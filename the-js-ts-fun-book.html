@@ -246,6 +246,115 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 @keyframes bounce { 0%{transform:scale(0)} 50%{transform:scale(1.2)} 70%{transform:scale(0.9)} 100%{transform:scale(1)} }
 @keyframes starPop { 0%{transform:scale(0) rotate(-30deg)} 60%{transform:scale(1.3) rotate(10deg)} 100%{transform:scale(1) rotate(0)} }
 @keyframes confettiFall { 0%{transform:translateY(0) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+@keyframes countUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes flipIn { from{transform:rotateY(90deg);opacity:0} to{transform:rotateY(0);opacity:1} }
+
+/* XP & Level System */
+.xp-bar-container { display:flex; align-items:center; gap:0.8rem; margin-top:0.6rem; }
+.xp-level-badge { background:var(--accent); color:var(--accent-text); font-weight:800; font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:999px; white-space:nowrap; }
+.xp-bar { flex:1; height:8px; background:var(--bg); border-radius:8px; overflow:hidden; border:1px solid var(--border); }
+.xp-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),#4CAF50); border-radius:8px; transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.xp-text { font-size:0.75rem; color:var(--text-muted); white-space:nowrap; }
+.xp-popup { position:fixed; top:80px; right:20px; background:var(--surface); border:2px solid var(--accent); border-radius:12px; padding:0.8rem 1.2rem; z-index:9998; animation:popIn 0.4s ease, fadeOut 0.3s ease 1.7s forwards; font-weight:700; color:var(--heading); box-shadow:0 4px 20px rgba(217,254,6,0.2); }
+@keyframes fadeOut { to{opacity:0;transform:translateY(-10px)} }
+
+/* Dashboard */
+.dashboard { padding:2rem; max-width:900px; margin:2rem auto; }
+.dashboard-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem; }
+.dash-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; transition:all 0.3s; }
+.dash-card:hover { transform:translateY(-2px); box-shadow:0 4px 20px rgba(0,0,0,0.1); }
+.dash-card h3 { color:var(--heading); font-size:1rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+.dash-stat { font-size:2.5rem; font-weight:800; color:var(--heading); }
+.dash-label { font-size:0.85rem; color:var(--text-muted); }
+.topic-bar { display:flex; align-items:center; gap:0.5rem; margin:0.4rem 0; }
+.topic-bar-label { font-size:0.75rem; color:var(--text-muted); min-width:90px; }
+.topic-bar-track { flex:1; height:6px; background:var(--bg); border-radius:6px; overflow:hidden; }
+.topic-bar-fill { height:100%; border-radius:6px; transition:width 0.6s ease; }
+.topic-bar-pct { font-size:0.7rem; color:var(--text-muted); min-width:32px; text-align:right; }
+.donut-container { display:flex; justify-content:center; align-items:center; position:relative; }
+.donut-center { position:absolute; text-align:center; }
+.donut-center .dash-stat { font-size:1.8rem; line-height:1; }
+.donut-center .dash-label { font-size:0.7rem; }
+.streak-fire { display:inline-flex; align-items:center; gap:0.3rem; font-size:1.5rem; font-weight:800; color:var(--heading); }
+.streak-days { display:flex; gap:0.3rem; margin-top:0.5rem; }
+.streak-dot { width:24px; height:24px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:var(--text-muted); }
+.streak-dot.active { background:var(--accent); border-color:var(--accent); color:var(--accent-text); }
+.dash-tab { display:inline-block; padding:0.5rem 1.2rem; border-radius:8px; cursor:pointer; font-size:0.85rem; font-weight:600; border:1px solid var(--border); background:var(--bg); color:var(--text-muted); transition:all 0.2s; margin-right:0.5rem; }
+.dash-tab.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+
+/* Flashcard Mode */
+.flashcard-toggle { display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all 0.2s; margin-bottom:1rem; }
+.flashcard-toggle:hover { border-color:var(--accent); color:var(--heading); }
+.flashcard-toggle.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+.flashcards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin:1.5rem 0; perspective:1000px; }
+.flashcard { position:relative; height:200px; cursor:pointer; transform-style:preserve-3d; transition:transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+.flashcard.flipped { transform:rotateY(180deg); }
+.flashcard-face { position:absolute; top:0;left:0;right:0;bottom:0; backface-visibility:hidden; border-radius:12px; padding:1.2rem; display:flex; flex-direction:column; justify-content:center; border:1px solid var(--border); }
+.flashcard-front { background:var(--surface); border-left:3px solid var(--heading); }
+.flashcard-front .point-title { font-weight:700; font-size:0.95rem; color:var(--heading); margin-bottom:0.5rem; }
+.flashcard-front .flip-hint { font-size:0.7rem; color:var(--text-muted); position:absolute; bottom:0.8rem; right:1rem; }
+.flashcard-back { background:linear-gradient(135deg,var(--surface),var(--bg)); transform:rotateY(180deg); }
+.flashcard-back p { color:var(--text-muted); font-size:0.85rem; line-height:1.6; }
+
+/* Interactive Code Playground */
+.playground { margin:1.5rem 0; border-radius:12px; overflow:hidden; border:1px solid var(--border); }
+.playground-header { display:flex; align-items:center; justify-content:space-between; padding:0.6rem 1rem; background:var(--surface); border-bottom:1px solid var(--border); }
+.playground-title { font-size:0.8rem; font-weight:600; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem; }
+.playground-dots { display:flex; gap:0.3rem; }
+.playground-dots span { width:10px; height:10px; border-radius:50%; }
+.playground-editor { width:100%; min-height:150px; background:var(--code-bg); color:var(--code-text); border:none; padding:1rem; font-family:"Fira Code",Consolas,monospace; font-size:0.82rem; line-height:1.6; resize:vertical; outline:none; }
+.playground-actions { display:flex; gap:0.5rem; padding:0.6rem 1rem; background:var(--surface); border-top:1px solid var(--border); }
+.playground-run { padding:0.4rem 1.2rem; background:var(--accent); color:var(--accent-text); border:none; border-radius:6px; font-size:0.8rem; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.playground-run:hover { background:var(--accent-hover); }
+.playground-reset { padding:0.4rem 1rem; background:var(--bg); color:var(--text-muted); border:1px solid var(--border); border-radius:6px; font-size:0.8rem; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.playground-reset:hover { border-color:var(--accent); color:var(--text); }
+.playground-output { background:#0a0c10; padding:0.8rem 1rem; font-family:"Fira Code",Consolas,monospace; font-size:0.8rem; color:#4CAF50; min-height:40px; max-height:150px; overflow-y:auto; border-top:1px solid var(--border); white-space:pre-wrap; }
+.playground-output.error { color:#f44336; }
+
+/* Scroll Reveal */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* Bookmark */
+.bookmark-btn { position:absolute; top:0.8rem; right:0.8rem; background:none; border:none; cursor:pointer; color:var(--text-muted); transition:all 0.2s; padding:0.3rem; }
+.bookmark-btn:hover { color:var(--heading); }
+.bookmark-btn.bookmarked { color:var(--accent); }
+.bookmark-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; }
+.bookmark-btn.bookmarked svg { fill:currentColor; }
+.lesson-head { position:relative; }
+
+/* Reading Time */
+.reading-time { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem; }
+
+/* Keyboard shortcut hints */
+.kbd { display:inline-block; padding:0.1rem 0.4rem; background:var(--bg); border:1px solid var(--border); border-radius:4px; font-size:0.7rem; color:var(--text-muted); font-family:"Fira Code",monospace; }
+.nav-hint { display:flex; justify-content:center; gap:1rem; margin-top:0.5rem; font-size:0.75rem; color:var(--text-muted); }
+
+/* Concept diagram */
+.concept-diagram { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin:1.5rem 0; text-align:center; }
+.concept-diagram h4 { color:var(--heading); margin-bottom:1rem; display:flex; align-items:center; justify-content:center; gap:0.4rem; }
+.diagram-flow { display:flex; align-items:center; justify-content:center; gap:0.3rem; flex-wrap:wrap; padding:0.5rem; }
+.diagram-node { padding:0.5rem 1rem; background:var(--bg); border:1px solid var(--accent); border-radius:8px; font-size:0.8rem; font-weight:600; color:var(--heading); transition:all 0.3s; }
+.diagram-node:hover { background:var(--accent); color:var(--accent-text); transform:scale(1.05); }
+.diagram-arrow { color:var(--accent); font-size:1.2rem; }
+
+/* Lesson rating */
+.lesson-rating { display:flex; align-items:center; justify-content:center; gap:0.8rem; margin:1.5rem 0; padding:1rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+.lesson-rating span { font-size:0.85rem; color:var(--text-muted); }
+.rate-btn { padding:0.4rem 1rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); cursor:pointer; font-size:0.85rem; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.3rem; color:var(--text); }
+.rate-btn:hover { border-color:var(--accent); }
+.rate-btn.rated { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+
+@media(max-width:700px) {
+  .dashboard-grid { grid-template-columns:1fr; }
+  .flashcards { grid-template-columns:1fr; }
+  .diagram-flow { flex-direction:column; }
+  .diagram-arrow { transform:rotate(90deg); }
+  .nav-hint { display:none; }
+}
 </style>
 </head>
 <body>
@@ -267,10 +376,16 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 </div>
 <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
 <div class="progress-text" id="ptxt">0 / 30 lessons completed</div>
+<div class="xp-bar-container">
+<div class="xp-level-badge" id="xp-level">Lv 1</div>
+<div class="xp-bar"><div class="xp-bar-fill" id="xp-fill" style="width:0%"></div></div>
+<div class="xp-text" id="xp-text">0 / 100 XP</div>
+</div>
 </div>
 </header>
 
 <div class="tabs" id="tabs"></div>
+<div id="dashboard" style="display:none"></div>
 <main id="content"></main>
 <footer>
 <div style="max-width:700px;margin:0 auto;">
@@ -303,8 +418,92 @@ let current=0;
 let completed=new Set();
 let codeVisible=false;
 let quizScores={};
+let flashcardMode=false;
+let showDashboard=false;
+let bookmarks=new Set();
+let lessonRatings={};
+let xp=0;
+let totalXpEarned=new Set();
+
+// Load saved state from localStorage
+function loadState(){
+  try{
+    const s=localStorage.getItem('funbook_state');
+    if(s){
+      const d=JSON.parse(s);
+      if(d.completed) completed=new Set(d.completed);
+      if(d.quizScores) quizScores=d.quizScores;
+      if(d.bookmarks) bookmarks=new Set(d.bookmarks);
+      if(d.ratings) lessonRatings=d.ratings;
+      if(d.xp) xp=d.xp;
+      if(d.xpEarned) totalXpEarned=new Set(d.xpEarned);
+      if(typeof d.current==='number') current=d.current;
+    }
+  }catch(e){}
+}
+function saveState(){
+  try{
+    localStorage.setItem('funbook_state',JSON.stringify({
+      completed:[...completed],quizScores,bookmarks:[...bookmarks],
+      ratings:lessonRatings,xp,xpEarned:[...totalXpEarned],current
+    }));
+  }catch(e){}
+}
 
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// XP System
+function getLevel(xp){return Math.floor(xp/100)+1;}
+function getXpInLevel(xp){return xp%100;}
+function getLevelTitle(lvl){
+  const titles=['Newbie','Apprentice','Coder','Developer','Engineer','Architect','Guru','Legend','Master','Grandmaster'];
+  return titles[Math.min(lvl-1,titles.length-1)];
+}
+function addXp(amount,reason){
+  xp+=amount;
+  saveState();
+  updateXpBar();
+  showXpPopup(amount,reason);
+}
+function showXpPopup(amount,reason){
+  const p=document.createElement('div');
+  p.className='xp-popup';
+  p.innerHTML=`+${amount} XP <span style="font-weight:400;font-size:0.8rem;color:var(--text-muted);margin-left:0.5rem">${reason}</span>`;
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),2200);
+}
+function updateXpBar(){
+  const lvl=getLevel(xp);
+  const inLvl=getXpInLevel(xp);
+  const el=document.getElementById('xp-level');
+  const fill=document.getElementById('xp-fill');
+  const txt=document.getElementById('xp-text');
+  if(el) el.textContent=`Lv ${lvl} ${getLevelTitle(lvl)}`;
+  if(fill) fill.style.width=inLvl+'%';
+  if(txt) txt.textContent=`${inLvl} / 100 XP`;
+}
+
+// Reading time estimate
+function getReadingTime(lesson){
+  let words=0;
+  words+=lesson.analogy.split(/\s+/).length;
+  words+=lesson.whatIs.split(/\s+/).length;
+  words+=lesson.realWorld.split(/\s+/).length;
+  lesson.points.forEach(p=>{words+=p.t.split(/\s+/).length+p.d.split(/\s+/).length;});
+  if(lesson.funFact) words+=lesson.funFact.split(/\s+/).length;
+  if(lesson.code) words+=lesson.code.split(/\s+/).length;
+  return Math.max(2,Math.ceil(words/200));
+}
+
+// Topic categories for dashboard
+const TOPICS={
+  'Fundamentals':[1,2],'TypeScript':[3,4,5,6,7,8,9],'Frontend':[10,11,12],
+  'Backend':[13],'Database':[14,15],'Caching':[16],'Jobs':[17],
+  'Security':[18],'Services':[19,20],'Cloud':[21],'DevOps':[22,27],
+  'Testing':[23],'Real-time':[24],'Architecture':[25,26],
+  'Tooling':[28],'Integration':[29,30]
+};
+const TOPIC_COLORS=['#D9FE06','#4CAF50','#2196F3','#FF9800','#E91E63','#9C27B0','#00BCD4','#FF5722','#607D8B','#795548','#3F51B5','#8BC34A','#CDDC39','#FFC107','#009688','#673AB7'];
 
 function toggleTheme(){
   const html=document.documentElement;
@@ -380,47 +579,233 @@ function bigIcon(id){
   return ICONS[id]||'';
 }
 
+// Dashboard rendering
+function renderDashboard(){
+  const totalLessons=L.length;
+  const completedCount=completed.size;
+  const pct=Math.round(completedCount/totalLessons*100);
+  const totalQuizzes=totalLessons*3;
+  let correctQuizzes=0;
+  Object.values(quizScores).forEach(v=>{if(v===true)correctQuizzes++;});
+  const lvl=getLevel(xp);
+
+  // Donut chart SVG
+  const radius=60,cx=75,cy=75,circ=2*Math.PI*radius;
+  const filled=circ*(pct/100);
+  const donutSvg=`<svg width="150" height="150" viewBox="0 0 150 150">
+    <circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="var(--border)" stroke-width="12"/>
+    <circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="var(--accent)" stroke-width="12"
+      stroke-dasharray="${filled} ${circ-filled}" stroke-dashoffset="${circ*0.25}"
+      stroke-linecap="round" style="transition:stroke-dasharray 0.8s ease"/>
+  </svg>`;
+
+  // Topic progress bars
+  let topicBars='';
+  let tIdx=0;
+  Object.entries(TOPICS).forEach(([name,ids])=>{
+    const done=ids.filter(id=>completed.has(id-1)).length;
+    const topicPct=Math.round(done/ids.length*100);
+    const color=TOPIC_COLORS[tIdx%TOPIC_COLORS.length];
+    topicBars+=`<div class="topic-bar">
+      <div class="topic-bar-label">${name}</div>
+      <div class="topic-bar-track"><div class="topic-bar-fill" style="width:${topicPct}%;background:${color}"></div></div>
+      <div class="topic-bar-pct">${topicPct}%</div>
+    </div>`;
+    tIdx++;
+  });
+
+  // Bookmarked lessons
+  let bookmarkList='';
+  if(bookmarks.size>0){
+    bookmarkList='<div style="margin-top:0.8rem">';
+    bookmarks.forEach(idx=>{
+      if(L[idx]) bookmarkList+=`<div style="padding:0.3rem 0;cursor:pointer;color:var(--text-muted);font-size:0.85rem" onclick="showDashboard=false;goTo(${idx})">${L[idx].id}. ${L[idx].title}</div>`;
+    });
+    bookmarkList+='</div>';
+  }else{
+    bookmarkList='<div style="color:var(--text-muted);font-size:0.85rem;margin-top:0.5rem">No bookmarks yet. Click the bookmark icon on any lesson.</div>';
+  }
+
+  document.getElementById('dashboard').innerHTML=`<div class="dashboard">
+    <h2 style="color:var(--heading);font-size:1.5rem;margin-bottom:0.3rem">Your Learning Dashboard</h2>
+    <p style="color:var(--text-muted);font-size:0.9rem">Track your progress, see your strengths, and plan what to learn next.</p>
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Overall Progress</h3>
+        <div class="donut-container">
+          ${donutSvg}
+          <div class="donut-center"><div class="dash-stat">${pct}%</div><div class="dash-label">${completedCount}/${totalLessons} lessons</div></div>
+        </div>
+      </div>
+      <div class="dash-card">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Stats</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;text-align:center">
+          <div><div class="dash-stat" style="font-size:1.8rem">${lvl}</div><div class="dash-label">Level</div></div>
+          <div><div class="dash-stat" style="font-size:1.8rem">${xp}</div><div class="dash-label">Total XP</div></div>
+          <div><div class="dash-stat" style="font-size:1.8rem">${correctQuizzes}</div><div class="dash-label">Quizzes Correct</div></div>
+          <div><div class="dash-stat" style="font-size:1.8rem">${bookmarks.size}</div><div class="dash-label">Bookmarked</div></div>
+        </div>
+      </div>
+      <div class="dash-card" style="grid-column:1/-1">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Progress by Topic</h3>
+        ${topicBars}
+      </div>
+      <div class="dash-card">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Bookmarked Lessons</h3>
+        ${bookmarkList}
+      </div>
+      <div class="dash-card">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg> Suggested Next</h3>
+        ${completedCount<totalLessons?
+          `<div style="cursor:pointer" onclick="showDashboard=false;goTo(${[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0})">
+            <div style="font-weight:700;color:var(--heading);font-size:1.1rem">${L[[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0].title}</div>
+            <div style="color:var(--text-muted);font-size:0.85rem;margin-top:0.3rem">Continue your learning journey</div>
+            <div class="btn btn-next" style="margin-top:1rem;display:inline-block;font-size:0.85rem;padding:0.5rem 1.5rem">Start Lesson</div>
+          </div>`
+          :'<div style="color:var(--heading);font-size:1.1rem;font-weight:700">All lessons completed! You are a Fullstack Hero!</div>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Concept diagram for each lesson
+function getConceptFlow(lesson){
+  const flows={
+    1:['Files','Monorepo','Shared Code','Apps'],
+    2:['JavaScript','+ Types','TypeScript','Safety'],
+    3:['let/const','Types','Arrays','Tuples'],
+    4:['Object','Interface','Type Alias','Nested'],
+    5:['function()','Arrow =>','Params','Return Type'],
+    6:['Union |','Type Guard','typeof','Narrowing'],
+    7:['Class','Constructor','Methods','Inheritance'],
+    8:['Promise','async','await','.then()'],
+    9:['Generic<T>','Partial<T>','Pick<T>','Omit<T>'],
+    10:['JSX','Component','Props','State','Render'],
+    11:['React DOM','React Native','Web','Mobile'],
+    12:['HTML/CSS','React','State Mgmt','Router'],
+    13:['Module','Controller','Service','NestJS'],
+    14:['Document','Collection','MongoDB','Query'],
+    15:['Schema','Migration','Prisma Client','Query'],
+    16:['SET','GET','TTL','Redis Cache'],
+    17:['Job','Queue','Worker','Bull Process'],
+    18:['Login','JWT Token','Guard','Protected'],
+    19:['Template','SMTP','Send','Inbox'],
+    20:['FCM','Token','Push','Device'],
+    21:['Upload','S3 Bucket','URL','Download'],
+    22:['Dockerfile','Build','Image','Container'],
+    23:['Unit Test','Integration','E2E','Coverage'],
+    24:['Connect','Emit','Listen','Real-time'],
+    25:['Endpoint','Method','Request','Response'],
+    26:['Module','Provider','Pipe','Interceptor'],
+    27:['Build','Test','Deploy','Monitor'],
+    28:['ESLint','Prettier','VSCode','Debug'],
+    29:['Frontend','API','Backend','Database'],
+    30:['Learn','Build','Ship','Grow']
+  };
+  return flows[lesson.id]||['Concept 1','Concept 2','Concept 3','Concept 4'];
+}
+
 function render(){
+  if(showDashboard){
+    document.getElementById('content').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    renderDashboard();
+  }else{
+    document.getElementById('content').style.display='block';
+    document.getElementById('dashboard').style.display='none';
+  }
+
   const pct=Math.round(completed.size/L.length*100);
   document.getElementById('pbar').style.width=pct+'%';
   document.getElementById('ptxt').textContent=completed.size+' / '+L.length+' lessons completed — '+pct+'%';
+  updateXpBar();
 
-  let tabsHtml='';
+  let tabsHtml=`<div class="tab ${showDashboard?'active':''}" onclick="showDashboard=true;render()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</div>`;
   L.forEach((l,i)=>{
-    const cls=i===current?'active':completed.has(i)?'done':'';
-    tabsHtml+=`<div class="tab ${cls}" onclick="goTo(${i})">${icon(l.id,'14')} ${l.id}</div>`;
+    const cls=(!showDashboard&&i===current)?'active':completed.has(i)?'done':'';
+    const bmk=bookmarks.has(i)?'<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-left:2px"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>':'';
+    tabsHtml+=`<div class="tab ${cls}" onclick="showDashboard=false;goTo(${i})">${icon(l.id,'14')} ${l.id}${bmk}</div>`;
   });
   document.getElementById('tabs').innerHTML=tabsHtml;
 
+  if(showDashboard) return;
+
   const l=L[current];
+  const readTime=getReadingTime(l);
+  const isBookmarked=bookmarks.has(current);
   let h='';
-  h+=`<div class="lesson-head"><span class="lesson-emoji">${bigIcon(l.id)}</span>`;
-  h+=`<div class="lesson-title">${l.title}</div>`;
-  h+=`<div class="lesson-sub">${l.subtitle}</div></div>`;
+  h+=`<div class="lesson-head">
+    <button class="bookmark-btn ${isBookmarked?'bookmarked':''}" onclick="toggleBookmark(${current})" title="${isBookmarked?'Remove bookmark':'Bookmark this lesson'}">
+      <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+    </button>
+    <span class="lesson-emoji">${bigIcon(l.id)}</span>
+    <div class="lesson-title">${l.title}</div>
+    <div class="lesson-sub">${l.subtitle}</div>
+    <div class="reading-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${readTime} min read</div>
+  </div>`;
 
-  h+=`<div class="analogy-box"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Think of it this way...</h3><p>${l.analogy}</p></div>`;
-
-  h+=`<div class="points">`;
-  l.points.forEach(p=>{
-    h+=`<div class="point"><div class="point-title">${p.t}</div><div class="point-desc">${p.d}</div></div>`;
+  // Concept flow diagram
+  const flow=getConceptFlow(l);
+  h+=`<div class="concept-diagram reveal"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Concept Flow</h4><div class="diagram-flow">`;
+  flow.forEach((node,i)=>{
+    if(i>0) h+=`<span class="diagram-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>`;
+    h+=`<div class="diagram-node">${node}</div>`;
   });
-  h+=`</div>`;
+  h+=`</div></div>`;
+
+  h+=`<div class="analogy-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Think of it this way...</h3><p>${l.analogy}</p></div>`;
+
+  // Flashcard toggle
+  h+=`<div style="display:flex;align-items:center;gap:0.5rem;margin:1.5rem 0 0">
+    <button class="flashcard-toggle ${flashcardMode?'active':''}" onclick="flashcardMode=!flashcardMode;render()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      ${flashcardMode?'Card View':'Flashcard Mode'}
+    </button>
+    <span style="font-size:0.75rem;color:var(--text-muted)">${flashcardMode?'Click cards to flip':'Switch to interactive flashcards'}</span>
+  </div>`;
+
+  if(flashcardMode){
+    h+=`<div class="flashcards">`;
+    l.points.forEach((p,i)=>{
+      h+=`<div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-face flashcard-front">
+          <div class="point-title">${p.t}</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <p>${p.d}</p>
+        </div>
+      </div>`;
+    });
+    h+=`</div>`;
+  }else{
+    h+=`<div class="points">`;
+    l.points.forEach(p=>{
+      h+=`<div class="point reveal"><div class="point-title">${p.t}</div><div class="point-desc">${p.d}</div></div>`;
+    });
+    h+=`</div>`;
+  }
 
   h+=`<div class="two-col">`;
-  h+=`<div class="col-box"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>What is it?</h3><p>${l.whatIs}</p></div>`;
-  h+=`<div class="col-box"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>Real-World Use</h3><p>${l.realWorld}</p></div>`;
+  h+=`<div class="col-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>What is it?</h3><p>${l.whatIs}</p></div>`;
+  h+=`<div class="col-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>Real-World Use</h3><p>${l.realWorld}</p></div>`;
   h+=`</div>`;
 
   if(l.funFact){
-    h+=`<div class="fun-fact"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Fun Fact</h4><p>${l.funFact}</p></div>`;
+    h+=`<div class="fun-fact reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Fun Fact</h4><p>${l.funFact}</p></div>`;
   }
 
   if(l.quiz && Array.isArray(l.quiz)){
     l.quiz.forEach((q, qIdx)=>{
       const quizKey=`${current}-${qIdx}`;
-      h+=`<div class="quiz-box" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Quiz ${qIdx+1} of ${l.quiz.length}</div><p style="margin-bottom:1rem;color:var(--text);font-weight:600">${q.q}</p>`;
+      const answered=quizScores[quizKey]!==undefined;
+      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Quiz ${qIdx+1} of ${l.quiz.length}</div><p style="margin-bottom:1rem;color:var(--text);font-weight:600">${q.q}</p>`;
       q.opts.forEach((o,i)=>{
-        h+=`<button class="quiz-btn" id="quiz-btn-${qIdx}-${i}" onclick="checkQuiz(this,${i},${q.ans},${qIdx})">${o}</button>`;
+        const isCorrect=answered&&i===q.ans;
+        const isWrong=answered&&quizScores[quizKey]===false&&i!==q.ans;
+        let cls='quiz-btn';
+        if(isCorrect) cls+=' correct';
+        h+=`<button class="${cls}" id="quiz-btn-${qIdx}-${i}" onclick="checkQuiz(this,${i},${q.ans},${qIdx})" ${answered?'disabled':''}>${o}</button>`;
       });
       h+=`</div>`;
     });
@@ -434,27 +819,120 @@ function render(){
     }
   }
 
-  h+=`<div style="text-align:center"><span class="code-toggle" onclick="toggleCode()"><span class="section-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>${codeVisible?'Hide Code':'Show Code Example'}</span></div>`;
-  if(codeVisible){
-    h+=`<div class="code-block">${escHtml(l.code)}</div>`;
-  }
+  // Interactive Code Playground
+  h+=`<div class="playground reveal">
+    <div class="playground-header">
+      <div class="playground-title"><div class="playground-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div></div>
+      <div class="playground-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Playground</div>
+    </div>
+    <textarea class="playground-editor" id="playground-code">${escHtml(l.code)}</textarea>
+    <div class="playground-actions">
+      <button class="playground-run" onclick="runPlayground()"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run</button>
+      <button class="playground-reset" onclick="resetPlayground()">Reset</button>
+    </div>
+    <div class="playground-output" id="playground-output">// Output will appear here...</div>
+  </div>`;
 
   if(l.challenge){
-    h+=`<div class="challenge"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Challenge</h4><p>${l.challenge}</p></div>`;
+    h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Challenge</h4><p>${l.challenge}</p></div>`;
   }
+
+  // Lesson rating
+  const rated=lessonRatings[current];
+  h+=`<div class="lesson-rating reveal">
+    <span>How was this lesson?</span>
+    <button class="rate-btn ${rated==='love'?'rated':''}" onclick="ratelesson(${current},'love')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="${rated==='love'?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> Love it
+    </button>
+    <button class="rate-btn ${rated==='good'?'rated':''}" onclick="ratelesson(${current},'good')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> Good
+    </button>
+    <button class="rate-btn ${rated==='meh'?'rated':''}" onclick="ratelesson(${current},'meh')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> Meh
+    </button>
+  </div>`;
 
   h+=`<div class="nav-btns">`;
   if(current>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>Previous</button>`;
   h+=`<button class="btn btn-next" onclick="markAndNext()">${current<L.length-1?'Complete & Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':'Finish! <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
   h+=`</div>`;
+  h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> Previous</span><span><span class="kbd">&rarr;</span> Next</span><span><span class="kbd">D</span> Dashboard</span></div>`;
 
   document.getElementById('content').innerHTML=h;
+  initScrollReveal();
 }
 
-function goTo(i){current=i;codeVisible=false;render();window.scrollTo(0,0);}
-function goPrev(){if(current>0){current--;codeVisible=false;render();window.scrollTo(0,0);}}
-function markAndNext(){completed.add(current);if(current<L.length-1){current++;codeVisible=false;}render();window.scrollTo(0,0);}
+function goTo(i){current=i;codeVisible=false;saveState();render();window.scrollTo(0,0);}
+function goPrev(){if(current>0){current--;codeVisible=false;saveState();render();window.scrollTo(0,0);}}
+function markAndNext(){
+  const wasNew=!completed.has(current);
+  completed.add(current);
+  if(wasNew&&!totalXpEarned.has('lesson-'+current)){
+    totalXpEarned.add('lesson-'+current);
+    addXp(20,'Lesson completed');
+  }
+  if(current<L.length-1){current++;codeVisible=false;}
+  saveState();render();window.scrollTo(0,0);
+}
 function toggleCode(){codeVisible=!codeVisible;render();}
+function toggleBookmark(idx){
+  if(bookmarks.has(idx)) bookmarks.delete(idx);
+  else bookmarks.add(idx);
+  saveState();render();
+}
+function ratelesson(idx,rating){
+  lessonRatings[idx]=rating;
+  saveState();render();
+}
+
+// Code Playground
+function runPlayground(){
+  const code=document.getElementById('playground-code').value;
+  const output=document.getElementById('playground-output');
+  output.classList.remove('error');
+  const logs=[];
+  const fakeConsole={log:(...a)=>logs.push(a.map(v=>typeof v==='object'?JSON.stringify(v,null,2):String(v)).join(' ')),
+    error:(...a)=>logs.push('ERROR: '+a.join(' ')),
+    warn:(...a)=>logs.push('WARN: '+a.join(' '))};
+  try{
+    const cleanCode=code.replace(/:\s*(string|number|boolean|any|void|never|unknown|object|Array<[^>]*>|Record<[^>]*>|Promise<[^>]*>|\w+\[\]|{\s*[^}]*})\s*/g,' ')
+      .replace(/\b(interface|type|enum)\s+\w+\s*{[^}]*}/g,'')
+      .replace(/<\w+>/g,'')
+      .replace(/\bas\s+\w+/g,'')
+      .replace(/\bimport\s+.*?from\s+['"][^'"]+['"]/g,'')
+      .replace(/\bexport\s+(default\s+)?/g,'')
+      .replace(/\@\w+\([^)]*\)\s*/g,'');
+    const fn=new Function('console',cleanCode);
+    fn(fakeConsole);
+    output.textContent=logs.length?logs.join('\n'):'// No output (try adding console.log)';
+  }catch(e){
+    output.classList.add('error');
+    output.textContent='Error: '+e.message;
+  }
+}
+function resetPlayground(){
+  const l=L[current];
+  document.getElementById('playground-code').value=l.code;
+  document.getElementById('playground-output').textContent='// Output will appear here...';
+  document.getElementById('playground-output').classList.remove('error');
+}
+
+// Scroll reveal
+function initScrollReveal(){
+  const els=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+  els.forEach(el=>obs.observe(el));
+}
+
+// Keyboard navigation
+document.addEventListener('keydown',(e)=>{
+  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight'&&!showDashboard){markAndNext();}
+  else if(e.key==='ArrowLeft'&&!showDashboard){goPrev();}
+  else if(e.key==='d'||e.key==='D'){showDashboard=!showDashboard;render();}
+});
 
 const ACHIEVEMENTS={
   perfect:[
@@ -596,11 +1074,20 @@ function checkQuiz(btn,picked,ans,quizIdx){
     }
     if(answeredCount===totalQuestions && !shownAchievements.has(current)){
       shownAchievements.add(current);
+      // Award XP for quiz completion
+      const xpKey='quiz-'+current;
+      if(!totalXpEarned.has(xpKey)){
+        totalXpEarned.add(xpKey);
+        const quizXp=correctCount===totalQuestions?30:correctCount>=2?20:10;
+        addXp(quizXp,'Quiz '+correctCount+'/'+totalQuestions);
+      }
+      saveState();
       setTimeout(()=>showAchievement(correctCount,totalQuestions),600);
     }
   }
 }
 
+loadState();
 initTheme();
 render();
 </script>
