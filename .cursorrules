@@ -1,0 +1,83 @@
+# Cursor Rules — The JS & TS Fun Book
+
+You are working on **The JS & TS Fun Book**, an interactive single-page HTML tutorial for learning TypeScript, NestJS, React, and fullstack development.
+
+## Project Structure
+
+```
+js-ts-fun-book/
+├── index.html                    ← Redirect to the-js-ts-fun-book.html
+├── the-js-ts-fun-book.html       ← Rendering engine (CSS + HTML + JS, ~40KB)
+├── data.js                       ← Lesson content (30 lessons, ~128KB)
+├── README.md                     ← Project description
+└── CLAUDE.md                     ← Full project documentation (READ THIS FIRST)
+```
+
+## Critical Rules
+
+1. **Always read `CLAUDE.md` first** — It contains the full architecture, data schema, design system, and all function documentation.
+
+2. **Two-file architecture**: `the-js-ts-fun-book.html` is the engine, `data.js` is the content. They are separate files connected via `<script src="data.js">`.
+
+3. **data.js exports a global**: `const LESSONS_DATA = [...]` — Do NOT change this to ES modules, CommonJS, or any other format.
+
+4. **Quiz property is `q:` not `t:`** — Each quiz uses `{ q: "question", opts: [...], ans: Number }`. Using `t:` instead of `q:` is a known past bug.
+
+5. **Exactly 3 quizzes per lesson** — The achievement system depends on this. Don't add more or fewer.
+
+6. **SVG icons only** — No emoji anywhere. All icons use `<svg>` with `stroke: currentColor`.
+
+7. **Brand colors**: Accent = `#D9FE06` (neon green), Dark BG = `#12151A`, Font = Poppins.
+
+8. **No external dependencies** except Google Fonts (Poppins). Everything is self-contained.
+
+9. **ICONS map in HTML**: Keys `1`–`30` map to SVG strings. When adding lessons, add matching icons.
+
+10. **Theme toggle**: Dark mode is default. Light mode via `html[data-theme="light"]`. Persisted in `localStorage`.
+
+## When Editing Lessons (data.js)
+
+Each lesson follows this exact schema:
+```js
+{
+  id: Number,        // Sequential 1-30
+  title: String,
+  subtitle: String,
+  analogy: String,   // Fun real-world analogy
+  points: [          // 6-11 teaching points
+    { t: String, d: String }
+  ],
+  whatIs: String,
+  realWorld: String,
+  code: String,      // Code example (use backtick template literals)
+  funFact: String,   // Optional
+  quiz: [            // EXACTLY 3 quizzes
+    { q: String, opts: [String, String, String, String], ans: Number }
+  ],
+  challenge: String
+}
+```
+
+## When Editing the Engine (the-js-ts-fun-book.html)
+
+- CSS is in a single `<style>` block in `<head>`
+- JS is in a single `<script>` block before `</body>`
+- Key functions: `render()`, `goTo(i)`, `checkQuiz()`, `showAchievement()`, `spawnConfetti()`, `toggleTheme()`
+- State variables: `current`, `completed` (Set), `codeVisible`, `quizScores`, `shownAchievements` (Set)
+
+## Style Conventions
+
+- Minified-ish CSS (one rule per line, short property names)
+- Compact JS (minimal whitespace, arrow functions, template literals)
+- HTML uses semantic elements: `<header>`, `<main>`, `<footer>`
+- BEM-lite class naming: `.lesson-title`, `.quiz-btn`, `.achievement-card`
+
+## Testing
+
+After any change, verify:
+- All 30 lessons render without errors
+- All 90 quizzes have `q:` property (not `t:`)
+- Each lesson has exactly 3 quiz items
+- ICONS map has keys matching all lesson IDs
+- Theme toggle works in both directions
+- Achievement popup triggers after answering all 3 quizzes in a lesson

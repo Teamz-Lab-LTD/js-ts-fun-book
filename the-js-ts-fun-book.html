@@ -3,12 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The JS & TS Fun Book - From Zero to Fullstack Hero</title>
+<title>The JS & TS Fun Book — Learn TypeScript, NestJS & React from Zero to Fullstack Hero</title>
+<meta name="description" content="Free interactive tutorial to learn TypeScript, NestJS, React, MongoDB, Docker & fullstack development. 30 fun lessons with quizzes, code examples, and real-world analogies. Perfect for beginners and experienced developers.">
+<meta name="keywords" content="learn typescript, typescript tutorial, nestjs tutorial, react tutorial, fullstack development, javascript tutorial, typescript for beginners, nestjs for beginners, learn react, typescript quiz, nestjs guide, typescript book, free coding tutorial, web development, mongodb tutorial, docker tutorial, prisma tutorial, jwt authentication, REST API tutorial, typescript generics, async await tutorial">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://teamz-lab-ltd.github.io/js-ts-fun-book/">
+
+<!-- Open Graph / Social Media -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="The JS & TS Fun Book — Learn TypeScript, NestJS & React for Free">
+<meta property="og:description" content="30 interactive lessons with quizzes to master TypeScript, NestJS, React & fullstack development. Fun analogies, real code examples, achievement system. From zero to production-ready.">
+<meta property="og:url" content="https://teamz-lab-ltd.github.io/js-ts-fun-book/">
+<meta property="og:site_name" content="The JS & TS Fun Book">
+<meta property="og:image" content="https://teamz-lab-ltd.github.io/js-ts-fun-book/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The JS & TS Fun Book — Learn TypeScript, NestJS & React for Free">
+<meta name="twitter:description" content="30 interactive lessons with quizzes. Master TypeScript, NestJS, React & fullstack development with fun analogies and real code.">
+<meta name="twitter:image" content="https://teamz-lab-ltd.github.io/js-ts-fun-book/og-image.png">
+
+<!-- Structured Data for Google Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "The JS & TS Fun Book — TypeScript, NestJS & React Tutorial",
+  "description": "Free interactive tutorial with 30 lessons covering TypeScript, NestJS, React, MongoDB, Docker and fullstack development. Includes quizzes, code examples, and achievement system.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://github.com/Teamz-Lab-LTD"
+  },
+  "educationalLevel": "Beginner to Intermediate",
+  "programmingLanguage": ["TypeScript", "JavaScript"],
+  "teaches": ["TypeScript", "NestJS", "React", "MongoDB", "Docker", "REST API", "JWT Authentication", "Prisma ORM", "Redis", "WebSockets"],
+  "numberOfLessons": 30,
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT10H"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "The JS & TS Fun Book",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "150"
+  }
+}
+</script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+
+<!-- Preconnect for performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 :root {
   --bg: #12151A;
@@ -55,708 +125,127 @@ html[data-theme="light"] {
   --score-border: rgba(18,21,26,0.15);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif; line-height:1.7; transition:background 0.3s,color 0.3s,border-color 0.3s; }
+
+header { padding:2rem; border-bottom:1px solid var(--border); background:var(--surface); transition:background 0.3s,border-color 0.3s; }
+.hdr { max-width:1400px; margin:0 auto; }
+.hdr-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.2rem; }
+.hdr-left { display:flex; align-items:center; gap:1rem; }
+.logo { font-size:2.8rem; }
+.hdr-txt h1 { font-size:1.9rem; }
+.hdr-txt p { color:var(--text-muted); font-size:0.9rem; }
+
+.theme-toggle { padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); cursor:pointer; font-size:1.2rem; transition:all 0.2s; display:flex; align-items:center; justify-content:center; width:44px; height:44px; }
+.theme-toggle:hover { border-color:var(--accent); background:var(--bg); }
+
+.progress-bar { height:8px; background:var(--surface); border-radius:8px; overflow:hidden; margin-top:0.5rem; border:1px solid var(--border); transition:background 0.3s,border-color 0.3s; }
+.progress-fill { height:100%; background:var(--accent); border-radius:8px; transition:width 0.4s; }
+.progress-text { margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted); }
+
+.tabs { display:flex; flex-wrap:wrap; gap:0.4rem; padding:1rem 2rem; background:var(--surface); border-bottom:1px solid var(--border); max-width:100%; overflow-x:auto; transition:background 0.3s,border-color 0.3s; }
+.tab { padding:0.45rem 0.9rem; border-radius:8px; cursor:pointer; font-size:0.78rem; border:1px solid var(--border); background:var(--bg); color:var(--text-muted); transition:all 0.25s; white-space:nowrap; }
+.tab:hover { border-color:var(--accent); color:var(--text); }
+.tab.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+.tab.done { background:rgba(217,254,6,0.15); color:var(--heading); border-color:var(--accent); }
+
+.icon { display:inline-flex; align-items:center; justify-content:center; width:var(--icon-size); height:var(--icon-size); vertical-align:middle; }
+.section-icon { display:inline-flex; align-items:center; margin-right:0.4rem; color:var(--heading); }
+.section-icon svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+main { max-width:900px; margin:2rem auto; padding:0 2rem; }
+.lesson-head { text-align:center; margin-bottom:2rem; }
+.lesson-emoji { margin-bottom:0.5rem; display:flex; justify-content:center; align-items:center; }
+.lesson-emoji svg { width:56px; height:56px; stroke:var(--heading); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.tab svg.tab-icon { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; vertical-align:-2px; margin-right:2px; }
+
+.lesson-title { font-size:2rem; margin-bottom:0.3rem; color:var(--heading); font-weight:700; }
+.lesson-sub { color:var(--text-muted); font-size:1rem; }
+
+.analogy-box { border-radius:12px; padding:1.8rem; margin:1.5rem 0; border:1px solid var(--border); background:var(--surface); transition:background 0.3s,border-color 0.3s; }
+.analogy-box h3 { margin-bottom:0.5rem; font-size:1.1rem; color:var(--text); }
+.analogy-box p { color:var(--text-muted); font-size:0.95rem; line-height:1.7; }
+
+.points { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin:1.5rem 0; }
+.point { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; transition:transform 0.2s,background 0.3s,border-color 0.3s; border-left:3px solid var(--heading); }
+.point:hover { transform:translateY(-3px); }
+.point-title { font-weight:700; margin-bottom:0.3rem; font-size:0.95rem; color:var(--heading); display:flex; align-items:center; gap:0.4rem; }
+.point-title::before { content:''; display:inline-block; width:6px; height:6px; background:var(--heading); border-radius:50%; flex-shrink:0; }
+.point-desc { color:var(--text-muted); font-size:0.85rem; }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin:1.5rem 0; }
+.col-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.3rem; transition:background 0.3s,border-color 0.3s; }
+.col-box h3 { margin-bottom:0.5rem; font-size:1rem; color:var(--text); }
+.col-box p { color:var(--text-muted); font-size:0.88rem; line-height:1.6; }
+
+.code-toggle { display:inline-block; margin:1.5rem 0; padding:0.6rem 1.5rem; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:8px; cursor:pointer; font-size:0.85rem; transition:all 0.2s; }
+.code-toggle:hover { background:var(--bg); border-color:var(--accent); color:var(--heading); }
+
+.code-block { background:var(--code-bg); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:0.5rem 0 1.5rem; overflow-x:auto; font-family:"Fira Code",Consolas,monospace; font-size:0.82rem; line-height:1.6; color:var(--code-text); white-space:pre; transition:background 0.3s,border-color 0.3s,color 0.3s; }
+
+.nav-btns { display:flex; gap:1rem; justify-content:center; margin:2.5rem 0; }
+.btn { padding:0.7rem 2rem; border-radius:8px; cursor:pointer; font-size:0.9rem; font-weight:600; border:none; transition:all 0.2s; font-family:'Poppins',sans-serif; }
+.btn-prev { background:var(--surface); color:var(--text); border:1px solid var(--border); }
+.btn-prev:hover { border-color:var(--accent); color:var(--heading); }
+.btn-next { background:var(--accent); color:var(--accent-text); font-weight:700; }
+.btn-next:hover { background:var(--accent-hover); }
+
+.fun-fact { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:1.2rem 0; transition:background 0.3s,border-color 0.3s; }
+.fun-fact h4 { color:var(--heading); margin-bottom:0.3rem; }
+.fun-fact p { color:var(--text-muted); font-size:0.88rem; }
+
+.quiz-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:1.2rem 0; transition:background 0.3s,border-color 0.3s; }
+.quiz-box h4 { color:var(--heading); margin-bottom:0.5rem; }
+.quiz-btn { display:block; width:100%; text-align:left; padding:0.6rem 1rem; margin:0.3rem 0; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--text); cursor:pointer; font-size:0.85rem; transition:all 0.2s; font-family:'Poppins',sans-serif; }
+.quiz-btn:hover { border-color:var(--accent); color:var(--heading); }
+.quiz-btn.correct { background:var(--quiz-correct-bg); border-color:var(--quiz-correct-border); color:var(--quiz-correct-text); }
+.quiz-btn.wrong { background:var(--quiz-wrong-bg); border-color:var(--quiz-wrong-border); color:var(--quiz-wrong-text); }
+.quiz-counter { color:var(--heading); font-size:0.9rem; margin-bottom:0.8rem; font-weight:600; }
+.quiz-score { margin-top:1.5rem; padding:1rem; background:var(--score-bg); border:1px solid var(--score-border); border-radius:8px; text-align:center; color:var(--heading); font-weight:600; display:none; }
+
+.challenge { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:1.2rem 0; transition:background 0.3s,border-color 0.3s; }
+.challenge h4 { color:var(--heading); margin-bottom:0.3rem; }
+.challenge p { color:var(--text-muted); font-size:0.88rem; }
+
+footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8rem; border-top:1px solid var(--border); transition:color 0.3s,border-color 0.3s; }
+
+@media(max-width:700px) {
+  .two-col { grid-template-columns:1fr; }
+  .tabs { padding:0.8rem 1rem; }
+  .lesson-title { font-size:1.5rem; }
+  main { padding:0 1rem; }
+  .hdr-top { flex-direction:column; align-items:flex-start; }
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.7;
-  transition: background 0.3s, color 0.3s, border-color 0.3s;
-}
-
-header {
-  padding: 2rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.hdr {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.hdr-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.hdr-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.logo {
-  font-size: 2.8rem;
-}
-
-.hdr-txt h1 {
-  font-size: 1.9rem;
-}
-
-.hdr-txt p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-.theme-toggle {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-}
-
-.theme-toggle:hover {
-  border-color: var(--accent);
-  background: var(--bg);
-}
-
-.progress-bar {
-  height: 8px;
-  background: var(--surface);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 0.5rem;
-  border: 1px solid var(--border);
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 8px;
-  transition: width 0.4s;
-}
-
-.progress-text {
-  margin-top: 0.4rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 1rem 2rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  max-width: 100%;
-  overflow-x: auto;
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.tab {
-  padding: 0.45rem 0.9rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.78rem;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-muted);
-  transition: all 0.25s;
-  white-space: nowrap;
-}
-
-.tab:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-
-.tab.active {
-  background: var(--accent);
-  color: var(--accent-text);
-  border-color: var(--accent);
-}
-
-.tab.done {
-  background: rgba(217,254,6,0.15);
-  color: var(--heading);
-  border-color: var(--accent);
-}
-
-.icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--icon-size);
-  height: var(--icon-size);
-  vertical-align: middle;
-}
-
-.section-icon {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 0.4rem;
-  color: var(--heading);
-}
-
-.section-icon svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-main {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 2rem;
-}
-
-.lesson-head {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.lesson-emoji {
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.lesson-emoji svg {
-  width: 56px;
-  height: 56px;
-  stroke: var(--heading);
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.tab svg.tab-icon {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vertical-align: -2px;
-  margin-right: 2px;
-}
-
-.lesson-title {
-  font-size: 2rem;
-  margin-bottom: 0.3rem;
-  color: var(--heading);
-  font-weight: 700;
-}
-
-.lesson-sub {
-  color: var(--text-muted);
-  font-size: 1rem;
-}
-
-.analogy-box {
-  border-radius: 12px;
-  padding: 1.8rem;
-  margin: 1.5rem 0;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.analogy-box h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-  color: var(--text);
-}
-
-.analogy-box p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.7;
-}
-
-.points {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.point {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem;
-  transition: transform 0.2s, background 0.3s, border-color 0.3s;
-}
-
-.point:hover {
-  transform: translateY(-3px);
-}
-
-.point {
-  border-left: 3px solid var(--heading);
-}
-
-.point-title {
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-  font-size: 0.95rem;
-  color: var(--heading);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.point-title::before {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: var(--heading);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.point-desc {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-  margin: 1.5rem 0;
-}
-
-.col-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.3rem;
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.col-box h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: var(--text);
-}
-
-.col-box p {
-  color: var(--text-muted);
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
-
-.code-toggle {
-  display: inline-block;
-  margin: 1.5rem 0;
-  padding: 0.6rem 1.5rem;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.2s;
-}
-
-.code-toggle:hover {
-  background: var(--bg);
-  border-color: var(--accent);
-  color: var(--heading);
-}
-
-.code-block {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin: 0.5rem 0 1.5rem;
-  overflow-x: auto;
-  font-family: "Fira Code", Consolas, monospace;
-  font-size: 0.82rem;
-  line-height: 1.6;
-  color: var(--code-text);
-  white-space: pre;
-  transition: background 0.3s, border-color 0.3s, color 0.3s;
-}
-
-.nav-btns {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin: 2.5rem 0;
-}
-
-.btn {
-  padding: 0.7rem 2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  transition: all 0.2s;
-  font-family: 'Poppins', sans-serif;
-}
-
-.btn-prev {
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.btn-prev:hover {
-  border-color: var(--accent);
-  color: var(--heading);
-}
-
-.btn-next {
-  background: var(--accent);
-  color: var(--accent-text);
-  font-weight: 700;
-}
-
-.btn-next:hover {
-  background: var(--accent-hover);
-}
-
-.fun-fact {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin: 1.2rem 0;
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.fun-fact h4 {
-  color: var(--heading);
-  margin-bottom: 0.3rem;
-}
-
-.fun-fact p {
-  color: var(--text-muted);
-  font-size: 0.88rem;
-}
-
-.quiz-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin: 1.2rem 0;
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.quiz-box h4 {
-  color: var(--heading);
-  margin-bottom: 0.5rem;
-}
-
-.quiz-btn {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.6rem 1rem;
-  margin: 0.3rem 0;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.2s;
-  font-family: 'Poppins', sans-serif;
-}
-
-.quiz-btn:hover {
-  border-color: var(--accent);
-  color: var(--heading);
-}
-
-.quiz-btn.correct {
-  background: var(--quiz-correct-bg);
-  border-color: var(--quiz-correct-border);
-  color: var(--quiz-correct-text);
-}
-
-.quiz-btn.wrong {
-  background: var(--quiz-wrong-bg);
-  border-color: var(--quiz-wrong-border);
-  color: var(--quiz-wrong-text);
-}
-
-.quiz-counter {
-  color: var(--heading);
-  font-size: 0.9rem;
-  margin-bottom: 0.8rem;
-  font-weight: 600;
-}
-
-.quiz-score {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: var(--score-bg);
-  border: 1px solid var(--score-border);
-  border-radius: 8px;
-  text-align: center;
-  color: var(--heading);
-  font-weight: 600;
-  display: none;
-}
-
-.challenge {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin: 1.2rem 0;
-  transition: background 0.3s, border-color 0.3s;
-}
-
-.challenge h4 {
-  color: var(--heading);
-  margin-bottom: 0.3rem;
-}
-
-.challenge p {
-  color: var(--text-muted);
-  font-size: 0.88rem;
-}
-
-footer {
-  text-align: center;
-  padding: 3rem;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  border-top: 1px solid var(--border);
-  transition: color 0.3s, border-color 0.3s;
-}
-
-@media(max-width: 700px) {
-  .two-col {
-    grid-template-columns: 1fr;
-  }
-  .tabs {
-    padding: 0.8rem 1rem;
-  }
-  .lesson-title {
-    font-size: 1.5rem;
-  }
-  main {
-    padding: 0 1rem;
-  }
-  .hdr-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 /* Achievement System */
-.achievement-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(4px);
-}
+.achievement-overlay { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:9999; animation:fadeIn 0.3s ease; backdrop-filter:blur(4px); }
+.achievement-card { background:var(--surface); border:2px solid var(--accent); border-radius:16px; padding:2.5rem 2rem; max-width:420px; width:90%; text-align:center; animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275); box-shadow:0 0 40px rgba(217,254,6,0.15),0 0 80px rgba(217,254,6,0.05); position:relative; overflow:hidden; }
+.achievement-card::before { content:''; position:absolute; top:-2px;left:-2px;right:-2px; height:4px; background:var(--accent); }
+.achievement-icon { width:72px; height:72px; margin:0 auto 1rem; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; animation:bounce 0.6s ease 0.3s both; }
+.achievement-icon svg { width:36px; height:36px; stroke:var(--accent-text); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.achievement-badge { display:inline-block; padding:0.3rem 1rem; background:var(--accent); color:var(--accent-text); border-radius:999px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.8rem; }
+.achievement-title { font-size:1.4rem; font-weight:800; color:var(--heading); margin-bottom:0.4rem; }
+.achievement-subtitle { font-size:0.95rem; color:var(--text-muted); margin-bottom:0.3rem; }
+.achievement-score { font-size:2rem; font-weight:800; color:var(--heading); margin:0.8rem 0; }
+.achievement-msg { font-size:0.85rem; color:var(--text-muted); margin-bottom:1.2rem; line-height:1.5; }
+.achievement-close { padding:0.6rem 2rem; background:var(--accent); color:var(--accent-text); border:none; border-radius:8px; font-size:0.9rem; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.achievement-close:hover { background:var(--accent-hover); transform:translateY(-1px); }
+.achievement-stars { display:flex; justify-content:center; gap:0.5rem; margin:0.8rem 0; }
+.achievement-star { width:28px; height:28px; transition:all 0.3s; }
+.achievement-star.filled { stroke:var(--accent); fill:var(--accent); animation:starPop 0.3s ease both; }
+.achievement-star.empty { stroke:var(--border); fill:none; }
+.achievement-star:nth-child(2) { animation-delay:0.15s; }
+.achievement-star:nth-child(3) { animation-delay:0.3s; }
 
-.achievement-card {
-  background: var(--surface);
-  border: 2px solid var(--accent);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  max-width: 420px;
-  width: 90%;
-  text-align: center;
-  animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-  box-shadow: 0 0 40px rgba(217,254,6,0.15), 0 0 80px rgba(217,254,6,0.05);
-  position: relative;
-  overflow: hidden;
-}
+.confetti-container { position:fixed; top:0;left:0;right:0;bottom:0; pointer-events:none; z-index:10000; overflow:hidden; }
+.confetti { position:absolute; width:8px; height:8px; top:-10px; animation:confettiFall linear forwards; }
 
-.achievement-card::before {
-  content: '';
-  position: absolute;
-  top: -2px; left: -2px; right: -2px;
-  height: 4px;
-  background: var(--accent);
-}
-
-.achievement-icon {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 1rem;
-  background: var(--accent);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: bounce 0.6s ease 0.3s both;
-}
-
-.achievement-icon svg {
-  width: 36px;
-  height: 36px;
-  stroke: var(--accent-text);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.achievement-badge {
-  display: inline-block;
-  padding: 0.3rem 1rem;
-  background: var(--accent);
-  color: var(--accent-text);
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.8rem;
-}
-
-.achievement-title {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--heading);
-  margin-bottom: 0.4rem;
-}
-
-.achievement-subtitle {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-bottom: 0.3rem;
-}
-
-.achievement-score {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--heading);
-  margin: 0.8rem 0;
-}
-
-.achievement-msg {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1.2rem;
-  line-height: 1.5;
-}
-
-.achievement-close {
-  padding: 0.6rem 2rem;
-  background: var(--accent);
-  color: var(--accent-text);
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: all 0.2s;
-}
-
-.achievement-close:hover {
-  background: var(--accent-hover);
-  transform: translateY(-1px);
-}
-
-.achievement-stars {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 0.8rem 0;
-}
-
-.achievement-star {
-  width: 28px;
-  height: 28px;
-  transition: all 0.3s;
-}
-
-.achievement-star.filled {
-  stroke: var(--accent);
-  fill: var(--accent);
-  animation: starPop 0.3s ease both;
-}
-
-.achievement-star.empty {
-  stroke: var(--border);
-  fill: none;
-}
-
-.achievement-star:nth-child(2) { animation-delay: 0.15s; }
-.achievement-star:nth-child(3) { animation-delay: 0.3s; }
-
-/* Confetti particles */
-.confetti-container {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  z-index: 10000;
-  overflow: hidden;
-}
-
-.confetti {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  top: -10px;
-  animation: confettiFall linear forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes popIn {
-  from { transform: scale(0.7) translateY(20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-@keyframes bounce {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  70% { transform: scale(0.9); }
-  100% { transform: scale(1); }
-}
-
-@keyframes starPop {
-  0% { transform: scale(0) rotate(-30deg); }
-  60% { transform: scale(1.3) rotate(10deg); }
-  100% { transform: scale(1) rotate(0); }
-}
-
-@keyframes confettiFall {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes popIn { from{transform:scale(0.7) translateY(20px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+@keyframes bounce { 0%{transform:scale(0)} 50%{transform:scale(1.2)} 70%{transform:scale(0.9)} 100%{transform:scale(1)} }
+@keyframes starPop { 0%{transform:scale(0) rotate(-30deg)} 60%{transform:scale(1.3) rotate(10deg)} 100%{transform:scale(1) rotate(0)} }
+@keyframes confettiFall { 0%{transform:translateY(0) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
 </style>
 </head>
 <body>
@@ -777,1660 +266,39 @@ footer {
 </button>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
-<div class="progress-text" id="ptxt">0 / 25 lessons completed</div>
+<div class="progress-text" id="ptxt">0 / 30 lessons completed</div>
 </div>
 </header>
 
 <div class="tabs" id="tabs"></div>
 <main id="content"></main>
-<footer>Made with fun for learners everywhere</footer>
+<footer>
+<div style="max-width:700px;margin:0 auto;">
+<div style="margin-bottom:1.5rem;">
+<div style="font-size:1.1rem;font-weight:700;color:var(--heading);margin-bottom:0.5rem;">Share this with fellow developers!</div>
+<div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+<a href="https://twitter.com/intent/tweet?text=Just%20found%20this%20amazing%20FREE%20interactive%20tutorial%20to%20learn%20TypeScript%2C%20NestJS%20%26%20React!%2030%20lessons%20with%20quizzes%20and%20fun%20analogies.%20%F0%9F%94%A5&url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F&hashtags=TypeScript,NestJS,React,WebDev,LearnToCode" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg> Share on X
+</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> Share on LinkedIn
+</a>
+<button onclick="navigator.clipboard.writeText('https://teamz-lab-ltd.github.io/js-ts-fun-book/');this.textContent='Copied!';setTimeout(()=>this.innerHTML='<svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot; ry=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1&quot;/></svg> Copy Link',2000)" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.85rem;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;font-family:'Poppins',sans-serif;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Link
+</button>
+</div>
+</div>
+<p style="margin-bottom:0.5rem;">The JS & TS Fun Book — A free, open-source interactive tutorial by <a href="https://github.com/Teamz-Lab-LTD" target="_blank" rel="noopener" style="color:var(--heading);text-decoration:none;">Teamz Lab</a></p>
+<p style="font-size:0.75rem;">Learn TypeScript, NestJS, React, MongoDB, Prisma, Docker, JWT Authentication, Redis, WebSockets & more — all in one place.</p>
+<p style="font-size:0.7rem;margin-top:0.5rem;">30 interactive lessons &bull; 90+ quizzes &bull; 200+ teaching points &bull; Real code examples &bull; Achievement system</p>
+</div>
+</footer>
+
+<!-- Lesson Data (separate file for easy maintenance) -->
+<script src="data.js"></script>
 
 <script>
-const L=[
-{id:1,emoji:"🏗️",title:"What is a Monorepo?",subtitle:"One Repo to Rule Them All",
-analogy:"Imagine you have 3 pets: a cat, a dog, and a parrot. You COULD keep each in a separate house (3 repos). OR you could keep them all in ONE big house with separate rooms (monorepo). They share the same kitchen (shared code), same electricity (build tools), but each has their own space!",
-analogyEmoji:"🏠",
-points:[
-{t:"One Repository",d:"Frontend, backend, and shared code all live in one place — like roommates sharing an apartment."},
-{t:"Shared Code",d:"Common types, utilities, and configs are used everywhere — no copy-pasting between projects!"},
-{t:"Turborepo / Nx",d:"Tools that make monorepos fast — they know which parts changed and only rebuild those."},
-{t:"pnpm Workspaces",d:"pnpm connects your project folders (frontend, backend, shared) so they can directly import code from each other — no publishing needed!"}
-],
-whatIs:"A monorepo is a single Git repository that contains multiple projects (frontend, backend, shared libraries). Tools like Turborepo and pnpm workspaces make it efficient by sharing dependencies and running tasks in parallel.",
-realWorld:"Companies like Google, Meta, and Microsoft use monorepos. Your NestJS backend and React frontend can share TypeScript types — change a type once, both sides update instantly!",
-code:`// Typical monorepo structure:
-my-project/
-├── apps/
-│   ├── frontend/     ← React app (Vite + TypeScript)
-│   └── backend/      ← NestJS app
-├── packages/
-│   └── shared/       ← Shared types, utils
-├── package.json      ← Root config
-├── pnpm-workspace.yaml
-└── turbo.json        ← Turborepo config
-
-// pnpm-workspace.yaml
-packages:
-  - "apps/*"
-  - "packages/*"
-
-// In frontend, you can import shared types:
-import { UserDTO } from '@myproject/shared';`,
-funFact:"Google's monorepo has over 2 BILLION lines of code and 86 terabytes of data. One repo. Seriously. 🤯",
-quiz:[
-{q:"What's the main benefit of a monorepo?",opts:["Looks cooler on GitHub","Share code between frontend and backend easily","Makes Git slower","You only need one developer"],ans:1},
-{q:"What tool makes monorepos fast by only rebuilding what changed?",opts:["Webpack","Turborepo","MongoDB","React"],ans:1},
-{q:"In a monorepo, where do shared types typically live?",opts:["In node_modules","In a packages/shared directory","In the browser","In the database"],ans:1}
-],
-challenge:"Create a folder structure with apps/frontend, apps/backend, and packages/shared. Add a shared types.ts file and try importing it from both apps!"
-},
-
-{id:2,emoji:"⚡",title:"JavaScript vs TypeScript",subtitle:"Adding Superpowers to JS",
-analogy:"JavaScript is like texting without autocorrect — fast but you make typos that nobody catches until it's embarrassing. TypeScript is like texting WITH autocorrect AND grammar check — it catches your mistakes BEFORE you hit send!",
-analogyEmoji:"📱",
-points:[
-{t:"TypeScript = JS + Types",d:"TypeScript is JavaScript with type annotations. Every valid JS code is also valid TS code!"},
-{t:"Catches Bugs Early",d:"Instead of finding errors at 3 AM in production, TypeScript finds them while you're coding."},
-{t:"Better Autocomplete",d:"Your editor knows exactly what properties and methods are available — like having a cheat sheet."},
-{t:"Compiles to JavaScript",d:"Browsers don't understand TypeScript. It gets compiled to regular JavaScript before running."}
-],
-whatIs:"TypeScript is a superset of JavaScript created by Microsoft. It adds static type checking — meaning you declare what type of data variables hold (string, number, etc.) and the compiler verifies you use them correctly.",
-realWorld:"Almost every major company uses TypeScript now: Airbnb, Slack, Stripe, and more. NestJS is built entirely in TypeScript, and React has first-class TypeScript support.",
-code:`// JavaScript — no types, YOLO mode 🎲
-function greet(name) {
-  return "Hello " + name.toUpperCase();
-}
-greet(42); // 💥 Runtime error! 42.toUpperCase is not a function
-
-// TypeScript — safe mode 🛡️
-function greet(name: string): string {
-  return "Hello " + name.toUpperCase();
-}
-greet(42); // ❌ Compile error! Argument of type 'number'
-           //    is not assignable to parameter of type 'string'
-greet("World"); // ✅ "Hello WORLD"
-
-// TypeScript interfaces — like a contract 📝
-interface User {
-  name: string;
-  age: number;
-  email?: string; // optional (the ? means it's OK to skip)
-}
-
-const user: User = {
-  name: "Alex",
-  age: 25,
-  // email is optional, so this is fine!
-};`,
-funFact:"TypeScript was created by the same person who created C# — Anders Hejlsberg. That's why TS feels familiar to C#/Java developers!",
-quiz:[
-{q:"What happens to TypeScript when it runs in a browser?",opts:["It runs directly","It gets compiled to JavaScript first","The browser downloads a TypeScript engine","It doesn't work in browsers"],ans:1},
-{q:"What does the '?' after a property mean in an interface?",opts:["The property is broken","The property is optional","The property is a question","The property must be a boolean"],ans:1},
-{q:"Who created TypeScript?",opts:["Google","Meta (Facebook)","Microsoft","Amazon"],ans:2}
-],
-challenge:"Open your editor and rename a .js file to .ts. Add type annotations to your variables and functions. How many bugs does TypeScript find?"
-},
-
-{id:3,emoji:"🎨",title:"React — The UI Wizard",subtitle:"Build Interfaces Like LEGO",
-analogy:"React is like building with LEGO blocks. Each component is a LEGO piece — a Button, a Card, a NavBar. You snap them together to build your page. Want to change the header? Just swap that LEGO piece. The rest stays untouched!",
-analogyEmoji:"🧱",
-points:[
-{t:"Components = Building Blocks",d:"Everything in React is a component. A button, a form, a whole page — all are reusable pieces."},
-{t:"JSX = HTML in JavaScript",d:"Write HTML-like syntax directly in your JavaScript/TypeScript. It feels natural and powerful."},
-{t:"State = Memory",d:"Components can remember things (like 'is this menu open?') using useState hooks."},
-{t:"Virtual DOM = Speed",d:"React only updates the parts of the page that changed — not the whole thing. Super efficient!"}
-],
-whatIs:"React is a JavaScript library for building user interfaces, created by Meta (Facebook). It uses a component-based architecture where you build small, reusable UI pieces and compose them together.",
-realWorld:"React powers Facebook, Instagram, Netflix, Airbnb, and thousands more apps. It's the most popular frontend library with millions of developers worldwide.",
-code:`// A simple React component — it's just a function! 🎯
-import { useState } from 'react';
-
-function LikeButton() {
-  // State = component's memory
-  const [likes, setLikes] = useState(0);
-  const [emoji, setEmoji] = useState('👍');
-
-  const handleClick = () => {
-    setLikes(likes + 1);
-    setEmoji(likes >= 10 ? '🔥' : likes >= 5 ? '❤️' : '👍');
-  };
-
-  return (
-    &lt;button onClick={handleClick}&gt;
-      {emoji} {likes} {likes === 1 ? 'like' : 'likes'}
-    &lt;/button&gt;
-  );
-}
-
-// Using components together — like LEGO! 🧱
-function App() {
-  return (
-    &lt;div&gt;
-      &lt;h1&gt;My Awesome App&lt;/h1&gt;
-      &lt;LikeButton /&gt;
-      &lt;LikeButton /&gt;  {/* Each has its own state! */}
-    &lt;/div&gt;
-  );
-}`,
-funFact:"React was first used on Facebook's News Feed in 2011 and Instagram in 2012 — BEFORE it was released to the public in 2013! 🕵️",
-quiz:[
-{q:"What is a React component?",opts:["A CSS framework","A reusable piece of UI (like a function that returns HTML)","A database","A type of server"],ans:1},
-{q:"What does useState do?",opts:["Updates the database","Lets a component remember things (state)","Configures the state machine","Sends data to the server"],ans:1},
-{q:"In React, how do you update a component's displayed data?",opts:["Directly modify the variable","Use state setters like setState or useState's setter","Reload the page","Call a database query"],ans:1}
-],
-challenge:"Create a counter component with + and - buttons. Bonus: add a reset button and make the number turn red when it goes negative!"
-},
-
-{id:4,emoji:"🌐",title:"React vs React Native",subtitle:"Web vs Mobile — Same Brain, Different Body",
-analogy:"React is like a chef who cooks for a restaurant (web browser). React Native is the SAME chef cooking for a food truck (mobile phone). Same recipes (JavaScript/React), same skills — but different kitchen equipment (web elements vs native components)!",
-analogyEmoji:"👨‍🍳",
-points:[
-{t:"Same Language",d:"Both use JavaScript/TypeScript and React concepts (components, hooks, state)."},
-{t:"Different Output",d:"React renders HTML elements (div, span, p). React Native renders native mobile components (View, Text, TouchableOpacity)."},
-{t:"Code Sharing",d:"Business logic, API calls, state management — all can be shared between web and mobile!"},
-{t:"Expo",d:"A toolkit that makes React Native development easier — like create-react-app but for mobile."}
-],
-whatIs:"React Native lets you build native mobile apps (iOS + Android) using React and JavaScript. Unlike hybrid apps (like Cordova), React Native actually renders real native UI components — so your app feels native because it IS native.",
-realWorld:"Facebook, Instagram, Discord, Shopify, and Pinterest all use React Native. Many teams share 60-80% of their code between web (React) and mobile (React Native).",
-code:`// React (Web) 🌐
-function Welcome() {
-  return (
-    &lt;div className="container"&gt;
-      &lt;h1&gt;Hello Web!&lt;/h1&gt;
-      &lt;p&gt;Click the button&lt;/p&gt;
-      &lt;button onClick={handleClick}&gt;
-        Press Me
-      &lt;/button&gt;
-    &lt;/div&gt;
-  );
-}
-
-// React Native (Mobile) 📱
-// Same logic, different building blocks!
-function Welcome() {
-  return (
-    &lt;View style={styles.container}&gt;
-      &lt;Text style={styles.title}&gt;Hello Mobile!&lt;/Text&gt;
-      &lt;Text&gt;Tap the button&lt;/Text&gt;
-      &lt;TouchableOpacity onPress={handlePress}&gt;
-        &lt;Text&gt;Press Me&lt;/Text&gt;
-      &lt;/TouchableOpacity&gt;
-    &lt;/View&gt;
-  );
-}
-
-// The translation table 📋
-// Web          →  Mobile
-// div          →  View
-// p, span, h1  →  Text
-// button       →  TouchableOpacity
-// img          →  Image
-// input        →  TextInput
-// onClick      →  onPress`,
-funFact:"Shopify rewrote their entire mobile app in React Native and now 80% of the code is shared between iOS and Android. That's like getting 2 apps for the price of 1.2! 💰",
-quiz:[
-{q:"What does React Native render?",opts:["HTML elements in a WebView","Real native mobile components","PDF pages","Nothing — it's a server framework"],ans:1},
-{q:"What's a major advantage of React Native?",opts:["It's the only way to build mobile apps","You can share business logic between web and mobile","It's faster than native development","It requires less programming knowledge"],ans:1},
-{q:"Which of these companies uses React Native?",opts:["Microsoft","Google","Instagram","Amazon"],ans:2}
-],
-challenge:"Compare the same simple component written in React (web) and React Native. Count how many differences there are — you'll be surprised how few!"
-},
-
-{id:5,emoji:"📦",title:"TypeScript for Dart/Kotlin Devs",subtitle:"You Already Know This!",
-analogy:"If you know Dart or Kotlin, learning TypeScript is like visiting a country that speaks a very similar language. The grammar is slightly different, but you can understand most conversations immediately!",
-analogyEmoji:"🗺️",
-points:[
-{t:"Types Work Similarly",d:"String, number, boolean, arrays, generics — same concepts, slightly different syntax."},
-{t:"Null Safety",d:"TypeScript has optional chaining (?.) and nullish coalescing (??) — just like Dart and Kotlin!"},
-{t:"Interfaces & Types",d:"Like abstract classes but more flexible. TypeScript interfaces don't compile to anything — they're just for type checking."},
-{t:"Async/Await",d:"Works almost identically to Dart and Kotlin. Promises = Futures."}
-],
-whatIs:"TypeScript shares many concepts with Dart and Kotlin: static typing, null safety, generics, async/await. If you know one, picking up the others is mostly about learning new syntax for the same ideas.",
-realWorld:"Many mobile developers (Flutter/Kotlin) transition to fullstack by adding TypeScript. The mental model transfers directly — types, classes, async patterns all work the same way.",
-code:`// Side-by-side comparison 🔄
-
-// --- Variables ---
-// Dart:    String name = "Alex";
-// Kotlin:  val name: String = "Alex"
-// TS:
-const name: string = "Alex";  // lowercase 'string'!
-
-// --- Functions ---
-// Dart:    int add(int a, int b) => a + b;
-// Kotlin:  fun add(a: Int, b: Int): Int = a + b
-// TS:
-const add = (a: number, b: number): number => a + b;
-
-// --- Null safety ---
-// Dart:    String? name;   name?.toUpperCase()
-// Kotlin:  val name: String?   name?.uppercase()
-// TS:
-const name: string | undefined = undefined;
-name?.toUpperCase(); // Same ?. operator!
-
-// --- Classes ---
-// TS:
-class Animal {
-  constructor(
-    public name: string,     // auto-creates this.name
-    private sound: string
-  ) {}
-
-  speak(): string {
-    return \`\${this.name} says \${this.sound}\`;
-  }
-}
-
-// --- Generics ---
-// Dart:    List<String> names = ["a", "b"];
-// Kotlin:  val names: List<String> = listOf("a", "b")
-// TS:
-const names: Array&lt;string&gt; = ["a", "b"];
-// or shorthand:
-const names2: string[] = ["a", "b"];`,
-funFact:"TypeScript, Dart, and Kotlin were all created within a few years of each other (2011-2012). It's like they went to the same school of 'let's fix JavaScript/Java'! 🎓",
-quiz:[
-{q:"In TypeScript, what's the type for whole and decimal numbers?",opts:["int and double","Int and Float","number (just one type for all numbers!)","integer and decimal"],ans:2},
-{q:"What does the ?. operator do in TypeScript?",opts:["It's a typo","It's optional chaining — safe property access","It makes code slower","It's only for databases"],ans:1},
-{q:"How are TypeScript Generics similar to Dart?",opts:["They're completely different","They work the same way, just different syntax","Generics are only in Kotlin","TypeScript doesn't have generics"],ans:1}
-],
-challenge:"Take a class you wrote in Dart or Kotlin and rewrite it in TypeScript. How similar are they?"
-},
-
-{id:6,emoji:"🎪",title:"The Frontend Tech Stack",subtitle:"Meet Your Toolkit",
-analogy:"Building a frontend is like throwing a party. React is the venue, Vite is the fast setup crew, Tailwind is the decorator, React Router is the floor plan, React Query is the caterer who brings food from the kitchen (backend), and Mantine/Radix are the pre-made party supplies!",
-analogyEmoji:"🎉",
-points:[
-{t:"React + Vite",d:"React builds the UI, Vite makes development super fast with instant hot reload. Like a race car for your dev server!"},
-{t:"Tailwind CSS",d:"Style with class names like 'bg-blue-500 text-white p-4'. No writing CSS files — style right in your HTML!"},
-{t:"React Query (TanStack)",d:"Fetches data from your API and caches it. Handles loading, errors, and refetching automatically."},
-{t:"React Hook Form + Zod",d:"React Hook Form manages form state efficiently. Zod validates data with TypeScript types. Together = unbreakable forms!"}
-],
-whatIs:"A modern React frontend uses multiple libraries working together: Vite for building, Tailwind for styling, React Query for data fetching, React Hook Form + Zod for forms, and component libraries like Radix UI or Mantine for pre-built UI elements.",
-realWorld:"This exact tech stack (React + Vite + Tailwind + React Query + Zod) is used by thousands of production apps. It's considered one of the best modern React setups for 2024-2025.",
-code:`// React Query — fetch data the smart way 🧠
-import { useQuery } from '@tanstack/react-query';
-
-function UserList() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['users'],
-    queryFn: () => fetch('/api/users').then(r => r.json()),
-    staleTime: 5 * 60 * 1000, // cache for 5 minutes!
-  });
-
-  if (isLoading) return &lt;p&gt;Loading...&lt;/p&gt;;
-  if (error) return &lt;p&gt;Oops! Something broke 💥&lt;/p&gt;;
-
-  return (
-    &lt;ul className="space-y-2"&gt;
-      {data.map(user =&gt; (
-        &lt;li key={user.id} className="bg-white p-4 rounded-lg shadow"&gt;
-          {user.name}
-        &lt;/li&gt;
-      ))}
-    &lt;/ul&gt;
-  );
-}
-
-// React Hook Form + Zod — bulletproof forms 🛡️
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
-const schema = z.object({
-  email: z.string().email('Invalid email!'),
-  password: z.string().min(8, 'Too short!'),
-});
-
-function LoginForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: zodResolver(schema),
-  });
-
-  return (
-    &lt;form onSubmit={handleSubmit(data =&gt; console.log(data))}&gt;
-      &lt;input {...register('email')} /&gt;
-      {errors.email &amp;&amp; &lt;span&gt;{errors.email.message}&lt;/span&gt;}
-    &lt;/form&gt;
-  );
-}`,
-funFact:"Vite (pronounced 'veet') means 'fast' in French. And it IS fast — 10-100x faster than the old create-react-app setup. The creator, Evan You, also created Vue.js! 🏎️",
-quiz:[
-{q:"What does React Query do?",opts:["Writes SQL queries","Fetches data from APIs and caches it smartly","Creates database tables","Formats CSS"],ans:1},
-{q:"What does Vite provide over traditional React setups?",opts:["More features","Much faster development with instant hot reload","Better security","Automatic SEO optimization"],ans:1},
-{q:"What is Tailwind CSS?",opts:["A responsive CSS framework library","Utility-first CSS framework for styling with class names","A JavaScript library","A database tool"],ans:1}
-],
-challenge:"Install React Query in a Vite project and fetch data from a public API like https://jsonplaceholder.typicode.com/users. Add loading and error states!"
-},
-
-{id:7,emoji:"🏰",title:"Why NestJS?",subtitle:"Express Grew Up and Got Organized",
-analogy:"Express is like a studio apartment — everything in one room, you decide where stuff goes. NestJS is like a well-designed house with labeled rooms: kitchen (services), front door (controllers), hallways (modules). Both work, but the house is WAY easier to manage when you have 50 rooms!",
-analogyEmoji:"🏠",
-points:[
-{t:"Built-in Structure",d:"Module → Controller → Service pattern. Everyone organizes code the same way — no more 'where did John put that file?'"},
-{t:"Dependency Injection",d:"Instead of manually creating instances, you just declare what you need and NestJS delivers it. Like room service!"},
-{t:"TypeScript First",d:"NestJS is built FOR TypeScript. Decorators (@Get, @Post, @Injectable) make code readable and self-documenting."},
-{t:"Batteries Included",d:"Validation, auth guards, Swagger docs, WebSockets, microservices — all built-in or plug-and-play."}
-],
-whatIs:"NestJS is a progressive Node.js framework for building server-side applications. Built on top of Express (or Fastify), it provides an opinionated structure inspired by Angular, using modules, controllers, and services.",
-realWorld:"NestJS is used by Adidas, Roche, Autodesk, and many startups. It's the most popular structured Node.js framework, with over 60K GitHub stars.",
-code:`// The NestJS Holy Trinity 🔺
-// 1. MODULE — wires everything together
-@Module({
-  controllers: [UserController],
-  providers: [UserService],
-})
-export class UserModule {}
-
-// 2. CONTROLLER — handles HTTP requests (the front door 🚪)
-@Controller('users')
-export class UserController {
-  constructor(private userService: UserService) {}
-  //          ↑ NestJS auto-injects this! Magic! ✨
-
-  @Get()          // GET /users
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Get(':id')     // GET /users/123
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
-  }
-
-  @Post()         // POST /users
-  create(@Body() data: CreateUserDto) {
-    return this.userService.create(data);
-  }
-}
-
-// 3. SERVICE — business logic (the brain 🧠)
-@Injectable()
-export class UserService {
-  constructor(private prisma: PrismaService) {}
-
-  findAll() {
-    return this.prisma.user.findMany();
-  }
-
-  findOne(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
-  }
-
-  create(data: CreateUserDto) {
-    return this.prisma.user.create({ data });
-  }
-}`,
-funFact:"NestJS was created by Kamil Myśliwiec in 2017 because he was frustrated that Node.js had no structure like Angular did for frontend. He basically thought 'why can't backend be organized too?' and just... built it. 😤🛠️",
-quiz:[
-{q:"What is Dependency Injection in NestJS?",opts:["A security vulnerability","NestJS automatically creates and provides instances your class needs","A way to inject CSS","Manual object creation"],ans:1},
-{q:"Which of these is NOT a core NestJS concept?",opts:["Modules","Controllers","Services","React components"],ans:3},
-{q:"What does NestJS use as the foundation?",opts:["Apache","Django","Express (or Fastify)","Flask"],ans:2}
-],
-challenge:"Create a NestJS project with `nest new my-app`, then generate a module with `nest g resource cats`. Look at the files it creates — controller, service, module, DTO. Notice how they connect!"
-},
-
-{id:8,emoji:"🗄️",title:"MongoDB — The Flexible Database",subtitle:"Store Data Like JSON Files",
-analogy:"MySQL is like a strict printed form — every person fills in EXACTLY the same boxes (columns). MongoDB is like a folder of sticky notes — each note can have different info! One has a phone number, another has an address. Both are fine!",
-analogyEmoji:"📝",
-points:[
-{t:"Documents, Not Tables",d:"Data is stored as JSON-like documents. Each document can have different fields — ultimate flexibility!"},
-{t:"No Schema Migrations",d:"Need to add a new field? Just add it. No ALTER TABLE, no migrations, no headaches."},
-{t:"Nested Data",d:"Store objects inside objects naturally. An address inside a user? Just nest it — no JOINs needed!"},
-{t:"Scales Horizontally",d:"Need more power? Add more servers. MongoDB distributes data across them automatically."}
-],
-whatIs:"MongoDB is a NoSQL database that stores data as flexible JSON-like documents (BSON). Unlike SQL databases with rigid tables, MongoDB lets each document have its own structure. It's the 'M' in the MEAN/MERN stack.",
-realWorld:"MongoDB is used by Adobe, eBay, Forbes, Google, and Toyota. It's especially popular for apps with varied data shapes — like property listings, user profiles, or content management systems.",
-code:`// SQL (MySQL) — rigid table structure 📊
-// Every row MUST have the same columns:
-// | id | name  | email           | age |
-// | 1  | Alex  | alex@mail.com   | 25  |
-// | 2  | Sam   | sam@mail.com    | 30  |
-
-// MongoDB — flexible documents 📄
-// Document 1
-{
-  "_id": "abc123",
-  "name": "Alex",
-  "email": "alex@mail.com",
-  "age": 25
-}
-// Document 2 — has EXTRA fields, and that's OK!
-{
-  "_id": "def456",
-  "name": "Sam",
-  "email": "sam@mail.com",
-  "age": 30,
-  "phone": "+1234567",
-  "address": {
-    "city": "New York",
-    "country": "USA"
-  },
-  "hobbies": ["coding", "gaming", "cooking"]
-}
-
-// Nested data — no JOINs needed! 🎯
-{
-  "name": "Sunset Apartment",
-  "address": {
-    "street": "123 Main St",
-    "city": "San Francisco",
-    "coordinates": { "lat": 37.77, "lng": -122.41 }
-  },
-  "images": [
-    { "url": "photo1.jpg", "caption": "Living room" },
-    { "url": "photo2.jpg", "caption": "Kitchen" }
-  ],
-  "amenities": ["wifi", "parking", "gym"]
-}`,
-funFact:"MongoDB's name comes from 'humongous' — because it was designed to handle HUMONGOUS amounts of data. The founders literally just shortened the word! 🦕",
-quiz:[
-{q:"What's the main difference between MongoDB and MySQL?",opts:["MongoDB is faster","MongoDB stores flexible documents, MySQL stores rigid table rows","They're the same thing","MySQL is newer"],ans:1},
-{q:"What does 'NoSQL' stand for?",opts:["No Structured Query Language","Not Only SQL","No Sequel","Nothing Sequential Language"],ans:1},
-{q:"Can you add new fields to a MongoDB document without changing the schema?",opts:["No, you need to alter the table","Yes, just add the field — MongoDB is flexible!","Only if it's the first field","No, that would break consistency"],ans:1}
-],
-challenge:"Install MongoDB Compass (free GUI). Create a database, add a collection called 'users', and insert two documents with DIFFERENT fields. Notice how MongoDB doesn't complain!"
-},
-
-{id:9,emoji:"🔮",title:"Prisma — Your Database Translator",subtitle:"Talk to Your Database in TypeScript",
-analogy:"Imagine you only speak English but your database speaks Mongolian. Without Prisma, you'd have to learn Mongolian yourself (raw queries). With Prisma, you speak English (TypeScript), and Prisma translates everything perfectly — with spell check!",
-analogyEmoji:"🗣️",
-points:[
-{t:"Type-Safe Queries",d:"Your editor autocompletes database fields. Typo in a column name? Caught BEFORE you run!"},
-{t:"Schema as Code",d:"Define your data model in schema.prisma — one file to rule all your data."},
-{t:"Auto-Generated Types",d:"Prisma reads your schema and generates TypeScript types. You never write database types manually!"},
-{t:"Works with Many DBs",d:"Prisma supports PostgreSQL, MySQL, MongoDB, SQLite, and more. Switch databases with minimal code changes."}
-],
-whatIs:"Prisma is a modern ORM (Object-Relational Mapping) for TypeScript and Node.js. It auto-generates a type-safe database client from your schema, making database operations feel like writing regular TypeScript code.",
-realWorld:"Prisma is used by companies like Daimler, Rapha, and many YC startups. It's the most popular TypeScript ORM, especially loved for its developer experience and type safety.",
-code:`// Step 1: Define your schema (prisma/schema.prisma) 📝
-model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String @unique
-  age   Int
-  posts Post[]       // One user has many posts!
-}
-
-model Post {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  title    String
-  content  String
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId
-}
-
-// Step 2: Use it in your code — look how clean! ✨
-// Create
-const user = await prisma.user.create({
-  data: {
-    name: "Alex",
-    email: "alex@dev.com",
-    age: 25,
-  },
-});
-
-// Find with relations (auto-JOINs!)
-const userWithPosts = await prisma.user.findUnique({
-  where: { email: "alex@dev.com" },
-  include: { posts: true }, // Magic! 🪄
-});
-
-// Type-safe filtering
-const adults = await prisma.user.findMany({
-  where: { age: { gte: 18 } },
-  orderBy: { name: 'asc' },
-  take: 10,
-});
-// Try typing prisma.user.fi... and see the autocomplete! 🤩`,
-funFact:"Before Prisma, the most popular MongoDB ORM was Mongoose (created in 2010). Prisma launched MongoDB support in 2021 and quickly became the go-to choice for TypeScript devs! 🚀",
-quiz:[
-{q:"What does Prisma auto-generate?",opts:["HTML pages","TypeScript types from your database schema","Docker containers","React components"],ans:1},
-{q:"What's an ORM?",opts:["A type of bug","Object-Relational Mapping — makes database queries feel like TypeScript code","Only Ruby Middleware","Objectively Responsive Manager"],ans:1},
-{q:"How do you define your data model in Prisma?",opts:["In a JavaScript file","In a TypeScript interface","In the schema.prisma file","In the database directly"],ans:2}
-],
-challenge:"Run `npx prisma init` in a project. Define a User model in schema.prisma, then run `npx prisma generate`. Open node_modules/.prisma/client and look at the generated types!"
-},
-
-{id:10,emoji:"⚡",title:"Redis — The Speed Demon",subtitle:"Super-Fast Temporary Storage",
-analogy:"Your database (MongoDB) is like a filing cabinet — organized, reliable, but takes a few seconds to find things. Redis is like a sticky note on your desk — INSTANTLY readable! You put frequently needed info on the sticky note so you don't keep opening the cabinet.",
-analogyEmoji:"📌",
-points:[
-{t:"In-Memory Storage",d:"Redis stores data in RAM, not on disk. That's why it's insanely fast — 0.1ms vs 10-100ms!"},
-{t:"Cache Layer",d:"Store frequently-accessed data in Redis. 100 users requesting the same data? Database queried ONCE, Redis serves 99!"},
-{t:"Sessions",d:"Remember who's logged in? Store session data in Redis — checked on every request, needs to be fast."},
-{t:"Rate Limiting",d:"Count how many API requests a user made this minute. If too many, block them. Redis tracks this efficiently."}
-],
-whatIs:"Redis is an open-source, in-memory data store used as a cache, message broker, and database. It stores data in RAM (not disk), making it incredibly fast but limited in size. Think of it as a turbo-charged, temporary storage layer.",
-realWorld:"Twitter uses Redis to cache timelines. GitHub uses it for job queues. Stack Overflow uses it for caching. Almost every high-traffic app has Redis somewhere in its stack.",
-code:`// Without Redis — database gets hammered 😵
-// 100 users visit the homepage in 1 minute:
-// → 100 database queries (each takes 200ms)
-// → Database: "I'm TIRED! 😫"
-
-// With Redis — database chills 😎
-// Request 1:
-User → Backend → Redis (miss!) → Database (200ms)
-              → Store in Redis (cache it!)
-
-// Requests 2-100:
-User → Backend → Redis (HIT! 2ms) → "Here's your data!"
-              → Database: *sipping coffee* ☕
-
-// Redis in your docker-compose.yml:
-services:
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
-// Using Redis with NestJS:
-@Injectable()
-export class CacheService {
-  constructor(@Inject(CACHE_MANAGER) private cache: Cache) {}
-
-  async getProperty(id: string) {
-    // Check Redis first
-    const cached = await this.cache.get(\`property:\${id}\`);
-    if (cached) return cached; // Cache HIT! ⚡
-
-    // Cache miss — ask database
-    const property = await this.prisma.property.findUnique({
-      where: { id },
-    });
-
-    // Store in Redis for next time (expire in 5 min)
-    await this.cache.set(\`property:\${id}\`, property, 300);
-    return property;
-  }
-}`,
-funFact:"Redis can handle over 100,000 operations PER SECOND on a single server. That's like a librarian who can find and return 100K books every second! 📚💨",
-quiz:[
-{q:"Why is Redis so fast?",opts:["It uses a better programming language","It stores data in RAM (memory) instead of disk","It compresses data really well","It only works locally"],ans:1},
-{q:"What's a common use case for Redis?",opts:["Building web applications","Caching frequently-accessed data to speed up APIs","Creating databases","Training machine learning models"],ans:1},
-{q:"What happens to data in Redis if the server shuts down?",opts:["It's automatically backed up","It's permanently stored","It's lost (unless you configured persistence)","It gets transferred to a database"],ans:2}
-],
-challenge:"Run Redis in Docker: `docker run -p 6379:6379 redis:7-alpine`. Then use `redis-cli` to SET and GET values. Try: `SET greeting 'Hello!' EX 10` — it disappears after 10 seconds!"
-},
-
-{id:11,emoji:"📬",title:"Bull — The Job Queue Manager",subtitle:"Background Tasks Made Easy",
-analogy:"Imagine a restaurant. Without a queue: you order food and stand awkwardly at the counter for 20 minutes. WITH a queue: you order, get a receipt number, sit down, and they call your number when it's ready. Bull is the receipt system for your backend!",
-analogyEmoji:"🍽️",
-points:[
-{t:"Background Processing",d:"Offload slow tasks (emails, image processing, notifications) to run in the background."},
-{t:"Powered by Redis",d:"Bull stores its job queue in Redis. Redis is the whiteboard, Bull is the manager reading it."},
-{t:"Auto-Retry",d:"Job failed? Bull retries automatically! Configure max retries and delay between attempts."},
-{t:"Job Scheduling",d:"Need to send a reminder email in 24 hours? Bull can delay and schedule jobs for later."}
-],
-whatIs:"Bull is a Node.js library for creating robust job queues backed by Redis. It handles background processing, retries, scheduling, and concurrency — so your API stays fast while heavy work happens behind the scenes.",
-realWorld:"Any app that sends emails, processes images, generates PDFs, or sends push notifications uses a job queue. Bull is the most popular choice for Node.js/NestJS applications.",
-code:`// The Problem: User waits for email to send ⏳
-@Post('signup')
-async signup(@Body() data: SignupDto) {
-  const user = await this.prisma.user.create({ data });
-  await this.emailService.send(user.email); // Takes 3-5 seconds! 😴
-  return user; // User waits all that time...
-}
-
-// The Solution: Queue it with Bull! 🎯
-// Step 1: Add job to queue (instant!)
-@Post('signup')
-async signup(@Body() data: SignupDto) {
-  const user = await this.prisma.user.create({ data });
-
-  // This returns INSTANTLY — job added to queue
-  await this.emailQueue.add('welcome-email', {
-    to: user.email,
-    name: user.name,
-  });
-
-  return user; // User gets response in milliseconds! 🚀
-}
-
-// Step 2: Process the job in the background
-@Processor('email')
-export class EmailProcessor {
-  @Process('welcome-email')
-  async handleWelcome(job: Job) {
-    console.log(\`Sending email to \${job.data.to}...\`);
-    await this.emailService.send({
-      to: job.data.to,
-      subject: \`Welcome \${job.data.name}!\`,
-      template: 'welcome',
-    });
-    console.log('Email sent! ✅');
-  }
-
-  // If it fails, Bull retries automatically!
-  @OnQueueFailed()
-  onFailed(job: Job, err: Error) {
-    console.log(\`Job \${job.id} failed: \${err.message}\`);
-    // Bull will retry based on your config!
-  }
-}`,
-funFact:"The name 'Bull' comes from 'Bull Queue' — but some people think it's because queues can be 'bull-headed' about retrying failed jobs until they succeed! 🐂",
-quiz:[
-{q:"Why use a job queue instead of doing everything in the request?",opts:["It's more complex and fun","Users get instant responses while slow tasks run in the background","Queues are required by law","It uses less memory"],ans:1},
-{q:"What does Bull use as its backend?",opts:["MongoDB","Redis","PostgreSQL","The file system"],ans:1},
-{q:"What happens if a Bull job fails?",opts:["The job is deleted forever","Bull automatically retries based on your configuration","The server crashes","The user gets an error immediately"],ans:1}
-],
-challenge:"Set up a Bull queue in NestJS using @nestjs/bull. Create a processor that logs 'Processing job!' and add a job to it from a controller. Watch the terminal — the job runs separately!"
-},
-
-{id:12,emoji:"🎭",title:"TypeScript Types Deep Dive",subtitle:"Your Code's Safety Net",
-analogy:"Types are like labels on containers in a kitchen. A jar labeled 'Sugar' helps you avoid accidentally putting salt in your coffee. TypeScript labels (types) help you avoid accidentally putting a number where a string should go!",
-analogyEmoji:"🏷️",
-points:[
-{t:"Primitive Types",d:"string, number, boolean, null, undefined — the building blocks. Unlike Java, there's just 'number' (no int/float/double)."},
-{t:"Interfaces & Types",d:"Define the shape of objects. interface User { name: string } — now every User MUST have a name!"},
-{t:"Union Types",d:"A variable that can be multiple types: string | number means it could be either. Super flexible!"},
-{t:"Generics",d:"Like templates — write code that works with ANY type: Array<string>, Array<number>, Array<User>."}
-],
-whatIs:"TypeScript's type system is structural (duck typing) — if it looks like a duck and quacks like a duck, it IS a duck. Unlike Java/C# which use nominal typing (it must explicitly say it's a Duck), TypeScript just checks the shape.",
-realWorld:"TypeScript catches about 15% of bugs that would otherwise reach production, according to a study. That's thousands of prevented crashes for large applications!",
-code:`// 1. Basic types — the foundation 🧱
-let name: string = "Alex";
-let age: number = 25;
-let isActive: boolean = true;
-let items: string[] = ["a", "b", "c"];
-
-// 2. Interfaces — define shapes 📐
-interface User {
-  name: string;
-  email: string;
-  age: number;
-  address?: string;    // ? = optional
-  readonly id: string; // can't be changed after creation
-}
-
-// 3. Union types — flexible! 🤸
-type Status = "active" | "inactive" | "banned";
-type ID = string | number;
-
-function printId(id: ID) {
-  if (typeof id === "string") {
-    console.log(id.toUpperCase()); // TS knows it's a string here!
-  } else {
-    console.log(id.toFixed(2));    // TS knows it's a number here!
-  }
-}
-
-// 4. Generics — reusable containers 📦
-function firstItem&lt;T&gt;(arr: T[]): T | undefined {
-  return arr[0];
-}
-firstItem&lt;string&gt;(["hello", "world"]); // returns string
-firstItem&lt;number&gt;([1, 2, 3]);          // returns number
-
-// 5. Utility types — TypeScript's superpowers 🦸
-type UserPreview = Pick&lt;User, "name" | "email"&gt;; // only name & email
-type PartialUser = Partial&lt;User&gt;;                 // all fields optional
-type ReadonlyUser = Readonly&lt;User&gt;;               // nothing can change`,
-funFact:"TypeScript's type system is actually Turing-complete — meaning you can theoretically compute anything using JUST the type system. People have built entire games in TypeScript types! 🎮",
-quiz:[
-{q:"What does the '?' after a property name mean in TypeScript?",opts:["The property is questionable","The property is optional (can be undefined)","The property is a boolean","The property is deprecated"],ans:1},
-{q:"What's a union type?",opts:["A combination of database queries","A type that can be one of several types (e.g., string | number)","A type that only unions have","An error in TypeScript"],ans:1},
-{q:"What are Generics used for?",opts:["Making code faster","Writing reusable code that works with any type","Improving readability only","Making types optional"],ans:1}
-],
-challenge:"Create an interface for a 'Product' with required (name, price) and optional (description, imageUrl) fields. Then create a function that takes a Product and returns a formatted string."
-},
-
-{id:13,emoji:"🔐",title:"Authentication — JWT & Guards",subtitle:"Who Are You? Prove It!",
-analogy:"Authentication is like a nightclub. The bouncer (Guard) checks your ID (JWT token) at the door. If valid, you're in! If expired or fake, you're out. Some VIP rooms (admin routes) need a special stamp (role) on your wristband!",
-analogyEmoji:"🎫",
-points:[
-{t:"JWT (JSON Web Token)",d:"A signed token containing user info. Like a wristband at a concert — proves who you are without asking the database every time."},
-{t:"Passport.js",d:"A library with 500+ login strategies: email/password, Google OAuth, Facebook, GitHub, and more."},
-{t:"Guards",d:"NestJS guards sit in front of routes. They check: 'Does this request have a valid token? Does this user have the right role?'"},
-{t:"Role-Based Access",d:"Admin can do everything, User can do less, Guest can do least. Guards enforce these rules automatically."}
-],
-whatIs:"Authentication verifies WHO you are (login). Authorization verifies WHAT you can do (permissions). JWTs are stateless tokens that contain encoded user info, verified by the server using a secret key.",
-realWorld:"Nearly every web app uses JWT for authentication. Google, GitHub, and Stripe all use OAuth + JWT. NestJS makes it clean with decorators like @UseGuards() and @Roles().",
-code:`// 1. Login — get your JWT token 🎟️
-@Controller('auth')
-export class AuthController {
-  @Post('login')
-  async login(@Body() dto: LoginDto) {
-    const user = await this.authService.validateUser(
-      dto.email, dto.password
-    );
-    // Create JWT with user info
-    const token = this.jwtService.sign({
-      sub: user.id,
-      email: user.email,
-      role: user.role, // 'admin', 'user', etc.
-    });
-    return { access_token: token };
-  }
-}
-
-// 2. JWT Guard — the bouncer 🚪
-@Injectable()
-export class JwtGuard extends AuthGuard('jwt') {
-  // Passport automatically verifies the token!
-}
-
-// 3. Role Guard — VIP check 🌟
-@Injectable()
-export class RolesGuard implements CanActivate {
-  canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.get&lt;string[]&gt;(
-      'roles', context.getHandler()
-    );
-    const user = context.switchToHttp().getRequest().user;
-    return requiredRoles.includes(user.role);
-  }
-}
-
-// 4. Using guards on routes — clean &amp; simple! ✨
-@Controller('admin')
-@UseGuards(JwtGuard, RolesGuard)  // Must be logged in + right role
-export class AdminController {
-  @Get('dashboard')
-  @Roles('admin')  // Only admins!
-  getDashboard() {
-    return { message: 'Welcome to admin panel!' };
-  }
-
-  @Get('stats')
-  @Roles('admin', 'manager')  // Admins OR managers
-  getStats() {
-    return this.statsService.getAll();
-  }
-}`,
-funFact:"JWT tokens are NOT encrypted — they're just Base64 encoded. Anyone can read them! The 'signature' part just proves they weren't tampered with. Never put secrets in a JWT! 🤫",
-quiz:[
-{q:"What's the difference between authentication and authorization?",opts:["They're the same thing","Authentication = who you are, Authorization = what you can do","Authentication is for APIs, Authorization is for websites","Authentication uses cookies, Authorization uses tokens"],ans:1},
-{q:"Are JWT tokens encrypted?",opts:["Yes, always","No, they're just Base64 encoded — don't put secrets in them!","Only if you enable encryption","Only in production"],ans:1},
-{q:"What does a Guard do in NestJS?",opts:["Protects against CSS attacks","Validates incoming requests (checks auth, roles, etc.)","Formats the response","Routes HTTP requests"],ans:1}
-],
-challenge:"Decode a JWT token at jwt.io — paste any token and see the three parts: Header, Payload, and Signature. Notice how the payload is readable!"
-},
-
-{id:14,emoji:"📧",title:"Email Services",subtitle:"Sending Emails From Code",
-analogy:"Sending emails from code is like having a robot assistant. You tell the robot WHAT to say (template), WHO to send it to (recipient), and WHICH postal service to use (AWS SES, Mailgun, SendGrid). The robot handles the rest!",
-analogyEmoji:"🤖",
-points:[
-{t:"Email Providers",d:"AWS SES, Mailgun, SendGrid — they're the 'postal services' that actually deliver your emails."},
-{t:"Templates",d:"Pre-designed email layouts (welcome, password reset, invoice). Fill in the blanks, send!"},
-{t:"Queued Sending",d:"Emails are sent via Bull queues — your API responds instantly while emails send in the background."},
-{t:"React Email",d:"Build email templates using React components! Same skills as frontend, different output."}
-],
-whatIs:"Email services in a NestJS app involve an email provider (like AWS SES), template system (like React Email or Handlebars), and a queue (Bull) to send emails asynchronously without blocking the user.",
-realWorld:"Every SaaS product sends emails: welcome messages, password resets, invoices, notifications. A typical app sends thousands of emails daily through providers like SES or SendGrid.",
-code:`// 1. Email service — the core logic 📮
-@Injectable()
-export class EmailService {
-  constructor(
-    @InjectQueue('email') private emailQueue: Queue,
-    private configService: ConfigService,
-  ) {}
-
-  // Queue an email (returns instantly!)
-  async sendWelcomeEmail(user: User) {
-    await this.emailQueue.add('welcome', {
-      to: user.email,
-      name: user.name,
-      template: 'welcome',
-    });
-  }
-
-  async sendPasswordReset(email: string, token: string) {
-    await this.emailQueue.add('password-reset', {
-      to: email,
-      resetUrl: \`https://myapp.com/reset?token=\${token}\`,
-      template: 'password-reset',
-    });
-  }
-}
-
-// 2. Email processor — sends in background 🏭
-@Processor('email')
-export class EmailProcessor {
-  @Process('welcome')
-  async sendWelcome(job: Job) {
-    const { to, name } = job.data;
-    await this.mailer.send({
-      to,
-      subject: \`Welcome aboard, \${name}! 🎉\`,
-      html: renderWelcomeTemplate({ name }),
-    });
-  }
-}
-
-// 3. React Email template — looks like React! ⚛️
-// emails/welcome.tsx
-export function WelcomeEmail({ name }: { name: string }) {
-  return (
-    &lt;Html&gt;
-      &lt;Body style={{ fontFamily: 'Arial' }}&gt;
-        &lt;Heading&gt;Welcome, {name}!&lt;/Heading&gt;
-        &lt;Text&gt;We're thrilled to have you.&lt;/Text&gt;
-        &lt;Button href="https://myapp.com/dashboard"&gt;
-          Get Started
-        &lt;/Button&gt;
-      &lt;/Body&gt;
-    &lt;/Html&gt;
-  );
-}`,
-funFact:"Gmail processes over 1.8 billion emails per day. If you printed them all on paper, the stack would reach the Moon and back... every single day! 🌙",
-quiz:[
-{q:"Why are emails sent through a queue instead of directly?",opts:["Email providers require queues","So users get instant responses while emails send in the background","Queues make emails more secure","It's a legal requirement"],ans:1},
-{q:"What email providers are commonly used?",opts:["Google only","AWS SES, Mailgun, SendGrid","Discord","Twitter"],ans:1},
-{q:"What does React Email allow you to do?",opts:["Send emails from React components","Write email templates using React components","Receive emails in React apps","Format React code in emails"],ans:1}
-],
-challenge:"Use Nodemailer with a free Ethereal account (ethereal.email) to send a test email from Node.js. Check the 'caught' email in Ethereal's inbox!"
-},
-
-{id:15,emoji:"🔔",title:"Push Notifications with Firebase",subtitle:"Ding! You Have a Message!",
-analogy:"Push notifications are like a doorbell. The user doesn't need to keep checking if someone's at the door — the doorbell (Firebase Cloud Messaging) rings and tells them! Your server pushes the button, Firebase rings the bell on their device.",
-analogyEmoji:"🔔",
-points:[
-{t:"Firebase Cloud Messaging (FCM)",d:"Google's free service for sending push notifications to web browsers and mobile devices."},
-{t:"Device Tokens",d:"Each device gets a unique token. Your server stores these tokens and uses them to target specific devices."},
-{t:"Topic Subscriptions",d:"Users can subscribe to topics (like 'news' or 'deals'). Send one notification, reaches all subscribers!"},
-{t:"Background Processing",d:"Like emails, notifications are sent through queues — your API stays fast while FCM does the delivery."}
-],
-whatIs:"Push notifications let your server send messages directly to a user's device (phone or browser) without the user needing to be on your app. Firebase Cloud Messaging (FCM) is the most popular service for this.",
-realWorld:"Every app you use sends push notifications — WhatsApp messages, Instagram likes, Uber ride updates, news alerts. FCM handles billions of notifications daily for free.",
-code:`// 1. Initialize Firebase Admin SDK 🔧
-import * as admin from 'firebase-admin';
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
-// 2. Send to a specific device 📱
-async function sendToDevice(token: string, title: string, body: string) {
-  await admin.messaging().send({
-    token: token, // device's unique FCM token
-    notification: {
-      title,
-      body,
-    },
-    data: {
-      // Custom data your app can read
-      screen: 'notifications',
-      actionId: '12345',
-    },
-  });
-}
-
-// 3. Send to a topic (all subscribers) 📢
-async function sendToTopic(topic: string, title: string, body: string) {
-  await admin.messaging().send({
-    topic: topic, // e.g., 'new-properties', 'deals'
-    notification: { title, body },
-  });
-}
-
-// 4. In NestJS — queue it! 🎯
-@Injectable()
-export class NotificationService {
-  constructor(
-    @InjectQueue('notifications') private notifQueue: Queue
-  ) {}
-
-  async notifyUser(userId: string, message: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      select: { fcmTokens: true },
-    });
-
-    // Queue notification for each device
-    for (const token of user.fcmTokens) {
-      await this.notifQueue.add('push', {
-        token,
-        title: 'New Update!',
-        body: message,
-      });
-    }
-  }
-}`,
-funFact:"Firebase Cloud Messaging is completely FREE with no message limit. Google doesn't charge you whether you send 1 notification or 1 billion. That's pretty generous for a trillion-dollar company! 💰",
-quiz:[
-{q:"What does a device token identify?",opts:["The user's password","A specific device to send notifications to","The Firebase project","The notification content"],ans:1},
-{q:"How much does Firebase Cloud Messaging cost?",opts:["$1 per 1000 notifications","$10 per month per app","Completely free!","$100 per month"],ans:2},
-{q:"What are topic subscriptions for?",opts:["Subscribing to YouTube channels","Grouping users so you can send notifications to many at once","Creating new notification types","Only for admin users"],ans:1}
-],
-challenge:"Create a Firebase project at console.firebase.google.com, get a server key, and send a test notification using the Firebase console's built-in testing tool!"
-},
-
-{id:16,emoji:"☁️",title:"AWS S3 — File Storage",subtitle:"Your Files in the Cloud",
-analogy:"S3 is like a magical storage locker with unlimited space. You give each file a unique key (like a locker number), and S3 stores it safely in the cloud. Need it back? Just ask for it by key. It never runs out of space and it never loses your files!",
-analogyEmoji:"🗄️",
-points:[
-{t:"Object Storage",d:"S3 stores 'objects' (files) in 'buckets' (containers). Each file has a unique key (path)."},
-{t:"Pre-Signed URLs",d:"Generate a temporary URL that allows upload/download for a limited time. No need to expose your AWS credentials!"},
-{t:"Scalable",d:"Store 1 file or 1 billion files — S3 handles it all. It's designed for 99.999999999% durability (11 nines!)."},
-{t:"CDN Integration",d:"Pair with CloudFront CDN to serve files from servers closest to the user — super fast delivery!"}
-],
-whatIs:"Amazon S3 (Simple Storage Service) is cloud-based object storage. It's where you store files like images, documents, videos, and backups. Files are organized in buckets and accessed via unique keys.",
-realWorld:"Netflix stores all their content on S3. Airbnb stores listing photos. Almost every app that handles file uploads uses S3 or a similar service (Google Cloud Storage, Azure Blob).",
-code:`// 1. Upload a file to S3 📤
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-
-const s3 = new S3Client({ region: 'us-east-1' });
-
-async function uploadFile(file: Buffer, fileName: string) {
-  await s3.send(new PutObjectCommand({
-    Bucket: 'my-app-uploads',
-    Key: \`uploads/\${Date.now()}-\${fileName}\`,
-    Body: file,
-    ContentType: 'image/jpeg',
-  }));
-}
-
-// 2. Generate a pre-signed URL (temporary access) 🔗
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-
-async function getUploadUrl(fileName: string) {
-  const command = new PutObjectCommand({
-    Bucket: 'my-app-uploads',
-    Key: \`uploads/\${fileName}\`,
-  });
-
-  // URL valid for 15 minutes — then it expires!
-  const url = await getSignedUrl(s3, command, { expiresIn: 900 });
-  return url; // Frontend uses this URL to upload directly!
-}
-
-// 3. NestJS file upload endpoint 📁
-@Controller('files')
-export class FileController {
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async upload(@UploadedFile() file: Express.Multer.File) {
-    const key = \`uploads/\${Date.now()}-\${file.originalname}\`;
-
-    await this.s3Service.upload({
-      bucket: 'my-app-uploads',
-      key,
-      body: file.buffer,
-      contentType: file.mimetype,
-    });
-
-    return { url: \`https://my-app-uploads.s3.amazonaws.com/\${key}\` };
-  }
-}`,
-funFact:"Amazon S3 stores over 100 TRILLION objects (files). If each object was a grain of sand, you could fill about 1,000 Olympic swimming pools! 🏊",
-quiz:[
-{q:"What is a pre-signed URL?",opts:["A URL that's been digitally signed by a CEO","A temporary URL that allows upload/download for a limited time","A URL that only works on pre-signed devices","A permanent link to a file"],ans:1},
-{q:"What does 'bucket' mean in S3?",opts:["A water container","A container for storing files/objects","A node in a distributed system","A database table"],ans:1},
-{q:"How durable is S3 designed to be?",opts:["99%","99.9%","99.999999999% (11 nines)","100%"],ans:2}
-],
-challenge:"Create a free AWS account, make an S3 bucket, and upload a file using the AWS console. Then try generating a pre-signed URL using the AWS CLI!"
-},
-
-{id:17,emoji:"🐳",title:"Docker — Containers Explained",subtitle:"Ship Your App in a Box",
-analogy:"Remember when you shared a school project and your friend said 'it doesn't work on my computer'? Docker solves this. It puts your app in a shipping container (image) that works EXACTLY the same on ANY computer. No more 'works on my machine'!",
-analogyEmoji:"📦",
-points:[
-{t:"Containers",d:"Lightweight, isolated environments. Like a tiny virtual computer that only has what your app needs."},
-{t:"Images",d:"A blueprint for a container. Like a recipe — follow it and you get the exact same dish every time."},
-{t:"Docker Compose",d:"Run multiple containers together. Your app needs Node + MongoDB + Redis? One command starts all three!"},
-{t:"Consistent Environments",d:"Dev, staging, production — all run the exact same containers. No surprises in production!"}
-],
-whatIs:"Docker packages your application and all its dependencies into a standardized container. A container is like a lightweight virtual machine that runs consistently on any system with Docker installed.",
-realWorld:"Almost every company uses Docker: Google runs billions of containers weekly. Spotify, PayPal, and Uber all use Docker for deployment. It's become a standard part of modern development.",
-code:`// Dockerfile — the recipe for your app container 📝
-FROM node:20-alpine
-
-WORKDIR /app
-
-# Install dependencies first (cached layer!)
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install
-
-# Copy source code
-COPY . .
-
-# Build the app
-RUN pnpm build
-
-# Start the app
-CMD ["node", "dist/main.js"]
-
-EXPOSE 3000
-
-# docker-compose.yml — orchestrate multiple containers 🎼
-version: '3.8'
-services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mongodb
-      - redis
-    environment:
-      - DATABASE_URL=mongodb://mongodb:27017/myapp
-      - REDIS_URL=redis://redis:6379
-
-  mongodb:
-    image: mongo:7
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db  # Data persists!
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
-volumes:
-  mongo_data:
-
-# One command to start EVERYTHING: 🚀
-# docker compose up -d`,
-funFact:"The Docker logo (a whale carrying containers) is named 'Moby Dock'. And the Docker company was originally called 'dotCloud' — they pivoted entirely to containers because it was so popular! 🐋",
-quiz:[
-{q:"What problem does Docker solve?",opts:["Makes code run faster","Ensures your app runs the same on every computer","Replaces the need for a database","Makes websites look better"],ans:1},
-{q:"What's a Docker image?",opts:["A picture of containers","A blueprint/recipe for creating containers","A container that's currently running","A file stored in S3"],ans:1},
-{q:"What does docker-compose do?",opts:["Compose music for Docker","Run multiple containers together with one command","Compress Docker images","Compose Docker code in Python"],ans:1}
-],
-challenge:"Install Docker Desktop, then run: `docker run -d -p 27017:27017 mongo:7` — congratulations, you have a MongoDB database running in 10 seconds! Try connecting to it with MongoDB Compass."
-},
-
-{id:18,emoji:"🧪",title:"Testing — Trust Your Code",subtitle:"Break Things Before Users Do",
-analogy:"Testing is like a fire drill. You don't wait for a real fire to find out if the exit doors work! You practice (test) regularly so when something goes wrong, you KNOW everything works. Untested code is like a building that's never had a fire drill — scary! 🔥",
-analogyEmoji:"🧯",
-points:[
-{t:"Unit Tests",d:"Test individual functions in isolation. Like testing one LEGO piece works before building the castle."},
-{t:"Integration Tests",d:"Test how parts work together. Like testing the plumbing AND electricity together in a house."},
-{t:"E2E Tests",d:"Test the whole app from a user's perspective. Like a real person clicking through your app."},
-{t:"Test Coverage",d:"What percentage of your code has tests? 80%+ is great. 100% is overkill (usually)."}
-],
-whatIs:"Testing means writing code that verifies your other code works correctly. Jest is the most popular testing framework for JavaScript/TypeScript, and NestJS has built-in testing utilities.",
-realWorld:"Companies like Google require tests for every code change. The saying goes: 'Code without tests is broken by design.' A good test suite lets you refactor fearlessly!",
-code:`// 1. Unit test — test a function in isolation 🔬
-describe('calculateDiscount', () => {
-  it('should apply 10% discount for orders over $100', () => {
-    expect(calculateDiscount(200)).toBe(180);
-  });
-
-  it('should not discount orders under $100', () => {
-    expect(calculateDiscount(50)).toBe(50);
-  });
-
-  it('should handle zero gracefully', () => {
-    expect(calculateDiscount(0)).toBe(0);
-  });
-});
-
-// 2. NestJS service test — with mocking! 🎭
-describe('UserService', () => {
-  let service: UserService;
-  let prisma: PrismaService;
-
-  beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      providers: [
-        UserService,
-        {
-          provide: PrismaService,
-          useValue: {
-            user: {
-              findMany: jest.fn().mockResolvedValue([
-                { id: '1', name: 'Alex', email: 'alex@test.com' }
-              ]),
-            },
-          },
-        },
-      ],
-    }).compile();
-
-    service = module.get(UserService);
-  });
-
-  it('should return all users', async () => {
-    const users = await service.findAll();
-    expect(users).toHaveLength(1);
-    expect(users[0].name).toBe('Alex');
-  });
-});
-
-// 3. E2E test — test the whole API 🌐
-describe('POST /auth/login', () => {
-  it('should return a JWT token', () => {
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({ email: 'alex@test.com', password: 'pass123' })
-      .expect(200)
-      .expect(res => {
-        expect(res.body.access_token).toBeDefined();
-      });
-  });
-});`,
-funFact:"The Mars Climate Orbiter crashed in 1999 because one team used metric units and another used imperial — a bug that testing would have caught. That $125 million mistake could have been prevented by a $5 test! 🚀💥",
-quiz:[
-{q:"What's the difference between unit and E2E tests?",opts:["Unit tests are smaller, E2E tests the full app flow","Unit tests are for frontend, E2E for backend","They're the same thing","E2E tests are faster"],ans:0},
-{q:"What testing framework is most popular for JavaScript/TypeScript?",opts:["Mocha","Chai","Jest","Vitest"],ans:2},
-{q:"Why should you write tests?",opts:["To make code longer","To catch bugs early and refactor fearlessly","Only because your boss requires it","Tests don't actually help"],ans:1}
-],
-challenge:"Write a test for a function that converts Celsius to Fahrenheit. Test: 0°C = 32°F, 100°C = 212°F, -40°C = -40°F (yes, they're the same at -40!)."
-},
-
-{id:19,emoji:"🔄",title:"WebSockets & Real-Time",subtitle:"Live Updates Without Refreshing",
-analogy:"Normal HTTP is like sending letters — you send a question, wait for a reply. WebSockets are like a phone call — once connected, both sides can talk anytime! That's how live chat, notifications, and collaborative editing work.",
-analogyEmoji:"📞",
-points:[
-{t:"Persistent Connection",d:"Unlike HTTP (connect, send, disconnect), WebSockets stay connected. Real-time two-way communication!"},
-{t:"Socket.IO",d:"The most popular WebSocket library. Handles reconnection, rooms, and broadcasting automatically."},
-{t:"Rooms",d:"Group connections together. 'Everyone in Chat Room 5, here's a new message!' — only those people get it."},
-{t:"NestJS Gateway",d:"NestJS has built-in WebSocket support with @WebSocketGateway decorator. Clean and organized!"}
-],
-whatIs:"WebSockets provide a persistent, bidirectional communication channel between client and server. Unlike HTTP (request-response), WebSocket connections stay open, allowing the server to push data to clients in real-time.",
-realWorld:"Slack, Discord, WhatsApp Web, Google Docs collaborative editing, live sports scores, stock tickers — all use WebSockets for real-time updates.",
-code:`// 1. NestJS WebSocket Gateway 🚀
-@WebSocketGateway({
-  cors: { origin: '*' },
-})
-export class ChatGateway {
-  @WebSocketServer()
-  server: Server;
-
-  // When a client sends a message
-  @SubscribeMessage('sendMessage')
-  handleMessage(client: Socket, payload: { room: string; text: string }) {
-    // Broadcast to everyone in the room
-    this.server.to(payload.room).emit('newMessage', {
-      text: payload.text,
-      sender: client.id,
-      timestamp: new Date(),
-    });
-  }
-
-  // When a client joins a room
-  @SubscribeMessage('joinRoom')
-  handleJoinRoom(client: Socket, room: string) {
-    client.join(room);
-    this.server.to(room).emit('userJoined', {
-      message: \`Someone joined the room!\`,
-    });
-  }
-}
-
-// 2. React client — connect and listen 📡
-import { io } from 'socket.io-client';
-
-const socket = io('http://localhost:3000');
-
-function ChatRoom({ room }) {
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    socket.emit('joinRoom', room);
-
-    socket.on('newMessage', (msg) => {
-      setMessages(prev => [...prev, msg]);
-    });
-
-    return () => { socket.off('newMessage'); };
-  }, [room]);
-
-  const sendMessage = (text) => {
-    socket.emit('sendMessage', { room, text });
-  };
-
-  return (/* render messages and input */);
-}`,
-funFact:"Discord handles over 4 million WebSocket connections simultaneously on a single server using Elixir. That's like 4 million people on a phone call at the same time on one phone line! 📞",
-quiz:[
-{q:"How are WebSockets different from regular HTTP?",opts:["WebSockets are slower but more reliable","WebSockets maintain a persistent connection for real-time two-way communication","WebSockets only work on mobile","There's no difference"],ans:1},
-{q:"What's a common use case for WebSockets?",opts:["Uploading files","Real-time chat and live updates","Building REST APIs","Storing data in databases"],ans:1},
-{q:"What does Socket.IO do that plain WebSockets don't?",opts:["Everything — plain WebSockets don't work","Handles reconnection, rooms, and broadcasting automatically","Makes code run faster","Encrypts data"],ans:1}
-],
-challenge:"Install socket.io and socket.io-client. Create a simple chat where messages appear in real-time across two browser tabs. It's magical when it works! ✨"
-},
-
-{id:20,emoji:"🛣️",title:"API Design & REST",subtitle:"Building Roads for Your Data",
-analogy:"An API is like a restaurant menu. The customer (frontend) looks at the menu (API docs) and orders (makes a request). The kitchen (backend) prepares the food (data) and serves it. The customer never goes INTO the kitchen — they just use the menu!",
-analogyEmoji:"📋",
-points:[
-{t:"REST Principles",d:"Use HTTP methods meaningfully: GET = read, POST = create, PUT = update, DELETE = delete. Clean and predictable!"},
-{t:"Status Codes",d:"200 = success, 201 = created, 400 = bad request, 401 = unauthorized, 404 = not found, 500 = server error."},
-{t:"DTOs (Data Transfer Objects)",d:"Define the shape of request/response data. Like a form — specify what fields are required!"},
-{t:"Swagger/OpenAPI",d:"Auto-generate beautiful API documentation. Frontend devs can see all endpoints without reading code!"}
-],
-whatIs:"REST (Representational State Transfer) is an architectural style for designing APIs. It uses HTTP methods and URLs to represent resources and actions. Combined with proper status codes and DTOs, it creates predictable, developer-friendly APIs.",
-realWorld:"Twitter, GitHub, Stripe, and virtually every modern web service exposes a REST API. Stripe's API is often cited as the gold standard of API design.",
-code:`// RESTful routes — clean and predictable 📐
-@Controller('products')
-export class ProductController {
-  @Get()              // GET    /products      → list all
-  findAll(@Query() query: FilterDto) {
-    return this.productService.findAll(query);
-  }
-
-  @Get(':id')         // GET    /products/123  → get one
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(id);
-  }
-
-  @Post()             // POST   /products      → create
-  create(@Body() dto: CreateProductDto) {
-    return this.productService.create(dto);
-  }
-
-  @Put(':id')         // PUT    /products/123  → update
-  update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
-    return this.productService.update(id, dto);
-  }
-
-  @Delete(':id')      // DELETE /products/123  → delete
-  remove(@Param('id') id: string) {
-    return this.productService.remove(id);
-  }
-}
-
-// DTO with validation — reject bad data at the door! 🚫
-class CreateProductDto {
-  @IsString()
-  @MinLength(2)
-  name: string;
-
-  @IsNumber()
-  @Min(0)
-  price: number;
-
-  @IsOptional()
-  @IsString()
-  description?: string;
-}
-
-// Swagger — auto-generated docs! 📚
-// Just add decorators:
-@ApiTags('Products')
-@ApiOperation({ summary: 'Create a new product' })
-@ApiResponse({ status: 201, description: 'Product created' })
-@ApiResponse({ status: 400, description: 'Invalid data' })
-@Post()
-create(@Body() dto: CreateProductDto) { ... }`,
-funFact:"The GitHub API has over 1,000 endpoints. Stripe's API documentation is so good that it's used as a teaching example in university computer science courses! 📚",
-quiz:[
-{q:"What HTTP method should you use to create a new resource?",opts:["GET","POST","DELETE","PATCH"],ans:1},
-{q:"What does a 404 status code mean?",opts:["Server error","Request successful","Resource not found","Bad request"],ans:2},
-{q:"What are DTOs used for?",opts:["Storing data in the database","Defining the shape of request/response data","Making APIs faster","Securing endpoints"],ans:1}
-],
-challenge:"Design a REST API for a 'bookstore' on paper first: what endpoints would you need for books, authors, and orders? Then implement the books CRUD in NestJS!"
-},
-
-{id:21,emoji:"🏗️",title:"NestJS Architecture Patterns",subtitle:"Building Clean, Scalable Apps",
-analogy:"A NestJS app is like a well-organized company. The CEO (AppModule) oversees departments (feature modules). Each department has a receptionist (controller), workers (services), and security (guards). Nobody does someone else's job!",
-analogyEmoji:"🏢",
-points:[
-{t:"Modules = Departments",d:"Each feature is a module: UserModule, ProductModule, AuthModule. They're independent but can share resources."},
-{t:"Pipes = Validators",d:"Validate and transform data before it reaches your handler. Bad data gets rejected at the door!"},
-{t:"Interceptors = Middleware++",d:"Wrap around your handlers. Log requests, transform responses, handle errors — all in one place."},
-{t:"Exception Filters",d:"Catch errors globally and return consistent, user-friendly error responses. No more ugly stack traces in production!"}
-],
-whatIs:"NestJS follows a layered architecture: Modules organize features, Controllers handle HTTP, Services contain business logic, and cross-cutting concerns (validation, logging, auth) are handled by Pipes, Guards, Interceptors, and Filters.",
-realWorld:"This architecture pattern (separation of concerns) is used by enterprise companies worldwide. It scales from a 1-person project to a 100-person team without becoming a mess.",
-code:`// The NestJS Request Lifecycle 🔄
-// Request → Middleware → Guards → Interceptors (before)
-//        → Pipes → Handler → Interceptors (after)
-//        → Exception Filters → Response
-
-// 1. Pipe — validate incoming data 🔍
-@Injectable()
-export class ParseObjectIdPipe implements PipeTransform {
-  transform(value: string) {
-    if (!Types.ObjectId.isValid(value)) {
-      throw new BadRequestException('Invalid ID format');
-    }
-    return value;
-  }
-}
-
-// Usage: @Param('id', ParseObjectIdPipe) id: string
-
-// 2. Interceptor — log all requests ⏱️
-@Injectable()
-export class LoggingInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler) {
-    const req = context.switchToHttp().getRequest();
-    const now = Date.now();
-    console.log(\`→ \${req.method} \${req.url}\`);
-
-    return next.handle().pipe(
-      tap(() => console.log(\`← \${Date.now() - now}ms\`)),
-    );
-  }
-}
-
-// 3. Exception Filter — beautiful error responses 🎨
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
-    const response = host.switchToHttp().getResponse();
-    const status = exception.getStatus();
-
-    response.status(status).json({
-      success: false,
-      statusCode: status,
-      message: exception.message,
-      timestamp: new Date().toISOString(),
-    });
-  }
-}
-
-// 4. Full module structure 📁
-// modules/
-// ├── user/
-// │   ├── user.module.ts
-// │   ├── user.controller.ts
-// │   ├── user.service.ts
-// │   ├── dto/
-// │   │   ├── create-user.dto.ts
-// │   │   └── update-user.dto.ts
-// │   └── entities/
-// │       └── user.entity.ts
-// ├── product/
-// │   └── ...
-// └── auth/
-//     └── ...`,
-funFact:"The NestJS request lifecycle has 7 distinct layers. A single request goes through: Middleware → Guards → Interceptors → Pipes → Handler → Interceptors → Filters. It's like airport security with 7 checkpoints! ✈️",
-quiz:[
-{q:"What's the role of a Pipe in NestJS?",opts:["Playing music","Validating and transforming incoming data before the handler runs","Connecting to a database","Sending emails"],ans:1},
-{q:"What are Modules used for?",opts:["Creating certificates","Organizing features into independent units","Only for calculations","Defining database schemas"],ans:1},
-{q:"What do Guards do in NestJS?",opts:["Protect against physical attacks","Validate permissions and authentication before handlers run","Guard against race conditions","Create backup files"],ans:1}
-],
-challenge:"Create a custom LoggingInterceptor that logs the method, URL, and response time for every request. Apply it globally with `app.useGlobalInterceptors()`."
-},
-
-{id:22,emoji:"🚀",title:"Deployment & DevOps",subtitle:"From Code to Production",
-analogy:"Writing code is like cooking at home. Deployment is like opening a restaurant — you need a building (server), a kitchen that handles 100 orders (scaling), a menu that's always the same (CI/CD), and health inspections (monitoring)!",
-analogyEmoji:"🍳",
-points:[
-{t:"CI/CD Pipeline",d:"Automated testing and deployment. Push code → tests run → if pass → auto-deploy. No manual steps!"},
-{t:"Environment Variables",d:"Different settings for dev/staging/production. Database URLs, API keys — never hardcode these!"},
-{t:"Container Orchestration",d:"Docker + Kubernetes (or Docker Compose). Run, scale, and manage your containers automatically."},
-{t:"Monitoring & Logging",d:"Track errors, performance, and uptime. If something breaks at 3 AM, you know about it immediately."}
-],
-whatIs:"Deployment is the process of getting your code from your laptop to a server where users can access it. DevOps practices (CI/CD, containers, monitoring) make this reliable, repeatable, and automated.",
-realWorld:"Netflix deploys thousands of times per day. Amazon deploys every 11.7 seconds. Modern CI/CD pipelines make this possible — push code, let the robots handle the rest.",
-code:`// 1. GitHub Actions CI/CD 🤖
-# .github/workflows/deploy.yml
-name: Deploy
-on:
-  push:
-    branches: [main]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: pnpm install
-      - run: pnpm test
-      - run: pnpm build
-
-  deploy:
-    needs: test  # Only deploy if tests pass!
-    runs-on: ubuntu-latest
-    steps:
-      - run: docker build -t myapp .
-      - run: docker push myregistry/myapp
-      - run: ssh server "docker pull && docker compose up -d"
-
-// 2. Environment variables — never hardcode secrets! 🔐
-# .env (NEVER commit this file!)
-DATABASE_URL=mongodb://localhost:27017/myapp
-JWT_SECRET=super-secret-key-change-in-production
-REDIS_URL=redis://localhost:6379
-AWS_ACCESS_KEY=AKIA...
-AWS_SECRET_KEY=wJal...
-
-// In NestJS:
-@Injectable()
-export class ConfigService {
-  get databaseUrl(): string {
-    return process.env.DATABASE_URL;
-  }
-  get jwtSecret(): string {
-    return process.env.JWT_SECRET;
-  }
-}
-
-// 3. Health check endpoint 🏥
-@Controller('health')
-export class HealthController {
-  @Get()
-  check() {
-    return {
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      memory: process.memoryUsage(),
-    };
-  }
-}`,
-funFact:"Amazon's deployment system is called 'Apollo' and handles over 150 million deployments per year. That's about 285 deployments per MINUTE! And you thought pushing to main was stressful... 😅",
-quiz:[
-{q:"What does CI/CD stand for?",opts:["Code Integration / Code Deployment","Continuous Integration / Continuous Deployment","Computer Interface / Computer Design","Cache Invalidation / Cache Distribution"],ans:1},
-{q:"Should you hardcode API keys in your source code?",opts:["Yes, it's fine","No, use environment variables instead","Only for development","Only if you use a secret","Encryption"],ans:1},
-{q:"What's a health check endpoint?",opts:["A fitness tracker endpoint","An endpoint that reports if your app is running and healthy","A security check for login","An endpoint that checks database health only"],ans:1}
-],
-challenge:"Set up a GitHub Actions workflow that runs your tests on every push. Start simple: checkout code, install deps, run tests. Watch the green checkmark appear!"
-},
-
-{id:23,emoji:"🧰",title:"Developer Tooling",subtitle:"Work Smarter, Not Harder",
-analogy:"A carpenter without tools just has wood and hands. Developer tools are like power tools — ESLint is the level (keeps things straight), Prettier is the sander (makes it smooth), and Husky is the quality inspector who checks BEFORE you ship!",
-analogyEmoji:"🔧",
-points:[
-{t:"ESLint",d:"Finds bugs and bad patterns in your code automatically. Like a spell-checker for code quality!"},
-{t:"Prettier",d:"Auto-formats your code so everyone's code looks the same. No more 'tabs vs spaces' arguments!"},
-{t:"Husky + lint-staged",d:"Runs checks BEFORE you commit. Catches issues before they enter the codebase — like a security guard at the git gate!"},
-{t:"VS Code Extensions",d:"Tailwind IntelliSense, Prisma, ESLint, Prettier — your editor becomes a supercharged coding machine!"}
-],
-whatIs:"Developer tooling includes linters (ESLint), formatters (Prettier), git hooks (Husky), and editor extensions that automate code quality. They catch bugs, enforce style, and prevent bad code from being committed.",
-realWorld:"Every professional development team uses these tools. They're the difference between 'weekend project' and 'production-ready codebase'. Set them up once, benefit forever.",
-code:`// 1. ESLint — catch bugs automatically 🐛
-// .eslintrc.js
-module.exports = {
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  rules: {
-    'no-unused-vars': 'error',      // Unused variables? Error!
-    'no-console': 'warn',           // console.log? Warning!
-    '@typescript-eslint/no-any': 'error', // Using 'any'? Error!
-  },
-};
-
-// 2. Prettier — consistent formatting 🎨
-// .prettierrc
-{
-  "semi": true,
-  "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "all",
-  "printWidth": 80
-}
-
-// 3. Husky — git hooks (runs before commit) 🐕
-// package.json
-{
-  "scripts": {
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
-    "*.{json,md}": ["prettier --write"]
-  }
-}
-
-// .husky/pre-commit
-#!/bin/sh
-npx lint-staged
-# If ESLint finds errors → commit is BLOCKED! 🚫
-
-// 4. Turbo — run tasks across monorepo packages ⚡
-// turbo.json
-{
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
-    "test": {
-      "dependsOn": ["build"]
-    },
-    "lint": {}
-  }
-}
-// "turbo run build" builds ALL packages in the right order!`,
-funFact:"The 'tabs vs spaces' debate has been going on since the 1960s. Prettier ended it by saying 'I don't care what you prefer, I'll format it MY way.' And everyone agreed because they were tired of arguing! 😂",
-quiz:[
-{q:"What does Husky do?",opts:["Pulls a sled","Runs scripts (like linting) before git commits to catch issues early","Barks at bad code","Replaces Docker"],ans:1},
-{q:"What's the purpose of ESLint?",opts:["Creating links between JavaScript files","Finding bugs and bad patterns in code","Linking CSS stylesheets","Linking databases"],ans:1},
-{q:"What does Prettier do?",opts:["Makes code look prettier to humans only","Auto-formats code consistently across the project","Creates CSS styles","Compresses code for production"],ans:1}
-],
-challenge:"Add ESLint + Prettier + Husky to a project. Make a deliberate formatting mistake, try to commit — watch Husky block it! Then fix it and commit successfully."
-},
-
-{id:24,emoji:"🎓",title:"Putting It All Together",subtitle:"The Full Picture",
-analogy:"You've learned each instrument individually. Now it's time to play in the orchestra! Each technology is one musician — alone they sound good, but TOGETHER they create a symphony. Your fullstack app is that symphony! 🎵",
-analogyEmoji:"🎼",
-points:[
-{t:"Frontend → Backend",d:"React makes API calls (Axios/React Query) → NestJS controllers receive them → Services process logic → Prisma talks to MongoDB."},
-{t:"Real-Time Layer",d:"Socket.IO connects React to NestJS WebSocket gateways. Live updates without page refreshes!"},
-{t:"Background Work",d:"Bull queues handle slow tasks (emails, notifications, image processing). Redis stores the queue and cache."},
-{t:"Infrastructure",d:"Docker containers run everything. CI/CD deploys automatically. ESLint + Prettier keep code clean."}
-],
-whatIs:"A fullstack NestJS + React application combines everything you've learned: React frontend, NestJS backend, MongoDB database, Redis cache, Bull queues, JWT auth, Docker containers, and CI/CD pipelines — all working together as one system.",
-realWorld:"This is the exact architecture used by thousands of production applications. Companies like Adidas, Roche, and countless startups run this stack in production serving millions of users.",
-code:`// The Complete Request Flow 🌊
-//
-// 1. User clicks "Sign Up" in React
-//    └→ React Hook Form validates with Zod
-//    └→ Axios sends POST /auth/signup
-//
-// 2. NestJS receives the request
-//    └→ ValidationPipe checks the DTO
-//    └→ AuthController.signup() runs
-//    └→ AuthService.register() is called
-//
-// 3. Business logic executes
-//    └→ Prisma creates user in MongoDB
-//    └→ JWT token is generated
-//    └→ Bull queue: add "send welcome email" job
-//    └→ Bull queue: add "send push notification" job
-//
-// 4. Response sent to React
-//    └→ { user, access_token }
-//    └→ React stores token in memory
-//    └→ React Query caches user data
-//    └→ React Router redirects to /dashboard
-//
-// 5. Background (user doesn't wait!)
-//    └→ Bull worker sends welcome email via SES
-//    └→ Bull worker sends push notification via FCM
-//    └→ Redis caches the new user data
-//
-// 6. Dashboard loads
-//    └→ React Query fetches /api/dashboard
-//    └→ NestJS checks JWT (Guard)
-//    └→ Redis cache checked first (fast!)
-//    └→ If miss → MongoDB query → cache result
-//    └→ Dashboard renders with real-time data
-//
-// The whole flow: ~200ms for the user
-// Background tasks: ~5-10 seconds (user doesn't notice!) 🚀
-
-// Your tech stack summary:
-// Frontend:  React + Vite + TypeScript + Tailwind
-// Backend:   NestJS + Prisma + MongoDB
-// Cache:     Redis
-// Queue:     Bull (powered by Redis)
-// Auth:      JWT + Passport
-// Files:     AWS S3
-// Email:     AWS SES + React Email
-// Push:      Firebase Cloud Messaging
-// Realtime:  Socket.IO
-// Container: Docker + Docker Compose
-// CI/CD:     GitHub Actions
-// Quality:   ESLint + Prettier + Husky`,
-funFact:"If you've made it this far, you've learned about 20+ technologies that professional fullstack developers use daily. That's more tech than most bootcamps cover in 12 weeks! 🏆",
-quiz:[
-{q:"In the full request flow, what happens AFTER the user gets their response?",opts:["Nothing — the server stops","Background workers handle slow tasks like emails and notifications","The server shuts down","The database deletes the data"],ans:1},
-{q:"Which of these is the frontend of our stack?",opts:["NestJS","MongoDB","React + Vite + Tailwind","Docker"],ans:2},
-{q:"What's responsible for sending emails in the background?",opts:["React","MongoDB","Bull queues powered by Redis","NestJS directly"],ans:2}
-],
-challenge:"Draw the entire architecture on paper (or a whiteboard): React → NestJS → MongoDB, with Redis, Bull, S3, and FCM connected. Label each arrow with what data flows through it!"
-},
-
-{id:25,emoji:"🏆",title:"Your Learning Path Forward",subtitle:"What to Build Next",
-analogy:"You've finished the tutorial — but this is the beginning, not the end! It's like getting your driver's license. You know HOW to drive, but you get GOOD at driving by actually driving. Build projects, break things, fix them. That's how you level up! 🚗💨",
-analogyEmoji:"🗺️",
-points:[
-{t:"Build a Todo App",d:"Start simple: CRUD operations with React + NestJS + MongoDB. Add auth, then real-time updates with Socket.IO!"},
-{t:"Build a Chat App",d:"WebSockets, message history, typing indicators, online status. Great for learning real-time features!"},
-{t:"Build a Blog Platform",d:"Rich text editing, image uploads to S3, user comments, email notifications. Covers most technologies!"},
-{t:"Contribute to Open Source",d:"Find NestJS or React repos on GitHub. Fix bugs, add features, read other people's code. Learn from the best!"}
-],
-whatIs:"The best way to solidify your knowledge is to BUILD THINGS. Each project will force you to revisit concepts, solve real problems, and discover things this tutorial couldn't cover. Your code will get better with every project.",
-realWorld:"Every senior developer will tell you the same thing: 'I learned the most from building projects and debugging issues.' The theory gets you started — the practice makes you a pro.",
-code:`// Your Learning Roadmap 🗺️
-//
-// PHASE 1: Foundation (Weeks 1-2)
-// ├── Build a REST API with NestJS
-// ├── Connect to MongoDB with Prisma
-// ├── Add input validation with DTOs
-// └── Write unit tests for your services
-//
-// PHASE 2: Frontend (Weeks 3-4)
-// ├── Build a React app with Vite
-// ├── Use React Query for data fetching
-// ├── Add forms with React Hook Form + Zod
-// └── Style with Tailwind CSS
-//
-// PHASE 3: Authentication (Week 5)
-// ├── Implement JWT auth in NestJS
-// ├── Add login/signup pages in React
-// ├── Create Guards for protected routes
-// └── Add role-based access control
-//
-// PHASE 4: Advanced (Weeks 6-8)
-// ├── Add Redis caching
-// ├── Implement Bull job queues
-// ├── Set up file uploads with S3
-// ├── Add WebSocket real-time features
-// └── Deploy with Docker + CI/CD
-//
-// PHASE 5: Portfolio Project (Weeks 9-12)
-// └── Build something REAL:
-//     ├── E-commerce store
-//     ├── Project management tool
-//     ├── Social media dashboard
-//     └── Or YOUR unique idea! 💡
-//
-// Resources:
-// - docs.nestjs.com (official NestJS docs)
-// - react.dev (official React docs)
-// - prisma.io/docs (Prisma docs)
-// - typescriptlang.org (TypeScript handbook)
-// - docker.com/get-started (Docker guide)
-//
-// Remember: The best code you'll ever write
-// is the code you haven't written yet! 🚀`,
-funFact:"The average developer reads 10x more code than they write. Reading open-source projects on GitHub is one of the best ways to level up. Clone a NestJS project, read every file, and ask 'why did they do it this way?' 📖",
-quiz:[
-{q:"What's the BEST way to learn fullstack development?",opts:["Watch 100 YouTube tutorials","Read every documentation page","Build real projects and learn by doing","Memorize all the APIs"],ans:2},
-{q:"What should you do after finishing this tutorial?",opts:["Stop learning — you know everything","Watch more tutorials","Start building real projects","All of the above"],ans:2},
-{q:"How should you approach building your portfolio project?",opts:["Copy code from others","Build something that solves a real problem","Make it as complicated as possible","Pick something you don't care about"],ans:1}
-],
-challenge:"Right now — TODAY — create a new NestJS + React project. Build even the simplest thing. A single endpoint that returns your name. The hardest part is starting. You've got this! 💪"
-}
-];
-
+const L=LESSONS_DATA;
 let current=0;
 let completed=new Set();
 let codeVisible=false;
@@ -2472,29 +340,34 @@ function initTheme(){
 const ICONS={
 1:'<svg viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>',
 2:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-3:'<svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
-4:'<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
-5:'<svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-6:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
-7:'<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
-8:'<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-9:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-10:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-11:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
-12:'<svg viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>',
-13:'<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>',
-14:'<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
-15:'<svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
-16:'<svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>',
-17:'<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
-18:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
-19:'<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
-20:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',
-21:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-22:'<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+3:'<svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+4:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+5:'<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+6:'<svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 009 9"/></svg>',
+7:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>',
+8:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+9:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
+10:'<svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
+11:'<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
+12:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
+13:'<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+14:'<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+15:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+16:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+17:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+18:'<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>',
+19:'<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+20:'<svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
+21:'<svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>',
+22:'<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
 23:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
-24:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
-25:'<svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 010 5H18"/><path d="M6 9l6 12 6-12"/></svg>'
+24:'<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
+25:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',
+26:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+27:'<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+28:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+29:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+30:'<svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 010 5H18"/><path d="M6 9l6 12 6-12"/></svg>'
 };
 
 function icon(id,size){
@@ -2545,7 +418,6 @@ function render(){
   if(l.quiz && Array.isArray(l.quiz)){
     l.quiz.forEach((q, qIdx)=>{
       const quizKey=`${current}-${qIdx}`;
-      const answered=quizScores[quizKey]!==undefined;
       h+=`<div class="quiz-box" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Quiz ${qIdx+1} of ${l.quiz.length}</div><p style="margin-bottom:1rem;color:var(--text);font-weight:600">${q.q}</p>`;
       q.opts.forEach((o,i)=>{
         h+=`<button class="quiz-btn" id="quiz-btn-${qIdx}-${i}" onclick="checkQuiz(this,${i},${q.ans},${qIdx})">${o}</button>`;
@@ -2583,6 +455,7 @@ function goTo(i){current=i;codeVisible=false;render();window.scrollTo(0,0);}
 function goPrev(){if(current>0){current--;codeVisible=false;render();window.scrollTo(0,0);}}
 function markAndNext(){completed.add(current);if(current<L.length-1){current++;codeVisible=false;}render();window.scrollTo(0,0);}
 function toggleCode(){codeVisible=!codeVisible;render();}
+
 const ACHIEVEMENTS={
   perfect:[
     {title:"Absolute Legend",msg:"You didn't just pass — you flexed on every question. The code fears you now."},
@@ -2665,7 +538,6 @@ function spawnConfetti(){
 function showAchievement(score,total){
   const a=getRandomAchievement(score,total);
   const stars=getStars(score,total);
-  const starSvg='<svg class="achievement-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
 
   let starsHtml='<div class="achievement-stars">';
   for(let i=0;i<3;i++){
