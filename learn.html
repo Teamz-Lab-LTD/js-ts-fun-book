@@ -9,17 +9,17 @@
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow">
 <meta name="google" content="notranslate">
-<link rel="canonical" href="https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book">
-<link rel="alternate" hreflang="en" href="https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book">
-<link rel="alternate" hreflang="x-default" href="https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book">
+<link rel="canonical" href="https://learn.teamzlab.com/learn.html?course=js-ts-fun-book">
+<link rel="alternate" hreflang="en" href="https://learn.teamzlab.com/learn.html?course=js-ts-fun-book">
+<link rel="alternate" hreflang="x-default" href="https://learn.teamzlab.com/learn.html?course=js-ts-fun-book">
 
 <!-- Open Graph / Social Media -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Learn TypeScript, NestJS & React Free — 36 Interactive Lessons">
 <meta property="og:description" content="Master fullstack development with 36 free interactive lessons, quizzes, and real code examples. From zero to production-ready. Start now.">
-<meta property="og:url" content="https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book">
+<meta property="og:url" content="https://learn.teamzlab.com/learn.html?course=js-ts-fun-book">
 <meta property="og:site_name" content="The JS & TS Fun Book">
-<meta property="og:image" content="https://teamz-lab-ltd.github.io/teamz-lab-learning/og-image.png">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
@@ -28,7 +28,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Learn TypeScript, NestJS & React Free — 36 Interactive Lessons">
 <meta name="twitter:description" content="Master fullstack development with 36 free lessons, quizzes, and real code. From zero to production-ready.">
-<meta name="twitter:image" content="https://teamz-lab-ltd.github.io/teamz-lab-learning/og-image.png">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
 
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956" crossorigin="anonymous"></script>
@@ -219,6 +219,22 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 .btn--hire:hover { background:rgba(217,254,6,0.12); color:var(--accent); box-shadow:0 0 12px rgba(217,254,6,0.35); }
 .nav-link { color:var(--text-muted); text-decoration:none; font-size:0.85rem; font-weight:500; transition:color 0.2s; }
 .nav-link:hover { color:var(--accent); }
+/* Build CTA banner */
+.build-cta { display:flex; align-items:center; gap:1rem; background:linear-gradient(135deg,rgba(217,254,6,0.06),rgba(217,254,6,0.02)); border:1px solid rgba(217,254,6,0.2); border-radius:12px; padding:1rem 1.2rem; margin:1.5rem 0; }
+.build-cta__icon { flex-shrink:0; color:var(--accent); }
+.build-cta__text { flex:1; font-size:0.85rem; line-height:1.5; }
+.build-cta__text strong { display:block; color:var(--text); font-size:0.9rem; margin-bottom:0.15rem; }
+.build-cta__text span { color:var(--text-muted); font-size:0.8rem; }
+.build-cta__btn { flex-shrink:0; padding:0.5rem 1.2rem; background:var(--accent); color:var(--accent-text); font-weight:700; font-size:0.8rem; border-radius:8px; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; white-space:nowrap; }
+.build-cta__btn:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(217,254,6,0.3); }
+@media(max-width:600px){ .build-cta { flex-direction:column; text-align:center; } .build-cta__icon { display:none; } }
+/* Scroll nudge toast */
+.nudge-toast { position:fixed; bottom:-80px; left:50%; transform:translateX(-50%); background:var(--surface); border:1px solid rgba(217,254,6,0.3); border-radius:12px; padding:0.6rem 1.2rem; display:flex; align-items:center; gap:0.8rem; box-shadow:0 8px 32px rgba(0,0,0,0.4); z-index:999; transition:bottom 0.4s ease; font-size:0.8rem; max-width:90vw; }
+.nudge-toast.show { bottom:1.5rem; }
+.nudge-toast__text { color:var(--text-muted); }
+.nudge-toast__text strong { color:var(--text); }
+.nudge-toast__btn { padding:0.35rem 0.8rem; background:var(--accent); color:var(--accent-text); font-weight:700; font-size:0.75rem; border-radius:6px; text-decoration:none; white-space:nowrap; }
+.nudge-toast__close { background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0 0.2rem; }
 .teamz-cta { text-align:center; margin-bottom:1rem; }
 .teamz-cta__label { font-size:0.8rem; color:var(--text-muted); margin-bottom:0.6rem; }
 .teamz-cta__links { display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
@@ -767,13 +783,13 @@ body { top:0 !important; }
 <div style="margin-bottom:1.5rem;">
 <div style="font-size:1.1rem;font-weight:700;color:var(--heading);margin-bottom:0.5rem;">Share this with fellow developers!</div>
 <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
-<a href="https://twitter.com/intent/tweet?text=Just%20found%20this%20amazing%20FREE%20interactive%20tutorial%20to%20learn%20TypeScript%2C%20NestJS%20%26%20React!%2036%20lessons%20with%20quizzes%20and%20fun%20analogies.%20%F0%9F%94%A5&url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F&hashtags=TypeScript,NestJS,React,WebDev,LearnToCode" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
+<a href="https://twitter.com/intent/tweet?text=Just%20found%20this%20amazing%20FREE%20interactive%20tutorial%20to%20learn%20TypeScript%2C%20NestJS%20%26%20React!%2036%20lessons%20with%20quizzes%20and%20fun%20analogies.%20%F0%9F%94%A5&url=https%3A%2F%2Flearn.teamzlab.com&hashtags=TypeScript,NestJS,React,WebDev,LearnToCode" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg> Share on X
 </a>
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> Share on LinkedIn
 </a>
-<button onclick="navigator.clipboard.writeText('https://teamz-lab-ltd.github.io/teamz-lab-learning/');this.textContent='Copied!';setTimeout(()=>this.innerHTML='<svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot; ry=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1&quot;/></svg> Copy Link',2000)" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.85rem;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;font-family:'Poppins',sans-serif;">
+<button onclick="navigator.clipboard.writeText('https://learn.teamzlab.com/');this.textContent='Copied!';setTimeout(()=>this.innerHTML='<svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot; ry=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1&quot;/></svg> Copy Link',2000)" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.85rem;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;font-family:'Poppins',sans-serif;">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Link
 </button>
 </div>
@@ -1548,6 +1564,16 @@ function render(){
   // Ad slot: before navigation — end of lesson, high engagement
   h+=adSlot('before-nav');
 
+  // "Need It Built?" CTA — subtle lead gen for non-tech visitors
+  h+=`<div class="build-cta reveal">
+    <div class="build-cta__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+    <div class="build-cta__text">
+      <strong>Don't want to code it yourself?</strong>
+      <span>Teamz Lab builds apps, websites & AI integrations for businesses worldwide.</span>
+    </div>
+    <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="build-cta__btn">See Our Work</a>
+  </div>`;
+
   h+=`<div class="nav-btns">`;
   if(current>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
   h+=`<button class="btn btn-next" onclick="markAndNext()">${current<L.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
@@ -1775,7 +1801,7 @@ function showCertificate(){
             <div class="cert-date">${today} &bull; ID: ${certId}</div>
           </div>
           <div class="cert-actions">
-            <a class="cert-btn cert-btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F" target="_blank" rel="noopener">
+            <a class="cert-btn cert-btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
               ${s.certShare||'Share on LinkedIn'}
             </a>
@@ -1798,11 +1824,11 @@ function closeCert(){
 function shareCertTwitter(){
   const name=certName||'Someone';
   const text=encodeURIComponent(`I just completed all 36 lessons of The JS & TS Fun Book! 🎉 Learned TypeScript, NestJS, React & fullstack development.\n\nCheck it out (it's free!):`);
-  const url=encodeURIComponent('https://teamz-lab-ltd.github.io/teamz-lab-learning/');
+  const url=encodeURIComponent('https://learn.teamzlab.com/');
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=TypeScript,NestJS,WebDev,LearnToCode`,'_blank');
 }
 function copyCertLink(){
-  navigator.clipboard.writeText('https://teamz-lab-ltd.github.io/teamz-lab-learning/');
+  navigator.clipboard.writeText('https://learn.teamzlab.com/');
   const btn=event.target.closest('.cert-btn');
   if(btn){const orig=btn.innerHTML;btn.textContent='Copied!';setTimeout(()=>btn.innerHTML=orig,1500);}
 }
@@ -2385,6 +2411,31 @@ if(typeof COURSE_CONFIG!=='undefined'){
   document.title=COURSE_CONFIG.title+' — Free Interactive Lessons';
 }
 }); // end courseLoaded listener
+</script>
+
+<!-- Scroll-triggered nudge toast -->
+<div class="nudge-toast" id="nudge-toast">
+  <div class="nudge-toast__text"><strong>Need an app or website?</strong> Teamz Lab can build it for you.</div>
+  <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nudge-toast__btn">See Our Work</a>
+  <button class="nudge-toast__close" onclick="document.getElementById('nudge-toast').classList.remove('show');sessionStorage.setItem('nudgeDismissed','1')">&times;</button>
+</div>
+<script>
+(function(){
+  if(sessionStorage.getItem('nudgeDismissed')) return;
+  let shown=false;
+  window.addEventListener('scroll',function(){
+    if(shown) return;
+    const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight);
+    if(pct>0.55){
+      shown=true;
+      document.getElementById('nudge-toast').classList.add('show');
+      setTimeout(function(){
+        const el=document.getElementById('nudge-toast');
+        if(el) el.classList.remove('show');
+      },12000);
+    }
+  });
+})();
 </script>
 </body>
 </html>
