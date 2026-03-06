@@ -1561,13 +1561,11 @@ if(currentLang!=='en'){
   });
 }
 render();
-// Trigger Google Translate on page load if non-English language was saved
+// On page load: if non-English was saved, lazy-load Google Translate
 if(currentLang!=='en'){
-  const gtInterval=setInterval(()=>{
-    const sel=document.querySelector('.goog-te-combo');
-    if(sel){clearInterval(gtInterval);sel.value=currentLang;sel.dispatchEvent(new Event('change'));}
-  },500);
-  setTimeout(()=>clearInterval(gtInterval),10000);
+  document.documentElement.classList.remove('notranslate');
+  document.documentElement.removeAttribute('translate');
+  loadGoogleTranslate(()=>triggerGT(currentLang));
 }
 </script>
 </body>
