@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="notranslate" translate="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
 <meta name="keywords" content="learn typescript 2026, typescript tutorial free, nestjs tutorial 2026, react tutorial free, fullstack development course, learn to code free, javascript typescript tutorial, backend development roadmap, web development 2026, typescript for beginners, nestjs for beginners, coding course free, typescript quiz, nestjs guide, fullstack roadmap 2026, learn react 2026, mongodb tutorial, docker tutorial, REST API tutorial, node.js backend, typescript course online free, web dev roadmap, programming tutorial beginners, developer tools 2026">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow">
+<meta name="google" content="notranslate">
 <link rel="canonical" href="https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html">
 <link rel="alternate" hreflang="en" href="https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html">
 <link rel="alternate" hreflang="x-default" href="https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html">
@@ -581,14 +582,8 @@ body { top:0 !important; }
 
 <div id="cert-container"></div>
 
-<!-- Google Translate (hidden, controlled programmatically) -->
+<!-- Google Translate (loaded on demand, not auto) -->
 <div id="google_translate_element"></div>
-<script>
-function googleTranslateElementInit(){
-  new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ar,bn,es,fr,hi,id,pt',autoDisplay:false},'google_translate_element');
-}
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <!-- Lesson Data (separate file for easy maintenance) -->
 <script src="data.js"></script>
@@ -1210,6 +1205,25 @@ function resetPlayground(){
 function toggleLangDropdown(){
   document.getElementById('lang-dropdown').classList.toggle('open');
 }
+let gtLoaded=false;
+function loadGoogleTranslate(cb){
+  if(gtLoaded){if(cb)cb();return;}
+  window.googleTranslateElementInit=function(){
+    new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ar,bn,es,fr,hi,id,pt',autoDisplay:false},'google_translate_element');
+    gtLoaded=true;
+    if(cb)setTimeout(cb,500);
+  };
+  const s=document.createElement('script');
+  s.src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  document.body.appendChild(s);
+}
+function triggerGT(lang){
+  const sel=document.querySelector('.goog-te-combo');
+  if(sel){
+    if(lang==='en'){sel.value='';sel.dispatchEvent(new Event('change'));}
+    else{sel.value=lang;sel.dispatchEvent(new Event('change'));}
+  }
+}
 function setLang(lang){
   currentLang=lang;
   document.getElementById('current-lang').textContent=LANG_NAMES[lang]||'EN';
@@ -1218,14 +1232,21 @@ function setLang(lang){
     el.classList.toggle('active',el.textContent===LANG_FLAGS[lang]);
   });
   saveState();render();
-  // Trigger Google Translate for content translation
-  setTimeout(()=>{
-    const sel=document.querySelector('.goog-te-combo');
-    if(sel){
-      if(lang==='en'){sel.value='';sel.dispatchEvent(new Event('change'));}
-      else{sel.value=lang;sel.dispatchEvent(new Event('change'));}
+  if(lang==='en'){
+    // Restore original — remove Google Translate and allow notranslate
+    document.documentElement.classList.add('notranslate');
+    document.documentElement.setAttribute('translate','no');
+    triggerGT('en');
+  }else{
+    // Remove notranslate so Google Translate can work on content
+    document.documentElement.classList.remove('notranslate');
+    document.documentElement.removeAttribute('translate');
+    if(!gtLoaded){
+      loadGoogleTranslate(()=>triggerGT(lang));
+    }else{
+      setTimeout(()=>triggerGT(lang),200);
     }
-  },300);
+  }
 }
 document.addEventListener('click',function(e){
   if(!e.target.closest('.lang-selector')){
