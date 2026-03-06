@@ -563,7 +563,7 @@ body { top:0 !important; }
 <div style="margin-bottom:1.5rem;">
 <div style="font-size:1.1rem;font-weight:700;color:var(--heading);margin-bottom:0.5rem;">Share this with fellow developers!</div>
 <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
-<a href="https://twitter.com/intent/tweet?text=Just%20found%20this%20amazing%20FREE%20interactive%20tutorial%20to%20learn%20TypeScript%2C%20NestJS%20%26%20React!%2030%20lessons%20with%20quizzes%20and%20fun%20analogies.%20%F0%9F%94%A5&url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F&hashtags=TypeScript,NestJS,React,WebDev,LearnToCode" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
+<a href="https://twitter.com/intent/tweet?text=Just%20found%20this%20amazing%20FREE%20interactive%20tutorial%20to%20learn%20TypeScript%2C%20NestJS%20%26%20React!%2036%20lessons%20with%20quizzes%20and%20fun%20analogies.%20%F0%9F%94%A5&url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F&hashtags=TypeScript,NestJS,React,WebDev,LearnToCode" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg> Share on X
 </a>
 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F" target="_blank" rel="noopener" style="padding:0.5rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem;">
@@ -576,7 +576,7 @@ body { top:0 !important; }
 </div>
 <p style="margin-bottom:0.5rem;">The JS & TS Fun Book — A free, open-source interactive tutorial by <a href="https://github.com/Teamz-Lab-LTD" target="_blank" rel="noopener" style="color:var(--heading);text-decoration:none;">Teamz Lab</a></p>
 <p style="font-size:0.75rem;">Learn TypeScript, NestJS, React, MongoDB, Prisma, Docker, JWT Authentication, Redis, WebSockets & more — all in one place.</p>
-<p style="font-size:0.7rem;margin-top:0.5rem;">36 interactive lessons &bull; 108 quizzes &bull; 250+ teaching points &bull; Real code examples &bull; Achievement system</p>
+<p style="font-size:0.7rem;margin-top:0.5rem;">36 interactive lessons &bull; 108 quizzes &bull; 310+ teaching points &bull; Real code examples &bull; Achievement system</p>
 </div>
 </footer>
 
@@ -989,9 +989,10 @@ function render(){
   if(flashcardMode){
     h+=`<div class="flashcards">`;
     l.points.forEach((p,i)=>{
-      h+=`<div class="flashcard" onclick="this.classList.toggle('flipped')">
+      h+=`<div class="flashcard" tabindex="0" role="button" aria-label="${escHtml(p.t)} — press Enter to flip" onclick="if(!event.target.closest('.ai-wrap'))this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();if(!event.target.closest('.ai-wrap'))this.classList.toggle('flipped')}">
         <div class="flashcard-face flashcard-front">
           <div class="point-title notranslate">${p.t}</div>
+          ${aiLinks(l.title,p.t)}
           <div class="flip-hint">Click to flip</div>
         </div>
         <div class="flashcard-face flashcard-back">
@@ -1002,8 +1003,10 @@ function render(){
     h+=`</div>`;
   }else{
     h+=`<div class="points">`;
-    l.points.forEach(p=>{
-      h+=`<div class="point reveal"><div class="point-title notranslate">${p.t}</div><div class="point-desc">${p.d}</div></div>`;
+    l.points.forEach((p,pi)=>{
+      const rKey=current+'-'+pi;
+      const reacted=pointReactions[rKey]||'';
+      h+=`<div class="point reveal"><div class="point-title notranslate">${p.t}</div><div class="point-desc">${p.d}</div><div class="point-reactions"><button class="point-react-btn ${reacted==='got'?'reacted':''}" onclick="event.stopPropagation();reactPoint(${current},${pi},'got')" title="Got it!">&#10003;</button><button class="point-react-btn ${reacted==='hard'?'reacted':''}" onclick="event.stopPropagation();reactPoint(${current},${pi},'hard')" title="This is hard">&#63;</button><button class="point-react-btn ${reacted==='love'?'reacted':''}" onclick="event.stopPropagation();reactPoint(${current},${pi},'love')" title="Love this!">&#9829;</button></div>${aiLinks(l.title,p.t)}</div>`;
     });
     h+=`</div>`;
   }
@@ -1069,6 +1072,16 @@ function render(){
     h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('challenge')}</h4><p>${l.challenge}</p></div>`;
   }
 
+  // Typing Challenge
+  if(l.code&&l.code.length<500){
+    if(typingActive){
+      const targetCode=l.code.trim();
+      h+=`<div class="typing-challenge reveal notranslate"><div class="typing-header"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M6 21h12"/><path d="M12 17v4"/></svg> Type the Code</span><div class="typing-stats" id="typing-stats">0 / ${targetCode.length} chars</div></div><div class="typing-progress"><div class="typing-progress-fill" id="typing-progress-fill" style="width:0%"></div></div><div class="typing-area"><div class="typing-target">${escHtml(targetCode)}</div><textarea class="typing-input" id="typing-input" oninput="checkTyping()" spellcheck="false" autocomplete="off" placeholder="Start typing..."></textarea></div><div class="typing-result" id="typing-result"></div></div>`;
+    }else{
+      h+=`<div style="text-align:center;margin:0.5rem 0" class="reveal"><button onclick="startTypingChallenge()" style="padding:0.4rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:0.8rem;color:var(--text-muted);font-family:'Poppins',sans-serif;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--heading)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M2 3h20v14H2z"/><path d="M6 21h12"/><path d="M12 17v4"/></svg> Try typing this code (+15 XP)</button></div>`;
+    }
+  }
+
   // Resources section (collapsible)
   if(l.resources&&l.resources.length>0){
     h+=`<div class="resources-section reveal">
@@ -1104,17 +1117,13 @@ function render(){
     </button>`;
   }
 
-  // Notes section
+  // Notes section (toggle — floating panel)
   const hasNote=lessonNotes[current]&&lessonNotes[current].trim();
   h+=`<div class="notes-section reveal">
-    <button class="notes-toggle ${hasNote?'has-notes':''}" onclick="toggleNotes()">
+    <button class="notes-toggle ${hasNote?'has-notes':''}" onclick="toggleNotesFloat()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
       ${t('myNotes')} ${hasNote?'('+t('notesSaved')+')':''}
     </button>
-    <div class="notes-area ${notesOpen?'open':''}" id="notes-area">
-      <textarea class="notes-textarea" id="notes-ta" placeholder="${t('notesPlaceholder')}" oninput="saveNote(${current})">${lessonNotes[current]||''}</textarea>
-      <div class="notes-saved" id="notes-saved">${t('autoSaved')}</div>
-    </div>
   </div>`;
 
   // Lesson rating
@@ -1136,18 +1145,26 @@ function render(){
   if(current>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
   h+=`<button class="btn btn-next" onclick="markAndNext()">${current<L.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
   h+=`</div>`;
-  h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span></div>`;
+  h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span><span><span class="kbd">N</span> ${t('myNotes')}</span><span><span class="kbd">T</span> Theme</span><span><span class="kbd">?</span> Help</span></div>`;
 
   document.getElementById('content').innerHTML=h;
   initScrollReveal();
+  // Update floating notes if open
+  if(notesOpen){
+    const editor=document.getElementById('notes-editor');
+    const lData=LESSONS_DATA[current];
+    document.getElementById('notes-float-lesson').textContent=t('myNotes')+' — '+lData.title;
+    if(editor) editor.innerHTML=lessonNotes[current]||'';
+    updateCharCount();
+  }
   // Re-trigger Google Translate for dynamically rendered content (only if loaded)
   if(currentLang!=='en'&&gtLoaded){
     setTimeout(()=>triggerGT(currentLang),400);
   }
 }
 
-function goTo(i){current=i;codeVisible=false;saveState();render();window.scrollTo(0,0);}
-function goPrev(){if(current>0){current--;codeVisible=false;saveState();render();window.scrollTo(0,0);}}
+function goTo(i){current=i;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);}
+function goPrev(){if(current>0){current--;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);}}
 function markAndNext(){
   const wasNew=!completed.has(current);
   completed.add(current);
@@ -1155,8 +1172,9 @@ function markAndNext(){
     totalXpEarned.add('lesson-'+current);
     addXp(20,'Lesson completed');
   }
-  if(current<L.length-1){current++;codeVisible=false;}
+  if(current<L.length-1){current++;codeVisible=false;typingActive=false;}
   saveState();render();window.scrollTo(0,0);
+  checkMilestones();
 }
 function toggleCode(){codeVisible=!codeVisible;render();}
 function toggleBookmark(idx){
@@ -1390,13 +1408,134 @@ function initScrollReveal(){
   els.forEach(el=>obs.observe(el));
 }
 
-// Keyboard navigation
-document.addEventListener('keydown',(e)=>{
-  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT') return;
-  if(e.key==='ArrowRight'&&!showDashboard){markAndNext();}
-  else if(e.key==='ArrowLeft'&&!showDashboard){goPrev();}
-  else if(e.key==='d'||e.key==='D'){showDashboard=!showDashboard;render();}
+// --- INTERACTIVE FEATURES ---
+
+// Toast notification system
+let toastTimer=null;
+function showToast(msg,icon){
+  let t=document.getElementById('fun-toast');
+  if(!t){t=document.createElement('div');t.id='fun-toast';t.className='toast';document.body.appendChild(t);}
+  t.innerHTML=(icon||'')+' '+msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Milestone celebrations
+function checkMilestones(){
+  const c=completed.size;
+  const milestones={1:'You completed your first lesson! The journey begins!',5:'5 lessons done! You are on fire!',10:'10 lessons! You are unstoppable!',15:'Halfway there! 15 lessons crushed!',20:'20 lessons! Almost a fullstack dev!',25:'25 lessons! You are a coding machine!',30:'30 lessons! Legend status unlocked!',36:'ALL LESSONS COMPLETE! You are a Fullstack Hero!'};
+  if(milestones[c]){
+    const key='milestone-'+c;
+    if(!localStorage.getItem(key)){
+      localStorage.setItem(key,'1');
+      setTimeout(()=>{showToast(milestones[c],'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>');if(c>=5)spawnConfetti();},800);
+    }
+  }
+}
+
+// Emoji reactions on point cards
+let pointReactions={};
+function loadReactions(){try{const r=localStorage.getItem('funbook_reactions');if(r)pointReactions=JSON.parse(r);}catch(e){}}
+function saveReactions(){try{localStorage.setItem('funbook_reactions',JSON.stringify(pointReactions));}catch(e){}}
+loadReactions();
+function reactPoint(lessonIdx,pointIdx,emoji){
+  const key=lessonIdx+'-'+pointIdx;
+  if(pointReactions[key]===emoji){delete pointReactions[key];}
+  else{pointReactions[key]=emoji;}
+  saveReactions();render();
+}
+
+// Typing Challenge
+let typingActive=false;
+function startTypingChallenge(){typingActive=true;render();setTimeout(()=>{const inp=document.getElementById('typing-input');if(inp)inp.focus();},100);}
+function checkTyping(){
+  const inp=document.getElementById('typing-input');
+  const l=LESSONS_DATA[current];
+  if(!inp||!l)return;
+  const target=l.code.trim();
+  const typed=inp.value;
+  const pct=Math.min(100,Math.round((typed.length/target.length)*100));
+  const fill=document.getElementById('typing-progress-fill');
+  if(fill)fill.style.width=pct+'%';
+  const stats=document.getElementById('typing-stats');
+  if(stats)stats.textContent=typed.length+' / '+target.length+' chars';
+  if(typed.trim()===target){
+    const result=document.getElementById('typing-result');
+    if(result){result.style.display='block';result.innerHTML='<span class="celebrate-pop">You typed it perfectly! +15 XP</span>';}
+    const xpKey='typing-'+current;
+    if(!totalXpEarned.has(xpKey)){totalXpEarned.add(xpKey);addXp(15,'Typing challenge');}
+    typingActive=false;
+  }
+}
+
+// Floating Notes system
+function toggleNotesFloat(){
+  const panel=document.getElementById('notes-float');
+  if(panel.classList.contains('open')){closeNotesFloat();return;}
+  panel.classList.add('open');notesOpen=true;
+  const editor=document.getElementById('notes-editor');
+  const lData=LESSONS_DATA[current];
+  document.getElementById('notes-float-lesson').textContent=t('myNotes')+' — '+lData.title;
+  editor.innerHTML=lessonNotes[current]||'';
+  updateCharCount();editor.focus();
+}
+function closeNotesFloat(){document.getElementById('notes-float').classList.remove('open');notesOpen=false;}
+function saveNoteFloat(){
+  const editor=document.getElementById('notes-editor');
+  if(editor){lessonNotes[current]=editor.innerHTML;saveState();updateCharCount();
+    const saved=document.getElementById('notes-saved-float');
+    if(saved){saved.classList.add('show');setTimeout(()=>saved.classList.remove('show'),1500);}
+  }
+}
+function updateCharCount(){
+  const editor=document.getElementById('notes-editor');
+  const cc=document.getElementById('notes-char-count');
+  if(editor&&cc) cc.textContent=(editor.innerText||'').length+' chars';
+}
+function noteCmd(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('notes-editor').focus();saveNoteFloat();}
+function noteInsertCode(){
+  const sel=window.getSelection();
+  if(sel.rangeCount){const range=sel.getRangeAt(0);const code=document.createElement('code');code.textContent=range.toString()||'code';range.deleteContents();range.insertNode(code);sel.collapseToEnd();}
+  saveNoteFloat();
+}
+// Draggable notes panel
+(function(){
+  const header=document.getElementById('notes-float-header');
+  const panel=document.getElementById('notes-float');
+  if(!header||!panel) return;
+  let isDragging=false,startX,startY,startLeft,startTop;
+  header.addEventListener('mousedown',function(e){
+    if(e.target.closest('.notes-float-actions')) return;
+    isDragging=true;const rect=panel.getBoundingClientRect();
+    startX=e.clientX;startY=e.clientY;startLeft=rect.left;startTop=rect.top;
+    panel.style.right='auto';panel.style.bottom='auto';
+    panel.style.left=startLeft+'px';panel.style.top=startTop+'px';
+    document.body.style.userSelect='none';
+  });
+  document.addEventListener('mousemove',function(e){if(!isDragging)return;panel.style.left=(startLeft+e.clientX-startX)+'px';panel.style.top=(startTop+e.clientY-startY)+'px';});
+  document.addEventListener('mouseup',function(){if(isDragging){isDragging=false;document.body.style.userSelect='';}});
+})();
+
+// Keyboard shortcuts
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+  if(e.key==='ArrowRight'){e.preventDefault();if(!showDashboard&&current<L.length-1)goTo(current+1);}
+  else if(e.key==='ArrowLeft'){e.preventDefault();if(!showDashboard&&current>0)goTo(current-1);}
+  else if(e.key==='d'||e.key==='D'){e.preventDefault();showDashboard=!showDashboard;render();}
+  else if(e.key==='n'||e.key==='N'){e.preventDefault();toggleNotesFloat();}
+  else if(e.key==='t'){e.preventDefault();toggleTheme();}
+  else if(e.key==='?'){showToast('Keys: &larr; &rarr; navigate, N notes, T theme, D dashboard, ? help');}
 });
+
+// Daily motivational tip
+function showDailyTip(){
+  const today=new Date().toDateString();
+  if(localStorage.getItem('funbook_tip_date')===today)return;
+  localStorage.setItem('funbook_tip_date',today);
+  const tips=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!'];
+  setTimeout(()=>{showToast(tips[Math.floor(Math.random()*tips.length)],'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>');},2000);
+}
 
 const ACHIEVEMENTS={
   perfect:[
@@ -1561,6 +1700,7 @@ if(currentLang!=='en'){
   });
 }
 render();
+showDailyTip();
 // On page load: if non-English was saved, lazy-load Google Translate
 if(currentLang!=='en'){
   document.documentElement.classList.remove('notranslate');
