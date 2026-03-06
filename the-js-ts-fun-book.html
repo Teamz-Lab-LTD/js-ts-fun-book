@@ -831,18 +831,13 @@ function render(){
     }
   }
 
-  // Interactive Code Playground
+  // Code Example — show as read-only block (most code is TypeScript/structural and can't be eval'd)
   h+=`<div class="playground reveal">
     <div class="playground-header">
       <div class="playground-title"><div class="playground-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div></div>
-      <div class="playground-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Playground</div>
+      <div class="playground-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Example</div>
     </div>
-    <textarea class="playground-editor" id="playground-code">${escHtml(l.code)}</textarea>
-    <div class="playground-actions">
-      <button class="playground-run" onclick="runPlayground()"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run</button>
-      <button class="playground-reset" onclick="resetPlayground()">Reset</button>
-    </div>
-    <div class="playground-output" id="playground-output">// Output will appear here...</div>
+    <div class="code-block" style="margin:0;border-radius:0;border:none">${escHtml(l.code)}</div>
   </div>`;
 
   if(l.challenge){
