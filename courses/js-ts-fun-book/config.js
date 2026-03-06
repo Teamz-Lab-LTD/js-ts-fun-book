@@ -14,9 +14,9 @@ const COURSE_CONFIG = {
   orgFull: 'Teamz Lab LTD',
 
   // URLs
-  siteUrl: 'https://teamz-lab-ltd.github.io/js-ts-fun-book/',
-  canonicalUrl: 'https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html',
-  ogImage: 'https://teamz-lab-ltd.github.io/js-ts-fun-book/og-image.png',
+  siteUrl: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/',
+  canonicalUrl: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book',
+  ogImage: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/og-image.png',
 
   // SEO
   description: 'Free interactive course: learn TypeScript, NestJS, React & fullstack development with {lessonCount} lessons, quizzes, and real-world code examples.',

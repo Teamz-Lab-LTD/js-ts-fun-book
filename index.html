@@ -1,10 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=the-js-ts-fun-book.html">
-  <title>Redirecting...</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teamz Lab Learning — Free Interactive Courses</title>
+<meta name="description" content="Free interactive courses by Teamz Lab. Learn programming with quizzes, real-world analogies, spaced repetition, and gamified lessons.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+<style>
+:root { --bg:#12151A; --surface:#1D1F25; --text:#FFFFFF; --text-muted:rgba(255,255,255,0.7); --border:rgba(255,255,255,0.15); --accent:#D9FE06; --accent-text:#12151A; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif; min-height:100vh; }
+.container { max-width:900px; margin:0 auto; padding:3rem 2rem; }
+.header { text-align:center; margin-bottom:3rem; }
+.logo { display:flex; justify-content:center; margin-bottom:1rem; }
+.header h1 { font-size:2.2rem; font-weight:800; margin-bottom:0.5rem; }
+.header h1 span { color:var(--accent); }
+.header p { color:var(--text-muted); font-size:1rem; max-width:500px; margin:0 auto; }
+.courses { display:grid; gap:1.5rem; }
+.course-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; transition:all 0.3s; cursor:pointer; text-decoration:none; color:inherit; display:block; position:relative; overflow:hidden; }
+.course-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
+.course-card:hover { transform:translateY(-4px); border-color:var(--accent); box-shadow:0 8px 40px rgba(217,254,6,0.1); }
+.course-card h2 { font-size:1.4rem; font-weight:700; margin-bottom:0.3rem; color:var(--accent); }
+.course-card .subtitle { color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; }
+.course-card .stats { display:flex; gap:1.5rem; flex-wrap:wrap; }
+.stat { text-align:center; }
+.stat-num { font-size:1.3rem; font-weight:800; color:var(--accent); display:block; }
+.stat-label { font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+.course-card .tags { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:1rem; }
+.tag { padding:0.15rem 0.5rem; background:rgba(217,254,6,0.1); border:1px solid rgba(217,254,6,0.2); border-radius:6px; font-size:0.68rem; color:var(--accent); }
+.badge { display:inline-block; padding:0.2rem 0.6rem; background:var(--accent); color:var(--accent-text); border-radius:6px; font-size:0.7rem; font-weight:700; margin-bottom:0.8rem; }
+.coming-soon { opacity:0.5; pointer-events:none; }
+.coming-soon .badge { background:var(--border); color:var(--text-muted); }
+.footer { text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); color:var(--text-muted); font-size:0.8rem; }
+.method-badges { display:flex; gap:0.3rem; flex-wrap:wrap; margin-top:0.8rem; }
+.method { padding:0.15rem 0.4rem; border-radius:4px; font-size:0.6rem; font-weight:600; }
+.method.sr { background:rgba(33,150,243,0.15); color:#2196F3; }
+.method.rp { background:rgba(76,175,80,0.15); color:#4CAF50; }
+.method.il { background:rgba(255,152,0,0.15); color:#ff9800; }
+.method.mc { background:rgba(233,30,99,0.15); color:#E91E63; }
+.method.dc { background:rgba(0,188,212,0.15); color:#00BCD4; }
+@media(max-width:600px) { .container { padding:2rem 1rem; } .course-card { padding:1.5rem; } .header h1 { font-size:1.6rem; } }
+</style>
 </head>
 <body>
-  <p>Redirecting to <a href="the-js-ts-fun-book.html">The JS & TS Fun Book</a>...</p>
+<div class="container">
+  <div class="header">
+    <div class="logo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D9FE06" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M8 7h6"/><path d="M8 11h8"/></svg></div>
+    <h1>Teamz Lab <span>Learning</span></h1>
+    <p>Free interactive courses with science-backed learning methods. Quizzes, spaced repetition, and real-world examples.</p>
+    <div class="method-badges" style="justify-content:center;margin-top:1rem">
+      <span class="method sr">Spaced Repetition</span>
+      <span class="method rp">Active Recall</span>
+      <span class="method il">Interleaving</span>
+      <span class="method mc">Metacognition</span>
+      <span class="method dc">Dual Coding</span>
+    </div>
+  </div>
+
+  <div class="courses">
+    <a class="course-card" href="learn.html?course=js-ts-fun-book">
+      <span class="badge">AVAILABLE NOW</span>
+      <h2>The JS & TS Fun Book</h2>
+      <div class="subtitle">From Zero to Fullstack Hero — TypeScript, NestJS & React</div>
+      <div class="stats">
+        <div class="stat"><span class="stat-num">36</span><span class="stat-label">Lessons</span></div>
+        <div class="stat"><span class="stat-num">108</span><span class="stat-label">Quizzes</span></div>
+        <div class="stat"><span class="stat-num">310+</span><span class="stat-label">Teaching Points</span></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label">Languages</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">TypeScript</span>
+        <span class="tag">NestJS</span>
+        <span class="tag">React</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Docker</span>
+        <span class="tag">JWT</span>
+        <span class="tag">Prisma</span>
+        <span class="tag">Redis</span>
+        <span class="tag">WebSockets</span>
+      </div>
+    </a>
+
+    <div class="course-card coming-soon">
+      <span class="badge">COMING SOON</span>
+      <h2>Python for Beginners</h2>
+      <div class="subtitle">Learn Python from scratch with fun projects and real-world examples</div>
+      <div class="stats">
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Lessons</span></div>
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Quizzes</span></div>
+      </div>
+    </div>
+
+    <div class="course-card coming-soon">
+      <span class="badge">COMING SOON</span>
+      <h2>System Design 101</h2>
+      <div class="subtitle">Learn distributed systems, scalability, and architecture patterns</div>
+      <div class="stats">
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Lessons</span></div>
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Quizzes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Built by <a href="https://github.com/Teamz-Lab-LTD" style="color:#D9FE06;text-decoration:none">Teamz Lab</a> — Open source, free forever</p>
+    <p style="margin-top:0.3rem;font-size:0.7rem">Powered by evidence-based learning science: Dunlosky et al. (2013), Bjork's Desirable Difficulties, Leitner Spaced Repetition</p>
+  </div>
+</div>
 </body>
 </html>
