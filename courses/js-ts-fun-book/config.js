@@ -5,7 +5,7 @@
 const COURSE_CONFIG = {
   // Course identity
   title: 'Free Full-Stack Playbook',
-  subtitle: 'From Idea to Deployed App — Learn to Build Real Apps Free | by Teamz Lab',
+  subtitle: 'From Idea to Deployed App — <strong>~10 min/lesson</strong> — Learn to Build Real Apps Free | by Teamz Lab',
   shortTitle: 'Full-Stack Playbook',
 
   // Organization

@@ -12,31 +12,44 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956" crossorigin="anonymous"></script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 <style>
-:root { --bg:#12151A; --surface:#1D1F25; --text:#FFFFFF; --text-muted:rgba(255,255,255,0.7); --border:rgba(255,255,255,0.15); --accent:#D9FE06; --accent-text:#12151A; }
+:root {
+  /* Colors */
+  --bg:#12151A; --surface:#1D1F25; --text:#FFFFFF; --text-muted:rgba(255,255,255,0.7);
+  --border:rgba(255,255,255,0.15); --accent:#D9FE06; --accent-text:#12151A; --accent-fg:#D9FE06;
+  /* Typography tokens */
+  --font:'Poppins',sans-serif; --font-accent:'Playfair Display',Georgia,serif; --font-code:'Fira Code',Consolas,monospace;
+  --text-6xl:96px; --text-5xl:80px; --text-4xl:72px; --text-3xl:64px; --text-2xl:56px; --text-xl:48px;
+  --text-h1:40px; --text-h2:32px; --text-h3:28px; --text-h4:24px; --text-h5:20px; --text-h6:18px;
+  --text-lg:16px; --text-md:14px; --text-sm:12px; --text-xs:10px;
+  --lh:140%;
+}
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif; min-height:100vh; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--text-lg); line-height:var(--lh); min-height:100vh; }
 .container { max-width:900px; margin:0 auto; padding:3rem 2rem; }
+/* Header */
 .header { text-align:center; margin-bottom:3rem; }
-.header h1 { font-size:2.2rem; font-weight:800; margin-bottom:0.5rem; }
+.header h1 { font-size:var(--text-h1); font-weight:700; margin-bottom:0.5rem; line-height:var(--lh); }
 .header h1 span { color:var(--accent); }
-.header p { color:var(--text-muted); font-size:1rem; max-width:500px; margin:0 auto; }
+.header p { color:var(--text-muted); font-size:var(--text-lg); line-height:var(--lh); max-width:500px; margin:0 auto; }
+/* Course cards */
 .courses { display:grid; gap:1.5rem; }
-.course-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; transition:all 0.3s; cursor:pointer; text-decoration:none; color:inherit; display:block; position:relative; overflow:hidden; }
+.course-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:2rem; transition:all 0.3s; cursor:pointer; text-decoration:none; color:inherit; display:block; position:relative; overflow:hidden; }
 .course-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
 .course-card:hover { transform:translateY(-4px); border-color:var(--accent); box-shadow:0 8px 40px rgba(217,254,6,0.1); }
-.course-card h2 { font-size:1.4rem; font-weight:700; margin-bottom:0.3rem; color:var(--accent); }
-.course-card .subtitle { color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; }
+.course-card h2 { font-size:var(--text-h4); font-weight:700; margin-bottom:0.3rem; color:var(--accent-fg); line-height:var(--lh); }
+.course-card .subtitle { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); margin-bottom:1rem; }
 .course-card .stats { display:flex; gap:1.5rem; flex-wrap:wrap; }
 .stat { text-align:center; }
-.stat-num { font-size:1.3rem; font-weight:800; color:var(--accent); display:block; }
-.stat-label { font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+.stat-num { font-size:var(--text-h5); font-weight:700; color:var(--accent-fg); display:block; line-height:var(--lh); }
+.stat-label { font-size:var(--text-xs); color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; line-height:var(--lh); }
 .course-card .tags { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:1rem; }
-.tag { padding:0.15rem 0.5rem; background:rgba(217,254,6,0.1); border:1px solid rgba(217,254,6,0.2); border-radius:6px; font-size:0.68rem; color:var(--accent); }
-.badge { display:inline-block; padding:0.2rem 0.6rem; background:var(--accent); color:var(--accent-text); border-radius:6px; font-size:0.7rem; font-weight:700; margin-bottom:0.8rem; }
+.tag { padding:0.15rem 0.5rem; background:rgba(217,254,6,0.1); border:1px solid rgba(217,254,6,0.2); border-radius:6px; font-size:var(--text-xs); color:var(--accent-fg); line-height:var(--lh); }
+.badge { display:inline-block; padding:0.2rem 0.6rem; background:var(--accent); color:var(--accent-text); border-radius:22px; font-size:var(--text-xs); font-weight:700; margin-bottom:0.8rem; line-height:var(--lh); }
 .coming-soon { opacity:0.5; pointer-events:none; }
 .coming-soon .badge { background:var(--border); color:var(--text-muted); }
-.footer { text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); color:var(--text-muted); font-size:0.8rem; }
-.font-accent { font-family:'Playfair Display',Georgia,serif; }
+/* Footer */
+.footer { text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); color:var(--text-muted); font-size:var(--text-sm); line-height:var(--lh); }
+.font-accent { font-family:var(--font-accent); }
 .teamz-logo { display:inline-flex; align-items:center; color:var(--text); text-decoration:none; }
 .teamz-logo:hover { color:var(--accent); }
 .teamz-logo svg { display:block; }
@@ -44,40 +57,55 @@ body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif
 .site-header { position:sticky; top:0; z-index:100; background:var(--bg); border-bottom:1px solid var(--border); padding:0.6rem 2rem; }
 .site-header__inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
 .site-header__nav { display:flex; align-items:center; gap:0.8rem; }
-.btn--hire { display:inline-block; padding:0.4rem 1rem; font-size:0.8rem; font-weight:600; font-family:'Poppins',sans-serif; background:transparent; color:var(--text); border:2px solid var(--accent); border-radius:8px; text-decoration:none; transition:box-shadow 0.2s, background 0.2s, color 0.2s; }
-.btn--hire:hover { background:rgba(217,254,6,0.12); color:var(--accent); box-shadow:0 0 12px rgba(217,254,6,0.35); }
-.nav-link { color:var(--text-muted); text-decoration:none; font-size:0.85rem; font-weight:500; transition:color 0.2s; }
-.nav-link:hover { color:var(--accent); }
+/* Ghost button — design system */
+.btn--hire { display:inline-block; padding:8px 16px; font-size:var(--text-md); font-weight:600; font-family:var(--font); background:transparent; color:var(--text); border:1px solid var(--text); border-radius:22px; text-decoration:none; height:36px; transition:box-shadow 0.2s, border-color 0.2s, color 0.2s; }
+.btn--hire:hover { border-color:var(--accent); color:var(--accent-fg); box-shadow:0 0 12px rgba(217,254,6,0.35); }
+.nav-link { color:var(--text-muted); text-decoration:none; font-size:var(--text-md); font-weight:500; transition:color 0.2s; line-height:var(--lh); }
+.nav-link:hover { color:var(--accent-fg); }
 /* Trust strip */
 .teamz-cta { text-align:center; margin-bottom:1rem; }
-.teamz-cta__label { font-size:0.8rem; color:var(--text-muted); margin-bottom:0.6rem; }
+.teamz-cta__label { font-size:var(--text-sm); color:var(--text-muted); margin-bottom:0.6rem; line-height:var(--lh); }
 .teamz-cta__links { display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
-.teamz-cta__link { color:var(--accent); text-decoration:none; font-weight:600; font-size:0.8rem; }
+.teamz-cta__link { color:var(--accent-fg); text-decoration:none; font-weight:600; font-size:var(--text-sm); line-height:var(--lh); }
 .teamz-cta__link:hover { text-decoration:underline; }
 .method-badges { display:flex; gap:0.3rem; flex-wrap:wrap; margin-top:0.8rem; }
-.method { padding:0.15rem 0.4rem; border-radius:4px; font-size:0.6rem; font-weight:600; }
-.method.sr, .method.rp, .method.il, .method.mc, .method.dc { background:rgba(217,254,6,0.1); color:var(--accent); border:1px solid rgba(217,254,6,0.2); }
+.method { padding:0.15rem 0.4rem; border-radius:22px; font-size:var(--text-xs); font-weight:600; line-height:var(--lh); }
+.method.sr, .method.rp, .method.il, .method.mc, .method.dc { background:rgba(217,254,6,0.1); color:var(--accent-fg); border:1px solid rgba(217,254,6,0.2); }
 /* For Business section */
 .biz-section { margin-top:3rem; padding-top:2.5rem; border-top:1px solid var(--border); }
-.biz-section h2 { font-size:1.4rem; font-weight:700; text-align:center; margin-bottom:0.3rem; }
-.biz-section h2 span { color:var(--accent); }
-.biz-section .biz-sub { text-align:center; color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto; }
+.biz-section h2 { font-size:var(--text-h4); font-weight:700; text-align:center; margin-bottom:0.3rem; line-height:var(--lh); }
+.biz-section h2 span { color:var(--accent-fg); }
+.biz-section .biz-sub { text-align:center; color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto; }
 .biz-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-bottom:1.5rem; }
 .biz-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.4rem; text-align:center; transition:all 0.3s; }
 .biz-card:hover { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 6px 24px rgba(217,254,6,0.08); }
 .biz-card__icon { width:40px; height:40px; margin:0 auto 0.8rem; color:var(--accent); }
-.biz-card h3 { font-size:1rem; font-weight:700; margin-bottom:0.3rem; }
-.biz-card p { color:var(--text-muted); font-size:0.8rem; line-height:1.5; }
+.biz-card h3 { font-size:var(--text-lg); font-weight:700; margin-bottom:0.3rem; line-height:var(--lh); }
+.biz-card p { color:var(--text-muted); font-size:var(--text-sm); line-height:var(--lh); }
+/* Primary button — design system */
 .biz-cta { text-align:center; margin:1.5rem 0; }
-.biz-cta a { display:inline-block; padding:0.7rem 2rem; background:var(--accent); color:var(--accent-text); font-weight:700; font-size:0.9rem; border-radius:10px; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; }
+.biz-cta a { display:inline-block; padding:12px 16px; height:44px; background:var(--accent); color:var(--accent-text); font-weight:700; font-size:var(--text-lg); font-family:var(--font); border-radius:22px; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; line-height:var(--lh); }
 .biz-cta a:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(217,254,6,0.3); }
 /* Share section */
 .share-section { margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--border); text-align:center; }
-.share-section h3 { font-size:1.1rem; font-weight:700; margin-bottom:1rem; }
+.share-section h3 { font-size:var(--text-h6); font-weight:700; margin-bottom:1rem; line-height:var(--lh); }
+/* Neutral buttons — design system */
 .share-btns { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; }
-.share-btns a, .share-btns button { padding:0.5rem 1rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); text-decoration:none; font-size:0.8rem; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; font-family:'Poppins',sans-serif; }
-.share-btns a:hover, .share-btns button:hover { border-color:var(--accent); color:var(--accent); }
-@media(max-width:600px) { .container { padding:2rem 1rem; } .course-card { padding:1.5rem; } .header h1 { font-size:1.6rem; } .biz-grid { grid-template-columns:1fr; } }
+.share-btns a, .share-btns button { padding:8px 16px; height:36px; background:var(--surface); border:1px solid var(--border); border-radius:22px; color:var(--text); text-decoration:none; font-size:var(--text-md); font-family:var(--font); cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; line-height:var(--lh); }
+.share-btns a:hover, .share-btns button:hover { border-color:var(--accent); color:var(--accent-fg); }
+/* Light mode — design system */
+@media(prefers-color-scheme:light) {
+  :root {
+    --bg:#F4F5F5; --surface:#FFFFFF; --text:#12151A; --text-muted:rgba(18,21,26,0.6);
+    --border:#DDDDDD; --accent:#D9FE06; --accent-text:#12151A; --accent-fg:#12151A;
+  }
+  .course-card:hover { box-shadow:0 8px 40px rgba(0,0,0,0.08); }
+  .biz-card:hover { box-shadow:0 6px 24px rgba(0,0,0,0.06); }
+  .btn--hire:hover { box-shadow:0 0 12px rgba(18,21,26,0.15); }
+  .tag, .method.sr, .method.rp, .method.il, .method.mc, .method.dc { background:rgba(18,21,26,0.06); border-color:rgba(18,21,26,0.15); }
+  .coming-soon .badge { background:#DDDDDD; color:rgba(18,21,26,0.5); }
+}
+@media(max-width:600px) { .container { padding:2rem 1rem; } .course-card { padding:1.5rem; } .header h1 { font-size:var(--text-h3); } .biz-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -163,7 +191,7 @@ body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif
 
   <!-- Promoted Tools / Sponsors -->
   <div id="promoted-home" style="display:none;background:#1D1F25;border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:1.2rem;margin-bottom:1.5rem">
-    <div style="font-size:0.6rem;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:0.6rem">Recommended Tools</div>
+    <div style="font-size:var(--text-xs);color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:0.6rem">Recommended Tools</div>
     <div id="promoted-home-items" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8rem"></div>
   </div>
 
@@ -216,7 +244,7 @@ body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif
         <a href="https://apps.apple.com/us/developer/teamz-lab-ltd/id1785282466" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">App Store</a>
       </nav>
     </div>
-    <p style="font-size:0.75rem">&copy; <script>document.write(new Date().getFullYear())</script> Teamz Lab LTD. All rights reserved. Free &amp; open source.</p>
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> Teamz Lab LTD. All rights reserved. Free &amp; open source.</p>
   </div>
 </div>
 </body>

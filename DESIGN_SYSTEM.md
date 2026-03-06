@@ -26,10 +26,10 @@ Extracted from Figma: Generic Pages for Teamz Apps (Shibly)
 | `--border` | `rgba(255,255,255,0.15)` | `#DDDDDD` |
 | `--accent` | `#D9FE06` | `#D9FE06` (same both modes) |
 | `--accent-text` | `#12151A` | `#12151A` (text ON accent bg) |
-| `--accent-fg` | `#D9FE06` | `#4a6800` (accent used AS text color) |
+| `--accent-fg` | `#D9FE06` | `#12151A` (accent used AS text color) |
 
 > **Key rule**: `--accent` (#D9FE06) is ALWAYS the neon green for button backgrounds and fills.
-> When accent is used as **text/link/icon color** on light backgrounds, use `--accent-fg` instead (darker green for readability).
+> When accent is used as **text/link/icon color** on light backgrounds, use `--accent-fg` instead (`--text` color for readability).
 
 ---
 
@@ -187,7 +187,7 @@ In dark mode, button types adapt:
 --accent-fg: #D9FE06;       /* Accent as text color -- visible on dark bg */
 
 /* Light mode */
---accent-fg: #4a6800;       /* Accent as text color -- darker for readability */
+--accent-fg: #12151A;       /* Accent as text color -- uses --text for readability */
 ```
 
 ### Where to use each:
