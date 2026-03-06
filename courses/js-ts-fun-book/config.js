@@ -4,9 +4,9 @@
 
 const COURSE_CONFIG = {
   // Course identity
-  title: 'The JS & TS Fun Book',
-  subtitle: 'From Zero to Fullstack Hero — NestJS + React Edition',
-  shortTitle: 'JS & TS Fun Book',
+  title: 'Free Full-Stack Playbook',
+  subtitle: 'From Idea to Deployed App — Learn to Build Real Apps Free | by Teamz Lab',
+  shortTitle: 'Full-Stack Playbook',
 
   // Organization
   org: 'Teamz Lab',
@@ -19,8 +19,8 @@ const COURSE_CONFIG = {
   ogImage: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/og-image.png',
 
   // SEO
-  description: 'Free interactive course: learn TypeScript, NestJS, React & fullstack development with {lessonCount} lessons, quizzes, and real-world code examples.',
-  keywords: 'learn typescript, nestjs tutorial, react tutorial, fullstack development course',
+  description: 'Free interactive playbook: learn to build real apps with TypeScript, React, NestJS, AI & more. {lessonCount} hands-on lessons, quizzes, code playground — no signup required.',
+  keywords: 'free full stack playbook, learn to build apps 2026, typescript tutorial free, nestjs tutorial, react tutorial, fullstack developer roadmap, learn to code free, free coding bootcamp no signup, AI app development, build real apps from scratch',
   topics: ['TypeScript', 'JavaScript', 'NestJS', 'React', 'MongoDB', 'Docker', 'REST API', 'JWT Authentication', 'Prisma ORM', 'Redis', 'WebSockets'],
   educationalLevel: 'Beginner to Intermediate',
 
@@ -111,8 +111,8 @@ const COURSE_CONFIG = {
 
   // Social sharing
   social: {
-    hashtags: 'TypeScript,NestJS,React,WebDev,LearnToCode',
-    tweetTemplate: 'Just found this amazing FREE interactive tutorial to learn TypeScript, NestJS & React! {lessonCount} lessons with quizzes and fun analogies.'
+    hashtags: 'FullStackPlaybook,TypeScript,NestJS,React,LearnToCode,WebDev2026',
+    tweetTemplate: 'Just found this FREE Full-Stack Playbook — {lessonCount} interactive lessons to build real apps with TypeScript, React & NestJS! Quizzes, code playground, and zero signup.'
   },
 
   // Footer stats (auto-calculated if not set)

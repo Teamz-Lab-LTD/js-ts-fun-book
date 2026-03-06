@@ -1,10 +1,10 @@
-# CLAUDE.md — The JS & TS Fun Book
+# CLAUDE.md — Free Full-Stack Playbook
 
 > This file gives any AI assistant (Claude, Cursor, Copilot, etc.) the full context to work on this project.
 
 ## Project Overview
 
-**The JS & TS Fun Book** is a single-page interactive HTML tutorial that teaches TypeScript, NestJS, React, and fullstack development through 40 gamified lessons — from "What is Programming?" to deploying a full-stack app. It is designed to be viral, SEO-friendly, and visually polished — matching the Teamz Lab brand.
+**Free Full-Stack Playbook** is a single-page interactive HTML tutorial that teaches TypeScript, NestJS, React, and fullstack development through 40 gamified lessons — from "What is Programming?" to deploying a full-stack app. It is designed to be viral, SEO-friendly, and visually polished — matching the Teamz Lab brand.
 
 - **Live URL**: `https://learn.teamzlab.com/learn.html?course=js-ts-fun-book`
 - **GitHub Pages**: `https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book`
@@ -201,6 +201,8 @@ Theme persisted separately in `localStorage` key `theme`.
 5. **No external dependencies** — Only Google Fonts (Poppins) and Firebase Analytics CDN. Everything else is self-contained.
 6. **SVG icons only, no emoji** — Icons use `stroke: currentColor` for theme compatibility.
 7. **RTL support** — Arabic language triggers `dir="rtl"` on `<html>`. Code blocks stay LTR.
+8. **NEVER use inline styles for UI elements** — Always use CSS classes with the design system's custom properties (`var(--text-sm)`, `var(--font)`, `var(--heading)`, `var(--accent)`, `var(--surface)`, `var(--border)`, `var(--lh)`, etc.). Create a named CSS class (e.g. `.trust-strip`) and style it in the `<style>` block. Inline `style=""` attributes are only acceptable for one-off layout tweaks (e.g. `style="display:none"`), never for typography, colors, spacing, or theming.
+9. **Typography rules** — Font family: `var(--font)` (Poppins). Font sizes: use `var(--text-xs)`, `var(--text-sm)`, `var(--text-md)`, `var(--text-lg)`, `var(--text-xl)`, `var(--text-2xl)`. Line height: `var(--lh)`. Font weights: 400 (body), 500 (medium), 600 (semibold), 700 (bold), 800 (extra-bold/headings). Colors: `var(--text)` for body, `var(--text-muted)` for secondary, `var(--heading)` for headings/emphasis, `var(--accent)` for links/CTAs.
 
 ---
 

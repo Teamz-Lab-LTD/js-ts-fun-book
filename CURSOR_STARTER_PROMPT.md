@@ -4,7 +4,7 @@
 
 ---
 
-I'm working on **The JS & TS Fun Book** — an interactive single-page HTML tutorial for learning TypeScript, NestJS, React, and fullstack development. Before doing anything, please read `CLAUDE.md` in the project root — it has the complete architecture, design system, data schema, function docs, and all project context.
+I'm working on **Free Full-Stack Playbook** — an interactive single-page HTML tutorial for learning TypeScript, NestJS, React, and fullstack development. Before doing anything, please read `CLAUDE.md` in the project root — it has the complete architecture, design system, data schema, function docs, and all project context.
 
 ## Quick Summary
 

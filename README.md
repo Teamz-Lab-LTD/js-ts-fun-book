@@ -1,4 +1,4 @@
-# The JS & TS Fun Book
+# Free Full-Stack Playbook
 
 An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **React**, and **fullstack development** through 40 fun lessons — from "What is Programming?" to deploying a full-stack app. Built by [Teamz Lab LTD](https://github.com/Teamz-Lab-LTD).
 
