@@ -497,6 +497,142 @@ body { top:0 !important; }
 .skill-node.current { background:rgba(33,150,243,0.15); border-color:#2196F3; color:#2196F3; }
 .skill-node:hover { transform:translateY(-1px); }
 
+/* Toast notification */
+.toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(100px); background:var(--surface); border:1px solid var(--accent); border-radius:12px; padding:0.8rem 1.5rem; color:var(--text); font-size:0.85rem; z-index:10001; opacity:0; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow:0 4px 20px rgba(0,0,0,0.3); display:flex; align-items:center; gap:0.5rem; max-width:90vw; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* Point card reactions */
+.point-reactions { display:flex; gap:0.3rem; margin-top:0.5rem; }
+.point-react-btn { background:var(--bg); border:1px solid var(--border); border-radius:6px; width:28px; height:28px; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; color:var(--text-muted); }
+.point-react-btn:hover { border-color:var(--accent); transform:scale(1.15); }
+.point-react-btn.reacted { background:rgba(217,254,6,0.15); border-color:var(--accent); color:var(--heading); }
+
+/* Typing Challenge */
+.typing-challenge { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:1.5rem 0; }
+.typing-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; font-size:0.85rem; color:var(--text-muted); }
+.typing-progress { height:6px; background:var(--bg); border-radius:6px; overflow:hidden; margin-bottom:0.8rem; }
+.typing-progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),#4CAF50); border-radius:6px; transition:width 0.3s; }
+.typing-area { position:relative; }
+.typing-target { background:var(--code-bg); padding:0.8rem; border-radius:8px; font-family:'Fira Code',monospace; font-size:0.8rem; color:var(--text-muted); white-space:pre-wrap; margin-bottom:0.5rem; opacity:0.6; max-height:150px; overflow-y:auto; }
+.typing-input { width:100%; min-height:100px; padding:0.8rem; background:var(--code-bg); border:1px solid var(--border); border-radius:8px; color:var(--code-text); font-family:'Fira Code',monospace; font-size:0.8rem; resize:vertical; outline:none; box-sizing:border-box; }
+.typing-input:focus { border-color:var(--accent); }
+.typing-result { display:none; text-align:center; padding:0.8rem; color:#4CAF50; font-weight:700; font-size:0.9rem; margin-top:0.5rem; }
+.celebrate-pop { animation:popIn 0.4s ease; display:inline-block; }
+
+/* Floating Notes Panel */
+.notes-float { position:fixed; bottom:1rem; right:1rem; width:380px; max-height:500px; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.3); z-index:9997; display:flex; flex-direction:column; transform:translateY(120%); transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); overflow:hidden; }
+.notes-float.open { transform:translateY(0); }
+.notes-float-header { display:flex; align-items:center; justify-content:space-between; padding:0.6rem 1rem; background:var(--bg); border-bottom:1px solid var(--border); cursor:move; user-select:none; }
+.notes-float-title { font-size:0.8rem; font-weight:600; color:var(--heading); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.notes-float-actions { display:flex; gap:0.3rem; }
+.notes-float-actions button { background:none; border:none; cursor:pointer; color:var(--text-muted); padding:0.2rem; font-size:0.9rem; transition:color 0.2s; }
+.notes-float-actions button:hover { color:var(--heading); }
+.notes-toolbar { display:flex; gap:0.2rem; padding:0.3rem 0.5rem; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.notes-toolbar button { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:0.15rem 0.4rem; cursor:pointer; font-size:0.72rem; color:var(--text-muted); transition:all 0.2s; font-family:'Poppins',sans-serif; }
+.notes-toolbar button:hover { border-color:var(--accent); color:var(--heading); }
+.notes-editor { flex:1; min-height:200px; max-height:350px; padding:0.8rem; font-family:'Poppins',sans-serif; font-size:0.85rem; color:var(--text); overflow-y:auto; outline:none; line-height:1.6; }
+.notes-editor code { background:var(--code-bg); padding:0.1rem 0.3rem; border-radius:3px; font-family:'Fira Code',monospace; font-size:0.8rem; }
+.notes-float-footer { display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0.8rem; border-top:1px solid var(--border); font-size:0.7rem; color:var(--text-muted); }
+.notes-saved-float { color:var(--accent); opacity:0; transition:opacity 0.3s; }
+.notes-saved-float.show { opacity:1; }
+
+@media(max-width:700px) {
+  .notes-float { width:calc(100vw - 1rem); right:0.5rem; bottom:0.5rem; }
+}
+
+/* Spaced Repetition Review Mode */
+.review-mode { max-width:900px; margin:2rem auto; padding:0 2rem; }
+.review-header { text-align:center; margin-bottom:1.5rem; }
+.review-header h2 { color:var(--heading); font-size:1.5rem; margin-bottom:0.3rem; }
+.review-header p { color:var(--text-muted); font-size:0.9rem; }
+.review-boxes { display:flex; gap:0.5rem; justify-content:center; margin:1.5rem 0; flex-wrap:wrap; }
+.review-box { padding:0.5rem 1rem; border-radius:8px; font-size:0.78rem; font-weight:600; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); cursor:pointer; transition:all 0.2s; text-align:center; min-width:80px; }
+.review-box:hover { border-color:var(--accent); }
+.review-box.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+.review-box-count { font-size:1.2rem; font-weight:800; display:block; color:var(--heading); }
+.review-box.active .review-box-count { color:var(--accent-text); }
+.review-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin:1rem 0; animation:flipIn 0.3s ease; }
+.review-card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+.review-card-lesson { font-size:0.72rem; color:var(--text-muted); padding:0.2rem 0.6rem; background:var(--bg); border-radius:4px; }
+.review-card-progress { font-size:0.8rem; color:var(--heading); font-weight:600; }
+.review-question { font-size:1rem; font-weight:600; color:var(--text); margin-bottom:1rem; line-height:1.6; }
+.review-opts { display:flex; flex-direction:column; gap:0.4rem; }
+.review-opt { display:block; width:100%; text-align:left; padding:0.6rem 1rem; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--text); cursor:pointer; font-size:0.85rem; transition:all 0.2s; font-family:'Poppins',sans-serif; }
+.review-opt:hover { border-color:var(--accent); }
+.review-opt.correct { background:var(--quiz-correct-bg); border-color:var(--quiz-correct-border); color:var(--quiz-correct-text); }
+.review-opt.wrong { background:var(--quiz-wrong-bg); border-color:var(--quiz-wrong-border); color:var(--quiz-wrong-text); }
+.review-empty { text-align:center; padding:3rem; color:var(--text-muted); }
+.review-empty h3 { color:var(--heading); margin-bottom:0.5rem; }
+.review-streak { display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.8rem; background:rgba(76,175,80,0.15); border-radius:8px; font-size:0.8rem; color:#4CAF50; font-weight:600; margin:0.5rem 0; }
+
+/* Mixed Quiz (Interleaved Practice) */
+.mixed-quiz { max-width:900px; margin:2rem auto; padding:0 2rem; }
+.mixed-quiz-header { text-align:center; margin-bottom:1.5rem; }
+.mixed-quiz-header h2 { color:var(--heading); font-size:1.5rem; }
+.mixed-quiz-progress { display:flex; gap:0.3rem; justify-content:center; margin:1rem 0; }
+.mixed-quiz-dot { width:12px; height:12px; border-radius:50%; border:2px solid var(--border); transition:all 0.3s; }
+.mixed-quiz-dot.correct { background:#4CAF50; border-color:#4CAF50; }
+.mixed-quiz-dot.wrong { background:#f44336; border-color:#f44336; }
+.mixed-quiz-dot.current { border-color:var(--accent); box-shadow:0 0 0 3px rgba(217,254,6,0.2); }
+.mixed-quiz-result { text-align:center; padding:2rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; margin:1.5rem 0; }
+.mixed-quiz-result h3 { color:var(--heading); font-size:1.3rem; margin-bottom:0.5rem; }
+.mixed-quiz-score { font-size:2.5rem; font-weight:800; color:var(--heading); }
+
+/* Self-Explanation Prompt */
+.self-explain { background:linear-gradient(135deg,rgba(33,150,243,0.08),rgba(76,175,80,0.08)); border:1px solid rgba(33,150,243,0.3); border-radius:12px; padding:1.2rem; margin:1.5rem 0; }
+.self-explain h4 { color:#2196F3; margin-bottom:0.5rem; font-size:0.95rem; display:flex; align-items:center; gap:0.5rem; }
+.self-explain p { color:var(--text-muted); font-size:0.85rem; margin-bottom:0.8rem; }
+.self-explain-textarea { width:100%; min-height:80px; padding:0.8rem; background:var(--code-bg); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'Poppins',sans-serif; font-size:0.85rem; resize:vertical; outline:none; box-sizing:border-box; transition:border-color 0.2s; }
+.self-explain-textarea:focus { border-color:#2196F3; }
+.self-explain-footer { display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem; }
+.self-explain-save { font-size:0.72rem; color:#4CAF50; opacity:0; transition:opacity 0.3s; }
+.self-explain-save.show { opacity:1; }
+.self-explain-xp { font-size:0.72rem; color:var(--text-muted); }
+
+/* Confidence Rating (Metacognition) */
+.confidence-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.8rem; padding:0.5rem 0; }
+.confidence-label { font-size:0.75rem; color:var(--text-muted); white-space:nowrap; }
+.confidence-btns { display:flex; gap:0.3rem; }
+.confidence-btn { padding:0.2rem 0.6rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--text-muted); cursor:pointer; font-size:0.7rem; font-weight:600; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.confidence-btn:hover { border-color:var(--accent); }
+.confidence-btn.selected { border-color:var(--accent); background:rgba(217,254,6,0.15); color:var(--heading); }
+.confidence-btn.low { border-color:#f44336; background:rgba(244,67,54,0.1); color:#f44336; }
+.confidence-btn.mid { border-color:#ff9800; background:rgba(255,152,0,0.1); color:#ff9800; }
+.confidence-btn.high { border-color:#4CAF50; background:rgba(76,175,80,0.1); color:#4CAF50; }
+
+/* Flashcard SRS difficulty buttons */
+.flashcard-difficulty { display:flex; gap:0.3rem; justify-content:center; margin-top:0.5rem; position:absolute; bottom:0.6rem; left:50%; transform:translateX(-50%); }
+.flashcard-diff-btn { padding:0.15rem 0.5rem; border-radius:4px; border:1px solid var(--border); background:var(--bg); font-size:0.65rem; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Poppins',sans-serif; }
+.flashcard-diff-btn.easy { color:#4CAF50; }
+.flashcard-diff-btn.hard { color:#f44336; }
+.flashcard-diff-btn:hover { transform:scale(1.1); }
+
+/* Elaborative Interrogation */
+.why-prompt { background:linear-gradient(135deg,rgba(156,39,176,0.08),rgba(233,30,99,0.08)); border:1px solid rgba(156,39,176,0.3); border-radius:12px; padding:1rem; margin:0.8rem 0; }
+.why-prompt h4 { color:#9C27B0; font-size:0.9rem; margin-bottom:0.4rem; display:flex; align-items:center; gap:0.4rem; }
+.why-prompt-q { color:var(--text); font-size:0.88rem; font-weight:500; margin-bottom:0.5rem; }
+.why-reveal-btn { padding:0.3rem 0.8rem; border:1px solid rgba(156,39,176,0.4); border-radius:6px; background:transparent; color:#9C27B0; cursor:pointer; font-size:0.78rem; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.why-reveal-btn:hover { background:rgba(156,39,176,0.1); }
+.why-answer { padding:0.6rem; background:rgba(156,39,176,0.05); border-radius:6px; margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted); line-height:1.6; display:none; }
+
+/* Learning method badges */
+.method-badges { display:flex; flex-wrap:wrap; gap:0.3rem; justify-content:center; margin:0.8rem 0; }
+.method-badge { padding:0.15rem 0.5rem; border-radius:12px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.method-badge.retrieval { background:rgba(76,175,80,0.15); color:#4CAF50; }
+.method-badge.spaced { background:rgba(33,150,243,0.15); color:#2196F3; }
+.method-badge.interleaved { background:rgba(255,152,0,0.15); color:#ff9800; }
+.method-badge.elaboration { background:rgba(156,39,176,0.15); color:#9C27B0; }
+.method-badge.dual-coding { background:rgba(0,188,212,0.15); color:#00BCD4; }
+.method-badge.metacognition { background:rgba(233,30,99,0.15); color:#E91E63; }
+
+/* Review/Mixed Quiz tab in nav */
+.tab.review-tab { border-color:rgba(33,150,243,0.4); color:#2196F3; }
+.tab.review-tab:hover { background:rgba(33,150,243,0.1); }
+.tab.review-tab.active { background:#2196F3; color:#fff; border-color:#2196F3; }
+.tab.mixed-tab { border-color:rgba(255,152,0,0.4); color:#ff9800; }
+.tab.mixed-tab:hover { background:rgba(255,152,0,0.1); }
+.tab.mixed-tab.active { background:#ff9800; color:#fff; border-color:#ff9800; }
+
 @media(max-width:700px) {
   .dashboard-grid { grid-template-columns:1fr; }
   .flashcards { grid-template-columns:1fr; }
@@ -508,6 +644,9 @@ body { top:0 !important; }
   .cert-name { font-size:1.5rem; }
   .cert-stats { gap:1rem; }
   .cert-actions { flex-direction:column; align-items:center; }
+  .review-boxes { gap:0.3rem; }
+  .review-box { min-width:60px; font-size:0.7rem; }
+  .confidence-bar { flex-wrap:wrap; }
 }
 </style>
 </head>
@@ -582,9 +721,33 @@ body { top:0 !important; }
 
 <div id="cert-container"></div>
 
+<!-- Floating Notes Panel -->
+<div class="notes-float" id="notes-float">
+  <div class="notes-float-header" id="notes-float-header">
+    <span class="notes-float-title" id="notes-float-lesson">My Notes</span>
+    <div class="notes-float-actions">
+      <button onclick="closeNotesFloat()" title="Close">&times;</button>
+    </div>
+  </div>
+  <div class="notes-toolbar">
+    <button onclick="noteCmd('bold')" title="Bold"><b>B</b></button>
+    <button onclick="noteCmd('italic')" title="Italic"><i>I</i></button>
+    <button onclick="noteCmd('underline')" title="Underline"><u>U</u></button>
+    <button onclick="noteInsertCode()" title="Code">&lt;/&gt;</button>
+    <button onclick="noteCmd('insertUnorderedList')" title="List">List</button>
+  </div>
+  <div class="notes-editor" id="notes-editor" contenteditable="true" oninput="saveNoteFloat()"></div>
+  <div class="notes-float-footer">
+    <span id="notes-char-count">0 chars</span>
+    <span class="notes-saved-float" id="notes-saved-float">Saved</span>
+  </div>
+</div>
+
 <!-- Google Translate (loaded on demand, not auto) -->
 <div id="google_translate_element"></div>
 
+<!-- Course Config (change this file to create a different course) -->
+<script src="config.js"></script>
 <!-- Lesson Data (separate file for easy maintenance) -->
 <script src="data.js"></script>
 
@@ -606,6 +769,14 @@ let eli5Mode=false;
 let walkthroughMode=false;
 let lessonNotes={}; // {lessonIndex: "note text"}
 let notesOpen=false;
+let showReview=false;
+let showMixedQuiz=false;
+let selfExplanations={}; // {lessonIndex: "text"}
+let confidenceRatings={}; // {"lessonIdx-quizIdx": "low"|"mid"|"high"}
+let srsCards={}; // {"lessonIdx-quizIdx": {box:0, lastReview:timestamp, nextReview:timestamp}}
+let flashcardDifficulty={}; // {"lessonIdx-pointIdx": "easy"|"hard"}
+let mixedQuizState={questions:[],current:0,answers:[],active:false};
+let reviewStreak=0;
 
 // Language system — UI translations
 const LANG_NAMES={en:'EN',bn:'BN',hi:'HI',es:'ES',ar:'AR',pt:'PT',id:'ID',fr:'FR'};
@@ -638,6 +809,11 @@ function loadState(){
       if(d.lang) currentLang=d.lang;
       if(d.certName) certName=d.certName;
       if(d.notes) lessonNotes=d.notes;
+      if(d.selfExplanations) selfExplanations=d.selfExplanations;
+      if(d.confidenceRatings) confidenceRatings=d.confidenceRatings;
+      if(d.srsCards) srsCards=d.srsCards;
+      if(d.flashcardDifficulty) flashcardDifficulty=d.flashcardDifficulty;
+      if(typeof d.reviewStreak==='number') reviewStreak=d.reviewStreak;
     }
   }catch(e){}
 }
@@ -646,7 +822,8 @@ function saveState(){
     localStorage.setItem('funbook_state',JSON.stringify({
       completed:[...completed],quizScores,bookmarks:[...bookmarks],
       ratings:lessonRatings,xp,xpEarned:[...totalXpEarned],current,
-      lang:currentLang,certName,notes:lessonNotes
+      lang:currentLang,certName,notes:lessonNotes,
+      selfExplanations,confidenceRatings,srsCards,flashcardDifficulty,reviewStreak
     }));
   }catch(e){}
 }
@@ -696,8 +873,8 @@ function getReadingTime(lesson){
   return Math.max(2,Math.ceil(words/200));
 }
 
-// Topic categories for dashboard (updated for 36 lessons)
-const TOPICS={
+// Topic categories — from config.js or fallback
+const TOPICS=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.topicMap)||{
   'Fundamentals':[1,2],'TypeScript':[3,4,5,6,7,8,9,10,22],'Frontend':[11,12,13],
   'API & REST':[14],'NestJS':[15,16,17],'Database':[18,19],'Config':[20],
   'Security':[21],'Caching & Jobs':[23,24],'Services':[25,26,27],
@@ -881,8 +1058,10 @@ function renderDashboard(){
   </div>`;
 }
 
-// Concept diagram for each lesson (36 lessons)
+// Concept diagram — from config.js or inline fallback
 function getConceptFlow(lesson){
+  const cfgFlows=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.conceptFlows)||{};
+  if(cfgFlows[lesson.id]) return cfgFlows[lesson.id];
   const flows={
     1:['JavaScript','+ Types','TypeScript','Safety'],
     2:['ESLint','Prettier','VSCode','Debug'],
@@ -925,7 +1104,15 @@ function getConceptFlow(lesson){
 }
 
 function render(){
-  if(showDashboard){
+  if(showReview){
+    document.getElementById('content').innerHTML=renderReviewMode();
+    document.getElementById('content').style.display='block';
+    document.getElementById('dashboard').style.display='none';
+  }else if(showMixedQuiz){
+    document.getElementById('content').innerHTML=renderMixedQuiz();
+    document.getElementById('content').style.display='block';
+    document.getElementById('dashboard').style.display='none';
+  }else if(showDashboard){
     document.getElementById('content').style.display='none';
     document.getElementById('dashboard').style.display='block';
     renderDashboard();
@@ -939,15 +1126,18 @@ function render(){
   document.getElementById('ptxt').textContent=completed.size+' / '+L.length+' '+t('lessonsCompleted')+' — '+pct+'%';
   updateXpBar();
 
-  let tabsHtml=`<div class="tab ${showDashboard?'active':''}" onclick="showDashboard=true;render()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> ${t('dashboard')}</div>`;
+  const dueCount=getDueReviewCards().length;
+  let tabsHtml=`<div class="tab ${showDashboard&&!showReview&&!showMixedQuiz?'active':''}" onclick="showDashboard=true;showReview=false;showMixedQuiz=false;render()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> ${t('dashboard')}</div>`;
+  tabsHtml+=`<div class="tab review-tab ${showReview?'active':''}" onclick="showReview=true;showDashboard=false;showMixedQuiz=false;render()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Review${dueCount>0?' ('+dueCount+')':''}</div>`;
+  tabsHtml+=`<div class="tab mixed-tab ${showMixedQuiz?'active':''}" onclick="startMixedQuiz()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15A9 9 0 115.64 5.64L1 10"/></svg> Mix</div>`;
   L.forEach((l,i)=>{
-    const cls=(!showDashboard&&i===current)?'active':completed.has(i)?'done':'';
+    const cls=(!showDashboard&&!showReview&&!showMixedQuiz&&i===current)?'active':completed.has(i)?'done':'';
     const bmk=bookmarks.has(i)?'<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-left:2px"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>':'';
-    tabsHtml+=`<div class="tab ${cls}" onclick="showDashboard=false;goTo(${i})">${icon(l.id,'14')} ${l.id}${bmk}</div>`;
+    tabsHtml+=`<div class="tab ${cls}" onclick="showDashboard=false;showReview=false;showMixedQuiz=false;goTo(${i})">${icon(l.id,'14')} ${l.id}${bmk}</div>`;
   });
   document.getElementById('tabs').innerHTML=tabsHtml;
 
-  if(showDashboard) return;
+  if(showDashboard||showReview||showMixedQuiz) return;
 
   const l=L[current];
   const readTime=getReadingTime(l);
@@ -962,6 +1152,13 @@ function render(){
     <div class="lesson-sub">${l.subtitle}</div>
     <div class="reading-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${readTime} min read</div>
     ${l.prereqs&&l.prereqs.length?`<div class="prereqs"><span style="font-size:0.72rem;color:var(--text-muted);margin-right:0.3rem">${t('prereqLabel')}:</span>${l.prereqs.map(pid=>{const pl=L.find(x=>x.id===pid);return pl?`<span class="prereq-chip ${completed.has(L.indexOf(pl))?'done':''}" onclick="showDashboard=false;goTo(${L.indexOf(pl)})">${pl.title}</span>`:'';}).join('')}</div>`:''}
+    <div class="method-badges" title="Evidence-based learning methods used in this lesson">
+      <span class="method-badge retrieval">Retrieval Practice</span>
+      <span class="method-badge dual-coding">Dual Coding</span>
+      <span class="method-badge elaboration">Elaboration</span>
+      <span class="method-badge metacognition">Metacognition</span>
+      ${completed.size>0?'<span class="method-badge spaced">Spaced Review</span>':''}
+    </div>
   </div>`;
 
   // Concept flow diagram
@@ -976,6 +1173,29 @@ function render(){
   h+=`<div class="analogy-box reveal"><h3 style="display:flex;align-items:center"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('thinkOfIt')}${aiLinks(l.title,'analogy explanation')}</h3><p>${l.analogy}</p>
   ${l.eli5?`<button class="eli5-toggle ${eli5Mode?'active':''}" onclick="toggleEli5()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('eli5')}</button>`:''}
   ${eli5Mode&&l.eli5?`<div class="eli5-box"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${t('eli5Label')}</h4><p>${l.eli5}</p></div>`:''}</div>`;
+
+  // Elaborative Interrogation — "Why?" prompt
+  {
+    const whyQ=l.whyQuestion||'Why is '+l.title+' important in real-world development? How does it connect to the concepts you\'ve already learned?';
+    const whyA=l.whyAnswer||l.realWorld+' Understanding this concept deeply helps you make better architectural decisions and write more maintainable code.';
+    h+=`<div class="why-prompt reveal">
+      <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Think Deeper <span class="method-badge elaboration" style="margin-left:0.5rem">Elaborative Interrogation</span></h4>
+      <div class="why-prompt-q">${whyQ}</div>
+      <button class="why-reveal-btn" onclick="const a=document.getElementById('why-answer-${current}');a.style.display=a.style.display==='block'?'none':'block'">Show Explanation</button>
+      <div class="why-answer" id="why-answer-${current}">${whyA}</div>
+    </div>`;
+  }
+
+  // Self-Explanation Prompt (Metacognition + Elaboration)
+  h+=`<div class="self-explain reveal">
+    <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Explain It Yourself (+10 XP)</h4>
+    <p>Research shows explaining concepts in your own words dramatically improves retention. Write a brief explanation below:</p>
+    <textarea class="self-explain-textarea" id="self-explain-ta" placeholder="In my own words, ${l.title} is about..." oninput="saveSelfExplanation(${current})">${selfExplanations[current]||''}</textarea>
+    <div class="self-explain-footer">
+      <span class="self-explain-save" id="self-explain-saved">${t('autoSaved')}</span>
+      <span class="self-explain-xp">${selfExplanations[current]&&selfExplanations[current].length>=20?'XP earned!':'Min 20 chars for XP'}</span>
+    </div>
+  </div>`;
 
   // Flashcard toggle
   h+=`<div style="display:flex;align-items:center;gap:0.5rem;margin:1.5rem 0 0">
@@ -997,6 +1217,10 @@ function render(){
         </div>
         <div class="flashcard-face flashcard-back">
           <p>${p.d}</p>
+          <div class="flashcard-difficulty">
+            <button class="flashcard-diff-btn easy" onclick="event.stopPropagation();rateFlashcard(${current},${i},'easy')">Easy</button>
+            <button class="flashcard-diff-btn hard" onclick="event.stopPropagation();rateFlashcard(${current},${i},'hard')">Hard</button>
+          </div>
         </div>
       </div>`;
     });
@@ -1024,7 +1248,12 @@ function render(){
     l.quiz.forEach((q, qIdx)=>{
       const quizKey=`${current}-${qIdx}`;
       const answered=quizScores[quizKey]!==undefined;
-      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('quiz')} ${qIdx+1} / ${l.quiz.length}</div><p style="margin-bottom:1rem;color:var(--text);font-weight:600">${q.q}</p>`;
+      const confKey=current+'-'+qIdx;
+      const conf=confidenceRatings[confKey]||'';
+      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('quiz')} ${qIdx+1} / ${l.quiz.length}</div><p style="margin-bottom:0.5rem;color:var(--text);font-weight:600">${q.q}</p>`;
+      if(!answered){
+        h+=`<div class="confidence-bar" id="quiz-confidence-${qIdx}"><span class="confidence-label">How confident?</span><div class="confidence-btns"><button class="confidence-btn ${conf==='low'?'selected low':''}" data-level="low" onclick="setConfidence(${current},${qIdx},'low')">Unsure</button><button class="confidence-btn ${conf==='mid'?'selected mid':''}" data-level="mid" onclick="setConfidence(${current},${qIdx},'mid')">Somewhat</button><button class="confidence-btn ${conf==='high'?'selected high':''}" data-level="high" onclick="setConfidence(${current},${qIdx},'high')">Very Sure</button></div></div>`;
+      }
       q.opts.forEach((o,i)=>{
         const isCorrect=answered&&i===q.ans;
         const isWrong=answered&&quizScores[quizKey]===false&&i!==q.ans;
@@ -1163,7 +1392,7 @@ function render(){
   }
 }
 
-function goTo(i){current=i;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);}
+function goTo(i){current=i;codeVisible=false;typingActive=false;showReview=false;showMixedQuiz=false;showDashboard=false;saveState();render();window.scrollTo(0,0);}
 function goPrev(){if(current>0){current--;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);}}
 function markAndNext(){
   const wasNew=!completed.has(current);
@@ -1525,15 +1754,215 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='d'||e.key==='D'){e.preventDefault();showDashboard=!showDashboard;render();}
   else if(e.key==='n'||e.key==='N'){e.preventDefault();toggleNotesFloat();}
   else if(e.key==='t'){e.preventDefault();toggleTheme();}
-  else if(e.key==='?'){showToast('Keys: &larr; &rarr; navigate, N notes, T theme, D dashboard, ? help');}
+  else if(e.key==='r'||e.key==='R'){e.preventDefault();showReview=!showReview;showMixedQuiz=false;showDashboard=false;render();}
+  else if(e.key==='?'){showToast('Keys: &larr; &rarr; navigate, N notes, T theme, D dashboard, R review, ? help');}
 });
+
+// --- LEARNING SCIENCE FEATURES ---
+
+// Spaced Repetition System (Leitner Boxes)
+function initSrsCard(lessonIdx,quizIdx){
+  const key=lessonIdx+'-'+quizIdx;
+  if(!srsCards[key]){
+    srsCards[key]={box:0,lastReview:0,nextReview:0};
+  }
+  return srsCards[key];
+}
+function getSrsIntervals(){
+  return (typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.srs&&COURSE_CONFIG.srs.intervals)||[0,1,3,7,14];
+}
+function promoteSrsCard(key){
+  const card=srsCards[key];
+  if(!card) return;
+  const intervals=getSrsIntervals();
+  card.box=Math.min(card.box+1,intervals.length-1);
+  card.lastReview=Date.now();
+  card.nextReview=Date.now()+intervals[card.box]*86400000;
+  saveState();
+}
+function demoteSrsCard(key){
+  const card=srsCards[key];
+  if(!card) return;
+  card.box=0;
+  card.lastReview=Date.now();
+  card.nextReview=Date.now();
+  saveState();
+}
+function getDueReviewCards(){
+  const now=Date.now();
+  const due=[];
+  Object.entries(srsCards).forEach(([key,card])=>{
+    if(card.nextReview<=now&&card.box<(getSrsIntervals().length-1)){
+      const [li,qi]=key.split('-').map(Number);
+      if(L[li]&&L[li].quiz&&L[li].quiz[qi]){
+        due.push({key,lessonIdx:li,quizIdx:qi,box:card.box,q:L[li].quiz[qi]});
+      }
+    }
+  });
+  due.sort((a,b)=>a.box-b.box);
+  const batch=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.srs&&COURSE_CONFIG.srs.reviewBatchSize)||10;
+  return due.slice(0,batch);
+}
+function renderReviewMode(){
+  const due=getDueReviewCards();
+  const intervals=getSrsIntervals();
+  const boxCounts=new Array(intervals.length).fill(0);
+  Object.values(srsCards).forEach(c=>{boxCounts[Math.min(c.box,intervals.length-1)]++;});
+  let h='<div class="review-mode">';
+  h+='<div class="review-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Spaced Repetition Review</h2>';
+  h+='<p>Review questions at scientifically optimal intervals for long-term memory.</p>';
+  if(reviewStreak>0) h+='<div class="review-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> '+reviewStreak+' day streak!</div>';
+  h+='<div class="method-badges"><span class="method-badge spaced">Spaced Repetition</span><span class="method-badge retrieval">Active Recall</span><span class="method-badge metacognition">Desirable Difficulty</span></div></div>';
+  h+='<div class="review-boxes">';
+  const boxLabels=['New','1 day','3 days','1 week','Mastered'];
+  boxCounts.forEach((count,i)=>{
+    h+='<div class="review-box"><span class="review-box-count">'+count+'</span>'+boxLabels[i]+'</div>';
+  });
+  h+='</div>';
+  if(due.length===0){
+    h+='<div class="review-empty"><h3>All caught up!</h3><p>No cards due for review right now. Complete more quizzes or check back later.</p>';
+    h+='<button class="btn btn-next" onclick="showReview=false;render()" style="margin-top:1rem">Back to Lessons</button></div>';
+  }else{
+    h+='<p style="text-align:center;color:var(--text-muted);font-size:0.85rem">'+due.length+' card'+(due.length>1?'s':'')+' due for review</p>';
+    due.forEach((item,idx)=>{
+      const cardKey='review-card-'+idx;
+      const lessonTitle=L[item.lessonIdx].title;
+      h+='<div class="review-card" id="'+cardKey+'">';
+      h+='<div class="review-card-header"><span class="review-card-lesson">Lesson '+L[item.lessonIdx].id+': '+lessonTitle+'</span><span class="review-card-progress">'+(idx+1)+'/'+due.length+'</span></div>';
+      h+='<div class="review-question">'+item.q.q+'</div>';
+      h+='<div class="review-opts">';
+      item.q.opts.forEach((opt,oi)=>{
+        h+='<button class="review-opt" id="rev-opt-'+idx+'-'+oi+'" onclick="answerReview('+idx+','+oi+','+item.q.ans+',\''+item.key+'\')">'+opt+'</button>';
+      });
+      h+='</div></div>';
+    });
+  }
+  h+='</div>';
+  return h;
+}
+function answerReview(cardIdx,picked,ans,srsKey){
+  const isCorrect=picked===ans;
+  const card=document.getElementById('review-card-'+cardIdx);
+  if(!card) return;
+  const opts=card.querySelectorAll('.review-opt');
+  opts.forEach((b,i)=>{
+    if(i===ans) b.classList.add('correct');
+    else if(i===picked&&!isCorrect) b.classList.add('wrong');
+    b.disabled=true;
+    b.style.pointerEvents='none';
+  });
+  if(isCorrect){
+    promoteSrsCard(srsKey);
+    if(!totalXpEarned.has('review-'+srsKey+'-'+Date.now())){
+      const xpAmt=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp&&COURSE_CONFIG.xp.reviewCorrect)||5;
+      addXp(xpAmt,'Review correct');
+    }
+  }else{
+    demoteSrsCard(srsKey);
+  }
+}
+
+// Interleaved Mixed Quiz
+function startMixedQuiz(){
+  const completedLessons=[...completed].filter(i=>L[i]&&L[i].quiz&&L[i].quiz.length>0);
+  if(completedLessons.length<2){showToast('Complete at least 2 lessons first!');return;}
+  const questions=[];
+  const shuffled=[...completedLessons].sort(()=>Math.random()-0.5);
+  const picked=shuffled.slice(0,Math.min(10,shuffled.length));
+  picked.forEach(li=>{
+    const qi=Math.floor(Math.random()*L[li].quiz.length);
+    questions.push({lessonIdx:li,quizIdx:qi,q:L[li].quiz[qi],lessonTitle:L[li].title});
+  });
+  mixedQuizState={questions,current:0,answers:[],active:true};
+  showMixedQuiz=true;
+  render();
+}
+function renderMixedQuiz(){
+  const mq=mixedQuizState;
+  let h='<div class="mixed-quiz">';
+  h+='<div class="mixed-quiz-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15A9 9 0 115.64 5.64L1 10"/></svg> Mixed Challenge</h2>';
+  h+='<p style="color:var(--text-muted);font-size:0.85rem">Questions from different lessons — interleaved practice strengthens your brain!</p>';
+  h+='<div class="method-badges"><span class="method-badge interleaved">Interleaving</span><span class="method-badge retrieval">Retrieval Practice</span></div></div>';
+  h+='<div class="mixed-quiz-progress">';
+  mq.questions.forEach((q,i)=>{
+    const cls=i<mq.answers.length?(mq.answers[i]?'correct':'wrong'):i===mq.current?'current':'';
+    h+='<div class="mixed-quiz-dot '+cls+'"></div>';
+  });
+  h+='</div>';
+  if(mq.current>=mq.questions.length){
+    const correct=mq.answers.filter(a=>a).length;
+    const total=mq.answers.length;
+    h+='<div class="mixed-quiz-result"><h3>Mixed Challenge Complete!</h3>';
+    h+='<div class="mixed-quiz-score">'+correct+' / '+total+'</div>';
+    h+='<p style="color:var(--text-muted);margin:0.5rem 0">'+(correct===total?'Perfect interleaved recall!':correct>=total*0.75?'Strong cross-topic knowledge!':'Keep practicing — interleaving takes time!')+'</p>';
+    h+='<div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem">';
+    h+='<button class="btn btn-prev" onclick="startMixedQuiz()">Try Again</button>';
+    h+='<button class="btn btn-next" onclick="showMixedQuiz=false;mixedQuizState.active=false;render()">Back to Lessons</button></div></div>';
+  }else{
+    const q=mq.questions[mq.current];
+    h+='<div class="review-card"><div class="review-card-header"><span class="review-card-lesson">From: '+q.lessonTitle+'</span><span class="review-card-progress">'+(mq.current+1)+'/'+mq.questions.length+'</span></div>';
+    h+='<div class="review-question">'+q.q.q+'</div><div class="review-opts">';
+    q.q.opts.forEach((opt,oi)=>{
+      h+='<button class="review-opt" onclick="answerMixedQuiz('+oi+','+q.q.ans+')">'+opt+'</button>';
+    });
+    h+='</div></div>';
+  }
+  h+='</div>';
+  return h;
+}
+function answerMixedQuiz(picked,ans){
+  const isCorrect=picked===ans;
+  mixedQuizState.answers.push(isCorrect);
+  mixedQuizState.current++;
+  if(mixedQuizState.current>=mixedQuizState.questions.length){
+    const xpAmt=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp&&COURSE_CONFIG.xp.mixedQuizComplete)||25;
+    if(!totalXpEarned.has('mixed-'+Date.now())){addXp(xpAmt,'Mixed Challenge');}
+  }
+  render();
+}
+
+// Self-Explanation System
+function saveSelfExplanation(lessonIdx){
+  const ta=document.getElementById('self-explain-ta');
+  if(!ta)return;
+  const text=ta.value.trim();
+  if(text.length>0){
+    selfExplanations[lessonIdx]=text;
+    const xpKey='selfexp-'+lessonIdx;
+    if(!totalXpEarned.has(xpKey)&&text.length>=20){
+      totalXpEarned.add(xpKey);
+      const xpAmt=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp&&COURSE_CONFIG.xp.selfExplanation)||10;
+      addXp(xpAmt,'Self-explanation');
+    }
+    saveState();
+    const saved=document.getElementById('self-explain-saved');
+    if(saved){saved.classList.add('show');setTimeout(()=>saved.classList.remove('show'),1500);}
+  }
+}
+
+// Confidence Rating (Metacognition)
+function setConfidence(lessonIdx,quizIdx,level){
+  confidenceRatings[lessonIdx+'-'+quizIdx]=level;
+  saveState();
+  document.querySelectorAll('#quiz-confidence-'+quizIdx+' .confidence-btn').forEach(b=>{
+    b.classList.remove('selected','low','mid','high');
+    if(b.dataset.level===level) b.classList.add('selected',level);
+  });
+}
+
+// Flashcard difficulty tracking
+function rateFlashcard(lessonIdx,pointIdx,diff){
+  flashcardDifficulty[lessonIdx+'-'+pointIdx]=diff;
+  saveState();
+  showToast(diff==='easy'?'Marked as easy — you know this!':'Marked as hard — will show more often');
+}
 
 // Daily motivational tip
 function showDailyTip(){
   const today=new Date().toDateString();
   if(localStorage.getItem('funbook_tip_date')===today)return;
   localStorage.setItem('funbook_tip_date',today);
-  const tips=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!'];
+  const tips=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!','Tip: Try the Review tab — spaced repetition boosts memory by 200%!','Tip: Try Mixed Challenge for interleaved practice!','Tip: Write self-explanations — teaching yourself cements learning!','Tip: Rate your confidence before answering quizzes — metacognition helps!','Tip: Press R for spaced review mode!'];
   setTimeout(()=>{showToast(tips[Math.floor(Math.random()*tips.length)],'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>');},2000);
 }
 
@@ -1653,6 +2082,9 @@ function checkQuiz(btn,picked,ans,quizIdx){
   const quizKey=`${current}-${quizIdx}`;
   const isCorrect=(picked===ans);
   quizScores[quizKey]=isCorrect;
+  // Initialize SRS card for spaced repetition
+  initSrsCard(current,quizIdx);
+  if(isCorrect){promoteSrsCard(quizKey);}else{demoteSrsCard(quizKey);}
   siblings.forEach((b,i)=>{
     b.classList.remove('correct','wrong');
     if(i===ans) b.classList.add('correct');
