@@ -25,12 +25,25 @@ const COURSE_CONFIG = {
   educationalLevel: 'Beginner to Intermediate',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
+  // Topic categories ordered from beginner → advanced
   topicMap: {
-    'Fundamentals':[1,2],'TypeScript':[3,4,5,6,7,8,9,10,22],'Frontend':[11,12,13],
-    'API & REST':[14],'NestJS':[15,16,17],'Database':[18,19],'Config':[20],
-    'Security':[21],'Caching & Jobs':[23,24],'Services':[25,26,27],
-    'Real-time':[28],'Testing':[29],'DevOps':[30,31,32],
-    'Architecture':[33],'Integration':[34,35,36]
+    'Getting Started':[37,38,39,40],
+    'Fundamentals':[1,2],
+    'TypeScript Basics':[3,4,5,6,7],
+    'TypeScript Advanced':[8,9,10,22],
+    'Frontend':[11,12,13],
+    'API & REST':[14],
+    'NestJS':[15,16,17],
+    'Database':[18,19],
+    'Config':[20],
+    'Security':[21],
+    'Caching & Jobs':[23,24],
+    'Services':[25,26,27],
+    'Real-time':[28],
+    'Testing':[29],
+    'DevOps':[30,31,32],
+    'Architecture':[33],
+    'Integration':[34,35,36]
   },
 
   // Concept flow diagrams per lesson ID
@@ -70,7 +83,11 @@ const COURSE_CONFIG = {
     33:['Files','Monorepo','Shared Code','Apps'],
     34:['React DOM','React Native','Web','Mobile'],
     35:['Frontend','API','Backend','Database'],
-    36:['Learn','Build','Ship','Grow']
+    36:['Learn','Build','Ship','Grow'],
+    37:['Idea','Instructions','Code','Run'],
+    38:['VS Code','Node.js','Terminal','npm'],
+    39:['Browser','Request','Server','Response'],
+    40:['Write','Run','Debug','Celebrate']
   },
 
   // Spaced Repetition settings
