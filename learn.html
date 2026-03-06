@@ -1869,7 +1869,7 @@ function checkMilestones(){
 }
 
 // Emoji reactions on point cards
-let pointReactions={};
+// pointReactions already declared at top
 function loadReactions(){try{const r=localStorage.getItem('funbook_reactions');if(r)pointReactions=JSON.parse(r);}catch(e){}}
 function saveReactions(){try{localStorage.setItem('funbook_reactions',JSON.stringify(pointReactions));}catch(e){}}
 loadReactions();
