@@ -347,12 +347,81 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 .rate-btn:hover { border-color:var(--accent); }
 .rate-btn.rated { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
 
+/* Resources Collapsible */
+.resources-section { margin:1.5rem 0; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.resources-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; background:var(--surface); border:none; cursor:pointer; color:var(--heading); font-size:0.9rem; font-weight:600; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.resources-toggle:hover { background:var(--bg); }
+.resources-toggle svg { transition:transform 0.3s; }
+.resources-toggle.open svg { transform:rotate(180deg); }
+.resources-list { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+.resources-list.open { max-height:600px; }
+.resource-item { display:flex; align-items:center; gap:0.8rem; padding:0.8rem 1.2rem; border-top:1px solid var(--border); transition:background 0.2s; }
+.resource-item:hover { background:var(--surface); }
+.resource-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.resource-icon.video { background:rgba(255,0,0,0.15); color:#f44; }
+.resource-icon.article { background:rgba(33,150,243,0.15); color:#2196F3; }
+.resource-icon.docs { background:rgba(76,175,80,0.15); color:#4CAF50; }
+.resource-info { flex:1; min-width:0; }
+.resource-info a { color:var(--text); text-decoration:none; font-size:0.85rem; font-weight:500; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.resource-info a:hover { color:var(--heading); }
+.resource-source { font-size:0.72rem; color:var(--text-muted); }
+.resource-badge { font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:4px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+.resource-badge.video { background:rgba(255,0,0,0.1); color:#f44; }
+.resource-badge.article { background:rgba(33,150,243,0.1); color:#2196F3; }
+.resource-badge.docs { background:rgba(76,175,80,0.1); color:#4CAF50; }
+
+/* Certificate */
+.cert-overlay { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:9999; animation:fadeIn 0.3s ease; backdrop-filter:blur(6px); }
+.cert-card { background:#12151A; border:3px solid var(--accent); border-radius:20px; padding:0; max-width:700px; width:95%; animation:popIn 0.4s ease; position:relative; overflow:hidden; }
+.cert-inner { padding:2.5rem 2rem; text-align:center; }
+.cert-border { position:absolute; top:8px;left:8px;right:8px;bottom:8px; border:1px solid rgba(217,254,6,0.3); border-radius:14px; pointer-events:none; }
+.cert-badge { display:inline-block; padding:0.3rem 1.2rem; background:var(--accent); color:#12151A; border-radius:999px; font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:2px; margin-bottom:1rem; }
+.cert-title { font-size:1.8rem; font-weight:800; color:#fff; margin-bottom:0.3rem; }
+.cert-subtitle { font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:1.5rem; }
+.cert-name { font-size:2rem; font-weight:800; color:var(--accent); margin:1rem 0; min-height:2.5rem; }
+.cert-desc { font-size:0.85rem; color:rgba(255,255,255,0.7); margin-bottom:1rem; line-height:1.6; }
+.cert-stats { display:flex; justify-content:center; gap:2rem; margin:1.5rem 0; }
+.cert-stat { text-align:center; }
+.cert-stat-num { font-size:1.5rem; font-weight:800; color:var(--accent); }
+.cert-stat-label { font-size:0.7rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; }
+.cert-footer { display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); }
+.cert-org { font-size:0.75rem; color:rgba(255,255,255,0.4); }
+.cert-date { font-size:0.75rem; color:rgba(255,255,255,0.4); }
+.cert-name-input { background:transparent; border:none; border-bottom:2px solid var(--accent); color:var(--accent); font-size:1.5rem; font-weight:700; text-align:center; width:80%; padding:0.3rem; font-family:'Poppins',sans-serif; outline:none; }
+.cert-name-input::placeholder { color:rgba(217,254,6,0.4); }
+.cert-actions { display:flex; gap:0.8rem; justify-content:center; margin-top:1.5rem; flex-wrap:wrap; }
+.cert-btn { padding:0.6rem 1.5rem; border-radius:8px; font-size:0.85rem; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; border:none; }
+.cert-btn-primary { background:var(--accent); color:#12151A; }
+.cert-btn-primary:hover { background:var(--accent-hover); }
+.cert-btn-share { background:transparent; border:1px solid rgba(255,255,255,0.2); color:#fff; }
+.cert-btn-share:hover { border-color:var(--accent); color:var(--accent); }
+.cert-btn-close { position:absolute; top:1rem; right:1rem; background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:1.2rem; padding:0.3rem; }
+.cert-btn-close:hover { color:#fff; }
+.cert-trigger { display:none; margin:1.5rem auto; padding:0.8rem 2rem; background:linear-gradient(135deg,var(--accent),#b8d804); color:#12151A; border:none; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.3s; box-shadow:0 4px 20px rgba(217,254,6,0.3); }
+.cert-trigger:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(217,254,6,0.4); }
+.cert-trigger.show { display:block; }
+
+/* Language Selector */
+.lang-selector { position:relative; display:inline-block; }
+.lang-btn { display:flex; align-items:center; gap:0.4rem; padding:0.4rem 0.8rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); cursor:pointer; font-size:0.8rem; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.lang-btn:hover { border-color:var(--accent); }
+.lang-dropdown { position:absolute; top:100%; right:0; margin-top:0.3rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; min-width:160px; z-index:100; display:none; box-shadow:0 4px 20px rgba(0,0,0,0.3); overflow:hidden; }
+.lang-dropdown.open { display:block; }
+.lang-option { display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1rem; cursor:pointer; font-size:0.82rem; color:var(--text); transition:all 0.2s; border:none; background:none; width:100%; text-align:left; font-family:'Poppins',sans-serif; }
+.lang-option:hover { background:var(--bg); color:var(--heading); }
+.lang-option.active { color:var(--accent); font-weight:600; }
+
 @media(max-width:700px) {
   .dashboard-grid { grid-template-columns:1fr; }
   .flashcards { grid-template-columns:1fr; }
   .diagram-flow { flex-direction:column; }
   .diagram-arrow { transform:rotate(90deg); }
   .nav-hint { display:none; }
+  .cert-inner { padding:1.5rem 1rem; }
+  .cert-title { font-size:1.3rem; }
+  .cert-name { font-size:1.5rem; }
+  .cert-stats { gap:1rem; }
+  .cert-actions { flex-direction:column; align-items:center; }
 }
 </style>
 </head>
@@ -366,6 +435,23 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 <div class="hdr-txt">
 <h1>The JS & TS Fun Book</h1>
 <p>From Zero to Fullstack Hero — NestJS + React Edition</p>
+</div>
+</div>
+<div class="lang-selector">
+<button class="lang-btn" onclick="toggleLangDropdown()" title="Change language">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+<span id="current-lang">EN</span>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</button>
+<div class="lang-dropdown" id="lang-dropdown">
+<button class="lang-option active" onclick="setLang('en')">English</button>
+<button class="lang-option" onclick="setLang('bn')">Bengali</button>
+<button class="lang-option" onclick="setLang('hi')">Hindi</button>
+<button class="lang-option" onclick="setLang('es')">Spanish</button>
+<button class="lang-option" onclick="setLang('ar')">Arabic</button>
+<button class="lang-option" onclick="setLang('pt')">Portuguese</button>
+<button class="lang-option" onclick="setLang('id')">Indonesian</button>
+<button class="lang-option" onclick="setLang('fr')">French</button>
 </div>
 </div>
 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
@@ -408,6 +494,8 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 </div>
 </footer>
 
+<div id="cert-container"></div>
+
 <!-- Lesson Data (separate file for easy maintenance) -->
 <script src="data.js"></script>
 
@@ -423,6 +511,23 @@ let bookmarks=new Set();
 let lessonRatings={};
 let xp=0;
 let totalXpEarned=new Set();
+let currentLang='en';
+let certName='';
+
+// Language system — UI translations
+const LANG_NAMES={en:'EN',bn:'BN',hi:'HI',es:'ES',ar:'AR',pt:'PT',id:'ID',fr:'FR'};
+const LANG_FLAGS={en:'English',bn:'Bengali',hi:'Hindi',es:'Spanish',ar:'Arabic',pt:'Portuguese',id:'Indonesian',fr:'French'};
+const UI_STRINGS={
+  en:{lessonsCompleted:'lessons completed',whatIs:'What is it?',realWorld:'Real-World Use',funFact:'Fun Fact',challenge:'Challenge',quiz:'Quiz',codeExample:'Code Example',previous:'Previous',completeNext:'Complete & Next',finish:'Finish!',howWas:'How was this lesson?',loveIt:'Love it',good:'Good',meh:'Meh',resources:'Learning Resources',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Flashcard Mode',dashboard:'Dashboard',getCertificate:'Get Your Certificate',certTitle:'Certificate of Completion',certSubtitle:'This certifies that',certCompleted:'has successfully completed all 36 lessons of',certCourse:'The JS & TS Fun Book',certLessons:'Lessons',certQuizzes:'Quizzes',certPoints:'Points',certShare:'Share on LinkedIn',certDownload:'Download',certEnterName:'Enter your name',certIssuedBy:'Issued by Teamz Lab LTD',perfect:'Perfect!',great:'Great job!',goodEffort:'Good effort!',keepPracticing:'Keep practicing!',prev:'Previous',next:'Next'},
+  bn:{lessonsCompleted:'টি পাঠ সম্পন্ন',whatIs:'এটি কী?',realWorld:'বাস্তব ব্যবহার',funFact:'মজার তথ্য',challenge:'চ্যালেঞ্জ',quiz:'কুইজ',codeExample:'কোড উদাহরণ',previous:'আগের',completeNext:'সম্পন্ন ও পরবর্তী',finish:'শেষ!',howWas:'এই পাঠটি কেমন ছিল?',loveIt:'দারুণ',good:'ভালো',meh:'মোটামুটি',resources:'শিক্ষার উপকরণ',videos:'ভিডিও',articles:'আর্টিকেল',docs:'ডকুমেন্টেশন',flashcardMode:'ফ্ল্যাশকার্ড মোড',dashboard:'ড্যাশবোর্ড',getCertificate:'আপনার সার্টিফিকেট নিন',certTitle:'সমাপ্তির সনদপত্র',certSubtitle:'এটি প্রমাণ করে যে',certCompleted:'সফলভাবে সম্পন্ন করেছেন',certCourse:'দ্য JS & TS ফান বুক',certLessons:'পাঠ',certQuizzes:'কুইজ',certPoints:'পয়েন্ট',certShare:'লিংকডইনে শেয়ার',certDownload:'ডাউনলোড',certEnterName:'আপনার নাম লিখুন',certIssuedBy:'টিমজ ল্যাব লিমিটেড কর্তৃক প্রদত্ত',perfect:'পারফেক্ট!',great:'দারুণ!',goodEffort:'ভালো চেষ্টা!',keepPracticing:'আরো চেষ্টা করুন!',prev:'আগের',next:'পরবর্তী'},
+  hi:{lessonsCompleted:'पाठ पूरे हुए',whatIs:'यह क्या है?',realWorld:'वास्तविक उपयोग',funFact:'मज़ेदार तथ्य',challenge:'चुनौती',quiz:'क्विज़',codeExample:'कोड उदाहरण',previous:'पिछला',completeNext:'पूरा करें और अगला',finish:'समाप्त!',howWas:'यह पाठ कैसा रहा?',loveIt:'बहुत अच्छा',good:'अच्छा',meh:'ठीक-ठाक',resources:'सीखने के संसाधन',videos:'वीडियो',articles:'लेख',docs:'डॉक्यूमेंटेशन',flashcardMode:'फ़्लैशकार्ड मोड',dashboard:'डैशबोर्ड',getCertificate:'अपना प्रमाणपत्र प्राप्त करें',certTitle:'पूर्णता का प्रमाणपत्र',certSubtitle:'यह प्रमाणित करता है कि',certCompleted:'ने सफलतापूर्वक पूरा किया',certCourse:'The JS & TS Fun Book',certLessons:'पाठ',certQuizzes:'क्विज़',certPoints:'अंक',certShare:'लिंक्डइन पर शेयर',certDownload:'डाउनलोड',certEnterName:'अपना नाम दर्ज करें',certIssuedBy:'Teamz Lab LTD द्वारा जारी',perfect:'परफेक्ट!',great:'शानदार!',goodEffort:'अच्छा प्रयास!',keepPracticing:'अभ्यास जारी रखें!',prev:'पिछला',next:'अगला'},
+  es:{lessonsCompleted:'lecciones completadas',whatIs:'Que es?',realWorld:'Uso en el mundo real',funFact:'Dato curioso',challenge:'Desafio',quiz:'Quiz',codeExample:'Ejemplo de codigo',previous:'Anterior',completeNext:'Completar y siguiente',finish:'Terminar!',howWas:'Como fue esta leccion?',loveIt:'Me encanta',good:'Bien',meh:'Regular',resources:'Recursos de aprendizaje',videos:'Videos',articles:'Articulos',docs:'Documentacion',flashcardMode:'Modo flashcard',dashboard:'Panel',getCertificate:'Obtener certificado',certTitle:'Certificado de Finalizacion',certSubtitle:'Esto certifica que',certCompleted:'ha completado exitosamente',certCourse:'The JS & TS Fun Book',certLessons:'Lecciones',certQuizzes:'Quizzes',certPoints:'Puntos',certShare:'Compartir en LinkedIn',certDownload:'Descargar',certEnterName:'Ingresa tu nombre',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfecto!',great:'Genial!',goodEffort:'Buen esfuerzo!',keepPracticing:'Sigue practicando!',prev:'Anterior',next:'Siguiente'},
+  ar:{lessonsCompleted:'دروس مكتملة',whatIs:'ما هذا؟',realWorld:'الاستخدام الواقعي',funFact:'حقيقة ممتعة',challenge:'تحدي',quiz:'اختبار',codeExample:'مثال الكود',previous:'السابق',completeNext:'إكمال والتالي',finish:'إنهاء!',howWas:'كيف كان هذا الدرس؟',loveIt:'أحببته',good:'جيد',meh:'عادي',resources:'مصادر التعلم',videos:'فيديوهات',articles:'مقالات',docs:'التوثيق',flashcardMode:'وضع البطاقات',dashboard:'لوحة التحكم',getCertificate:'احصل على شهادتك',certTitle:'شهادة إتمام',certSubtitle:'هذا يشهد بأن',certCompleted:'قد أكمل بنجاح',certCourse:'The JS & TS Fun Book',certLessons:'دروس',certQuizzes:'اختبارات',certPoints:'نقاط',certShare:'مشاركة على لينكدإن',certDownload:'تحميل',certEnterName:'أدخل اسمك',certIssuedBy:'صادر من Teamz Lab LTD',perfect:'ممتاز!',great:'رائع!',goodEffort:'جهد جيد!',keepPracticing:'واصل التدريب!',prev:'السابق',next:'التالي'},
+  pt:{lessonsCompleted:'licoes concluidas',whatIs:'O que e?',realWorld:'Uso no mundo real',funFact:'Fato curioso',challenge:'Desafio',quiz:'Quiz',codeExample:'Exemplo de codigo',previous:'Anterior',completeNext:'Concluir e proximo',finish:'Finalizar!',howWas:'Como foi esta licao?',loveIt:'Adorei',good:'Bom',meh:'Mais ou menos',resources:'Recursos de aprendizagem',videos:'Videos',articles:'Artigos',docs:'Documentacao',flashcardMode:'Modo flashcard',dashboard:'Painel',getCertificate:'Obter certificado',certTitle:'Certificado de Conclusao',certSubtitle:'Isto certifica que',certCompleted:'concluiu com sucesso',certCourse:'The JS & TS Fun Book',certLessons:'Licoes',certQuizzes:'Quizzes',certPoints:'Pontos',certShare:'Compartilhar no LinkedIn',certDownload:'Baixar',certEnterName:'Digite seu nome',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfeito!',great:'Otimo!',goodEffort:'Bom esforco!',keepPracticing:'Continue praticando!',prev:'Anterior',next:'Proximo'},
+  id:{lessonsCompleted:'pelajaran selesai',whatIs:'Apa ini?',realWorld:'Penggunaan dunia nyata',funFact:'Fakta menarik',challenge:'Tantangan',quiz:'Kuis',codeExample:'Contoh kode',previous:'Sebelumnya',completeNext:'Selesai & Berikutnya',finish:'Selesai!',howWas:'Bagaimana pelajaran ini?',loveIt:'Suka',good:'Bagus',meh:'Biasa',resources:'Sumber belajar',videos:'Video',articles:'Artikel',docs:'Dokumentasi',flashcardMode:'Mode flashcard',dashboard:'Dasbor',getCertificate:'Dapatkan sertifikat',certTitle:'Sertifikat Penyelesaian',certSubtitle:'Ini menyatakan bahwa',certCompleted:'telah berhasil menyelesaikan',certCourse:'The JS & TS Fun Book',certLessons:'Pelajaran',certQuizzes:'Kuis',certPoints:'Poin',certShare:'Bagikan di LinkedIn',certDownload:'Unduh',certEnterName:'Masukkan nama Anda',certIssuedBy:'Diterbitkan oleh Teamz Lab LTD',perfect:'Sempurna!',great:'Hebat!',goodEffort:'Usaha bagus!',keepPracticing:'Terus berlatih!',prev:'Sebelumnya',next:'Berikutnya'},
+  fr:{lessonsCompleted:'lecons terminees',whatIs:'Qu\'est-ce que c\'est?',realWorld:'Utilisation reelle',funFact:'Fait amusant',challenge:'Defi',quiz:'Quiz',codeExample:'Exemple de code',previous:'Precedent',completeNext:'Terminer et suivant',finish:'Terminer!',howWas:'Comment etait cette lecon?',loveIt:'J\'adore',good:'Bien',meh:'Bof',resources:'Ressources d\'apprentissage',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Mode flashcard',dashboard:'Tableau de bord',getCertificate:'Obtenir le certificat',certTitle:'Certificat d\'achevement',certSubtitle:'Ceci certifie que',certCompleted:'a termine avec succes',certCourse:'The JS & TS Fun Book',certLessons:'Lecons',certQuizzes:'Quiz',certPoints:'Points',certShare:'Partager sur LinkedIn',certDownload:'Telecharger',certEnterName:'Entrez votre nom',certIssuedBy:'Delivre par Teamz Lab LTD',perfect:'Parfait!',great:'Genial!',goodEffort:'Bon effort!',keepPracticing:'Continuez!',prev:'Precedent',next:'Suivant'}
+};
+function t(key){return (UI_STRINGS[currentLang]||UI_STRINGS.en)[key]||UI_STRINGS.en[key]||key;}
 
 // Load saved state from localStorage
 function loadState(){
@@ -437,6 +542,8 @@ function loadState(){
       if(d.xp) xp=d.xp;
       if(d.xpEarned) totalXpEarned=new Set(d.xpEarned);
       if(typeof d.current==='number') current=d.current;
+      if(d.lang) currentLang=d.lang;
+      if(d.certName) certName=d.certName;
     }
   }catch(e){}
 }
@@ -444,7 +551,8 @@ function saveState(){
   try{
     localStorage.setItem('funbook_state',JSON.stringify({
       completed:[...completed],quizScores,bookmarks:[...bookmarks],
-      ratings:lessonRatings,xp,xpEarned:[...totalXpEarned],current
+      ratings:lessonRatings,xp,xpEarned:[...totalXpEarned],current,
+      lang:currentLang,certName
     }));
   }catch(e){}
 }
@@ -728,10 +836,10 @@ function render(){
 
   const pct=Math.round(completed.size/L.length*100);
   document.getElementById('pbar').style.width=pct+'%';
-  document.getElementById('ptxt').textContent=completed.size+' / '+L.length+' lessons completed — '+pct+'%';
+  document.getElementById('ptxt').textContent=completed.size+' / '+L.length+' '+t('lessonsCompleted')+' — '+pct+'%';
   updateXpBar();
 
-  let tabsHtml=`<div class="tab ${showDashboard?'active':''}" onclick="showDashboard=true;render()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</div>`;
+  let tabsHtml=`<div class="tab ${showDashboard?'active':''}" onclick="showDashboard=true;render()"><svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> ${t('dashboard')}</div>`;
   L.forEach((l,i)=>{
     const cls=(!showDashboard&&i===current)?'active':completed.has(i)?'done':'';
     const bmk=bookmarks.has(i)?'<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-left:2px"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>':'';
@@ -798,19 +906,19 @@ function render(){
   }
 
   h+=`<div class="two-col">`;
-  h+=`<div class="col-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>What is it?</h3><p>${l.whatIs}</p></div>`;
-  h+=`<div class="col-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>Real-World Use</h3><p>${l.realWorld}</p></div>`;
+  h+=`<div class="col-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></span>${t('whatIs')}</h3><p>${l.whatIs}</p></div>`;
+  h+=`<div class="col-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>${t('realWorld')}</h3><p>${l.realWorld}</p></div>`;
   h+=`</div>`;
 
   if(l.funFact){
-    h+=`<div class="fun-fact reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Fun Fact</h4><p>${l.funFact}</p></div>`;
+    h+=`<div class="fun-fact reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('funFact')}</h4><p>${l.funFact}</p></div>`;
   }
 
   if(l.quiz && Array.isArray(l.quiz)){
     l.quiz.forEach((q, qIdx)=>{
       const quizKey=`${current}-${qIdx}`;
       const answered=quizScores[quizKey]!==undefined;
-      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Quiz ${qIdx+1} of ${l.quiz.length}</div><p style="margin-bottom:1rem;color:var(--text);font-weight:600">${q.q}</p>`;
+      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('quiz')} ${qIdx+1} / ${l.quiz.length}</div><p style="margin-bottom:1rem;color:var(--text);font-weight:600">${q.q}</p>`;
       q.opts.forEach((o,i)=>{
         const isCorrect=answered&&i===q.ans;
         const isWrong=answered&&quizScores[quizKey]===false&&i!==q.ans;
@@ -826,7 +934,7 @@ function render(){
       if(quizScores[`${current}-${i}`]===true) correctCount++;
     }
     if(correctCount>0 || Object.keys(quizScores).some(k=>k.startsWith(current+'-'))){
-      h+=`<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>You got ${correctCount}/${totalQuestions} correct! ${correctCount===totalQuestions?'Perfect!':correctCount>=Math.ceil(totalQuestions*0.75)?'Great job!':correctCount>=Math.ceil(totalQuestions*0.5)?'Good effort!':'Keep practicing!'}</div>`;
+      h+=`<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${correctCount}/${totalQuestions} ${correctCount===totalQuestions?t('perfect'):correctCount>=Math.ceil(totalQuestions*0.75)?t('great'):correctCount>=Math.ceil(totalQuestions*0.5)?t('goodEffort'):t('keepPracticing')}</div>`;
     }
   }
 
@@ -834,35 +942,70 @@ function render(){
   h+=`<div class="playground reveal">
     <div class="playground-header">
       <div class="playground-title"><div class="playground-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div></div>
-      <div class="playground-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Example</div>
+      <div class="playground-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> ${t('codeExample')}</div>
     </div>
     <div class="code-block" style="margin:0;border-radius:0;border:none">${escHtml(l.code)}</div>
   </div>`;
 
   if(l.challenge){
-    h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>Challenge</h4><p>${l.challenge}</p></div>`;
+    h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('challenge')}</h4><p>${l.challenge}</p></div>`;
+  }
+
+  // Resources section (collapsible)
+  if(l.resources&&l.resources.length>0){
+    h+=`<div class="resources-section reveal">
+      <button class="resources-toggle" id="res-btn-${current}" onclick="toggleResources(${current})">
+        <span style="display:flex;align-items:center;gap:0.5rem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          ${t('resources')} (${l.resources.length})
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="resources-list" id="res-list-${current}">`;
+    l.resources.forEach(r=>{
+      const iconSvg=r.type==='video'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>':
+        r.type==='article'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>':
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>';
+      h+=`<div class="resource-item">
+        <div class="resource-icon ${r.type}">${iconSvg}</div>
+        <div class="resource-info">
+          <a href="${r.url}" target="_blank" rel="noopener">${r.title}</a>
+          <div class="resource-source">${r.source}</div>
+        </div>
+        <span class="resource-badge ${r.type}">${r.type}</span>
+      </div>`;
+    });
+    h+=`</div></div>`;
+  }
+
+  // Certificate trigger (show when all lessons completed)
+  if(completed.size>=L.length){
+    h+=`<button class="cert-trigger show reveal" onclick="showCertificate()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px;margin-right:6px"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></svg>
+      ${t('getCertificate')}
+    </button>`;
   }
 
   // Lesson rating
   const rated=lessonRatings[current];
   h+=`<div class="lesson-rating reveal">
-    <span>How was this lesson?</span>
+    <span>${t('howWas')}</span>
     <button class="rate-btn ${rated==='love'?'rated':''}" onclick="ratelesson(${current},'love')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="${rated==='love'?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> Love it
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="${rated==='love'?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> ${t('loveIt')}
     </button>
     <button class="rate-btn ${rated==='good'?'rated':''}" onclick="ratelesson(${current},'good')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> Good
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> ${t('good')}
     </button>
     <button class="rate-btn ${rated==='meh'?'rated':''}" onclick="ratelesson(${current},'meh')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> Meh
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> ${t('meh')}
     </button>
   </div>`;
 
   h+=`<div class="nav-btns">`;
-  if(current>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>Previous</button>`;
-  h+=`<button class="btn btn-next" onclick="markAndNext()">${current<L.length-1?'Complete & Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':'Finish! <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
+  if(current>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
+  h+=`<button class="btn btn-next" onclick="markAndNext()">${current<L.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
   h+=`</div>`;
-  h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> Previous</span><span><span class="kbd">&rarr;</span> Next</span><span><span class="kbd">D</span> Dashboard</span></div>`;
+  h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span></div>`;
 
   document.getElementById('content').innerHTML=h;
   initScrollReveal();
@@ -921,6 +1064,98 @@ function resetPlayground(){
   document.getElementById('playground-code').value=l.code;
   document.getElementById('playground-output').textContent='// Output will appear here...';
   document.getElementById('playground-output').classList.remove('error');
+}
+
+// Language system
+function toggleLangDropdown(){
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('current-lang').textContent=LANG_NAMES[lang]||'EN';
+  document.getElementById('lang-dropdown').classList.remove('open');
+  document.querySelectorAll('.lang-option').forEach(el=>{
+    el.classList.toggle('active',el.textContent===LANG_FLAGS[lang]);
+  });
+  saveState();render();
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.lang-selector')){
+    const dd=document.getElementById('lang-dropdown');
+    if(dd) dd.classList.remove('open');
+  }
+});
+
+// Resources toggle
+function toggleResources(idx){
+  const list=document.getElementById('res-list-'+idx);
+  const btn=document.getElementById('res-btn-'+idx);
+  if(list&&btn){
+    list.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+}
+
+// Certificate system
+function showCertificate(){
+  const totalCorrect=Object.values(quizScores).filter(v=>v===true).length;
+  const totalQuizzes=L.length*3;
+  const s=UI_STRINGS[currentLang]||UI_STRINGS.en;
+  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const certId='TL-'+Date.now().toString(36).toUpperCase();
+  document.getElementById('cert-container').innerHTML=`
+    <div class="cert-overlay" onclick="if(event.target===this)closeCert()">
+      <div class="cert-card">
+        <div class="cert-border"></div>
+        <button class="cert-btn-close" onclick="closeCert()">&times;</button>
+        <div class="cert-inner">
+          <div class="cert-badge">${s.certTitle||'Certificate of Completion'}</div>
+          <div class="cert-title">The JS & TS Fun Book</div>
+          <div class="cert-subtitle">${s.certSubtitle||'This certifies that'}</div>
+          <div class="cert-name">
+            <input class="cert-name-input" id="cert-name-input" type="text" placeholder="${s.certEnterName||'Enter your name'}" value="${escHtml(certName)}" onchange="certName=this.value;saveState();" oninput="document.getElementById('cert-name-display')&&(document.getElementById('cert-name-display').textContent=this.value)">
+          </div>
+          <div class="cert-desc">${s.certCompleted||'has successfully completed all 36 lessons of'}<br><strong>${s.certCourse||'The JS & TS Fun Book'}</strong></div>
+          <div class="cert-stats">
+            <div class="cert-stat"><div class="cert-stat-num">${completed.size}</div><div class="cert-stat-label">${s.certLessons||'Lessons'}</div></div>
+            <div class="cert-stat"><div class="cert-stat-num">${totalCorrect}/${totalQuizzes}</div><div class="cert-stat-label">${s.certQuizzes||'Quizzes'}</div></div>
+            <div class="cert-stat"><div class="cert-stat-num">${xp}</div><div class="cert-stat-label">XP</div></div>
+          </div>
+          <div class="cert-footer">
+            <div class="cert-org">${s.certIssuedBy||'Issued by Teamz Lab LTD'}</div>
+            <div class="cert-date">${today} &bull; ID: ${certId}</div>
+          </div>
+          <div class="cert-actions">
+            <a class="cert-btn cert-btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fteamz-lab-ltd.github.io%2Fjs-ts-fun-book%2F" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              ${s.certShare||'Share on LinkedIn'}
+            </a>
+            <button class="cert-btn cert-btn-share" onclick="shareCertTwitter()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg>
+              Share on X
+            </button>
+            <button class="cert-btn cert-btn-share" onclick="copyCertLink()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy Link
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function closeCert(){
+  document.getElementById('cert-container').innerHTML='';
+}
+function shareCertTwitter(){
+  const name=certName||'Someone';
+  const text=encodeURIComponent(`I just completed all 36 lessons of The JS & TS Fun Book! 🎉 Learned TypeScript, NestJS, React & fullstack development.\n\nCheck it out (it's free!):`);
+  const url=encodeURIComponent('https://teamz-lab-ltd.github.io/js-ts-fun-book/');
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=TypeScript,NestJS,WebDev,LearnToCode`,'_blank');
+}
+function copyCertLink(){
+  navigator.clipboard.writeText('https://teamz-lab-ltd.github.io/js-ts-fun-book/');
+  const btn=event.target.closest('.cert-btn');
+  if(btn){const orig=btn.innerHTML;btn.textContent='Copied!';setTimeout(()=>btn.innerHTML=orig,1500);}
 }
 
 // Scroll reveal
@@ -1095,6 +1330,13 @@ function checkQuiz(btn,picked,ans,quizIdx){
 
 loadState();
 initTheme();
+// Init language indicator
+if(currentLang!=='en'){
+  document.getElementById('current-lang').textContent=LANG_NAMES[currentLang]||'EN';
+  document.querySelectorAll('.lang-option').forEach(el=>{
+    el.classList.toggle('active',el.textContent===LANG_FLAGS[currentLang]);
+  });
+}
 render();
 </script>
 </body>
