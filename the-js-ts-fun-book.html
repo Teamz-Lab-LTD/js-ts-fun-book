@@ -1140,9 +1140,9 @@ function render(){
 
   document.getElementById('content').innerHTML=h;
   initScrollReveal();
-  // Re-trigger Google Translate for dynamically rendered content
-  if(currentLang!=='en'){
-    setTimeout(()=>{const sel=document.querySelector('.goog-te-combo');if(sel&&sel.value){sel.value=currentLang;sel.dispatchEvent(new Event('change'));}},400);
+  // Re-trigger Google Translate for dynamically rendered content (only if loaded)
+  if(currentLang!=='en'&&gtLoaded){
+    setTimeout(()=>triggerGT(currentLang),400);
   }
 }
 
