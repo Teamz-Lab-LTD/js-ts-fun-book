@@ -4,49 +4,47 @@
 
 ## Project Overview
 
-**The JS & TS Fun Book** is a single-page interactive HTML tutorial that teaches TypeScript, NestJS, React, and fullstack development through 30 fun, gamified lessons. It is designed to be viral, SEO-friendly, and visually polished — matching the Teamz Lab brand.
+**The JS & TS Fun Book** is a single-page interactive HTML tutorial that teaches TypeScript, NestJS, React, and fullstack development through 40 gamified lessons — from "What is Programming?" to deploying a full-stack app. It is designed to be viral, SEO-friendly, and visually polished — matching the Teamz Lab brand.
 
-- **Live URL**: `https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html`
-- **GitHub Repo**: `https://github.com/Teamz-Lab-LTD/js-ts-fun-book` (private)
+- **Live URL**: `https://learn.teamzlab.com/learn.html?course=js-ts-fun-book`
+- **GitHub Pages**: `https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book`
 - **Organization**: Teamz Lab LTD
 
 ---
 
 ## Architecture
 
-The project uses a **two-file architecture** for maintainability:
+The project uses a **multi-course architecture**:
 
-### `the-js-ts-fun-book.html` (~40KB, ~608 lines)
-The **rendering engine**. Contains:
-- All CSS (custom properties theming, dark/light mode)
-- HTML structure (header, tabs, main content area, footer)
-- All JavaScript logic (rendering, quiz system, achievements, confetti, theme toggle)
-- SEO meta tags (Open Graph, Twitter Cards, JSON-LD structured data)
-- SVG icon system (ICONS map with 30 unique icons, keyed 1–30)
-- Share buttons (Twitter, LinkedIn, Facebook, WhatsApp, copy link)
+### `learn.html` (~3400+ lines, ~100KB)
+The **generic rendering engine** shared across all courses. Contains:
+- All CSS (custom properties theming, dark/light mode, RTL support)
+- HTML structure (sidebar, header, main content, footer)
+- All JavaScript logic (rendering, quiz system with option shuffling, flashcards, SRS, achievements, XP, analytics)
+- SEO meta tags (Open Graph, Twitter Cards, JSON-LD structured data, FAQ schema)
+- SVG icon system
+- Share buttons (Twitter, LinkedIn, Facebook, WhatsApp, Reddit, copy link)
+- Firebase Analytics integration (production-only)
+- 8-language UI support
 
-### `data.js` (~128KB, ~1840 lines)
+### `courses/js-ts-fun-book/data.js` (~large)
 The **lesson content**. Contains a single global:
 ```js
-const LESSONS_DATA = [ ... ];  // Array of 30 lesson objects
+const LESSONS_DATA = [ ... ];  // Array of 40 lesson objects
 ```
 
-The HTML loads this via `<script src="data.js"></script>` then references it as:
+### `courses/js-ts-fun-book/config.js`
+The **course configuration**. Contains:
 ```js
-const L = LESSONS_DATA;
+const COURSE_CONFIG = { ... };  // Title, SEO, topicMap, conceptFlows, SRS settings, XP rewards
 ```
 
-### `index.html` (small redirect file)
-Redirects visitors from the root to `the-js-ts-fun-book.html`.
-
-### `README.md`
-Project description with features list and live demo link.
+### `index.html`
+Landing page / course selector.
 
 ---
 
 ## Design System / Theming
-
-The project matches the **Teamz Lab Astro project** theme:
 
 ### CSS Custom Properties (Dark Mode — default)
 ```css
@@ -57,34 +55,17 @@ The project matches the **Teamz Lab Astro project** theme:
   --text-muted: rgba(255,255,255,0.7);
   --border: rgba(255,255,255,0.15);
   --accent: #D9FE06;          /* Neon green — primary brand color */
-  --accent-hover: #c5e805;
   --accent-text: #12151A;
   --heading: #D9FE06;
-  --code-bg: #0d0f14;
-  --code-text: #e0e0e0;
-  --icon-size: 20px;
 }
 ```
 
 ### Light Mode (via `html[data-theme="light"]`)
-```css
---bg: #F4F5F5;
---surface: #FFFFFF;
---text: #12151A;
---heading: #12151A;
---accent: #D9FE06;  /* Same accent in both modes */
-```
+### RTL Support (via `html[dir="rtl"]`) — for Arabic language
 
 ### Typography
 - **Font**: Poppins (Google Fonts) — weights 400, 500, 600, 700, 800
 - **Code font**: Fira Code, Consolas, monospace
-
-### Key Design Rules
-- Accent color `#D9FE06` is used for buttons, active tabs, headings (dark mode), achievement badges
-- All icons are **SVG with `stroke: currentColor`** — no emoji anywhere
-- Cards have `border-radius: 12px`, subtle borders, hover lift effects
-- Achievement system uses confetti animation, star ratings, and randomized witty messages
-- Theme toggle persists via `localStorage`
 
 ---
 
@@ -94,189 +75,156 @@ Each lesson in `LESSONS_DATA` follows this schema:
 
 ```js
 {
-  id: Number,          // 1-30
-  title: String,       // Lesson title
-  subtitle: String,    // Short tagline
-  analogy: String,     // Fun real-world analogy explaining the concept
-  points: [            // 6-11 teaching points (visual cards)
-    { t: String, d: String }  // t = title, d = description
+  id: Number,            // 1-40
+  title: String,
+  subtitle: String,
+  analogy: String,       // Fun real-world analogy
+  points: [              // 7-11 teaching points (flashcard-ready)
+    { t: String, d: String }
   ],
-  whatIs: String,      // "What is it?" explanation
-  realWorld: String,   // "Real-World Use" explanation
-  code: String,        // Code example (shown in toggle)
-  funFact: String,     // Optional fun fact
-  quiz: [              // Exactly 3 quizzes per lesson
-    {
-      q: String,       // Question text
-      opts: [String],  // 4 answer options
-      ans: Number      // Correct answer index (0-based)
-    }
+  whatIs: String,
+  realWorld: String,
+  code: String,          // Code example
+  funFact: String,
+  quiz: [                // 3-5 quizzes per lesson (options shuffled at render time)
+    { q: String, opts: [String], ans: Number }
   ],
-  challenge: String    // End-of-lesson challenge prompt
+  challenge: String,
+  resources: [           // External learning resources
+    { type: String, title: String, url: String, source: String }
+  ],
+  eli5: String,          // Explain Like I'm 5
+  codeWalkthrough: [String],  // Line-by-line code explanation
+  bugChallenge: { code: String, hint: String, answer: String },
+  difficulty: String,    // "beginner" | "intermediate" | "advanced"
+  prereqs: [Number]      // Prerequisite lesson IDs
 }
 ```
 
 ### Content Stats
-- **30 lessons**, **216 teaching points**, **90 quizzes** (3 per lesson)
-- Every lesson has: analogy, 6-11 points, whatIs, realWorld, code example, quiz[3], challenge
+- **40 lessons**, **346 teaching points**, **120+ quizzes**
+- Every lesson has: analogy, points, whatIs, realWorld, code, funFact, quiz, challenge, resources, eli5, codeWalkthrough, bugChallenge, difficulty, prereqs
 
 ---
 
-## The 30 Lessons (in order)
+## The 40 Lessons (by topic)
 
-| # | Title | Points | Topic Area |
-|---|-------|--------|------------|
-| 1 | What is a Monorepo? | 7 | Project Structure |
-| 2 | JavaScript vs TypeScript | 6 | TypeScript Basics |
-| 3 | Variables, Types & Arrays | 8 | TypeScript Basics |
-| 4 | Objects & Interfaces | 8 | TypeScript Basics |
-| 5 | Functions & Arrow Functions | 7 | TypeScript Basics |
-| 6 | Union Types & Type Narrowing | 8 | TypeScript Basics |
-| 7 | Classes & OOP | 8 | TypeScript Basics |
-| 8 | Async/Await & Promises | 8 | TypeScript Basics |
-| 9 | Generics & Utility Types | 9 | TypeScript Advanced |
-| 10 | React — The UI Wizard | 8 | Frontend |
-| 11 | React vs React Native | 8 | Frontend |
-| 12 | The Frontend Tech Stack | 7 | Frontend |
-| 13 | Why NestJS? | 11 | Backend |
-| 14 | MongoDB — The Flexible Database | 8 | Database |
-| 15 | Prisma — Your Database Translator | 9 | Database |
-| 16 | Redis — The Speed Demon | 7 | Caching |
-| 17 | Bull — The Job Queue Manager | 8 | Background Jobs |
-| 18 | Authentication — JWT & Guards | 6 | Security |
-| 19 | Email Services | 6 | Services |
-| 20 | Push Notifications with Firebase | 6 | Services |
-| 21 | AWS S3 — File Storage | 7 | Cloud |
-| 22 | Docker — Containers Explained | 6 | DevOps |
-| 23 | Testing — Trust Your Code | 7 | Testing |
-| 24 | WebSockets & Real-Time | 6 | Real-time |
-| 25 | API Design & REST | 6 | Architecture |
-| 26 | NestJS Architecture Patterns | 6 | Architecture |
-| 27 | Deployment & DevOps | 7 | DevOps |
-| 28 | Developer Tooling | 6 | Tooling |
-| 29 | Putting It All Together | 6 | Integration |
-| 30 | Your Learning Path Forward | 6 | Career |
+| Topic | Lesson IDs | Count |
+|-------|-----------|-------|
+| Getting Started | 37, 38, 39, 40 | 4 |
+| Fundamentals | 1, 2 | 2 |
+| TypeScript Basics | 3, 4, 5, 6, 7 | 5 |
+| TypeScript Advanced | 8, 9, 10, 22 | 4 |
+| Frontend | 11, 12, 13 | 3 |
+| API & REST | 14 | 1 |
+| NestJS | 15, 16, 17 | 3 |
+| Database | 18, 19 | 2 |
+| Config | 20 | 1 |
+| Security | 21 | 1 |
+| Caching & Jobs | 23, 24 | 2 |
+| Services | 25, 26, 27 | 3 |
+| Real-time | 28 | 1 |
+| Testing | 29 | 1 |
+| DevOps | 30, 31, 32 | 3 |
+| Architecture | 33 | 1 |
+| Integration | 34, 35, 36 | 3 |
 
 ---
 
-## JavaScript Functions (in the-js-ts-fun-book.html)
+## Platform Features
 
-### Core Functions
-- `render()` — Main render function, builds all HTML for the current lesson
-- `goTo(i)` — Navigate to lesson index `i`
-- `goPrev()` — Go to previous lesson
-- `markAndNext()` — Mark current as completed, go to next
-- `toggleCode()` — Show/hide code example
-- `toggleTheme()` — Toggle dark/light mode, persists to localStorage
-- `initTheme()` — Initialize theme from localStorage on page load
+### Learning
+- Flashcard mode (default ON) with flip animation and SRS difficulty rating
+- Code playground with live JS execution
+- Line-by-line code walkthroughs
+- Spot-the-bug challenges
+- Typing challenges for muscle memory
+- Elaborative interrogation ("Think Deeper" prompts)
+- Self-explanation text input
+- ELI5 toggle
+- Concept flow diagrams per lesson
+- Prerequisites with completion tracking
 
-### Quiz System
-- `checkQuiz(btn, picked, ans, quizIdx)` — Check a quiz answer, update UI, trigger achievement
-- `quizScores` — Object tracking `{lessonIdx-quizIdx: boolean}` for each answer
+### Assessment
+- Per-lesson quizzes with **shuffled option order** (seeded randomization)
+- Confidence rating before answering (Unsure / Somewhat / Very Sure)
+- Spaced Repetition Review (Leitner 5-box system)
+- Mixed Challenge (interleaved cross-lesson quizzes)
+- Achievement system with confetti and witty messages
 
-### Achievement System
-- `showAchievement(score, total)` — Show achievement overlay with random witty message
-- `getRandomAchievement(score, total)` — Pick random message from tier (perfect/great/good/tryAgain)
-- `getStars(score, total)` — Calculate 0-3 stars
-- `spawnConfetti()` — Create confetti particle animation (triggered on 66%+ score)
-- `ACHIEVEMENTS` — Object with message pools: `perfect`, `great`, `good`, `tryAgain`
+### Gamification
+- XP system with 10 level titles (Newbie to Grandmaster)
+- Progress tracking (overall + per-topic)
+- Bookmarks
+- Point reactions (Got It / Hard / Love)
+- Lesson ratings (5-star)
+- Completion milestones with messages
+- Certificate generation with LinkedIn share
 
-### Utility
-- `escHtml(s)` — HTML-escape a string for safe rendering in code blocks
+### Tools
+- Full-text search across all lesson content
+- Per-lesson notes editor (rich text, copy/share, all-notes view)
+- Dashboard with donut chart, topic progress, skill tree
+- Keyboard shortcuts (arrows, Ctrl+K search, D dashboard, N notes, T theme)
 
-### ICONS Map
-- `ICONS` — Object with keys `1`–`30`, each containing a unique SVG string
-- Each SVG uses `viewBox="0 0 24 24"` with stroke-based paths
+### Internationalization
+- 8-language UI: English, Bengali, Hindi, Spanish, Arabic, Portuguese, Indonesian, French
+- Arabic RTL support (CSS `[dir="rtl"]` rules)
+- Google Translate integration for lesson content
 
----
-
-## SEO Features
-
-### Meta Tags
-- Title, description, keywords, author, robots, canonical URL
-- Open Graph: type, title, description, url, site_name, image (1200x630)
-- Twitter Card: summary_large_image, title, description, image
-
-### JSON-LD Structured Data
-- `Course` schema: name, description, provider (Teamz Lab), educationalLevel, programmingLanguage, teaches, numberOfLessons, isAccessibleForFree
-- `WebApplication` schema: name, applicationCategory (Educational), operatingSystem (Web Browser), offers (free), aggregateRating
-
-### Share Buttons (in footer)
-- Twitter/X (pre-composed tweet with hashtags)
-- LinkedIn (share URL)
-- Facebook (share URL)
-- WhatsApp (pre-composed message)
-- Copy Link button
+### Analytics
+- Firebase Analytics (production-only: learn.teamzlab.com, teamz-lab-ltd.github.io)
+- `window.__logEvent(name, params)` — tracks 20+ event types
+- `window.__setUserProps(props)` — user segmentation
+- Events: lesson_view, lesson_complete, quiz_answer, bookmark_toggle, theme_toggle, share_click, hire_click, etc.
 
 ---
 
 ## State Management
 
-All state is in-memory JavaScript variables:
-- `current` — Current lesson index (0-based)
-- `completed` — `Set` of completed lesson indices
-- `codeVisible` — Boolean for code toggle
-- `quizScores` — Object `{ "lessonIdx-quizIdx": boolean }`
-- `shownAchievements` — `Set` of lesson indices where achievement was already shown
+All state persisted to `localStorage` key `funbook_state`:
+- `current`, `completed`, `quizScores`, `bookmarks`, `xp`, `xpEarned`
+- `lessonNotes`, `selfExplanations`, `pointReactions`, `lessonRatings`
+- `confidenceRatings`, `srsCards`, `flashcardDifficulty`, `reviewStreak`
+- `lang`, `certName`
 
-Theme preference is persisted in `localStorage` key `theme`.
+Theme persisted separately in `localStorage` key `theme`.
 
 ---
 
 ## Known Considerations & Rules
 
-1. **Quiz property is `q:` not `t:`** — Each quiz object uses `q` for the question text. A bug was previously found where one quiz used `t:` instead.
-2. **Exactly 3 quizzes per lesson** — The achievement system assumes exactly 3 quizzes. Adding more or fewer will break the score display.
-3. **ICONS map must have keys 1–30** — The render function looks up `ICONS[l.id]` for each lesson. Missing icons cause blank spaces.
-4. **data.js uses `const LESSONS_DATA`** — The HTML references this global. Do not wrap in a module or change the variable name.
-5. **No external dependencies** — The only external resource is Google Fonts (Poppins). Everything else is self-contained.
-6. **SVG icons only, no emoji** — The entire project uses SVG icons with `stroke: currentColor` for theme compatibility.
+1. **Quiz options are shuffled at render time** — `shuffleOpts()` uses seeded randomization so options appear in different positions but stay consistent across re-renders.
+2. **Quiz count is dynamic** — The system uses `l.quiz.length` everywhere, not a hardcoded number. You can add more quizzes freely.
+3. **data.js uses `const LESSONS_DATA`** — The HTML references this global. Do not wrap in a module or change the variable name.
+4. **config.js uses `const COURSE_CONFIG`** — Contains topicMap, conceptFlows, SRS settings, XP rewards. Read by learn.html.
+5. **No external dependencies** — Only Google Fonts (Poppins) and Firebase Analytics CDN. Everything else is self-contained.
+6. **SVG icons only, no emoji** — Icons use `stroke: currentColor` for theme compatibility.
+7. **RTL support** — Arabic language triggers `dir="rtl"` on `<html>`. Code blocks stay LTR.
 
 ---
 
 ## How to Add a New Lesson
 
-1. Add a new object to the `LESSONS_DATA` array in `data.js` following the schema above
-2. Add a new SVG icon to the `ICONS` map in `the-js-ts-fun-book.html` with the next key number
-3. Update the progress text in the header (currently "0 / 30 lessons completed")
-4. Update the SEO meta tags if the total lesson count changes
-5. Update the JSON-LD `numberOfLessons` field
-
----
-
-## How to Modify Styling
-
-All styles are in the `<style>` block inside `the-js-ts-fun-book.html`. Key classes:
-- `.tab` / `.tab.active` / `.tab.done` — Lesson tabs
-- `.point` / `.point-title` / `.point-desc` — Teaching point cards
-- `.quiz-box` / `.quiz-btn` / `.quiz-btn.correct` / `.quiz-btn.wrong` — Quiz UI
-- `.achievement-overlay` / `.achievement-card` — Achievement popup
-- `.confetti` / `.confetti-container` — Confetti animation
-- `.code-block` — Code example styling
-- `.analogy-box` — Analogy section
-- `.fun-fact` — Fun fact section
-- `.challenge` — Challenge section
+1. Add a new object to `LESSONS_DATA` in `data.js` following the schema above (all fields required)
+2. Add the lesson ID to the appropriate topic in `config.js` `topicMap`
+3. Add a concept flow array in `config.js` `conceptFlows`
+4. The lesson count, progress, and SEO are all auto-calculated from the data
 
 ---
 
 ## Deployment
 
 - **GitHub Pages**: Deploy from `main` branch, root `/`
-- **Requirements**: Repo must be public for free GitHub Pages
-- **Files needed in root**: `index.html`, `the-js-ts-fun-book.html`, `data.js`, `README.md`
+- **Custom domain**: learn.teamzlab.com
 - **No build step** — Everything is static HTML/CSS/JS
+- **Files needed**: `learn.html`, `index.html`, `courses/js-ts-fun-book/data.js`, `courses/js-ts-fun-book/config.js`
 
 ---
 
-## Future Enhancement Ideas
+## Business Integration
 
-- Add more lessons (GraphQL, CI/CD pipelines, microservices, etc.)
-- Add a progress save/restore using localStorage
-- Create an OG image (og-image.png) for social media previews
-- Add syntax highlighting to code blocks (e.g., highlight.js)
-- Add a search/filter feature for lessons
-- Add keyboard navigation (arrow keys)
-- Export quiz results as a shareable certificate
-- PWA support (service worker for offline access)
-- Analytics integration (Google Analytics or Plausible)
-- i18n (multi-language support)
+- Footer CTA for hiring Teamz Lab (Upwork, website, apps)
+- Services: AI Integration, Web & Mobile Apps, SaaS, TypeScript expertise
+- Organization schema with service catalog in JSON-LD
+- Analytics tracks hire_click events with location context

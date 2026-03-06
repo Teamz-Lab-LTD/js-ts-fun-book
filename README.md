@@ -1,35 +1,54 @@
 # The JS & TS Fun Book
 
-An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **React**, and **fullstack development** through 30 fun lessons. Built by [Teamz Lab LTD](https://github.com/Teamz-Lab-LTD).
+An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **React**, and **fullstack development** through 40 fun lessons — from "What is Programming?" to deploying a full-stack app. Built by [Teamz Lab LTD](https://github.com/Teamz-Lab-LTD).
 
 ## Live Demo
 
-[https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html](https://teamz-lab-ltd.github.io/js-ts-fun-book/the-js-ts-fun-book.html)
+[https://learn.teamzlab.com/learn.html?course=js-ts-fun-book](https://learn.teamzlab.com/learn.html?course=js-ts-fun-book)
 
 ## Features
 
-- 30 interactive lessons covering TypeScript basics to full-stack architecture
-- 90 quizzes (3 per lesson) with instant feedback
-- 216 teaching points with real-world analogies
-- Achievement system with confetti animations and witty messages
+- 40 interactive lessons covering zero-to-hero fullstack development
+- 120 quizzes (3 per lesson) with instant feedback
+- 346 teaching points with real-world analogies
+- Flashcard mode with spaced repetition (SRS)
+- Code playground with live execution
+- Line-by-line code walkthroughs
+- Spot-the-bug challenges
+- Typing challenges for muscle memory
+- Mixed quizzes across lessons
+- XP system, levels, achievements, and certificates
+- Self-explanation & elaborative interrogation prompts
+- Per-lesson notes with copy/share
+- 8-language UI (English, Bengali, Hindi, Spanish, Arabic, Portuguese, Indonesian, French)
 - Dark/Light mode toggle
 - Fully responsive design
-- SEO optimized with Open Graph and JSON-LD structured data
-- Share buttons for Twitter, LinkedIn, Facebook, and WhatsApp
+- SEO optimized with Open Graph, JSON-LD structured data, and FAQ schema
+- Share buttons for Twitter, LinkedIn, Facebook, WhatsApp, and Reddit
+- Firebase Analytics integration
 - Zero dependencies — pure HTML, CSS, and JavaScript
 
 ## Lessons
 
 | # | Topic | Area |
 |---|-------|------|
-| 1-2 | Monorepo, JS vs TS | Fundamentals |
-| 3-9 | Variables, Objects, Functions, Classes, Async, Generics | TypeScript |
-| 10-12 | React, React Native, Frontend Stack | Frontend |
-| 13 | Why NestJS? | Backend |
-| 14-17 | MongoDB, Prisma, Redis, Bull | Data & Jobs |
-| 18-21 | Auth, Email, Push Notifications, AWS S3 | Services |
-| 22-28 | Docker, Testing, WebSockets, API Design, DevOps, Tooling | Infrastructure |
-| 29-30 | Integration & Learning Path | Career |
+| 37-40 | What is Programming?, Setup, Internet, First App | Getting Started |
+| 1-2 | JS vs TS, Developer Tooling | Fundamentals |
+| 3-7 | Variables, Objects, Functions, Modules, Union Types | TypeScript Basics |
+| 8-10, 22 | Classes, Async/Await, Error Handling, Generics | TypeScript Advanced |
+| 11-13 | React, State Management, Frontend Stack | Frontend |
+| 14 | API Design & REST | API & REST |
+| 15-17 | NestJS, Architecture, Validation & DTOs | NestJS |
+| 18-19 | MongoDB, Prisma | Database |
+| 20 | Environment Variables & Config | Config |
+| 21 | Authentication — JWT & Guards | Security |
+| 23-24 | Redis, Bull Job Queues | Caching & Jobs |
+| 25-27 | Email, Push Notifications, AWS S3 | Services |
+| 28 | WebSockets & Real-Time | Real-time |
+| 29 | Testing | Testing |
+| 30-32 | Docker, Git, Deployment & DevOps | DevOps |
+| 33 | Monorepo | Architecture |
+| 34-36 | React Native, Integration, Learning Path | Integration |
 
 ## Tech Stack
 
