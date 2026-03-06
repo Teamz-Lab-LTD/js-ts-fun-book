@@ -411,6 +411,79 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 .lang-option:hover { background:var(--bg); color:var(--heading); }
 .lang-option.active { color:var(--accent); font-weight:600; }
 
+/* Google Translate — hide default UI */
+.goog-te-banner-frame { display:none !important; }
+body { top:0 !important; }
+.skiptranslate { display:none !important; }
+#google_translate_element { position:absolute; visibility:hidden; height:0; overflow:hidden; }
+.goog-te-gadget { font-size:0 !important; }
+
+/* ELI5 Mode */
+.eli5-toggle { display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 1rem; background:linear-gradient(135deg,#ff6b35,#f7c948); color:#12151A; border:none; border-radius:20px; font-size:0.8rem; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.3s; }
+.eli5-toggle:hover { transform:scale(1.05); box-shadow:0 4px 15px rgba(255,107,53,0.3); }
+.eli5-toggle.active { background:linear-gradient(135deg,#f7c948,#ff6b35); box-shadow:0 0 20px rgba(255,107,53,0.4); }
+.eli5-box { background:linear-gradient(135deg,rgba(255,107,53,0.1),rgba(247,201,72,0.1)); border:1px solid rgba(255,107,53,0.3); border-radius:12px; padding:1.2rem; margin:1rem 0; animation:fadeIn 0.3s ease; }
+.eli5-box h4 { color:#f7c948; margin-bottom:0.5rem; font-size:0.95rem; display:flex; align-items:center; gap:0.5rem; }
+.eli5-box p { color:var(--text); font-size:0.9rem; line-height:1.7; }
+
+/* Code Walkthrough */
+.walkthrough-toggle { display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.8rem; background:rgba(33,150,243,0.15); border:1px solid rgba(33,150,243,0.3); border-radius:6px; color:#2196F3; cursor:pointer; font-size:0.78rem; font-weight:600; font-family:'Poppins',sans-serif; transition:all 0.2s; margin-left:0.5rem; }
+.walkthrough-toggle:hover { background:rgba(33,150,243,0.25); }
+.walkthrough-toggle.active { background:#2196F3; color:#fff; }
+.walkthrough-container { margin:0; }
+.walkthrough-line { display:flex; gap:0.5rem; padding:0.25rem 0.5rem; cursor:pointer; border-radius:4px; transition:all 0.2s; border-left:2px solid transparent; }
+.walkthrough-line:hover { background:rgba(217,254,6,0.05); border-left-color:var(--accent); }
+.walkthrough-line.active { background:rgba(217,254,6,0.08); border-left-color:var(--accent); }
+.walkthrough-num { color:var(--text-muted); font-size:0.72rem; min-width:22px; text-align:right; font-family:'Fira Code',monospace; padding-top:2px; user-select:none; opacity:0.5; }
+.walkthrough-code { font-family:'Fira Code',Consolas,monospace; font-size:0.8rem; color:var(--code-text); flex:1; white-space:pre; }
+.walkthrough-explain { padding:0.4rem 0.5rem 0.4rem 30px; font-size:0.8rem; color:#2196F3; line-height:1.5; display:none; background:rgba(33,150,243,0.05); border-radius:4px; margin:0.1rem 0; }
+.walkthrough-explain.show { display:block; animation:fadeIn 0.2s ease; }
+
+/* Spot the Bug */
+.bug-challenge { background:linear-gradient(135deg,rgba(244,67,54,0.08),rgba(255,152,0,0.08)); border:1px solid rgba(244,67,54,0.3); border-radius:12px; padding:1.2rem; margin:1.5rem 0; }
+.bug-challenge h4 { color:#f44; margin-bottom:0.8rem; display:flex; align-items:center; gap:0.5rem; font-size:0.95rem; }
+.bug-code { background:var(--code-bg); border-radius:8px; padding:1rem; font-family:'Fira Code',monospace; font-size:0.82rem; color:var(--code-text); margin-bottom:0.8rem; overflow-x:auto; white-space:pre; }
+.bug-actions { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.bug-hint-btn { padding:0.35rem 0.8rem; background:transparent; border:1px solid rgba(255,152,0,0.4); border-radius:6px; color:#ff9800; cursor:pointer; font-size:0.78rem; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.bug-hint-btn:hover { background:rgba(255,152,0,0.1); }
+.bug-reveal-btn { padding:0.35rem 0.8rem; background:rgba(76,175,80,0.15); border:1px solid rgba(76,175,80,0.4); border-radius:6px; color:#4CAF50; cursor:pointer; font-size:0.78rem; font-family:'Poppins',sans-serif; transition:all 0.2s; }
+.bug-reveal-btn:hover { background:rgba(76,175,80,0.2); }
+.bug-hint { padding:0.6rem; background:rgba(255,152,0,0.08); border-radius:6px; margin-top:0.6rem; font-size:0.82rem; color:#ff9800; display:none; line-height:1.5; }
+.bug-answer { padding:0.6rem; background:rgba(76,175,80,0.08); border-radius:6px; margin-top:0.6rem; font-size:0.82rem; color:#4CAF50; display:none; line-height:1.6; }
+
+/* AI Help Links */
+.ai-help { display:inline-flex; gap:0.3rem; margin-left:auto; flex-shrink:0; }
+.ai-btn { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:6px; border:1px solid var(--border); background:var(--surface); cursor:pointer; transition:all 0.2s; text-decoration:none; padding:0; }
+.ai-btn:hover { transform:scale(1.1); }
+.ai-btn.ai-yt { color:#f44; }
+.ai-btn.ai-yt:hover { background:rgba(255,0,0,0.1); border-color:#f44; }
+.ai-btn.ai-gemini { color:#4285f4; }
+.ai-btn.ai-gemini:hover { background:rgba(66,133,244,0.1); border-color:#4285f4; }
+.ai-btn.ai-gpt { color:#10a37f; font-family:'Poppins',sans-serif; }
+.ai-btn.ai-gpt:hover { background:rgba(16,163,127,0.1); border-color:#10a37f; }
+
+/* Difficulty Badge */
+.diff-badge { display:inline-flex; align-items:center; gap:0.3rem; padding:0.2rem 0.6rem; border-radius:12px; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-left:0.5rem; }
+.diff-beginner { background:rgba(76,175,80,0.15); color:#4CAF50; }
+.diff-intermediate { background:rgba(255,152,0,0.15); color:#ff9800; }
+.diff-advanced { background:rgba(244,67,54,0.15); color:#f44; }
+
+/* Prerequisites */
+.prereqs { display:flex; flex-wrap:wrap; gap:0.3rem; margin:0.5rem 0; }
+.prereq-chip { padding:0.15rem 0.5rem; background:var(--surface); border:1px solid var(--border); border-radius:6px; font-size:0.7rem; color:var(--text-muted); cursor:pointer; transition:all 0.2s; }
+.prereq-chip:hover { border-color:var(--accent); color:var(--accent); }
+.prereq-chip.done { border-color:rgba(76,175,80,0.4); color:#4CAF50; }
+
+/* Skill Tree */
+.skill-tree { margin:1.5rem 0; }
+.skill-tier { margin-bottom:1rem; }
+.skill-tier-label { font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:600; margin-bottom:0.4rem; }
+.skill-nodes { display:flex; flex-wrap:wrap; gap:0.4rem; }
+.skill-node { padding:0.3rem 0.7rem; border-radius:8px; font-size:0.72rem; font-weight:600; cursor:pointer; transition:all 0.2s; border:1px solid var(--border); color:var(--text-muted); background:var(--surface); }
+.skill-node.completed { background:rgba(217,254,6,0.15); border-color:var(--accent); color:var(--accent); }
+.skill-node.current { background:rgba(33,150,243,0.15); border-color:#2196F3; color:#2196F3; }
+.skill-node:hover { transform:translateY(-1px); }
+
 @media(max-width:700px) {
   .dashboard-grid { grid-template-columns:1fr; }
   .flashcards { grid-template-columns:1fr; }
@@ -496,6 +569,15 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 
 <div id="cert-container"></div>
 
+<!-- Google Translate (hidden, controlled programmatically) -->
+<div id="google_translate_element"></div>
+<script>
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ar,bn,es,fr,hi,id,pt',autoDisplay:false},'google_translate_element');
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <!-- Lesson Data (separate file for easy maintenance) -->
 <script src="data.js"></script>
 
@@ -513,19 +595,21 @@ let xp=0;
 let totalXpEarned=new Set();
 let currentLang='en';
 let certName='';
+let eli5Mode=false;
+let walkthroughMode=false;
 
 // Language system — UI translations
 const LANG_NAMES={en:'EN',bn:'BN',hi:'HI',es:'ES',ar:'AR',pt:'PT',id:'ID',fr:'FR'};
 const LANG_FLAGS={en:'English',bn:'Bengali',hi:'Hindi',es:'Spanish',ar:'Arabic',pt:'Portuguese',id:'Indonesian',fr:'French'};
 const UI_STRINGS={
-  en:{lessonsCompleted:'lessons completed',whatIs:'What is it?',realWorld:'Real-World Use',funFact:'Fun Fact',challenge:'Challenge',quiz:'Quiz',codeExample:'Code Example',previous:'Previous',completeNext:'Complete & Next',finish:'Finish!',howWas:'How was this lesson?',loveIt:'Love it',good:'Good',meh:'Meh',resources:'Learning Resources',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Flashcard Mode',dashboard:'Dashboard',getCertificate:'Get Your Certificate',certTitle:'Certificate of Completion',certSubtitle:'This certifies that',certCompleted:'has successfully completed all 36 lessons of',certCourse:'The JS & TS Fun Book',certLessons:'Lessons',certQuizzes:'Quizzes',certPoints:'Points',certShare:'Share on LinkedIn',certDownload:'Download',certEnterName:'Enter your name',certIssuedBy:'Issued by Teamz Lab LTD',perfect:'Perfect!',great:'Great job!',goodEffort:'Good effort!',keepPracticing:'Keep practicing!',prev:'Previous',next:'Next'},
-  bn:{lessonsCompleted:'টি পাঠ সম্পন্ন',whatIs:'এটি কী?',realWorld:'বাস্তব ব্যবহার',funFact:'মজার তথ্য',challenge:'চ্যালেঞ্জ',quiz:'কুইজ',codeExample:'কোড উদাহরণ',previous:'আগের',completeNext:'সম্পন্ন ও পরবর্তী',finish:'শেষ!',howWas:'এই পাঠটি কেমন ছিল?',loveIt:'দারুণ',good:'ভালো',meh:'মোটামুটি',resources:'শিক্ষার উপকরণ',videos:'ভিডিও',articles:'আর্টিকেল',docs:'ডকুমেন্টেশন',flashcardMode:'ফ্ল্যাশকার্ড মোড',dashboard:'ড্যাশবোর্ড',getCertificate:'আপনার সার্টিফিকেট নিন',certTitle:'সমাপ্তির সনদপত্র',certSubtitle:'এটি প্রমাণ করে যে',certCompleted:'সফলভাবে সম্পন্ন করেছেন',certCourse:'দ্য JS & TS ফান বুক',certLessons:'পাঠ',certQuizzes:'কুইজ',certPoints:'পয়েন্ট',certShare:'লিংকডইনে শেয়ার',certDownload:'ডাউনলোড',certEnterName:'আপনার নাম লিখুন',certIssuedBy:'টিমজ ল্যাব লিমিটেড কর্তৃক প্রদত্ত',perfect:'পারফেক্ট!',great:'দারুণ!',goodEffort:'ভালো চেষ্টা!',keepPracticing:'আরো চেষ্টা করুন!',prev:'আগের',next:'পরবর্তী'},
-  hi:{lessonsCompleted:'पाठ पूरे हुए',whatIs:'यह क्या है?',realWorld:'वास्तविक उपयोग',funFact:'मज़ेदार तथ्य',challenge:'चुनौती',quiz:'क्विज़',codeExample:'कोड उदाहरण',previous:'पिछला',completeNext:'पूरा करें और अगला',finish:'समाप्त!',howWas:'यह पाठ कैसा रहा?',loveIt:'बहुत अच्छा',good:'अच्छा',meh:'ठीक-ठाक',resources:'सीखने के संसाधन',videos:'वीडियो',articles:'लेख',docs:'डॉक्यूमेंटेशन',flashcardMode:'फ़्लैशकार्ड मोड',dashboard:'डैशबोर्ड',getCertificate:'अपना प्रमाणपत्र प्राप्त करें',certTitle:'पूर्णता का प्रमाणपत्र',certSubtitle:'यह प्रमाणित करता है कि',certCompleted:'ने सफलतापूर्वक पूरा किया',certCourse:'The JS & TS Fun Book',certLessons:'पाठ',certQuizzes:'क्विज़',certPoints:'अंक',certShare:'लिंक्डइन पर शेयर',certDownload:'डाउनलोड',certEnterName:'अपना नाम दर्ज करें',certIssuedBy:'Teamz Lab LTD द्वारा जारी',perfect:'परफेक्ट!',great:'शानदार!',goodEffort:'अच्छा प्रयास!',keepPracticing:'अभ्यास जारी रखें!',prev:'पिछला',next:'अगला'},
-  es:{lessonsCompleted:'lecciones completadas',whatIs:'Que es?',realWorld:'Uso en el mundo real',funFact:'Dato curioso',challenge:'Desafio',quiz:'Quiz',codeExample:'Ejemplo de codigo',previous:'Anterior',completeNext:'Completar y siguiente',finish:'Terminar!',howWas:'Como fue esta leccion?',loveIt:'Me encanta',good:'Bien',meh:'Regular',resources:'Recursos de aprendizaje',videos:'Videos',articles:'Articulos',docs:'Documentacion',flashcardMode:'Modo flashcard',dashboard:'Panel',getCertificate:'Obtener certificado',certTitle:'Certificado de Finalizacion',certSubtitle:'Esto certifica que',certCompleted:'ha completado exitosamente',certCourse:'The JS & TS Fun Book',certLessons:'Lecciones',certQuizzes:'Quizzes',certPoints:'Puntos',certShare:'Compartir en LinkedIn',certDownload:'Descargar',certEnterName:'Ingresa tu nombre',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfecto!',great:'Genial!',goodEffort:'Buen esfuerzo!',keepPracticing:'Sigue practicando!',prev:'Anterior',next:'Siguiente'},
-  ar:{lessonsCompleted:'دروس مكتملة',whatIs:'ما هذا؟',realWorld:'الاستخدام الواقعي',funFact:'حقيقة ممتعة',challenge:'تحدي',quiz:'اختبار',codeExample:'مثال الكود',previous:'السابق',completeNext:'إكمال والتالي',finish:'إنهاء!',howWas:'كيف كان هذا الدرس؟',loveIt:'أحببته',good:'جيد',meh:'عادي',resources:'مصادر التعلم',videos:'فيديوهات',articles:'مقالات',docs:'التوثيق',flashcardMode:'وضع البطاقات',dashboard:'لوحة التحكم',getCertificate:'احصل على شهادتك',certTitle:'شهادة إتمام',certSubtitle:'هذا يشهد بأن',certCompleted:'قد أكمل بنجاح',certCourse:'The JS & TS Fun Book',certLessons:'دروس',certQuizzes:'اختبارات',certPoints:'نقاط',certShare:'مشاركة على لينكدإن',certDownload:'تحميل',certEnterName:'أدخل اسمك',certIssuedBy:'صادر من Teamz Lab LTD',perfect:'ممتاز!',great:'رائع!',goodEffort:'جهد جيد!',keepPracticing:'واصل التدريب!',prev:'السابق',next:'التالي'},
-  pt:{lessonsCompleted:'licoes concluidas',whatIs:'O que e?',realWorld:'Uso no mundo real',funFact:'Fato curioso',challenge:'Desafio',quiz:'Quiz',codeExample:'Exemplo de codigo',previous:'Anterior',completeNext:'Concluir e proximo',finish:'Finalizar!',howWas:'Como foi esta licao?',loveIt:'Adorei',good:'Bom',meh:'Mais ou menos',resources:'Recursos de aprendizagem',videos:'Videos',articles:'Artigos',docs:'Documentacao',flashcardMode:'Modo flashcard',dashboard:'Painel',getCertificate:'Obter certificado',certTitle:'Certificado de Conclusao',certSubtitle:'Isto certifica que',certCompleted:'concluiu com sucesso',certCourse:'The JS & TS Fun Book',certLessons:'Licoes',certQuizzes:'Quizzes',certPoints:'Pontos',certShare:'Compartilhar no LinkedIn',certDownload:'Baixar',certEnterName:'Digite seu nome',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfeito!',great:'Otimo!',goodEffort:'Bom esforco!',keepPracticing:'Continue praticando!',prev:'Anterior',next:'Proximo'},
-  id:{lessonsCompleted:'pelajaran selesai',whatIs:'Apa ini?',realWorld:'Penggunaan dunia nyata',funFact:'Fakta menarik',challenge:'Tantangan',quiz:'Kuis',codeExample:'Contoh kode',previous:'Sebelumnya',completeNext:'Selesai & Berikutnya',finish:'Selesai!',howWas:'Bagaimana pelajaran ini?',loveIt:'Suka',good:'Bagus',meh:'Biasa',resources:'Sumber belajar',videos:'Video',articles:'Artikel',docs:'Dokumentasi',flashcardMode:'Mode flashcard',dashboard:'Dasbor',getCertificate:'Dapatkan sertifikat',certTitle:'Sertifikat Penyelesaian',certSubtitle:'Ini menyatakan bahwa',certCompleted:'telah berhasil menyelesaikan',certCourse:'The JS & TS Fun Book',certLessons:'Pelajaran',certQuizzes:'Kuis',certPoints:'Poin',certShare:'Bagikan di LinkedIn',certDownload:'Unduh',certEnterName:'Masukkan nama Anda',certIssuedBy:'Diterbitkan oleh Teamz Lab LTD',perfect:'Sempurna!',great:'Hebat!',goodEffort:'Usaha bagus!',keepPracticing:'Terus berlatih!',prev:'Sebelumnya',next:'Berikutnya'},
-  fr:{lessonsCompleted:'lecons terminees',whatIs:'Qu\'est-ce que c\'est?',realWorld:'Utilisation reelle',funFact:'Fait amusant',challenge:'Defi',quiz:'Quiz',codeExample:'Exemple de code',previous:'Precedent',completeNext:'Terminer et suivant',finish:'Terminer!',howWas:'Comment etait cette lecon?',loveIt:'J\'adore',good:'Bien',meh:'Bof',resources:'Ressources d\'apprentissage',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Mode flashcard',dashboard:'Tableau de bord',getCertificate:'Obtenir le certificat',certTitle:'Certificat d\'achevement',certSubtitle:'Ceci certifie que',certCompleted:'a termine avec succes',certCourse:'The JS & TS Fun Book',certLessons:'Lecons',certQuizzes:'Quiz',certPoints:'Points',certShare:'Partager sur LinkedIn',certDownload:'Telecharger',certEnterName:'Entrez votre nom',certIssuedBy:'Delivre par Teamz Lab LTD',perfect:'Parfait!',great:'Genial!',goodEffort:'Bon effort!',keepPracticing:'Continuez!',prev:'Precedent',next:'Suivant'}
+  en:{lessonsCompleted:'lessons completed',whatIs:'What is it?',realWorld:'Real-World Use',funFact:'Fun Fact',challenge:'Challenge',quiz:'Quiz',codeExample:'Code Example',previous:'Previous',completeNext:'Complete & Next',finish:'Finish!',howWas:'How was this lesson?',loveIt:'Love it',good:'Good',meh:'Meh',resources:'Learning Resources',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Flashcard Mode',dashboard:'Dashboard',getCertificate:'Get Your Certificate',certTitle:'Certificate of Completion',certSubtitle:'This certifies that',certCompleted:'has successfully completed all 36 lessons of',certCourse:'The JS & TS Fun Book',certLessons:'Lessons',certQuizzes:'Quizzes',certPoints:'Points',certShare:'Share on LinkedIn',certDownload:'Download',certEnterName:'Enter your name',certIssuedBy:'Issued by Teamz Lab LTD',perfect:'Perfect!',great:'Great job!',goodEffort:'Good effort!',keepPracticing:'Keep practicing!',prev:'Previous',next:'Next',eli5:'Explain Like I\'m 5',eli5Label:'Super Simple Version',spotBug:'Spot the Bug!',spotBugDesc:'Can you find what\'s wrong with this code?',hint:'Show Hint',revealAnswer:'Reveal Answer',walkthrough:'Walkthrough',clickLine:'Click any line to see what it does',thinkOfIt:'Think of it this way...',conceptFlow:'Concept Flow',difficulty:'Difficulty',prereqLabel:'Prerequisites',beginner:'Beginner',intermediate:'Intermediate',advanced:'Advanced',skillTree:'Skill Tree'},
+  bn:{lessonsCompleted:'টি পাঠ সম্পন্ন',whatIs:'এটি কী?',realWorld:'বাস্তব ব্যবহার',funFact:'মজার তথ্য',challenge:'চ্যালেঞ্জ',quiz:'কুইজ',codeExample:'কোড উদাহরণ',previous:'আগের',completeNext:'সম্পন্ন ও পরবর্তী',finish:'শেষ!',howWas:'এই পাঠটি কেমন ছিল?',loveIt:'দারুণ',good:'ভালো',meh:'মোটামুটি',resources:'শিক্ষার উপকরণ',videos:'ভিডিও',articles:'আর্টিকেল',docs:'ডকুমেন্টেশন',flashcardMode:'ফ্ল্যাশকার্ড মোড',dashboard:'ড্যাশবোর্ড',getCertificate:'আপনার সার্টিফিকেট নিন',certTitle:'সমাপ্তির সনদপত্র',certSubtitle:'এটি প্রমাণ করে যে',certCompleted:'সফলভাবে সম্পন্ন করেছেন',certCourse:'দ্য JS & TS ফান বুক',certLessons:'পাঠ',certQuizzes:'কুইজ',certPoints:'পয়েন্ট',certShare:'লিংকডইনে শেয়ার',certDownload:'ডাউনলোড',certEnterName:'আপনার নাম লিখুন',certIssuedBy:'টিমজ ল্যাব লিমিটেড কর্তৃক প্রদত্ত',perfect:'পারফেক্ট!',great:'দারুণ!',goodEffort:'ভালো চেষ্টা!',keepPracticing:'আরো চেষ্টা করুন!',prev:'আগের',next:'পরবর্তী',eli5:'সহজ ভাষায় বুঝুন',eli5Label:'একদম সহজ ভার্সন',spotBug:'বাগ খুঁজুন!',spotBugDesc:'এই কোডে কী ভুল আছে বের করুন',hint:'ইঙ্গিত দেখুন',revealAnswer:'উত্তর দেখুন',walkthrough:'ধাপে ধাপে',clickLine:'প্রতিটি লাইনে ক্লিক করুন',thinkOfIt:'এভাবে ভাবুন...',conceptFlow:'ধারণার প্রবাহ',difficulty:'কঠিনতা',prereqLabel:'পূর্বশর্ত',beginner:'শুরুর স্তর',intermediate:'মাঝারি',advanced:'উন্নত',skillTree:'দক্ষতা বৃক্ষ'},
+  hi:{lessonsCompleted:'पाठ पूरे हुए',whatIs:'यह क्या है?',realWorld:'वास्तविक उपयोग',funFact:'मज़ेदार तथ्य',challenge:'चुनौती',quiz:'क्विज़',codeExample:'कोड उदाहरण',previous:'पिछला',completeNext:'पूरा करें और अगला',finish:'समाप्त!',howWas:'यह पाठ कैसा रहा?',loveIt:'बहुत अच्छा',good:'अच्छा',meh:'ठीक-ठाक',resources:'सीखने के संसाधन',videos:'वीडियो',articles:'लेख',docs:'डॉक्यूमेंटेशन',flashcardMode:'फ़्लैशकार्ड मोड',dashboard:'डैशबोर्ड',getCertificate:'अपना प्रमाणपत्र प्राप्त करें',certTitle:'पूर्णता का प्रमाणपत्र',certSubtitle:'यह प्रमाणित करता है कि',certCompleted:'ने सफलतापूर्वक पूरा किया',certCourse:'The JS & TS Fun Book',certLessons:'पाठ',certQuizzes:'क्विज़',certPoints:'अंक',certShare:'लिंक्डइन पर शेयर',certDownload:'डाउनलोड',certEnterName:'अपना नाम दर्ज करें',certIssuedBy:'Teamz Lab LTD द्वारा जारी',perfect:'परफेक्ट!',great:'शानदार!',goodEffort:'अच्छा प्रयास!',keepPracticing:'अभ्यास जारी रखें!',prev:'पिछला',next:'अगला',eli5:'बिल्कुल आसान भाषा में',eli5Label:'सबसे सरल संस्करण',spotBug:'बग खोजें!',spotBugDesc:'इस कोड में क्या गलत है?',hint:'संकेत दिखाएं',revealAnswer:'उत्तर दिखाएं',walkthrough:'कदम दर कदम',clickLine:'हर लाइन पर क्लिक करें',thinkOfIt:'इसे ऐसे समझें...',conceptFlow:'अवधारणा प्रवाह',difficulty:'कठिनाई',prereqLabel:'पूर्वापेक्षाएँ',beginner:'शुरुआती',intermediate:'मध्यम',advanced:'उन्नत',skillTree:'कौशल वृक्ष'},
+  es:{lessonsCompleted:'lecciones completadas',whatIs:'Que es?',realWorld:'Uso en el mundo real',funFact:'Dato curioso',challenge:'Desafio',quiz:'Quiz',codeExample:'Ejemplo de codigo',previous:'Anterior',completeNext:'Completar y siguiente',finish:'Terminar!',howWas:'Como fue esta leccion?',loveIt:'Me encanta',good:'Bien',meh:'Regular',resources:'Recursos de aprendizaje',videos:'Videos',articles:'Articulos',docs:'Documentacion',flashcardMode:'Modo flashcard',dashboard:'Panel',getCertificate:'Obtener certificado',certTitle:'Certificado de Finalizacion',certSubtitle:'Esto certifica que',certCompleted:'ha completado exitosamente',certCourse:'The JS & TS Fun Book',certLessons:'Lecciones',certQuizzes:'Quizzes',certPoints:'Puntos',certShare:'Compartir en LinkedIn',certDownload:'Descargar',certEnterName:'Ingresa tu nombre',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfecto!',great:'Genial!',goodEffort:'Buen esfuerzo!',keepPracticing:'Sigue practicando!',prev:'Anterior',next:'Siguiente',eli5:'Explicalo como si tuviera 5',eli5Label:'Version super simple',spotBug:'Encuentra el bug!',spotBugDesc:'Que esta mal en este codigo?',hint:'Pista',revealAnswer:'Ver respuesta',walkthrough:'Paso a paso',clickLine:'Haz clic en cada linea',thinkOfIt:'Piensalo asi...',conceptFlow:'Flujo conceptual',difficulty:'Dificultad',prereqLabel:'Prerequisitos',beginner:'Principiante',intermediate:'Intermedio',advanced:'Avanzado',skillTree:'Arbol de habilidades'},
+  ar:{lessonsCompleted:'دروس مكتملة',whatIs:'ما هذا؟',realWorld:'الاستخدام الواقعي',funFact:'حقيقة ممتعة',challenge:'تحدي',quiz:'اختبار',codeExample:'مثال الكود',previous:'السابق',completeNext:'إكمال والتالي',finish:'إنهاء!',howWas:'كيف كان هذا الدرس؟',loveIt:'أحببته',good:'جيد',meh:'عادي',resources:'مصادر التعلم',videos:'فيديوهات',articles:'مقالات',docs:'التوثيق',flashcardMode:'وضع البطاقات',dashboard:'لوحة التحكم',getCertificate:'احصل على شهادتك',certTitle:'شهادة إتمام',certSubtitle:'هذا يشهد بأن',certCompleted:'قد أكمل بنجاح',certCourse:'The JS & TS Fun Book',certLessons:'دروس',certQuizzes:'اختبارات',certPoints:'نقاط',certShare:'مشاركة على لينكدإن',certDownload:'تحميل',certEnterName:'أدخل اسمك',certIssuedBy:'صادر من Teamz Lab LTD',perfect:'ممتاز!',great:'رائع!',goodEffort:'جهد جيد!',keepPracticing:'واصل التدريب!',prev:'السابق',next:'التالي',eli5:'اشرحها ببساطة',eli5Label:'النسخة البسيطة',spotBug:'اكتشف الخطأ!',spotBugDesc:'هل يمكنك إيجاد الخطأ في هذا الكود؟',hint:'تلميح',revealAnswer:'اظهر الإجابة',walkthrough:'خطوة بخطوة',clickLine:'انقر على أي سطر',thinkOfIt:'فكر فيها هكذا...',conceptFlow:'تدفق المفاهيم',difficulty:'الصعوبة',prereqLabel:'المتطلبات',beginner:'مبتدئ',intermediate:'متوسط',advanced:'متقدم',skillTree:'شجرة المهارات'},
+  pt:{lessonsCompleted:'licoes concluidas',whatIs:'O que e?',realWorld:'Uso no mundo real',funFact:'Fato curioso',challenge:'Desafio',quiz:'Quiz',codeExample:'Exemplo de codigo',previous:'Anterior',completeNext:'Concluir e proximo',finish:'Finalizar!',howWas:'Como foi esta licao?',loveIt:'Adorei',good:'Bom',meh:'Mais ou menos',resources:'Recursos de aprendizagem',videos:'Videos',articles:'Artigos',docs:'Documentacao',flashcardMode:'Modo flashcard',dashboard:'Painel',getCertificate:'Obter certificado',certTitle:'Certificado de Conclusao',certSubtitle:'Isto certifica que',certCompleted:'concluiu com sucesso',certCourse:'The JS & TS Fun Book',certLessons:'Licoes',certQuizzes:'Quizzes',certPoints:'Pontos',certShare:'Compartilhar no LinkedIn',certDownload:'Baixar',certEnterName:'Digite seu nome',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfeito!',great:'Otimo!',goodEffort:'Bom esforco!',keepPracticing:'Continue praticando!',prev:'Anterior',next:'Proximo',eli5:'Explique como se eu tivesse 5 anos',eli5Label:'Versao super simples',spotBug:'Encontre o bug!',spotBugDesc:'O que esta errado neste codigo?',hint:'Dica',revealAnswer:'Revelar resposta',walkthrough:'Passo a passo',clickLine:'Clique em qualquer linha',thinkOfIt:'Pense assim...',conceptFlow:'Fluxo conceitual',difficulty:'Dificuldade',prereqLabel:'Pre-requisitos',beginner:'Iniciante',intermediate:'Intermediario',advanced:'Avancado',skillTree:'Arvore de habilidades'},
+  id:{lessonsCompleted:'pelajaran selesai',whatIs:'Apa ini?',realWorld:'Penggunaan dunia nyata',funFact:'Fakta menarik',challenge:'Tantangan',quiz:'Kuis',codeExample:'Contoh kode',previous:'Sebelumnya',completeNext:'Selesai & Berikutnya',finish:'Selesai!',howWas:'Bagaimana pelajaran ini?',loveIt:'Suka',good:'Bagus',meh:'Biasa',resources:'Sumber belajar',videos:'Video',articles:'Artikel',docs:'Dokumentasi',flashcardMode:'Mode flashcard',dashboard:'Dasbor',getCertificate:'Dapatkan sertifikat',certTitle:'Sertifikat Penyelesaian',certSubtitle:'Ini menyatakan bahwa',certCompleted:'telah berhasil menyelesaikan',certCourse:'The JS & TS Fun Book',certLessons:'Pelajaran',certQuizzes:'Kuis',certPoints:'Poin',certShare:'Bagikan di LinkedIn',certDownload:'Unduh',certEnterName:'Masukkan nama Anda',certIssuedBy:'Diterbitkan oleh Teamz Lab LTD',perfect:'Sempurna!',great:'Hebat!',goodEffort:'Usaha bagus!',keepPracticing:'Terus berlatih!',prev:'Sebelumnya',next:'Berikutnya',eli5:'Jelaskan seperti saya usia 5 tahun',eli5Label:'Versi super sederhana',spotBug:'Temukan bug-nya!',spotBugDesc:'Apa yang salah dari kode ini?',hint:'Petunjuk',revealAnswer:'Lihat jawaban',walkthrough:'Langkah demi langkah',clickLine:'Klik baris mana saja',thinkOfIt:'Bayangkan seperti ini...',conceptFlow:'Alur konsep',difficulty:'Tingkat kesulitan',prereqLabel:'Prasyarat',beginner:'Pemula',intermediate:'Menengah',advanced:'Lanjutan',skillTree:'Pohon keterampilan'},
+  fr:{lessonsCompleted:'lecons terminees',whatIs:'Qu\'est-ce que c\'est?',realWorld:'Utilisation reelle',funFact:'Fait amusant',challenge:'Defi',quiz:'Quiz',codeExample:'Exemple de code',previous:'Precedent',completeNext:'Terminer et suivant',finish:'Terminer!',howWas:'Comment etait cette lecon?',loveIt:'J\'adore',good:'Bien',meh:'Bof',resources:'Ressources d\'apprentissage',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Mode flashcard',dashboard:'Tableau de bord',getCertificate:'Obtenir le certificat',certTitle:'Certificat d\'achevement',certSubtitle:'Ceci certifie que',certCompleted:'a termine avec succes',certCourse:'The JS & TS Fun Book',certLessons:'Lecons',certQuizzes:'Quiz',certPoints:'Points',certShare:'Partager sur LinkedIn',certDownload:'Telecharger',certEnterName:'Entrez votre nom',certIssuedBy:'Delivre par Teamz Lab LTD',perfect:'Parfait!',great:'Genial!',goodEffort:'Bon effort!',keepPracticing:'Continuez!',prev:'Precedent',next:'Suivant',eli5:'Explique-moi comme si j\'avais 5 ans',eli5Label:'Version ultra simple',spotBug:'Trouvez le bug!',spotBugDesc:'Qu\'est-ce qui ne va pas dans ce code?',hint:'Indice',revealAnswer:'Voir la reponse',walkthrough:'Pas a pas',clickLine:'Cliquez sur n\'importe quelle ligne',thinkOfIt:'Pensez-y comme ca...',conceptFlow:'Flux conceptuel',difficulty:'Difficulte',prereqLabel:'Prerequis',beginner:'Debutant',intermediate:'Intermediaire',advanced:'Avance',skillTree:'Arbre de competences'}
 };
 function t(key){return (UI_STRINGS[currentLang]||UI_STRINGS.en)[key]||UI_STRINGS.en[key]||key;}
 
@@ -777,6 +861,12 @@ function renderDashboard(){
           </div>`
           :'<div style="color:var(--heading);font-size:1.1rem;font-weight:700">All lessons completed! You are a Fullstack Hero!</div>'}
       </div>
+      <div class="dash-card" style="grid-column:1/-1">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v4"/><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M12 12l-6 2M12 12l6 2"/></svg> ${t('skillTree')}</h3>
+        <div class="skill-tree">
+          ${Object.entries(TOPICS).map(([name,ids])=>`<div class="skill-tier"><div class="skill-tier-label">${name}</div><div class="skill-nodes">${ids.map(id=>{const idx=id-1;const cls=completed.has(idx)?'completed':idx===current&&!showDashboard?'current':'';return `<div class="skill-node ${cls}" onclick="showDashboard=false;goTo(${idx})">${id}. ${L[idx].title}</div>`;}).join('')}</div></div>`).join('')}
+        </div>
+      </div>
     </div>
   </div>`;
 }
@@ -858,21 +948,24 @@ function render(){
       <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
     </button>
     <span class="lesson-emoji">${bigIcon(l.id)}</span>
-    <div class="lesson-title">${l.title}</div>
+    <div class="lesson-title notranslate">${l.title}${l.difficulty?`<span class="diff-badge diff-${l.difficulty}">${t(l.difficulty)}</span>`:''}</div>
     <div class="lesson-sub">${l.subtitle}</div>
     <div class="reading-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${readTime} min read</div>
+    ${l.prereqs&&l.prereqs.length?`<div class="prereqs"><span style="font-size:0.72rem;color:var(--text-muted);margin-right:0.3rem">${t('prereqLabel')}:</span>${l.prereqs.map(pid=>{const pl=L.find(x=>x.id===pid);return pl?`<span class="prereq-chip ${completed.has(L.indexOf(pl))?'done':''}" onclick="showDashboard=false;goTo(${L.indexOf(pl)})">${pl.title}</span>`:'';}).join('')}</div>`:''}
   </div>`;
 
   // Concept flow diagram
   const flow=getConceptFlow(l);
-  h+=`<div class="concept-diagram reveal"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Concept Flow</h4><div class="diagram-flow">`;
+  h+=`<div class="concept-diagram reveal"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> ${t('conceptFlow')}</h4><div class="diagram-flow notranslate">`;
   flow.forEach((node,i)=>{
     if(i>0) h+=`<span class="diagram-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>`;
     h+=`<div class="diagram-node">${node}</div>`;
   });
   h+=`</div></div>`;
 
-  h+=`<div class="analogy-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>Think of it this way...</h3><p>${l.analogy}</p></div>`;
+  h+=`<div class="analogy-box reveal"><h3><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('thinkOfIt')}</h3><p>${l.analogy}</p>
+  ${l.eli5?`<button class="eli5-toggle ${eli5Mode?'active':''}" onclick="toggleEli5()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('eli5')}</button>`:''}
+  ${eli5Mode&&l.eli5?`<div class="eli5-box"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${t('eli5Label')}</h4><p>${l.eli5}</p></div>`:''}</div>`;
 
   // Flashcard toggle
   h+=`<div style="display:flex;align-items:center;gap:0.5rem;margin:1.5rem 0 0">
@@ -888,7 +981,7 @@ function render(){
     l.points.forEach((p,i)=>{
       h+=`<div class="flashcard" onclick="this.classList.toggle('flipped')">
         <div class="flashcard-face flashcard-front">
-          <div class="point-title">${p.t}</div>
+          <div class="point-title notranslate">${p.t}</div>
           <div class="flip-hint">Click to flip</div>
         </div>
         <div class="flashcard-face flashcard-back">
@@ -900,7 +993,7 @@ function render(){
   }else{
     h+=`<div class="points">`;
     l.points.forEach(p=>{
-      h+=`<div class="point reveal"><div class="point-title">${p.t}</div><div class="point-desc">${p.d}</div></div>`;
+      h+=`<div class="point reveal"><div class="point-title notranslate">${p.t}</div><div class="point-desc">${p.d}</div></div>`;
     });
     h+=`</div>`;
   }
@@ -938,14 +1031,29 @@ function render(){
     }
   }
 
-  // Code Example — show as read-only block (most code is TypeScript/structural and can't be eval'd)
-  h+=`<div class="playground reveal">
+  // Code Example with optional walkthrough mode
+  h+=`<div class="playground reveal notranslate">
     <div class="playground-header">
       <div class="playground-title"><div class="playground-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div></div>
-      <div class="playground-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> ${t('codeExample')}</div>
+      <div class="playground-title" translate="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> ${t('codeExample')}${l.codeWalkthrough?`<button class="walkthrough-toggle ${walkthroughMode?'active':''}" onclick="toggleWalkthrough()">${t('walkthrough')}</button>`:''}</div>
     </div>
-    <div class="code-block" style="margin:0;border-radius:0;border:none">${escHtml(l.code)}</div>
+    ${walkthroughMode&&l.codeWalkthrough?`<div class="walkthrough-container"><div style="padding:0.4rem 0.5rem 0;font-size:0.72rem;color:var(--text-muted)" translate="yes">${t('clickLine')}</div>${l.code.split('\\n').map((line,i)=>`<div class="walkthrough-line" id="wt-line-${i}" onclick="toggleWalkthroughLine(${i})"><span class="walkthrough-num">${i+1}</span><span class="walkthrough-code">${escHtml(line)}</span></div>${l.codeWalkthrough[i]?`<div class="walkthrough-explain" id="wt-explain-${i}" translate="yes">${l.codeWalkthrough[i]}</div>`:''}`).join('')}</div>`:`<div class="code-block" style="margin:0;border-radius:0;border:none">${escHtml(l.code)}</div>`}
   </div>`;
+
+  // Spot the Bug challenge
+  if(l.bugChallenge){
+    h+=`<div class="bug-challenge reveal">
+      <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2l1.88 1.88M14.12 3.88L16 2M9 7.13v-1a3.003 3.003 0 116 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 014-4h4a4 4 0 014 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9M6.53 9C4.6 8.8 3 7.1 3 5M6 13H2M6 17H3M17.47 9c1.93-.2 3.53-1.9 3.53-4M18 13h4M18 17h3"/></svg> ${t('spotBug')}</h4>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.8rem">${t('spotBugDesc')}</p>
+      <div class="bug-code notranslate">${escHtml(l.bugChallenge.code)}</div>
+      <div class="bug-actions">
+        <button class="bug-hint-btn" onclick="toggleBugHint(${current})">${t('hint')}</button>
+        <button class="bug-reveal-btn" onclick="revealBugAnswer(${current})">${t('revealAnswer')}</button>
+      </div>
+      <div class="bug-hint" id="bug-hint-${current}">${l.bugChallenge.hint}</div>
+      <div class="bug-answer" id="bug-answer-${current}">${l.bugChallenge.answer}</div>
+    </div>`;
+  }
 
   if(l.challenge){
     h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('challenge')}</h4><p>${l.challenge}</p></div>`;
@@ -1009,6 +1117,10 @@ function render(){
 
   document.getElementById('content').innerHTML=h;
   initScrollReveal();
+  // Re-trigger Google Translate for dynamically rendered content
+  if(currentLang!=='en'){
+    setTimeout(()=>{const sel=document.querySelector('.goog-te-combo');if(sel&&sel.value){sel.value=currentLang;sel.dispatchEvent(new Event('change'));}},400);
+  }
 }
 
 function goTo(i){current=i;codeVisible=false;saveState();render();window.scrollTo(0,0);}
@@ -1078,6 +1190,14 @@ function setLang(lang){
     el.classList.toggle('active',el.textContent===LANG_FLAGS[lang]);
   });
   saveState();render();
+  // Trigger Google Translate for content translation
+  setTimeout(()=>{
+    const sel=document.querySelector('.goog-te-combo');
+    if(sel){
+      if(lang==='en'){sel.value='';sel.dispatchEvent(new Event('change'));}
+      else{sel.value=lang;sel.dispatchEvent(new Event('change'));}
+    }
+  },300);
 }
 document.addEventListener('click',function(e){
   if(!e.target.closest('.lang-selector')){
@@ -1085,6 +1205,44 @@ document.addEventListener('click',function(e){
     if(dd) dd.classList.remove('open');
   }
 });
+
+// AI Help Links — reusable for any section
+function aiLinks(topic,context){
+  const ytQ=encodeURIComponent(topic+' '+context+' tutorial for beginners');
+  const gQ=encodeURIComponent('explain '+topic+' '+context+' simply for beginners');
+  const prompt=encodeURIComponent('Explain '+topic+': '+context+' in simple terms for a complete beginner');
+  return '<span class="ai-help notranslate">'
+    +'<a href="https://www.youtube.com/results?search_query='+ytQ+'" target="_blank" rel="noopener" class="ai-btn ai-yt" title="Search YouTube"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 00.5 6.2C0 8 0 12 0 12s0 4 .5 5.8a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1C24 16 24 12 24 12s0-4-.5-5.8zM9.5 15.6V8.4L15.8 12l-6.3 3.6z"/></svg></a>'
+    +'<a href="https://www.google.com/search?q='+gQ+'" target="_blank" rel="noopener" class="ai-btn ai-gemini" title="Ask Google AI"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l1 3 1-3 3-1-3-1-1-3-1 3-3 1z" opacity=".6"/></svg></a>'
+    +'<button class="ai-btn ai-gpt" onclick="navigator.clipboard.writeText(decodeURIComponent(\''+prompt+'\'));window.open(\'https://chatgpt.com\',\'_blank\')" title="Copy prompt &amp; open ChatGPT"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8" stroke-linecap="round"/></svg></button>'
+    +'</span>';
+}
+
+// ELI5 toggle
+function toggleEli5(){eli5Mode=!eli5Mode;render();}
+
+// Walkthrough toggle
+function toggleWalkthrough(){walkthroughMode=!walkthroughMode;render();}
+function toggleWalkthroughLine(lineIdx){
+  const el=document.getElementById('wt-explain-'+lineIdx);
+  const line=document.getElementById('wt-line-'+lineIdx);
+  if(el&&line){
+    const isOpen=el.classList.contains('show');
+    document.querySelectorAll('.walkthrough-explain').forEach(e=>e.classList.remove('show'));
+    document.querySelectorAll('.walkthrough-line').forEach(e=>e.classList.remove('active'));
+    if(!isOpen){el.classList.add('show');line.classList.add('active');}
+  }
+}
+
+// Bug challenge
+function toggleBugHint(idx){
+  const el=document.getElementById('bug-hint-'+idx);
+  if(el) el.style.display=el.style.display==='block'?'none':'block';
+}
+function revealBugAnswer(idx){
+  const el=document.getElementById('bug-answer-'+idx);
+  if(el) el.style.display='block';
+}
 
 // Resources toggle
 function toggleResources(idx){
@@ -1338,6 +1496,14 @@ if(currentLang!=='en'){
   });
 }
 render();
+// Trigger Google Translate on page load if non-English language was saved
+if(currentLang!=='en'){
+  const gtInterval=setInterval(()=>{
+    const sel=document.querySelector('.goog-te-combo');
+    if(sel){clearInterval(gtInterval);sel.value=currentLang;sel.dispatchEvent(new Event('change'));}
+  },500);
+  setTimeout(()=>clearInterval(gtInterval),10000);
+}
 </script>
 </body>
 </html>
