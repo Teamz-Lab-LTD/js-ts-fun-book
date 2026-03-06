@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The JS & TS Fun Book — Learn TypeScript, NestJS & React from Zero to Fullstack Hero</title>
-<meta name="description" content="Free interactive tutorial to learn TypeScript, NestJS, React, MongoDB, Docker & fullstack development. 30 fun lessons with quizzes, code examples, and real-world analogies. Perfect for beginners and experienced developers.">
+<meta name="description" content="Free interactive tutorial to learn TypeScript, NestJS, React, MongoDB, Docker & fullstack development. 36 fun lessons with quizzes, code playground, and real-world analogies. Perfect for beginners and experienced developers.">
 <meta name="keywords" content="learn typescript, typescript tutorial, nestjs tutorial, react tutorial, fullstack development, javascript tutorial, typescript for beginners, nestjs for beginners, learn react, typescript quiz, nestjs guide, typescript book, free coding tutorial, web development, mongodb tutorial, docker tutorial, prisma tutorial, jwt authentication, REST API tutorial, typescript generics, async await tutorial">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow">
@@ -13,7 +13,7 @@
 <!-- Open Graph / Social Media -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="The JS & TS Fun Book — Learn TypeScript, NestJS & React for Free">
-<meta property="og:description" content="30 interactive lessons with quizzes to master TypeScript, NestJS, React & fullstack development. Fun analogies, real code examples, achievement system. From zero to production-ready.">
+<meta property="og:description" content="36 interactive lessons with quizzes to master TypeScript, NestJS, React & fullstack development. Fun analogies, real code examples, achievement system. From zero to production-ready.">
 <meta property="og:url" content="https://teamz-lab-ltd.github.io/js-ts-fun-book/">
 <meta property="og:site_name" content="The JS & TS Fun Book">
 <meta property="og:image" content="https://teamz-lab-ltd.github.io/js-ts-fun-book/og-image.png">
@@ -24,7 +24,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The JS & TS Fun Book — Learn TypeScript, NestJS & React for Free">
-<meta name="twitter:description" content="30 interactive lessons with quizzes. Master TypeScript, NestJS, React & fullstack development with fun analogies and real code.">
+<meta name="twitter:description" content="36 interactive lessons with quizzes. Master TypeScript, NestJS, React & fullstack development with fun analogies and real code.">
 <meta name="twitter:image" content="https://teamz-lab-ltd.github.io/js-ts-fun-book/og-image.png">
 
 <!-- Structured Data for Google Rich Results -->
@@ -33,7 +33,7 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "The JS & TS Fun Book — TypeScript, NestJS & React Tutorial",
-  "description": "Free interactive tutorial with 30 lessons covering TypeScript, NestJS, React, MongoDB, Docker and fullstack development. Includes quizzes, code examples, and achievement system.",
+  "description": "Free interactive tutorial with 36 lessons covering TypeScript, NestJS, React, MongoDB, Docker and fullstack development. Includes quizzes, code playground, and achievement system.",
   "provider": {
     "@type": "Organization",
     "name": "Teamz Lab",
@@ -42,7 +42,7 @@
   "educationalLevel": "Beginner to Intermediate",
   "programmingLanguage": ["TypeScript", "JavaScript"],
   "teaches": ["TypeScript", "NestJS", "React", "MongoDB", "Docker", "REST API", "JWT Authentication", "Prisma ORM", "Redis", "WebSockets"],
-  "numberOfLessons": 30,
+  "numberOfLessons": 36,
   "isAccessibleForFree": true,
   "inLanguage": "en",
   "hasCourseInstance": {
@@ -375,7 +375,7 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 </button>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
-<div class="progress-text" id="ptxt">0 / 30 lessons completed</div>
+<div class="progress-text" id="ptxt">0 / 36 lessons completed</div>
 <div class="xp-bar-container">
 <div class="xp-level-badge" id="xp-level">Lv 1</div>
 <div class="xp-bar"><div class="xp-bar-fill" id="xp-fill" style="width:0%"></div></div>
@@ -405,7 +405,7 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:0.8
 </div>
 <p style="margin-bottom:0.5rem;">The JS & TS Fun Book — A free, open-source interactive tutorial by <a href="https://github.com/Teamz-Lab-LTD" target="_blank" rel="noopener" style="color:var(--heading);text-decoration:none;">Teamz Lab</a></p>
 <p style="font-size:0.75rem;">Learn TypeScript, NestJS, React, MongoDB, Prisma, Docker, JWT Authentication, Redis, WebSockets & more — all in one place.</p>
-<p style="font-size:0.7rem;margin-top:0.5rem;">30 interactive lessons &bull; 90+ quizzes &bull; 200+ teaching points &bull; Real code examples &bull; Achievement system</p>
+<p style="font-size:0.7rem;margin-top:0.5rem;">36 interactive lessons &bull; 108 quizzes &bull; 250+ teaching points &bull; Real code examples &bull; Achievement system</p>
 </div>
 </footer>
 
@@ -495,13 +495,13 @@ function getReadingTime(lesson){
   return Math.max(2,Math.ceil(words/200));
 }
 
-// Topic categories for dashboard
+// Topic categories for dashboard (updated for 36 lessons)
 const TOPICS={
-  'Fundamentals':[1,2],'TypeScript':[3,4,5,6,7,8,9],'Frontend':[10,11,12],
-  'Backend':[13],'Database':[14,15],'Caching':[16],'Jobs':[17],
-  'Security':[18],'Services':[19,20],'Cloud':[21],'DevOps':[22,27],
-  'Testing':[23],'Real-time':[24],'Architecture':[25,26],
-  'Tooling':[28],'Integration':[29,30]
+  'Fundamentals':[1,2],'TypeScript':[3,4,5,6,7,8,9,10,22],'Frontend':[11,12,13],
+  'API & REST':[14],'NestJS':[15,16,17],'Database':[18,19],'Config':[20],
+  'Security':[21],'Caching & Jobs':[23,24],'Services':[25,26,27],
+  'Real-time':[28],'Testing':[29],'DevOps':[30,31,32],
+  'Architecture':[33],'Integration':[34,35,36]
 };
 const TOPIC_COLORS=['#D9FE06','#4CAF50','#2196F3','#FF9800','#E91E63','#9C27B0','#00BCD4','#FF5722','#607D8B','#795548','#3F51B5','#8BC34A','#CDDC39','#FFC107','#009688','#673AB7'];
 
@@ -537,36 +537,42 @@ function initTheme(){
 }
 
 const ICONS={
-1:'<svg viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>',
-2:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+1:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+2:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
 3:'<svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
 4:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
 5:'<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
-6:'<svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 009 9"/></svg>',
-7:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>',
-8:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-9:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
-10:'<svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
-11:'<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
-12:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
-13:'<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
-14:'<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-15:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-16:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-17:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
-18:'<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>',
-19:'<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
-20:'<svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
-21:'<svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>',
-22:'<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
-23:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
-24:'<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
-25:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',
-26:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-27:'<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
-28:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
-29:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
-30:'<svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 010 5H18"/><path d="M6 9l6 12 6-12"/></svg>'
+6:'<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+7:'<svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 009 9"/></svg>',
+8:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>',
+9:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+10:'<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+11:'<svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
+12:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+13:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
+14:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',
+15:'<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+16:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+17:'<svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
+18:'<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+19:'<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+20:'<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>',
+21:'<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>',
+22:'<svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
+23:'<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+24:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+25:'<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+26:'<svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
+27:'<svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>',
+28:'<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
+29:'<svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+30:'<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
+31:'<svg viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 012 2v7"/><path d="M6 9v12"/></svg>',
+32:'<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+33:'<svg viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>',
+34:'<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
+35:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+36:'<svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 010 5H18"/><path d="M6 9l6 12 6-12"/></svg>'
 };
 
 function icon(id,size){
@@ -668,39 +674,45 @@ function renderDashboard(){
   </div>`;
 }
 
-// Concept diagram for each lesson
+// Concept diagram for each lesson (36 lessons)
 function getConceptFlow(lesson){
   const flows={
-    1:['Files','Monorepo','Shared Code','Apps'],
-    2:['JavaScript','+ Types','TypeScript','Safety'],
+    1:['JavaScript','+ Types','TypeScript','Safety'],
+    2:['ESLint','Prettier','VSCode','Debug'],
     3:['let/const','Types','Arrays','Tuples'],
     4:['Object','Interface','Type Alias','Nested'],
     5:['function()','Arrow =>','Params','Return Type'],
-    6:['Union |','Type Guard','typeof','Narrowing'],
-    7:['Class','Constructor','Methods','Inheritance'],
-    8:['Promise','async','await','.then()'],
-    9:['Generic<T>','Partial<T>','Pick<T>','Omit<T>'],
-    10:['JSX','Component','Props','State','Render'],
-    11:['React DOM','React Native','Web','Mobile'],
-    12:['HTML/CSS','React','State Mgmt','Router'],
-    13:['Module','Controller','Service','NestJS'],
-    14:['Document','Collection','MongoDB','Query'],
-    15:['Schema','Migration','Prisma Client','Query'],
-    16:['SET','GET','TTL','Redis Cache'],
-    17:['Job','Queue','Worker','Bull Process'],
-    18:['Login','JWT Token','Guard','Protected'],
-    19:['Template','SMTP','Send','Inbox'],
-    20:['FCM','Token','Push','Device'],
-    21:['Upload','S3 Bucket','URL','Download'],
-    22:['Dockerfile','Build','Image','Container'],
-    23:['Unit Test','Integration','E2E','Coverage'],
-    24:['Connect','Emit','Listen','Real-time'],
-    25:['Endpoint','Method','Request','Response'],
-    26:['Module','Provider','Pipe','Interceptor'],
-    27:['Build','Test','Deploy','Monitor'],
-    28:['ESLint','Prettier','VSCode','Debug'],
-    29:['Frontend','API','Backend','Database'],
-    30:['Learn','Build','Ship','Grow']
+    6:['export','import','Barrel','Dynamic'],
+    7:['Union |','Type Guard','typeof','Narrowing'],
+    8:['Class','Constructor','Methods','Inheritance'],
+    9:['Promise','async','await','.then()'],
+    10:['try','catch','throw','finally'],
+    11:['JSX','Component','Props','State','Render'],
+    12:['useState','fetch()','React Query','CORS'],
+    13:['HTML/CSS','React','State Mgmt','Router'],
+    14:['Endpoint','Method','Request','Response'],
+    15:['Module','Controller','Service','NestJS'],
+    16:['Module','Provider','Pipe','Interceptor'],
+    17:['DTO','Validate','Transform','Reject/Accept'],
+    18:['Document','Collection','MongoDB','Query'],
+    19:['Schema','Migration','Prisma Client','Query'],
+    20:['.env','ConfigModule','ConfigService','Secrets'],
+    21:['Login','JWT Token','Guard','Protected'],
+    22:['Generic<T>','Partial<T>','Pick<T>','Omit<T>'],
+    23:['SET','GET','TTL','Redis Cache'],
+    24:['Job','Queue','Worker','Bull Process'],
+    25:['Template','SMTP','Send','Inbox'],
+    26:['FCM','Token','Push','Device'],
+    27:['Upload','S3 Bucket','URL','Download'],
+    28:['Connect','Emit','Listen','Real-time'],
+    29:['Unit Test','Integration','E2E','Coverage'],
+    30:['Dockerfile','Build','Image','Container'],
+    31:['git add','commit','push','PR','merge'],
+    32:['Build','Test','Deploy','Monitor'],
+    33:['Files','Monorepo','Shared Code','Apps'],
+    34:['React DOM','React Native','Web','Mobile'],
+    35:['Frontend','API','Backend','Database'],
+    36:['Learn','Build','Ship','Grow']
   };
   return flows[lesson.id]||['Concept 1','Concept 2','Concept 3','Concept 4'];
 }
