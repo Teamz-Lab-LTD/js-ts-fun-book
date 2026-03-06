@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://teamz-lab-ltd.github.io/js-ts-fun-book/sitemap.xml
