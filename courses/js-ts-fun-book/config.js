@@ -14,9 +14,9 @@ const COURSE_CONFIG = {
   orgFull: 'Teamz Lab LTD',
 
   // URLs
-  siteUrl: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/',
-  canonicalUrl: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/learn.html?course=js-ts-fun-book',
-  ogImage: 'https://teamz-lab-ltd.github.io/teamz-lab-learning/og-image.png',
+  siteUrl: 'https://learn.teamzlab.com/',
+  canonicalUrl: 'https://learn.teamzlab.com/learn.html?course=js-ts-fun-book',
+  ogImage: 'https://learn.teamzlab.com/og-image.png',
 
   // SEO
   description: 'Free interactive playbook: learn to build real apps with TypeScript, React, NestJS, AI & more. {lessonCount} hands-on lessons, quizzes, code playground — no signup required.',
