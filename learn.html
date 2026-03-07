@@ -569,10 +569,171 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .teamz-cta__link:hover { text-decoration:underline; }
 
 @media(max-width:700px) {
+  /* --- Header --- */
+  header { padding:1rem; }
+  .hdr-top { flex-direction:row; flex-wrap:wrap; gap:0.5rem; align-items:center; }
+  .hdr-left { flex:1; min-width:0; gap:0.5rem; }
+  .hdr-txt h1 { font-size:var(--text-h5); }
+  .hdr-txt p { font-size:var(--text-xs); }
+  .nav-link { display:none; }
+  .btn--hire { display:none; }
+  .theme-toggle { width:36px; height:36px; padding:6px; }
+  .logo svg { width:24px; height:24px; }
+
+  /* --- Main content --- */
+  main { padding:0 0.75rem; margin:1rem auto; }
   .two-col { grid-template-columns:1fr; }
-  .lesson-title { font-size:var(--text-h4); }
-  main { padding:0 1rem; }
-  .hdr-top { flex-direction:column; align-items:flex-start; }
+  .lesson-title { font-size:var(--text-h5); }
+  .lesson-head { padding:1rem 0.5rem 0.8rem; margin-bottom:1rem; }
+  .lesson-emoji svg { width:36px; height:36px; }
+
+  /* --- Points grid --- */
+  .points { grid-template-columns:1fr; gap:0.8rem; margin:1rem 0; }
+  .point { padding:1rem; }
+
+  /* --- Code blocks --- */
+  .code-block { padding:0.8rem; font-size:var(--text-xs); border-radius:8px; margin:0.5rem 0 1rem; }
+  .code-toggle { padding:0.5rem 1rem; font-size:var(--text-sm); margin:1rem 0; }
+
+  /* --- Quiz --- */
+  .quiz-box { padding:1rem; margin:1rem 0; }
+  .quiz-btn { padding:0.7rem 0.8rem; font-size:var(--text-sm); }
+
+  /* --- Nav buttons --- */
+  .nav-btns { gap:0.5rem; margin:1.5rem 0; }
+  .btn { padding:0.6rem 1.2rem; font-size:var(--text-sm); }
+
+  /* --- Analogy, fun fact, challenge --- */
+  .analogy-box { padding:1.2rem; margin:1rem 0; }
+  .fun-fact { padding:1rem; margin:0.8rem 0; }
+  .challenge { padding:1rem; margin:0.8rem 0; }
+  .col-box { padding:1rem; }
+
+  /* --- Flashcards --- */
+  .flashcards { grid-template-columns:1fr; gap:0.8rem; margin:1rem 0; }
+  .flashcard { min-height:220px; }
+  .flashcard-face { padding:1.2rem 1rem 2rem; }
+
+  /* --- Playground --- */
+  .playground-editor { min-height:120px; font-size:var(--text-xs); padding:0.8rem; }
+  .playground-actions { flex-wrap:wrap; padding:0.5rem 0.8rem; }
+
+  /* --- Diagram --- */
+  .diagram-flow { flex-direction:column; gap:0.2rem; }
+  .diagram-arrow { transform:rotate(90deg); }
+  .diagram-node { font-size:var(--text-xs); padding:0.4rem 0.8rem; }
+
+  /* --- Resources --- */
+  .resource-item { gap:0.5rem; padding:0.6rem 0.8rem; }
+  .resource-info a { font-size:var(--text-sm); }
+
+  /* --- Bug challenge --- */
+  .bug-challenge { padding:1rem; }
+  .bug-code { font-size:var(--text-xs); padding:0.8rem; }
+  .bug-actions { gap:0.4rem; }
+
+  /* --- Typing challenge --- */
+  .typing-target { font-size:var(--text-xs); padding:0.6rem; }
+  .typing-input { font-size:var(--text-xs); min-height:80px; padding:0.6rem; }
+
+  /* --- Self explain --- */
+  .self-explain { padding:1rem; margin:1rem 0; }
+  .self-explain-textarea { min-height:60px; font-size:var(--text-sm); }
+
+  /* --- Why prompt --- */
+  .why-prompt { padding:0.8rem; }
+
+  /* --- Walkthrough --- */
+  .walkthrough-code { font-size:var(--text-xs); }
+  .walkthrough-explain { padding:0.3rem 0.4rem 0.3rem 24px; font-size:var(--text-xs); }
+
+  /* --- Footer --- */
+  footer { padding:1.5rem 1rem; }
+
+  /* --- Progress bar area --- */
+  .progress-text { font-size:var(--text-xs); }
+  .xp-bar-container { gap:0.5rem; }
+  .xp-level-badge { font-size:var(--text-xs); padding:0.15rem 0.5rem; }
+  .xp-text { font-size:var(--text-xs); }
+
+  /* --- Dashboard --- */
+  .dashboard { padding:1rem; margin:1rem auto; }
+  .dashboard-grid { grid-template-columns:1fr; gap:1rem; }
+  .dash-card { padding:1rem; }
+  .dash-stat { font-size:var(--text-h3); }
+
+  /* --- Certificate --- */
+  .cert-inner { padding:1.5rem 1rem; }
+  .cert-title { font-size:var(--text-h5); }
+  .cert-name { font-size:var(--text-h4); }
+  .cert-stats { gap:1rem; }
+  .cert-actions { flex-direction:column; align-items:center; }
+  .cert-name-input { font-size:var(--text-h5); width:90%; }
+
+  /* --- Review mode --- */
+  .review-mode { padding:0 1rem; margin:1rem auto; }
+  .review-boxes { gap:0.3rem; }
+  .review-box { min-width:55px; font-size:var(--text-xs); padding:0.4rem 0.6rem; }
+  .review-card { padding:1rem; }
+  .review-question { font-size:var(--text-md); }
+
+  /* --- Mixed quiz --- */
+  .mixed-quiz { padding:0 1rem; margin:1rem auto; }
+
+  /* --- Confidence bar --- */
+  .confidence-bar { flex-wrap:wrap; gap:0.3rem; }
+  .confidence-btns { gap:0.2rem; }
+
+  /* --- Nav hint --- */
+  .nav-hint { display:none; }
+
+  /* --- Lesson rating --- */
+  .lesson-rating { flex-wrap:wrap; gap:0.5rem; padding:0.8rem; }
+
+  /* --- ELI5 --- */
+  .eli5-box { padding:1rem; }
+
+  /* --- Search modal --- */
+  .search-modal { width:95%; max-height:80vh; }
+  .search-input { font-size:var(--text-md); }
+  .search-kbd { display:none; }
+
+  /* --- Achievement --- */
+  .achievement-card { padding:1.5rem 1rem; }
+  .achievement-icon { width:56px; height:56px; }
+  .achievement-icon svg { width:28px; height:28px; }
+  .achievement-title { font-size:var(--text-h5); }
+  .achievement-score { font-size:var(--text-h3); }
+
+  /* --- Floating elements --- */
+  .notes-float { width:calc(100vw - 1rem); right:0.5rem; bottom:0.5rem; }
+  .notes-fab { bottom:1rem; right:1rem; width:44px; height:44px; }
+  .coffee-fab { bottom:4.2rem; right:1rem; height:40px; font-size:0.72rem; padding:0 0.8rem 0 0.6rem; }
+  .sidebar-toggle { bottom:1rem; left:1rem; width:40px; height:40px; }
+  .xp-popup { top:60px; right:10px; font-size:var(--text-sm); padding:0.6rem 1rem; }
+
+  /* --- Nudge toast: lift above FABs and shrink to avoid overlap --- */
+  .nudge-toast.show { bottom:5.5rem; }
+  .nudge-toast { max-width:calc(100vw - 6rem); padding:0.5rem 0.8rem; gap:0.5rem; font-size:var(--text-xs); border-radius:16px; }
+  .nudge-toast__btn { height:30px; padding:6px 12px; font-size:var(--text-xs); border-radius:16px; }
+  .nudge-toast__close { font-size:var(--text-md); }
+
+  /* --- AI Judge modal --- */
+  .ai-judge-modal { max-width:95%; padding:1.2rem; }
+
+  /* --- Ad slot --- */
+  .ad-slot { margin:0.8rem -0.5rem; }
+
+  /* --- Method badges --- */
+  .method-badges { gap:0.2rem; }
+  .method-badge { font-size:0.55rem; padding:0.1rem 0.35rem; }
+
+  /* --- Trust strip --- */
+  .trust-strip { padding:0.6rem 0.8rem; font-size:var(--text-xs); }
+
+  /* --- Flashcard popup --- */
+  .flashcard-popup { max-width:95%; padding:1.2rem; }
+  .flashcard-diff-btn { padding:0.3rem 0.8rem; font-size:var(--text-xs); }
 }
 
 /* Achievement System */
@@ -653,16 +814,26 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .flashcard-toggle:hover { border-color:var(--accent); color:var(--heading); }
 .flashcard-toggle.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
 .flashcards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin:1.5rem 0; perspective:1000px; }
-.flashcard { position:relative; min-height:200px; cursor:pointer; transform-style:preserve-3d; transition:transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+.flashcard { position:relative; min-height:280px; cursor:pointer; transform-style:preserve-3d; transition:transform 0.6s cubic-bezier(0.4,0,0.2,1); }
 .flashcard.flipped { transform:rotateY(180deg); }
-.flashcard-face { position:absolute; top:0;left:0;right:0;bottom:0; backface-visibility:hidden; border-radius:12px; padding:1.2rem; display:flex; flex-direction:column; justify-content:center; border:1px solid var(--border); overflow-y:auto; }
+.flashcard-face { position:absolute; top:0;left:0;right:0;bottom:0; backface-visibility:hidden; border-radius:12px; padding:2rem 1.2rem 2.5rem; display:flex; flex-direction:column; justify-content:center; border:1px solid var(--border); overflow-y:auto; }
 .flashcard-front { background:var(--surface); border-left:3px solid var(--heading); }
 .flashcard-front .point-title { font-weight:700; font-size:var(--text-md); color:var(--heading); margin-bottom:0.5rem; }
 .flashcard-front .flip-hint { font-size:var(--text-xs); color:var(--text-muted); position:absolute; bottom:0.8rem; right:1rem; }
 .flashcard-back { background:linear-gradient(135deg,var(--surface),var(--bg)); transform:rotateY(180deg); }
 .flashcard-back p { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); }
-.flashcard.expanded { min-height:auto; }
-.flashcard.expanded .flashcard-face { position:relative; min-height:200px; }
+.flashcard-view-full { position:absolute; bottom:0.6rem; right:0.8rem; padding:0.15rem 0.5rem; border-radius:4px; border:1px solid var(--border); background:var(--bg); font-size:var(--text-xs); font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Poppins',sans-serif; color:var(--text-muted); display:inline-flex; align-items:center; gap:0.3rem; z-index:2; }
+.flashcard-view-full:hover { border-color:var(--accent); color:var(--heading); transform:scale(1.05); }
+.flashcard-popup-overlay { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.7); z-index:9999; display:flex; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px); animation:fadeIn 0.3s ease; }
+.flashcard-popup { background:var(--surface); border:1px solid var(--border); border-radius:16px; max-width:560px; width:100%; padding:1.5rem; position:relative; max-height:80vh; overflow-y:auto; }
+.flashcard-popup-title { font-weight:700; font-size:var(--text-md); color:var(--heading); margin-bottom:0.8rem; }
+.flashcard-popup-body { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); }
+.flashcard-popup-close { position:absolute; top:0.8rem; right:0.8rem; background:none; border:none; color:var(--text-muted); cursor:pointer; padding:0.3rem; }
+.flashcard-popup-actions { display:flex; gap:0.5rem; justify-content:center; margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--border); }
+.flashcard-diff-btn { padding:0.4rem 1.2rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); font-size:var(--text-sm); font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Poppins',sans-serif; display:inline-flex; align-items:center; gap:0.4rem; }
+.flashcard-diff-btn.easy { color:var(--quiz-correct-text); }
+.flashcard-diff-btn.hard { color:var(--quiz-wrong-text); }
+.flashcard-diff-btn:hover { transform:scale(1.05); border-color:var(--accent); }
 
 /* Interactive Code Playground */
 .playground { margin:1.5rem 0; border-radius:12px; overflow:hidden; border:1px solid var(--border); }
@@ -964,11 +1135,7 @@ body { top:0 !important; }
 .coffee-fab:hover { transform:scale(1.08); box-shadow:0 6px 32px rgba(255,221,0,0.5); animation:none; }
 .coffee-fab svg { width:22px; height:22px; flex-shrink:0; }
 
-@media(max-width:700px) {
-  .notes-float { width:calc(100vw - 1rem); right:0.5rem; bottom:0.5rem; }
-  .notes-fab { bottom:1rem; right:1rem; width:44px; height:44px; }
-  .coffee-fab { bottom:4.2rem; right:1rem; height:40px; font-size:0.72rem; padding:0 0.8rem 0 0.6rem; }
-}
+/* notes/coffee mobile rules consolidated into main @media(max-width:700px) block */
 
 /* Spaced Repetition Review Mode */
 .review-mode { max-width:900px; margin:2rem auto; padding:0 2rem; }
@@ -1057,11 +1224,6 @@ body { top:0 !important; }
 .confidence-btn.high { border-color:var(--quiz-correct-border); background:var(--quiz-correct-bg); color:var(--quiz-correct-text); }
 
 /* Flashcard SRS difficulty buttons */
-.flashcard-difficulty { display:flex; gap:0.3rem; justify-content:center; margin-top:0.5rem; position:absolute; bottom:0.6rem; left:50%; transform:translateX(-50%); }
-.flashcard-diff-btn { padding:0.15rem 0.5rem; border-radius:4px; border:1px solid var(--border); background:var(--bg); font-size:var(--text-xs); font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Poppins',sans-serif; }
-.flashcard-diff-btn.easy { color:var(--quiz-correct-text); }
-.flashcard-diff-btn.hard { color:var(--quiz-wrong-text); }
-.flashcard-diff-btn:hover { transform:scale(1.1); }
 
 /* Elaborative Interrogation */
 .why-prompt { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem; margin:0.8rem 0; }
@@ -1087,22 +1249,7 @@ body { top:0 !important; }
 .tab.mixed-tab:hover { border-color:var(--accent); color:var(--heading); }
 .tab.mixed-tab.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
 
-@media(max-width:700px) {
-  .dashboard-grid { grid-template-columns:1fr; }
-  .flashcards { grid-template-columns:1fr; }
-  .diagram-flow { flex-direction:column; }
-  .diagram-arrow { transform:rotate(90deg); }
-  .nav-hint { display:none; }
-  .cert-inner { padding:1.5rem 1rem; }
-  .cert-title { font-size:var(--text-h5); }
-  .cert-name { font-size:var(--text-h4); }
-  .cert-stats { gap:1rem; }
-  .cert-actions { flex-direction:column; align-items:center; }
-  .review-boxes { gap:0.3rem; }
-  .review-box { min-width:60px; font-size:var(--text-xs); }
-  .confidence-bar { flex-wrap:wrap; }
-  .ad-slot { margin:0.8rem -0.5rem; }
-}
+/* mobile rules consolidated into main @media(max-width:700px) block above */
 
 /* RTL Support (Arabic) */
 [dir="rtl"] { direction:rtl; text-align:right; }
@@ -1149,6 +1296,115 @@ body { top:0 !important; }
 .promoted-item-info { flex:1; }
 .promoted-item-name { font-weight:600; font-size:var(--text-md); }
 .promoted-item-desc { font-size:var(--text-xs); color:var(--text-muted); }
+
+/* === Small phones (≤480px) === */
+@media(max-width:480px) {
+  /* Tighter typography */
+  .hdr-txt h1 { font-size:var(--text-h6); }
+  .hdr-txt p { display:none; }
+  .lesson-title { font-size:var(--text-lg); word-break:break-word; }
+  .lesson-sub { font-size:var(--text-xs); }
+
+  /* Tighter header */
+  header { padding:0.75rem; }
+  .hdr-top { gap:0.4rem; }
+  .logo svg { width:20px; height:20px; }
+  .lang-btn { padding:0.3rem 0.5rem; font-size:var(--text-xs); }
+  .lang-btn span:last-child { display:none; }
+
+  /* Tighter content */
+  main { padding:0 0.5rem; }
+  .analogy-box { padding:0.8rem; border-radius:8px; }
+  .analogy-box h3 { font-size:var(--text-md); }
+  .analogy-box p { font-size:var(--text-xs); }
+
+  /* Points */
+  .point { padding:0.8rem; }
+  .point-title { font-size:var(--text-sm); }
+  .point-desc { font-size:var(--text-xs); }
+
+  /* Code */
+  .code-block { font-size:9px; padding:0.6rem; }
+  .playground-editor { font-size:11px; }
+
+  /* Flashcard */
+  .flashcard { min-height:180px; }
+  .flashcard-face { padding:1rem 0.8rem 1.8rem; }
+  .flashcard-front .point-title { font-size:var(--text-sm); }
+
+  /* Buttons — full width on very small phones */
+  .nav-btns { flex-direction:column; }
+  .btn { width:100%; text-align:center; }
+
+  /* Quiz */
+  .quiz-btn { font-size:var(--text-xs); padding:0.6rem; }
+  .quiz-box h4 { font-size:var(--text-md); }
+
+  /* Dashboard */
+  .dash-stat { font-size:var(--text-h4); }
+  .dash-card h3 { font-size:var(--text-md); }
+
+  /* Certificate */
+  .cert-title { font-size:var(--text-lg); }
+  .cert-name { font-size:var(--text-h5); }
+  .cert-subtitle { font-size:var(--text-xs); }
+  .cert-stat-num { font-size:var(--text-h5); }
+
+  /* Sidebar */
+  .sidebar { width:85vw; min-width:auto; }
+
+  /* Review */
+  .review-box { min-width:48px; padding:0.3rem 0.4rem; }
+  .review-question { font-size:var(--text-sm); }
+  .review-opt { font-size:var(--text-sm); padding:0.5rem 0.8rem; }
+
+  /* Achievement */
+  .achievement-card { padding:1.2rem 0.8rem; }
+  .achievement-title { font-size:var(--text-lg); }
+  .achievement-score { font-size:var(--text-h4); }
+
+  /* XP popup */
+  .xp-popup { right:5px; font-size:var(--text-xs); padding:0.5rem 0.8rem; }
+
+  /* Lesson rating */
+  .lesson-rating { flex-direction:column; align-items:stretch; gap:0.4rem; }
+  .rate-btn { justify-content:center; }
+
+  /* Typing */
+  .typing-challenge { padding:0.8rem; }
+
+  /* Search */
+  .search-input-wrap { padding:0.8rem; }
+  .search-result { padding:0.5rem 0.6rem; gap:0.5rem; }
+
+  /* Notes float */
+  .notes-float { max-height:60vh; }
+  .notes-editor { min-height:150px; }
+
+  /* Toast */
+  .toast { font-size:var(--text-sm); padding:0.6rem 1rem; }
+
+  /* Bug challenge */
+  .bug-actions { flex-direction:column; }
+  .bug-hint-btn, .bug-reveal-btn { width:100%; text-align:center; justify-content:center; display:flex; }
+
+  /* Concept diagram */
+  .concept-diagram { padding:1rem; }
+  .concept-diagram h4 { font-size:var(--text-md); }
+
+  /* Build CTA */
+  .build-cta { padding:0.8rem; }
+  .build-cta__text strong { font-size:var(--text-sm); }
+  .build-cta__text span { font-size:var(--text-xs); }
+
+  /* AI tool items */
+  .ai-tool-item { padding:0.6rem 0.8rem; gap:0.5rem; }
+  .ai-tool-icon { width:28px; height:28px; }
+  .ai-tool-icon svg { width:16px; height:16px; }
+
+  /* Promoted items */
+  .promoted-items { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
@@ -2091,7 +2347,7 @@ function render(){
   if(flashcardMode){
     h+=`<div class="flashcards">`;
     l.points.forEach((p,i)=>{
-      h+=`<div class="flashcard" tabindex="0" role="button" aria-label="${escHtml(p.t)} — press Enter to flip" onclick="if(!event.target.closest('.ask-ai-btn'))this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();if(!event.target.closest('.ask-ai-btn'))this.classList.toggle('flipped')}">
+      h+=`<div class="flashcard" tabindex="0" role="button" aria-label="${escHtml(p.t)} — press Enter to flip" onclick="if(!event.target.closest('.ask-ai-btn')&&!event.target.closest('.flashcard-view-full'))this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();if(!event.target.closest('.ask-ai-btn')&&!event.target.closest('.flashcard-view-full'))this.classList.toggle('flipped')}">
         <div class="flashcard-face flashcard-front">
           <div class="point-title notranslate">${p.t}</div>
           ${aiLinks(l.title,p.t)}
@@ -2099,11 +2355,7 @@ function render(){
         </div>
         <div class="flashcard-face flashcard-back">
           <p>${p.d}</p>
-          ${p.d.length>150?'<button style="margin-top:0.5rem;padding:0.2rem 0.5rem;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text-muted);cursor:pointer;font-size:var(--text-xs);font-family:Poppins,sans-serif" onclick="event.stopPropagation();this.closest(\'.flashcard\').classList.toggle(\'expanded\')">Expand / Collapse</button>':''}
-          <div class="flashcard-difficulty">
-            <button class="flashcard-diff-btn easy" onclick="event.stopPropagation();rateFlashcard(${current},${i},'easy')">Easy</button>
-            <button class="flashcard-diff-btn hard" onclick="event.stopPropagation();rateFlashcard(${current},${i},'hard')">Hard</button>
-          </div>
+          <button class="flashcard-view-full" onclick="event.stopPropagation();showFlashcardPopup(${current},${i})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View</button>
         </div>
       </div>`;
     });
@@ -3265,6 +3517,16 @@ function rateFlashcard(lessonIdx,pointIdx,diff){
   flashcardDifficulty[lessonIdx+'-'+pointIdx]=diff;
   saveState();
   showToast(diff==='easy'?'Marked as easy — you know this!':'Marked as hard — will show more often');
+}
+window.showFlashcardPopup=function(lessonIdx,pointIdx){
+  const p=L[lessonIdx].points[pointIdx];
+  const overlay=document.createElement('div');
+  overlay.className='flashcard-popup-overlay';
+  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+  const safeTitle=L[lessonIdx].title.replace(/'/g,"\\'");
+  const safePt=p.t.replace(/'/g,"\\'");
+  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-title">${p.t}</div><div class="flashcard-popup-body">${p.d}</div><div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Easy</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hard</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
+  document.body.appendChild(overlay);
 }
 
 // Daily motivational tip
