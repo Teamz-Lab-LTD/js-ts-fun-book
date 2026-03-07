@@ -2275,7 +2275,7 @@ function render(){
 }
 
 function goTo(i){current=i;codeVisible=false;typingActive=false;showReview=false;showMixedQuiz=false;showDashboard=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[i])window.__logEvent('lesson_view',{lesson_id:L[i].id,lesson_title:L[i].title});}
-function goPrev(){if(current>0){current--;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);}}
+function goPrev(){if(current>0){current--;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[current])window.__logEvent('lesson_view',{lesson_id:L[current].id,lesson_title:L[current].title,nav:'prev'});}}
 function markAndNext(){
   const wasNew=!completed.has(current);
   completed.add(current);
@@ -2295,12 +2295,14 @@ function toggleBookmark(idx){if(window.__logEvent)window.__logEvent('bookmark_to
   saveState();render();
 }
 function ratelesson(idx,rating){
+  if(window.__logEvent)window.__logEvent('lesson_rating',{lesson_id:L[idx].id,lesson_title:L[idx].title,rating:rating});
   lessonRatings[idx]=rating;
   saveState();render();
 }
 
 // Code Playground
 function runPlayground(){
+  if(window.__logEvent)window.__logEvent('playground_run',{lesson_id:L[current].id});
   const code=document.getElementById('playground-code').value;
   const output=document.getElementById('playground-output');
   output.classList.remove('error');
@@ -2325,6 +2327,7 @@ function runPlayground(){
   }
 }
 function resetPlayground(){
+  if(window.__logEvent)window.__logEvent('playground_reset',{lesson_id:L[current].id});
   const l=L[current];
   document.getElementById('playground-code').value=l.code;
   document.getElementById('playground-output').textContent='// Output will appear here...';
@@ -2398,10 +2401,10 @@ function aiLinks(topic,context){
 }
 
 // ELI5 toggle
-function toggleEli5(){eli5Mode=!eli5Mode;render();}
+function toggleEli5(){if(window.__logEvent)window.__logEvent('eli5_toggle',{mode:!eli5Mode?'on':'off',lesson_id:L[current].id});eli5Mode=!eli5Mode;render();}
 
 // Walkthrough toggle
-function toggleWalkthrough(){walkthroughMode=!walkthroughMode;render();}
+function toggleWalkthrough(){if(window.__logEvent)window.__logEvent('walkthrough_toggle',{mode:!walkthroughMode?'on':'off',lesson_id:L[current].id});walkthroughMode=!walkthroughMode;render();}
 function toggleWalkthroughLine(lineIdx){
   const el=document.getElementById('wt-explain-'+lineIdx);
   const line=document.getElementById('wt-line-'+lineIdx);
@@ -2415,10 +2418,12 @@ function toggleWalkthroughLine(lineIdx){
 
 // Bug challenge
 function toggleBugHint(idx){
+  if(window.__logEvent)window.__logEvent('bug_hint_toggle',{lesson_id:L[idx].id});
   const el=document.getElementById('bug-hint-'+idx);
   if(el) el.style.display=el.style.display==='block'?'none':'block';
 }
 function revealBugAnswer(idx){
+  if(window.__logEvent)window.__logEvent('bug_answer_reveal',{lesson_id:L[idx].id});
   const el=document.getElementById('bug-answer-'+idx);
   if(el) el.style.display='block';
 }
@@ -2500,12 +2505,14 @@ function closeCert(){
   document.getElementById('cert-container').innerHTML='';
 }
 function shareCertTwitter(){
+  if(window.__logEvent)window.__logEvent('certificate_share',{platform:'twitter'});
   const name=certName||'Someone';
   const text=encodeURIComponent(`I just completed all 40 lessons of the Free Full-Stack Playbook! 🎉 Learned TypeScript, NestJS, React & fullstack development.\n\nCheck it out (it's free!):`);
   const url=encodeURIComponent('https://learn.teamzlab.com/');
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=TypeScript,NestJS,WebDev,LearnToCode`,'_blank');
 }
 function copyCertLink(){
+  if(window.__logEvent)window.__logEvent('certificate_share',{platform:'copy_link'});
   navigator.clipboard.writeText('https://learn.teamzlab.com/');
   const btn=event.target.closest('.cert-btn');
   if(btn){const orig=btn.innerHTML;btn.textContent='Copied!';setTimeout(()=>btn.innerHTML=orig,1500);}
@@ -2582,6 +2589,7 @@ function checkTyping(){
   const stats=document.getElementById('typing-stats');
   if(stats)stats.textContent=typed.length+' / '+target.length+' chars';
   if(typed.trim()===target){
+    if(window.__logEvent)window.__logEvent('typing_challenge_complete',{lesson_id:L[current].id,char_count:typed.length});
     const result=document.getElementById('typing-result');
     if(result){result.style.display='block';result.innerHTML='<span class="celebrate-pop">You typed it perfectly! +15 XP</span>';}
     const xpKey='typing-'+current;
@@ -2594,6 +2602,7 @@ function checkTyping(){
 function toggleNotesFloat(){
   const panel=document.getElementById('notes-float');
   if(panel.classList.contains('open')){closeNotesFloat();return;}
+  if(window.__logEvent)window.__logEvent('notes_open',{lesson_id:L[current].id});
   panel.classList.add('open');notesOpen=true;
   const editor=document.getElementById('notes-editor');
   const lData=LESSONS_DATA[current];
@@ -2811,6 +2820,7 @@ function filterSidebar(query){
 // Full-text search system
 function openSearch(){
   if(document.getElementById('search-overlay')) return;
+  if(window.__logEvent)window.__logEvent('search_open',{});
   const overlay=document.createElement('div');
   overlay.className='search-overlay';
   overlay.id='search-overlay';
@@ -2843,6 +2853,7 @@ function closeSearch(){
 }
 function performSearch(query){
   const q=query.toLowerCase().trim();
+  if(q.length>=2&&window.__logEvent)window.__logEvent('search_query',{query:q});
   const resultsEl=document.getElementById('search-results');
   if(!resultsEl) return;
   if(q.length<2){
@@ -3027,6 +3038,7 @@ function renderReviewMode(){
 }
 function answerReview(cardIdx,picked,ans,srsKey){
   const isCorrect=picked===ans;
+  if(window.__logEvent)window.__logEvent('srs_review_answer',{srs_key:srsKey,is_correct:isCorrect});
   const card=document.getElementById('review-card-'+cardIdx);
   if(!card) return;
   const opts=card.querySelectorAll('.review-opt');
@@ -3105,6 +3117,7 @@ function renderMixedQuiz(){
 }
 function answerMixedQuiz(picked,ans){
   const isCorrect=picked===ans;
+  if(window.__logEvent)window.__logEvent('mixed_quiz_answer',{is_correct:isCorrect,question_index:mixedQuizState.current});
   mixedQuizState.answers.push(isCorrect);
   mixedQuizState.current++;
   if(mixedQuizState.current>=mixedQuizState.questions.length){
@@ -3182,6 +3195,7 @@ function openAiJudge(){if(window.__logEvent)window.__logEvent('ai_judge_open',{l
   document.body.appendChild(div);
 }
 function copyAiPrompt(){
+  if(window.__logEvent)window.__logEvent('ai_judge_copy_prompt',{lesson_id:L[current].id});
   const prompt=window._aiJudgePrompt||'';
   if(!prompt)return;
   navigator.clipboard.writeText(prompt).then(function(){
@@ -3196,6 +3210,7 @@ function closeAiJudge(){
 
 // Confidence Rating (Metacognition)
 function setConfidence(lessonIdx,quizIdx,level){
+  if(window.__logEvent)window.__logEvent('confidence_rating',{lesson_id:L[lessonIdx].id,quiz_index:quizIdx,level:level});
   confidenceRatings[lessonIdx+'-'+quizIdx]=level;
   saveState();
   document.querySelectorAll('#quiz-confidence-'+quizIdx+' .confidence-btn').forEach(b=>{
@@ -3209,6 +3224,7 @@ function toggleFlashcard(){flashcardMode=!flashcardMode;if(window.__logEvent)win
 
 // Flashcard difficulty tracking
 function rateFlashcard(lessonIdx,pointIdx,diff){
+  if(window.__logEvent)window.__logEvent('flashcard_rating',{lesson_id:L[lessonIdx].id,point_index:pointIdx,difficulty:diff});
   flashcardDifficulty[lessonIdx+'-'+pointIdx]=diff;
   saveState();
   showToast(diff==='easy'?'Marked as easy — you know this!':'Marked as hard — will show more often');

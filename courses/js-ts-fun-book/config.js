@@ -20,30 +20,31 @@ const COURSE_CONFIG = {
 
   // SEO
   description: 'Free interactive playbook: learn to build real apps with TypeScript, React, NestJS, AI & more. {lessonCount} hands-on lessons, quizzes, code playground — no signup required.',
-  keywords: 'free full stack playbook, learn to build apps 2026, typescript tutorial free, nestjs tutorial, react tutorial, fullstack developer roadmap, learn to code free, free coding bootcamp no signup, AI app development, build real apps from scratch',
-  topics: ['TypeScript', 'JavaScript', 'NestJS', 'React', 'MongoDB', 'Docker', 'REST API', 'JWT Authentication', 'Prisma ORM', 'Redis', 'WebSockets'],
+  keywords: 'free full stack playbook, learn to build apps 2026, typescript tutorial free, nestjs tutorial, nestjs crud tutorial, nestjs guards, nestjs middleware, nestjs beginner to intermediate, react tutorial, fullstack developer roadmap, learn to code free, free coding bootcamp no signup, AI app development, build real apps from scratch',
+  topics: ['TypeScript', 'JavaScript', 'NestJS', 'React', 'MongoDB', 'Docker', 'REST API', 'JWT Authentication', 'Prisma ORM', 'Redis', 'WebSockets', 'NestJS CRUD', 'NestJS Guards', 'NestJS Middleware'],
   educationalLevel: 'Beginner to Intermediate',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
   // Topic categories ordered from beginner → advanced
   topicMap: {
     'Getting Started':[37,38,39,40],
-    'Fundamentals':[1,2],
-    'TypeScript Basics':[3,4,5,6,7],
+    'Fundamentals':[1],
+    'TypeScript Basics':[3,4,5,6,7,2],
     'TypeScript Advanced':[8,9,10,22],
     'Frontend':[11,12,13],
     'API & REST':[14],
-    'NestJS':[15,16,17],
-    'Database':[18,19],
-    'Config':[20],
     'Security':[21],
+    'NestJS':[15,41,42,43,16,17,44,45,46,47],
+    'Database':[18,19,49],
+    'Config':[20],
     'Caching & Jobs':[23,24],
     'Services':[25,26,27],
     'Real-time':[28],
     'Testing':[29],
     'DevOps':[30,31,32],
     'Architecture':[33],
-    'Integration':[34,35,36]
+    'Integration':[34,35,36],
+    'Projects':[48]
   },
 
   // Concept flow diagrams per lesson ID
@@ -87,7 +88,16 @@ const COURSE_CONFIG = {
     37:['Idea','Instructions','Code','Run'],
     38:['VS Code','Node.js','Terminal','npm'],
     39:['Browser','Request','Server','Response'],
-    40:['Write','Run','Debug','Celebrate']
+    40:['Write','Run','Debug','Celebrate'],
+    41:['CLI','Scaffold','Structure','Run'],
+    42:['@Controller','@Get/@Post','@Param','@Body'],
+    43:['@Injectable','Constructor','Providers','Singleton'],
+    44:['Middleware','next()','Interceptor','RxJS pipe'],
+    45:['Guard','canActivate','@Roles','@CurrentUser'],
+    46:['throw Error','@Catch','Filter','Response'],
+    47:['Create','Read','Update','Delete'],
+    48:['Schema','Auth','CRUD','Filter','Deploy'],
+    49:['1:1','1:N','M:N','Foreign Key','Query']
   },
 
   // Spaced Repetition settings
