@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://teamz-lab-ltd.github.io/teamz-lab-learning/sitemap.xml
+Sitemap: https://learn.teamzlab.com/sitemap.xml

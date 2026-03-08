@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Full-Stack Playbook — Build Real Apps From Scratch | 49 Interactive Lessons by Teamz Lab</title>
-<meta name="description" content="Free interactive course: learn TypeScript, React & NestJS with 49 hands-on lessons, 245 quizzes & code playground. No signup required.">
+<title>Free Full-Stack Playbook — Interactive TypeScript, NestJS & React Course (No Signup)</title>
+<meta name="description" content="Free interactive beginner-friendly course: learn TypeScript, NestJS, and React by building real apps. 49 lessons, 245 quizzes, code playground, and no signup.">
 <!-- meta keywords removed: ignored by Google since 2009 -->
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow">
@@ -70,6 +70,7 @@ if(['learn.teamzlab.com','teamz-lab-ltd.github.io'].includes(location.hostname))
   "@type": "Course",
   "name": "Free Full-Stack Playbook — Build Real Apps From Scratch",
   "description": "Understand how modern websites and apps are built. 49 free interactive lessons covering TypeScript, NestJS, React, MongoDB, Docker, AI integration and fullstack development. 245 quizzes, code playground, and achievement system. Created by Teamz Lab.",
+  "keywords": ["interactive typescript course", "nestjs tutorial for beginners", "react and nestjs full stack course", "project-based coding course", "free coding course no signup", "full stack roadmap with quizzes"],
   "provider": {
     "@type": "Organization",
     "name": "Teamz Lab",
@@ -88,7 +89,7 @@ if(['learn.teamzlab.com','teamz-lab-ltd.github.io'].includes(location.hostname))
   "isAccessibleForFree": true,
   "inLanguage": "en",
   "datePublished": "2026-03-01",
-  "dateModified": "2026-03-07",
+  "dateModified": "2026-03-08",
   "image": "https://learn.teamzlab.com/og-image.png",
   "audience": {
     "@type": "EducationalAudience",
@@ -393,14 +394,18 @@ body { background:var(--bg); color:var(--text); font-family:'Poppins',sans-serif
 
 header { padding:2rem; border-bottom:1px solid var(--border); background:var(--surface); transition:background 0.3s,border-color 0.3s; }
 .hdr { max-width:1400px; margin:0 auto; }
-.hdr-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.2rem; }
-.hdr-left { display:flex; align-items:center; gap:1rem; }
+.hdr-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.2rem; flex-wrap:wrap; }
+.hdr-left { display:flex; align-items:center; gap:0.75rem; flex:1; min-width:0; }
+.hdr-actions { display:flex; align-items:center; gap:0.6rem; flex-shrink:0; flex-wrap:wrap; }
+.hdr-utils { margin-left:0.25rem; }
 .logo { font-size:var(--text-xl); }
 .hdr-txt h1 { font-size:var(--text-h2); line-height:var(--lh); }
 .hdr-txt p { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); }
 
 .theme-toggle { padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); cursor:pointer; font-size:var(--text-h5); transition:all 0.2s; display:flex; align-items:center; justify-content:center; width:44px; height:44px; }
 .theme-toggle:hover { border-color:var(--accent); background:var(--bg); }
+.theme-toggle.header-icon-btn { border:none; background:transparent; }
+.theme-toggle.header-icon-btn:hover { border:none; background:transparent; }
 
 .progress-bar { height:8px; background:var(--surface); border-radius:8px; overflow:hidden; margin-top:0.5rem; border:1px solid var(--border); transition:background 0.3s,border-color 0.3s; }
 .progress-fill { height:100%; background:var(--accent); border-radius:8px; transition:width 0.4s; }
@@ -546,6 +551,11 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .btn--hire:hover { background:rgba(217,254,6,0.12); color:var(--accent-fg); box-shadow:0 0 12px rgba(217,254,6,0.35); }
 .nav-link { color:var(--text-muted); text-decoration:none; font-size:var(--text-md); line-height:var(--lh); font-weight:500; transition:color 0.2s; }
 .nav-link:hover { color:var(--accent-fg); }
+.nav-link--icon { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; color:var(--text); border-radius:8px; }
+.nav-link--icon:hover { color:var(--accent-fg); }
+.nav-link--bordered { border:1px solid currentColor; border-radius:8px; padding:8px 12px; white-space:nowrap; }
+.header-icon-btn { border:none; background:transparent; color:var(--text-muted); box-shadow:none; }
+.header-icon-btn:hover { color:var(--text); background:transparent; }
 /* Build CTA banner */
 .build-cta { display:flex; align-items:center; gap:1rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem 1.2rem; margin:1.5rem 0; }
 .build-cta__icon { flex-shrink:0; color:var(--accent-fg); }
@@ -555,13 +565,6 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .build-cta__btn { flex-shrink:0; padding:8px 16px; height:36px; background:var(--accent); color:var(--accent-text); font-weight:700; font-size:var(--text-md); font-family:var(--font); border-radius:22px; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; white-space:nowrap; display:inline-flex; align-items:center; line-height:var(--lh); }
 .build-cta__btn:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(217,254,6,0.3); }
 @media(max-width:600px){ .build-cta { flex-direction:column; text-align:center; } .build-cta__icon { display:none; } }
-/* Scroll nudge toast */
-.nudge-toast { position:fixed; bottom:-80px; left:50%; transform:translateX(-50%); background:var(--surface); border:1px solid var(--border); border-radius:22px; padding:0.6rem 1.2rem; display:flex; align-items:center; gap:0.8rem; box-shadow:0 8px 32px rgba(0,0,0,0.4); z-index:999; transition:bottom 0.4s ease; font-size:var(--text-sm); max-width:90vw; line-height:var(--lh); }
-.nudge-toast.show { bottom:1.5rem; }
-.nudge-toast__text { color:var(--text-muted); }
-.nudge-toast__text strong { color:var(--text); }
-.nudge-toast__btn { padding:8px 16px; height:36px; background:var(--accent); color:var(--accent-text); font-weight:700; font-size:var(--text-md); font-family:var(--font); border-radius:22px; text-decoration:none; white-space:nowrap; display:inline-flex; align-items:center; line-height:var(--lh); }
-.nudge-toast__close { background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:var(--text-h6); padding:0 0.2rem; }
 .teamz-cta { text-align:center; margin-bottom:1rem; }
 .teamz-cta__label { font-size:var(--text-sm); color:var(--text-muted); margin-bottom:0.6rem; }
 .teamz-cta__links { display:flex; flex-wrap:wrap; justify-content:center; gap:1rem; }
@@ -571,13 +574,19 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 @media(max-width:700px) {
   /* --- Header --- */
   header { padding:1rem; }
-  .hdr-top { flex-direction:row; flex-wrap:wrap; gap:0.5rem; align-items:center; }
-  .hdr-left { flex:1; min-width:0; gap:0.5rem; }
-  .hdr-txt h1 { font-size:var(--text-h5); }
+  .hdr-top { gap:0.5rem; align-items:center; }
+  .hdr-left { gap:0.5rem; min-width:0; flex:1 1 auto; }
+  .hdr-actions { gap:0.4rem; justify-content:flex-end; margin-left:auto; }
+  .hdr-utils { margin-left:0.2rem; gap:0.15rem; }
+  .hdr-utils .theme-toggle { width:34px; height:34px; padding:5px; }
+  .hdr-utils .theme-toggle svg { width:16px; height:16px; }
+  .hdr-utils .lang-btn--text { padding:0.2rem 0.35rem; font-size:var(--text-xs); }
+  .hdr-txt h1 { font-size:var(--text-h5); line-height:1.2; }
   .hdr-txt p { font-size:var(--text-xs); }
-  .nav-link { display:none; }
-  .btn--hire { display:none; }
-  .theme-toggle { width:36px; height:36px; padding:6px; }
+  .theme-toggle, .nav-link--icon { width:38px; height:38px; padding:6px; }
+  .theme-toggle svg, .nav-link--icon svg { width:18px; height:18px; }
+  .nav-link--bordered { padding:5px 8px; font-size:var(--text-sm); }
+  .btn--hire { padding:0.3rem 0.6rem; font-size:var(--text-xs); }
   .logo svg { width:24px; height:24px; }
 
   /* --- Main content --- */
@@ -711,12 +720,6 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
   .coffee-fab { bottom:4.2rem; right:1rem; height:40px; font-size:0.72rem; padding:0 0.8rem 0 0.6rem; }
   .sidebar-toggle { bottom:1rem; left:1rem; width:40px; height:40px; }
   .xp-popup { top:60px; right:10px; font-size:var(--text-sm); padding:0.6rem 1rem; }
-
-  /* --- Nudge toast: lift above FABs and shrink to avoid overlap --- */
-  .nudge-toast.show { bottom:5.5rem; }
-  .nudge-toast { max-width:calc(100vw - 6rem); padding:0.5rem 0.8rem; gap:0.5rem; font-size:var(--text-xs); border-radius:16px; }
-  .nudge-toast__btn { height:30px; padding:6px 12px; font-size:var(--text-xs); border-radius:16px; }
-  .nudge-toast__close { font-size:var(--text-md); }
 
   /* --- AI Judge modal --- */
   .ai-judge-modal { max-width:95%; padding:1.2rem; }
@@ -943,6 +946,14 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .cert-trigger { display:none; margin:1.5rem auto; padding:0.8rem 2rem; background:linear-gradient(135deg,var(--accent),var(--accent-hover)); color:var(--accent-text); border:none; border-radius:12px; font-size:var(--text-lg); font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.3s; box-shadow:0 4px 20px rgba(217,254,6,0.3); }
 .cert-trigger:hover { transform:translateY(-2px); box-shadow:0 6px 30px rgba(217,254,6,0.4); }
 .cert-trigger.show { display:block; }
+
+/* Header utility group: language (text) + search + theme — no borders, tight spacing */
+.hdr-utils { display:flex; align-items:center; gap:0.2rem; flex-shrink:0; }
+.hdr-utils .lang-btn--text { border:none; background:transparent; padding:0.25rem 0.4rem; min-width:0; color:var(--text-muted); font-size:var(--text-sm); font-weight:600; }
+.hdr-utils .lang-btn--text:hover { color:var(--text); }
+.hdr-utils .lang-btn--text svg { display:none; }
+.hdr-utils .theme-toggle { width:36px; height:36px; padding:6px; }
+.hdr-utils .theme-toggle svg { width:18px; height:18px; }
 
 /* Language Selector */
 .lang-selector { position:relative; display:inline-block; }
@@ -1246,6 +1257,31 @@ body { top:0 !important; }
 /* Learning method badges */
 .method-badges { display:flex; flex-wrap:wrap; gap:0.25rem; justify-content:center; margin:0.6rem 0 0; }
 .method-badge { padding:0.1rem 0.45rem; border-radius:22px; font-size:0.6rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; background:transparent; color:var(--text-muted); border:1px solid var(--border); line-height:var(--lh); }
+.method-meta { display:flex; align-items:center; justify-content:center; gap:0.45rem; flex-wrap:wrap; margin:0.6rem 0 0; }
+.method-info-btn { width:24px; height:24px; border-radius:50%; border:1px solid var(--border); background:var(--bg); color:var(--text-muted); display:inline-flex; align-items:center; justify-content:center; font-size:var(--text-sm); font-weight:700; cursor:pointer; transition:all 0.2s; font-family:var(--font); }
+.method-info-btn:hover { border-color:var(--accent); color:var(--heading); }
+
+/* Pedagogy transparency modal */
+.pedagogy-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:10000; display:flex; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(3px); }
+.pedagogy-modal { width:min(760px,100%); max-height:90vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1rem 1rem 0.8rem; position:relative; }
+.pedagogy-close { position:absolute; top:0.65rem; right:0.7rem; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:var(--text-h5); line-height:1; }
+.pedagogy-close:hover { color:var(--text); }
+.pedagogy-head { padding-right:1.8rem; margin-bottom:0.8rem; }
+.pedagogy-head h3 { color:var(--heading); font-size:var(--text-h6); margin-bottom:0.2rem; }
+.pedagogy-head p { color:var(--text-muted); font-size:var(--text-sm); }
+.pedagogy-cards { display:grid; gap:0.55rem; }
+.pedagogy-card { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:0.65rem 0.75rem; }
+.pedagogy-card h4 { color:var(--heading); font-size:var(--text-md); margin-bottom:0.2rem; }
+.pedagogy-card p { color:var(--text-muted); font-size:var(--text-sm); margin-bottom:0.25rem; }
+.pedagogy-source { color:var(--accent-fg); font-size:var(--text-xs); text-decoration:none; }
+.pedagogy-source:hover { text-decoration:underline; }
+
+/* Keyboard focus visibility */
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visible, .search-input:focus-visible, .sidebar-search input:focus-visible, .playground-editor:focus-visible, .typing-input:focus-visible, .self-explain-textarea:focus-visible, .notes-textarea:focus-visible {
+  border-color:var(--accent) !important;
+  box-shadow:0 0 0 2px rgba(217,254,6,0.25);
+}
 
 /* Review/Mixed Quiz tab in nav */
 .tab.review-tab { border-color:rgba(217,254,6,0.3); }
@@ -1314,9 +1350,17 @@ body { top:0 !important; }
   /* Tighter header */
   header { padding:0.75rem; }
   .hdr-top { gap:0.4rem; }
+  .hdr-left { flex:1 1 100%; }
+  .hdr-actions { gap:0.35rem; justify-content:flex-end; }
+  .hdr-utils { margin-left:0.15rem; gap:0.1rem; }
+  .hdr-utils .theme-toggle { width:32px; height:32px; padding:4px; }
+  .hdr-utils .theme-toggle svg { width:14px; height:14px; }
+  .hdr-utils .lang-btn--text { padding:0.15rem 0.3rem; font-size:0.7rem; }
   .logo svg { width:20px; height:20px; }
-  .lang-btn { padding:0.3rem 0.5rem; font-size:var(--text-xs); }
-  .lang-btn span:last-child { display:none; }
+  .nav-link--bordered { padding:4px 6px; font-size:var(--text-xs); }
+  .btn--hire { padding:0.25rem 0.5rem; font-size:0.7rem; }
+  .theme-toggle, .nav-link--icon { width:34px; height:34px; padding:5px; }
+  .theme-toggle svg, .nav-link--icon svg { width:16px; height:16px; }
 
   /* Tighter content */
   main { padding:0 0.5rem; }
@@ -1476,8 +1520,13 @@ body { top:0 !important; }
 <p>From Idea to Deployed App — <strong>~10 min/lesson</strong> — Learn to Build Real Apps Free | by <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" style="color:var(--accent-fg);text-decoration:none;font-weight:700" onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header_subtitle'})">Teamz Lab</a></p>
 </div>
 </div>
+<div class="hdr-actions">
+<a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link nav-link--icon" aria-label="Home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+<a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link nav-link--bordered">Our Apps</a>
+<a onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header'})" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="btn--hire">Hire Teamz Lab</a>
+<div class="hdr-utils">
 <div class="lang-selector">
-<button class="lang-btn" onclick="toggleLangDropdown()" title="Change language">
+<button class="lang-btn lang-btn--text" onclick="toggleLangDropdown()" title="Change language">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
 <span id="current-lang">EN</span>
 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1493,16 +1542,15 @@ body { top:0 !important; }
 <button class="lang-option" onclick="setLang('fr')">French</button>
 </div>
 </div>
-<a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Home</a>
-<a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Our Apps</a>
-<a onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header'})" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="btn--hire">Hire Teamz Lab</a>
-<button class="theme-toggle" onclick="openSearch()" title="Search lessons (Ctrl+K)" aria-label="Search" style="font-size:var(--text-lg)">
+<button class="theme-toggle header-icon-btn" onclick="openSearch()" title="Search lessons (Ctrl+K)" aria-label="Search">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
 </button>
-<button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
+<button class="theme-toggle header-icon-btn" onclick="toggleTheme()" title="Toggle dark/light mode" aria-label="Toggle theme">
 <svg id="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
 <svg id="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
+</div>
+</div>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
 <div class="progress-text" id="ptxt">0 / 49 lessons completed</div>
@@ -1703,6 +1751,15 @@ body { top:0 !important; }
 <script>
 window.addEventListener('courseLoaded',function(){
 const L=LESSONS_DATA;
+const COURSE_SLUG=new URLSearchParams(location.search).get('course')||'default';
+const LS_PREFIX='funbook_'+COURSE_SLUG+'_';
+const SESSION_KEY='funbook_session_id_'+COURSE_SLUG;
+const MASTERY_THRESHOLD=0.8;
+const MAX_QUIZ_ATTEMPTS=2;
+
+function lsGet(key){return localStorage.getItem(LS_PREFIX+key);}
+function lsSet(key,val){localStorage.setItem(LS_PREFIX+key,val);}
+function lsRemove(key){localStorage.removeItem(LS_PREFIX+key);}
 
 // Build navigation order from topicMap so prev/next follows sidebar order
 const navOrder=(function(){
@@ -1729,6 +1786,8 @@ let current=navOrder[0]||0;
 let completed=new Set();
 let codeVisible=false;
 let quizScores={};
+let quizAttempts={}; // {"lessonIdx-quizIdx": number of attempts}
+let quizFirstTryCorrect={}; // {"lessonIdx-quizIdx": true|false}
 let flashcardMode=true;
 let showDashboard=false;
 let bookmarks=new Set();
@@ -1749,7 +1808,21 @@ let srsCards={}; // {"lessonIdx-quizIdx": {box:0, lastReview:timestamp, nextRevi
 let flashcardDifficulty={}; // {"lessonIdx-pointIdx": "easy"|"hard"}
 let mixedQuizState={questions:[],current:0,answers:[],active:false};
 let reviewStreak=0;
+let lastReviewDate='';
 let pointReactions={}; // ensure defined if missing
+
+// Analytics session/attempt state
+let sessionId=sessionStorage.getItem(SESSION_KEY);
+if(!sessionId){
+  sessionId='s_'+Math.random().toString(36).slice(2)+Date.now().toString(36);
+  sessionStorage.setItem(SESSION_KEY,sessionId);
+}
+let lessonAttemptId='';
+let lessonAttemptStartedAt=Date.now();
+let lessonQuestionViewed=new Set();
+let sessionStartedAt=Date.now();
+let sessionEnded=false;
+let heartbeatTimer=null;
 
 // ── Ad Manager ──────────────────────────────────────────
 // Centralized ad slot system. When you're ready for AdSense:
@@ -1805,7 +1878,7 @@ function promotedSection(){
 const LANG_NAMES={en:'EN',bn:'BN',hi:'HI',es:'ES',ar:'AR',pt:'PT',id:'ID',fr:'FR'};
 const LANG_FLAGS={en:'English',bn:'Bengali',hi:'Hindi',es:'Spanish',ar:'Arabic',pt:'Portuguese',id:'Indonesian',fr:'French'};
 const UI_STRINGS={
-  en:{lessonsCompleted:'lessons completed',whatIs:'What is it?',realWorld:'Real-World Use',funFact:'Fun Fact',challenge:'Challenge',quiz:'Quiz',codeExample:'Code Example',previous:'Previous',completeNext:'Complete & Next',finish:'Finish!',howWas:'How was this lesson?',loveIt:'Love it',good:'Good',meh:'Meh',resources:'Learning Resources',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Flashcard Mode',dashboard:'Dashboard',getCertificate:'Get Your Certificate',certTitle:'Certificate of Completion',certSubtitle:'This certifies that',certCompleted:'has successfully completed all 49 lessons of',certCourse:'Free Full-Stack Playbook',certLessons:'Lessons',certQuizzes:'Quizzes',certPoints:'Points',certShare:'Share on LinkedIn',certDownload:'Download',certEnterName:'Enter your name',certIssuedBy:'Issued by Teamz Lab LTD',perfect:'Perfect!',great:'Great job!',goodEffort:'Good effort!',keepPracticing:'Keep practicing!',prev:'Previous',next:'Next',eli5:'Explain Like I\'m 5',eli5Label:'Super Simple Version',spotBug:'Spot the Bug!',spotBugDesc:'Can you find what\'s wrong with this code?',hint:'Show Hint',revealAnswer:'Reveal Answer',walkthrough:'Walkthrough',clickLine:'Click any line to see what it does',thinkOfIt:'Think of it this way...',conceptFlow:'Concept Flow',difficulty:'Difficulty',prereqLabel:'Prerequisites',beginner:'Beginner',intermediate:'Intermediate',advanced:'Advanced',skillTree:'Skill Tree',myNotes:'My Notes',notesSaved:'saved',notesPlaceholder:'Write your notes for this lesson here... Saved locally on your device.',autoSaved:'Auto-saved'},
+  en:{lessonsCompleted:'lessons completed',whatIs:'What is it?',realWorld:'Real-World Use',funFact:'Fun Fact',challenge:'Challenge',quiz:'Quiz',codeExample:'Code Example',previous:'Previous',completeNext:'Complete & Next',finish:'Finish!',howWas:'How was this lesson?',loveIt:'Love it',good:'Good',meh:'Meh',resources:'Learning Resources',videos:'Videos',articles:'Articles',docs:'Documentation',flashcardMode:'Flashcard Mode',dashboard:'Dashboard',getCertificate:'Get Your Certificate',certTitle:'Certificate of Completion',certSubtitle:'This certifies that',certCompleted:'has successfully completed this course',certCourse:'Free Full-Stack Playbook',certLessons:'Lessons',certQuizzes:'Quizzes',certPoints:'Points',certShare:'Share on LinkedIn',certDownload:'Download',certEnterName:'Enter your name',certIssuedBy:'Issued by Teamz Lab LTD',perfect:'Perfect!',great:'Great job!',goodEffort:'Good effort!',keepPracticing:'Keep practicing!',prev:'Previous',next:'Next',eli5:'Explain Like I\'m 5',eli5Label:'Super Simple Version',spotBug:'Spot the Bug!',spotBugDesc:'Can you find what\'s wrong with this code?',hint:'Show Hint',revealAnswer:'Reveal Answer',walkthrough:'Walkthrough',clickLine:'Click any line to see what it does',thinkOfIt:'Think of it this way...',conceptFlow:'Concept Flow',difficulty:'Difficulty',prereqLabel:'Prerequisites',beginner:'Beginner',intermediate:'Intermediate',advanced:'Advanced',skillTree:'Skill Tree',myNotes:'My Notes',notesSaved:'saved',notesPlaceholder:'Write your notes for this lesson here... Saved locally on your device.',autoSaved:'Auto-saved'},
   bn:{lessonsCompleted:'টা লেসন শেষ',whatIs:'এইটা কি জিনিস?',realWorld:'আসল কাজে কোথায় লাগে',funFact:'মজার ব্যাপার',challenge:'চ্যালেঞ্জ',quiz:'কুইজ',codeExample:'কোড দেখো',previous:'আগেরটা',completeNext:'শেষ করো, পরেরটা দেখো',finish:'শেষ!',howWas:'লেসনটা কেমন লাগলো?',loveIt:'মারাত্মক!',good:'ভালো',meh:'এমনই',resources:'শেখার জিনিসপত্র',videos:'ভিডিও',articles:'আর্টিকেল',docs:'ডকুমেন্টেশন',flashcardMode:'ফ্ল্যাশকার্ড মোড',dashboard:'ড্যাশবোর্ড',getCertificate:'সার্টিফিকেট নাও',certTitle:'কোর্স শেষ করার সার্টিফিকেট',certSubtitle:'এই সার্টিফিকেট প্রমাণ করে',certCompleted:'সফলভাবে শেষ করেছে',certCourse:'Free Full-Stack Playbook',certLessons:'লেসন',certQuizzes:'কুইজ',certPoints:'পয়েন্ট',certShare:'LinkedIn-এ শেয়ার করো',certDownload:'ডাউনলোড',certEnterName:'তোমার নাম লেখো',certIssuedBy:'Teamz Lab LTD থেকে দেওয়া',perfect:'একদম পারফেক্ট!',great:'দারুণ হয়েছে!',goodEffort:'ভালো চেষ্টা!',keepPracticing:'আরেকটু প্র্যাকটিস করো!',prev:'আগেরটা',next:'পরেরটা',eli5:'একদম সোজা ভাষায় বুঝাও',eli5Label:'সবচেয়ে সোজা ভার্সন',spotBug:'ভুলটা খোঁজো!',spotBugDesc:'এই কোডে কোথায় গণ্ডগোল আছে বের করো',hint:'একটু হিন্ট দাও',revealAnswer:'উত্তরটা দেখাও',walkthrough:'লাইন বাই লাইন',clickLine:'যেকোনো লাইনে ক্লিক করো',thinkOfIt:'এইভাবে চিন্তা করো...',conceptFlow:'ধাপে ধাপে বোঝো',difficulty:'কঠিন লেভেল',prereqLabel:'আগে শিখতে হবে',beginner:'সহজ',intermediate:'মাঝামাঝি',advanced:'কঠিন',skillTree:'স্কিল ট্রি',myNotes:'আমার নোট',notesSaved:'সেভ আছে',notesPlaceholder:'এই লেসনের নোট এখানে লেখো... তোমার ডিভাইসে সেভ থাকবে।',autoSaved:'অটো সেভ হয়ে গেছে'},
   hi:{lessonsCompleted:'लेसन पूरे किए',whatIs:'ये क्या चीज़ है?',realWorld:'असली ज़िंदगी में कहाँ काम आता है',funFact:'मज़ेदार बात',challenge:'चैलेंज',quiz:'क्विज़',codeExample:'कोड देखो',previous:'पिछला',completeNext:'पूरा करो, अगला देखो',finish:'खत्म!',howWas:'लेसन कैसा लगा?',loveIt:'बहुत मस्त!',good:'अच्छा',meh:'ठीक-ठाक',resources:'सीखने का सामान',videos:'वीडियो',articles:'आर्टिकल',docs:'डॉक्यूमेंटेशन',flashcardMode:'फ्लैशकार्ड मोड',dashboard:'डैशबोर्ड',getCertificate:'अपना सर्टिफिकेट लो',certTitle:'कोर्स पूरा करने का सर्टिफिकेट',certSubtitle:'ये सर्टिफिकेट बताता है कि',certCompleted:'ने पूरा कर लिया है',certCourse:'Free Full-Stack Playbook',certLessons:'लेसन',certQuizzes:'क्विज़',certPoints:'पॉइंट्स',certShare:'LinkedIn पर शेयर करो',certDownload:'डाउनलोड',certEnterName:'अपना नाम लिखो',certIssuedBy:'Teamz Lab LTD से मिला',perfect:'एकदम परफेक्ट!',great:'शानदार!',goodEffort:'अच्छी कोशिश!',keepPracticing:'थोड़ा और प्रैक्टिस करो!',prev:'पिछला',next:'अगला',eli5:'एकदम आसान भाषा में समझाओ',eli5Label:'सबसे सिंपल वर्ज़न',spotBug:'गलती ढूँढो!',spotBugDesc:'इस कोड में क्या गड़बड़ है?',hint:'हिंट दो',revealAnswer:'जवाब दिखाओ',walkthrough:'लाइन बाय लाइन',clickLine:'किसी भी लाइन पर क्लिक करो',thinkOfIt:'इसे ऐसे सोचो...',conceptFlow:'स्टेप बाय स्टेप समझो',difficulty:'कितना मुश्किल',prereqLabel:'पहले ये सीखो',beginner:'आसान',intermediate:'बीच का',advanced:'मुश्किल',skillTree:'स्किल ट्री',myNotes:'मेरे नोट्स',notesSaved:'सेव है',notesPlaceholder:'इस लेसन के नोट्स यहाँ लिखो... तुम्हारे डिवाइस में सेव रहेगा।',autoSaved:'ऑटो सेव हो गया'},
   es:{lessonsCompleted:'lecciones hechas',whatIs:'Que es esto?',realWorld:'Donde se usa de verdad',funFact:'Dato curioso',challenge:'Reto',quiz:'Quiz',codeExample:'Mira el codigo',previous:'Anterior',completeNext:'Listo, vamos al siguiente',finish:'Terminamos!',howWas:'Que tal esta leccion?',loveIt:'Me encanto!',good:'Estuvo bien',meh:'Mas o menos',resources:'Material de estudio',videos:'Videos',articles:'Articulos',docs:'Documentacion',flashcardMode:'Modo flashcard',dashboard:'Panel',getCertificate:'Consigue tu certificado',certTitle:'Certificado de Finalizacion',certSubtitle:'Este certificado confirma que',certCompleted:'completo exitosamente',certCourse:'Free Full-Stack Playbook',certLessons:'Lecciones',certQuizzes:'Quizzes',certPoints:'Puntos',certShare:'Compartir en LinkedIn',certDownload:'Descargar',certEnterName:'Escribe tu nombre',certIssuedBy:'Emitido por Teamz Lab LTD',perfect:'Perfecto!',great:'Genial!',goodEffort:'Buen intento!',keepPracticing:'Sigue practicando!',prev:'Anterior',next:'Siguiente',eli5:'Explicamelo facilito',eli5Label:'Version super simple',spotBug:'Encuentra el error!',spotBugDesc:'Que tiene de malo este codigo?',hint:'Dame una pista',revealAnswer:'Mostrar respuesta',walkthrough:'Linea por linea',clickLine:'Haz clic en cualquier linea',thinkOfIt:'Piensalo asi...',conceptFlow:'Paso a paso',difficulty:'Nivel',prereqLabel:'Primero aprende esto',beginner:'Facil',intermediate:'Intermedio',advanced:'Avanzado',skillTree:'Arbol de habilidades',myNotes:'Mis notas',notesSaved:'guardado',notesPlaceholder:'Escribe tus notas aqui... Se guardan en tu dispositivo.',autoSaved:'Guardado automatico'},
@@ -1819,11 +1892,14 @@ function t(key){return (UI_STRINGS[currentLang]||UI_STRINGS.en)[key]||UI_STRINGS
 // Load saved state from localStorage
 function loadState(){
   try{
-    const s=localStorage.getItem('funbook_state');
+    const s=lsGet('state')||localStorage.getItem('funbook_state');
     if(s){
+      if(!lsGet('state')) lsSet('state',s);
       const d=JSON.parse(s);
       if(d.completed) completed=new Set(d.completed);
       if(d.quizScores) quizScores=d.quizScores;
+      if(d.quizAttempts) quizAttempts=d.quizAttempts;
+      if(d.quizFirstTryCorrect) quizFirstTryCorrect=d.quizFirstTryCorrect;
       if(d.bookmarks) bookmarks=new Set(d.bookmarks);
       if(d.ratings) lessonRatings=d.ratings;
       if(d.xp) xp=d.xp;
@@ -1837,21 +1913,251 @@ function loadState(){
       if(d.srsCards) srsCards=d.srsCards;
       if(d.flashcardDifficulty) flashcardDifficulty=d.flashcardDifficulty;
       if(typeof d.reviewStreak==='number') reviewStreak=d.reviewStreak;
+      if(typeof d.lastReviewDate==='string') lastReviewDate=d.lastReviewDate;
     }
   }catch(e){}
 }
 function saveState(){
   try{
-    localStorage.setItem('funbook_state',JSON.stringify({
-      completed:[...completed],quizScores,bookmarks:[...bookmarks],
+    lsSet('state',JSON.stringify({
+      completed:[...completed],quizScores,quizAttempts,quizFirstTryCorrect,bookmarks:[...bookmarks],
       ratings:lessonRatings,xp,xpEarned:[...totalXpEarned],current,
       lang:currentLang,certName,notes:lessonNotes,
-      selfExplanations,confidenceRatings,srsCards,flashcardDifficulty,reviewStreak
+      selfExplanations,confidenceRatings,srsCards,flashcardDifficulty,reviewStreak,lastReviewDate
     }));
   }catch(e){}
 }
 
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function dayKey(d){
+  const dt=d||new Date();
+  const y=dt.getFullYear();
+  const m=String(dt.getMonth()+1).padStart(2,'0');
+  const dd=String(dt.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+dd;
+}
+
+function dayDiff(fromDay,toDay){
+  if(!fromDay||!toDay) return null;
+  const from=new Date(fromDay+'T00:00:00');
+  const to=new Date(toDay+'T00:00:00');
+  if(Number.isNaN(from.getTime())||Number.isNaN(to.getTime())) return null;
+  return Math.round((to-from)/86400000);
+}
+
+function trackSessionStart(){
+  const today=dayKey();
+  const prevDay=lsGet('last_seen_day');
+  const diff=dayDiff(prevDay,today);
+  const isReturning=typeof diff==='number'&&diff>=1;
+  lsSet('last_seen_day',today);
+  if(window.__logEvent){
+    const payload={session_id:sessionId,course_slug:COURSE_SLUG,is_returning:isReturning};
+    if(typeof diff==='number') payload.days_since_last_visit=diff;
+    window.__logEvent('session_start',payload);
+    if(isReturning){
+      window.__logEvent('return_visit',{
+        session_id:sessionId,
+        course_slug:COURSE_SLUG,
+        days_since_last_visit:diff
+      });
+    }
+  }
+}
+
+function endSession(reason){
+  if(sessionEnded) return;
+  sessionEnded=true;
+  if(heartbeatTimer){clearInterval(heartbeatTimer);heartbeatTimer=null;}
+  endLessonAttempt(reason||'session_end');
+  if(window.__logEvent){
+    window.__logEvent('session_end',{
+      session_id:sessionId,
+      course_slug:COURSE_SLUG,
+      reason:reason||'session_end',
+      elapsed_seconds:Math.max(1,Math.round((Date.now()-sessionStartedAt)/1000))
+    });
+  }
+}
+
+function getTotalQuizCount(){
+  return L.reduce((sum,lesson)=>sum+((lesson.quiz&&Array.isArray(lesson.quiz))?lesson.quiz.length:0),0);
+}
+
+function getLessonQuizStats(lessonIdx){
+  const lesson=L[lessonIdx];
+  const total=(lesson&&lesson.quiz&&Array.isArray(lesson.quiz))?lesson.quiz.length:0;
+  if(total===0) return {total:0,answered:0,correct:0,pct:1};
+  let answered=0;
+  let correct=0;
+  for(let i=0;i<total;i++){
+    const v=quizScores[lessonIdx+'-'+i];
+    if(v!==undefined){
+      answered++;
+      if(v===true) correct++;
+    }
+  }
+  return {total,answered,correct,pct:correct/total};
+}
+
+function isLessonMastered(lessonIdx){
+  const s=getLessonQuizStats(lessonIdx);
+  if(s.total===0) return true;
+  return s.answered===s.total&&s.pct>=MASTERY_THRESHOLD;
+}
+
+function beginLessonAttempt(source){
+  if(!L[current]) return;
+  lessonAttemptId='a_'+Math.random().toString(36).slice(2)+Date.now().toString(36);
+  lessonAttemptStartedAt=Date.now();
+  lessonQuestionViewed=new Set();
+  if(window.__logEvent)window.__logEvent('lesson_started',{
+    lesson_id:L[current].id,
+    lesson_title:L[current].title,
+    attempt_id:lessonAttemptId,
+    source:source||'unknown',
+    session_id:sessionId
+  });
+}
+
+function endLessonAttempt(reason){
+  if(!lessonAttemptId||!L[current]) return;
+  const elapsed=Math.max(1,Math.round((Date.now()-lessonAttemptStartedAt)/1000));
+  const wasCompleted=completed.has(current);
+  if(window.__logEvent){
+    window.__logEvent(wasCompleted?'lesson_ended':'lesson_abandoned',{
+      lesson_id:L[current].id,
+      lesson_title:L[current].title,
+      attempt_id:lessonAttemptId,
+      reason:reason||'unknown',
+      elapsed_seconds:elapsed,
+      session_id:sessionId
+    });
+  }
+  lessonAttemptId='';
+}
+
+function ensureLessonAttempt(source){
+  if(showDashboard||showReview||showMixedQuiz){
+    applyKeyboardAffordances(document);
+    return;
+  }
+  if(!L[current]||lessonAttemptId) return;
+  beginLessonAttempt(source||'auto');
+  if(window.__logEvent){
+    window.__logEvent('lesson_view',{
+      lesson_id:L[current].id,
+      lesson_title:L[current].title,
+      attempt_id:lessonAttemptId,
+      session_id:sessionId
+    });
+  }
+}
+
+function startLessonHeartbeat(){
+  if(heartbeatTimer) clearInterval(heartbeatTimer);
+  heartbeatTimer=setInterval(()=>{
+    if(document.visibilityState!=='visible') return;
+    if(showDashboard||showReview||showMixedQuiz) return;
+    if(!L[current]||!lessonAttemptId) return;
+    const stats=getLessonQuizStats(current);
+    if(window.__logEvent){
+      window.__logEvent('lesson_heartbeat',{
+        lesson_id:L[current].id,
+        lesson_title:L[current].title,
+        attempt_id:lessonAttemptId,
+        session_id:sessionId,
+        elapsed_seconds:Math.max(1,Math.round((Date.now()-lessonAttemptStartedAt)/1000)),
+        quiz_answered:stats.answered,
+        quiz_total:stats.total
+      });
+    }
+  },30000);
+}
+
+function applyKeyboardAffordances(root){
+  const container=root||document;
+  container.querySelectorAll('div[onclick],span[onclick]').forEach(el=>{
+    if(el.closest('.notes-editor')) return;
+    if(el.hasAttribute('onkeydown')) return;
+    if(el.hasAttribute('data-kbskip')) return;
+    if(el.matches('button,a,input,textarea,select,summary')) return;
+    if(!el.hasAttribute('role')) el.setAttribute('role','button');
+    if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex','0');
+    el.setAttribute('data-kbclick','1');
+  });
+}
+
+function openPedagogyInfo(context){
+  if(window.__logEvent) window.__logEvent('pedagogy_info_open',{context:context||'lesson',lesson_id:L[current]&&L[current].id,session_id:sessionId});
+  if(document.getElementById('pedagogy-info-container')) return;
+  const cards=[
+    {name:'Retrieval Practice',how:'Answering from memory strengthens long-term retention more than re-reading.',source:'https://www.science.org/doi/10.1126/science.1199327'},
+    {name:'Spaced Repetition',how:'Revisiting content over time improves durable memory compared with massed practice.',source:'https://www.pnas.org/doi/10.1073/pnas.1102280108'},
+    {name:'Interleaving',how:'Mixing related problem types improves discrimination and transfer to new tasks.',source:'https://pubmed.ncbi.nlm.nih.gov/20951662/'},
+    {name:'Elaboration',how:'Explaining why ideas are true improves understanding and transfer.',source:'https://www.sciencedirect.com/science/article/pii/S0361476X12000279'},
+    {name:'Metacognition',how:'Confidence judgments help calibrate what to review next and reduce overconfidence.',source:'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3734875/'}
+  ];
+  const modal=document.createElement('div');
+  modal.id='pedagogy-info-container';
+  const cardsHtml=cards.map(c=>`
+    <div class="pedagogy-card">
+      <h4>${escHtml(c.name)}</h4>
+      <p>${escHtml(c.how)}</p>
+      <a class="pedagogy-source" href="${c.source}" target="_blank" rel="noopener" onclick="if(window.__logEvent)window.__logEvent('pedagogy_source_click',{method:'${escHtml(c.name).replace(/'/g,"\\'")}'})">Source</a>
+    </div>`).join('');
+  modal.innerHTML=`<div class="pedagogy-overlay" onclick="if(event.target===this)closePedagogyInfo()">
+    <div class="pedagogy-modal">
+      <button class="pedagogy-close" onclick="closePedagogyInfo()" aria-label="Close">&times;</button>
+      <div class="pedagogy-head">
+        <h3>Why This Lesson Format Works</h3>
+        <p>These methods are used intentionally to improve understanding, retention, and transfer.</p>
+      </div>
+      <div class="pedagogy-cards">${cardsHtml}</div>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+
+function closePedagogyInfo(){
+  const el=document.getElementById('pedagogy-info-container');
+  if(el) el.remove();
+}
+
+function updateReviewStreak(){
+  const today=dayKey();
+  if(lastReviewDate===today) return;
+  if(!lastReviewDate){
+    reviewStreak=1;
+  }else{
+    const diff=dayDiff(lastReviewDate,today);
+    if(diff===1) reviewStreak+=1;
+    else reviewStreak=1;
+  }
+  lastReviewDate=today;
+  saveState();
+  if(window.__logEvent){
+    window.__logEvent('review_streak_update',{
+      session_id:sessionId,
+      review_streak:reviewStreak,
+      last_review_date:lastReviewDate
+    });
+  }
+}
+
+function getQuizExplanation(lessonIdx,quizIdx,picked,ans,isCorrect){
+  const lesson=L[lessonIdx];
+  const q=lesson&&lesson.quiz&&lesson.quiz[quizIdx];
+  if(!lesson||!q) return '';
+  if(q.explanation) return q.explanation;
+  const correctOpt=q.opts&&q.opts[ans]?q.opts[ans]:'the correct option';
+  const cue=(lesson.points&&lesson.points[quizIdx%lesson.points.length])?lesson.points[quizIdx%lesson.points.length].t:'the lesson key concept';
+  if(isCorrect){
+    return 'Correct. "'+escHtml(correctOpt)+'" matches '+escHtml(cue)+'.';
+  }
+  return 'Not quite. Correct answer: "'+escHtml(correctOpt)+'". Review '+escHtml(cue)+' and retry.';
+}
 
 // Seeded shuffle for quiz options — consistent per quiz, randomized across quizzes
 function shuffleOpts(opts,ans,seed){
@@ -2003,7 +2309,7 @@ function renderDashboard(){
   const totalLessons=L.length;
   const completedCount=completed.size;
   const pct=Math.round(completedCount/totalLessons*100);
-  const totalQuizzes=totalLessons*3;
+  const totalQuizzes=getTotalQuizCount();
   let correctQuizzes=0;
   Object.values(quizScores).forEach(v=>{if(v===true)correctQuizzes++;});
   const lvl=getLevel(xp);
@@ -2038,7 +2344,7 @@ function renderDashboard(){
   if(bookmarks.size>0){
     bookmarkList='<div style="margin-top:0.8rem">';
     bookmarks.forEach(idx=>{
-      if(L[idx]) bookmarkList+=`<div style="padding:0.3rem 0;cursor:pointer;color:var(--text-muted);font-size:var(--text-md)" onclick="switchView('lesson');goTo(${idx})">${L[idx].id}. ${L[idx].title}</div>`;
+      if(L[idx]) bookmarkList+=`<div style="padding:0.3rem 0;cursor:pointer;color:var(--text-muted);font-size:var(--text-md)" onclick="goTo(${idx})">${L[idx].id}. ${L[idx].title}</div>`;
     });
     bookmarkList+='</div>';
   }else{
@@ -2062,7 +2368,7 @@ function renderDashboard(){
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;text-align:center">
           <div><div class="dash-stat" style="font-size:var(--text-h3)">${lvl}</div><div class="dash-label">Level</div></div>
           <div><div class="dash-stat" style="font-size:var(--text-h3)">${xp}</div><div class="dash-label">Total XP</div></div>
-          <div><div class="dash-stat" style="font-size:var(--text-h3)">${correctQuizzes}</div><div class="dash-label">Quizzes Correct</div></div>
+          <div><div class="dash-stat" style="font-size:var(--text-h3)">${correctQuizzes}/${totalQuizzes}</div><div class="dash-label">Quizzes Correct</div></div>
           <div><div class="dash-stat" style="font-size:var(--text-h3)">${Object.values(pointReactions).filter(v=>v==='got').length}</div><div class="dash-label">Got It</div></div>
         </div>
       </div>
@@ -2089,7 +2395,7 @@ function renderDashboard(){
         if(hardItems.length>0){
           cards+='<div style="max-height:180px;overflow-y:auto">';
           hardItems.forEach(item=>{
-            cards+=`<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="switchView('lesson');goTo(${item.lessonIdx})">
+            cards+=`<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="goTo(${item.lessonIdx})">
               <div style="font-size:var(--text-sm);font-weight:600;color:var(--heading)">${escHtml(item.point)}</div>
               <div style="font-size:var(--text-xs);color:var(--text-muted)">${escHtml(item.lesson)}</div>
             </div>`;
@@ -2105,7 +2411,7 @@ function renderDashboard(){
         if(completed.size>0){
           cards+='<div style="max-height:200px;overflow-y:auto">';
           [...completed].sort((a,b)=>a-b).forEach(idx=>{
-            if(L[idx]) cards+=`<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:0.4rem" onclick="switchView('lesson');goTo(${idx})">
+            if(L[idx]) cards+=`<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:0.4rem" onclick="goTo(${idx})">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               <span style="font-size:var(--text-sm);color:var(--heading)">${escHtml(L[idx].title)}</span>
             </div>`;
@@ -2125,7 +2431,7 @@ function renderDashboard(){
       <div class="dash-card">
         <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg> Suggested Next</h3>
         ${completedCount<totalLessons?
-          `<div style="cursor:pointer" onclick="switchView('lesson');goTo(${[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0})">
+          `<div style="cursor:pointer" onclick="goTo(${[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0})">
             <div style="font-weight:700;color:var(--heading);font-size:var(--text-h6)">${L[[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0].title}</div>
             <div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.3rem">Continue your learning journey</div>
             <div class="btn btn-next" style="margin-top:1rem;display:inline-block;font-size:var(--text-md);padding:0.5rem 1.5rem">Start Lesson</div>
@@ -2135,7 +2441,7 @@ function renderDashboard(){
       <div class="dash-card" style="grid-column:1/-1">
         <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v4"/><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M12 12l-6 2M12 12l6 2"/></svg> ${t('skillTree')}</h3>
         <div class="skill-tree">
-          ${Object.entries(TOPICS).map(([name,ids])=>`<div class="skill-tier"><div class="skill-tier-label">${name}</div><div class="skill-nodes">${ids.map(id=>{const idx=id-1;const cls=completed.has(idx)?'completed':idx===current&&!showDashboard?'current':'';return `<div class="skill-node ${cls}" onclick="switchView('lesson');goTo(${idx})">${id}. ${L[idx].title}</div>`;}).join('')}</div></div>`).join('')}
+          ${Object.entries(TOPICS).map(([name,ids])=>`<div class="skill-tier"><div class="skill-tier-label">${name}</div><div class="skill-nodes">${ids.map(id=>{const idx=id-1;const cls=completed.has(idx)?'completed':idx===current&&!showDashboard?'current':'';return `<div class="skill-node ${cls}" onclick="goTo(${idx})">${id}. ${L[idx].title}</div>`;}).join('')}</div></div>`).join('')}
         </div>
       </div>
     </div>
@@ -2253,7 +2559,7 @@ function render(){
         const isDone=completed.has(i);
         const cls=isActive?'active':isDone?'done':'';
         const searchContent=((l.subtitle||'')+' '+(l.analogy||'')+' '+(l.whatIs||'')+' '+(l.points?l.points.map(p=>p.t+' '+p.d).join(' '):'')).toLowerCase().replace(/[<>]/g,'');
-        sidebarHtml+=`<div class="sidebar-item ${cls}" onclick="switchView('lesson');goTo(${i});closeSidebar()" data-title="${l.title.toLowerCase()}" data-id="${l.id}" data-content="${searchContent.substring(0,500)}">`;
+        sidebarHtml+=`<div class="sidebar-item ${cls}" onclick="goTo(${i});closeSidebar()" data-title="${l.title.toLowerCase()}" data-id="${l.id}" data-content="${searchContent.substring(0,500)}">`;
         sidebarHtml+=`<span class="sidebar-item-id">${seqIdx+1}</span>`;
         sidebarHtml+=`<span class="sidebar-item-icon">${icon(l.id,'14')}</span>`;
         sidebarHtml+=`<span class="sidebar-item-title">${l.title}</span>`;
@@ -2267,7 +2573,7 @@ function render(){
       const isActive=!showDashboard&&!showReview&&!showMixedQuiz&&i===current;
       const isDone=completed.has(i);
       const cls=isActive?'active':isDone?'done':'';
-      sidebarHtml+=`<div class="sidebar-item ${cls}" onclick="switchView('lesson');goTo(${i});closeSidebar()" data-title="${l.title.toLowerCase()}" data-id="${l.id}">`;
+      sidebarHtml+=`<div class="sidebar-item ${cls}" onclick="goTo(${i});closeSidebar()" data-title="${l.title.toLowerCase()}" data-id="${l.id}">`;
       sidebarHtml+=`<span class="sidebar-item-id">${l.id}</span>`;
       sidebarHtml+=`<span class="sidebar-item-icon">${icon(l.id,'14')}</span>`;
       sidebarHtml+=`<span class="sidebar-item-title">${l.title}</span>`;
@@ -2296,13 +2602,16 @@ function render(){
     <div class="lesson-title notranslate">${l.title}${l.difficulty?`<span class="diff-badge diff-${l.difficulty}">${t(l.difficulty)}</span>`:''}</div>
     <div class="lesson-sub">${l.subtitle}</div>
     <div class="reading-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${readTime} min read</div>
-    ${l.prereqs&&l.prereqs.length?`<div class="prereqs"><span style="font-size:var(--text-sm);color:var(--text-muted);margin-right:0.3rem">${t('prereqLabel')}:</span>${l.prereqs.map(pid=>{const pl=L.find(x=>x.id===pid);return pl?`<span class="prereq-chip ${completed.has(L.indexOf(pl))?'done':''}" onclick="switchView('lesson');goTo(${L.indexOf(pl)})">${pl.title}</span>`:'';}).join('')}</div>`:''}
-    <div class="method-badges" title="Evidence-based learning methods used in this lesson">
-      <span class="method-badge retrieval">Retrieval Practice</span>
-      <span class="method-badge dual-coding">Dual Coding</span>
-      <span class="method-badge elaboration">Elaboration</span>
-      <span class="method-badge metacognition">Metacognition</span>
-      ${completed.size>0?'<span class="method-badge spaced">Spaced Review</span>':''}
+    ${l.prereqs&&l.prereqs.length?`<div class="prereqs"><span style="font-size:var(--text-sm);color:var(--text-muted);margin-right:0.3rem">${t('prereqLabel')}:</span>${l.prereqs.map(pid=>{const pl=L.find(x=>x.id===pid);return pl?`<span class="prereq-chip ${completed.has(L.indexOf(pl))?'done':''}" onclick="goTo(${L.indexOf(pl)})">${pl.title}</span>`:'';}).join('')}</div>`:''}
+    <div class="method-meta" title="Evidence-based learning methods used in this lesson">
+      <div class="method-badges">
+        <span class="method-badge retrieval">Retrieval Practice</span>
+        <span class="method-badge dual-coding">Dual Coding</span>
+        <span class="method-badge elaboration">Elaboration</span>
+        <span class="method-badge metacognition">Metacognition</span>
+        ${completed.size>0?'<span class="method-badge spaced">Spaced Review</span>':''}
+      </div>
+      <button class="method-info-btn" aria-label="Why this method works" onclick="openPedagogyInfo('lesson')">i</button>
     </div>
   </div>`;
 
@@ -2374,7 +2683,16 @@ function render(){
 
   if(flashcardMode){
     h+=`<div class="flashcards">`;
-    l.points.forEach((p,i)=>{
+    const pointOrder=l.points.map((_,i)=>i).sort((a,b)=>{
+      const da=flashcardDifficulty[current+'-'+a]||'';
+      const db=flashcardDifficulty[current+'-'+b]||'';
+      if(da===db) return a-b;
+      if(da==='hard') return -1;
+      if(db==='hard') return 1;
+      return a-b;
+    });
+    pointOrder.forEach((i)=>{
+      const p=l.points[i];
       h+=`<div class="flashcard" tabindex="0" role="button" aria-label="${escHtml(p.t)} — press Enter to flip" onclick="if(!event.target.closest('.ask-ai-btn')&&!event.target.closest('.flashcard-view-full'))this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();if(!event.target.closest('.ask-ai-btn')&&!event.target.closest('.flashcard-view-full'))this.classList.toggle('flipped')}">
         <div class="flashcard-face flashcard-front">
           <div class="point-title notranslate">${p.t}</div>
@@ -2406,11 +2724,26 @@ function render(){
   }
 
   if(l.quiz && Array.isArray(l.quiz)){
+    const lessonQuizStats=getLessonQuizStats(current);
     l.quiz.forEach((q, qIdx)=>{
       const quizKey=`${current}-${qIdx}`;
+      const attempts=quizAttempts[quizKey]||0;
       const answered=quizScores[quizKey]!==undefined;
       const confKey=current+'-'+qIdx;
       const conf=confidenceRatings[confKey]||'';
+      if(lessonAttemptId){
+        const viewKey=lessonAttemptId+'-'+quizKey;
+        if(!lessonQuestionViewed.has(viewKey)){
+          lessonQuestionViewed.add(viewKey);
+          if(window.__logEvent)window.__logEvent('quiz_question_viewed',{
+            lesson_id:l.id,
+            lesson_title:l.title,
+            quiz_index:qIdx,
+            attempt_id:lessonAttemptId,
+            session_id:sessionId
+          });
+        }
+      }
       // Shuffle options so correct answer isn't always in the same position
       const sh=shuffleOpts(q.opts,q.ans,l.id*100+qIdx);
       const shuffledOpts=sh.opts;
@@ -2421,20 +2754,35 @@ function render(){
       }
       shuffledOpts.forEach((o,i)=>{
         const isCorrect=answered&&i===shuffledAns;
-        const isWrong=answered&&quizScores[quizKey]===false&&i!==shuffledAns;
         let cls='quiz-btn';
         if(isCorrect) cls+=' correct';
         h+=`<button class="${cls}" id="quiz-btn-${qIdx}-${i}" onclick="checkQuiz(this,${i},${shuffledAns},${qIdx})" ${answered?'disabled':''}>${o}</button>`;
       });
+      if(attempts>0){
+        const solved=quizScores[quizKey];
+        if(solved===true){
+          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--quiz-correct-text);font-size:var(--text-sm)">Correct on ${attempts===1?'first try':'attempt '+attempts}. ${getQuizExplanation(current,qIdx,shuffledAns,shuffledAns,true)}</div>`;
+        }else if(solved===false){
+          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--quiz-wrong-text);font-size:var(--text-sm)">Final attempt used. ${getQuizExplanation(current,qIdx,-1,shuffledAns,false)}</div>`;
+        }else{
+          const remaining=Math.max(0,MAX_QUIZ_ATTEMPTS-attempts);
+          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--warning);font-size:var(--text-sm)">Not correct yet. ${remaining} attempt${remaining===1?'':'s'} left.</div>`;
+        }
+      }else{
+        h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="display:none"></div>`;
+      }
       h+=`</div>`;
     });
-    const totalQuestions=l.quiz.length;
-    let correctCount=0;
-    for(let i=0;i<totalQuestions;i++){
-      if(quizScores[`${current}-${i}`]===true) correctCount++;
-    }
-    if(correctCount>0 || Object.keys(quizScores).some(k=>k.startsWith(current+'-'))){
-      h+=`<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${correctCount}/${totalQuestions} ${correctCount===totalQuestions?t('perfect'):correctCount>=Math.ceil(totalQuestions*0.75)?t('great'):correctCount>=Math.ceil(totalQuestions*0.5)?t('goodEffort'):t('keepPracticing')}</div>`;
+    if(lessonQuizStats.answered>0){
+      const mastered=lessonQuizStats.answered===lessonQuizStats.total&&lessonQuizStats.pct>=MASTERY_THRESHOLD;
+      const masteryPct=Math.round(MASTERY_THRESHOLD*100);
+      h+=`<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>You got ${lessonQuizStats.correct}/${lessonQuizStats.total} correct. Mastery target: ${masteryPct}%.</div>`;
+      if(lessonQuizStats.answered===lessonQuizStats.total&&!mastered){
+        h+=`<div style="margin-top:0.6rem;text-align:center"><button class="btn btn-prev" onclick="resetLessonQuiz(${current})">Retake Quiz</button></div>`;
+      }
+      if(mastered){
+        h+=`<div style="margin-top:0.6rem;color:var(--quiz-correct-text);text-align:center;font-size:var(--text-sm);font-weight:600">Mastery unlocked. You can continue.</div>`;
+      }
     }
   }
 
@@ -2512,7 +2860,7 @@ function render(){
   // Self-Explanation Prompt (Metacognition + Elaboration) — at the end after all content
   h+=`<div class="self-explain reveal">
     <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Explain It Yourself (+10 XP)</h4>
-    <p>Research shows explaining concepts in your own words dramatically improves retention. Write a brief explanation below:</p>
+    <p>Explaining concepts in your own words can strengthen understanding and memory. Write a brief explanation below:</p>
     <textarea class="self-explain-textarea" id="self-explain-ta" placeholder="In my own words, ${l.title} is about..." oninput="saveSelfExplanation(${current})">${selfExplanations[current]||''}</textarea>
     <div class="self-explain-footer">
       <span class="self-explain-save" id="self-explain-saved">${t('autoSaved')}</span>
@@ -2559,24 +2907,17 @@ function render(){
   // Ad slot: before navigation — end of lesson, high engagement
   h+=adSlot('before-nav');
 
-  // "Need It Built?" CTA — subtle lead gen for non-tech visitors
-  h+=`<div class="build-cta reveal">
-    <div class="build-cta__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
-    <div class="build-cta__text">
-      <strong>Don't want to code it yourself?</strong>
-      <span>Teamz Lab builds apps, websites & AI integrations for businesses worldwide.</span>
-    </div>
-    <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="build-cta__btn">See Our Work</a>
-  </div>`;
-
+  const canProceed=isLessonMastered(current);
+  const nextLabel=navPos[current]<navOrder.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
   h+=`<div class="nav-btns">`;
   if(navPos[current]>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
-  h+=`<button class="btn btn-next" onclick="markAndNext()">${navPos[current]<navOrder.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
+  h+=`<button class="btn btn-next" onclick="markAndNext()" ${canProceed?'':'disabled title="Complete quiz mastery first" style="opacity:0.6;cursor:not-allowed"'}>${nextLabel}</button>`;
   h+=`</div>`;
   h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span><span><span class="kbd">N</span> ${t('myNotes')}</span><span><span class="kbd">T</span> Theme</span><span><span class="kbd">?</span> Help</span></div>`;
 
   document.getElementById('content').innerHTML=h;
   initScrollReveal();
+  applyKeyboardAffordances(document);
   // Update floating notes if open
   if(notesOpen){
     const editor=document.getElementById('notes-editor');
@@ -2589,20 +2930,53 @@ function render(){
   if(currentLang!=='en'&&gtLoaded){
     setTimeout(()=>triggerGT(currentLang),400);
   }
+  ensureLessonAttempt('render');
 }
 
-function goTo(i){current=i;codeVisible=false;typingActive=false;showReview=false;showMixedQuiz=false;showDashboard=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[i])window.__logEvent('lesson_view',{lesson_id:L[i].id,lesson_title:L[i].title});}
-function goPrev(){const pos=navPos[current];if(pos>0){current=navOrder[pos-1];codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[current])window.__logEvent('lesson_view',{lesson_id:L[current].id,lesson_title:L[current].title,nav:'prev'});}}
+function goTo(i){
+  if(typeof i!=='number'||!L[i]) return;
+  const prev=current;
+  endLessonAttempt('navigate');
+  if(window.__logEvent&&L[prev]&&prev!==i){
+    const prevStats=getLessonQuizStats(prev);
+    const prevMastered=prevStats.total===0||(prevStats.answered===prevStats.total&&prevStats.pct>=MASTERY_THRESHOLD);
+    if(i>prev&&!completed.has(prev)&&!prevMastered){
+      window.__logEvent('lesson_skip',{
+        lesson_id:L[prev].id,
+        lesson_title:L[prev].title,
+        to_lesson_id:L[i]&&L[i].id,
+        session_id:sessionId
+      });
+    }
+  }
+  current=i;codeVisible=false;typingActive=false;showReview=false;showMixedQuiz=false;showDashboard=false;saveState();render();window.scrollTo(0,0);
+  ensureLessonAttempt('navigate');
+}
+function goPrev(){
+  const pos=navPos[current];
+  if(pos>0){
+    endLessonAttempt('navigate_prev');
+    current=navOrder[pos-1];codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);
+    ensureLessonAttempt('navigate_prev');
+  }
+}
 function markAndNext(){
+  if(!isLessonMastered(current)){
+    showToast('Master this lesson quiz first (80%+) to continue.');
+    return;
+  }
   const wasNew=!completed.has(current);
   completed.add(current);
   if(wasNew&&!totalXpEarned.has('lesson-'+current)){
     totalXpEarned.add('lesson-'+current);
-    addXp(20,'Lesson completed');
+    const lessonXp=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp&&COURSE_CONFIG.xp.lessonComplete)||20;
+    addXp(lessonXp,'Lesson completed');
     if(window.__logEvent)window.__logEvent('lesson_complete',{lesson_id:L[current].id,lesson_title:L[current].title,total_completed:completed.size});
   }
+  endLessonAttempt('complete_next');
   const pos=navPos[current];if(pos<navOrder.length-1){current=navOrder[pos+1];codeVisible=false;typingActive=false;}
   saveState();render();window.scrollTo(0,0);
+  ensureLessonAttempt('complete_next');
   checkMilestones();
 }
 function toggleCode(){codeVisible=!codeVisible;if(window.__logEvent)window.__logEvent('code_toggle',{visible:codeVisible,lesson_id:L[current].id});render();}
@@ -2774,7 +3148,7 @@ function toggleResources(idx){
 // Certificate system
 function showCertificate(){if(window.__logEvent)window.__logEvent('certificate_view',{completed_lessons:completed.size});
   const totalCorrect=Object.values(quizScores).filter(v=>v===true).length;
-  const totalQuizzes=L.length*3;
+  const totalQuizzes=getTotalQuizCount();
   const s=UI_STRINGS[currentLang]||UI_STRINGS.en;
   const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   const certId='TL-'+Date.now().toString(36).toUpperCase();
@@ -2790,7 +3164,7 @@ function showCertificate(){if(window.__logEvent)window.__logEvent('certificate_v
           <div class="cert-name">
             <input class="cert-name-input" id="cert-name-input" type="text" placeholder="${s.certEnterName||'Enter your name'}" value="${escHtml(certName)}" onchange="certName=this.value;saveState();" oninput="document.getElementById('cert-name-display')&&(document.getElementById('cert-name-display').textContent=this.value)">
           </div>
-          <div class="cert-desc">${s.certCompleted||'has successfully completed all 49 lessons of'}<br><strong>${s.certCourse||'Free Full-Stack Playbook'}</strong></div>
+          <div class="cert-desc">${s.certCompleted||'has successfully completed this course'}<br><strong>${s.certCourse||'Free Full-Stack Playbook'}</strong></div>
           <div class="cert-stats">
             <div class="cert-stat"><div class="cert-stat-num">${completed.size}</div><div class="cert-stat-label">${s.certLessons||'Lessons'}</div></div>
             <div class="cert-stat"><div class="cert-stat-num">${totalCorrect}/${totalQuizzes}</div><div class="cert-stat-label">${s.certQuizzes||'Quizzes'}</div></div>
@@ -2824,7 +3198,7 @@ function closeCert(){
 function shareCertTwitter(){
   if(window.__logEvent)window.__logEvent('certificate_share',{platform:'twitter'});
   const name=certName||'Someone';
-  const text=encodeURIComponent(`I just completed all 49 lessons of the Free Full-Stack Playbook! 🎉 Learned TypeScript, NestJS, React & fullstack development.\n\nCheck it out (it's free!):`);
+  const text=encodeURIComponent(`I just completed all ${L.length} lessons of the Free Full-Stack Playbook! 🎉 Learned TypeScript, NestJS, React & fullstack development.\n\nCheck it out (it's free!):`);
   const url=encodeURIComponent('https://learn.teamzlab.com/learn.html?course=js-ts-fun-book');
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=TypeScript,NestJS,WebDev,LearnToCode`,'_blank');
 }
@@ -2860,11 +3234,15 @@ function showToast(msg,icon){
 // Milestone celebrations
 function checkMilestones(){
   const c=completed.size;
-  const milestones={1:'You completed your first lesson! The journey begins!',5:'5 lessons done! You are on fire!',10:'10 lessons! You are unstoppable!',15:'Halfway there! 15 lessons crushed!',20:'20 lessons! Almost a fullstack dev!',25:'25 lessons! You are a coding machine!',30:'30 lessons! Legend status unlocked!',36:'36 lessons! Only 4 more to go!',40:'ALL LESSONS COMPLETE! You are a Fullstack Hero!'};
+  const finalMilestone=L.length;
+  const milestones={1:'You completed your first lesson! The journey begins!',5:'5 lessons done! You are on fire!',10:'10 lessons! You are unstoppable!',20:'20 lessons! Almost a fullstack dev!',30:'30 lessons! Legend status unlocked!',40:'40 lessons! Final stretch now.'};
+  const halfway=Math.max(1,Math.round(L.length/2));
+  milestones[halfway]='Halfway there! '+halfway+' lessons crushed!';
+  milestones[finalMilestone]='ALL LESSONS COMPLETE! You are a Fullstack Hero!';
   if(milestones[c]){
     const key='milestone-'+c;
-    if(!localStorage.getItem(key)){
-      localStorage.setItem(key,'1');
+    if(!lsGet(key)){
+      lsSet(key,'1');
       setTimeout(()=>{showToast(milestones[c],'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>');if(c>=5)spawnConfetti();},800);
     }
   }
@@ -2872,8 +3250,8 @@ function checkMilestones(){
 
 // Emoji reactions on point cards
 // pointReactions already declared at top
-function loadReactions(){try{const r=localStorage.getItem('funbook_reactions');if(r)pointReactions=JSON.parse(r);}catch(e){}}
-function saveReactions(){try{localStorage.setItem('funbook_reactions',JSON.stringify(pointReactions));}catch(e){}}
+function loadReactions(){try{const r=lsGet('reactions')||localStorage.getItem('funbook_reactions');if(r){if(!lsGet('reactions')) lsSet('reactions',r);pointReactions=JSON.parse(r);}}catch(e){}}
+function saveReactions(){try{lsSet('reactions',JSON.stringify(pointReactions));}catch(e){}}
 loadReactions();
 function reactPoint(lessonIdx,pointIdx,emoji){if(window.__logEvent)window.__logEvent('point_reaction',{lesson_id:L[lessonIdx].id,point_index:pointIdx,reaction:emoji});
   const key=lessonIdx+'-'+pointIdx;
@@ -3038,6 +3416,15 @@ function noteInsertCode(){
 
 // Keyboard shortcuts
 document.addEventListener('keydown',function(e){
+  const el=e.target;
+  if(!el||!el.matches||!el.matches('[data-kbclick="1"]')) return;
+  if(e.key==='Enter'||e.key===' '){
+    e.preventDefault();
+    el.click();
+  }
+});
+
+document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
   if(e.key==='ArrowRight'){e.preventDefault();const p=navPos[current];if(!showDashboard&&p<navOrder.length-1)goTo(navOrder[p+1]);}
   else if(e.key==='ArrowLeft'){e.preventDefault();const p=navPos[current];if(!showDashboard&&p>0)goTo(navOrder[p-1]);}
@@ -3073,16 +3460,16 @@ function collapseSidebar(){
   const sb=document.getElementById('sidebar');
   sb.classList.add('collapsed');
   document.getElementById('sidebar-expand-btn').classList.add('show');
-  localStorage.setItem('sidebar_collapsed','1');
+  lsSet('sidebar_collapsed','1');
 }
 function expandSidebar(){
   const sb=document.getElementById('sidebar');
   sb.classList.remove('collapsed');
   document.getElementById('sidebar-expand-btn').classList.remove('show');
-  localStorage.removeItem('sidebar_collapsed');
+  lsRemove('sidebar_collapsed');
 }
 // Restore sidebar collapsed state
-if(localStorage.getItem('sidebar_collapsed')==='1'){
+if(lsGet('sidebar_collapsed')==='1'){
   document.getElementById('sidebar').classList.add('collapsed');
   document.getElementById('sidebar-expand-btn').classList.add('show');
 }
@@ -3242,7 +3629,7 @@ function performSearch(query){
   }
   let html='';
   unique.slice(0,20).forEach(r=>{
-    html+=`<div class="search-result" onclick="closeSearch();switchView('lesson');goTo(${r.lessonIdx})">
+    html+=`<div class="search-result" onclick="closeSearch();goTo(${r.lessonIdx})">
       <div class="search-result-id">${r.id}</div>
       <div class="search-result-info">
         <div class="search-result-title">${highlightMatch(r.title,q)}</div>
@@ -3253,6 +3640,7 @@ function performSearch(query){
   });
   if(unique.length>20) html+=`<div style="text-align:center;padding:0.5rem;font-size:var(--text-sm);color:var(--text-muted)">Showing 20 of ${unique.length} results</div>`;
   resultsEl.innerHTML=html;
+  applyKeyboardAffordances(resultsEl);
 }
 function extractContext(text,query){
   const lower=text.toLowerCase();
@@ -3322,9 +3710,9 @@ function renderReviewMode(){
   Object.values(srsCards).forEach(c=>{boxCounts[Math.min(c.box,intervals.length-1)]++;});
   let h='<div class="review-mode">';
   h+='<div class="review-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Spaced Repetition Review</h2>';
-  h+='<p>Review questions at scientifically optimal intervals for long-term memory.</p>';
+  h+='<p>Review questions at increasing intervals to strengthen long-term memory.</p>';
   if(reviewStreak>0) h+='<div class="review-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> '+reviewStreak+' day streak!</div>';
-  h+='<div class="method-badges"><span class="method-badge spaced">Spaced Repetition</span><span class="method-badge retrieval">Active Recall</span><span class="method-badge metacognition">Desirable Difficulty</span></div></div>';
+  h+='<div class="method-meta"><div class="method-badges"><span class="method-badge spaced">Spaced Repetition</span><span class="method-badge retrieval">Active Recall</span><span class="method-badge metacognition">Desirable Difficulty</span></div><button class="method-info-btn" aria-label="Why this method works" onclick="openPedagogyInfo(\'review\')">i</button></div></div>';
   h+='<div class="review-boxes">';
   const boxLabels=['New','1 day','3 days','1 week','Mastered'];
   boxCounts.forEach((count,i)=>{
@@ -3355,6 +3743,7 @@ function renderReviewMode(){
 }
 function answerReview(cardIdx,picked,ans,srsKey){
   const isCorrect=picked===ans;
+  updateReviewStreak();
   if(window.__logEvent)window.__logEvent('srs_review_answer',{srs_key:srsKey,is_correct:isCorrect});
   const card=document.getElementById('review-card-'+cardIdx);
   if(!card) return;
@@ -3367,7 +3756,9 @@ function answerReview(cardIdx,picked,ans,srsKey){
   });
   if(isCorrect){
     promoteSrsCard(srsKey);
-    if(!totalXpEarned.has('review-'+srsKey+'-'+Date.now())){
+    const xpKey='review-'+srsKey+'-'+dayKey();
+    if(!totalXpEarned.has(xpKey)){
+      totalXpEarned.add(xpKey);
       const xpAmt=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp&&COURSE_CONFIG.xp.reviewCorrect)||5;
       addXp(xpAmt,'Review correct');
     }
@@ -3379,6 +3770,7 @@ function answerReview(cardIdx,picked,ans,srsKey){
 // Interleaved Mixed Quiz
 function startMixedQuiz(){
   if(window.__logEvent)window.__logEvent('mixed_quiz_start',{completed_lessons:completed.size});
+  if(!showDashboard&&!showReview&&!showMixedQuiz) endLessonAttempt('start_mixed_quiz');
   showMixedQuiz=true;showDashboard=false;showReview=false;
   const completedLessons=[...completed].filter(i=>L[i]&&L[i].quiz&&L[i].quiz.length>0);
   if(completedLessons.length<2){mixedQuizState={questions:[],current:0,answers:[],active:false};render();return;}
@@ -3401,7 +3793,7 @@ function renderMixedQuiz(){
   h+='<div class="method-badges"><span class="method-badge">Interleaving</span><span class="method-badge">Retrieval Practice</span></div></div>';
   if(mq.questions.length===0&&mq.current===0){
     h+='<div class="review-empty"><h3>Complete at least 2 lessons first</h3><p>Mixed Challenge pulls random questions from your completed lessons to test cross-topic knowledge. Finish a few lessons and come back!</p>';
-    h+='<button class="btn btn-next" onclick="switchView(\'lesson\');render()" style="margin-top:1rem">Back to Lessons</button></div></div>';
+    h+='<button class="btn btn-next" onclick="switchView(\'lesson\')" style="margin-top:1rem">Back to Lessons</button></div></div>';
     return h;
   }
   h+='<div class="mixed-quiz-progress">';
@@ -3418,7 +3810,7 @@ function renderMixedQuiz(){
     h+='<p style="color:var(--text-muted);margin:0.5rem 0">'+(correct===total?'Perfect interleaved recall!':correct>=total*0.75?'Strong cross-topic knowledge!':'Keep practicing — interleaving takes time!')+'</p>';
     h+='<div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem">';
     h+='<button class="btn btn-prev" onclick="startMixedQuiz()">Try Again</button>';
-    h+='<button class="btn btn-next" onclick="switchView(\'lesson\');render()">Back to Lessons</button></div></div>';
+    h+='<button class="btn btn-next" onclick="switchView(\'lesson\')">Back to Lessons</button></div></div>';
   }else{
     const q=mq.questions[mq.current];
     h+='<div class="review-card"><div class="review-card-header"><span class="review-card-lesson">From: '+q.lessonTitle+'</span><span class="review-card-progress">'+(mq.current+1)+'/'+mq.questions.length+'</span></div>';
@@ -3439,7 +3831,11 @@ function answerMixedQuiz(picked,ans){
   mixedQuizState.current++;
   if(mixedQuizState.current>=mixedQuizState.questions.length){
     const xpAmt=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp&&COURSE_CONFIG.xp.mixedQuizComplete)||25;
-    if(!totalXpEarned.has('mixed-'+Date.now())){addXp(xpAmt,'Mixed Challenge');}
+    const xpKey='mixed-'+dayKey();
+    if(!totalXpEarned.has(xpKey)){
+      totalXpEarned.add(xpKey);
+      addXp(xpAmt,'Mixed Challenge');
+    }
   }
   render();
 }
@@ -3561,9 +3957,9 @@ window.showFlashcardPopup=function(lessonIdx,pointIdx){
 // Daily motivational tip
 function showDailyTip(){
   const today=new Date().toDateString();
-  if(localStorage.getItem('funbook_tip_date')===today)return;
-  localStorage.setItem('funbook_tip_date',today);
-  const tips=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!','Tip: Try the Review tab — spaced repetition boosts memory by 200%!','Tip: Try Mixed Challenge for interleaved practice!','Tip: Write self-explanations — teaching yourself cements learning!','Tip: Rate your confidence before answering quizzes — metacognition helps!','Tip: Press R for spaced review mode!'];
+  if(lsGet('tip_date')===today)return;
+  lsSet('tip_date',today);
+  const tips=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!','Tip: Try the Review tab for spaced practice over time.','Tip: Try Mixed Challenge for interleaved practice!','Tip: Write self-explanations — teaching yourself cements learning!','Tip: Rate your confidence before answering quizzes — metacognition helps!','Tip: Press R for spaced review mode!'];
   setTimeout(()=>{showToast(tips[Math.floor(Math.random()*tips.length)],'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>');},2000);
 }
 
@@ -3587,7 +3983,7 @@ const ACHIEVEMENTS={
     {title:"On The Right Track",msg:"Rome wasn't built in a day, but they were definitely using TypeScript."}
   ],
   tryAgain:[
-    {title:"Plot Twist: Learning!",msg:"Wrong answers are just your brain's way of creating stronger memory connections. Science says so."},
+    {title:"Plot Twist: Learning!",msg:"Wrong answers can become stronger memory connections when you review and retry."},
     {title:"Respawn Point Set",msg:"Every master was once a disaster. You just set your checkpoint — come back stronger!"},
     {title:"Error 200: Learning OK",msg:"In programming, errors are expected. You're running perfectly — in debug mode."}
   ]
@@ -3684,53 +4080,101 @@ function showAchievement(score,total){
 let shownAchievements=new Set();
 
 function checkQuiz(btn,picked,ans,quizIdx){
-  const quizBox=document.getElementById(`quiz-${quizIdx}`);
-  const siblings=quizBox.querySelectorAll('.quiz-btn');
   const quizKey=`${current}-${quizIdx}`;
+  const prevAttempts=quizAttempts[quizKey]||0;
+  const attempts=prevAttempts+1;
+  quizAttempts[quizKey]=attempts;
   const isCorrect=(picked===ans);
-  quizScores[quizKey]=isCorrect;
-  if(window.__logEvent)window.__logEvent('quiz_answer',{lesson_id:L[current].id,lesson_title:L[current].title,quiz_index:quizIdx,is_correct:isCorrect});
-  // Initialize SRS card for spaced repetition
-  initSrsCard(current,quizIdx);
-  if(isCorrect){promoteSrsCard(quizKey);}else{demoteSrsCard(quizKey);}
-  siblings.forEach((b,i)=>{
-    b.classList.remove('correct','wrong');
-    if(i===ans) b.classList.add('correct');
-    else if(i===picked&&picked!==ans) b.classList.add('wrong');
-    b.disabled=true;
-  });
+  const isFinal=isCorrect||attempts>=MAX_QUIZ_ATTEMPTS;
+  if(quizFirstTryCorrect[quizKey]===undefined&&!isCorrect){
+    quizFirstTryCorrect[quizKey]=false;
+  }
+  if(isCorrect){
+    quizScores[quizKey]=true;
+    if(quizFirstTryCorrect[quizKey]===undefined) quizFirstTryCorrect[quizKey]=attempts===1;
+    initSrsCard(current,quizIdx);
+    promoteSrsCard(quizKey);
+  }else if(isFinal){
+    quizScores[quizKey]=false;
+    initSrsCard(current,quizIdx);
+    demoteSrsCard(quizKey);
+  }else if(window.__logEvent){
+    window.__logEvent('quiz_retry_started',{
+      lesson_id:L[current].id,
+      lesson_title:L[current].title,
+      quiz_index:quizIdx,
+      attempt_number:attempts+1,
+      session_id:sessionId,
+      attempt_id:lessonAttemptId
+    });
+  }
+
+  if(window.__logEvent){
+    const payload={
+      lesson_id:L[current].id,
+      lesson_title:L[current].title,
+      quiz_index:quizIdx,
+      picked_index:picked,
+      correct_index:ans,
+      is_correct:isCorrect,
+      is_final:isFinal,
+      attempt_number:attempts,
+      confidence_pre:confidenceRatings[quizKey]||'',
+      session_id:sessionId,
+      attempt_id:lessonAttemptId
+    };
+    window.__logEvent('quiz_submitted',payload);
+    window.__logEvent('quiz_answer',payload);
+    if(attempts>1) window.__logEvent('quiz_retry_submitted',payload);
+  }
+
   const l=L[current];
   if(l.quiz && Array.isArray(l.quiz)){
-    const totalQuestions=l.quiz.length;
-    let correctCount=0;
-    let answeredCount=0;
-    for(let i=0;i<totalQuestions;i++){
-      if(quizScores[`${current}-${i}`]!==undefined){
-        answeredCount++;
-        if(quizScores[`${current}-${i}`]===true) correctCount++;
-      }
-    }
-    const scoreDiv=document.getElementById('quiz-score');
-    if(scoreDiv){
-      scoreDiv.style.display='block';
-      scoreDiv.innerHTML=`<span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>You got ${correctCount}/${totalQuestions} correct! ${correctCount===totalQuestions?'Perfect!':correctCount>=Math.ceil(totalQuestions*0.75)?'Great job!':correctCount>=Math.ceil(totalQuestions*0.5)?'Good effort!':'Keep practicing!'}`;
-    }
-    if(answeredCount===totalQuestions && !shownAchievements.has(current)){
+    const stats=getLessonQuizStats(current);
+    if(stats.answered===stats.total && !shownAchievements.has(current)){
       shownAchievements.add(current);
       // Award XP for quiz completion
       const xpKey='quiz-'+current;
       if(!totalXpEarned.has(xpKey)){
         totalXpEarned.add(xpKey);
-        const quizXp=correctCount===totalQuestions?30:correctCount>=2?20:10;
-        addXp(quizXp,'Quiz '+correctCount+'/'+totalQuestions);
+        const xpCfg=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.xp)?COURSE_CONFIG.xp:{};
+        const quizXp=stats.correct===stats.total?(xpCfg.quizPerfect||30):stats.correct>=Math.ceil(stats.total*0.75)?(xpCfg.quizGood||20):(xpCfg.quizOk||10);
+        addXp(quizXp,'Quiz '+stats.correct+'/'+stats.total);
       }
-      saveState();
-      setTimeout(()=>showAchievement(correctCount,totalQuestions),600);
+      if(isFinal) setTimeout(()=>showAchievement(stats.correct,stats.total),450);
+    }else if(stats.answered<stats.total){
+      shownAchievements.delete(current);
     }
   }
+  saveState();
+  render();
+}
+
+function resetLessonQuiz(lessonIdx){
+  const lesson=L[lessonIdx];
+  if(!lesson||!lesson.quiz) return;
+  lesson.quiz.forEach((_,idx)=>{
+    const key=lessonIdx+'-'+idx;
+    delete quizScores[key];
+    delete quizAttempts[key];
+    delete quizFirstTryCorrect[key];
+    delete confidenceRatings[key];
+  });
+  shownAchievements.delete(lessonIdx);
+  if(window.__logEvent){
+    window.__logEvent('quiz_reset',{
+      lesson_id:L[lessonIdx].id,
+      lesson_title:L[lessonIdx].title,
+      session_id:sessionId,
+      attempt_id:lessonAttemptId
+    });
+  }
+  saveState();
+  render();
 }
 
 loadState();
+trackSessionStart();
 initTheme();
 // Set RTL for Arabic on initial load
 if(currentLang==='ar'){document.documentElement.dir='rtl';document.documentElement.lang='ar';}
@@ -3753,7 +4197,10 @@ if(currentLang!=='en'){
   });
 }
 render();
+startLessonHeartbeat();
 showDailyTip();
+window.addEventListener('pagehide',()=>endSession('pagehide'));
+window.addEventListener('beforeunload',()=>endSession('beforeunload'));
 // On page load: if non-English was saved, lazy-load Google Translate
 if(currentLang!=='en'){
   document.documentElement.classList.remove('notranslate');
@@ -3781,11 +4228,16 @@ if(typeof COURSE_CONFIG!=='undefined'){
 }
 // View switching helper (avoids closure variable issues in onclick)
 function switchView(view){
+  const wasLessonView=!showDashboard&&!showReview&&!showMixedQuiz;
+  if(view!=='lesson'&&wasLessonView){
+    endLessonAttempt('switch_'+view);
+  }
   if(view==='dashboard'){showDashboard=true;showReview=false;showMixedQuiz=false;}
   else if(view==='review'){showReview=true;showDashboard=false;showMixedQuiz=false;}
   else if(view==='lesson'){showDashboard=false;showReview=false;showMixedQuiz=false;}
   if(window.__logEvent)window.__logEvent('screen_view',{screen_name:view});
   render();
+  if(view==='lesson') ensureLessonAttempt('switch_view');
 }
 // AI help for any topic (generic Ask AI button)
 function askAi(topic,context){
@@ -3826,33 +4278,8 @@ function askAi(topic,context){
   document.body.appendChild(div);
 }
 // Expose functions to global scope for onclick handlers
-Object.assign(window,{render,goTo,goPrev,markAndNext,toggleCode:()=>{codeVisible=!codeVisible;render()},toggleBookmark,ratelesson,toggleTheme,toggleSidebar,closeSidebar,collapseSidebar,expandSidebar,filterSidebar,openSearch,closeSearch,performSearch,toggleNotesFloat,closeNotesFloat,saveNoteFloat,noteCmd,noteInsertCode,updateCharCount,toggleEli5,toggleWalkthrough,toggleWalkthroughLine,toggleBugHint,revealBugAnswer,toggleResources,toggleNotes,saveNote,showCertificate,closeCert,shareCertTwitter,copyCertLink,checkQuiz,showAchievement,spawnConfetti,startTypingChallenge,checkTyping,reactPoint,toggleFlashcard,rateFlashcard,startMixedQuiz,answerMixedQuiz,answerReview,saveSelfExplanation,openAiJudge,closeAiJudge,copyAiPrompt,setConfidence,showDailyTip,toggleLangDropdown,setLang,runPlayground,resetPlayground,renderDashboard,renderReviewMode,renderMixedQuiz,adSlot,promotedSection,escHtml,initScrollReveal,showToast,checkMilestones,switchView,askAi,minimizeNotes,showNotesView,openNoteForLesson,copyNote,shareNote});
+Object.assign(window,{render,goTo,goPrev,markAndNext,toggleCode:()=>{codeVisible=!codeVisible;render()},toggleBookmark,ratelesson,toggleTheme,toggleSidebar,closeSidebar,collapseSidebar,expandSidebar,filterSidebar,openSearch,closeSearch,performSearch,toggleNotesFloat,closeNotesFloat,saveNoteFloat,noteCmd,noteInsertCode,updateCharCount,toggleEli5,toggleWalkthrough,toggleWalkthroughLine,toggleBugHint,revealBugAnswer,toggleResources,toggleNotes,saveNote,showCertificate,closeCert,shareCertTwitter,copyCertLink,checkQuiz,resetLessonQuiz,showAchievement,spawnConfetti,startTypingChallenge,checkTyping,reactPoint,toggleFlashcard,rateFlashcard,startMixedQuiz,answerMixedQuiz,answerReview,saveSelfExplanation,openAiJudge,closeAiJudge,copyAiPrompt,setConfidence,showDailyTip,toggleLangDropdown,setLang,runPlayground,resetPlayground,renderDashboard,renderReviewMode,renderMixedQuiz,adSlot,promotedSection,escHtml,initScrollReveal,showToast,checkMilestones,switchView,askAi,openPedagogyInfo,closePedagogyInfo,minimizeNotes,showNotesView,openNoteForLesson,copyNote,shareNote});
 }); // end courseLoaded listener
-</script>
-
-<!-- Scroll-triggered nudge toast -->
-<div class="nudge-toast" id="nudge-toast">
-  <div class="nudge-toast__text"><strong>Need an app or website?</strong> Teamz Lab can build it for you.</div>
-  <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nudge-toast__btn">See Our Work</a>
-  <button class="nudge-toast__close" onclick="document.getElementById('nudge-toast').classList.remove('show');sessionStorage.setItem('nudgeDismissed','1')">&times;</button>
-</div>
-<script>
-(function(){
-  if(sessionStorage.getItem('nudgeDismissed')) return;
-  let shown=false;
-  window.addEventListener('scroll',function(){
-    if(shown) return;
-    const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight);
-    if(pct>0.55){
-      shown=true;
-      document.getElementById('nudge-toast').classList.add('show');
-      setTimeout(function(){
-        const el=document.getElementById('nudge-toast');
-        if(el) el.classList.remove('show');
-      },12000);
-    }
-  });
-})();
 </script>
 </body>
 </html>

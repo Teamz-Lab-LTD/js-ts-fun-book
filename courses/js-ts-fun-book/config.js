@@ -19,8 +19,8 @@ const COURSE_CONFIG = {
   ogImage: 'https://learn.teamzlab.com/og-image.png',
 
   // SEO
-  description: 'Free interactive playbook: learn to build real apps with TypeScript, React, NestJS, AI & more. {lessonCount} hands-on lessons, quizzes, code playground — no signup required.',
-  keywords: 'free full stack playbook, learn to build apps 2026, typescript tutorial free, nestjs tutorial, nestjs crud tutorial, nestjs guards, nestjs middleware, nestjs beginner to intermediate, react tutorial, fullstack developer roadmap, learn to code free, free coding bootcamp no signup, AI app development, build real apps from scratch',
+  description: 'Free interactive, project-based playbook: learn TypeScript, NestJS, and React by building real apps. {lessonCount} hands-on lessons, quizzes, code playground — no signup required.',
+  keywords: 'interactive typescript course, nestjs tutorial for beginners, nestjs course no signup, project based full stack course, react nestjs tutorial, fullstack roadmap with quizzes, free coding bootcamp no signup, learn nestjs by building api, typescript react nestjs course free, gamified coding course, full stack developer roadmap, build real apps from scratch',
   topics: ['TypeScript', 'JavaScript', 'NestJS', 'React', 'MongoDB', 'Docker', 'REST API', 'JWT Authentication', 'Prisma ORM', 'Redis', 'WebSockets', 'NestJS CRUD', 'NestJS Guards', 'NestJS Middleware'],
   educationalLevel: 'Beginner to Intermediate',
 

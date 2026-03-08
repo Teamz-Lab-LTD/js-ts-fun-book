@@ -1,6 +1,6 @@
 # Free Full-Stack Playbook
 
-An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **React**, and **fullstack development** through 40 fun lessons — from "What is Programming?" to deploying a full-stack app. Built by [Teamz Lab LTD](https://github.com/Teamz-Lab-LTD).
+An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **React**, and **fullstack development** through 49 lessons — from "What is Programming?" to production-focused full-stack projects. Built by [Teamz Lab LTD](https://github.com/Teamz-Lab-LTD).
 
 ## Live Demo
 
@@ -8,9 +8,9 @@ An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **Rea
 
 ## Features
 
-- 40 interactive lessons covering zero-to-hero fullstack development
-- 120 quizzes (3 per lesson) with instant feedback
-- 346 teaching points with real-world analogies
+- 49 interactive lessons covering zero-to-hero fullstack development
+- 245 quizzes with instant feedback
+- 419 teaching points with real-world analogies
 - Flashcard mode with spaced repetition (SRS)
 - Code playground with live execution
 - Line-by-line code walkthroughs
@@ -38,7 +38,7 @@ An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **Rea
 | 8-10, 22 | Classes, Async/Await, Error Handling, Generics | TypeScript Advanced |
 | 11-13 | React, State Management, Frontend Stack | Frontend |
 | 14 | API Design & REST | API & REST |
-| 15-17 | NestJS, Architecture, Validation & DTOs | NestJS |
+| 15-17, 41-47 | NestJS core, project structure, CRUD, middleware, guards, filters | NestJS |
 | 18-19 | MongoDB, Prisma | Database |
 | 20 | Environment Variables & Config | Config |
 | 21 | Authentication — JWT & Guards | Security |
@@ -48,7 +48,7 @@ An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **Rea
 | 29 | Testing | Testing |
 | 30-32 | Docker, Git, Deployment & DevOps | DevOps |
 | 33 | Monorepo | Architecture |
-| 34-36 | React Native, Integration, Learning Path | Integration |
+| 34-36, 48-49 | React Native, Integration, capstone project, DB relations | Integration & Projects |
 
 ## Tech Stack
 
@@ -58,7 +58,7 @@ An interactive, gamified tutorial that teaches **TypeScript**, **NestJS**, **Rea
 
 ## Run Locally
 
-Just open `the-js-ts-fun-book.html` in your browser. No server needed.
+Just open `index.html` (or `learn.html?course=js-ts-fun-book`) in your browser. No server needed.
 
 ## License
 
