@@ -782,8 +782,15 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .xp-popup { position:fixed; top:80px; right:20px; background:var(--surface); border:2px solid var(--accent); border-radius:12px; padding:0.8rem 1.2rem; z-index:9998; animation:popIn 0.4s ease, fadeOut 0.3s ease 1.7s forwards; font-weight:700; color:var(--heading); box-shadow:0 4px 20px rgba(217,254,6,0.2); }
 @keyframes fadeOut { to{opacity:0;transform:translateY(-10px)} }
 
-/* Trust strip */
-.trust-strip { text-align:center; margin-top:0.6rem; padding:0.8rem 1.5rem; font-family:var(--font); font-size:var(--text-sm); font-weight:500; color:var(--text); line-height:var(--lh); }
+/* Header progress + trust strip — hideable together */
+.header-progress-wrap { margin-top:0.5rem; }
+.header-progress-wrap.collapsed { margin-top:0.15rem; margin-bottom:0.05rem; }
+.header-progress-wrap.collapsed .header-progress-content { display:none; }
+.header-progress-wrap.collapsed .header-progress-toggle { margin:0; padding:0.15rem 0.4rem; }
+.header-progress-toggle { display:block; margin:0.3rem auto 0; padding:0.25rem 0.6rem; font-size:var(--text-xs); font-family:var(--font); color:var(--text-muted); background:none; border:none; cursor:pointer; text-decoration:underline; transition:color 0.2s; }
+.header-progress-toggle:hover { color:var(--heading); }
+.header-progress-content .trust-strip { margin-top:0.5rem; }
+.trust-strip { text-align:center; padding:0.5rem 1.2rem; font-family:var(--font); font-size:var(--text-sm); font-weight:500; color:var(--text); line-height:var(--lh); }
 .trust-strip strong { color:var(--heading); font-weight:700; }
 .trust-strip a { color:var(--heading); text-decoration:underline; font-weight:700; transition:opacity 0.2s; }
 .trust-strip a:hover { opacity:0.85; }
@@ -1552,6 +1559,8 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 </div>
 </div>
 </div>
+<div id="header-progress-wrap" class="header-progress-wrap">
+<div class="header-progress-content">
 <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
 <div class="progress-text" id="ptxt">0 / 49 lessons completed</div>
 <div class="xp-bar-container">
@@ -1559,9 +1568,30 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 <div class="xp-bar"><div class="xp-bar-fill" id="xp-fill" style="width:0%"></div></div>
 <div class="xp-text" id="xp-text">0 / 100 XP</div>
 </div>
-</div>
 <div class="trust-strip">We build apps, websites & AI systems for businesses worldwide. <strong>This free playbook shows how we do it.</strong> <a href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'trust_strip'})">Need something built? Talk to us</a></div>
+</div>
+<button type="button" class="header-progress-toggle" id="header-progress-toggle-btn" onclick="toggleTrustStrip()" aria-label="Hide progress and message">Hide</button>
+</div>
+</div>
 </header>
+<script>
+(function(){
+  var wrap=document.getElementById('header-progress-wrap');
+  var btn=document.getElementById('header-progress-toggle-btn');
+  var key='trust_strip_hidden';
+  if(wrap&&localStorage.getItem(key)==='true') wrap.classList.add('collapsed');
+  if(btn) btn.textContent=wrap&&wrap.classList.contains('collapsed')?'Show progress & message':'Hide';
+  window.toggleTrustStrip=function(){
+    if(!wrap||!btn) return;
+    wrap.classList.toggle('collapsed');
+    var hidden=wrap.classList.contains('collapsed');
+    localStorage.setItem(key,hidden?'true':'false');
+    btn.textContent=hidden?'Show progress & message':'Hide';
+    btn.setAttribute('aria-label',hidden?'Show progress and message':'Hide progress and message');
+    if(window.__logEvent) window.__logEvent('trust_strip_toggle',{hidden:hidden});
+  };
+})();
+</script>
 
 <div class="tabs" id="tabs" style="display:none"></div>
 <div class="app-layout">
