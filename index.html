@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Interactive Coding Courses (No Signup) | Teamz Lab Learning</title>
-<meta name="description" content="Learn TypeScript, NestJS, and React with free no-signup interactive coding courses, quizzes, spaced repetition, and project-based lessons.">
+<title id="meta-title">Free Interactive Coding Courses (No Signup) | Teamz Lab Learning</title>
+<meta id="meta-description" name="description" content="Learn TypeScript, NestJS, and React with free no-signup interactive coding courses, quizzes, spaced repetition, and project-based lessons.">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="google" content="notranslate">
@@ -13,8 +13,8 @@
 <link rel="alternate" hreflang="en" href="https://learn.teamzlab.com/">
 <link rel="alternate" hreflang="x-default" href="https://learn.teamzlab.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Free Interactive Coding Courses (No Signup) | Teamz Lab Learning">
-<meta property="og:description" content="Learn TypeScript, NestJS, and React with free interactive lessons, quizzes, and science-backed practice. No signup required.">
+<meta id="og-title" property="og:title" content="Free Interactive Coding Courses (No Signup) | Teamz Lab Learning">
+<meta id="og-description" property="og:description" content="Learn TypeScript, NestJS, and React with free interactive lessons, quizzes, and science-backed practice. No signup required.">
 <meta property="og:url" content="https://learn.teamzlab.com/">
 <meta property="og:site_name" content="Teamz Lab Learning">
 <meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free Interactive Coding Courses (No Signup) | Teamz Lab Learning">
-<meta name="twitter:description" content="Learn TypeScript, NestJS, and React with free interactive courses, quizzes, and spaced repetition.">
+<meta id="twitter-title" name="twitter:title" content="Free Interactive Coding Courses (No Signup) | Teamz Lab Learning">
+<meta id="twitter-description" name="twitter:description" content="Learn TypeScript, NestJS, and React with free interactive courses, quizzes, and spaced repetition.">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
 <meta name="twitter:site" content="@TeamzLab">
 <meta name="twitter:creator" content="@TeamzLab">
@@ -162,6 +162,14 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
 .site-header { position:sticky; top:0; z-index:100; background:var(--bg); border-bottom:1px solid var(--border); padding:0.6rem 2rem; }
 .site-header__inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
 .site-header__nav { display:flex; align-items:center; gap:0.8rem; }
+.lang-selector { position:relative; }
+.lang-btn { display:flex; align-items:center; justify-content:center; gap:0.35rem; border:none; background:transparent; color:var(--text-muted); font-size:var(--text-sm); font-weight:600; cursor:pointer; padding:0.25rem 0.4rem; font-family:var(--font); }
+.lang-btn:hover { color:var(--text); }
+.lang-dropdown { position:absolute; top:calc(100% + 0.3rem); right:0; background:var(--surface); border:1px solid var(--border); border-radius:8px; min-width:130px; display:none; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.22); }
+.lang-dropdown.open { display:block; }
+.lang-option { width:100%; border:none; background:transparent; color:var(--text); font-family:var(--font); font-size:var(--text-sm); text-align:left; padding:0.55rem 0.8rem; cursor:pointer; }
+.lang-option:hover { background:var(--bg); }
+.lang-option.active { color:var(--accent-fg); font-weight:700; }
 /* Ghost button — design system */
 .btn--hire { display:inline-block; padding:8px 16px; font-size:var(--text-md); font-weight:600; font-family:var(--font); background:transparent; color:var(--text); border:1px solid var(--text); border-radius:22px; text-decoration:none; height:36px; transition:box-shadow 0.2s, border-color 0.2s, color 0.2s; }
 .btn--hire:hover { border-color:var(--accent); color:var(--accent-fg); box-shadow:0 0 12px rgba(217,254,6,0.35); }
@@ -228,15 +236,24 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
 </style>
 </head>
 <body>
-<a href="#main-content" class="skip-link">Skip to content</a>
+<a href="#main-content" class="skip-link" id="skip-link">Skip to content</a>
 <!-- Sticky Header -->
 <header class="site-header">
   <div class="site-header__inner">
     <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="120" height="19" viewBox="0 0 1129 180" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M267.92 107.15V79.2901H338.52V107.15H267.92ZM320.82 177.37C313.04 177.37 306.39 175.9 300.86 172.95C295.34 170 291.16 165.77 288.34 160.24C285.52 154.72 284.1 148.07 284.1 140.28V53.3101H316.1V134.45C316.1 139.09 317.35 142.7 319.87 145.27C322.38 147.84 325.96 149.13 330.6 149.13H338.51V177.37H320.81H320.82Z" fill="currentColor"/><path d="M402.53 179.82C393.24 179.82 384.55 177.68 376.46 173.42C368.36 169.15 361.9 163.1 357.07 155.25C352.24 147.41 349.82 138.4 349.82 128.23C349.82 118.06 352.24 109.25 357.07 101.4C361.9 93.5601 368.33 87.5001 376.37 83.2301C384.4 78.9601 393.13 76.8301 402.54 76.8301C412.83 76.8301 422.34 79.4401 431.06 84.6401C439.78 89.8501 446.31 97.1001 450.64 106.38C454.97 115.67 456.19 126.02 454.31 137.44H372.79V118.05H430.77L424.37 122.94C424.24 118.8 423.36 115.07 421.73 111.74C420.1 108.42 417.68 105.75 414.48 103.74C411.28 101.73 407.29 100.73 402.53 100.73C398.14 100.73 394.25 101.8 390.86 103.93C387.47 106.07 384.93 109.2 383.24 113.34C381.55 117.48 380.7 122.5 380.7 128.4C380.7 134.3 381.61 139.16 383.43 143.37C385.25 147.58 387.82 150.74 391.15 152.88C394.47 155.02 398.46 156.08 403.1 156.08C406.11 156.08 408.78 155.7 411.1 154.95C413.42 154.2 415.49 153.13 417.31 151.75C419.13 150.37 420.73 148.55 422.11 146.29H452.42C448.65 156.33 442.5 164.43 433.97 170.58C425.43 176.73 414.96 179.8 402.53 179.8V179.82Z" fill="currentColor"/><path d="M513.98 179.82C505.95 179.82 498.26 177.72 490.92 173.51C483.58 169.31 477.58 163.31 472.94 155.53C468.3 147.75 465.97 138.71 465.97 128.42C465.97 118.13 468.29 109.09 472.94 101.31C477.58 93.5301 483.58 87.5101 490.92 83.2401C498.26 78.9701 505.95 76.8401 513.98 76.8401C519.25 76.8401 524.02 77.4701 528.29 78.7201C532.56 79.9801 536.29 81.7601 539.49 84.0901C542.69 86.4101 545.48 89.2701 547.87 92.6601L544.67 96.8001V79.2901H574.23V177.37H544.67V160.05L547.87 164C544.35 169.15 539.8 173.07 534.22 175.77C528.63 178.47 521.89 179.82 513.98 179.82ZM520.76 151.58C525.15 151.58 529.14 150.58 532.71 148.57C536.29 146.56 539.05 143.8 540.99 140.29C542.93 136.78 543.91 132.82 543.91 128.43C543.91 124.04 542.94 120.08 540.99 116.57C539.04 113.06 536.28 110.26 532.71 108.19C529.13 106.12 525.15 105.08 520.76 105.08C516.37 105.08 512.38 106.12 508.81 108.19C505.23 110.26 502.47 113.06 500.53 116.57C498.58 120.09 497.61 124.04 497.61 128.43C497.61 132.82 498.58 136.78 500.53 140.29C502.47 143.81 505.24 146.57 508.81 148.57C512.39 150.58 516.37 151.58 520.76 151.58Z" fill="currentColor"/><path d="M597.94 177.37V79.2901H626.93V95.6701L623.73 93.0301C627.75 87.5101 632.36 83.4301 637.57 80.7901C642.78 78.1501 648.4 76.8401 654.42 76.8401C661.32 76.8401 667.53 78.6301 673.06 82.2101C678.58 85.7901 682.66 90.5901 685.3 96.6101L680.59 96.2301C685.23 90.0801 690.31 85.3101 695.84 81.9201C701.36 78.5301 707.82 76.8401 715.23 76.8401C722.64 76.8401 729.1 78.5301 734.62 81.9201C740.14 85.3101 744.41 90.0801 747.42 96.2301C750.43 102.38 751.94 109.47 751.94 117.5V177.37H719.94V122.96C719.94 119.45 719.34 116.34 718.15 113.64C716.96 110.94 715.33 108.87 713.25 107.43C711.18 105.99 708.7 105.26 705.81 105.26C702.92 105.26 700.54 105.95 698.28 107.33C696.02 108.71 694.2 110.75 692.82 113.45C691.44 116.15 690.75 119.32 690.75 122.96V177.37H658.93V122.96C658.93 119.45 658.33 116.34 657.14 113.64C655.95 110.94 654.32 108.87 652.25 107.43C650.18 105.99 647.7 105.26 644.81 105.26C641.92 105.26 639.38 105.95 637.19 107.33C634.99 108.71 633.24 110.75 631.92 113.45C630.6 116.15 629.94 119.32 629.94 122.96V177.37H597.94Z" fill="currentColor"/><path d="M768.32 177.37V159.49L814.82 99.25L818.21 106.4H770.2V79.29H849.65V97.17L803.53 157.41L799.95 150.26H851.53V177.37H768.32Z" fill="currentColor"/><path d="M872.43 177.37V41.8201H886.55V177.37H872.43Z" fill="currentColor"/><path d="M956.39 179.25C947.98 179.25 940.13 177.15 932.86 172.94C925.58 168.74 919.81 162.96 915.54 155.62C911.27 148.28 909.14 140.15 909.14 131.24C909.14 122.33 911.27 114.2 915.54 106.86C919.81 99.52 925.58 93.75 932.86 89.54C940.14 85.34 947.98 83.23 956.39 83.23C961.41 83.23 966.24 84.05 970.89 85.68C975.53 87.31 979.71 89.57 983.41 92.46C987.11 95.35 990.16 98.67 992.54 102.44L990.28 105.64V85.12H1004.4V177.37H990.28V156.85L992.54 160.05C988.9 165.82 983.88 170.47 977.48 173.98C971.08 177.49 964.05 179.25 956.4 179.25H956.39ZM957.52 166.07C963.67 166.07 969.32 164.53 974.46 161.46C979.61 158.39 983.69 154.21 986.7 148.94C989.71 143.67 991.22 137.77 991.22 131.24C991.22 124.71 989.71 118.81 986.7 113.54C983.69 108.27 979.61 104.1 974.46 101.02C969.31 97.95 963.66 96.41 957.52 96.41C951.38 96.41 945.72 97.95 940.58 101.02C935.43 104.1 931.35 108.27 928.34 113.54C925.33 118.81 923.82 124.71 923.82 131.24C923.82 137.77 925.33 143.67 928.34 148.94C931.35 154.21 935.43 158.39 940.58 161.46C945.72 164.54 951.37 166.07 957.52 166.07Z" fill="currentColor"/><path d="M1081.59 179.25C1073.93 179.25 1066.9 177.49 1060.5 173.98C1054.1 170.47 1049.08 165.82 1045.44 160.05L1047.7 156.85V177.37H1033.58V41.8201H1047.7V105.64L1045.44 102.44C1049.08 96.6701 1054.1 92.0201 1060.5 88.5101C1066.9 85.0001 1073.93 83.2401 1081.59 83.2401C1090 83.2401 1097.84 85.3401 1105.12 89.5501C1112.4 93.7601 1118.17 99.5301 1122.44 106.87C1126.71 114.21 1128.84 122.34 1128.84 131.25C1128.84 140.16 1126.7 148.29 1122.44 155.63C1118.17 162.97 1112.4 168.75 1105.12 172.95C1097.84 177.16 1089.99 179.26 1081.59 179.26V179.25ZM1080.65 166.07C1086.8 166.07 1092.42 164.53 1097.5 161.46C1102.58 158.39 1106.63 154.21 1109.64 148.94C1112.65 143.67 1114.16 137.77 1114.16 131.24C1114.16 124.71 1112.65 118.81 1109.64 113.54C1106.63 108.27 1102.58 104.1 1097.5 101.02C1092.42 97.9501 1086.8 96.4101 1080.65 96.4101C1074.5 96.4101 1068.82 97.9501 1063.61 101.02C1058.4 104.1 1054.29 108.27 1051.28 113.54C1048.27 118.81 1046.76 124.71 1046.76 131.24C1046.76 137.77 1048.27 143.67 1051.28 148.94C1054.29 154.21 1058.4 158.39 1063.61 161.46C1068.82 164.54 1074.5 166.07 1080.65 166.07Z" fill="currentColor"/><path d="M103.64 0H0V53.18H103.64V0Z" fill="currentColor"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z" fill="currentColor"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37" fill="currentColor"/></svg></a>
     <nav class="site-header__nav">
-      <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Home</a>
-      <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Our Apps</a>
-      <a href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="btn--hire">Hire Teamz Lab</a>
+      <a id="nav-home" href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Home</a>
+      <a id="nav-apps" href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Our Apps</a>
+      <div class="lang-selector">
+        <button class="lang-btn" id="lang-toggle" type="button" aria-label="Change language" title="Change language">
+          <span id="current-lang">EN</span>
+        </button>
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button class="lang-option active" type="button" data-lang="en">English</button>
+          <button class="lang-option" type="button" data-lang="bn">বাংলা</button>
+        </div>
+      </div>
+      <a id="nav-hire" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="btn--hire">Hire Teamz Lab</a>
     </nav>
   </div>
 </header>
@@ -244,30 +261,30 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
 <main id="main-content" class="container">
   <section class="header" aria-labelledby="page-title">
     <h1 id="page-title" class="font-accent hero-title">Teamz Lab <span>Learning</span></h1>
-    <p>Free no-signup interactive coding courses with science-backed methods. Learn TypeScript, NestJS, and React with quizzes, spaced repetition, and project-based practice.</p>
+    <p id="hero-subtitle">Free no-signup interactive coding courses with science-backed methods. Learn TypeScript, NestJS, and React with quizzes, spaced repetition, and project-based practice.</p>
     <div class="method-badges method-badges--center">
-      <span class="method sr">Spaced Repetition</span>
-      <span class="method rp">Active Recall</span>
-      <span class="method il">Interleaving</span>
-      <span class="method mc">Metacognition</span>
-      <span class="method dc">Dual Coding</span>
+      <span class="method sr" id="method-sr">Spaced Repetition</span>
+      <span class="method rp" id="method-rp">Active Recall</span>
+      <span class="method il" id="method-il">Interleaving</span>
+      <span class="method mc" id="method-mc">Metacognition</span>
+      <span class="method dc" id="method-dc">Dual Coding</span>
     </div>
   </section>
 
   <section class="courses" aria-label="Course list">
-    <a class="course-card" href="learn.html?course=js-ts-fun-book" aria-label="Open Free Full-Stack Playbook course">
-      <span class="badge">AVAILABLE NOW</span>
-      <h2>Free Full-Stack Playbook</h2>
-      <div class="subtitle">Project-based TypeScript, React, and NestJS tutorial with quizzes — no signup</div>
+    <a id="course-open-link" class="course-card" href="learn.html?course=js-ts-fun-book" aria-label="Open Free Full-Stack Playbook course">
+      <span class="badge" id="badge-available">AVAILABLE NOW</span>
+      <h2 id="course-main-title">Free Full-Stack Playbook</h2>
+      <div class="subtitle" id="course-main-subtitle">Project-based TypeScript, React, and NestJS tutorial with quizzes — no signup</div>
       <div class="stats">
-        <div class="stat"><span class="stat-num">49</span><span class="stat-label">Lessons</span></div>
-        <div class="stat"><span class="stat-num">245</span><span class="stat-label">Quizzes</span></div>
-        <div class="stat"><span class="stat-num">419</span><span class="stat-label">Teaching Points</span></div>
-        <div class="stat"><span class="stat-num">8</span><span class="stat-label">Languages</span></div>
+        <div class="stat"><span class="stat-num">49</span><span class="stat-label" id="stat-lessons">Lessons</span></div>
+        <div class="stat"><span class="stat-num">245</span><span class="stat-label" id="stat-quizzes">Quizzes</span></div>
+        <div class="stat"><span class="stat-num">419</span><span class="stat-label" id="stat-points">Teaching Points</span></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label" id="stat-languages">Languages</span></div>
       </div>
       <div class="tags">
-        <span class="tag">No Signup</span>
-        <span class="tag">Project Based</span>
+        <span class="tag" id="tag-no-signup">No Signup</span>
+        <span class="tag" id="tag-project-based">Project Based</span>
         <span class="tag">TypeScript</span>
         <span class="tag">NestJS</span>
         <span class="tag">React</span>
@@ -286,22 +303,22 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
     </div>
 
     <div class="course-card coming-soon">
-      <span class="badge">COMING SOON</span>
-      <h2>Python for Beginners</h2>
-      <div class="subtitle">Learn Python from scratch with fun projects and real-world examples</div>
+      <span class="badge" id="badge-coming-1">COMING SOON</span>
+      <h2 id="coming-title-1">Python for Beginners</h2>
+      <div class="subtitle" id="coming-subtitle-1">Learn Python from scratch with fun projects and real-world examples</div>
       <div class="stats">
-        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Lessons</span></div>
-        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Quizzes</span></div>
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label" id="coming-stat-1-lessons">Lessons</span></div>
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label" id="coming-stat-1-quizzes">Quizzes</span></div>
       </div>
     </div>
 
     <div class="course-card coming-soon">
-      <span class="badge">COMING SOON</span>
-      <h2>System Design 101</h2>
-      <div class="subtitle">Learn distributed systems, scalability, and architecture patterns</div>
+      <span class="badge" id="badge-coming-2">COMING SOON</span>
+      <h2 id="coming-title-2">System Design 101</h2>
+      <div class="subtitle" id="coming-subtitle-2">Learn distributed systems, scalability, and architecture patterns</div>
       <div class="stats">
-        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Lessons</span></div>
-        <div class="stat"><span class="stat-num">--</span><span class="stat-label">Quizzes</span></div>
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label" id="coming-stat-2-lessons">Lessons</span></div>
+        <div class="stat"><span class="stat-num">--</span><span class="stat-label" id="coming-stat-2-quizzes">Quizzes</span></div>
       </div>
     </div>
   </section>
@@ -313,7 +330,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
 
   <!-- Promoted Tools / Sponsors -->
   <section id="promoted-home" class="promoted-home" aria-label="Recommended tools">
-    <h2 class="promoted-home__label">Recommended Tools</h2>
+    <h2 class="promoted-home__label" id="promoted-title">Recommended Tools</h2>
     <div id="promoted-home-items" class="promoted-home__items"></div>
   </section>
 
@@ -321,75 +338,380 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
     <h2 id="faq-title">Frequently Asked Questions</h2>
     <div class="faq-grid">
       <article class="faq-item">
-        <h3>Is this coding platform really free?</h3>
-        <p>Yes. You can start learning immediately with no payment and no account required.</p>
+        <h3 id="faq-q1">Is this coding platform really free?</h3>
+        <p id="faq-a1">Yes. You can start learning immediately with no payment and no account required.</p>
       </article>
       <article class="faq-item">
-        <h3>Which technologies are covered?</h3>
-        <p>The current course covers TypeScript, React, NestJS, MongoDB, Docker, API design, authentication, and modern full-stack workflows.</p>
+        <h3 id="faq-q2">Which technologies are covered?</h3>
+        <p id="faq-a2">The current course covers TypeScript, React, NestJS, MongoDB, Docker, API design, authentication, and modern full-stack workflows.</p>
       </article>
       <article class="faq-item">
-        <h3>Is this suitable for beginners?</h3>
-        <p>Yes. Lessons are structured from fundamentals to intermediate implementation with guided examples and quizzes.</p>
+        <h3 id="faq-q3">Is this suitable for beginners?</h3>
+        <p id="faq-a3">Yes. Lessons are structured from fundamentals to intermediate implementation with guided examples and quizzes.</p>
       </article>
       <article class="faq-item">
-        <h3>How is this different from normal tutorials?</h3>
-        <p>You get interactive learning with retrieval practice and spaced review instead of passive video-only consumption.</p>
+        <h3 id="faq-q4">How is this different from normal tutorials?</h3>
+        <p id="faq-a4">You get interactive learning with retrieval practice and spaced review instead of passive video-only consumption.</p>
       </article>
     </div>
   </section>
 
   <!-- For Business Owners -->
   <section class="biz-section">
-    <h2>Not a Developer? <span>We Build It For You.</span></h2>
-    <p class="biz-sub">Teamz Lab doesn't just teach — we build apps, websites, and AI-powered solutions for businesses worldwide.</p>
+    <h2><span id="biz-title-main">Not a Developer?</span> <span id="biz-title-accent">We Build It For You.</span></h2>
+    <p class="biz-sub" id="biz-subtitle">Teamz Lab doesn't just teach — we build apps, websites, and AI-powered solutions for businesses worldwide.</p>
     <div class="biz-grid">
       <div class="biz-card">
         <div class="biz-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-        <h3>Mobile Apps</h3>
-        <p>iOS & Android apps that your customers will love. From idea to App Store.</p>
+        <h3 id="biz-card1-title">Mobile Apps</h3>
+        <p id="biz-card1-desc">iOS & Android apps that your customers will love. From idea to App Store.</p>
       </div>
       <div class="biz-card">
         <div class="biz-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <h3>Websites & Web Apps</h3>
-        <p>Modern, fast websites and dashboards that grow your business online.</p>
+        <h3 id="biz-card2-title">Websites & Web Apps</h3>
+        <p id="biz-card2-desc">Modern, fast websites and dashboards that grow your business online.</p>
       </div>
       <div class="biz-card">
         <div class="biz-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><line x1="10" y1="22" x2="14" y2="22"/><line x1="10" y1="18" x2="14" y2="18"/><line x1="9" y1="20" x2="15" y2="20"/></svg></div>
-        <h3>AI Integration</h3>
-        <p>ChatGPT, automation, smart chatbots — add AI superpowers to your business.</p>
+        <h3 id="biz-card3-title">AI Integration</h3>
+        <p id="biz-card3-desc">ChatGPT, automation, smart chatbots — add AI superpowers to your business.</p>
       </div>
     </div>
     <div class="biz-cta">
-      <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer">See Our Work & Apps</a>
+      <a id="biz-cta-link" href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer">See Our Work & Apps</a>
     </div>
   </section>
 
   <!-- Share Section -->
   <section class="share-section">
-    <h2>Know someone who'd love this?</h2>
+    <h2 id="share-title">Know someone who'd love this?</h2>
     <div class="share-btns">
-      <a href="https://twitter.com/intent/tweet?text=Free%20interactive%20coding%20tutorials%20by%20%40TeamzLab%20%E2%80%94%20learn%20TypeScript%2C%20React%2C%20NestJS%20with%20quizzes%20%26%20gamified%20lessons!&url=https%3A%2F%2Flearn.teamzlab.com&hashtags=LearnToCode,TypeScript,WebDev,FreeEducation" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg> Share on X</a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> Share on LinkedIn</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> Facebook</a>
-      <a href="https://api.whatsapp.com/send?text=Check%20out%20these%20free%20interactive%20coding%20tutorials%20by%20Teamz%20Lab!%20Learn%20TypeScript%2C%20React%2C%20NestJS%20with%20quizzes%20%26%20gamified%20lessons%20%F0%9F%94%A5%20https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> WhatsApp</a>
-      <button onclick="navigator.clipboard.writeText('https://learn.teamzlab.com');this.textContent='Copied!';setTimeout(()=>this.innerHTML='<svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot; ry=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1&quot;/></svg> Copy Link',2000)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Link</button>
+      <a id="share-x-link" href="https://twitter.com/intent/tweet?text=Free%20interactive%20coding%20tutorials%20by%20%40TeamzLab%20%E2%80%94%20learn%20TypeScript%2C%20React%2C%20NestJS%20with%20quizzes%20%26%20gamified%20lessons!&url=https%3A%2F%2Flearn.teamzlab.com&hashtags=LearnToCode,TypeScript,WebDev,FreeEducation" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg> <span id="share-x-label">Share on X</span></a>
+      <a id="share-linkedin-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> <span id="share-linkedin-label">Share on LinkedIn</span></a>
+      <a id="share-facebook-link" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> <span id="share-facebook-label">Facebook</span></a>
+      <a id="share-whatsapp-link" href="https://api.whatsapp.com/send?text=Check%20out%20these%20free%20interactive%20coding%20tutorials%20by%20Teamz%20Lab!%20Learn%20TypeScript%2C%20React%2C%20NestJS%20with%20quizzes%20%26%20gamified%20lessons%20%F0%9F%94%A5%20https%3A%2F%2Flearn.teamzlab.com" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> <span id="share-whatsapp-label">WhatsApp</span></a>
+      <button id="copy-link-btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> <span id="copy-link-label">Copy Link</span></button>
     </div>
   </section>
 
   <footer class="footer">
     <!-- Built by Teamz Lab trust strip -->
     <div class="teamz-cta">
-      <p class="teamz-cta__label">Built by <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo teamz-logo--inline"><svg width="80" height="13" viewBox="0 0 1129 180" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M267.92 107.15V79.2901H338.52V107.15H267.92ZM320.82 177.37C313.04 177.37 306.39 175.9 300.86 172.95C295.34 170 291.16 165.77 288.34 160.24C285.52 154.72 284.1 148.07 284.1 140.28V53.3101H316.1V134.45C316.1 139.09 317.35 142.7 319.87 145.27C322.38 147.84 325.96 149.13 330.6 149.13H338.51V177.37H320.81H320.82Z" fill="currentColor"/><path d="M402.53 179.82C393.24 179.82 384.55 177.68 376.46 173.42C368.36 169.15 361.9 163.1 357.07 155.25C352.24 147.41 349.82 138.4 349.82 128.23C349.82 118.06 352.24 109.25 357.07 101.4C361.9 93.5601 368.33 87.5001 376.37 83.2301C384.4 78.9601 393.13 76.8301 402.54 76.8301C412.83 76.8301 422.34 79.4401 431.06 84.6401C439.78 89.8501 446.31 97.1001 450.64 106.38C454.97 115.67 456.19 126.02 454.31 137.44H372.79V118.05H430.77L424.37 122.94C424.24 118.8 423.36 115.07 421.73 111.74C420.1 108.42 417.68 105.75 414.48 103.74C411.28 101.73 407.29 100.73 402.53 100.73C398.14 100.73 394.25 101.8 390.86 103.93C387.47 106.07 384.93 109.2 383.24 113.34C381.55 117.48 380.7 122.5 380.7 128.4C380.7 134.3 381.61 139.16 383.43 143.37C385.25 147.58 387.82 150.74 391.15 152.88C394.47 155.02 398.46 156.08 403.1 156.08C406.11 156.08 408.78 155.7 411.1 154.95C413.42 154.2 415.49 153.13 417.31 151.75C419.13 150.37 420.73 148.55 422.11 146.29H452.42C448.65 156.33 442.5 164.43 433.97 170.58C425.43 176.73 414.96 179.8 402.53 179.8V179.82Z" fill="currentColor"/><path d="M513.98 179.82C505.95 179.82 498.26 177.72 490.92 173.51C483.58 169.31 477.58 163.31 472.94 155.53C468.3 147.75 465.97 138.71 465.97 128.42C465.97 118.13 468.29 109.09 472.94 101.31C477.58 93.5301 483.58 87.5101 490.92 83.2401C498.26 78.9701 505.95 76.8401 513.98 76.8401C519.25 76.8401 524.02 77.4701 528.29 78.7201C532.56 79.9801 536.29 81.7601 539.49 84.0901C542.69 86.4101 545.48 89.2701 547.87 92.6601L544.67 96.8001V79.2901H574.23V177.37H544.67V160.05L547.87 164C544.35 169.15 539.8 173.07 534.22 175.77C528.63 178.47 521.89 179.82 513.98 179.82ZM520.76 151.58C525.15 151.58 529.14 150.58 532.71 148.57C536.29 146.56 539.05 143.8 540.99 140.29C542.93 136.78 543.91 132.82 543.91 128.43C543.91 124.04 542.94 120.08 540.99 116.57C539.04 113.06 536.28 110.26 532.71 108.19C529.13 106.12 525.15 105.08 520.76 105.08C516.37 105.08 512.38 106.12 508.81 108.19C505.23 110.26 502.47 113.06 500.53 116.57C498.58 120.09 497.61 124.04 497.61 128.43C497.61 132.82 498.58 136.78 500.53 140.29C502.47 143.81 505.24 146.57 508.81 148.57C512.39 150.58 516.37 151.58 520.76 151.58Z" fill="currentColor"/><path d="M597.94 177.37V79.2901H626.93V95.6701L623.73 93.0301C627.75 87.5101 632.36 83.4301 637.57 80.7901C642.78 78.1501 648.4 76.8401 654.42 76.8401C661.32 76.8401 667.53 78.6301 673.06 82.2101C678.58 85.7901 682.66 90.5901 685.3 96.6101L680.59 96.2301C685.23 90.0801 690.31 85.3101 695.84 81.9201C701.36 78.5301 707.82 76.8401 715.23 76.8401C722.64 76.8401 729.1 78.5301 734.62 81.9201C740.14 85.3101 744.41 90.0801 747.42 96.2301C750.43 102.38 751.94 109.47 751.94 117.5V177.37H719.94V122.96C719.94 119.45 719.34 116.34 718.15 113.64C716.96 110.94 715.33 108.87 713.25 107.43C711.18 105.99 708.7 105.26 705.81 105.26C702.92 105.26 700.54 105.95 698.28 107.33C696.02 108.71 694.2 110.75 692.82 113.45C691.44 116.15 690.75 119.32 690.75 122.96V177.37H658.93V122.96C658.93 119.45 658.33 116.34 657.14 113.64C655.95 110.94 654.32 108.87 652.25 107.43C650.18 105.99 647.7 105.26 644.81 105.26C641.92 105.26 639.38 105.95 637.19 107.33C634.99 108.71 633.24 110.75 631.92 113.45C630.6 116.15 629.94 119.32 629.94 122.96V177.37H597.94Z" fill="currentColor"/><path d="M768.32 177.37V159.49L814.82 99.25L818.21 106.4H770.2V79.29H849.65V97.17L803.53 157.41L799.95 150.26H851.53V177.37H768.32Z" fill="currentColor"/><path d="M872.43 177.37V41.8201H886.55V177.37H872.43Z" fill="currentColor"/><path d="M956.39 179.25C947.98 179.25 940.13 177.15 932.86 172.94C925.58 168.74 919.81 162.96 915.54 155.62C911.27 148.28 909.14 140.15 909.14 131.24C909.14 122.33 911.27 114.2 915.54 106.86C919.81 99.52 925.58 93.75 932.86 89.54C940.14 85.34 947.98 83.23 956.39 83.23C961.41 83.23 966.24 84.05 970.89 85.68C975.53 87.31 979.71 89.57 983.41 92.46C987.11 95.35 990.16 98.67 992.54 102.44L990.28 105.64V85.12H1004.4V177.37H990.28V156.85L992.54 160.05C988.9 165.82 983.88 170.47 977.48 173.98C971.08 177.49 964.05 179.25 956.4 179.25H956.39ZM957.52 166.07C963.67 166.07 969.32 164.53 974.46 161.46C979.61 158.39 983.69 154.21 986.7 148.94C989.71 143.67 991.22 137.77 991.22 131.24C991.22 124.71 989.71 118.81 986.7 113.54C983.69 108.27 979.61 104.1 974.46 101.02C969.31 97.95 963.66 96.41 957.52 96.41C951.38 96.41 945.72 97.95 940.58 101.02C935.43 104.1 931.35 108.27 928.34 113.54C925.33 118.81 923.82 124.71 923.82 131.24C923.82 137.77 925.33 143.67 928.34 148.94C931.35 154.21 935.43 158.39 940.58 161.46C945.72 164.54 951.37 166.07 957.52 166.07Z" fill="currentColor"/><path d="M1081.59 179.25C1073.93 179.25 1066.9 177.49 1060.5 173.98C1054.1 170.47 1049.08 165.82 1045.44 160.05L1047.7 156.85V177.37H1033.58V41.8201H1047.7V105.64L1045.44 102.44C1049.08 96.6701 1054.1 92.0201 1060.5 88.5101C1066.9 85.0001 1073.93 83.2401 1081.59 83.2401C1090 83.2401 1097.84 85.3401 1105.12 89.5501C1112.4 93.7601 1118.17 99.5301 1122.44 106.87C1126.71 114.21 1128.84 122.34 1128.84 131.25C1128.84 140.16 1126.7 148.29 1122.44 155.63C1118.17 162.97 1112.4 168.75 1105.12 172.95C1097.84 177.16 1089.99 179.26 1081.59 179.26V179.25ZM1080.65 166.07C1086.8 166.07 1092.42 164.53 1097.5 161.46C1102.58 158.39 1106.63 154.21 1109.64 148.94C1112.65 143.67 1114.16 137.77 1114.16 131.24C1114.16 124.71 1112.65 118.81 1109.64 113.54C1106.63 108.27 1102.58 104.1 1097.5 101.02C1092.42 97.9501 1086.8 96.4101 1080.65 96.4101C1074.5 96.4101 1068.82 97.9501 1063.61 101.02C1058.4 104.1 1054.29 108.27 1051.28 113.54C1048.27 118.81 1046.76 124.71 1046.76 131.24C1046.76 137.77 1048.27 143.67 1051.28 148.94C1054.29 154.21 1058.4 158.39 1063.61 161.46C1068.82 164.54 1074.5 166.07 1080.65 166.07Z" fill="currentColor"/><path d="M103.64 0H0V53.18H103.64V0Z" fill="currentColor"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z" fill="currentColor"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37" fill="currentColor"/></svg></a></p>
+      <p class="teamz-cta__label"><span id="footer-built-by">Built by</span> <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo teamz-logo--inline"><svg width="80" height="13" viewBox="0 0 1129 180" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M267.92 107.15V79.2901H338.52V107.15H267.92ZM320.82 177.37C313.04 177.37 306.39 175.9 300.86 172.95C295.34 170 291.16 165.77 288.34 160.24C285.52 154.72 284.1 148.07 284.1 140.28V53.3101H316.1V134.45C316.1 139.09 317.35 142.7 319.87 145.27C322.38 147.84 325.96 149.13 330.6 149.13H338.51V177.37H320.81H320.82Z" fill="currentColor"/><path d="M402.53 179.82C393.24 179.82 384.55 177.68 376.46 173.42C368.36 169.15 361.9 163.1 357.07 155.25C352.24 147.41 349.82 138.4 349.82 128.23C349.82 118.06 352.24 109.25 357.07 101.4C361.9 93.5601 368.33 87.5001 376.37 83.2301C384.4 78.9601 393.13 76.8301 402.54 76.8301C412.83 76.8301 422.34 79.4401 431.06 84.6401C439.78 89.8501 446.31 97.1001 450.64 106.38C454.97 115.67 456.19 126.02 454.31 137.44H372.79V118.05H430.77L424.37 122.94C424.24 118.8 423.36 115.07 421.73 111.74C420.1 108.42 417.68 105.75 414.48 103.74C411.28 101.73 407.29 100.73 402.53 100.73C398.14 100.73 394.25 101.8 390.86 103.93C387.47 106.07 384.93 109.2 383.24 113.34C381.55 117.48 380.7 122.5 380.7 128.4C380.7 134.3 381.61 139.16 383.43 143.37C385.25 147.58 387.82 150.74 391.15 152.88C394.47 155.02 398.46 156.08 403.1 156.08C406.11 156.08 408.78 155.7 411.1 154.95C413.42 154.2 415.49 153.13 417.31 151.75C419.13 150.37 420.73 148.55 422.11 146.29H452.42C448.65 156.33 442.5 164.43 433.97 170.58C425.43 176.73 414.96 179.8 402.53 179.8V179.82Z" fill="currentColor"/><path d="M513.98 179.82C505.95 179.82 498.26 177.72 490.92 173.51C483.58 169.31 477.58 163.31 472.94 155.53C468.3 147.75 465.97 138.71 465.97 128.42C465.97 118.13 468.29 109.09 472.94 101.31C477.58 93.5301 483.58 87.5101 490.92 83.2401C498.26 78.9701 505.95 76.8401 513.98 76.8401C519.25 76.8401 524.02 77.4701 528.29 78.7201C532.56 79.9801 536.29 81.7601 539.49 84.0901C542.69 86.4101 545.48 89.2701 547.87 92.6601L544.67 96.8001V79.2901H574.23V177.37H544.67V160.05L547.87 164C544.35 169.15 539.8 173.07 534.22 175.77C528.63 178.47 521.89 179.82 513.98 179.82ZM520.76 151.58C525.15 151.58 529.14 150.58 532.71 148.57C536.29 146.56 539.05 143.8 540.99 140.29C542.93 136.78 543.91 132.82 543.91 128.43C543.91 124.04 542.94 120.08 540.99 116.57C539.04 113.06 536.28 110.26 532.71 108.19C529.13 106.12 525.15 105.08 520.76 105.08C516.37 105.08 512.38 106.12 508.81 108.19C505.23 110.26 502.47 113.06 500.53 116.57C498.58 120.09 497.61 124.04 497.61 128.43C497.61 132.82 498.58 136.78 500.53 140.29C502.47 143.81 505.24 146.57 508.81 148.57C512.39 150.58 516.37 151.58 520.76 151.58Z" fill="currentColor"/><path d="M597.94 177.37V79.2901H626.93V95.6701L623.73 93.0301C627.75 87.5101 632.36 83.4301 637.57 80.7901C642.78 78.1501 648.4 76.8401 654.42 76.8401C661.32 76.8401 667.53 78.6301 673.06 82.2101C678.58 85.7901 682.66 90.5901 685.3 96.6101L680.59 96.2301C685.23 90.0801 690.31 85.3101 695.84 81.9201C701.36 78.5301 707.82 76.8401 715.23 76.8401C722.64 76.8401 729.1 78.5301 734.62 81.9201C740.14 85.3101 744.41 90.0801 747.42 96.2301C750.43 102.38 751.94 109.47 751.94 117.5V177.37H719.94V122.96C719.94 119.45 719.34 116.34 718.15 113.64C716.96 110.94 715.33 108.87 713.25 107.43C711.18 105.99 708.7 105.26 705.81 105.26C702.92 105.26 700.54 105.95 698.28 107.33C696.02 108.71 694.2 110.75 692.82 113.45C691.44 116.15 690.75 119.32 690.75 122.96V177.37H658.93V122.96C658.93 119.45 658.33 116.34 657.14 113.64C655.95 110.94 654.32 108.87 652.25 107.43C650.18 105.99 647.7 105.26 644.81 105.26C641.92 105.26 639.38 105.95 637.19 107.33C634.99 108.71 633.24 110.75 631.92 113.45C630.6 116.15 629.94 119.32 629.94 122.96V177.37H597.94Z" fill="currentColor"/><path d="M768.32 177.37V159.49L814.82 99.25L818.21 106.4H770.2V79.29H849.65V97.17L803.53 157.41L799.95 150.26H851.53V177.37H768.32Z" fill="currentColor"/><path d="M872.43 177.37V41.8201H886.55V177.37H872.43Z" fill="currentColor"/><path d="M956.39 179.25C947.98 179.25 940.13 177.15 932.86 172.94C925.58 168.74 919.81 162.96 915.54 155.62C911.27 148.28 909.14 140.15 909.14 131.24C909.14 122.33 911.27 114.2 915.54 106.86C919.81 99.52 925.58 93.75 932.86 89.54C940.14 85.34 947.98 83.23 956.39 83.23C961.41 83.23 966.24 84.05 970.89 85.68C975.53 87.31 979.71 89.57 983.41 92.46C987.11 95.35 990.16 98.67 992.54 102.44L990.28 105.64V85.12H1004.4V177.37H990.28V156.85L992.54 160.05C988.9 165.82 983.88 170.47 977.48 173.98C971.08 177.49 964.05 179.25 956.4 179.25H956.39ZM957.52 166.07C963.67 166.07 969.32 164.53 974.46 161.46C979.61 158.39 983.69 154.21 986.7 148.94C989.71 143.67 991.22 137.77 991.22 131.24C991.22 124.71 989.71 118.81 986.7 113.54C983.69 108.27 979.61 104.1 974.46 101.02C969.31 97.95 963.66 96.41 957.52 96.41C951.38 96.41 945.72 97.95 940.58 101.02C935.43 104.1 931.35 108.27 928.34 113.54C925.33 118.81 923.82 124.71 923.82 131.24C923.82 137.77 925.33 143.67 928.34 148.94C931.35 154.21 935.43 158.39 940.58 161.46C945.72 164.54 951.37 166.07 957.52 166.07Z" fill="currentColor"/><path d="M1081.59 179.25C1073.93 179.25 1066.9 177.49 1060.5 173.98C1054.1 170.47 1049.08 165.82 1045.44 160.05L1047.7 156.85V177.37H1033.58V41.8201H1047.7V105.64L1045.44 102.44C1049.08 96.6701 1054.1 92.0201 1060.5 88.5101C1066.9 85.0001 1073.93 83.2401 1081.59 83.2401C1090 83.2401 1097.84 85.3401 1105.12 89.5501C1112.4 93.7601 1118.17 99.5301 1122.44 106.87C1126.71 114.21 1128.84 122.34 1128.84 131.25C1128.84 140.16 1126.7 148.29 1122.44 155.63C1118.17 162.97 1112.4 168.75 1105.12 172.95C1097.84 177.16 1089.99 179.26 1081.59 179.26V179.25ZM1080.65 166.07C1086.8 166.07 1092.42 164.53 1097.5 161.46C1102.58 158.39 1106.63 154.21 1109.64 148.94C1112.65 143.67 1114.16 137.77 1114.16 131.24C1114.16 124.71 1112.65 118.81 1109.64 113.54C1106.63 108.27 1102.58 104.1 1097.5 101.02C1092.42 97.9501 1086.8 96.4101 1080.65 96.4101C1074.5 96.4101 1068.82 97.9501 1063.61 101.02C1058.4 104.1 1054.29 108.27 1051.28 113.54C1048.27 118.81 1046.76 124.71 1046.76 131.24C1046.76 137.77 1048.27 143.67 1051.28 148.94C1054.29 154.21 1058.4 158.39 1063.61 161.46C1068.82 164.54 1074.5 166.07 1080.65 166.07Z" fill="currentColor"/><path d="M103.64 0H0V53.18H103.64V0Z" fill="currentColor"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z" fill="currentColor"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37" fill="currentColor"/></svg></a></p>
       <nav class="teamz-cta__links" aria-label="Teamz Lab links">
-        <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">Website</a>
-        <a href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">Upwork</a>
-        <a href="https://play.google.com/store/apps/dev?id=7194763656319643086" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">Play Store</a>
-        <a href="https://apps.apple.com/us/developer/teamz-lab-ltd/id1785282466" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">App Store</a>
+        <a id="footer-link-website" href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">Website</a>
+        <a id="footer-link-upwork" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">Upwork</a>
+        <a id="footer-link-play" href="https://play.google.com/store/apps/dev?id=7194763656319643086" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">Play Store</a>
+        <a id="footer-link-app" href="https://apps.apple.com/us/developer/teamz-lab-ltd/id1785282466" target="_blank" rel="noopener noreferrer" class="teamz-cta__link">App Store</a>
       </nav>
     </div>
-    <p>&copy; <script>document.write(new Date().getFullYear())</script> Teamz Lab LTD. All rights reserved. Free &amp; open source.</p>
+    <p id="footer-copyright"></p>
   </footer>
 </main>
+<script>
+(function(){
+  const LANG_KEY='teamz_learning_lang';
+  const SUPPORTED_LANGS=['en','bn'];
+  const SITE_URL='https://learn.teamzlab.com';
+  const STRINGS={
+    en:{
+      pageTitle:'Free Interactive Coding Courses (No Signup) | Teamz Lab Learning',
+      metaDescription:'Learn TypeScript, NestJS, and React with free no-signup interactive coding courses, quizzes, spaced repetition, and project-based lessons.',
+      ogTitle:'Free Interactive Coding Courses (No Signup) | Teamz Lab Learning',
+      ogDescription:'Learn TypeScript, NestJS, and React with free interactive lessons, quizzes, and science-backed practice. No signup required.',
+      twitterTitle:'Free Interactive Coding Courses (No Signup) | Teamz Lab Learning',
+      twitterDescription:'Learn TypeScript, NestJS, and React with free interactive courses, quizzes, and spaced repetition.',
+      langLabel:'EN',
+      langToggleTitle:'Change language',
+      skipLink:'Skip to content',
+      navHome:'Home',
+      navApps:'Our Apps',
+      navHire:'Hire Teamz Lab',
+      heroSubtitle:'Free no-signup interactive coding courses with science-backed methods. Learn TypeScript, NestJS, and React with quizzes, spaced repetition, and project-based practice.',
+      methodSr:'Spaced Repetition',
+      methodRp:'Active Recall',
+      methodIl:'Interleaving',
+      methodMc:'Metacognition',
+      methodDc:'Dual Coding',
+      badgeAvailable:'AVAILABLE NOW',
+      courseMainTitle:'Free Full-Stack Playbook',
+      courseMainSubtitle:'Project-based TypeScript, React, and NestJS tutorial with quizzes — no signup',
+      statLessons:'Lessons',
+      statQuizzes:'Quizzes',
+      statPoints:'Teaching Points',
+      statLanguages:'Languages',
+      tagNoSignup:'No Signup',
+      tagProjectBased:'Project Based',
+      badgeComing:'COMING SOON',
+      comingTitle1:'Python for Beginners',
+      comingSubtitle1:'Learn Python from scratch with fun projects and real-world examples',
+      comingTitle2:'System Design 101',
+      comingSubtitle2:'Learn distributed systems, scalability, and architecture patterns',
+      promotedTitle:'Recommended Tools',
+      faqTitle:'Frequently Asked Questions',
+      faqQ1:'Is this coding platform really free?',
+      faqA1:'Yes. You can start learning immediately with no payment and no account required.',
+      faqQ2:'Which technologies are covered?',
+      faqA2:'The current course covers TypeScript, React, NestJS, MongoDB, Docker, API design, authentication, and modern full-stack workflows.',
+      faqQ3:'Is this suitable for beginners?',
+      faqA3:'Yes. Lessons are structured from fundamentals to intermediate implementation with guided examples and quizzes.',
+      faqQ4:'How is this different from normal tutorials?',
+      faqA4:'You get interactive learning with retrieval practice and spaced review instead of passive video-only consumption.',
+      bizTitleMain:'Not a Developer?',
+      bizTitleAccent:'We Build It For You.',
+      bizSubtitle:'Teamz Lab doesn\'t just teach — we build apps, websites, and AI-powered solutions for businesses worldwide.',
+      bizCard1Title:'Mobile Apps',
+      bizCard1Desc:'iOS & Android apps that your customers will love. From idea to App Store.',
+      bizCard2Title:'Websites & Web Apps',
+      bizCard2Desc:'Modern, fast websites and dashboards that grow your business online.',
+      bizCard3Title:'AI Integration',
+      bizCard3Desc:'ChatGPT, automation, smart chatbots — add AI superpowers to your business.',
+      bizCta:'See Our Work & Apps',
+      shareTitle:'Know someone who\'d love this?',
+      shareX:'Share on X',
+      shareLinkedIn:'Share on LinkedIn',
+      shareFacebook:'Facebook',
+      shareWhatsApp:'WhatsApp',
+      copyLink:'Copy Link',
+      copied:'Copied!',
+      footerBuiltBy:'Built by',
+      footerWebsite:'Website',
+      footerUpwork:'Upwork',
+      footerPlay:'Play Store',
+      footerApp:'App Store',
+      footerCopyright:'Teamz Lab LTD. All rights reserved. Free & open source.',
+      courseLinkAria:'Open Free Full-Stack Playbook course',
+      shareXText:'Free interactive coding tutorials by @TeamzLab — learn TypeScript, React, NestJS with quizzes and gamified lessons!',
+      shareWhatsAppText:'Check out these free interactive coding tutorials by Teamz Lab! Learn TypeScript, React, NestJS with quizzes and gamified lessons 🔥'
+    },
+    bn:{
+      pageTitle:'ফ্রি Interactive Coding Courses (No Signup) | Teamz Lab Learning',
+      metaDescription:'ফ্রি no-signup interactive coding courses দিয়ে TypeScript, NestJS এবং React শিখুন — quizzes, spaced repetition এবং project-based lessons সহ।',
+      ogTitle:'ফ্রি Interactive Coding Courses (No Signup) | Teamz Lab Learning',
+      ogDescription:'TypeScript, NestJS এবং React শিখুন free interactive lessons, quizzes এবং science-backed practice দিয়ে। No signup required.',
+      twitterTitle:'ফ্রি Interactive Coding Courses (No Signup) | Teamz Lab Learning',
+      twitterDescription:'TypeScript, NestJS এবং React শিখুন free interactive courses, quizzes এবং spaced repetition দিয়ে।',
+      langLabel:'BN',
+      langToggleTitle:'ভাষা পরিবর্তন',
+      skipLink:'কনটেন্টে যান',
+      navHome:'হোম',
+      navApps:'আমাদের Apps',
+      navHire:'Teamz Lab Hire করুন',
+      heroSubtitle:'ফ্রি no-signup interactive coding courses এ TypeScript, NestJS এবং React শিখুন quizzes, spaced repetition এবং project-based practice দিয়ে।',
+      methodSr:'Spaced Repetition',
+      methodRp:'Active Recall',
+      methodIl:'Interleaving',
+      methodMc:'Metacognition',
+      methodDc:'Dual Coding',
+      badgeAvailable:'এখনই শুরু',
+      courseMainTitle:'Free Full-Stack Playbook',
+      courseMainSubtitle:'Project-based TypeScript, React এবং NestJS tutorial with quizzes — no signup',
+      statLessons:'লেসন',
+      statQuizzes:'কুইজ',
+      statPoints:'টিচিং পয়েন্ট',
+      statLanguages:'ভাষা',
+      tagNoSignup:'সাইনআপ লাগে না',
+      tagProjectBased:'Project-based',
+      badgeComing:'শীঘ্রই আসছে',
+      comingTitle1:'Beginners-এর জন্য Python',
+      comingSubtitle1:'মজার project এবং real-world উদাহরণ দিয়ে zero থেকে Python শিখুন',
+      comingTitle2:'System Design 101',
+      comingSubtitle2:'distributed systems, scalability এবং architecture patterns শিখুন',
+      promotedTitle:'প্রস্তাবিত Tools',
+      faqTitle:'প্রশ্নোত্তর',
+      faqQ1:'এই coding platform কি সত্যিই ফ্রি?',
+      faqA1:'হ্যাঁ। কোনো payment বা account ছাড়াই আপনি সাথে সাথে শেখা শুরু করতে পারবেন।',
+      faqQ2:'কোন কোন technology কভার করা হয়েছে?',
+      faqA2:'বর্তমান course-এ TypeScript, React, NestJS, MongoDB, Docker, API design, authentication এবং modern full-stack workflow কভার করা হয়েছে।',
+      faqQ3:'Beginners-দের জন্য কি উপযুক্ত?',
+      faqA3:'হ্যাঁ। Lessons fundamentals থেকে শুরু করে ধাপে ধাপে intermediate implementation পর্যন্ত যায়, guided examples এবং quizzes সহ।',
+      faqQ4:'এটা সাধারণ tutorial থেকে কীভাবে আলাদা?',
+      faqA4:'এখানে passive video-only শেখার বদলে interactive learning, retrieval practice এবং spaced review আছে।',
+      bizTitleMain:'Developer নন?',
+      bizTitleAccent:'আমরা আপনার জন্য Build করি।',
+      bizSubtitle:'Teamz Lab শুধু শেখায় না — আমরা বিশ্বজুড়ে business-এর জন্য apps, websites এবং AI-powered solutions build করি।',
+      bizCard1Title:'Mobile Apps',
+      bizCard1Desc:'iOS ও Android apps যা আপনার customers ভালোবাসবে। Idea থেকে App Store পর্যন্ত।',
+      bizCard2Title:'Websites & Web Apps',
+      bizCard2Desc:'Modern ও fast websites এবং dashboards যা আপনার business online-এ grow করতে সাহায্য করে।',
+      bizCard3Title:'AI Integration',
+      bizCard3Desc:'ChatGPT, automation, smart chatbots — আপনার business-এ AI superpowers যোগ করুন।',
+      bizCta:'আমাদের কাজ ও Apps দেখুন',
+      shareTitle:'চেনা কারও কাজে লাগতে পারে?',
+      shareX:'X-এ শেয়ার করুন',
+      shareLinkedIn:'LinkedIn-এ শেয়ার করুন',
+      shareFacebook:'Facebook-এ শেয়ার করুন',
+      shareWhatsApp:'WhatsApp-এ শেয়ার করুন',
+      copyLink:'লিংক কপি করুন',
+      copied:'কপি হয়েছে!',
+      footerBuiltBy:'নির্মাতা',
+      footerWebsite:'ওয়েবসাইট',
+      footerUpwork:'Upwork',
+      footerPlay:'Play Store',
+      footerApp:'App Store',
+      footerCopyright:'Teamz Lab LTD. সর্বস্বত্ব সংরক্ষিত। Free & open source.',
+      courseLinkAria:'Free Full-Stack Playbook course খুলুন',
+      shareXText:'Teamz Lab-এর free interactive coding tutorials — TypeScript, React, NestJS শিখুন quizzes এবং gamified lessons দিয়ে!',
+      shareWhatsAppText:'Teamz Lab-এর free interactive coding tutorials দেখুন! TypeScript, React, NestJS শিখুন quizzes এবং gamified lessons দিয়ে 🔥'
+    }
+  };
+
+  function setText(id,text){
+    const el=document.getElementById(id);
+    if(el) el.textContent=text;
+  }
+
+  function setMetaContent(id,text){
+    const el=document.getElementById(id);
+    if(el) el.setAttribute('content',text);
+  }
+
+  function setShareLinks(s){
+    const xUrl='https://twitter.com/intent/tweet?text='+encodeURIComponent(s.shareXText)+'&url='+encodeURIComponent(SITE_URL)+'&hashtags=LearnToCode,TypeScript,WebDev,FreeEducation';
+    const linkedInUrl='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(SITE_URL);
+    const facebookUrl='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SITE_URL);
+    const waUrl='https://api.whatsapp.com/send?text='+encodeURIComponent(s.shareWhatsAppText+' '+SITE_URL);
+    const x=document.getElementById('share-x-link');
+    const li=document.getElementById('share-linkedin-link');
+    const fb=document.getElementById('share-facebook-link');
+    const wa=document.getElementById('share-whatsapp-link');
+    if(x) x.href=xUrl;
+    if(li) li.href=linkedInUrl;
+    if(fb) fb.href=facebookUrl;
+    if(wa) wa.href=waUrl;
+  }
+
+  function applyLanguage(lang){
+    const safeLang=SUPPORTED_LANGS.includes(lang)?lang:'en';
+    const s=STRINGS[safeLang];
+    document.documentElement.lang=safeLang;
+    document.documentElement.dir='ltr';
+    document.title=s.pageTitle;
+    setMetaContent('meta-description',s.metaDescription);
+    setMetaContent('og-title',s.ogTitle);
+    setMetaContent('og-description',s.ogDescription);
+    setMetaContent('twitter-title',s.twitterTitle);
+    setMetaContent('twitter-description',s.twitterDescription);
+    setText('skip-link',s.skipLink);
+    setText('nav-home',s.navHome);
+    setText('nav-apps',s.navApps);
+    setText('nav-hire',s.navHire);
+    setText('hero-subtitle',s.heroSubtitle);
+    setText('method-sr',s.methodSr);
+    setText('method-rp',s.methodRp);
+    setText('method-il',s.methodIl);
+    setText('method-mc',s.methodMc);
+    setText('method-dc',s.methodDc);
+    setText('badge-available',s.badgeAvailable);
+    setText('course-main-title',s.courseMainTitle);
+    setText('course-main-subtitle',s.courseMainSubtitle);
+    setText('stat-lessons',s.statLessons);
+    setText('stat-quizzes',s.statQuizzes);
+    setText('stat-points',s.statPoints);
+    setText('stat-languages',s.statLanguages);
+    setText('tag-no-signup',s.tagNoSignup);
+    setText('tag-project-based',s.tagProjectBased);
+    setText('badge-coming-1',s.badgeComing);
+    setText('badge-coming-2',s.badgeComing);
+    setText('coming-title-1',s.comingTitle1);
+    setText('coming-subtitle-1',s.comingSubtitle1);
+    setText('coming-title-2',s.comingTitle2);
+    setText('coming-subtitle-2',s.comingSubtitle2);
+    setText('coming-stat-1-lessons',s.statLessons);
+    setText('coming-stat-1-quizzes',s.statQuizzes);
+    setText('coming-stat-2-lessons',s.statLessons);
+    setText('coming-stat-2-quizzes',s.statQuizzes);
+    setText('promoted-title',s.promotedTitle);
+    setText('faq-title',s.faqTitle);
+    setText('faq-q1',s.faqQ1);
+    setText('faq-a1',s.faqA1);
+    setText('faq-q2',s.faqQ2);
+    setText('faq-a2',s.faqA2);
+    setText('faq-q3',s.faqQ3);
+    setText('faq-a3',s.faqA3);
+    setText('faq-q4',s.faqQ4);
+    setText('faq-a4',s.faqA4);
+    setText('biz-title-main',s.bizTitleMain);
+    setText('biz-title-accent',s.bizTitleAccent);
+    setText('biz-subtitle',s.bizSubtitle);
+    setText('biz-card1-title',s.bizCard1Title);
+    setText('biz-card1-desc',s.bizCard1Desc);
+    setText('biz-card2-title',s.bizCard2Title);
+    setText('biz-card2-desc',s.bizCard2Desc);
+    setText('biz-card3-title',s.bizCard3Title);
+    setText('biz-card3-desc',s.bizCard3Desc);
+    setText('biz-cta-link',s.bizCta);
+    setText('share-title',s.shareTitle);
+    setText('share-x-label',s.shareX);
+    setText('share-linkedin-label',s.shareLinkedIn);
+    setText('share-facebook-label',s.shareFacebook);
+    setText('share-whatsapp-label',s.shareWhatsApp);
+    setText('copy-link-label',s.copyLink);
+    setText('footer-built-by',s.footerBuiltBy);
+    setText('footer-link-website',s.footerWebsite);
+    setText('footer-link-upwork',s.footerUpwork);
+    setText('footer-link-play',s.footerPlay);
+    setText('footer-link-app',s.footerApp);
+    const year=new Date().getFullYear();
+    setText('footer-copyright','© '+year+' '+s.footerCopyright);
+    setShareLinks(s);
+    const courseLink=document.getElementById('course-open-link');
+    if(courseLink){
+      courseLink.setAttribute('aria-label',s.courseLinkAria);
+      courseLink.href='learn.html?course=js-ts-fun-book'+(safeLang==='en'?'':'&lang='+safeLang);
+    }
+    const langToggle=document.getElementById('lang-toggle');
+    if(langToggle){
+      langToggle.setAttribute('title',s.langToggleTitle);
+      langToggle.setAttribute('aria-label',s.langToggleTitle);
+    }
+    setText('current-lang',s.langLabel);
+    document.querySelectorAll('.lang-option').forEach((btn)=>{
+      btn.classList.toggle('active',btn.dataset.lang===safeLang);
+    });
+    localStorage.setItem(LANG_KEY,safeLang);
+    window.__homeLang=safeLang;
+  }
+
+  function initLangSelector(){
+    const toggle=document.getElementById('lang-toggle');
+    const dropdown=document.getElementById('lang-dropdown');
+    if(!toggle||!dropdown) return;
+    toggle.addEventListener('click',function(){
+      dropdown.classList.toggle('open');
+    });
+    document.querySelectorAll('.lang-option').forEach((btn)=>{
+      btn.addEventListener('click',function(){
+        applyLanguage(btn.dataset.lang||'en');
+        dropdown.classList.remove('open');
+      });
+    });
+    document.addEventListener('click',function(e){
+      if(!e.target.closest('.lang-selector')) dropdown.classList.remove('open');
+    });
+  }
+
+  function initCopyLinkButton(){
+    const btn=document.getElementById('copy-link-btn');
+    const label=document.getElementById('copy-link-label');
+    if(!btn||!label) return;
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(SITE_URL).then(function(){
+        const lang=window.__homeLang||'en';
+        const s=STRINGS[lang]||STRINGS.en;
+        label.textContent=s.copied;
+        setTimeout(function(){label.textContent=s.copyLink;},2000);
+      }).catch(function(){});
+    });
+  }
+
+  initLangSelector();
+  initCopyLinkButton();
+  const urlLang=new URLSearchParams(location.search).get('lang');
+  const storedLang=localStorage.getItem(LANG_KEY);
+  const initialLang=SUPPORTED_LANGS.includes(urlLang)?urlLang:(SUPPORTED_LANGS.includes(storedLang)?storedLang:'en');
+  applyLanguage(initialLang);
+})();
+</script>
 </body>
 </html>
