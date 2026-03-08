@@ -834,6 +834,12 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .flashcard-diff-btn.easy { color:var(--quiz-correct-text); }
 .flashcard-diff-btn.hard { color:var(--quiz-wrong-text); }
 .flashcard-diff-btn:hover { transform:scale(1.05); border-color:var(--accent); }
+.flashcard-popup-meta { font-size:var(--text-xs); color:var(--text-muted); margin-bottom:0.6rem; display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+.flashcard-popup-lesson { background:var(--bg); border:1px solid var(--border); padding:0.15rem 0.5rem; border-radius:4px; font-weight:500; }
+.flashcard-popup-eli5 { margin-top:1rem; }
+.flashcard-popup-eli5 summary { font-size:var(--text-sm); font-weight:600; color:var(--heading); cursor:pointer; list-style:none; display:flex; align-items:center; gap:0.4rem; }
+.flashcard-popup-eli5 summary::-webkit-details-marker { display:none; }
+.flashcard-popup-eli5 .eli5-content { margin-top:0.5rem; font-size:var(--text-sm); color:var(--text-muted); line-height:var(--lh); background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.8rem; }
 
 /* Interactive Code Playground */
 .playground { margin:1.5rem 0; border-radius:12px; overflow:hidden; border:1px solid var(--border); }
@@ -1697,7 +1703,29 @@ body { top:0 !important; }
 <script>
 window.addEventListener('courseLoaded',function(){
 const L=LESSONS_DATA;
-let current=0;
+
+// Build navigation order from topicMap so prev/next follows sidebar order
+const navOrder=(function(){
+  const tm=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.topicMap)||{};
+  const topics=Object.keys(tm);
+  if(!topics.length) return L.map((_,i)=>i); // fallback: array order
+  const idToIndex={};
+  L.forEach((l,i)=>{idToIndex[l.id]=i;});
+  const order=[];
+  const seen=new Set();
+  topics.forEach(t=>tm[t].forEach(id=>{
+    const i=idToIndex[id];
+    if(i!==undefined&&!seen.has(i)){order.push(i);seen.add(i);}
+  }));
+  // Append any lessons not in topicMap
+  L.forEach((_,i)=>{if(!seen.has(i)){order.push(i);seen.add(i);}});
+  return order;
+})();
+// Reverse lookup: array index → position in navOrder
+const navPos={};
+navOrder.forEach((idx,pos)=>{navPos[idx]=pos;});
+
+let current=navOrder[0]||0;
 let completed=new Set();
 let codeVisible=false;
 let quizScores={};
@@ -2542,8 +2570,8 @@ function render(){
   </div>`;
 
   h+=`<div class="nav-btns">`;
-  if(current>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
-  h+=`<button class="btn btn-next" onclick="markAndNext()">${current<L.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
+  if(navPos[current]>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
+  h+=`<button class="btn btn-next" onclick="markAndNext()">${navPos[current]<navOrder.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'}</button>`;
   h+=`</div>`;
   h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span><span><span class="kbd">N</span> ${t('myNotes')}</span><span><span class="kbd">T</span> Theme</span><span><span class="kbd">?</span> Help</span></div>`;
 
@@ -2564,7 +2592,7 @@ function render(){
 }
 
 function goTo(i){current=i;codeVisible=false;typingActive=false;showReview=false;showMixedQuiz=false;showDashboard=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[i])window.__logEvent('lesson_view',{lesson_id:L[i].id,lesson_title:L[i].title});}
-function goPrev(){if(current>0){current--;codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[current])window.__logEvent('lesson_view',{lesson_id:L[current].id,lesson_title:L[current].title,nav:'prev'});}}
+function goPrev(){const pos=navPos[current];if(pos>0){current=navOrder[pos-1];codeVisible=false;typingActive=false;saveState();render();window.scrollTo(0,0);if(window.__logEvent&&L[current])window.__logEvent('lesson_view',{lesson_id:L[current].id,lesson_title:L[current].title,nav:'prev'});}}
 function markAndNext(){
   const wasNew=!completed.has(current);
   completed.add(current);
@@ -2573,7 +2601,7 @@ function markAndNext(){
     addXp(20,'Lesson completed');
     if(window.__logEvent)window.__logEvent('lesson_complete',{lesson_id:L[current].id,lesson_title:L[current].title,total_completed:completed.size});
   }
-  if(current<L.length-1){current++;codeVisible=false;typingActive=false;}
+  const pos=navPos[current];if(pos<navOrder.length-1){current=navOrder[pos+1];codeVisible=false;typingActive=false;}
   saveState();render();window.scrollTo(0,0);
   checkMilestones();
 }
@@ -3011,8 +3039,8 @@ function noteInsertCode(){
 // Keyboard shortcuts
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
-  if(e.key==='ArrowRight'){e.preventDefault();if(!showDashboard&&current<L.length-1)goTo(current+1);}
-  else if(e.key==='ArrowLeft'){e.preventDefault();if(!showDashboard&&current>0)goTo(current-1);}
+  if(e.key==='ArrowRight'){e.preventDefault();const p=navPos[current];if(!showDashboard&&p<navOrder.length-1)goTo(navOrder[p+1]);}
+  else if(e.key==='ArrowLeft'){e.preventDefault();const p=navPos[current];if(!showDashboard&&p>0)goTo(navOrder[p-1]);}
   else if(e.key==='d'||e.key==='D'){e.preventDefault();if(showDashboard)switchView('lesson');else switchView('dashboard');}
   else if(e.key==='n'||e.key==='N'){e.preventDefault();toggleNotesFloat();}
   else if(e.key==='t'){e.preventDefault();toggleTheme();}
@@ -3519,13 +3547,14 @@ function rateFlashcard(lessonIdx,pointIdx,diff){
   showToast(diff==='easy'?'Marked as easy — you know this!':'Marked as hard — will show more often');
 }
 window.showFlashcardPopup=function(lessonIdx,pointIdx){
-  const p=L[lessonIdx].points[pointIdx];
+  const l=L[lessonIdx],p=l.points[pointIdx];
   const overlay=document.createElement('div');
   overlay.className='flashcard-popup-overlay';
   overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
-  const safeTitle=L[lessonIdx].title.replace(/'/g,"\\'");
+  const safeTitle=l.title.replace(/'/g,"\\'");
   const safePt=p.t.replace(/'/g,"\\'");
-  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-title">${p.t}</div><div class="flashcard-popup-body">${p.d}</div><div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Easy</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hard</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
+  const eli5=l.eli5?`<details class="flashcard-popup-eli5"><summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Explain Like I'm 5</summary><div class="eli5-content">${l.eli5}</div></details>`:'';
+  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-meta"><span class="flashcard-popup-lesson">${l.title}</span><span>Point ${pointIdx+1} of ${l.points.length}</span></div><div class="flashcard-popup-title">${p.t}</div><div class="flashcard-popup-body">${p.d}</div>${eli5}<div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Easy</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hard</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
   document.body.appendChild(overlay);
 }
 
