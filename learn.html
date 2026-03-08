@@ -508,6 +508,7 @@ main { max-width:900px; margin:2rem auto; padding:0 2rem; width:100%; }
 .point-title { font-weight:700; margin-bottom:0.3rem; font-size:var(--text-md); line-height:var(--lh); color:var(--heading); display:flex; align-items:center; gap:0.4rem; }
 .point-title::before { content:''; display:inline-block; width:6px; height:6px; background:var(--heading); border-radius:50%; flex-shrink:0; }
 .point-desc { color:var(--text-muted); font-size:var(--text-sm); line-height:var(--lh); }
+.point-code-example { font-family:'Fira Code',Consolas,monospace; font-size:var(--text-xs); background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.6rem 0.8rem; margin-top:0.5rem; overflow-x:auto; white-space:pre-wrap; word-break:break-word; color:var(--text); line-height:1.6; }
 
 .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin:1.5rem 0; }
 .col-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.3rem; transition:background 0.3s,border-color 0.3s; }
@@ -538,6 +539,9 @@ main { max-width:900px; margin:2rem auto; padding:0 2rem; width:100%; }
 .quiz-btn.wrong { background:var(--quiz-wrong-bg); border-color:var(--quiz-wrong-border); color:var(--quiz-wrong-text); }
 .quiz-counter { color:var(--heading); font-size:var(--text-md); margin-bottom:0.8rem; font-weight:600; }
 .quiz-score { margin-top:1.5rem; padding:1rem; background:var(--score-bg); border:1px solid var(--score-border); border-radius:8px; text-align:center; color:var(--heading); font-weight:600; display:none; }
+.quiz-analogy-box { margin-top:0.6rem; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.7rem 0.8rem; display:flex; flex-direction:column; gap:0.5rem; }
+.quiz-analogy-text { display:flex; gap:0.5rem; align-items:flex-start; font-size:var(--text-sm); color:var(--text-muted); line-height:var(--lh); font-style:italic; }
+.quiz-analogy-concept { display:flex; gap:0.5rem; align-items:flex-start; font-size:var(--text-sm); color:var(--text); line-height:var(--lh); }
 
 .challenge { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:1.2rem 0; transition:background 0.3s,border-color 0.3s; }
 .challenge h4 { color:var(--heading); margin-bottom:0.3rem; font-size:var(--text-lg); line-height:var(--lh); font-weight:700; }
@@ -828,10 +832,17 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .flashcard.flipped { transform:rotateY(180deg); }
 .flashcard-face { position:absolute; top:0;left:0;right:0;bottom:0; backface-visibility:hidden; border-radius:12px; padding:2rem 1.2rem 2.5rem; display:flex; flex-direction:column; justify-content:center; border:1px solid var(--border); overflow-y:auto; }
 .flashcard-front { background:var(--surface); border-left:3px solid var(--heading); }
-.flashcard-front .point-title { font-weight:700; font-size:var(--text-md); color:var(--heading); margin-bottom:0.5rem; }
+.flashcard-front .point-title { font-weight:700; font-size:var(--text-md); color:var(--heading); margin-bottom:0.5rem; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; gap:0.65rem; }
+.flashcard-front .point-title::before { margin-right:0.15rem; }
 .flashcard-front .flip-hint { font-size:var(--text-xs); color:var(--text-muted); position:absolute; bottom:0.8rem; right:1rem; }
 .flashcard-back { background:linear-gradient(135deg,var(--surface),var(--bg)); transform:rotateY(180deg); }
 .flashcard-back p { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); }
+.flashcard-back-desc { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); display:-webkit-box; -webkit-line-clamp:5; line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; }
+.flashcard-back-desc .point-inline-code { font-family:'Fira Code',Consolas,monospace; font-size:0.9em; background:var(--code-bg); padding:0.1em 0.35em; border-radius:4px; color:var(--code-text); white-space:pre-wrap; word-break:break-all; }
+.flashcard-point-code { font-family:'Fira Code',Consolas,monospace; font-size:var(--text-xs); background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:0.5rem; margin-top:0.5rem; overflow-x:auto; white-space:pre-wrap; word-break:break-word; color:var(--text); line-height:1.5; max-height:120px; overflow-y:auto; }
+.point-inline-code { font-family:'Fira Code',Consolas,monospace; font-size:0.9em; background:var(--code-bg); padding:0.1em 0.35em; border-radius:4px; color:var(--code-text); white-space:pre-wrap; word-break:break-all; }
+.flashcard-popup-body .point-inline-code,
+.flashcard-popup-body code { font-family:'Fira Code',Consolas,monospace; font-size:var(--text-sm); background:var(--code-bg); padding:0.15em 0.4em; border-radius:4px; color:var(--code-text); white-space:pre-wrap; word-break:break-word; }
 .flashcard-view-full { position:absolute; bottom:0.6rem; right:0.8rem; padding:0.15rem 0.5rem; border-radius:4px; border:1px solid var(--border); background:var(--bg); font-size:var(--text-xs); font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Poppins',sans-serif; color:var(--text-muted); display:inline-flex; align-items:center; gap:0.3rem; z-index:2; }
 .flashcard-view-full:hover { border-color:var(--accent); color:var(--heading); transform:scale(1.05); }
 .flashcard-popup-overlay { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.7); z-index:9999; display:flex; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px); animation:fadeIn 0.3s ease; }
@@ -843,6 +854,7 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .flashcard-diff-btn { padding:0.4rem 1.2rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); font-size:var(--text-sm); font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Poppins',sans-serif; display:inline-flex; align-items:center; gap:0.4rem; }
 .flashcard-diff-btn.easy { color:var(--quiz-correct-text); }
 .flashcard-diff-btn.hard { color:var(--quiz-wrong-text); }
+.flashcard-diff-btn.done { color:var(--heading); }
 .flashcard-diff-btn:hover { transform:scale(1.05); border-color:var(--accent); }
 .flashcard-popup-meta { font-size:var(--text-xs); color:var(--text-muted); margin-bottom:0.6rem; display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
 .flashcard-popup-lesson { background:var(--bg); border:1px solid var(--border); padding:0.15rem 0.5rem; border-radius:4px; font-weight:500; }
@@ -850,6 +862,13 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .flashcard-popup-eli5 summary { font-size:var(--text-sm); font-weight:600; color:var(--heading); cursor:pointer; list-style:none; display:flex; align-items:center; gap:0.4rem; }
 .flashcard-popup-eli5 summary::-webkit-details-marker { display:none; }
 .flashcard-popup-eli5 .eli5-content { margin-top:0.5rem; font-size:var(--text-sm); color:var(--text-muted); line-height:var(--lh); background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.8rem; }
+.flashcard-popup-extra { margin-top:1rem; }
+.flashcard-popup-extra summary { font-size:var(--text-sm); font-weight:600; color:var(--heading); cursor:pointer; list-style:none; display:flex; align-items:center; gap:0.4rem; }
+.flashcard-popup-extra summary::-webkit-details-marker { display:none; }
+.flashcard-popup-extra .extra-content { margin-top:0.5rem; font-size:var(--text-sm); color:var(--text-muted); line-height:var(--lh); background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:0.8rem; }
+.flashcard-popup-extra .extra-content code { font-family:'Fira Code',Consolas,monospace; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:0.1rem 0.3rem; font-size:var(--text-xs); }
+.flashcard-popup-extra .extra-content pre { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:0.8rem; overflow-x:auto; margin:0.5rem 0; font-family:'Fira Code',Consolas,monospace; font-size:var(--text-xs); line-height:1.6; color:var(--text); white-space:pre-wrap; word-break:break-word; }
+.flashcard-popup-analogy { font-style:italic; color:var(--text-muted); font-size:var(--text-sm); padding:0.6rem 0.8rem; border-left:3px solid var(--accent); background:color-mix(in srgb,var(--accent) 5%,transparent); border-radius:0 8px 8px 0; margin-top:0.5rem; }
 
 /* Interactive Code Playground */
 .playground { margin:1.5rem 0; border-radius:12px; overflow:hidden; border:1px solid var(--border); }
@@ -884,6 +903,9 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 /* Keyboard shortcut hints */
 .kbd { display:inline-block; padding:0.1rem 0.4rem; background:var(--bg); border:1px solid var(--border); border-radius:4px; font-size:var(--text-xs); color:var(--text-muted); font-family:"Fira Code",monospace; }
 .nav-hint { display:flex; justify-content:center; gap:1rem; margin-top:0.5rem; font-size:var(--text-sm); color:var(--text-muted); }
+.nav-unlock-hint { display:flex; align-items:flex-start; gap:0.5rem; margin-top:0.75rem; padding:0.75rem 1rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; font-size:var(--text-sm); color:var(--text-muted); line-height:var(--lh); }
+.nav-unlock-hint svg { color:var(--heading); flex-shrink:0; }
+.nav-unlock-hint strong { color:var(--text); }
 
 /* Concept diagram */
 .concept-diagram { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin:1.5rem 0; text-align:center; }
@@ -966,7 +988,7 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .lang-selector { position:relative; display:inline-block; }
 .lang-btn { display:flex; align-items:center; gap:0.4rem; padding:0.4rem 0.8rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); cursor:pointer; font-size:var(--text-sm); font-family:'Poppins',sans-serif; transition:all 0.2s; }
 .lang-btn:hover { border-color:var(--accent); }
-.lang-dropdown { position:absolute; top:100%; right:0; margin-top:0.3rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; min-width:160px; z-index:100; display:none; box-shadow:0 4px 20px rgba(0,0,0,0.3); overflow:hidden; }
+.lang-dropdown { position:absolute; top:100%; right:0; margin-top:0.3rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; min-width:190px; max-height:300px; z-index:100; display:none; box-shadow:0 4px 20px rgba(0,0,0,0.3); overflow:auto; }
 .lang-dropdown.open { display:block; }
 .lang-option { display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1rem; cursor:pointer; font-size:var(--text-sm); color:var(--text); transition:all 0.2s; border:none; background:none; width:100%; text-align:left; font-family:'Poppins',sans-serif; }
 .lang-option:hover { background:var(--bg); color:var(--heading); }
@@ -1006,8 +1028,12 @@ body { top:0 !important; }
 .eli5-toggle:hover { transform:scale(1.05); box-shadow:0 4px 15px rgba(217,254,6,0.3); }
 .eli5-toggle.active { background:var(--text); color:var(--bg); box-shadow:none; }
 .eli5-box { background:var(--eli5-bg); border:1px solid rgba(255,107,53,0.3); border-radius:12px; padding:1.2rem; margin:1rem 0; animation:fadeIn 0.3s ease; }
-.eli5-box h4 { color:var(--eli5-primary); margin-bottom:0.5rem; font-size:var(--text-lg); display:flex; align-items:center; gap:0.5rem; }
+.eli5-box h4 { color:var(--eli5-primary); margin-bottom:0.6rem; font-size:var(--text-lg); display:flex; align-items:center; gap:0.5rem; }
 .eli5-box p { color:var(--text); font-size:var(--text-md); line-height:var(--lh); }
+.eli5-list { display:grid; gap:0.7rem; }
+.eli5-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0.7rem 0.8rem; }
+.eli5-item-title { font-size:var(--text-sm); font-weight:700; color:var(--heading); margin-bottom:0.2rem; }
+.eli5-item p { margin:0; color:var(--text); font-size:var(--text-md); line-height:var(--lh); }
 
 /* Code Walkthrough */
 .walkthrough-toggle { display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.8rem; background:var(--info-bg); border:1px solid var(--info-border); border-radius:6px; color:var(--info); cursor:pointer; font-size:var(--text-sm); font-weight:600; font-family:'Poppins',sans-serif; transition:all 0.2s; margin-left:0.5rem; }
@@ -1532,16 +1558,13 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 <a href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link nav-link--bordered">Our Apps</a>
 <a onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header'})" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="btn--hire">Hire Teamz Lab</a>
 <div class="hdr-utils">
-<div class="lang-selector">
-<button class="lang-btn lang-btn--text" onclick="toggleLangDropdown()" title="Change language">
+<div class="lang-selector notranslate" translate="no">
+<button class="lang-btn lang-btn--text notranslate" onclick="toggleLangDropdown()" title="Change language" aria-label="Change language" translate="no">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-<span id="current-lang">EN</span>
+<span id="current-lang" class="notranslate" translate="no">EN</span>
 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
 </button>
-<div class="lang-dropdown" id="lang-dropdown">
-<button class="lang-option active" onclick="setLang('en')">English</button>
-<button class="lang-option" onclick="setLang('bn')">বাংলা</button>
-</div>
+<div class="lang-dropdown notranslate" id="lang-dropdown" translate="no"></div>
 </div>
 <button class="theme-toggle header-icon-btn" onclick="openSearch()" title="Search lessons (Ctrl+K)" aria-label="Search">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1899,9 +1922,115 @@ function promotedSection(){
 }
 
 // Language system — UI translations
-const LANG_NAMES={en:'EN',bn:'BN'};
-const LANG_FLAGS={en:'English',bn:'বাংলা'};
-const SUPPORTED_LANGS=['en','bn'];
+const LANGUAGE_OPTIONS={
+  en:'English',
+  bn:'বাংলা',
+  hi:'हिन्दी',
+  ur:'اردو',
+  ar:'العربية',
+  es:'Español',
+  fr:'Français',
+  de:'Deutsch',
+  pt:'Português',
+  ru:'Русский',
+  'zh-CN':'中文(简体)',
+  'zh-TW':'中文(繁體)',
+  ja:'日本語',
+  ko:'한국어',
+  id:'Bahasa Indonesia',
+  ms:'Bahasa Melayu',
+  vi:'Tiếng Việt',
+  th:'ไทย',
+  tr:'Türkçe',
+  it:'Italiano',
+  nl:'Nederlands',
+  pl:'Polski',
+  uk:'Українська',
+  ro:'Română',
+  cs:'Čeština',
+  sv:'Svenska',
+  no:'Norsk',
+  da:'Dansk',
+  fi:'Suomi',
+  el:'Ελληνικά',
+  he:'עברית',
+  fa:'فارسی',
+  ps:'پښتو',
+  sw:'Kiswahili',
+  am:'አማርኛ',
+  ha:'Hausa',
+  yo:'Yorùbá',
+  ig:'Igbo',
+  zu:'isiZulu',
+  xh:'isiXhosa',
+  st:'Sesotho',
+  sn:'chiShona',
+  so:'Soomaali',
+  af:'Afrikaans',
+  sq:'Shqip',
+  sr:'Српски',
+  hr:'Hrvatski',
+  sk:'Slovenčina',
+  sl:'Slovenščina',
+  bg:'Български',
+  hu:'Magyar',
+  lt:'Lietuvių',
+  lv:'Latviešu',
+  et:'Eesti',
+  ga:'Gaeilge',
+  cy:'Cymraeg',
+  mt:'Malti',
+  is:'Íslenska',
+  mk:'Македонски',
+  ka:'ქართული',
+  hy:'Հայերեն',
+  az:'Azərbaycanca',
+  kk:'Қазақша',
+  uz:'Oʻzbekcha',
+  ky:'Кыргызча',
+  tg:'Тоҷикӣ',
+  mn:'Монгол',
+  ne:'नेपाली',
+  si:'සිංහල',
+  ta:'தமிழ்',
+  te:'తెలుగు',
+  kn:'ಕನ್ನಡ',
+  ml:'മലയാളം',
+  mr:'मराठी',
+  gu:'ગુજરાતી',
+  pa:'ਪੰਜਾਬੀ',
+  my:'မြန်မာ',
+  km:'ខ្មែរ',
+  lo:'ລາວ',
+  ceb:'Cebuano',
+  tl:'Filipino',
+  jw:'Javanese',
+  su:'Sundanese',
+  eu:'Euskara',
+  ca:'Català',
+  gl:'Galego',
+  co:'Corsu',
+  lb:'Lëtzebuergesch',
+  la:'Latina',
+  gd:'Gàidhlig',
+  yi:'ייִדיש',
+  ht:'Kreyòl Ayisyen',
+  sm:'Gagana Samoa',
+  mi:'Māori',
+  haw:'ʻŌlelo Hawaiʻi',
+  ny:'Chichewa',
+  mg:'Malagasy',
+  bs:'Bosanski',
+  be:'Беларуская',
+  ku:'Kurdî',
+  sd:'سنڌي',
+  fy:'Frysk',
+  eo:'Esperanto',
+  hmn:'Hmong'
+};
+const SUPPORTED_LANGS=Object.keys(LANGUAGE_OPTIONS);
+const RTL_LANGS=['ar','he','fa','ur','ps','sd','yi','ku'];
+const LANG_NAMES=Object.fromEntries(SUPPORTED_LANGS.map((code)=>[code,(code.split('-')[0].slice(0,2)||code).toUpperCase()]));
 const UI_STRINGS={
   en:{
     lessonsCompleted:'lessons completed',
@@ -1963,7 +2092,10 @@ const UI_STRINGS={
     myNotes:'My Notes',
     notesSaved:'saved',
     notesPlaceholder:'Write your notes for this lesson here... Saved locally on your device.',
-    autoSaved:'Auto-saved'
+    autoSaved:'Auto-saved',
+    done:'Done',
+    unlockCompleteNextHint:'To unlock **Complete & Next**: answer all quiz questions above and score 80% or higher. Got some wrong? Click **Retake Quiz** above to clear your answers and try again.',
+    unlockCompleteNextTitle:'Answer all quiz questions with 80%+ to unlock. Use Retake Quiz to try again.'
   },
   bn:{
     lessonsCompleted:'টি লেসন সম্পন্ন',
@@ -2025,11 +2157,21 @@ const UI_STRINGS={
     myNotes:'আমার নোট',
     notesSaved:'সংরক্ষিত',
     notesPlaceholder:'এই লেসনের নোট এখানে লিখুন... আপনার ডিভাইসে সংরক্ষিত থাকবে।',
-    autoSaved:'অটো-সেভ হয়েছে'
+    autoSaved:'অটো-সেভ হয়েছে',
+    done:'Done',
+    unlockCompleteNextHint:'**সম্পন্ন এবং পরবর্তী** আনলক করতে: উপরের সব কুইজের উত্তর দিন এবং ৮০% বা তার বেশি স্কোর করুন। ভুল হয়েছে? আবার চেষ্টা করতে উপরের **কুইজ আবার করুন** ক্লিক করুন।',
+    unlockCompleteNextTitle:'আনলক করতে সব কুইজে ৮০%+ স্কোর করুন। আবার চেষ্টা করতে কুইজ আবার করুন ব্যবহার করুন।'
   }
 };
 function t(key){return (UI_STRINGS[currentLang]||UI_STRINGS.en)[key]||UI_STRINGS.en[key]||key;}
-function normalizeLang(lang){return SUPPORTED_LANGS.includes(lang)?lang:'en';}
+function normalizeLang(lang){
+  if(!lang) return 'en';
+  const raw=String(lang).trim();
+  if(SUPPORTED_LANGS.includes(raw)) return raw;
+  const lower=raw.toLowerCase();
+  const matched=SUPPORTED_LANGS.find((code)=>code.toLowerCase()===lower);
+  return matched||'en';
+}
 
 const TECH_TERMS=[
   'TypeScript','JavaScript','NestJS','React','Node.js','MongoDB','Docker','Prisma','Redis','JWT','REST API','REST APIs',
@@ -2116,6 +2258,64 @@ function saveState(){
 }
 
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function formatPointContentForDisplay(text){
+  if(typeof text!=='string') return '';
+  let s=escHtml(text);
+  s=s.replace(/`([^`]*)`/g,'<code class="point-inline-code">$1</code>');
+  s=s.replace(/\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g,(_,inner)=>'<code class="point-inline-code">{'+inner+'}</code>');
+  return s;
+}
+
+function normalizeLessonText(value){
+  if(typeof value!=='string') return '';
+  return value.replace(/\s+/g,' ').trim();
+}
+
+function firstNonEmptyText(values){
+  if(!Array.isArray(values)) return '';
+  for(const value of values){
+    const text=normalizeLessonText(value);
+    if(text) return text;
+  }
+  return '';
+}
+
+function getPointEli5(lesson,point,pointIdx){
+  const pointsEli5=lesson&&Array.isArray(lesson.eli5Points)?lesson.eli5Points:[];
+  const pointEli5Alt=lesson&&Array.isArray(lesson.pointEli5)?lesson.pointEli5:[];
+  const eli5ByPoint=lesson&&lesson.eli5ByPoint&&typeof lesson.eli5ByPoint==='object'?lesson.eli5ByPoint:null;
+  const pointKey=point&&typeof point.t==='string'?point.t:'';
+  const mappedEli5=eli5ByPoint&&pointKey?eli5ByPoint[pointKey]:'';
+  return firstNonEmptyText([
+    point&&point.eli5,
+    point&&point.explainLike5,
+    point&&point.explainLikeIm5,
+    point&&point.simple,
+    pointsEli5[pointIdx],
+    pointEli5Alt[pointIdx],
+    mappedEli5,
+    point&&point.d,
+    lesson&&lesson.eli5,
+    lesson&&lesson.whatIs,
+    lesson&&lesson.analogy
+  ]);
+}
+
+function getLessonEli5Items(lesson){
+  if(!lesson||!Array.isArray(lesson.points)) return [];
+  return lesson.points.map((point,idx)=>{
+    return {
+      title:normalizeLessonText(point&&point.t),
+      text:getPointEli5(lesson,point,idx)
+    };
+  }).filter((item)=>item.text);
+}
+
+function renderLessonEli5Html(lesson){
+  const items=getLessonEli5Items(lesson);
+  if(!items.length) return '';
+  return '<div class="eli5-box"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> '+t('eli5Label')+'</h4><div class="eli5-list">'+items.map((item)=>{const title=item.title?'<div class="eli5-item-title">'+escHtml(item.title)+'</div>':'';return '<div class="eli5-item">'+title+'<p>'+escHtml(item.text)+'</p></div>';}).join('')+'</div></div>';
+}
 
 function dayKey(d){
   const dt=d||new Date();
@@ -2775,9 +2975,19 @@ function render(){
     if(activeItem) activeItem.scrollIntoView({block:'nearest',behavior:'smooth'});
   },50);
 
-  if(showDashboard||showReview||showMixedQuiz) return;
+  if(showDashboard||showReview||showMixedQuiz){
+    lockTechnicalTerms(document.getElementById('content'));
+    lockTechnicalTerms(document.getElementById('dashboard'));
+    lockTechnicalTerms(document.getElementById('sidebar'));
+    applyKeyboardAffordances(document);
+    if(currentLang!=='en'&&gtLoaded){
+      setTimeout(()=>triggerGT(currentLang),200);
+    }
+    return;
+  }
 
   const l=L[current];
+  const lessonEli5Items=getLessonEli5Items(l);
   const readTime=getReadingTime(l);
   const isBookmarked=bookmarks.has(current);
   let h='';
@@ -2786,7 +2996,7 @@ function render(){
       <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
     </button>
     <span class="lesson-emoji">${bigIcon(l.id)}</span>
-    <div class="lesson-title notranslate">${l.title}${l.difficulty?`<span class="diff-badge diff-${l.difficulty}">${t(l.difficulty)}</span>`:''}</div>
+    <div class="lesson-title">${l.title}${l.difficulty?`<span class="diff-badge diff-${l.difficulty}">${t(l.difficulty)}</span>`:''}</div>
     <div class="lesson-sub">${l.subtitle}</div>
     <div class="reading-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${readTime} min read</div>
     ${l.prereqs&&l.prereqs.length?`<div class="prereqs"><span style="font-size:var(--text-sm);color:var(--text-muted);margin-right:0.3rem">${t('prereqLabel')}:</span>${l.prereqs.map(pid=>{const pl=L.find(x=>x.id===pid);return pl?`<span class="prereq-chip ${completed.has(L.indexOf(pl))?'done':''}" onclick="goTo(${L.indexOf(pl)})">${pl.title}</span>`:'';}).join('')}</div>`:''}
@@ -2804,7 +3014,7 @@ function render(){
 
   // Concept flow diagram
   const flow=getConceptFlow(l);
-  h+=`<div class="concept-diagram reveal"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> ${t('conceptFlow')}</h4><div class="diagram-flow notranslate">`;
+  h+=`<div class="concept-diagram reveal"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> ${t('conceptFlow')}</h4><div class="diagram-flow">`;
   flow.forEach((node,i)=>{
     if(i>0) h+=`<span class="diagram-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>`;
     h+=`<div class="diagram-node">${node}</div>`;
@@ -2812,8 +3022,7 @@ function render(){
   h+=`</div></div>`;
 
   h+=`<div class="analogy-box reveal"><h3 style="display:flex;align-items:center"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('thinkOfIt')}${aiLinks(l.title,'analogy explanation')}</h3><p>${l.analogy}</p>
-  ${l.eli5?`<button type="button" class="eli5-toggle ${eli5Mode?'active':''}" onclick="toggleEli5();return false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('eli5')}</button>`:''}
-  ${eli5Mode&&l.eli5?`<div class="eli5-box"><h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${t('eli5Label')}</h4><p>${l.eli5}</p></div>`:''}</div>`;
+  ${lessonEli5Items.length?`<button type="button" id="eli5-toggle-btn" class="eli5-toggle ${eli5Mode?'active':''}" onclick="toggleEli5();return false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('eli5')}</button><div id="eli5-box-container" style="display:${eli5Mode?'block':'none'};margin-top:1rem">${eli5Mode?renderLessonEli5Html(l):''}</div>`:''}</div>`;
 
   // What is it? + Real World (moved up — show before Think Deeper)
   h+=`<div class="two-col">`;
@@ -2882,12 +3091,13 @@ function render(){
       const p=l.points[i];
       h+=`<div class="flashcard" tabindex="0" role="button" aria-label="${escHtml(p.t)} — press Enter to flip" onclick="if(!event.target.closest('.ask-ai-btn')&&!event.target.closest('.flashcard-view-full'))this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();if(!event.target.closest('.ask-ai-btn')&&!event.target.closest('.flashcard-view-full'))this.classList.toggle('flipped')}">
         <div class="flashcard-face flashcard-front">
-          <div class="point-title notranslate">${p.t}</div>
+          <div class="point-title">${p.t}</div>
           ${aiLinks(l.title,p.t)}
           <div class="flip-hint">Click to flip</div>
         </div>
         <div class="flashcard-face flashcard-back">
-          <p>${p.d}</p>
+          <div class="flashcard-back-desc">${formatPointContentForDisplay(p.d)}</div>
+          ${p.code?`<pre class="flashcard-point-code">${escHtml(p.code)}</pre>`:''}
           <button class="flashcard-view-full" onclick="event.stopPropagation();showFlashcardPopup(${current},${i})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View</button>
         </div>
       </div>`;
@@ -2898,7 +3108,7 @@ function render(){
     l.points.forEach((p,pi)=>{
       const rKey=current+'-'+pi;
       const reacted=pointReactions[rKey]||'';
-      h+=`<div class="point reveal"><div class="point-title notranslate">${p.t}</div><div class="point-desc">${p.d}</div><div class="point-footer"><div class="point-reactions"><button class="point-react-btn ${reacted==='got'?'reacted':''}" data-key="${rKey}" data-emoji="got" onclick="event.stopPropagation();reactPoint(${current},${pi},'got')" title="Got it — I understand this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="react-label">Got it</span></button><button class="point-react-btn ${reacted==='hard'?'reacted':''}" data-key="${rKey}" data-emoji="hard" onclick="event.stopPropagation();reactPoint(${current},${pi},'hard')" title="Hard — need to review this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="react-label">Hard</span></button><button class="point-react-btn ${reacted==='love'?'reacted':''}" data-key="${rKey}" data-emoji="love" onclick="event.stopPropagation();reactPoint(${current},${pi},'love')" title="Love this — great explanation"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="react-label">Love</span></button></div><button class="ask-ai-btn" onclick="event.stopPropagation();askAi('${escHtml(l.title).replace(/'/g,"\\'")}','${escHtml(p.t).replace(/'/g,"\\'")}')" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
+      h+=`<div class="point reveal"><div class="point-title">${p.t}</div><div class="point-desc">${p.d}</div>${p.code?`<pre class="point-code-example">${escHtml(p.code)}</pre>`:''}<div class="point-footer"><div class="point-reactions"><button class="point-react-btn ${reacted==='got'?'reacted':''}" data-key="${rKey}" data-emoji="got" onclick="event.stopPropagation();reactPoint(${current},${pi},'got')" title="Got it — I understand this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="react-label">Got it</span></button><button class="point-react-btn ${reacted==='hard'?'reacted':''}" data-key="${rKey}" data-emoji="hard" onclick="event.stopPropagation();reactPoint(${current},${pi},'hard')" title="Hard — need to review this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="react-label">Hard</span></button><button class="point-react-btn ${reacted==='love'?'reacted':''}" data-key="${rKey}" data-emoji="love" onclick="event.stopPropagation();reactPoint(${current},${pi},'love')" title="Love this — great explanation"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="react-label">Love</span></button></div><button class="ask-ai-btn" onclick="event.stopPropagation();askAi('${escHtml(l.title).replace(/'/g,"\\'")}','${escHtml(p.t).replace(/'/g,"\\'")}')" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
     });
     h+=`</div>`;
   }
@@ -2907,7 +3117,7 @@ function render(){
   h+=adSlot('after-points');
 
   if(l.funFact){
-    h+=`<div class="fun-fact reveal"><h4 style="display:flex;align-items:center"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('funFact')}${aiLinks(l.title,'fun facts')}</h4><p>${l.funFact}</p></div>`;
+    h+=`<div class="fun-fact reveal"><h4 style="display:flex;align-items:center"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('funFact')}${aiLinks(l.title,'fun facts',l.funFact)}</h4><p>${l.funFact}</p></div>`;
   }
 
   if(l.quiz && Array.isArray(l.quiz)){
@@ -2935,7 +3145,7 @@ function render(){
       const sh=shuffleOpts(q.opts,q.ans,l.id*100+qIdx);
       const shuffledOpts=sh.opts;
       const shuffledAns=sh.ans;
-      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('quiz')} ${qIdx+1} / ${l.quiz.length}</div><p style="margin-bottom:0.5rem;color:var(--text);font-weight:600">${q.q}</p>`;
+      h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('quiz')} ${qIdx+1} / ${l.quiz.length}</div><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;margin-bottom:0.5rem"><p style="margin:0;color:var(--text);font-weight:600;flex:1">${q.q}</p>${quizAiButton(l.title,q.q,shuffledOpts)}</div>`;
       if(!answered){
         h+=`<div class="confidence-bar" id="quiz-confidence-${qIdx}"><span class="confidence-label">How confident?</span><div class="confidence-btns"><button class="confidence-btn ${conf==='low'?'selected low':''}" data-level="low" onclick="setConfidence(${current},${qIdx},'low')">Unsure</button><button class="confidence-btn ${conf==='mid'?'selected mid':''}" data-level="mid" onclick="setConfidence(${current},${qIdx},'mid')">Somewhat</button><button class="confidence-btn ${conf==='high'?'selected high':''}" data-level="high" onclick="setConfidence(${current},${qIdx},'high')">Very Sure</button></div></div>`;
       }
@@ -2977,12 +3187,12 @@ function render(){
   h+=adSlot('after-quiz');
 
   // Code Example with optional walkthrough mode
-  h+=`<div class="playground reveal notranslate">
+  h+=`<div class="playground reveal">
     <div class="playground-header">
       <div class="playground-title"><div class="playground-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div></div>
       <div class="playground-title" translate="yes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> ${t('codeExample')}${l.codeWalkthrough?`<button class="walkthrough-toggle ${walkthroughMode?'active':''}" onclick="toggleWalkthrough()">${t('walkthrough')}</button>`:''}</div>
     </div>
-    ${walkthroughMode&&l.codeWalkthrough?`<div class="walkthrough-container"><div style="padding:0.4rem 0.5rem 0;font-size:var(--text-sm);color:var(--text-muted)" translate="yes">${t('clickLine')}</div>${l.code.split('\\n').map((line,i)=>`<div class="walkthrough-line" id="wt-line-${i}" onclick="toggleWalkthroughLine(${i})"><span class="walkthrough-num">${i+1}</span><span class="walkthrough-code">${escHtml(line)}</span></div>${l.codeWalkthrough[i]?`<div class="walkthrough-explain" id="wt-explain-${i}" translate="yes">${l.codeWalkthrough[i]}</div>`:''}`).join('')}</div>`:`<div class="code-block" style="margin:0;border-radius:0;border:none">${escHtml(l.code)}</div>`}
+    ${walkthroughMode&&l.codeWalkthrough?`<div class="walkthrough-container"><div style="padding:0.4rem 0.5rem 0;font-size:var(--text-sm);color:var(--text-muted)" translate="yes">${t('clickLine')}</div>${l.code.split('\\n').map((line,i)=>`<div class="walkthrough-line" id="wt-line-${i}" onclick="toggleWalkthroughLine(${i})"><span class="walkthrough-num">${i+1}</span><span class="walkthrough-code notranslate">${escHtml(line)}</span></div>${l.codeWalkthrough[i]?`<div class="walkthrough-explain" id="wt-explain-${i}" translate="yes">${l.codeWalkthrough[i]}</div>`:''}`).join('')}</div>`:`<div class="code-block notranslate" style="margin:0;border-radius:0;border:none">${escHtml(l.code)}</div>`}
   </div>`;
 
   // Spot the Bug challenge
@@ -3008,7 +3218,7 @@ function render(){
   if(l.code&&l.code.length<500){
     if(typingActive){
       const targetCode=l.code.trim();
-      h+=`<div class="typing-challenge reveal notranslate"><div class="typing-header"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M6 21h12"/><path d="M12 17v4"/></svg> Type the Code</span><div class="typing-stats" id="typing-stats">0 / ${targetCode.length} chars</div></div><div class="typing-progress"><div class="typing-progress-fill" id="typing-progress-fill" style="width:0%"></div></div><div class="typing-area"><div class="typing-target">${escHtml(targetCode)}</div><textarea class="typing-input" id="typing-input" oninput="checkTyping()" spellcheck="false" autocomplete="off" placeholder="Start typing..."></textarea></div><div class="typing-result" id="typing-result"></div></div>`;
+      h+=`<div class="typing-challenge reveal"><div class="typing-header"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M6 21h12"/><path d="M12 17v4"/></svg> Type the Code</span><div class="typing-stats" id="typing-stats">0 / ${targetCode.length} chars</div></div><div class="typing-progress"><div class="typing-progress-fill" id="typing-progress-fill" style="width:0%"></div></div><div class="typing-area"><div class="typing-target notranslate">${escHtml(targetCode)}</div><textarea class="typing-input" id="typing-input" oninput="checkTyping()" spellcheck="false" autocomplete="off" placeholder="Start typing..."></textarea></div><div class="typing-result" id="typing-result"></div></div>`;
     }else{
       h+=`<div style="text-align:center;margin:0.5rem 0" class="reveal"><button onclick="startTypingChallenge()" style="padding:0.4rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:var(--text-sm);color:var(--text-muted);font-family:'Poppins',sans-serif;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--heading)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M2 3h20v14H2z"/><path d="M6 21h12"/><path d="M12 17v4"/></svg> Try typing this code (+15 XP)</button></div>`;
     }
@@ -3095,11 +3305,20 @@ function render(){
   h+=adSlot('before-nav');
 
   const canProceed=isLessonMastered(current);
+  const hasQuiz=l.quiz&&Array.isArray(l.quiz)&&l.quiz.length>0;
+  const showUnlockHint=!canProceed&&hasQuiz;
   const nextLabel=navPos[current]<navOrder.length-1?t('completeNext')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><polyline points="9 18 15 12 9 6"/></svg>':t('finish')+' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:4px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+  const unlockTitle=(typeof UI_STRINGS.en.unlockCompleteNextTitle!=='undefined')?t('unlockCompleteNextTitle'):'Answer all quiz questions with 80%+ to unlock. Use Retake Quiz to try again.';
+  const unlockTitleAttr=escHtml(unlockTitle).replace(/"/g,'&quot;');
   h+=`<div class="nav-btns">`;
   if(navPos[current]>0) h+=`<button class="btn btn-prev" onclick="goPrev()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polyline points="15 18 9 12 15 6"/></svg>${t('previous')}</button>`;
-  h+=`<button class="btn btn-next" onclick="markAndNext()" ${canProceed?'':'disabled title="Complete quiz mastery first" style="opacity:0.6;cursor:not-allowed"'}>${nextLabel}</button>`;
+  h+=`<button class="btn btn-next" onclick="markAndNext()" ${canProceed?'':'aria-disabled="true" title="'+unlockTitleAttr+'" style="opacity:0.6;cursor:not-allowed"'}>${nextLabel}</button>`;
   h+=`</div>`;
+  if(showUnlockHint){
+    const hintRaw=(typeof UI_STRINGS.en.unlockCompleteNextHint!=='undefined')?t('unlockCompleteNextHint'):'To unlock Complete & Next: answer all quiz questions above and score 80% or higher. Got some wrong? Click Retake Quiz above to try again.';
+    const hintHtml=escHtml(hintRaw).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    h+=`<div class="nav-unlock-hint" role="status" aria-live="polite"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>${hintHtml}</span></div>`;
+  }
   h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span><span><span class="kbd">N</span> ${t('myNotes')}</span><span><span class="kbd">T</span> Theme</span><span><span class="kbd">?</span> Help</span></div>`;
 
   document.getElementById('content').innerHTML=h;
@@ -3151,7 +3370,8 @@ function goPrev(){
 }
 function markAndNext(){
   if(!isLessonMastered(current)){
-    showToast('Master this lesson quiz first (80%+) to continue.');
+    const toastMsg=(typeof UI_STRINGS.en.unlockCompleteNextTitle!=='undefined')?t('unlockCompleteNextTitle'):'Answer all quiz questions with 80%+ to unlock. Use Retake Quiz to try again.';
+    showToast(toastMsg,'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>');
     return;
   }
   const wasNew=!completed.has(current);
@@ -3218,11 +3438,29 @@ function resetPlayground(){
 function toggleLangDropdown(){
   document.getElementById('lang-dropdown').classList.toggle('open');
 }
+function renderLanguageOptions(){
+  const dropdown=document.getElementById('lang-dropdown');
+  if(!dropdown) return;
+  dropdown.innerHTML=Object.entries(LANGUAGE_OPTIONS).map(([code,label])=>{
+    return '<button class="lang-option notranslate" type="button" data-lang="'+code+'" translate="no">'+label+'</button>';
+  }).join('');
+}
+function initLanguageSelector(){
+  const dropdown=document.getElementById('lang-dropdown');
+  if(!dropdown) return;
+  if(!dropdown.children.length) renderLanguageOptions();
+  dropdown.addEventListener('click',(e)=>{
+    const btn=e.target.closest('.lang-option');
+    if(!btn) return;
+    setLang(btn.dataset.lang||'en');
+  });
+}
 let gtLoaded=false;
 function loadGoogleTranslate(cb){
   if(gtLoaded){if(cb)cb();return;}
+  const includeLangs=SUPPORTED_LANGS.filter((code)=>code!=='en').join(',');
   window.googleTranslateElementInit=function(){
-    new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'bn',autoDisplay:false},'google_translate_element');
+    new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:includeLangs,autoDisplay:false},'google_translate_element');
     gtLoaded=true;
     if(cb)setTimeout(cb,500);
   };
@@ -3230,42 +3468,79 @@ function loadGoogleTranslate(cb){
   s.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
   document.body.appendChild(s);
 }
-function triggerGT(lang){
+
+function setGoogTransCookie(lang){
+  const target=lang==='en'?'en':lang;
+  const value='/en/'+target;
+  const host=location.hostname;
+  const parts=host.split('.');
+  const domains=[host,'.'+host];
+  if(parts.length>1) domains.push('.'+parts.slice(-2).join('.'));
+  [...new Set(domains)].forEach((domain)=>{
+    document.cookie='googtrans='+value+';path=/;domain='+domain;
+  });
+  document.cookie='googtrans='+value+';path=/';
+}
+
+function triggerGT(lang,attempt){
   const sel=document.querySelector('.goog-te-combo');
-  if(sel){
-    if(lang==='en'){sel.value='';sel.dispatchEvent(new Event('change'));}
-    else{sel.value=lang;sel.dispatchEvent(new Event('change'));}
+  const tries=typeof attempt==='number'?attempt:0;
+  const target=lang==='en'?'':lang;
+  if(!sel){
+    if(tries<20) setTimeout(()=>triggerGT(lang,tries+1),150);
+    return false;
   }
+  const hasTarget=[...sel.options].some((opt)=>opt.value===target);
+  if(!hasTarget){
+    if(tries<10) setTimeout(()=>triggerGT(lang,tries+1),150);
+    return false;
+  }
+  sel.value=target;
+  sel.dispatchEvent(new Event('change'));
+  return true;
+}
+
+function syncGoogleTranslate(lang){
+  setGoogTransCookie(lang);
+  if(lang==='en'){
+    triggerGT('en');
+    setTimeout(()=>triggerGT('en'),250);
+    return;
+  }
+  const run=()=>{
+    setGoogTransCookie(lang);
+    triggerGT(lang);
+    setTimeout(()=>triggerGT(lang),250);
+  };
+  if(!gtLoaded) loadGoogleTranslate(run);
+  else run();
 }
 function setLang(lang){
   lang=normalizeLang(lang);
   if(window.__logEvent)window.__logEvent('language_change',{language:lang});
   currentLang=lang;
-  // RTL support for Arabic
-  const isRtl=false;
+  const isRtl=RTL_LANGS.includes(lang);
   document.documentElement.dir=isRtl?'rtl':'ltr';
   document.documentElement.lang=lang;
-  document.getElementById('current-lang').textContent=LANG_NAMES[lang]||'EN';
+  document.getElementById('current-lang').textContent=LANG_NAMES[lang]||((lang.split('-')[0].slice(0,2)||'en').toUpperCase());
   document.getElementById('lang-dropdown').classList.remove('open');
   document.querySelectorAll('.lang-option').forEach(el=>{
-    el.classList.toggle('active',el.textContent===LANG_FLAGS[lang]);
+    el.classList.toggle('active',el.dataset.lang===lang);
   });
-  lockTechnicalTerms(document.body);
   saveState();render();
   if(lang==='en'){
-    // Restore original — remove Google Translate and allow notranslate
-    document.documentElement.classList.add('notranslate');
-    document.documentElement.setAttribute('translate','no');
-    triggerGT('en');
+    // Restore original without requiring reload
+    syncGoogleTranslate('en');
+    setTimeout(()=>{
+      document.documentElement.classList.add('notranslate');
+      document.documentElement.setAttribute('translate','no');
+    },120);
   }else{
     // Remove notranslate so Google Translate can work on content
     document.documentElement.classList.remove('notranslate');
     document.documentElement.removeAttribute('translate');
-    if(!gtLoaded){
-      loadGoogleTranslate(()=>triggerGT(lang));
-    }else{
-      setTimeout(()=>triggerGT(lang),200);
-    }
+    lockTechnicalTerms(document.body);
+    syncGoogleTranslate(lang);
   }
 }
 document.addEventListener('click',function(e){
@@ -3276,14 +3551,34 @@ document.addEventListener('click',function(e){
 });
 
 // AI Help Links — single "Ask AI" button per section
-function aiLinks(topic,context){
+function aiLinks(topic,context,extraContent){
   const safeTopic=escHtml(topic).replace(/'/g,"\\'");
   const safeCtx=escHtml(context).replace(/'/g,"\\'");
-  return '<button class="ask-ai-btn" onclick="event.stopPropagation();askAi(\''+safeTopic+'\',\''+safeCtx+'\')" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button>';
+  const safeExtra=extraContent?escHtml(extraContent).replace(/'/g,"\\'"):'';
+  return '<button class="ask-ai-btn" onclick="event.stopPropagation();askAi(\''+safeTopic+'\',\''+safeCtx+'\',\''+safeExtra+'\')" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button>';
+}
+function quizAiButton(topic,question,opts){
+  const q=normalizeLessonText(question);
+  const optionText=Array.isArray(opts)&&opts.length?opts.map((opt,idx)=>(idx+1)+'. '+normalizeLessonText(opt)).join(' | '):'';
+  const context='Quiz deep insight: '+q+(optionText?' Options: '+optionText:'')+'. Explain why the correct answer is right and why other options are wrong, in simple beginner terms.';
+  return aiLinks(topic,context);
 }
 
-// ELI5 toggle
-function toggleEli5(){if(window.__logEvent)window.__logEvent('eli5_toggle',{mode:!eli5Mode?'on':'off',lesson_id:L[current].id});eli5Mode=!eli5Mode;render();}
+// ELI5 toggle — update only button and ELI5 box to avoid full re-render blink
+function toggleEli5(){
+  if(window.__logEvent)window.__logEvent('eli5_toggle',{mode:!eli5Mode?'on':'off',lesson_id:L[current].id});
+  eli5Mode=!eli5Mode;
+  const btn=document.getElementById('eli5-toggle-btn');
+  const container=document.getElementById('eli5-box-container');
+  const l=L[current];
+  const hasLessonEli5=getLessonEli5Items(l).length>0;
+  if(btn){btn.classList.toggle('active',eli5Mode);}
+  if(container&&l&&hasLessonEli5){
+    container.style.display=eli5Mode?'block':'none';
+    if(eli5Mode)container.innerHTML=renderLessonEli5Html(l);
+    else container.innerHTML='';
+  }
+}
 
 // Walkthrough toggle
 function toggleWalkthrough(){if(window.__logEvent)window.__logEvent('walkthrough_toggle',{mode:!walkthroughMode?'on':'off',lesson_id:L[current].id});walkthroughMode=!walkthroughMode;render();}
@@ -3797,9 +4092,17 @@ function performSearch(query){
     if(l.funFact&&l.funFact.toLowerCase().includes(q)){
       results.push({lessonIdx:i,id:l.id,title:l.title,context:extractContext(l.funFact,q),type:'Fun Fact',score:4});
     }
-    // Search eli5
-    if(l.eli5&&l.eli5.toLowerCase().includes(q)){
-      results.push({lessonIdx:i,id:l.id,title:l.title,context:extractContext(l.eli5,q),type:'ELI5',score:4});
+    // Search ELI5 (point-level first, all sourced from lesson JSON)
+    if(Array.isArray(l.points)){
+      for(let pi=0;pi<l.points.length;pi++){
+        const point=l.points[pi];
+        const pointEli5=getPointEli5(l,point,pi);
+        if(pointEli5&&pointEli5.toLowerCase().includes(q)){
+          const pointLabel=point&&point.t?point.t+': ':'';
+          results.push({lessonIdx:i,id:l.id,title:l.title,context:extractContext(pointLabel+pointEli5,q),type:'ELI5',score:4});
+          break;
+        }
+      }
     }
     // Search challenge
     if(l.challenge&&l.challenge.toLowerCase().includes(q)){
@@ -3918,11 +4221,11 @@ function renderReviewMode(){
     due.forEach((item,idx)=>{
       const cardKey='review-card-'+idx;
       const lessonTitle=L[item.lessonIdx].title;
+      const rsh=shuffleOpts(item.q.opts,item.q.ans,item.lessonIdx*100+item.quizIdx+7777);
       h+='<div class="review-card" id="'+cardKey+'">';
       h+='<div class="review-card-header"><span class="review-card-lesson">Lesson '+L[item.lessonIdx].id+': '+lessonTitle+'</span><span class="review-card-progress">'+(idx+1)+'/'+due.length+'</span></div>';
-      h+='<div class="review-question">'+item.q.q+'</div>';
+      h+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;margin-bottom:0.8rem"><div class="review-question" style="margin-bottom:0;flex:1">'+item.q.q+'</div>'+quizAiButton(lessonTitle,item.q.q,rsh.opts)+'</div>';
       h+='<div class="review-opts">';
-      const rsh=shuffleOpts(item.q.opts,item.q.ans,item.lessonIdx*100+item.quizIdx+7777);
       rsh.opts.forEach((opt,oi)=>{
         h+='<button class="review-opt" id="rev-opt-'+idx+'-'+oi+'" onclick="answerReview('+idx+','+oi+','+rsh.ans+',\''+item.key+'\')">'+opt+'</button>';
       });
@@ -4004,9 +4307,9 @@ function renderMixedQuiz(){
     h+='<button class="btn btn-next" onclick="switchView(\'lesson\')">Back to Lessons</button></div></div>';
   }else{
     const q=mq.questions[mq.current];
-    h+='<div class="review-card"><div class="review-card-header"><span class="review-card-lesson">From: '+q.lessonTitle+'</span><span class="review-card-progress">'+(mq.current+1)+'/'+mq.questions.length+'</span></div>';
-    h+='<div class="review-question">'+q.q.q+'</div><div class="review-opts">';
     const msh=shuffleOpts(q.q.opts,q.q.ans,q.lessonIdx*100+q.quizIdx+5555);
+    h+='<div class="review-card"><div class="review-card-header"><span class="review-card-lesson">From: '+q.lessonTitle+'</span><span class="review-card-progress">'+(mq.current+1)+'/'+mq.questions.length+'</span></div>';
+    h+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;margin-bottom:0.8rem"><div class="review-question" style="margin-bottom:0;flex:1">'+q.q.q+'</div>'+quizAiButton(q.lessonTitle,q.q.q,msh.opts)+'</div><div class="review-opts">';
     msh.opts.forEach((opt,oi)=>{
       h+='<button class="review-opt" onclick="answerMixedQuiz('+oi+','+msh.ans+')">'+opt+'</button>';
     });
@@ -4140,8 +4443,17 @@ window.showFlashcardPopup=function(lessonIdx,pointIdx){
   overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
   const safeTitle=l.title.replace(/'/g,"\\'");
   const safePt=p.t.replace(/'/g,"\\'");
-  const eli5=l.eli5?`<details class="flashcard-popup-eli5"><summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Explain Like I'm 5</summary><div class="eli5-content">${l.eli5}</div></details>`:'';
-  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-meta"><span class="flashcard-popup-lesson">${l.title}</span><span>Point ${pointIdx+1} of ${l.points.length}</span></div><div class="flashcard-popup-title">${p.t}</div><div class="flashcard-popup-body">${p.d}</div>${eli5}<div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Easy</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hard</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
+  const pointEli5=getPointEli5(l,p,pointIdx);
+  const eli5=pointEli5?`<details class="flashcard-popup-eli5"><summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('eli5')}</summary><div class="eli5-content">${escHtml(pointEli5)}</div></details>`:'';
+  const bodyFormatted=formatPointContentForDisplay(p.d);
+  const titleFormatted=formatPointContentForDisplay(p.t);
+  // Build extra learning sections
+  let extraSections='';
+  // Only show per-point code example (no lesson-level fallback — it's irrelevant per-card)
+  if(p.code){
+    extraSections+=`<details class="flashcard-popup-extra" open><summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Example</summary><div class="extra-content"><pre>${escHtml(p.code)}</pre></div></details>`;
+  }
+  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-meta"><span class="flashcard-popup-lesson">${escHtml(l.title)}</span><span>Point ${pointIdx+1} of ${l.points.length}</span></div><div class="flashcard-popup-title">${titleFormatted}</div><div class="flashcard-popup-body">${bodyFormatted}</div>${eli5}${extraSections}<div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Easy</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hard</button><button class="flashcard-diff-btn done" onclick="if(window.__logEvent)window.__logEvent('flashcard_popup_done',{lesson_id:${l.id},point_index:${pointIdx}});this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg> ${t('done')}</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
   document.body.appendChild(overlay);
 }
 
@@ -4338,7 +4650,76 @@ function checkQuiz(btn,picked,ans,quizIdx){
     }
   }
   saveState();
-  render();
+  updateQuizUIInPlace(quizIdx, picked, ans, isCorrect, isFinal, attempts);
+}
+
+function updateQuizUIInPlace(quizIdx,picked,ans,isCorrect,isFinal,attempts){
+  const box=document.getElementById('quiz-'+quizIdx);
+  if(!box) return;
+  const feedbackEl=document.getElementById('quiz-feedback-'+quizIdx);
+  const confidenceEl=document.getElementById('quiz-confidence-'+quizIdx);
+  if(confidenceEl) confidenceEl.style.display='none';
+  const allBtns=box.querySelectorAll('.quiz-btn');
+  allBtns.forEach((b,i)=>{
+    const idx=parseInt(b.id.replace('quiz-btn-'+quizIdx+'-',''),10);
+    if(idx===picked) b.classList.add(isCorrect?'correct':'wrong');
+    if(idx===ans&&!isCorrect) b.classList.add('correct');
+    if(isFinal) b.disabled=true;
+  });
+  if(feedbackEl){
+    feedbackEl.style.display='block';
+    feedbackEl.style.marginTop='0.6rem';
+    feedbackEl.style.fontSize='var(--text-sm)';
+    if(isCorrect){
+      feedbackEl.style.color='var(--quiz-correct-text)';
+      const explanation=getQuizExplanation(current,quizIdx,ans,ans,true);
+      const l=L[current];
+      const relatedPoint=l.points&&l.points[quizIdx%l.points.length]?l.points[quizIdx%l.points.length]:null;
+      let analogyHtml='';
+      if(l.analogy||relatedPoint){
+        analogyHtml='<div class="quiz-analogy-box">';
+        if(l.analogy) analogyHtml+='<div class="quiz-analogy-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg><span><strong>Real-Life Analogy:</strong> '+escHtml(l.analogy)+'</span></div>';
+        if(relatedPoint) analogyHtml+='<div class="quiz-analogy-concept"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span><strong>Key Concept — '+escHtml(relatedPoint.t)+':</strong> '+escHtml(relatedPoint.d)+'</span></div>';
+        analogyHtml+='</div>';
+      }
+      feedbackEl.innerHTML='<span style="color:var(--quiz-correct-text)">Correct on '+(attempts===1?'first try':'attempt '+attempts)+'. '+escHtml(explanation)+'</span>'+analogyHtml;
+    }else if(isFinal){
+      feedbackEl.style.color='var(--quiz-wrong-text)';
+      feedbackEl.textContent='Final attempt used. '+getQuizExplanation(current,quizIdx,-1,ans,false);
+    }else{
+      feedbackEl.style.color='var(--warning)';
+      const remaining=Math.max(0,MAX_QUIZ_ATTEMPTS-attempts);
+      feedbackEl.textContent='Not correct yet. '+remaining+' attempt'+(remaining===1?'':'s')+' left.';
+    }
+  }
+  const l=L[current];
+  if(!l.quiz||!Array.isArray(l.quiz)) return;
+  const stats=getLessonQuizStats(current);
+  if(stats.answered!==stats.total) return;
+  const lastBox=document.getElementById('quiz-'+(l.quiz.length-1));
+  if(!lastBox||document.getElementById('quiz-score')) return;
+  const mastered=stats.pct>=MASTERY_THRESHOLD;
+  const masteryPct=Math.round(MASTERY_THRESHOLD*100);
+  const scoreHtml='<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>You got '+stats.correct+'/'+stats.total+' correct. Mastery target: '+masteryPct+'%.</div>';
+  lastBox.insertAdjacentHTML('afterend',scoreHtml);
+  if(!mastered){
+    const retakeHtml='<div style="margin-top:0.6rem;text-align:center"><button class="btn btn-prev" onclick="resetLessonQuiz('+current+')">Retake Quiz</button></div>';
+    document.getElementById('quiz-score').insertAdjacentHTML('afterend',retakeHtml);
+  }else{
+    const masteryHtml='<div style="margin-top:0.6rem;color:var(--quiz-correct-text);text-align:center;font-size:var(--text-sm);font-weight:600">Mastery unlocked. You can continue.</div>';
+    document.getElementById('quiz-score').insertAdjacentHTML('afterend',masteryHtml);
+    // Unlock the Complete & Next button in-place
+    const nextBtn=document.querySelector('.btn-next');
+    if(nextBtn&&nextBtn.getAttribute('aria-disabled')==='true'){
+      nextBtn.removeAttribute('aria-disabled');
+      nextBtn.removeAttribute('title');
+      nextBtn.style.opacity='';
+      nextBtn.style.cursor='';
+    }
+    // Hide the unlock hint
+    const unlockHint=document.querySelector('.nav-unlock-hint');
+    if(unlockHint) unlockHint.style.display='none';
+  }
 }
 
 function resetLessonQuiz(lessonIdx){
@@ -4373,7 +4754,8 @@ if(urlLangParam){
 }
 trackSessionStart();
 initTheme();
-document.documentElement.dir='ltr';
+initLanguageSelector();
+document.documentElement.dir=RTL_LANGS.includes(currentLang)?'rtl':'ltr';
 document.documentElement.lang=currentLang;
 // Set user properties for analytics segmentation
 setTimeout(()=>{
@@ -4387,12 +4769,10 @@ setTimeout(()=>{
   }
 },2000);
 // Init language indicator
-if(currentLang!=='en'){
-  document.getElementById('current-lang').textContent=LANG_NAMES[currentLang]||'EN';
-  document.querySelectorAll('.lang-option').forEach(el=>{
-    el.classList.toggle('active',el.textContent===LANG_FLAGS[currentLang]);
-  });
-}
+document.getElementById('current-lang').textContent=LANG_NAMES[currentLang]||((currentLang.split('-')[0].slice(0,2)||'en').toUpperCase());
+document.querySelectorAll('.lang-option').forEach(el=>{
+  el.classList.toggle('active',el.dataset.lang===currentLang);
+});
 render();
 lockTechnicalTerms(document.body);
 startLessonHeartbeat();
@@ -4404,7 +4784,7 @@ if(currentLang!=='en'){
   document.documentElement.classList.remove('notranslate');
   document.documentElement.removeAttribute('translate');
   lockTechnicalTerms(document.body);
-  loadGoogleTranslate(()=>triggerGT(currentLang));
+  syncGoogleTranslate(currentLang);
 }
 
 // Apply config to header if available
@@ -4439,9 +4819,10 @@ function switchView(view){
   if(view==='lesson') ensureLessonAttempt('switch_view');
 }
 // AI help for any topic (generic Ask AI button)
-function askAi(topic,context){
+function askAi(topic,context,extraContent){
   if(window.__logEvent)window.__logEvent('ask_ai',{topic,context});
-  const prompt='## Context\nI am learning programming as a complete beginner.\n\n## Topic\n**'+topic+'** — specifically: **'+context+'**\n\n## What I Need\nPlease explain this concept clearly. Structure your response as:\n\n1. **One-Line Definition** — What is it in one simple sentence?\n2. **Real-World Analogy** — Explain it using an everyday example (cooking, school, toys, games — something anyone can relate to)\n3. **Code Example** — A tiny, working code snippet with a comment on every line explaining what it does\n4. **Common Mistake** — One specific mistake beginners make with this concept, and how to avoid it\n5. **Memory Hook** — A fun fact, mnemonic, or trick to help me remember this forever\n\n## Rules\n- Use simple language (no jargon without explanation)\n- Be encouraging and friendly\n- Keep it concise but complete\n- If code is involved, use TypeScript/JavaScript';
+  const extraSection=extraContent?'\n\n## Reference Content\nHere is the content I am studying:\n> '+extraContent+'\n\nPlease use this as a starting point — expand on it, explain it deeper, and connect it to the topic above.':'';
+  const prompt='## Context\nI am learning programming as a complete beginner.\n\n## Topic\n**'+topic+'** — specifically: **'+context+'**'+extraSection+'\n\n## What I Need\nPlease explain this concept clearly. Structure your response as:\n\n1. **One-Line Definition** — What is it in one simple sentence?\n2. **Real-World Analogy** — Explain it using an everyday example (cooking, school, toys, games — something anyone can relate to)\n3. **Code Example** — A tiny, working code snippet with a comment on every line explaining what it does\n4. **Common Mistake** — One specific mistake beginners make with this concept, and how to avoid it\n5. **Memory Hook** — A fun fact, mnemonic, or trick to help me remember this forever\n6. **More Fun Facts** — Share 2-3 additional surprising or interesting fun facts related to this topic that will make learning memorable\n\n## Rules\n- Use simple language (no jargon without explanation)\n- Be encouraging and friendly\n- Keep it concise but complete\n- If code is involved, use TypeScript/JavaScript';
   window._aiJudgePrompt=prompt;
   const ytQ=encodeURIComponent(topic+' '+context+' explained simply for beginners');
   const tools=[

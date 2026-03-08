@@ -165,7 +165,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
 .lang-selector { position:relative; }
 .lang-btn { display:flex; align-items:center; justify-content:center; gap:0.35rem; border:none; background:transparent; color:var(--text-muted); font-size:var(--text-sm); font-weight:600; cursor:pointer; padding:0.25rem 0.4rem; font-family:var(--font); }
 .lang-btn:hover { color:var(--text); }
-.lang-dropdown { position:absolute; top:calc(100% + 0.3rem); right:0; background:var(--surface); border:1px solid var(--border); border-radius:8px; min-width:130px; display:none; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.22); }
+.lang-dropdown { position:absolute; top:calc(100% + 0.3rem); right:0; background:var(--surface); border:1px solid var(--border); border-radius:8px; min-width:190px; max-height:300px; display:none; overflow:auto; box-shadow:0 8px 24px rgba(0,0,0,0.22); }
 .lang-dropdown.open { display:block; }
 .lang-option { width:100%; border:none; background:transparent; color:var(--text); font-family:var(--font); font-size:var(--text-sm); text-align:left; padding:0.55rem 0.8rem; cursor:pointer; }
 .lang-option:hover { background:var(--bg); }
@@ -244,14 +244,11 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
     <nav class="site-header__nav">
       <a id="nav-home" href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Home</a>
       <a id="nav-apps" href="https://apps.teamzlab.com/" target="_blank" rel="noopener noreferrer" class="nav-link">Our Apps</a>
-      <div class="lang-selector">
-        <button class="lang-btn" id="lang-toggle" type="button" aria-label="Change language" title="Change language">
-          <span id="current-lang">EN</span>
+      <div class="lang-selector notranslate" translate="no">
+        <button class="lang-btn notranslate" id="lang-toggle" type="button" aria-label="Change language" title="Change language" translate="no">
+          <span id="current-lang" class="notranslate" translate="no">EN</span>
         </button>
-        <div class="lang-dropdown" id="lang-dropdown">
-          <button class="lang-option active" type="button" data-lang="en">English</button>
-          <button class="lang-option" type="button" data-lang="bn">বাংলা</button>
-        </div>
+        <div class="lang-dropdown notranslate" id="lang-dropdown" translate="no"></div>
       </div>
       <a id="nav-hire" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" class="btn--hire">Hire Teamz Lab</a>
     </nav>
@@ -280,7 +277,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
         <div class="stat"><span class="stat-num">49</span><span class="stat-label" id="stat-lessons">Lessons</span></div>
         <div class="stat"><span class="stat-num">245</span><span class="stat-label" id="stat-quizzes">Quizzes</span></div>
         <div class="stat"><span class="stat-num">419</span><span class="stat-label" id="stat-points">Teaching Points</span></div>
-        <div class="stat"><span class="stat-num">8</span><span class="stat-label" id="stat-languages">Languages</span></div>
+        <div class="stat"><span class="stat-num" id="stat-languages-num">100+</span><span class="stat-label" id="stat-languages">Languages</span></div>
       </div>
       <div class="tags">
         <span class="tag" id="tag-no-signup">No Signup</span>
@@ -408,10 +405,120 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
     <p id="footer-copyright"></p>
   </footer>
 </main>
+<div id="google_translate_element" style="display:none"></div>
 <script>
 (function(){
   const LANG_KEY='teamz_learning_lang';
-  const SUPPORTED_LANGS=['en','bn'];
+  const LANGUAGE_OPTIONS={
+    en:'English',
+    bn:'বাংলা',
+    hi:'हिन्दी',
+    ur:'اردو',
+    ar:'العربية',
+    es:'Español',
+    fr:'Français',
+    de:'Deutsch',
+    pt:'Português',
+    ru:'Русский',
+    'zh-CN':'中文(简体)',
+    'zh-TW':'中文(繁體)',
+    ja:'日本語',
+    ko:'한국어',
+    id:'Bahasa Indonesia',
+    ms:'Bahasa Melayu',
+    vi:'Tiếng Việt',
+    th:'ไทย',
+    tr:'Türkçe',
+    it:'Italiano',
+    nl:'Nederlands',
+    pl:'Polski',
+    uk:'Українська',
+    ro:'Română',
+    cs:'Čeština',
+    sv:'Svenska',
+    no:'Norsk',
+    da:'Dansk',
+    fi:'Suomi',
+    el:'Ελληνικά',
+    he:'עברית',
+    fa:'فارسی',
+    ps:'پښتو',
+    sw:'Kiswahili',
+    am:'አማርኛ',
+    ha:'Hausa',
+    yo:'Yorùbá',
+    ig:'Igbo',
+    zu:'isiZulu',
+    xh:'isiXhosa',
+    st:'Sesotho',
+    sn:'chiShona',
+    so:'Soomaali',
+    af:'Afrikaans',
+    sq:'Shqip',
+    sr:'Српски',
+    hr:'Hrvatski',
+    sk:'Slovenčina',
+    sl:'Slovenščina',
+    bg:'Български',
+    hu:'Magyar',
+    lt:'Lietuvių',
+    lv:'Latviešu',
+    et:'Eesti',
+    ga:'Gaeilge',
+    cy:'Cymraeg',
+    mt:'Malti',
+    is:'Íslenska',
+    mk:'Македонски',
+    ka:'ქართული',
+    hy:'Հայերեն',
+    az:'Azərbaycanca',
+    kk:'Қазақша',
+    uz:'Oʻzbekcha',
+    ky:'Кыргызча',
+    tg:'Тоҷикӣ',
+    mn:'Монгол',
+    ne:'नेपाली',
+    si:'සිංහල',
+    ta:'தமிழ்',
+    te:'తెలుగు',
+    kn:'ಕನ್ನಡ',
+    ml:'മലയാളം',
+    mr:'मराठी',
+    gu:'ગુજરાતી',
+    pa:'ਪੰਜਾਬੀ',
+    my:'မြန်မာ',
+    km:'ខ្មែរ',
+    lo:'ລາວ',
+    ceb:'Cebuano',
+    tl:'Filipino',
+    jw:'Javanese',
+    su:'Sundanese',
+    eu:'Euskara',
+    ca:'Català',
+    gl:'Galego',
+    co:'Corsu',
+    lb:'Lëtzebuergesch',
+    la:'Latina',
+    gd:'Gàidhlig',
+    yi:'ייִדיש',
+    ht:'Kreyòl Ayisyen',
+    sm:'Gagana Samoa',
+    mi:'Māori',
+    haw:'ʻŌlelo Hawaiʻi',
+    ny:'Chichewa',
+    mg:'Malagasy',
+    bs:'Bosanski',
+    be:'Беларуская',
+    ku:'Kurdî',
+    sd:'سنڌي',
+    fy:'Frysk',
+    eo:'Esperanto',
+    hmn:'Hmong'
+  };
+  const SUPPORTED_LANGS=Object.keys(LANGUAGE_OPTIONS);
+  const MANUAL_LANGS=['en'];
+  const RTL_LANGS=['ar','he','fa','ur','ps','sd','yi','ku'];
+  const LANG_SHORT=Object.fromEntries(SUPPORTED_LANGS.map((code)=>[code,(code.split('-')[0].slice(0,2)||code).toUpperCase()]));
   const SITE_URL='https://learn.teamzlab.com';
   const STRINGS={
     en:{
@@ -555,6 +662,128 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
       shareWhatsAppText:'Teamz Lab-এর free interactive coding tutorials দেখুন! TypeScript, React, NestJS শিখুন quizzes এবং gamified lessons দিয়ে 🔥'
     }
   };
+  let gtLoaded=false;
+  const TECH_TERMS=[
+    'TypeScript','JavaScript','NestJS','React','Node.js','MongoDB','Docker','Prisma','Redis','JWT','REST API','REST APIs',
+    'API','APIs','HTTP','HTTPS','JSON','URL','DNS','CLI','VS Code','npm','npx','Git','GitHub','GitLab','Bitbucket',
+    'HTML','CSS','SCSS','Sass','SQL','NoSQL','WebSocket','WebSockets','DTO','ESLint','Prettier','Husky','Bull',
+    'S3','CI/CD','OAuth','CORS','GraphQL','Firebase','Express','Fastify','TypeORM','Mongoose','PostgreSQL','MySQL',
+    'SQLite','Linux','Windows','macOS','iOS','Android','RxJS','CRUD'
+  ];
+  const TECH_TERM_RE=new RegExp('('+TECH_TERMS.map((v)=>v.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).sort((a,b)=>b.length-a.length).join('|')+')','g');
+
+  function normalizeLang(lang){
+    if(!lang) return 'en';
+    const raw=String(lang).trim();
+    if(SUPPORTED_LANGS.includes(raw)) return raw;
+    const lower=raw.toLowerCase();
+    const matched=SUPPORTED_LANGS.find((code)=>code.toLowerCase()===lower);
+    return matched||'en';
+  }
+
+  function renderLanguageOptions(){
+    const dropdown=document.getElementById('lang-dropdown');
+    if(!dropdown) return;
+    dropdown.innerHTML=Object.entries(LANGUAGE_OPTIONS).map(([code,label])=>{
+      return '<button class="lang-option notranslate" type="button" data-lang="'+code+'" translate="no">'+label+'</button>';
+    }).join('');
+  }
+
+  function lockTechnicalTerms(root){
+    if(!root||typeof document==='undefined') return;
+    const textNodes=[];
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+      acceptNode(node){
+        const value=node&&node.nodeValue;
+        if(!value||!value.trim()) return NodeFilter.FILTER_REJECT;
+        const parent=node.parentElement;
+        if(!parent) return NodeFilter.FILTER_REJECT;
+        if(parent.closest('.notranslate,script,style,code,pre,textarea')) return NodeFilter.FILTER_REJECT;
+        TECH_TERM_RE.lastIndex=0;
+        return TECH_TERM_RE.test(value)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+      }
+    });
+    while(walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach((textNode)=>{
+      const value=textNode.nodeValue||'';
+      TECH_TERM_RE.lastIndex=0;
+      let match;
+      let lastIdx=0;
+      const frag=document.createDocumentFragment();
+      while((match=TECH_TERM_RE.exec(value))!==null){
+        if(match.index>lastIdx) frag.appendChild(document.createTextNode(value.slice(lastIdx,match.index)));
+        const span=document.createElement('span');
+        span.className='notranslate tech-term';
+        span.setAttribute('translate','no');
+        span.textContent=match[0];
+        frag.appendChild(span);
+        lastIdx=match.index+match[0].length;
+      }
+      if(lastIdx===0) return;
+      if(lastIdx<value.length) frag.appendChild(document.createTextNode(value.slice(lastIdx)));
+      if(textNode.parentNode) textNode.parentNode.replaceChild(frag,textNode);
+    });
+  }
+
+  function loadGoogleTranslate(cb){
+    if(gtLoaded){if(cb)cb();return;}
+    const includeLangs=SUPPORTED_LANGS.filter((code)=>code!=='en').join(',');
+    window.googleTranslateElementInit=function(){
+      new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:includeLangs,autoDisplay:false},'google_translate_element');
+      gtLoaded=true;
+      if(cb) setTimeout(cb,500);
+    };
+    const s=document.createElement('script');
+    s.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(s);
+  }
+
+  function setGoogTransCookie(lang){
+    const target=lang==='en'?'en':lang;
+    const value='/en/'+target;
+    const host=location.hostname;
+    const parts=host.split('.');
+    const domains=[host,'.'+host];
+    if(parts.length>1) domains.push('.'+parts.slice(-2).join('.'));
+    [...new Set(domains)].forEach((domain)=>{
+      document.cookie='googtrans='+value+';path=/;domain='+domain;
+    });
+    document.cookie='googtrans='+value+';path=/';
+  }
+
+  function triggerGT(lang,attempt){
+    const sel=document.querySelector('.goog-te-combo');
+    const tries=typeof attempt==='number'?attempt:0;
+    const target=lang==='en'?'':lang;
+    if(!sel){
+      if(tries<20) setTimeout(()=>triggerGT(lang,tries+1),150);
+      return false;
+    }
+    const hasTarget=[...sel.options].some((opt)=>opt.value===target);
+    if(!hasTarget){
+      if(tries<10) setTimeout(()=>triggerGT(lang,tries+1),150);
+      return false;
+    }
+    sel.value=target;
+    sel.dispatchEvent(new Event('change'));
+    return true;
+  }
+
+  function syncGoogleTranslate(lang){
+    setGoogTransCookie(lang);
+    if(lang==='en'){
+      triggerGT('en');
+      setTimeout(()=>triggerGT('en'),250);
+      return;
+    }
+    const run=()=>{
+      setGoogTransCookie(lang);
+      triggerGT(lang);
+      setTimeout(()=>triggerGT(lang),250);
+    };
+    if(!gtLoaded) loadGoogleTranslate(run);
+    else run();
+  }
 
   function setText(id,text){
     const el=document.getElementById(id);
@@ -582,10 +811,12 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
   }
 
   function applyLanguage(lang){
-    const safeLang=SUPPORTED_LANGS.includes(lang)?lang:'en';
-    const s=STRINGS[safeLang];
+    const safeLang=normalizeLang(lang);
+    const s=STRINGS[safeLang]||STRINGS.en;
+    const isManual=MANUAL_LANGS.includes(safeLang);
+    const isRtl=RTL_LANGS.includes(safeLang);
     document.documentElement.lang=safeLang;
-    document.documentElement.dir='ltr';
+    document.documentElement.dir=isRtl?'rtl':'ltr';
     document.title=s.pageTitle;
     setMetaContent('meta-description',s.metaDescription);
     setMetaContent('og-title',s.ogTitle);
@@ -608,6 +839,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
     setText('stat-lessons',s.statLessons);
     setText('stat-quizzes',s.statQuizzes);
     setText('stat-points',s.statPoints);
+    setText('stat-languages-num',String(SUPPORTED_LANGS.length));
     setText('stat-languages',s.statLanguages);
     setText('tag-no-signup',s.tagNoSignup);
     setText('tag-project-based',s.tagProjectBased);
@@ -665,10 +897,22 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
       langToggle.setAttribute('title',s.langToggleTitle);
       langToggle.setAttribute('aria-label',s.langToggleTitle);
     }
-    setText('current-lang',s.langLabel);
+    setText('current-lang',LANG_SHORT[safeLang]||'EN');
     document.querySelectorAll('.lang-option').forEach((btn)=>{
       btn.classList.toggle('active',btn.dataset.lang===safeLang);
     });
+    if(isManual){
+      syncGoogleTranslate('en');
+      setTimeout(()=>{
+        document.documentElement.classList.add('notranslate');
+        document.documentElement.setAttribute('translate','no');
+      },120);
+    }else{
+      document.documentElement.classList.remove('notranslate');
+      document.documentElement.removeAttribute('translate');
+      lockTechnicalTerms(document.body);
+      syncGoogleTranslate(safeLang);
+    }
     localStorage.setItem(LANG_KEY,safeLang);
     window.__homeLang=safeLang;
   }
@@ -677,14 +921,15 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
     const toggle=document.getElementById('lang-toggle');
     const dropdown=document.getElementById('lang-dropdown');
     if(!toggle||!dropdown) return;
+    if(!dropdown.children.length) renderLanguageOptions();
     toggle.addEventListener('click',function(){
       dropdown.classList.toggle('open');
     });
-    document.querySelectorAll('.lang-option').forEach((btn)=>{
-      btn.addEventListener('click',function(){
-        applyLanguage(btn.dataset.lang||'en');
-        dropdown.classList.remove('open');
-      });
+    dropdown.addEventListener('click',function(e){
+      const btn=e.target.closest('.lang-option');
+      if(!btn) return;
+      applyLanguage(btn.dataset.lang||'en');
+      dropdown.classList.remove('open');
     });
     document.addEventListener('click',function(e){
       if(!e.target.closest('.lang-selector')) dropdown.classList.remove('open');
@@ -709,7 +954,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
   initCopyLinkButton();
   const urlLang=new URLSearchParams(location.search).get('lang');
   const storedLang=localStorage.getItem(LANG_KEY);
-  const initialLang=SUPPORTED_LANGS.includes(urlLang)?urlLang:(SUPPORTED_LANGS.includes(storedLang)?storedLang:'en');
+  const initialLang=normalizeLang(urlLang||storedLang||'en');
   applyLanguage(initialLang);
 })();
 </script>
