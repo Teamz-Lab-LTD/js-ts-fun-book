@@ -1,10 +1,10 @@
-// config.js — Flutter & Dart Masterclass Course Configuration
+// config.js — Flutter & Dart Course Configuration
 // The HTML engine reads this config to render everything.
 
 const COURSE_CONFIG = {
   // Course identity
-  title: 'Flutter & Dart Masterclass',
-  subtitle: 'From Zero to Professional Flutter Developer — <strong>~10 min/lesson</strong> — Build Beautiful Apps Free | by Teamz Lab',
+  title: 'Free Flutter Course: Beginner to Professional',
+  subtitle: 'Learn Flutter & Dart by Building Real Apps — <strong>51 Hands-On Lessons</strong> — BLoC, Clean Architecture, CRUD, Firebase & More | Free, No Signup | by Teamz Lab',
   shortTitle: 'Flutter & Dart',
 
   // Organization
@@ -18,9 +18,9 @@ const COURSE_CONFIG = {
   ogImage: 'https://learn.teamzlab.com/og-flutter.png',
 
   // SEO
-  description: 'Free interactive Flutter & Dart course: learn mobile app development by building real apps. {lessonCount} hands-on lessons, quizzes, code examples — from Class 5 student to professional Flutter developer. No signup required.',
-  keywords: 'flutter tutorial for beginners, dart programming course, flutter course free, mobile app development tutorial, cross-platform app development, flutter widgets tutorial, bloc state management, clean architecture flutter, flutter firebase tutorial, learn flutter step by step, flutter for kids, flutter project based course, flutter dart interactive course, build flutter apps free',
-  topics: ['Dart', 'Flutter', 'Widgets', 'State Management', 'BLoC Pattern', 'Clean Architecture', 'GoRouter', 'Dio HTTP', 'Hive Database', 'Firebase Auth', 'GetIt DI', 'REST API', 'JSON Serialization', 'Testing'],
+  description: 'Free interactive Flutter & Dart course with {lessonCount} hands-on lessons. Learn mobile app development from scratch: Dart programming, widgets, BLoC state management, Clean Architecture, CRUD operations, REST APIs with Dio, Hive local storage, Firebase Auth, GoRouter navigation, GetIt dependency injection, and testing. Build real cross-platform apps. No signup required.',
+  keywords: 'flutter course free, flutter tutorial for beginners, learn flutter 2026, dart programming tutorial, flutter app development course, flutter bloc tutorial, clean architecture flutter, flutter firebase tutorial, flutter crud app, flutter rest api tutorial, flutter hive database, flutter gorouter tutorial, flutter getit dependency injection, flutter for beginners free, cross-platform app development course, flutter project based learning, learn dart programming free, flutter state management tutorial, flutter testing tutorial, mobile app development free course, flutter repository pattern',
+  topics: ['Dart', 'Flutter', 'Widgets', 'State Management', 'BLoC Pattern', 'Clean Architecture', 'Repository Pattern', 'CRUD Operations', 'GoRouter', 'Dio HTTP', 'REST API', 'Hive Database', 'Firebase Auth', 'GetIt DI', 'JSON Serialization', 'Error Handling', 'Testing'],
   educationalLevel: 'Absolute Beginner to Professional',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
@@ -35,7 +35,7 @@ const COURSE_CONFIG = {
     'State Management':       [32, 33, 34, 35],
     'Architecture':           [36, 37, 38, 39],
     'Dependency Injection':   [40, 41],
-    'Networking':             [42, 43, 44],
+    'Networking & CRUD':      [42, 43, 44],
     'Local Storage':          [45, 46],
     'Firebase':               [47, 48],
     'Professional Patterns':  [49, 50, 51]
@@ -80,14 +80,14 @@ const COURSE_CONFIG = {
     35: ['safeEmit', 'Equatable', 'Transform', 'Advanced'],
     36: ['Domain', 'Data', 'Presentation', 'Infrastructure'],
     37: ['Entity', 'Use Case', 'Repository', 'Failure'],
-    38: ['DTO', 'DataSource', 'RepoImpl', 'API Call'],
+    38: ['DTO', 'DataSource', 'RepoImpl', 'CRUD'],
     39: ['BLoC', 'Widget', 'Screen', 'View'],
     40: ['Register', 'Resolve', 'Singleton', 'Factory'],
     41: ['@injectable', '@singleton', 'Generate', 'Auto-wire'],
-    42: ['HTTP', 'GET/POST', 'JSON', 'Response'],
+    42: ['Create', 'Read', 'Update', 'Delete'],
     43: ['Dio', 'Interceptors', 'Headers', 'Timeout'],
     44: ['fromJson', 'toJson', 'json_serializable', 'DTO'],
-    45: ['Hive', 'Box', 'Put/Get', 'Persist'],
+    45: ['Hive', 'Box', 'Put/Get', 'CRUD'],
     46: ['Access Token', 'Refresh', 'Expiry', 'Auto-refresh'],
     47: ['Firebase', 'Auth', 'Crashlytics', 'Remote Config'],
     48: ['Google Sign-In', 'Apple Sign-In', 'ID Token', 'Backend'],
@@ -117,10 +117,10 @@ const COURSE_CONFIG = {
 
   // Social sharing
   social: {
-    hashtags: 'Flutter,Dart,MobileApp,LearnToCode,CrossPlatform,FlutterDev,TeamzLab',
-    tweetTemplate: 'Just found this FREE Flutter & Dart Masterclass — {lessonCount} interactive lessons to build beautiful mobile apps! From absolute beginner to pro. Zero signup.'
+    hashtags: 'Flutter,Dart,FlutterDev,MobileApp,LearnFlutter,CrossPlatform,BLoC,CleanArchitecture,LearnToCode,TeamzLab',
+    tweetTemplate: 'Just found this FREE Flutter & Dart course — {lessonCount} interactive lessons covering BLoC, Clean Architecture, Firebase, and more. Build real apps from scratch. No signup needed!'
   },
 
   // Footer
-  footerTagline: 'Learn Flutter, Dart, BLoC, Clean Architecture, GoRouter, Dio, Hive, Firebase, GetIt, Testing & more — build real professional mobile apps.'
+  footerTagline: 'Learn Flutter & Dart from scratch: widgets, BLoC state management, Clean Architecture, Repository Pattern, CRUD apps, REST APIs with Dio, Hive local storage, Firebase Auth, GoRouter, GetIt DI, testing & deployment — build production-ready cross-platform apps for free.'
 };
