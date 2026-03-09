@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OG Image Generator — Teamz Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a2e; font-family: 'Poppins', sans-serif; padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 60px; }
+  h1 { color: #D9FE06; font-size: 24px; margin-bottom: 10px; }
+  p.note { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 30px; }
+
+  /* OG Card — exactly 1200x630 */
+  .og-card {
+    width: 1200px;
+    height: 630px;
+    background: #12151A;
+    border: 2px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+  }
+
+  /* Subtle grid pattern */
+  .og-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(217,254,6,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(217,254,6,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Accent glow */
+  .og-card::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(217,254,6,0.08) 0%, transparent 70%);
+  }
+
+  .og-card * { position: relative; z-index: 1; }
+
+  /* Logo area */
+  .og-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .og-logo-icon {
+    width: 56px;
+    height: 56px;
+    border: 3px solid #D9FE06;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 22px;
+    color: #D9FE06;
+    letter-spacing: -1px;
+  }
+  .og-logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .og-title {
+    font-size: 52px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .og-title .accent { color: #D9FE06; }
+
+  .og-subtitle {
+    font-size: 22px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 400;
+    margin-bottom: 36px;
+    line-height: 1.4;
+  }
+
+  .og-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .og-tag {
+    background: rgba(217,254,6,0.1);
+    border: 1px solid rgba(217,254,6,0.25);
+    color: #D9FE06;
+    padding: 8px 18px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* Bottom bar */
+  .og-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: rgba(217,254,6,0.06);
+    border-top: 1px solid rgba(217,254,6,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+  }
+  .og-url {
+    font-size: 16px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+  }
+  .og-by {
+    font-size: 16px;
+    color: #D9FE06;
+    font-weight: 600;
+  }
+
+  .label {
+    color: #D9FE06;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================ -->
+<!-- 1. GENERIC OG IMAGE — for index.html         -->
+<!--    Save as: og-image.png (1200x630)          -->
+<!-- ============================================ -->
+<div class="label">1. Generic — save as og-image.png</div>
+<div class="og-card" id="og-generic">
+  <div class="og-logo">
+    <div class="og-logo-icon">TL</div>
+    <div class="og-logo-text">Teamz Lab Learning</div>
+  </div>
+  <div class="og-title">
+    Learn to Code <span class="accent">for Free</span>
+  </div>
+  <div class="og-subtitle">
+    Interactive courses with quizzes, code playground & hands-on projects — no signup required
+  </div>
+  <div class="og-tags">
+    <span class="og-tag">Flutter & Dart</span>
+    <span class="og-tag">TypeScript</span>
+    <span class="og-tag">NestJS</span>
+    <span class="og-tag">React</span>
+    <span class="og-tag">Clean Architecture</span>
+    <span class="og-tag">Firebase</span>
+    <span class="og-tag">REST API</span>
+    <span class="og-tag">Free</span>
+  </div>
+  <div class="og-bottom">
+    <span class="og-url">learn.teamzlab.com</span>
+    <span class="og-by">By Teamz Lab LTD</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- 2. FLUTTER COURSE OG IMAGE                   -->
+<!--    Save as: og-flutter.png (1200x630)        -->
+<!-- ============================================ -->
+<div class="label">2. Flutter Course — save as og-flutter.png</div>
+<div class="og-card" id="og-flutter">
+  <div class="og-logo">
+    <div class="og-logo-icon">TL</div>
+    <div class="og-logo-text">Teamz Lab Learning</div>
+  </div>
+  <div class="og-title">
+    Free <span class="accent">Flutter & Dart</span> Course
+  </div>
+  <div class="og-subtitle">
+    51 Hands-On Lessons — BLoC, Clean Architecture, CRUD, Firebase & More
+  </div>
+  <div class="og-tags">
+    <span class="og-tag">Dart</span>
+    <span class="og-tag">Flutter</span>
+    <span class="og-tag">BLoC</span>
+    <span class="og-tag">Clean Architecture</span>
+    <span class="og-tag">CRUD</span>
+    <span class="og-tag">Firebase</span>
+    <span class="og-tag">GoRouter</span>
+    <span class="og-tag">Hive</span>
+    <span class="og-tag">GetIt DI</span>
+    <span class="og-tag">Testing</span>
+  </div>
+  <div class="og-bottom">
+    <span class="og-url">learn.teamzlab.com/?course=flutter-dart-masterclass</span>
+    <span class="og-by">By Teamz Lab LTD</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- 3. JS/TS COURSE OG IMAGE                     -->
+<!--    Save as: og-jsts.png (1200x630)           -->
+<!-- ============================================ -->
+<div class="label">3. JS/TS Course — save as og-jsts.png (optional update)</div>
+<div class="og-card" id="og-jsts">
+  <div class="og-logo">
+    <div class="og-logo-icon">TL</div>
+    <div class="og-logo-text">Teamz Lab Learning</div>
+  </div>
+  <div class="og-title">
+    Free <span class="accent">Full-Stack</span> Playbook
+  </div>
+  <div class="og-subtitle">
+    49 Interactive Lessons — TypeScript, NestJS, React, MongoDB, Docker & More
+  </div>
+  <div class="og-tags">
+    <span class="og-tag">TypeScript</span>
+    <span class="og-tag">NestJS</span>
+    <span class="og-tag">React</span>
+    <span class="og-tag">MongoDB</span>
+    <span class="og-tag">Docker</span>
+    <span class="og-tag">REST API</span>
+    <span class="og-tag">JWT Auth</span>
+    <span class="og-tag">Redis</span>
+    <span class="og-tag">Prisma</span>
+    <span class="og-tag">WebSockets</span>
+  </div>
+  <div class="og-bottom">
+    <span class="og-url">learn.teamzlab.com/?course=js-ts-fun-book</span>
+    <span class="og-by">By Teamz Lab LTD</span>
+  </div>
+</div>
+
+</body>
+</html>

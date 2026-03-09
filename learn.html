@@ -275,9 +275,10 @@ if(['learn.teamzlab.com','teamz-lab-ltd.github.io'].includes(location.hostname))
   --border: rgba(255,255,255,0.15);
   --accent: #D9FE06;
   --accent-hover: #c5e805;
-  --accent-fg: #D9FE06;
+  --accent-fg: #FFFFFF;
   --accent-text: #12151A;
-  --heading: #D9FE06;
+  --heading: #FFFFFF;
+  --brand: #D9FE06;
   --code-bg: #0d0f14;
   --code-text: #e0e0e0;
   --quiz-correct-bg: #1a3a1a;
@@ -286,8 +287,8 @@ if(['learn.teamzlab.com','teamz-lab-ltd.github.io'].includes(location.hostname))
   --quiz-wrong-bg: #3a1a1a;
   --quiz-wrong-border: #f44336;
   --quiz-wrong-text: #f44336;
-  --score-bg: rgba(217,254,6,0.1);
-  --score-border: rgba(217,254,6,0.3);
+  --score-bg: rgba(255,255,255,0.08);
+  --score-border: rgba(255,255,255,0.2);
   --icon-size: 20px;
   /* Typography scale */
   --text-6xl: 96px;
@@ -335,9 +336,13 @@ if(['learn.teamzlab.com','teamz-lab-ltd.github.io'].includes(location.hostname))
   --cert-text: #fff;
   --cert-muted: rgba(255,255,255,0.6);
   --cert-faint: rgba(255,255,255,0.4);
+  --bar-track: rgba(255,255,255,0.1);
+  --badge-bg: #FFFFFF;
+  --badge-text: #12151A;
 }
 
 html[data-theme="light"] {
+  --brand: #12151A;
   --bg: #F4F5F5;
   --surface: #FFFFFF;
   --text: #12151A;
@@ -386,6 +391,9 @@ html[data-theme="light"] {
   --cert-text: #fff;
   --cert-muted: rgba(255,255,255,0.6);
   --cert-faint: rgba(255,255,255,0.4);
+  --bar-track: rgba(18,21,26,0.1);
+  --badge-bg: var(--accent-fg);
+  --badge-text: var(--bg);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -407,8 +415,8 @@ header { padding:2rem; border-bottom:1px solid var(--border); background:var(--s
 .theme-toggle.header-icon-btn { border:none; background:transparent; }
 .theme-toggle.header-icon-btn:hover { border:none; background:transparent; }
 
-.progress-bar { height:8px; background:var(--surface); border-radius:8px; overflow:hidden; margin-top:0.5rem; border:1px solid var(--border); transition:background 0.3s,border-color 0.3s; }
-.progress-fill { height:100%; background:var(--accent); border-radius:8px; transition:width 0.4s; }
+.progress-bar { height:8px; background:var(--bar-track); border-radius:8px; overflow:hidden; margin-top:0.5rem; border:1px solid var(--border); transition:background 0.3s,border-color 0.3s; }
+.progress-fill { height:100%; background:var(--accent-fg); border-radius:8px; transition:width 0.4s; }
 .progress-text { margin-top:0.4rem; font-size:var(--text-sm); line-height:var(--lh); color:var(--text-muted); }
 
 /* App Layout — Sidebar + Content */
@@ -780,9 +788,9 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 
 /* XP & Level System */
 .xp-bar-container { display:flex; align-items:center; gap:0.8rem; margin-top:0.6rem; }
-.xp-level-badge { background:var(--accent); color:var(--accent-text); font-weight:800; font-size:var(--text-sm); padding:0.2rem 0.6rem; border-radius:999px; white-space:nowrap; }
-.xp-bar { flex:1; height:8px; background:var(--bg); border-radius:8px; overflow:hidden; border:1px solid var(--border); }
-.xp-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--quiz-correct-border)); border-radius:8px; transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.xp-level-badge { background:var(--badge-bg); color:var(--badge-text); font-weight:800; font-size:var(--text-sm); padding:0.2rem 0.6rem; border-radius:999px; white-space:nowrap; }
+.xp-bar { flex:1; height:8px; background:var(--bar-track); border-radius:8px; overflow:hidden; border:1px solid var(--border); }
+.xp-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent-fg),var(--quiz-correct-border)); border-radius:8px; transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
 .xp-text { font-size:var(--text-sm); color:var(--text-muted); white-space:nowrap; }
 .xp-popup { position:fixed; top:80px; right:20px; background:var(--surface); border:2px solid var(--accent); border-radius:12px; padding:0.8rem 1.2rem; z-index:9998; animation:popIn 0.4s ease, fadeOut 0.3s ease 1.7s forwards; font-weight:700; color:var(--heading); box-shadow:0 4px 20px rgba(217,254,6,0.2); }
 @keyframes fadeOut { to{opacity:0;transform:translateY(-10px)} }
@@ -810,7 +818,7 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
 .dash-label { font-size:var(--text-md); color:var(--text-muted); }
 .topic-bar { display:flex; align-items:center; gap:0.5rem; margin:0.4rem 0; }
 .topic-bar-label { font-size:var(--text-sm); color:var(--text-muted); min-width:90px; }
-.topic-bar-track { flex:1; height:6px; background:var(--bg); border-radius:6px; overflow:hidden; }
+.topic-bar-track { flex:1; height:6px; background:var(--bar-track); border-radius:6px; overflow:hidden; }
 .topic-bar-fill { height:100%; border-radius:6px; transition:width 0.6s ease; }
 .topic-bar-pct { font-size:var(--text-xs); color:var(--text-muted); min-width:32px; text-align:right; }
 .donut-container { display:flex; justify-content:center; align-items:center; position:relative; }
@@ -1128,8 +1136,8 @@ body { top:0 !important; }
 /* Typing Challenge */
 .typing-challenge { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin:1.5rem 0; }
 .typing-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; font-size:var(--text-md); color:var(--text-muted); }
-.typing-progress { height:6px; background:var(--bg); border-radius:6px; overflow:hidden; margin-bottom:0.8rem; }
-.typing-progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--quiz-correct-border)); border-radius:6px; transition:width 0.3s; }
+.typing-progress { height:6px; background:var(--bar-track); border-radius:6px; overflow:hidden; margin-bottom:0.8rem; }
+.typing-progress-fill { height:100%; background:linear-gradient(90deg,var(--accent-fg),var(--quiz-correct-border)); border-radius:6px; transition:width 0.3s; }
 .typing-area { position:relative; }
 .typing-target { background:var(--code-bg); padding:0.8rem; border-radius:8px; font-family:'Fira Code',monospace; font-size:var(--text-sm); color:var(--text-muted); white-space:pre-wrap; margin-bottom:0.5rem; opacity:0.6; max-height:150px; overflow-y:auto; }
 .typing-input { width:100%; min-height:100px; padding:0.8rem; background:var(--code-bg); border:1px solid var(--border); border-radius:8px; color:var(--code-text); font-family:'Fira Code',monospace; font-size:var(--text-sm); resize:vertical; outline:none; box-sizing:border-box; }
@@ -1553,7 +1561,7 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 <button class="hdr-hamburger" onclick="toggleSidebar()" title="Open chapters" aria-label="Toggle sidebar">
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
 </button>
-<div class="logo"><a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;color:var(--heading);text-decoration:none" aria-label="Teamz Lab"><svg width="32" height="32" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a></div>
+<div class="logo"><a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;color:var(--text);text-decoration:none" aria-label="Teamz Lab"><svg width="32" height="32" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a></div>
 <div class="hdr-txt">
 <h1>Free Full-Stack Playbook</h1>
 <p>From Idea to Deployed App — <strong>~10 min/lesson</strong> — Learn to Build Real Apps Free | by <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" style="color:var(--accent-fg);text-decoration:none;font-weight:700" onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header_subtitle'})">Teamz Lab</a></p>
@@ -1700,9 +1708,9 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
   </div>
   <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.8rem;flex-wrap:wrap">
     <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 110 2h-1.07A7 7 0 0113 22v-1a1 1 0 112 0v.93A5 5 0 0019 17H5a5 5 0 004 4.93V22a1 1 0 112 0v1a7 7 0 01-6.93-6H3a1 1 0 110-2h1a7 7 0 017-7h1V5.73A2 2 0 0112 2z"/></svg> AI Integration</span>
-    <span style="font-size:var(--text-sm);color:var(--text-muted);display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Web & Mobile Apps</span>
-    <span style="font-size:var(--text-sm);color:var(--text-muted);display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> SaaS & Startups</span>
-    <span style="font-size:var(--text-sm);color:var(--text-muted);display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> TypeScript & NestJS Experts</span>
+    <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Web & Mobile Apps</span>
+    <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> SaaS & Startups</span>
+    <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> TypeScript & NestJS Experts</span>
   </div>
 </div>
 <!-- Built by Teamz Lab trust strip -->
