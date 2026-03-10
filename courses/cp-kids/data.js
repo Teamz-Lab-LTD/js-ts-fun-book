@@ -47,25 +47,25 @@ const LESSONS_DATA = [
     ],
     whatIs: "Competitive Programming (CP) is a mind sport where participants solve well-defined programming problems within a time limit. You read a problem, think of a solution, write code, and submit it to an automated judge that instantly tells you if you are right or wrong. It combines logical thinking, math, and coding into one thrilling activity.",
     realWorld: "CP skills are used everywhere in the real world. Search engines like Google use algorithms to find the best results in milliseconds. GPS apps use shortest-path algorithms (a classic CP topic) to find the fastest route to your destination. Video games use optimization to render millions of pixels smoothly. Even social media feeds use sorting and filtering — all things you learn in CP!",
-    code: `#include <bits/stdc++.h>
-using namespace std;
+    code: `#include <bits/stdc++.h>  // Include all standard libraries at once
+using namespace std;       // So we can write cout instead of std::cout
 
 int main() {
     // Your very first CP-style program!
     // It reads a number and prints a greeting.
 
-    int age;
-    cout << "How old are you? ";
-    cin >> age;
+    int age;                // Create a box to hold a whole number
+    cout << "How old are you? ";  // Print a question to the screen
+    cin >> age;             // Read the user's answer into our box
 
-    if (age < 13) {
+    if (age < 13) {         // Check: is the number less than 13?
         cout << "Wow, a young CP champion in the making!" << endl;
-    } else {
+    } else {                // Otherwise (13 or older)
         cout << "Welcome to Competitive Programming!" << endl;
     }
 
-    cout << "Let the adventure begin!" << endl;
-    return 0;
+    cout << "Let the adventure begin!" << endl;  // One last message
+    return 0;               // Tell the computer we are done
 }`,
     funFact: "The youngest gold medalist at the International Olympiad in Informatics (IOI) was just 14 years old! And the top-rated Codeforces user, tourist (Gennady Korotkevich), started competing at age 11. He has won practically every major CP competition in the world — multiple times. So no matter your age, you are never too young (or too old) to start!",
     quiz: [
@@ -221,16 +221,16 @@ int main() {
     ],
     whatIs: "Setting up your coding environment means getting the tools you need to write, compile, and run C++ programs. You can use free online editors (like ideone.com or onlinegdb.com) that work right in your browser, or install a C++ compiler (g++) on your own computer. Either way, within 5 minutes you will be ready to write and run code!",
     realWorld: "Every app on your phone, every website you visit, and every video game you play was written as code and then compiled (translated) into a program. The compiler is one of the most important inventions in computer science. Without compilers, programmers would have to write in binary (just 1s and 0s) — which would be like writing an essay using only dots and dashes!",
-    code: `#include <bits/stdc++.h>
-using namespace std;
+    code: `#include <bits/stdc++.h>  // Include all standard libraries
+using namespace std;       // Lets us use cout and endl directly
 
-int main() {
-    cout << "Hello, World!" << endl;
-    cout << "My name is a CP beginner!" << endl;
+int main() {               // Every C++ program starts here
+    cout << "Hello, World!" << endl;          // Print text to the screen
+    cout << "My name is a CP beginner!" << endl;  // Another line of output
     cout << "I am learning C++ for competitive programming." << endl;
-    cout << "1 + 1 = " << 1 + 1 << endl;
-    cout << "Let us goooo!" << endl;
-    return 0;
+    cout << "1 + 1 = " << 1 + 1 << endl;     // C++ can do math and print the result!
+    cout << "Let us goooo!" << endl;          // endl moves to the next line
+    return 0;              // Tells the computer the program finished successfully
 }`,
     funFact: "The very first 'Hello World' program was written in 1972 by Brian Kernighan while he was writing documentation for the B programming language (the ancestor of C). Since then, literally billions of programmers have started their journey by writing Hello World. You are now part of that incredible tradition!",
     quiz: [
@@ -657,7 +657,7 @@ int main() {
         source: "YouTube"
       }
     ],
-    eli5: "Imagine you have a bunch of labeled boxes in your room. One box is labeled 'Toys' and it holds your toys. Another is labeled 'Books' and holds books. A small one labeled 'Lucky Coin' holds just one coin. Variables are exactly like those boxes — each box has a name (label), a type (what it can hold), and stuff inside (the value). You can open a box, look inside, or swap the stuff out!",
+    eli5: "Imagine you have a bunch of labeled boxes in your room. One box is labeled 'Toys' and it holds your toys. Another is labeled 'Books' and holds books. A small one labeled 'Lucky Coin' holds just one coin. In coding, these labeled boxes work the same way — each box has a name (the label), a rule for what it can hold (only numbers, only words, etc.), and stuff inside (what you stored). You can open a box, look inside, or swap the stuff out!",
     codeWalkthrough: [
       "#include <bits/stdc++.h> and using namespace std; — our standard CP setup. Gives us all the tools we need.",
       "int age = 12; — we create a variable called 'age' of type int (whole number) and store the value 12 in it. The = sign here means 'put this value inside the box.'",
@@ -2696,7 +2696,7 @@ int main() {
         source: "Codeforces"
       }
     ],
-    eli5: "Think of a string like a friendship bracelet made of letter beads. Each bead is one character. You can count the beads (length), look at bead number 3 (indexing), or check if a bead is a vowel. You can even make a new bracelet by changing all the beads to uppercase versions — it is like making the bracelet in ALL CAPS!",
+    eli5: "Think of a string like a friendship bracelet made of letter beads. Each bead is one character. You can count the beads (how long is it?), look at the 3rd bead from the left (which letter is there?), or check if a bead is a vowel. You can even make a new bracelet by changing all the beads to uppercase versions — it is like making the bracelet in ALL CAPS!",
     codeWalkthrough: [
       "We read a single word into string s using cin >>.",
       "s.length() tells us how many characters are in the string.",
@@ -4186,7 +4186,7 @@ int main() {
       { type: "video", title: "Two Pointer Algorithm Explained", url: "https://www.youtube.com/watch?v=On03HWe2tZM", source: "YouTube" },
       { type: "practice", title: "Sum of Two Values", url: "https://cses.fi/problemset/task/1640", source: "CSES" }
     ],
-    eli5: "Think of a number line from 1 to 10. You need to find two numbers that add up to 9. Put one finger on 1 (the smallest) and another finger on 10 (the biggest). 1 + 10 = 11 — too big! Move your right finger to 9. 1 + 9 = 10 — still too big! Move right finger to 8. 1 + 8 = 9 — that is it! If the sum was too small, you would move your left finger right instead. Your two fingers work as a team, and you never have to check every single pair. That is two pointers!",
+    eli5: "Think of a number line from 1 to 10. You need to find two numbers that add up to 9. Put one finger on 1 (the smallest) and another finger on 10 (the biggest). 1 + 10 = 11 — too big! Move your right finger to 9. 1 + 9 = 10 — still too big! Move right finger to 8. 1 + 8 = 9 — that is it! If the sum was too small, you would move your left finger right instead. Your two fingers work as a team, and you never have to check every single pair. That is the two-finger trick!",
     codeWalkthrough: [
       "int left = 0, right = n - 1; — we place our two pointers at opposite ends of the sorted array. left starts at the smallest element, right at the largest.",
       "int sum = arr[left] + arr[right]; — we calculate the sum of the elements at our two pointers. This is the pair we are currently examining.",
@@ -4250,20 +4250,21 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int n, q;
+    int n, q;           // n = number of elements, q = number of queries
     cin >> n >> q;
 
-    // 1-indexed prefix sum (easier formula)
-    vector<long long> arr(n + 1), prefix(n + 1, 0);
+    // 1-indexed prefix sum (easier formula — prefix[0] = 0 avoids edge cases)
+    vector<long long> arr(n + 1), prefix(n + 1, 0);  // prefix[i] will hold sum of arr[1..i]
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
-        prefix[i] = prefix[i - 1] + arr[i];
+        cin >> arr[i];                          // Read each element
+        prefix[i] = prefix[i - 1] + arr[i];    // Running total: add current to previous sum
     }
 
-    // Answer q range sum queries
+    // Answer q range sum queries in O(1) each
     while (q--) {
         int l, r;
         cin >> l >> r;
+        // Sum from l to r = (sum from 1 to r) minus (sum from 1 to l-1)
         long long rangeSum = prefix[r] - prefix[l - 1];
         cout << rangeSum << "\\n";
     }
@@ -5453,7 +5454,7 @@ int main() {
       { type: "article", title: "Time Complexity for Competitive Programming", url: "https://www.geeksforgeeks.org/understanding-time-complexity-simple-examples/", source: "GeeksforGeeks" },
       { type: "practice", title: "Problems Sorted by Difficulty", url: "https://codeforces.com/problemset?order=BY_RATING_ASC", source: "Codeforces" }
     ],
-    eli5: "Imagine you're looking for your friend in a group of people. If there are 10 people, you can check each one quickly. But what if there are a MILLION people? Checking one by one (O(n)) takes a while. Checking every pair (O(n²)) takes FOREVER. But if everyone is sorted by name, you can use a trick like opening a phone book to the middle and narrowing down (O(log n)) — super fast! Time complexity is about choosing the smartest way to find your friend!",
+    eli5: "Imagine you're looking for your friend in a group of people. If there are 10 people, you can check each one quickly. But what if there are a MILLION people? Checking one by one takes a while. Checking every pair takes FOREVER. But if everyone is sorted by name, you can use a trick like opening a phone book to the middle and narrowing down — super fast! Figuring out how fast or slow a way of solving something is — that is what this lesson is all about. Always pick the smartest way to find your friend!",
     codeWalkthrough: [
       "We read an array of n integers — this is the standard CP input pattern.",
       "cout << a[0] — accessing one element is O(1). No matter how big the array, getting one element is instant.",
@@ -5580,7 +5581,7 @@ int main() {
       { type: "practice", title: "CSES Problem Set — 300 Curated Problems", url: "https://cses.fi/problemset/", source: "CSES" },
       { type: "video", title: "Competitive Programming Roadmap", url: "https://www.youtube.com/watch?v=bSdp2WeyuJY", source: "Errichto" }
     ],
-    eli5: "Imagine you just learned to ride a bicycle! At first you couldn't even balance, but now you can ride around the whole neighborhood. This course was your training wheels — and now they're OFF! The road ahead has hills (harder problems), sharp turns (tricky algorithms), and beautiful views (elegant solutions). Sometimes you'll fall, and that's OK — every champion fell many times before winning. Just get back on, keep pedaling, and enjoy the ride. You're a programmer now, and the world is yours to explore!",
+    eli5: "Imagine you just learned to ride a bicycle! At first you couldn't even balance, but now you can ride around the whole neighborhood. This course was your training wheels — and now they're OFF! The road ahead has hills (harder problems), sharp turns (tricky new ideas), and beautiful views (really cool solutions). Sometimes you'll fall, and that's OK — every champion fell many times before winning. Just get back on, keep pedaling, and enjoy the ride. You're a coder now, and the world is yours to explore!",
     codeWalkthrough: [
       "ios_base::sync_with_stdio(false); cin.tie(NULL); — these two lines speed up cin and cout dramatically. Always include them in contest code! They disconnect C++ streams from C streams, removing synchronization overhead.",
       "int t; cin >> t; while (t--) — the standard multiple test case pattern. Read how many test cases, then solve each one in the loop.",
@@ -5991,108 +5992,63 @@ int main() {
     code: `#include <bits/stdc++.h>
 using namespace std;
 
-// ===== BFS — Breadth-First Search =====
+// BFS — visits nodes level by level (closest first)
 void bfs(int start, vector<vector<int>>& adj, int n) {
-    vector<bool> visited(n + 1, false);
-    vector<int> dist(n + 1, -1);
+    vector<int> dist(n + 1, -1);   // -1 means not yet visited
     queue<int> q;
-    
-    visited[start] = true;
-    dist[start] = 0;
+
+    dist[start] = 0;               // Starting node is 0 steps away
     q.push(start);
-    
+
     cout << "BFS order: ";
     while (!q.empty()) {
-        int node = q.front();
+        int node = q.front();      // Take the next node in line
         q.pop();
         cout << node << " ";
-        
-        for (int neighbor : adj[node]) {
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;
-                dist[neighbor] = dist[node] + 1;
-                q.push(neighbor);
+
+        for (int nb : adj[node]) { // Check each neighbor
+            if (dist[nb] == -1) {  // Only visit if not seen before
+                dist[nb] = dist[node] + 1;  // One step farther
+                q.push(nb);
             }
         }
     }
     cout << "\\n";
-    
-    // Print shortest distances from start
-    cout << "Distances from node " << start << ": ";
-    for (int i = 1; i <= n; i++) {
-        cout << i << "=" << dist[i] << " ";
-    }
-    cout << "\\n";
 }
 
-// ===== DFS — Depth-First Search (Recursive) =====
+// DFS — goes as deep as possible before backtracking
 void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited) {
-    visited[node] = true;
+    visited[node] = true;          // Mark this node as seen
     cout << node << " ";
-    
-    for (int neighbor : adj[node]) {
-        if (!visited[neighbor]) {
-            dfs(neighbor, adj, visited);
-        }
-    }
-}
 
-// ===== Count Connected Components =====
-int countComponents(vector<vector<int>>& adj, int n) {
-    vector<bool> visited(n + 1, false);
-    int components = 0;
-    
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i]) {
-            components++;
-            // Run DFS to mark all nodes in this component
-            // Using iterative DFS with stack
-            stack<int> st;
-            st.push(i);
-            visited[i] = true;
-            while (!st.empty()) {
-                int node = st.top();
-                st.pop();
-                for (int neighbor : adj[node]) {
-                    if (!visited[neighbor]) {
-                        visited[neighbor] = true;
-                        st.push(neighbor);
-                    }
-                }
-            }
+    for (int nb : adj[node]) {     // Try each neighbor
+        if (!visited[nb]) {        // If not yet visited
+            dfs(nb, adj, visited); // Go deeper!
         }
     }
-    return components;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
-    // Build a sample graph with 6 nodes
-    int n = 6;
-    vector<vector<int>> adj(n + 1);  // 1-indexed
-    
-    // Add undirected edges
-    // Graph: 1-2, 1-3, 2-4, 3-4, 5-6 (two components!)
-    vector<pair<int,int>> edges = {{1,2}, {1,3}, {2,4}, {3,4}, {5,6}};
+
+    int n = 5;                              // 5 nodes in our graph
+    vector<vector<int>> adj(n + 1);         // Adjacency list (1-indexed)
+
+    // Add undirected edges: 1-2, 1-3, 2-4, 3-4, 4-5
+    vector<pair<int,int>> edges = {{1,2}, {1,3}, {2,4}, {3,4}, {4,5}};
     for (auto [u, v] : edges) {
         adj[u].push_back(v);
-        adj[v].push_back(u);  // Undirected: add both ways!
+        adj[v].push_back(u);                // Both directions for undirected
     }
-    
-    // Run BFS from node 1
-    bfs(1, adj, n);
-    
-    // Run DFS from node 1
+
+    bfs(1, adj, n);                         // BFS from node 1
+
     vector<bool> visited(n + 1, false);
     cout << "DFS order: ";
-    dfs(1, adj, visited);
+    dfs(1, adj, visited);                   // DFS from node 1
     cout << "\\n";
-    
-    // Count connected components
-    cout << "Connected components: " << countComponents(adj, n) << "\\n";
-    
+
     return 0;
 }`,
     funFact: "The famous 'Six Degrees of Separation' theory says that any two people on Earth are connected by at most 6 friendships. Facebook actually tested this on their entire network of over 2 billion users and found the average is just 3.57! This is a graph theory result — social networks form a 'small world' graph where even though there are billions of nodes, the shortest path between any two is surprisingly short. Graph theory literally explains how we are all connected!",
@@ -6216,82 +6172,53 @@ int main() {
     code: `#include <bits/stdc++.h>
 using namespace std;
 
-// BFS — find shortest distances from start node
+// BFS — find shortest distances from a starting node
 void bfs(int start, vector<vector<int>>& adj, int n) {
-    vector<int> dist(n + 1, -1);  // -1 means unvisited
+    vector<int> dist(n + 1, -1);   // -1 means not visited yet
     queue<int> q;
 
-    dist[start] = 0;
-    q.push(start);
+    dist[start] = 0;               // Start node is 0 steps away
+    q.push(start);                 // Add start to the queue
 
     while (!q.empty()) {
-        int node = q.front();
+        int node = q.front();      // Grab the next node to process
         q.pop();
 
-        for (int neighbor : adj[node]) {
-            if (dist[neighbor] == -1) {  // Not visited yet!
-                dist[neighbor] = dist[node] + 1;
-                q.push(neighbor);
+        for (int nb : adj[node]) { // Look at each neighbor
+            if (dist[nb] == -1) {  // If we have not visited it
+                dist[nb] = dist[node] + 1;  // It is one step farther
+                q.push(nb);        // Add it to the queue
             }
         }
     }
 
-    // Print shortest distances
+    // Show shortest distances from start to every node
     for (int i = 1; i <= n; i++) {
-        cout << "Shortest distance to " << i << ": " << dist[i] << "\\n";
+        cout << "Distance to " << i << ": " << dist[i] << "\\n";
     }
-}
-
-// DFS — count connected components
-int countComponents(vector<vector<int>>& adj, int n) {
-    vector<bool> visited(n + 1, false);
-    int components = 0;
-
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i]) {
-            components++;
-            // DFS using a stack
-            stack<int> st;
-            st.push(i);
-            visited[i] = true;
-            while (!st.empty()) {
-                int node = st.top();
-                st.pop();
-                for (int nb : adj[node]) {
-                    if (!visited[nb]) {
-                        visited[nb] = true;
-                        st.push(nb);
-                    }
-                }
-            }
-        }
-    }
-    return components;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    // Graph with 7 nodes, two components: {1,2,3,4} and {5,6,7}
+    // Graph with 7 nodes, two groups: {1,2,3,4} and {5,6,7}
     int n = 7;
-    vector<vector<int>> adj(n + 1);
+    vector<vector<int>> adj(n + 1);  // Adjacency list (1-indexed)
 
-    // Component 1: 1-2, 2-3, 3-4, 1-4
+    // Group 1 edges: 1-2, 2-3, 3-4, 1-4
     adj[1].push_back(2); adj[2].push_back(1);
     adj[2].push_back(3); adj[3].push_back(2);
     adj[3].push_back(4); adj[4].push_back(3);
     adj[1].push_back(4); adj[4].push_back(1);
 
-    // Component 2: 5-6, 6-7
+    // Group 2 edges: 5-6, 6-7
     adj[5].push_back(6); adj[6].push_back(5);
     adj[6].push_back(7); adj[7].push_back(6);
 
     cout << "=== BFS Shortest Paths from Node 1 ===\\n";
     bfs(1, adj, n);
-
-    cout << "\\n=== Connected Components ===\\n";
-    cout << "Number of components: " << countComponents(adj, n) << "\\n";
+    // Nodes 5, 6, 7 are not connected to node 1, so distance = -1
 
     return 0;
 }`,
@@ -6515,5 +6442,350 @@ int main() {
     },
     difficulty: "advanced",
     prereqs: [6, 10]
+  },
+  // =============================================
+  // LESSON 46: Sieve of Eratosthenes
+  // =============================================
+  {
+    id: 46,
+    title: "Sieve of Eratosthenes — Finding All Primes Fast",
+    subtitle: "Cross out the fakes, keep the real primes!",
+    analogy: "Imagine your teacher hands you a class list of numbers from 2 to 100 and says: 'Circle the special ones — the primes!' Instead of checking each number one by one (so slow!), you use a clever trick. Start with 2 — it's prime! Now cross out every multiple of 2 (4, 6, 8…). Move to 3 — it's still standing, so it's prime! Cross out every multiple of 3 (6, 9, 12…). Keep going. By the time you're done, only the primes are left uncrossed. That's the Sieve of Eratosthenes — a 2000-year-old shortcut that still rocks in competitive programming!",
+    points: [
+      { t: "What Is a Sieve?", d: "A sieve is like a filter that lets only certain things through. In our case, we start by assuming every number is prime (innocent until proven guilty!). Then we systematically remove the non-primes by crossing out multiples. What's left after all the crossing out? Only the true primes survive the sieve!" },
+      { t: "Marking Composites", d: "A composite number is one that can be broken into smaller factors — like 12 = 2 × 6. When we find a prime number p, we mark ALL its multiples (2p, 3p, 4p…) as composite (not prime). It's like finding one bad apple and removing its entire gang. After we finish marking, any number still marked as prime is genuinely prime." },
+      { t: "Finding All Primes Up to N", d: "The sieve finds EVERY prime from 2 up to any number N you choose. Need all primes up to 1 million? The sieve handles it in a flash! You create a boolean array of size N+1, set everything to true, then start crossing out. This is way faster than checking each number individually — especially when N is large." },
+      { t: "The i×i Optimization", d: "Here's a neat trick: when crossing out multiples of prime p, you can start from p×p instead of 2×p. Why? Because smaller multiples like 2×p, 3×p, etc., were already crossed out by earlier primes! For example, when handling prime 5, you start at 25 because 10 was crossed out by 2, and 15 was crossed out by 3. This makes the sieve even faster." },
+      { t: "Using a Bool Array", d: "We use an array of true/false values to track which numbers are prime. Index i in the array represents the number i. Start with all values set to true (all are prime candidates). As we cross out composites, we flip their values to false. At the end, if is_prime[i] is still true, then i is a prime number. Simple and elegant!" },
+      { t: "Counting Primes", d: "After running the sieve, counting primes is super easy — just count how many entries are still marked true! Many CP problems ask 'how many primes are there up to N?' and the sieve answers this instantly. You can even store the primes in a separate list for quick access later." },
+      { t: "Smallest Prime Factor", d: "A cool bonus: you can modify the sieve to record the smallest prime factor of every number. Instead of just marking true/false, store which prime first crossed out each number. This is incredibly useful for quickly factoring numbers later — just keep dividing by the smallest prime factor until you reach 1." },
+      { t: "Why Only Check Up to √N?", d: "You only need to run the outer sieve loop up to the square root of N. If a number bigger than √N is composite, it must have a factor smaller than √N — and that factor's prime would have already crossed it out. So once you pass √N, all remaining unmarked numbers are guaranteed prime. This saves a huge amount of work!" },
+      { t: "Sieve in Competitive Programming", d: "The sieve is one of the most common tools in CP. Problems involving primes, divisors, or factorization almost always benefit from pre-computing a sieve. It runs in roughly O(N log log N) time, which is nearly linear — meaning it can handle N up to 10 million in well under a second. Build the sieve once, answer many queries fast!" }
+    ],
+    whatIs: "The Sieve of Eratosthenes is an ancient algorithm that finds all prime numbers up to a given limit N. It works by repeatedly marking the multiples of each prime as composite (not prime), starting from 2. After the sieve completes, every unmarked number is prime.",
+    realWorld: "Primes are the backbone of internet security — every time you shop online or send a message, encryption algorithms use huge prime numbers to keep your data safe. The sieve is also used in hash table design, random number generators, and mathematical research. In CP, it's essential for any problem involving primes or factors.",
+    code: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Find all primes up to: ";
+    cin >> n;
+
+    // Create a bool array, assume all are prime
+    vector<bool> is_prime(n + 1, true);
+    is_prime[0] = is_prime[1] = false; // 0 and 1 are not prime
+
+    // Sieve: cross out multiples of each prime
+    for (int i = 2; i * i <= n; i++) {
+        if (is_prime[i]) {
+            // Start crossing from i*i (optimization!)
+            for (int j = i * i; j <= n; j += i) {
+                is_prime[j] = false;
+            }
+        }
+    }
+
+    // Collect and print all primes
+    vector<int> primes;
+    for (int i = 2; i <= n; i++) {
+        if (is_prime[i]) {
+            primes.push_back(i);
+        }
+    }
+
+    cout << "Found " << primes.size() << " primes:\\n";
+    for (int p : primes) {
+        cout << p << " ";
+    }
+    cout << endl;
+
+    return 0;
+}`,
+    funFact: "The Sieve of Eratosthenes was invented by the Greek mathematician Eratosthenes around 240 BC — that's over 2,200 years ago! He's also the person who first calculated the circumference of the Earth using shadows and geometry. Talk about a multi-talented genius!",
+    quiz: [
+      { q: "What does the Sieve of Eratosthenes find?", opts: ["All even numbers up to N", "All prime numbers up to N", "All odd numbers up to N", "The largest prime below N"], ans: 1 },
+      { q: "In the optimized sieve, when crossing out multiples of prime p, where do you start?", opts: ["From 2 × p", "From p + 1", "From p × p", "From p + p"], ans: 2 },
+      { q: "Why do we only run the outer loop up to √N?", opts: ["Because primes are always less than √N", "Because any composite above √N was already crossed out by a smaller prime", "Because √N is always a prime number", "Because it makes the code look nicer"], ans: 1 },
+      { q: "After the sieve runs, what does is_prime[i] == true mean?", opts: ["i is an even number", "i is a composite number", "i is a prime number", "i has been crossed out"], ans: 2 },
+      { q: "What are the initial values in the bool array before the sieve starts (for indices 2 to N)?", opts: ["All false", "All true", "Alternating true and false", "Random values"], ans: 1 }
+    ],
+    challenge: "Modify the sieve to also compute the smallest prime factor (SPF) for every number up to N. Then use the SPF array to quickly factorize any number — for example, print all prime factors of 360. Bonus: solve a problem where you need to answer Q queries, each asking for the prime factorization of a number up to 1,000,000!",
+    resources: [
+      { type: "video", title: "Sieve of Eratosthenes Visualized", url: "https://www.youtube.com/watch?v=pKvGYOnO9Ao", source: "YouTube" },
+      { type: "article", title: "Sieve of Eratosthenes — CP-Algorithms", url: "https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html", source: "CP-Algorithms" },
+      { type: "practice", title: "Prime Sieve Problems on Codeforces", url: "https://codeforces.com/problemset?tags=number+theory", source: "Codeforces" }
+    ],
+    eli5: "Imagine you have a big box of toy number blocks from 2 to 100. You want to find the special blocks — the ones that can't be split into smaller groups. Start with block 2 — it's special! Now take out every second block after it (4, 6, 8…) because they can all be split into groups of 2. Next, block 3 is still in the box, so it's special too! Take out every third block (6, 9, 12…). Keep doing this. When you're done fishing out blocks, the ones still sitting in the box are the special ones — the primes!",
+    codeWalkthrough: [
+      "We include our standard library and start the main function.",
+      "We ask the user for a number n — we'll find all primes up to this number.",
+      "We create a vector of booleans called is_prime with n+1 slots, all set to true. Each slot represents whether that number is prime.",
+      "We manually set is_prime[0] and is_prime[1] to false because 0 and 1 are never prime.",
+      "The outer loop runs i from 2 up to √n (using the condition i*i <= n). For each i, we check if it's still marked prime.",
+      "If i is prime, the inner loop crosses out all multiples of i starting from i*i. We set is_prime[j] = false for each multiple j.",
+      "After the sieve finishes, we loop through the array and collect every number still marked true into a primes vector.",
+      "We print how many primes were found, then print each prime separated by spaces.",
+      "The whole process is incredibly fast — even for n = 10,000,000, it finishes in well under a second!"
+    ],
+    bugChallenge: {
+      code: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n = 30;
+    vector<bool> is_prime(n + 1, true);
+
+    for (int i = 2; i * i <= n; i++) {
+        if (is_prime[i]) {
+            for (int j = 2 * i; j <= n; j += i) {
+                is_prime[j] = false;
+            }
+        }
+    }
+
+    // Print all primes
+    for (int i = 0; i <= n; i++) {
+        if (is_prime[i]) cout << i << " ";
+    }
+    return 0;
+}`,
+      hint: "Look at the printing loop. What values does i start from? Are 0 and 1 prime numbers? The sieve itself works fine, but the output includes numbers that shouldn't be called prime!",
+      answer: "The bug is that 0 and 1 are never marked as non-prime, so they get printed as primes! The fix is to either set is_prime[0] = is_prime[1] = false before the sieve, or start the printing loop from i = 2 instead of i = 0. Remember: 0 and 1 are not prime numbers, so we must handle them explicitly!"
+    },
+    difficulty: "intermediate",
+    prereqs: [23, 12]
+  },
+  // =============================================
+  // LESSON 47: Combinatorics
+  // =============================================
+  {
+    id: 47,
+    title: "Combinatorics — Counting Without Listing",
+    subtitle: "How many ways? Let's count smart, not hard!",
+    analogy: "Imagine you're at an ice cream shop with 5 flavors and 3 toppings. Your friend starts listing every possible combo: 'Vanilla with sprinkles, vanilla with fudge, vanilla with gummies, chocolate with sprinkles…' — that takes forever! But you're smart. You say: '5 flavors × 3 toppings = 15 combos. Done!' That's combinatorics — the art of counting possibilities using clever math instead of writing out every single option. In CP, when a problem asks 'how many ways…?', combinatorics is your best friend.",
+    points: [
+      { t: "The Multiplication Principle", d: "If you have A choices for one thing and B choices for another, the total number of combined choices is A × B. Picking a shirt (4 options) and pants (3 options)? That's 4 × 3 = 12 outfits. This extends to any number of independent choices — just keep multiplying! It's the foundation of all counting." },
+      { t: "The Addition Principle", d: "If you can do something in A ways OR in B ways (but not both at the same time), the total is A + B. For example, if you can take the bus (3 routes) or the train (2 routes) to school, you have 3 + 2 = 5 ways to get there. Use addition when choices are alternatives, and multiplication when choices are combined." },
+      { t: "Factorial — The Building Block", d: "Factorial of n (written n!) means multiplying all numbers from 1 to n. So 5! = 5 × 4 × 3 × 2 × 1 = 120. It tells you how many ways you can arrange n things in a line. Factorials grow SUPER fast — 10! is already 3,628,800 and 20! is astronomically huge. By convention, 0! = 1." },
+      { t: "Permutations (nPr) — Order Matters", d: "A permutation counts how many ways you can pick r items from n items when the ORDER matters. The formula is nPr = n! / (n-r)!. For example, how many ways can 3 runners finish 1st, 2nd, 3rd out of 8? That's 8P3 = 8! / 5! = 8 × 7 × 6 = 336 ways. Gold-silver-bronze is different from bronze-silver-gold!" },
+      { t: "Combinations (nCr) — Order Doesn't Matter", d: "A combination counts how many ways you can pick r items from n items when order does NOT matter. The formula is nCr = n! / (r! × (n-r)!). Choosing 3 friends from a group of 8 to form a team? That's 8C3 = 56. Picking Alice-Bob-Carol is the same team as Carol-Alice-Bob, so we divide out the rearrangements." },
+      { t: "Pascal's Triangle", d: "Pascal's Triangle is a magical number triangle where each entry is the sum of the two entries above it. Row n of Pascal's Triangle contains all the values of nCr for r = 0 to n. It starts with row 0: just the number 1. Row 1 is 1, 1. Row 2 is 1, 2, 1. This gives us a fast way to build up combination values without computing huge factorials." },
+      { t: "Combinations with Modular Arithmetic", d: "In CP, answers often get astronomically large, so problems ask for the result modulo some number (usually 1,000,000,007). To compute nCr mod p, we precompute factorials and their modular inverses using Fermat's Little Theorem. This lets us calculate huge combinations without overflow. It's a very common technique in contests!" },
+      { t: "Common Counting Patterns in CP", d: "Many CP problems boil down to counting: how many paths in a grid? (Use combinations!) How many subsets of a set? (2^n — each element is either in or out.) How many ways to arrange items with restrictions? (Permutations with constraints.) Recognizing these patterns is the key skill. Once you spot the counting structure, the formula usually follows." }
+    ],
+    whatIs: "Combinatorics is the branch of mathematics that deals with counting, arranging, and choosing things. Instead of listing out every possibility (which could take years for large numbers), it gives us formulas and principles to calculate the count directly. In competitive programming, combinatorics problems are everywhere — from counting paths to choosing teams.",
+    realWorld: "Combinatorics is used in everything from lottery probability (how many ticket combinations exist?) to computer science (how many different passwords can be made?), biology (how many ways can DNA bases combine?), and even card games (how many different poker hands are possible?). Every time you wonder 'how many ways can this happen?', you're thinking about combinatorics.",
+    code: `#include <bits/stdc++.h>
+using namespace std;
+
+// Compute factorial up to n
+vector<long long> fact;
+void precompute(int n) {
+    fact.resize(n + 1);
+    fact[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        fact[i] = fact[i - 1] * i;
+    }
+}
+
+// Compute nCr using precomputed factorials
+long long nCr(int n, int r) {
+    if (r < 0 || r > n) return 0;
+    return fact[n] / (fact[r] * fact[n - r]);
+}
+
+int main() {
+    precompute(20); // factorials up to 20!
+
+    // Print Pascal's Triangle (first 8 rows)
+    cout << "Pascal's Triangle:\\n";
+    for (int n = 0; n <= 7; n++) {
+        for (int r = 0; r <= n; r++) {
+            cout << nCr(n, r) << " ";
+        }
+        cout << "\\n";
+    }
+
+    // Example: choosing 3 from 8
+    cout << "\\n8 choose 3 = " << nCr(8, 3) << "\\n";
+
+    // Permutation: 8P3 = 8! / 5!
+    long long perm = fact[8] / fact[5];
+    cout << "8 P 3 = " << perm << "\\n";
+
+    return 0;
+}`,
+    funFact: "The number of ways to shuffle a standard 52-card deck is 52!, which is roughly 8 × 10^67. That's more than the number of atoms in the observable universe! It means that every time you properly shuffle a deck, you're almost certainly holding a card arrangement that has NEVER existed before in human history.",
+    quiz: [
+      { q: "You have 4 shirts and 5 pants. How many different outfits can you make?", opts: ["9", "20", "45", "10"], ans: 1 },
+      { q: "What is 5! (five factorial)?", opts: ["25", "120", "60", "15"], ans: 1 },
+      { q: "In how many ways can you choose 2 fruits from {apple, banana, cherry} where order does NOT matter?", opts: ["6", "3", "2", "9"], ans: 1 },
+      { q: "What is the difference between permutations and combinations?", opts: ["Permutations are always larger", "Permutations care about order, combinations don't", "Combinations are always larger", "There is no difference"], ans: 1 },
+      { q: "Each entry in Pascal's Triangle equals what?", opts: ["The product of the two entries above it", "The sum of the two entries above it", "The difference of the two entries above it", "The average of the two entries above it"], ans: 1 }
+    ],
+    challenge: "Build a program that takes n and r as input and prints: (1) nPr (permutations), (2) nCr (combinations), and (3) the full row n of Pascal's Triangle. Then solve this: a pizza shop has 10 toppings. How many different pizzas can you make if each pizza can have between 0 and 10 toppings? (Hint: think about each topping as a yes/no choice!) Bonus: compute nCr modulo 1,000,000,007 for n up to 200,000.",
+    resources: [
+      { type: "video", title: "Counting Principles and Combinatorics", url: "https://www.youtube.com/watch?v=8RRo6Ti9d0U", source: "YouTube" },
+      { type: "article", title: "Combinatorics — CP-Algorithms", url: "https://cp-algorithms.com/combinatorics/binomial-coefficients.html", source: "CP-Algorithms" },
+      { type: "practice", title: "Combinatorics Problems on Codeforces", url: "https://codeforces.com/problemset?tags=combinatorics", source: "Codeforces" }
+    ],
+    eli5: "Imagine you're getting dressed and you have a drawer with 3 hats and 2 scarves. You want to know how many different hat-and-scarf looks you can make. Instead of trying every single combination on, you just count: 3 hats times 2 scarves equals 6 looks! Combinatorics is like being really good at counting things without having to actually do them all one by one. It's the lazy-but-smart way to figure out 'how many?'",
+    codeWalkthrough: [
+      "We create a global vector called 'fact' to store precomputed factorial values.",
+      "The precompute function fills this vector: fact[0] = 1, and each fact[i] = fact[i-1] * i. This builds up 1!, 2!, 3!, etc.",
+      "The nCr function computes combinations using the formula n! / (r! × (n-r)!). It returns 0 if r is out of range.",
+      "In main, we call precompute(20) to calculate all factorials up to 20!. This is enough for our examples.",
+      "We print Pascal's Triangle by looping through rows 0 to 7. For each row n, we print nCr(n, r) for r from 0 to n.",
+      "We compute 8 choose 3 = 56, meaning there are 56 ways to pick 3 items from 8 when order doesn't matter.",
+      "For permutations (8P3), we compute 8! / 5! = 336. This counts arrangements where order matters.",
+      "The code keeps things simple with plain division. For CP contests with large numbers, you'd use modular arithmetic instead."
+    ],
+    bugChallenge: {
+      code: `#include <bits/stdc++.h>
+using namespace std;
+
+long long factorial(int n) {
+    long long result = 1;
+    for (int i = 1; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+long long nCr(int n, int r) {
+    return factorial(n) / factorial(r) / factorial(n - r);
+}
+
+int main() {
+    // How many ways to choose 2 from 5?
+    cout << "5C2 = " << nCr(5, 2) << "\\n";
+    // How many ways to choose 3 from 30?
+    cout << "30C3 = " << nCr(30, 3) << "\\n";
+    // How many ways to choose 5 from 25?
+    cout << "25C5 = " << nCr(25, 5) << "\\n";
+    return 0;
+}`,
+      hint: "The factorial function looks correct, but think about what happens with bigger numbers. What is 30!? Can a long long hold that value? Try computing 30! by hand (or calculator) and compare to the maximum value of a long long.",
+      answer: "The bug is integer overflow! 30! is about 2.65 × 10^32, which far exceeds the maximum long long value (~9.2 × 10^18). Even though the final answer of 30C3 = 4060 is small, the intermediate factorial(30) overflows and gives garbage. The fix is to either compute nCr iteratively (multiply and divide step by step to keep numbers small), use Pascal's Triangle, or use modular arithmetic for large values."
+    },
+    difficulty: "intermediate",
+    prereqs: [19, 23]
+  },
+  // =============================================
+  // LESSON 48: Practice Makes Champion
+  // =============================================
+  {
+    id: 48,
+    title: "Practice Makes Champion — Your CP Toolkit",
+    subtitle: "You've built an arsenal. Now let's master when to use each weapon!",
+    analogy: "You've just become a superhero who's collected 45 incredible gadgets on your journey! You've got a speed boost (sorting), a magnifying glass (binary search), a crystal ball (dynamic programming), a Swiss army knife (greedy), a map (graphs), and so many more. But here's the thing — a superhero who has every gadget but doesn't know which one to grab for each villain is just carrying a heavy backpack! This lesson is your field guide. It tells you: 'When you face THIS type of problem, reach for THAT tool.' Now you'll fight smarter, not harder.",
+    points: [
+      { t: "The Toolkit You've Built", d: "Over 45 lessons, you've learned an incredible range of techniques: arrays, sorting, binary search, recursion, greedy algorithms, dynamic programming, graphs (BFS, DFS, shortest path), number theory, bit manipulation, two pointers, sliding window, prefix sums, stacks, queues, trees, and more. That's a serious toolkit! Most competitive programmers spend years building up this knowledge, and you've got it all in one place." },
+      { t: "Pattern: 'Find If Something Exists' → Binary Search or Hashing", d: "When a problem asks you to find a specific value, check if something is possible, or search in sorted data — think binary search! If you need to look up items quickly or count occurrences, hash maps (unordered_map) are your go-to. These are among the fastest lookup tools you have." },
+      { t: "Pattern: 'Find the Minimum/Maximum' → Greedy or DP", d: "When a problem asks for the best, cheapest, shortest, or most efficient solution — start by asking: 'Can I make locally optimal choices?' If yes, go greedy. If choices affect each other and you need to consider all possibilities, use dynamic programming. Greedy is simpler and faster, so try it first!" },
+      { t: "Pattern: 'Count the Number of Ways' → DP or Combinatorics", d: "When a problem asks 'how many ways can you…?', think combinatorics (nCr, factorials, multiplication principle) for structured counting, or dynamic programming for counting paths through complex states. Many grid path-counting problems and subset-counting problems fall into this category." },
+      { t: "Pattern: 'Shortest Path / Connected Components' → Graph Algorithms", d: "When a problem involves connections, networks, roads, or relationships — model it as a graph! Use BFS for shortest path in unweighted graphs, Dijkstra for weighted graphs, DFS for exploring and finding connected components. If the graph is a tree, even simpler techniques often work." },
+      { t: "Pattern: 'Process a Range / Subarray' → Prefix Sums, Sliding Window, or Two Pointers", d: "When a problem involves contiguous subarrays or ranges — prefix sums let you compute any range sum in O(1). Sliding window is perfect when you're looking for the best subarray of fixed or variable size. Two pointers work when you need to find pairs or shrink/grow a window from both ends." },
+      { t: "Your Practice Roadmap", d: "Here's your path forward: Start with Codeforces Div 2 A and B problems — these use basic implementation, sorting, greedy, and simple math. Move to C problems — these need binary search, prefix sums, two pointers, or simple DP. Then tackle D problems — these combine multiple techniques or need advanced DP and graph algorithms. Aim to solve 3-5 problems per week consistently." },
+      { t: "Online Judge Tips", d: "Always read the constraints first — they tell you the expected time complexity. N ≤ 10^3 means O(N²) is fine. N ≤ 10^5 means you need O(N log N). N ≤ 10^7 means O(N) only. Watch out for integer overflow — use long long when numbers can exceed 2 billion. Test edge cases: N=0, N=1, all same elements, already sorted, reverse sorted." },
+      { t: "The Champion Mindset", d: "The best competitive programmers aren't the ones who know the most algorithms — they're the ones who practice consistently and learn from every problem they can't solve. When you get stuck, don't just look at the solution — understand WHY that approach works. Upsolve problems after contests. Keep a notebook of techniques. Every problem you solve makes you faster and sharper for the next one!" }
+    ],
+    whatIs: "This is your graduation lesson — a complete recap of everything you've learned across 45 lessons, organized as a practical field guide. It maps problem types to the techniques you should reach for, gives you a practice roadmap, and sets you up for continued growth as a competitive programmer.",
+    realWorld: "The problem-solving skills you've learned in competitive programming transfer directly to real-world software engineering. Tech companies like Google, Meta, Amazon, and Microsoft use CP-style problems in their interviews. The algorithmic thinking, debugging skills, and pattern recognition you've built are valued everywhere in the tech industry.",
+    code: `#include <bits/stdc++.h>
+using namespace std;
+
+// === CP Contest Starter Template ===
+// Tip: save this as template.cpp and use it for every contest!
+
+typedef long long ll;
+typedef pair<int,int> pii;
+typedef vector<int> vi;
+
+#define pb push_back
+#define all(x) (x).begin(),(x).end()
+#define sz(x) (int)(x).size()
+#define FOR(i,a,b) for(int i=(a);i<(b);i++)
+
+const int MOD = 1e9 + 7;
+
+void solve() {
+    int n;
+    cin >> n;
+    // Your solution goes here!
+    // Step 1: Read input
+    // Step 2: Identify the pattern (see lesson notes!)
+    // Step 3: Apply the right technique
+    // Step 4: Output the answer
+    vi a(n);
+    FOR(i, 0, n) cin >> a[i];
+
+    // Example: find max element
+    cout << *max_element(all(a)) << "\\n";
+}
+
+int main() {
+    // Fast I/O — ALWAYS include this!
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t = 1;
+    // cin >> t; // Uncomment for multiple test cases
+    while (t--) solve();
+
+    return 0;
+}`,
+    funFact: "The word 'algorithm' comes from the name of the 9th-century Persian mathematician Al-Khwarizmi. And the youngest International Olympiad in Informatics (IOI) gold medalist was just 14 years old! Competitive programming has no age limit — some of the best programmers in the world started as kids, just like you.",
+    quiz: [
+      { q: "If a problem says 'find the shortest path between two cities', which approach should you consider first?", opts: ["Dynamic programming", "Binary search", "Graph algorithms (BFS/Dijkstra)", "Greedy sorting"], ans: 2 },
+      { q: "If the constraint says N ≤ 100,000, which time complexity is safe?", opts: ["O(N³)", "O(N²)", "O(N log N)", "O(2^N)"], ans: 2 },
+      { q: "A problem asks 'how many subsets of an array sum to exactly K?' — which technique fits best?", opts: ["Binary search", "Greedy algorithm", "Dynamic programming", "Two pointers"], ans: 2 },
+      { q: "When should you use a prefix sum array?", opts: ["To sort an array quickly", "To answer range sum queries in O(1)", "To find the shortest path in a graph", "To generate prime numbers"], ans: 1 },
+      { q: "What's the most important habit for improving at competitive programming?", opts: ["Memorizing every algorithm perfectly", "Solving problems consistently and upsolving after contests", "Only solving easy problems to build confidence", "Reading solutions without trying the problem first"], ans: 1 }
+    ],
+    challenge: "Create your own CP problem-solving cheat sheet! For each of these 10 problem types, write down which algorithm or technique you'd use and why: (1) Finding an element in a sorted array, (2) Shortest path in a maze, (3) Minimum coins to make change, (4) Number of ways to climb stairs, (5) Finding all prime factors, (6) Maximum subarray sum, (7) Checking if a string is a palindrome, (8) Finding connected groups in a network, (9) Scheduling non-overlapping events, (10) Counting pairs with a given sum. Then go to Codeforces and solve one problem for each type!",
+    resources: [
+      { type: "practice", title: "Codeforces Problem Archive", url: "https://codeforces.com/problemset", source: "Codeforces" },
+      { type: "article", title: "Competitive Programming Roadmap", url: "https://cp-algorithms.com/", source: "CP-Algorithms" },
+      { type: "practice", title: "AtCoder Beginner Contests", url: "https://atcoder.jp/contests/", source: "AtCoder" }
+    ],
+    eli5: "Imagine you have a big toy box full of different toys you've collected on an amazing adventure — building blocks, magnifying glasses, magic wands, maps, and more! Now when your friend comes to you with a problem — like 'help me build the tallest tower!' — you know exactly which toy to grab. Building blocks! And if they say 'help me find the hidden treasure!' — you grab the map! This lesson is like putting labels on all your toys so you always know which one to pick. You've got all the toys now. Go play and have fun solving puzzles!",
+    codeWalkthrough: [
+      "We start with our standard #include and using namespace std — every CP solution begins this way.",
+      "We define helpful shortcuts: 'll' for long long, 'pii' for pair of ints, 'vi' for vector of ints. These save typing during contests.",
+      "We define macros like 'pb' for push_back, 'all(x)' for begin/end, 'sz' for size, and 'FOR' for a shorter for-loop. Speed matters in contests!",
+      "MOD is set to 10^9 + 7, the most common modulo value in CP problems. Define it once and use it everywhere.",
+      "The solve() function handles one test case. This structure makes it easy to handle multiple test cases — just uncomment the cin >> t line.",
+      "Inside solve(), we read n and an array. The comments remind you of the problem-solving steps: read, identify pattern, apply technique, output.",
+      "As a simple example, we find and print the maximum element using max_element from the standard library.",
+      "In main(), the fast I/O lines (ios_base::sync_with_stdio(false) and cin.tie(NULL)) are crucial — they can make your solution 5-10x faster!",
+      "The test case loop (while t-- solve()) is the standard pattern. For single test case problems, t stays at 1.",
+      "Save this template and use it as your starting point for every contest problem. Customize it as you develop your own style!"
+    ],
+    bugChallenge: {
+      code: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    // Find the sum of all elements
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+    cout << "Sum = " << sum << endl;
+
+    return 0;
+}`,
+      hint: "This code looks perfectly fine for small numbers. But what if n = 200,000 and each element is 1,000,000,000? What happens to the variable 'sum'? Check the data type!",
+      answer: "The bug is integer overflow! If we have 200,000 elements each equal to 1,000,000,000, the sum would be 2 × 10^14, which far exceeds the int range (~2.1 × 10^9). The fix is to change 'int sum = 0' to 'long long sum = 0'. This is one of the most common bugs in competitive programming — always check if your answer could exceed 2 billion and use long long when it might!"
+    },
+    difficulty: "beginner",
+    prereqs: []
   }
 ];
