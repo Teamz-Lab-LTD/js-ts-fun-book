@@ -194,7 +194,7 @@
 }
 html[data-theme="dark"] {
   --bg:#12151A; --surface:#1D1F25; --text:#FFFFFF; --text-muted:rgba(255,255,255,0.7);
-  --border:rgba(255,255,255,0.15); --accent:#D9FE06; --accent-text:#12151A; --accent-fg:#D9FE06;
+  --border:rgba(255,255,255,0.15); --accent:#D9FE06; --accent-text:#12151A; --accent-fg:#FFFFFF;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--text-lg); line-height:var(--lh); min-height:100vh; }
@@ -211,7 +211,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--font); font-si
 .courses { display:grid; gap:1.5rem; }
 .course-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:2rem; transition:all 0.3s; cursor:pointer; text-decoration:none; color:inherit; display:block; position:relative; overflow:hidden; }
 .course-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
-.course-card:hover { transform:translateY(-4px); border-color:var(--accent); box-shadow:0 8px 40px rgba(217,254,6,0.1); }
+.course-card:hover { transform:translateY(-4px); border-color:var(--accent-fg); }
 .course-card h2 { font-size:var(--text-h4); font-weight:700; margin-bottom:0.3rem; color:var(--accent-fg); line-height:var(--lh); }
 .course-card .subtitle { color:var(--text-muted); font-size:var(--text-md); line-height:var(--lh); margin-bottom:1rem; }
 .course-card .stats { display:flex; gap:1.5rem; flex-wrap:wrap; }
@@ -302,10 +302,10 @@ html[data-theme="dark"] .biz-cta a:hover { box-shadow:0 6px 24px rgba(217,254,6,
 :root .tag, :root .method.sr, :root .method.rp, :root .method.il, :root .method.mc, :root .method.dc { background:rgba(18,21,26,0.06); border-color:rgba(18,21,26,0.15); }
 :root .coming-soon .badge { background:#DDDDDD; color:rgba(18,21,26,0.5); }
 /* Dark mode overrides */
-html[data-theme="dark"] .course-card:hover { box-shadow:0 8px 40px rgba(217,254,6,0.1); }
-html[data-theme="dark"] .biz-card:hover { box-shadow:0 6px 24px rgba(217,254,6,0.08); }
+html[data-theme="dark"] .course-card:hover { box-shadow:0 8px 40px rgba(255,255,255,0.06); }
+html[data-theme="dark"] .biz-card:hover { box-shadow:0 6px 24px rgba(255,255,255,0.05); }
 html[data-theme="dark"] .btn--hire:hover { box-shadow:0 0 12px rgba(217,254,6,0.35); }
-html[data-theme="dark"] .tag, html[data-theme="dark"] .method.sr, html[data-theme="dark"] .method.rp, html[data-theme="dark"] .method.il, html[data-theme="dark"] .method.mc, html[data-theme="dark"] .method.dc { background:rgba(217,254,6,0.1); border-color:rgba(217,254,6,0.2); }
+html[data-theme="dark"] .tag, html[data-theme="dark"] .method.sr, html[data-theme="dark"] .method.rp, html[data-theme="dark"] .method.il, html[data-theme="dark"] .method.mc, html[data-theme="dark"] .method.dc { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.15); }
 html[data-theme="dark"] .coming-soon .badge { background:var(--border); color:var(--text-muted); }
 /* Theme toggle button */
 .theme-toggle { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border:none; background:transparent; color:var(--text-muted); cursor:pointer; border-radius:50%; transition:color 0.2s; }
