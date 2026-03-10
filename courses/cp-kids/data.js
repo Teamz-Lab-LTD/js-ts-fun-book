@@ -6787,5 +6787,252 @@ int main() {
     },
     difficulty: "beginner",
     prereqs: []
+  },
+
+  // =============================================
+  // LESSON 49: More Sorting — Selection, Insertion & Merge Sort
+  // =============================================
+  {
+    id: 49,
+    title: "More Sorting — Selection, Insertion & Merge Sort",
+    subtitle: "Master different ways to put things in order and learn when to use each one!",
+    analogy: "Imagine you're a coach lining up kids by height for a class photo. With Selection Sort, you scan the whole line, find the shortest kid, and move them to the front — then find the next shortest, and so on. With Insertion Sort, it's like sorting playing cards: you pick up one card at a time and slide it into the right spot in your hand. Merge Sort is like splitting the class into two groups, having each group sort themselves, then carefully merging them back into one perfect line. Each method works, but some are faster when the line gets really long!",
+    points: [
+      { t: "Selection Sort — Find the Smallest First", d: "Selection Sort works by scanning through the entire list to find the smallest element, then swapping it to the front. Then it finds the second-smallest and puts it in position two, and so on. It's simple to understand but not the fastest — it always takes O(n²) time no matter what." },
+      { t: "Insertion Sort — Like Sorting Playing Cards", d: "Insertion Sort picks up one element at a time and slides it into its correct position among the already-sorted elements. Think of it like sorting cards in your hand — you pick up a new card and insert it where it belongs. It's really fast when the list is almost sorted already!" },
+      { t: "Merge Sort — Divide and Conquer Magic", d: "Merge Sort splits the list in half, sorts each half separately, then merges them back together in order. This 'divide and conquer' approach is super efficient — it always runs in O(n log n) time. The trade-off is it needs extra memory to hold the temporary halves." },
+      { t: "Counting Sort — Count and Place", d: "Counting Sort doesn't compare elements at all! Instead, it counts how many of each value you have, then places them in order based on those counts. It's blazing fast — O(n + k) where k is the range of values — but only works well when your numbers are in a small range." },
+      { t: "Comparing Time Complexities", d: "Bubble Sort, Selection Sort, and Insertion Sort are all O(n²) — they get slow with big lists. Merge Sort is O(n log n) — much faster for large data. Counting Sort is O(n + k) — the fastest of all when the value range is small. Knowing these speeds helps you pick the right tool!" },
+      { t: "When Selection Sort Shines", d: "Selection Sort is great when you need the simplest possible algorithm and the list is small. It always does the same number of comparisons no matter what, and it does the minimum number of swaps — exactly n-1 swaps. Use it when swapping is expensive but comparing is cheap." },
+      { t: "When Insertion Sort Shines", d: "Insertion Sort is the champion for nearly-sorted data — it can run in almost O(n) time! It's also great for small lists and is used inside more complex algorithms as a base case. Many real-world sorting implementations switch to Insertion Sort for small sub-arrays." },
+      { t: "Stability in Sorting", d: "A 'stable' sort keeps equal elements in their original order. Insertion Sort and Merge Sort are stable, but Selection Sort is NOT stable by default. In competitive programming, stability matters when you sort by one field but want to keep the order from a previous sort." },
+      { t: "Which Sort to Use in CP?", d: "In competitive programming, you'll almost always use the built-in sort() which is O(n log n). But understanding these algorithms helps you solve problems that ASK about sorting, or when you need a custom approach. Sometimes Counting Sort is the secret weapon for problems with small value ranges!" }
+    ],
+    whatIs: "This lesson covers four important sorting algorithms beyond Bubble Sort: Selection Sort (find the min, swap to front), Insertion Sort (insert each element in its place), Merge Sort (split, sort, merge), and Counting Sort (count occurrences, place in order). Each has different strengths depending on the data you're sorting.",
+    realWorld: "Sorting algorithms are everywhere! Your music app uses efficient sorting to arrange songs by name or date. Libraries sort books by call number using methods similar to Insertion Sort. Even mail sorting machines use Counting Sort-like approaches to sort letters by zip code into bins.",
+    code: `#include <bits/stdc++.h>
+using namespace std;
+
+// Selection Sort: find minimum, swap to front
+void selectionSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = 0; i < n - 1; i++) {
+        int minIdx = i; // assume current is smallest
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[minIdx]) minIdx = j; // found smaller
+        }
+        swap(a[i], a[minIdx]); // put smallest at position i
+    }
+}
+
+// Insertion Sort: insert each element in correct spot
+void insertionSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = 1; i < n; i++) {
+        int key = a[i]; // card to insert
+        int j = i - 1;
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j]; // shift bigger elements right
+            j--;
+        }
+        a[j + 1] = key; // place card in correct spot
+    }
+}
+
+int main() {
+    vector<int> v1 = {64, 25, 12, 22, 11};
+    vector<int> v2 = v1; // copy for second sort
+
+    // Test Selection Sort
+    selectionSort(v1);
+    cout << "Selection Sort: ";
+    for (int x : v1) cout << x << " ";
+    cout << endl;
+
+    // Test Insertion Sort
+    insertionSort(v2);
+    cout << "Insertion Sort: ";
+    for (int x : v2) cout << x << " ";
+    cout << endl;
+
+    // Output: 11 12 22 25 64 (both give same result!)
+    return 0;
+}`,
+    funFact: "The famous Timsort algorithm (used in Python and Java) is actually a hybrid of Merge Sort and Insertion Sort! It was invented by Tim Peters in 2002 and takes advantage of the fact that real-world data often has runs of already-sorted elements.",
+    quiz: [
+      { q: "In Selection Sort, what do we do in each pass?", opts: ["Swap adjacent elements", "Find the minimum element and swap it to the correct position", "Split the array in half", "Count occurrences of each element"], ans: 1 },
+      { q: "Which sorting algorithm is like sorting playing cards in your hand?", opts: ["Bubble Sort", "Selection Sort", "Insertion Sort", "Counting Sort"], ans: 2 },
+      { q: "What is the time complexity of Merge Sort?", opts: ["O(n)", "O(n²)", "O(n log n)", "O(n + k)"], ans: 2 },
+      { q: "When is Counting Sort the best choice?", opts: ["When the array is already sorted", "When elements are in a small range of values", "When the array is very large", "When elements are strings"], ans: 1 },
+      { q: "Which of these sorts is NOT stable by default?", opts: ["Insertion Sort", "Merge Sort", "Selection Sort", "Counting Sort"], ans: 2 }
+    ],
+    challenge: "Implement Counting Sort for an array where all values are between 0 and 100. Then test it with the array {4, 2, 2, 8, 3, 3, 1}. Bonus: Can you modify your Counting Sort to work with negative numbers by shifting all values up?",
+    resources: [
+      { type: "video", title: "Sorting Algorithms Visualized", url: "https://www.youtube.com/watch?v=kPRA0W1kECg", source: "YouTube" },
+      { type: "article", title: "Sorting Algorithms - CP-Algorithms", url: "https://cp-algorithms.com/", source: "CP-Algorithms" },
+      { type: "practice", title: "CSES Sorting and Searching", url: "https://cses.fi/problemset/", source: "CSES" }
+    ],
+    eli5: "Imagine you have a messy pile of toy blocks with numbers on them and you want to line them up from smallest to biggest. One way is to keep looking through the whole pile for the smallest block and put it at the front — that's Selection Sort. Another way is to pick up one block at a time and slide it into the right spot, just like when you sort cards in a game — that's Insertion Sort. The cleverest way is to split your pile into two smaller piles, sort each one, then carefully put them together like a zipper — that's Merge Sort, and it's the fastest for big piles!",
+    codeWalkthrough: [
+      "We include bits/stdc++.h for all standard library tools and use namespace std for convenience.",
+      "The selectionSort function takes a vector by reference so it modifies the original array directly.",
+      "The outer loop (i) represents which position we're filling next — starting from position 0.",
+      "For each position i, we assume it holds the minimum (minIdx = i), then scan the rest of the array to find if there's anything smaller.",
+      "If we find a smaller element at position j, we update minIdx. After scanning, we swap the minimum into position i.",
+      "The insertionSort function also takes a vector by reference. It starts from index 1 (index 0 is already 'sorted' by itself).",
+      "For each element at position i, we save it as 'key' — this is the card we need to insert into the right place.",
+      "The while loop shifts all elements bigger than key one position to the right, making room for key.",
+      "Once we find the right spot (where a[j] is not bigger than key, or we reach the beginning), we place key there.",
+      "In main(), we test both sorts on the same data and print the results — both give the same sorted output!"
+    ],
+    bugChallenge: {
+      code: `#include <bits/stdc++.h>
+using namespace std;
+
+void selectionSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = 0; i < n; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[minIdx]) minIdx = j;
+        }
+        swap(a[i], a[minIdx]);
+    }
+}
+
+int main() {
+    vector<int> v = {5, 3, 1, 4, 2};
+    selectionSort(v);
+    for (int x : v) cout << x << " ";
+}`,
+      hint: "This code actually works correctly, but it does one unnecessary iteration. Look at the outer loop's condition — when i reaches the last element, is there anything left to compare or swap?",
+      answer: "The outer loop should be 'i < n - 1' instead of 'i < n'. When i is at the last element (n-1), there are no elements after it to compare with, so that last iteration is wasted work. It still gives the correct answer, but in competitive programming, every tiny optimization counts! The fix: change 'i < n' to 'i < n - 1'."
+    },
+    difficulty: "intermediate",
+    prereqs: [24, 26]
+  },
+
+  // =============================================
+  // LESSON 50: C++ STL — Your Super Toolbox
+  // =============================================
+  {
+    id: 50,
+    title: "C++ STL — Your Super Toolbox",
+    subtitle: "Unlock the full power of C++ Standard Template Library for competitive programming!",
+    analogy: "The STL is like a super workshop full of perfectly-built tools. Instead of making your own hammer (array), you grab a vector — it's a hammer that grows when you need more nails! Need to look up a word? Use a map — it's like a magical dictionary that finds any word instantly. A set is like a jar that only keeps unique marbles and sorts them automatically. A priority_queue is like a line where the tallest person always goes first. Once you learn what each tool does, you'll solve problems 10x faster!",
+    points: [
+      { t: "Vector — The Super Array", d: "A vector is like an array that can grow and shrink. Use push_back() to add elements at the end, pop_back() to remove the last one, size() to check how many elements, and clear() to empty it. You can also use resize() to change its size. Vectors are the most-used container in CP!" },
+      { t: "Pair — Two Values in One Package", d: "A pair bundles two values together, like a name tag with both first and last name. Create one with make_pair(a, b) or {a, b}, and access the values with .first and .second. Pairs are super handy for storing coordinates (x, y) or key-value data." },
+      { t: "Set — Unique and Sorted Automatically", d: "A set stores unique elements and keeps them sorted at all times. Use insert() to add, erase() to remove, find() to search, and count() to check if something exists (returns 0 or 1). All operations are O(log n). Perfect for when you need unique sorted values!" },
+      { t: "Map — Your Magic Dictionary", d: "A map stores key-value pairs, like a real dictionary where each word (key) has a definition (value). Access values with map[key], insert with map[key] = value, and iterate through all pairs. Keys are automatically sorted, and lookup is O(log n)." },
+      { t: "Unordered Map & Set — Lightning Speed", d: "unordered_map and unordered_set are like map and set but use hashing instead of sorting. They don't keep elements in order, but lookups are O(1) on average — much faster! Use them when you don't need sorted order and want maximum speed." },
+      { t: "Priority Queue — VIP Line", d: "A priority_queue is like a line where the biggest element always gets to go first (max-heap). To make a min-heap (smallest first), declare it as priority_queue<int, vector<int>, greater<int>>. Push elements with push(), get the top with top(), and remove it with pop()." },
+      { t: "Deque — Double-Ended Queue", d: "A deque lets you add and remove from BOTH the front and the back in O(1) time. Use push_front(), push_back(), pop_front(), pop_back(). It's like a line where people can join or leave from either end. Great for sliding window problems!" },
+      { t: "Handy STL Functions", d: "The STL has awesome built-in functions: next_permutation gives the next arrangement, accumulate sums up a range, unique removes consecutive duplicates, __gcd finds greatest common divisor, and min/max/swap do exactly what their names say. These save tons of coding time!" },
+      { t: "STL Tricks for CP Success", d: "Use auto to avoid typing long type names. Range-based for loops (for (auto x : v)) make iteration clean. Sort with custom comparators using lambda functions. Combine these tricks and your CP code will be shorter, faster, and less bug-prone!" }
+    ],
+    whatIs: "The C++ Standard Template Library (STL) is a collection of ready-made data structures and algorithms that every competitive programmer must know. It includes containers like vector, set, map, and priority_queue, plus powerful functions like sort, binary_search, and next_permutation. Mastering the STL means you write less code, make fewer bugs, and solve problems faster.",
+    realWorld: "The STL mirrors tools used in real software everywhere. Google Maps uses priority queues to find shortest paths. Social media uses hash maps (unordered_map) to look up your profile in milliseconds. Online stores use sets to track unique products in your cart. Every professional C++ developer relies on the STL daily.",
+    code: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    // SET: unique sorted elements
+    set<int> s = {5, 3, 1, 4, 2, 3, 1}; // duplicates removed!
+    s.insert(6);
+    cout << "Set: ";
+    for (int x : s) cout << x << " "; // 1 2 3 4 5 6
+    cout << endl;
+
+    // MAP: key-value pairs
+    map<string, int> score;
+    score["Alice"] = 95;
+    score["Bob"] = 87;
+    score["Charlie"] = 92;
+    cout << "Bob's score: " << score["Bob"] << endl;
+
+    // PRIORITY QUEUE (max-heap by default)
+    priority_queue<int> maxPQ;
+    maxPQ.push(30); maxPQ.push(10); maxPQ.push(50);
+    cout << "Max: " << maxPQ.top() << endl; // 50
+
+    // Min-heap trick
+    priority_queue<int, vector<int>, greater<int>> minPQ;
+    minPQ.push(30); minPQ.push(10); minPQ.push(50);
+    cout << "Min: " << minPQ.top() << endl; // 10
+
+    // USEFUL FUNCTIONS
+    vector<int> v = {3, 1, 4, 1, 5};
+    sort(v.begin(), v.end()); // 1 1 3 4 5
+    int total = accumulate(v.begin(), v.end(), 0); // sum = 14
+    cout << "Sum: " << total << endl;
+
+    // NEXT PERMUTATION
+    vector<int> p = {1, 2, 3};
+    next_permutation(p.begin(), p.end());
+    cout << "Next perm: ";
+    for (int x : p) cout << x << " "; // 1 3 2
+    cout << endl;
+
+    // GCD and pair
+    cout << "GCD(12,8): " << __gcd(12, 8) << endl; // 4
+    pair<int, string> hero = {100, "Coder"};
+    cout << hero.first << " " << hero.second << endl;
+    return 0;
+}`,
+    funFact: "The C++ STL was designed by Alexander Stepanov, who spent over 20 years thinking about generic programming before the STL was accepted into C++ in 1994. He believed algorithms should be written once and work with any data type — and that's exactly what templates let you do!",
+    quiz: [
+      { q: "What does a set automatically do with duplicate elements?", opts: ["Keeps all of them", "Removes duplicates and stays sorted", "Throws an error", "Keeps only the last duplicate"], ans: 1 },
+      { q: "How do you create a min-heap priority_queue in C++?", opts: ["priority_queue<int, min>", "priority_queue<int, vector<int>, greater<int>>", "priority_queue<int, less<int>>", "min_priority_queue<int>"], ans: 1 },
+      { q: "What is the average time complexity of lookup in unordered_map?", opts: ["O(n)", "O(log n)", "O(1)", "O(n log n)"], ans: 2 },
+      { q: "Which STL function gives you the next arrangement of elements?", opts: ["next_arrangement()", "permute()", "next_permutation()", "rearrange()"], ans: 2 },
+      { q: "What container lets you efficiently add/remove from BOTH front and back?", opts: ["vector", "stack", "deque", "set"], ans: 2 }
+    ],
+    challenge: "Write a program that reads n words from input, counts how many times each word appears using a map, then prints the words and their counts sorted by frequency (highest first). Hint: Use a map to count, transfer to a vector of pairs, then sort with a custom comparator!",
+    resources: [
+      { type: "article", title: "C++ STL Cheat Sheet", url: "https://cplusplus.com/reference/stl/", source: "cplusplus.com" },
+      { type: "video", title: "STL in C++ for Competitive Programming", url: "https://www.youtube.com/watch?v=RRVYpIET_RU", source: "YouTube" },
+      { type: "practice", title: "HackerRank STL Practice", url: "https://www.hackerrank.com/domains/cpp/stl", source: "HackerRank" }
+    ],
+    eli5: "Imagine you have a super toy box with special compartments. One compartment is a magic bag (vector) that gets bigger whenever you put more toys in it. Another is a special jar (set) that only keeps one of each kind of marble and lines them up by size automatically. There's a magic notebook (map) where you write a friend's name and it instantly tells you their favorite color. And there's a special slide (priority queue) where the biggest kid always goes down first. With all these amazing compartments, you can organize anything super fast without building your own boxes from scratch!",
+    codeWalkthrough: [
+      "We include bits/stdc++.h which gives us access to ALL STL containers and algorithms — one include to rule them all!",
+      "We create a set with some duplicate values. The set automatically removes duplicates and sorts: {5,3,1,4,2,3,1} becomes {1,2,3,4,5}. We insert 6, and it goes to the right spot.",
+      "We iterate through the set with a range-based for loop. Elements come out in sorted order: 1 2 3 4 5 6.",
+      "We create a map from strings to ints for storing scores. Assigning score['Alice'] = 95 creates the entry. Accessing score['Bob'] returns 87.",
+      "We create a max-heap priority_queue. After pushing 30, 10, 50, calling top() gives us 50 — the maximum element.",
+      "For a min-heap, we use the longer declaration with greater<int>. Now top() gives 10 — the minimum. This is a super common CP trick!",
+      "We use accumulate() to sum up a sorted vector. It takes begin, end, and an initial value (0). The result is the total sum: 14.",
+      "next_permutation rearranges {1,2,3} to the next lexicographic permutation: {1,3,2}. Call it repeatedly to generate all permutations!",
+      "__gcd(12, 8) computes the greatest common divisor, returning 4. A pair bundles two values — here an int and a string.",
+      "Every one of these tools is something you'd otherwise have to code from scratch. The STL gives them to you for free — learn them and you'll code faster in every contest!"
+    ],
+    bugChallenge: {
+      code: `#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    map<string, int> freq;
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        string word;
+        cin >> word;
+        freq[word]++;
+    }
+
+    // Print words that appear more than once
+    for (auto it = freq.begin(); it != freq.end(); it++) {
+        if (it.second > 1) {
+            cout << it.first << ": " << it.second << endl;
+        }
+    }
+    return 0;
+}`,
+      hint: "Look closely at how we access the iterator's members. Map iterators are pointers to pairs — how do you access members of a pointer?",
+      answer: "The bug is using it.second and it.first instead of it->second and it->first. Since 'it' is an iterator (acts like a pointer), you must use the arrow operator (->) to access pair members, not the dot operator (.). Alternatively, you could use (*it).second. Fix both lines to use it->first and it->second and the code works perfectly!"
+    },
+    difficulty: "intermediate",
+    prereqs: [14, 26, 34, 35]
   }
 ];

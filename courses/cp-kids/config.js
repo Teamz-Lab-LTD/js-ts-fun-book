@@ -19,9 +19,9 @@ const COURSE_CONFIG = {
   ogImage: 'https://learn.teamzlab.com/og-image.png',
 
   // SEO — heavily optimized for search intent across all skill levels
-  description: 'The world\'s easiest free competitive programming course. {lessonCount} interactive lessons — learn C++, algorithms, data structures, sorting, searching, greedy, recursion, dynamic programming, graphs, BFS, DFS, bit manipulation, sieve of eratosthenes, combinatorics & contest strategy from absolute zero to advanced. Explained so simply that even a 10-year-old can master it. Quizzes, code playground, spaced repetition — no signup required.',
+  description: 'The world\'s easiest free competitive programming course. {lessonCount} interactive lessons — learn C++, STL, algorithms, data structures, sorting (bubble, selection, insertion, merge), searching, greedy, recursion, dynamic programming, graphs, BFS, DFS, bit manipulation, sieve of eratosthenes, combinatorics & contest strategy from absolute zero to advanced. Explained so simply that even a 10-year-old can master it. Quizzes, code playground, spaced repetition — no signup required.',
   keywords: 'competitive programming course free, learn competitive programming from scratch, competitive programming for beginners, cp tutorial zero to hero, c++ competitive programming, algorithm course for beginners, codeforces tutorial, competitive programming roadmap, free algorithm course no signup, data structures and algorithms easy, learn sorting searching greedy recursion, competitive programming for kids, best competitive programming course, interactive coding course free, problem solving course, ICPC preparation, IOI training, USACO beginner guide, competitive programming step by step, how to start competitive programming, cp roadmap 2025 2026, easy algorithm tutorial, beginner friendly cp course, programming contest preparation, competitive coding for students, learn algorithms with examples, c++ for competitive programming, online judge tutorial, competitive programming practice, gamified algorithm course, dynamic programming tutorial easy, dp for beginners, graph algorithms beginner, bfs dfs tutorial, bit manipulation competitive programming, learn dp from scratch, graph theory easy course, coin change problem tutorial, fibonacci dynamic programming, sieve of eratosthenes tutorial, combinatorics for beginners, permutations combinations cp, nCr nPr competitive programming, prime numbers algorithm, pascal triangle tutorial',
-  topics: ['C++ Fundamentals', 'Input/Output', 'Conditionals', 'Loops', 'Arrays', 'Strings', 'Functions', 'Sorting Algorithms', 'Binary Search', 'Math for CP', 'Number Theory', 'Sieve of Eratosthenes', 'Greedy Algorithms', 'Recursion', 'Stacks & Queues', 'Two Pointers', 'Prefix Sums', 'Frequency Counting', 'Time Complexity', 'Contest Strategy', 'Debugging', 'Dynamic Programming', 'Graph Algorithms', 'BFS & DFS', 'Bit Manipulation', 'Combinatorics'],
+  topics: ['C++ Fundamentals', 'Input/Output', 'Conditionals', 'Loops', 'Arrays', 'Strings', 'Functions', 'Sorting Algorithms', 'Selection Sort', 'Insertion Sort', 'Merge Sort', 'Binary Search', 'Math for CP', 'Number Theory', 'Sieve of Eratosthenes', 'Greedy Algorithms', 'Recursion', 'Stacks & Queues', 'Two Pointers', 'Prefix Sums', 'Frequency Counting', 'Time Complexity', 'Contest Strategy', 'Debugging', 'Dynamic Programming', 'Graph Algorithms', 'BFS & DFS', 'Bit Manipulation', 'Combinatorics', 'C++ STL'],
   educationalLevel: 'Absolute Beginner to Advanced',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
@@ -35,7 +35,7 @@ const COURSE_CONFIG = {
     'Strings & Text': [17, 18],
     'Functions': [19, 20],
     'Math & Number Theory': [21, 22, 23, 46],
-    'Sorting & Searching': [24, 25, 26],
+    'Sorting & Searching': [24, 25, 26, 49],
     'Problem Solving Patterns': [27, 28, 29],
     'Greedy Algorithms': [30, 31],
     'Recursion': [32, 33],
@@ -44,6 +44,7 @@ const COURSE_CONFIG = {
     'Graph Algorithms': [43, 44],
     'Bit Manipulation': [45],
     'Combinatorics': [47],
+    'C++ STL Toolkit': [50],
     'Contest Mastery': [36, 37, 38, 39, 40, 48]
   },
 
@@ -96,7 +97,9 @@ const COURSE_CONFIG = {
     45: ['0 and 1', 'AND/OR/XOR', 'Shift', 'Bit Trick!'],
     46: ['2,3,5...', 'Cross Out', 'Sieve', 'All Primes!'],
     47: ['Pick r', 'Order?', 'nPr/nCr', 'Count!'],
-    48: ['All Tools', 'Which One?', 'Practice', 'Champion!']
+    48: ['All Tools', 'Which One?', 'Practice', 'Champion!'],
+    49: ['Selection', 'Insertion', 'Merge', 'Compare!'],
+    50: ['vector', 'set/map', 'priority_queue', 'STL Pro!']
   },
 
   // Spaced Repetition settings
@@ -125,5 +128,5 @@ const COURSE_CONFIG = {
   },
 
   // Footer stats
-  footerTagline: 'Master C++, Algorithms, Sorting, Binary Search, Greedy, Recursion, Dynamic Programming, Graphs, BFS, DFS, Bit Manipulation, Sieve, Combinatorics, Stacks, Queues, Two Pointers, Prefix Sums & Contest Strategy — explained so simply that anyone can learn. The world\'s most beginner-friendly competitive programming course.'
+  footerTagline: 'Master C++, STL, Sorting (Bubble, Selection, Insertion, Merge), Binary Search, Greedy, Recursion, Dynamic Programming, Graphs, BFS, DFS, Bit Manipulation, Sieve, Combinatorics, Stacks, Queues, Two Pointers, Prefix Sums & Contest Strategy — explained so simply that anyone can learn. The world\'s most beginner-friendly competitive programming course.'
 };
