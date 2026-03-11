@@ -1,0 +1,10858 @@
+const LESSONS_DATA = [
+{
+  id: 1,
+  title: "Kotlin Basics: val/var, Null Safety, Smart Casts & Data Classes",
+  subtitle: "The fundamentals asked in every Android interview — master these first",
+  analogy: "val/var is like a permanent marker vs a pencil. Null safety is like a bouncer at a club — you prove your identity (non-null) before you get in, or you get redirected to the 'null entrance' gracefully.",
+  points: [
+    { t: "val vs var", d: "val is read-only (like Java final) — the reference cannot be reassigned. var is mutable. Prefer val by default for immutability and thread safety. val does NOT mean the object itself is immutable — a val List can still be mutable." },
+    { t: "Nullable types with ?", d: "In Kotlin, String is non-nullable (guaranteed non-null). String? is nullable. The compiler enforces null checks at compile time, eliminating NullPointerException at runtime when used correctly." },
+    { t: "Safe call operator ?.", d: "user?.address?.city — chains null checks. If any part is null, the entire expression short-circuits to null instead of throwing NPE. Essential for deeply nested nullable objects in enterprise data models." },
+    { t: "Elvis operator ?:", d: "val city = user?.address?.city ?: 'Unknown' — provides a default value when the left side is null. Can also throw: val id = userId ?: throw IllegalStateException('User ID required')" },
+    { t: "Non-null assertion !!", d: "Forces a nullable type to non-null — throws KotlinNullPointerException if null. Use ONLY when you are 100% certain the value is non-null and the compiler cannot infer it. In production code, this is usually a code smell." },
+    { t: "let scope function for null checks", d: "user?.let { safeUser -> process(safeUser) } — executes the block only if user is non-null. Inside the block, safeUser is guaranteed non-null. Replaces verbose if (user != null) { } patterns." },
+    { t: "Smart casts with is", d: "After an is check, Kotlin automatically casts the type — no explicit cast needed. if (shape is Circle) { shape.radius } works because the compiler knows shape is a Circle inside the if block." },
+    { t: "when expression", d: "when replaces Java switch but is far more powerful — it's an expression (returns a value), supports arbitrary conditions, ranges, type checks, and can destructure. Exhaustive when sealed classes/enums forces all cases." },
+    { t: "Data classes", d: "data class User(val id: Int, val name: String) auto-generates: equals(), hashCode(), toString(), copy(), componentN() functions for destructuring. Ideal for DTOs, API responses, UI state models." },
+    { t: "copy() function", d: "val updated = user.copy(name = 'Alice') creates a new instance with only specified fields changed. All other fields are copied from the original. Critical for immutable state management in MVI/Compose architectures." },
+    { t: "Destructuring declarations", d: "val (id, name) = user unpacks data class component functions. Works in for loops: for ((key, value) in map). Behind the scenes calls component1(), component2() etc." },
+    { t: "lateinit vs lazy", d: "lateinit var is for var properties initialized later (not null, throws if accessed before init). lazy { } is for val properties initialized on first access (thread-safe by default). Use lateinit for dependency injection, lazy for expensive computed properties." }
+  ],
+  whatIs: "Kotlin's type system and core syntax form the foundation of every Android interview. val/var control mutability, null safety eliminates NPE at compile time using the ?, ?., ?:, and !! operators, smart casts reduce boilerplate, when expressions replace switch with power, and data classes generate boilerplate-free value objects.",
+  realWorld: "In a field operations enterprise app, you might model a WorkOrder as a data class with nullable assignedTo: Employee? — because orders can be unassigned. Using ?.let ensures you only send push notifications when there IS an assignee, while ?: provides default status text in the UI. Smart casts in a when expression dispatch different sync strategies based on the WorkOrder subtype.",
+  code: `// val vs var — prefer val
+val BASE_URL = "https://api.fieldops.com"
+var retryCount = 0
+
+// Null safety in a real model
+data class WorkOrder(
+    val id: String,
+    val title: String,
+    val assignedTo: Employee?,   // nullable — can be unassigned
+    val completedAt: Long? = null
+)
+
+data class Employee(val id: String, val name: String, val email: String)
+
+// Safe call chain + Elvis
+fun getAssigneeName(order: WorkOrder): String {
+    return order.assignedTo?.name ?: "Unassigned"
+}
+
+// let for null-safe block execution
+fun notifyAssignee(order: WorkOrder) {
+    order.assignedTo?.let { employee ->
+        sendPushNotification(employee.email, order.title)
+    }
+}
+
+// Smart cast with when expression
+fun describeOrder(order: Any): String = when (order) {
+    is WorkOrder -> "Work Order: \${order.title}"
+    is String    -> "Raw ID: $order"
+    else         -> "Unknown: $order"
+}
+
+// copy() for immutable state update
+fun markComplete(order: WorkOrder, timestamp: Long): WorkOrder {
+    return order.copy(completedAt = timestamp)
+}
+
+// Destructuring
+fun logOrder(order: WorkOrder) {
+    val (id, title) = order
+    println("Processing order $id: $title")
+}`,
+  funFact: "Kotlin's null safety has been shown to eliminate ~35% of Android crash reports that were caused by NullPointerException in Java codebases. Google's internal data showed NPE was the #1 cause of Android app crashes before Kotlin adoption.",
+  quiz: [
+    {
+      q: "What is the key difference between val and a Java final field?",
+      opts: [
+        "val means the object is deeply immutable; final only prevents reassignment",
+        "val prevents reference reassignment like final, but the referenced object can still be mutable",
+        "val and final are completely equivalent in all ways",
+        "val compiles to a Kotlin-only construct with no Java equivalent"
+      ],
+      ans: 1
+    },
+    {
+      q: "Given: val list: MutableList<Int> = mutableListOf(1,2,3) — which statement is TRUE?",
+      opts: [
+        "This won't compile because val cannot hold a mutable collection",
+        "The list reference cannot be reassigned, but elements can be added/removed",
+        "Both the reference and the list contents are immutable",
+        "You must use var when holding a MutableList"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does user?.address?.city return if user is non-null but address is null?",
+      opts: [
+        "Throws NullPointerException",
+        "Returns an empty string",
+        "Returns null",
+        "Throws KotlinNullPointerException"
+      ],
+      ans: 2
+    },
+    {
+      q: "In a senior Android interview, when is !! (non-null assertion) appropriate?",
+      opts: [
+        "Whenever you are confident the value won't be null at runtime",
+        "Only in test code, never in production",
+        "When the compiler cannot infer non-nullability but you have a logical guarantee, and you want an immediate crash rather than silent null propagation",
+        "As a replacement for Elvis operator for conciseness"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does data class auto-generate that a regular class does NOT?",
+      opts: [
+        "Primary constructor and init block",
+        "equals(), hashCode(), toString(), copy(), and componentN() functions",
+        "Companion object and factory methods",
+        "Sealed subclasses and when exhaustiveness"
+      ],
+      ans: 1
+    },
+    {
+      q: "When using when as an expression (returning a value), what is required?",
+      opts: [
+        "The when must have an else branch unless the type is Boolean",
+        "The when must be exhaustive — either cover all possible values or have an else branch",
+        "Each branch must be a single expression, not a block",
+        "The subject must be a sealed class or enum"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between lateinit var and lazy {}?",
+      opts: [
+        "lateinit is for primitives; lazy is for objects",
+        "Both are identical — just different syntax for deferred initialization",
+        "lateinit is for var properties initialized after construction (throws UninitializedPropertyAccessException if accessed early); lazy is for val properties initialized on first access",
+        "lazy is thread-unsafe; lateinit is thread-safe"
+      ],
+      ans: 2
+    },
+    {
+      q: "In a smart cast scenario — if (obj is String) { obj.length } — when does the smart cast FAIL to work?",
+      opts: [
+        "When obj is a val local variable",
+        "When obj is a var property that could be changed by another thread between the check and the use",
+        "When obj is passed as a function parameter",
+        "Smart casts always work with is checks"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Model a school management app's Student data class with: id (non-nullable), name (non-nullable), guardianEmail (nullable), gpa (nullable Double). Write a function that returns a formatted summary string using safe calls, Elvis, and a when expression that returns 'Honors' / 'Passing' / 'At Risk' based on GPA. Write a markPromoted() function using copy().",
+  resources: [
+    { type: "docs", title: "Kotlin Basic Syntax — Official Docs", url: "https://kotlinlang.org/docs/basic-syntax.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Null Safety in Kotlin", url: "https://kotlinlang.org/docs/null-safety.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Data Classes", url: "https://kotlinlang.org/docs/data-classes.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Control Flow: when expression", url: "https://kotlinlang.org/docs/control-flow.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Android Kotlin Style Guide", url: "https://developer.android.com/kotlin/style-guide", source: "developer.android.com" }
+  ],
+  eli5: "Imagine you have a toy box. val means you can only put toys IN this box (you can't swap the box for a different box). var means you can swap the whole box. Null safety means some boxes have a warning label — 'this might be empty!' — and Kotlin makes you CHECK before reaching in, so you never get hurt by an empty box surprise.",
+  codeWalkthrough: [
+    "val BASE_URL = ... — compiler enforces this reference can never be reassigned; use for constants and injected dependencies",
+    "data class WorkOrder(...) — compiler generates equals/hashCode based on all constructor properties; two WorkOrders with same id/title are equal",
+    "val assignedTo: Employee? — the ? makes this property nullable; compiler will reject direct access without a null check",
+    "order.assignedTo?.name — safe call: if assignedTo is null, this returns null instead of throwing; chains safely",
+    "?: 'Unassigned' — Elvis: when the left side is null, return this default; right side can also be throw or return",
+    "order.assignedTo?.let { employee -> ... } — let block only executes when assignedTo is non-null; employee inside is guaranteed non-null String",
+    "is WorkOrder -> order.title — smart cast: compiler knows order is WorkOrder inside this branch, no cast needed",
+    "order.copy(completedAt = timestamp) — creates a NEW WorkOrder with all fields copied except completedAt; original is unchanged",
+    "val (id, title) = order — destructuring calls order.component1() and order.component2() automatically",
+    "fun notifyAssignee is unit-returning — no return type needed; Kotlin infers Unit (equivalent to Java void)"
+  ],
+  bugChallenge: {
+    code: `data class User(var id: Int, var name: String)
+
+fun processUser(input: Any) {
+    if (input is User) {
+        println(input.name)
+    }
+    input.name // smart cast here
+}
+
+fun getDisplayName(user: User?): String {
+    return user!!.name
+}`,
+    hint: "Two bugs: one with smart cast scope, one with force-unwrapping a nullable parameter",
+    answer: "Bug 1: 'input.name' outside the if block fails — smart cast only applies INSIDE the is-check block. Fix: move usage inside the if, or cast explicitly. Bug 2: user!!.name will throw KotlinNullPointerException if user is null — the function accepts User? so null is valid input. Fix: return user?.name ?: 'Guest'"
+  },
+  difficulty: "beginner",
+  prereqs: []
+},
+{
+  id: 2,
+  title: "Collections, Lambdas, Scope Functions & Higher-Order Functions",
+  subtitle: "Functional Kotlin patterns that senior Android devs use daily",
+  analogy: "Collections are your data containers, lambdas are mini-functions you can pass around like notes, scope functions are context-switchers that let you 'be inside' an object temporarily, and higher-order functions are managers who accept other functions as their instructions.",
+  points: [
+    { t: "Immutable vs Mutable collections", d: "listOf(), mapOf(), setOf() return read-only views (not truly immutable — the underlying data can change if it's a mutableList). mutableListOf(), mutableMapOf() return mutable collections. Always expose read-only interfaces from ViewModels and repositories." },
+    { t: "map operator", d: "Transforms each element and returns a new list. users.map { it.name } returns List<String>. Does not mutate the original. In Android: transform domain models to UI models." },
+    { t: "filter operator", d: "Returns a new list with only elements matching the predicate. orders.filter { it.status == Status.PENDING }. Combine with map for transform-then-filter pipelines." },
+    { t: "groupBy, associateBy, partition", d: "groupBy { it.category } returns Map<K, List<V>>. associateBy { it.id } returns Map<K, V> (last wins on duplicate keys). partition { it.isActive } returns Pair<List, List> split by predicate." },
+    { t: "fold and reduce", d: "fold(initial) { acc, item -> } accumulates with a starting value. reduce { acc, item -> } uses first element as initial — throws on empty list. Use fold for safe aggregation (totals, string building, combining states)." },
+    { t: "Lambda syntax", d: "{ param -> body } is the full form. { it.name } uses implicit 'it' for single-param lambdas. Trailing lambda syntax: list.filter { it > 0 } instead of list.filter({ it > 0 }). Last lambda outside parens is idiomatic Kotlin." },
+    { t: "let scope function", d: "obj.let { it -> transform(it) } — 'it' refers to the receiver. Returns the lambda result. Primary use: null-safe blocks (obj?.let { }) and transforming a value in a chain without a temp variable." },
+    { t: "apply scope function", d: "obj.apply { this.property = value } — 'this' is the receiver, returns the receiver itself. Used for object initialization and builder patterns: AlertDialog.Builder(ctx).apply { setTitle(...); setMessage(...) }.create()" },
+    { t: "run scope function", d: "obj.run { doSomething() } — 'this' is the receiver, returns lambda result. Also has standalone run { } form for grouping expressions. Used when you need to compute a result from an object's context." },
+    { t: "with scope function", d: "with(obj) { doSomething() } — NOT an extension function, receiver via parameter. 'this' is obj, returns lambda result. Use when the object is not nullable and you want to operate on it multiple times." },
+    { t: "also scope function", d: "obj.also { it -> sideEffect(it) } — 'it' is the receiver, returns the receiver. Used for side effects like logging without interrupting a chain. list.filter { }.also { log(it.size) }.map { }" },
+    { t: "inline functions and performance", d: "inline fun <T> measure(block: () -> T): T removes the lambda overhead at compile time — the lambda body is inlined at the call site. Use for performance-critical higher-order functions. Required for reified type parameters." }
+  ],
+  whatIs: "Kotlin's collection API and functional operators let you write concise, readable data transformations. Scope functions (let/run/with/apply/also) are syntactic sugar that organize code around objects. Higher-order functions that accept lambdas form the backbone of coroutines, Flow, and modern Android APIs like setContent {} in Compose.",
+  realWorld: "In a school management platform with Firebase + Room, you fetch a List<StudentEntity> from Room, use map to convert to List<StudentUiModel> for display, filter for only enrolled students, groupBy for class section tabs, and fold to compute total attendance percentage. apply sets up the RecyclerView adapter, let handles nullable selected student in edit screen.",
+  code: `// Collection transformations — school management scenario
+data class Student(
+    val id: String,
+    val name: String,
+    val section: String,
+    val attendanceRate: Double,
+    val isEnrolled: Boolean
+)
+
+fun buildSectionMap(students: List<Student>): Map<String, List<Student>> =
+    students
+        .filter { it.isEnrolled }
+        .groupBy { it.section }
+
+fun averageAttendance(students: List<Student>): Double =
+    if (students.isEmpty()) 0.0
+    else students.fold(0.0) { acc, s -> acc + s.attendanceRate } / students.size
+
+// Scope functions
+fun setupAdapter(recyclerView: RecyclerView, students: List<Student>) {
+    recyclerView.apply {
+        layoutManager = LinearLayoutManager(context)
+        adapter = StudentAdapter(students)
+        setHasFixedSize(true)
+    }
+}
+
+// let for null-safe navigation
+fun editStudent(selectedStudent: Student?) {
+    selectedStudent?.let { student ->
+        val intent = Intent(context, EditStudentActivity::class.java).apply {
+            putExtra("student_id", student.id)
+        }
+        startActivity(intent)
+    }
+}
+
+// also for side-effect logging in a chain
+fun processEnrollment(students: List<Student>): List<Student> =
+    students
+        .filter { it.isEnrolled }
+        .also { enrolled -> Timber.d("Processing \${enrolled.size} enrolled students") }
+        .sortedBy { it.name }`,
+  funFact: "Kotlin's scope functions are so idiomatic that Android's own Jetpack libraries are built around them — ViewBinding uses apply{}, coroutine builders use trailing lambdas, and Compose's DSL is entirely built on trailing lambda / receiver lambda patterns.",
+  quiz: [
+    {
+      q: "What is the difference between listOf() and mutableListOf() in terms of true immutability?",
+      opts: [
+        "listOf() creates a truly immutable list — the underlying array cannot be modified",
+        "listOf() returns a read-only VIEW — if the backing list is mutable, changes are visible through the listOf reference",
+        "Both are identical under the hood — just different compile-time interfaces",
+        "mutableListOf() is deprecated in favor of buildList{} in Kotlin 1.9+"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does associateBy { it.id } return for a list with duplicate ids?",
+      opts: [
+        "Throws IllegalArgumentException for duplicate keys",
+        "Returns the FIRST element for each duplicate key",
+        "Returns the LAST element for each duplicate key",
+        "Returns a Map<K, List<V>> like groupBy"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the key difference between fold and reduce?",
+      opts: [
+        "fold is for numbers; reduce is for strings",
+        "fold requires an explicit initial accumulator value; reduce uses the first element as the initial value and throws on empty collections",
+        "reduce is more performant than fold for large collections",
+        "They are identical — fold is just the newer API"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which scope function returns the receiver object itself (making it chainable)?",
+      opts: [
+        "let and run",
+        "apply and also",
+        "with and run",
+        "let and with"
+      ],
+      ans: 1
+    },
+    {
+      q: "In an Android ViewModel, you want to log the size of a filtered list without breaking a method chain. Which scope function is most appropriate?",
+      opts: [
+        "let — transform the list and return the size",
+        "run — execute a block and return the result",
+        "also — perform a side effect (logging) and return the original list",
+        "apply — configure the list in place"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the primary benefit of marking a higher-order function as inline?",
+      opts: [
+        "It makes the function run on a background thread automatically",
+        "It eliminates the lambda object allocation and call overhead by inlining the lambda body at the call site",
+        "It allows the function to be called from Java code",
+        "It makes the function available as a top-level declaration"
+      ],
+      ans: 1
+    },
+    {
+      q: "You have users.map { it.toUiModel() }.filter { it.isVisible }. A senior reviewer suggests reversing the order. Why?",
+      opts: [
+        "filter().map() is wrong — you must always map before filter",
+        "filter().map() is more performant — you reduce the collection size before doing the heavier toUiModel() transformation",
+        "The order makes no difference for correctness or performance",
+        "map must come first because filter needs UiModel properties"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does 'this' refer to inside an apply block?",
+      opts: [
+        "The lambda itself",
+        "The outer class instance",
+        "The receiver object that apply was called on",
+        "It depends on whether apply is used on a class or interface"
+      ],
+      ans: 2
+    }
+  ],
+  challenge: "Given a List<ClaimRecord> with fields: id, agentId, amount (Double), status (PENDING/APPROVED/REJECTED), write functions using only collection operators to: 1) Get total approved amount per agent as Map<String, Double>. 2) Partition into (needsReview: List, processed: List). 3) Find the top 3 agents by approved claim count. Use no loops — only map/filter/groupBy/fold/sortedByDescending/take.",
+  resources: [
+    { type: "docs", title: "Kotlin Collections Overview", url: "https://kotlinlang.org/docs/collections-overview.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Scope Functions", url: "https://kotlinlang.org/docs/scope-functions.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Lambdas and Higher-Order Functions", url: "https://kotlinlang.org/docs/lambdas.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Inline Functions", url: "https://kotlinlang.org/docs/inline-functions.html", source: "kotlinlang.org" }
+  ],
+  eli5: "Imagine you have a bag of colored balls (your collection). map is painting each ball a new color. filter keeps only the balls you like. fold counts up the total weight of all the balls. The scope functions (let/apply/run/with/also) are like saying 'I'm going to stand inside this ball for a moment and work on it' — each one lets you do that in slightly different ways.",
+  codeWalkthrough: [
+    "students.filter { it.isEnrolled } — creates a new list with only enrolled students; original list untouched",
+    ".groupBy { it.section } — transforms the filtered list into Map<String, List<Student>> keyed by section",
+    "students.fold(0.0) { acc, s -> acc + s.attendanceRate } — starts at 0.0, adds each student's rate; safe on empty lists",
+    "recyclerView.apply { ... } — 'this' inside is the recyclerView; returns recyclerView itself; perfect for initialization",
+    "layoutManager = LinearLayoutManager(context) — no 'recyclerView.' prefix needed inside apply; 'this' is implicit",
+    "selectedStudent?.let { student -> } — block only runs if selectedStudent is non-null; student is non-null inside",
+    "Intent(...).apply { putExtra(...) } — creates Intent and configures it in one expression; no temp variable needed",
+    ".also { enrolled -> Timber.d(...) } — side effect (logging) without interrupting the chain; returns the same list",
+    ".sortedBy { it.name } — terminal sort operation; returns a new sorted list; chain is now complete"
+  ],
+  bugChallenge: {
+    code: `fun getTotalAmount(orders: List<Order>): Double {
+    return orders.reduce { acc, order -> acc + order.amount }
+}
+
+fun getActiveUserNames(users: List<User>?): List<String> {
+    return users.map { it.name }.filter { it.isActive }
+}`,
+    hint: "Bug 1: reduce throws on empty list. Bug 2: two issues — nullable list not handled, and filter condition is wrong",
+    answer: "Bug 1: Use fold(0.0) { acc, o -> acc + o.amount } — reduce throws EmptyCollectionException on empty list. Bug 2: users.map { } on a nullable List? won't compile — fix with users?.map { it.name } ?: emptyList(). Also, isActive is a property of User not String — filter must happen BEFORE map: users?.filter { it.isActive }?.map { it.name } ?: emptyList()"
+  },
+  difficulty: "beginner",
+  prereqs: [1]
+},
+{
+  id: 3,
+  title: "OOP in Kotlin: Interfaces, Abstract Classes & Composition",
+  subtitle: "Design patterns and OOP principles that define senior Android architecture",
+  analogy: "An interface is a job description — it lists what you must do, not how. An abstract class is a half-built house — some rooms are complete, others are just empty frames you must finish. Composition is hiring specialists instead of one person who does everything.",
+  points: [
+    { t: "Primary vs secondary constructors", d: "Primary constructor is in the class header: class User(val id: Int, val name: String). Secondary constructors use constructor keyword and must delegate to primary with this(). In Kotlin, prefer primary constructors + default parameter values over multiple secondary constructors." },
+    { t: "init block", d: "init { } runs as part of the primary constructor. Used for validation: init { require(name.isNotBlank()) { 'Name cannot be blank' } }. Multiple init blocks run in declaration order interleaved with property initializers." },
+    { t: "open keyword", d: "Kotlin classes are final by default (cannot be subclassed). You must explicitly mark a class open to allow inheritance. This is the opposite of Java and encourages composition over inheritance by making inheritance opt-in." },
+    { t: "abstract classes", d: "abstract class defines a contract with partial implementation. abstract fun process() must be overridden. Non-abstract methods provide shared behavior. Cannot be instantiated directly. Use when subclasses share significant implementation." },
+    { t: "interfaces with default methods", d: "Kotlin interfaces can have default method implementations (unlike Java 7 interfaces). interface Validator { fun validate(input: String): Boolean; fun isValid(input: String) = validate(input) }. Classes can implement multiple interfaces." },
+    { t: "Composition over inheritance", d: "Instead of extending a class to reuse behavior, hold a reference to it. class OrderRepository(private val db: Database, private val api: ApiService). This avoids fragile base class problem, is easier to test (mock dependencies), and is the foundation of Clean Architecture." },
+    { t: "Interface delegation with by", d: "class LoggingList<T>(private val delegate: MutableList<T>) : MutableList<T> by delegate — delegates all MutableList methods to delegate, overriding only what you need. Kotlin's by keyword generates all the delegation boilerplate." },
+    { t: "Sealed classes for type hierarchies", d: "sealed class restricts subclasses to the same file/package. When used in when expressions, the compiler verifies exhaustiveness. Perfect for Result types, navigation events, UI states — any bounded set of types." },
+    { t: "Override rules", d: "override fun must be explicit in Kotlin. You can override a val with var (widening) but not var with val. Final override prevents further subclassing: final override fun toString()." },
+    { t: "Abstract vs Interface: when to choose", d: "Use abstract class when: subclasses share state (fields), you need constructor parameters, or there's significant shared implementation. Use interface when: defining a contract without state, multiple inheritance is needed, or you want maximum flexibility for testing/mocking." },
+    { t: "Data class inheritance restrictions", d: "data classes cannot be extended by other data classes (they can extend abstract classes/interfaces). Trying to extend a data class with another data class is a compile error. Use sealed class hierarchies instead." },
+    { t: "Visibility modifiers", d: "Kotlin defaults to public (opposite of Java). private: file/class scope. protected: class and subclasses. internal: same Gradle module. In Clean Architecture, use internal for implementation classes and expose only interfaces publicly." }
+  ],
+  whatIs: "OOP in Kotlin centers around composition over inheritance, explicit openness (classes are final by default), and powerful interface capabilities including default methods and delegation. Senior Android interviews test whether you know when to use abstract classes vs interfaces, how to design for testability through dependency injection, and how to apply SOLID principles in Android architecture.",
+  realWorld: "In a fintech claims processing app, you'd define a ClaimProcessor interface with validate() and process() methods. A BaseClaimProcessor abstract class provides shared audit logging and error handling. Specific processors (AutoClaimProcessor, ManualClaimProcessor) compose specialized services (FraudDetector, DocumentValidator) rather than inheriting them. The 'by' delegation creates a LoggingClaimRepository that wraps the real repository without subclassing it.",
+  code: `// Interface with default methods
+interface ClaimProcessor {
+    fun validate(claim: Claim): ValidationResult
+    fun process(claim: Claim): ProcessingResult
+
+    // Default method — shared across all implementations
+    fun canProcess(claim: Claim): Boolean = validate(claim).isValid
+}
+
+// Abstract class with shared implementation
+abstract class BaseClaimProcessor(
+    private val auditLogger: AuditLogger
+) : ClaimProcessor {
+
+    override fun process(claim: Claim): ProcessingResult {
+        auditLogger.log("Processing claim: \${claim.id}")
+        return doProcess(claim).also { result ->
+            auditLogger.log("Claim \${claim.id} result: \${result.status}")
+        }
+    }
+
+    // Template method pattern — subclasses fill in the logic
+    protected abstract fun doProcess(claim: Claim): ProcessingResult
+}
+
+// Composition — holds specialists, doesn't inherit them
+class AutoClaimProcessor(
+    auditLogger: AuditLogger,
+    private val fraudDetector: FraudDetector,       // composed
+    private val documentValidator: DocumentValidator  // composed
+) : BaseClaimProcessor(auditLogger) {
+
+    override fun validate(claim: Claim): ValidationResult {
+        val fraudCheck = fraudDetector.check(claim)
+        val docCheck = documentValidator.validate(claim.documents)
+        return ValidationResult(fraudCheck.passed && docCheck.passed)
+    }
+
+    override fun doProcess(claim: Claim): ProcessingResult =
+        ProcessingResult(status = Status.AUTO_APPROVED, claimId = claim.id)
+}
+
+// Interface delegation with 'by'
+class LoggingClaimRepository(
+    private val delegate: ClaimRepository,
+    private val logger: Logger
+) : ClaimRepository by delegate {
+
+    override fun save(claim: Claim): Claim {
+        logger.d("Saving claim \${claim.id}")
+        return delegate.save(claim)  // intercept only save()
+    }
+}`,
+  funFact: "Kotlin's 'classes are final by default' design was intentional — it implements Joshua Bloch's 'Item 19: Design and document for inheritance or else prohibit it' from Effective Java. Google's Android team has cited this as one of the most impactful Kotlin features for reducing fragile inheritance bugs in large codebases.",
+  quiz: [
+    {
+      q: "Why are Kotlin classes final by default, unlike Java?",
+      opts: [
+        "For performance — final classes are faster to call",
+        "To implement 'design and document for inheritance or prohibit it' — inheritance must be an explicit, deliberate design decision",
+        "To match Swift's behavior for cross-platform consistency",
+        "Because Kotlin uses interfaces for all polymorphism instead"
+      ],
+      ans: 1
+    },
+    {
+      q: "When should you prefer an abstract class over an interface in Android?",
+      opts: [
+        "When you need multiple inheritance",
+        "When subclasses need to share mutable state (fields) or when there is significant shared implementation that requires constructor parameters",
+        "Abstract classes are always preferable because they provide more control",
+        "When you want to allow mocking in unit tests"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does the 'by' keyword do in: class CachedRepo(private val db: Repo) : Repo by db?",
+      opts: [
+        "Creates a subclass of db at runtime",
+        "Generates delegation boilerplate — all Repo interface methods on CachedRepo are automatically forwarded to db, overrideable selectively",
+        "Creates a lazy proxy that forwards only the first call",
+        "It's syntactic sugar for extending the db class"
+      ],
+      ans: 1
+    },
+    {
+      q: "Can a data class extend another data class in Kotlin?",
+      opts: [
+        "Yes, using the open keyword on the parent",
+        "Yes, but only if the parent has no properties",
+        "No — data classes cannot be extended by other data classes; this is a compile error",
+        "Yes, using the @DataInheritance annotation"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the 'fragile base class' problem that composition over inheritance solves?",
+      opts: [
+        "Base classes cannot be used across modules in multi-module projects",
+        "Changes to a base class can unexpectedly break subclasses in non-obvious ways, especially when subclass override behavior depends on internal base class implementation details",
+        "Abstract classes in Kotlin cannot be serialized",
+        "Base classes are slower to instantiate than interface implementations"
+      ],
+      ans: 1
+    },
+    {
+      q: "In Android's Repository pattern, why do you inject an interface (UserRepository) rather than a concrete class (UserRepositoryImpl)?",
+      opts: [
+        "Interfaces are faster to call through JVM dispatch",
+        "It allows you to swap implementations (fake/mock in tests, different implementations per flavor) without changing callers — Dependency Inversion Principle",
+        "Android's Hilt DI framework requires interface injection",
+        "Concrete class injection causes memory leaks"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between init {} and a secondary constructor?",
+      opts: [
+        "init runs before the primary constructor; secondary constructors run after",
+        "init is part of the primary constructor flow and always runs; secondary constructors are alternative construction paths that must delegate to the primary constructor",
+        "They are equivalent — init is just a shorter syntax for secondary constructors",
+        "init is only for property validation; secondary constructors are for different parameter sets"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does 'internal' visibility modifier mean in a multi-module Android project?",
+      opts: [
+        "The declaration is visible only within the same class",
+        "The declaration is visible only within the same Gradle module — other modules cannot access it even if they depend on this module",
+        "The declaration is visible to all submodules but not the root module",
+        "Internal is equivalent to package-private in Java"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Design a notification system for a SaaS collaboration app. Define a NotificationChannel interface with send(notification: Notification): Result<Unit> and isAvailable(): Boolean. Create an abstract BaseNotificationChannel that handles retry logic (3 attempts with exponential backoff). Implement PushChannel and EmailChannel using composition (inject PushService and EmailService respectively). Create a MultiChannelNotifier that uses a List<NotificationChannel> and tries each available channel.",
+  resources: [
+    { type: "docs", title: "Classes and Inheritance — Kotlin", url: "https://kotlinlang.org/docs/classes.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Interfaces in Kotlin", url: "https://kotlinlang.org/docs/interfaces.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Delegation Pattern in Kotlin", url: "https://kotlinlang.org/docs/delegation.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Android Architecture: Repository Pattern", url: "https://developer.android.com/topic/architecture/data-layer", source: "developer.android.com" }
+  ],
+  eli5: "An interface is like a restaurant menu — it says 'we serve pizza and pasta' but doesn't tell the kitchen how to make them. An abstract class is like a recipe that has some steps filled in and some blank. Composition is like a chef who calls a pizza expert AND a pasta expert, instead of learning everything themselves. That's how modern Android apps are built!",
+  codeWalkthrough: [
+    "interface ClaimProcessor with default method canProcess() — implementors get canProcess() for free; must implement validate() and process()",
+    "abstract class BaseClaimProcessor(private val auditLogger: AuditLogger) — constructor injection of a dependency; auditLogger is shared across all subclasses",
+    "override fun process() calls auditLogger before and after — template method pattern; subclasses override doProcess() not process()",
+    "protected abstract fun doProcess() — forces subclasses to provide the core logic; protected means subclass-visible only",
+    "class AutoClaimProcessor(...) : BaseClaimProcessor(auditLogger) — passes auditLogger up to parent via constructor delegation",
+    "private val fraudDetector: FraudDetector — COMPOSITION: AutoClaimProcessor HAS a FraudDetector, doesn't extend it",
+    "class LoggingClaimRepository(...) : ClaimRepository by delegate — compiler generates all ClaimRepository methods forwarding to delegate",
+    "override fun save() — only save() is intercepted; all other ClaimRepository methods pass through to delegate automatically"
+  ],
+  bugChallenge: {
+    code: `interface Syncable {
+    fun sync(): Boolean
+    fun lastSyncTime(): Long = System.currentTimeMillis()
+}
+
+class DataRepository : Syncable {
+    fun sync() = true  // missing override keyword
+}
+
+abstract class BaseViewModel {
+    abstract fun loadData()
+    fun refresh() = loadData()
+}
+
+class UserViewModel : BaseViewModel() {
+    fun loadData() {  // missing override keyword
+        fetchUsers()
+    }
+}`,
+    hint: "Kotlin requires explicit override keyword — missing it causes compile errors, not silent shadowing",
+    answer: "Bug 1: DataRepository.sync() is missing 'override' — Kotlin requires explicit override for interface/abstract implementations. Without it, this is a compile error (or creates a new function that doesn't implement the interface). Fix: override fun sync() = true. Bug 2: Same issue in UserViewModel — loadData() must be 'override fun loadData()'. Without override, it doesn't satisfy the abstract contract and the class cannot be instantiated."
+  },
+  difficulty: "intermediate",
+  prereqs: [1, 2]
+},
+{
+  id: 4,
+  title: "Sealed Classes, Enums, Objects & Companion Objects",
+  subtitle: "Modern Kotlin state modeling patterns for clean, type-safe Android architecture",
+  analogy: "A sealed class is like a locked filing cabinet where you know EXACTLY what folders can exist inside — no surprises. An enum is a fixed set of named constants, like the days of the week. An object is a single post-office — only one can exist in the whole universe of your app.",
+  points: [
+    { t: "sealed class for state modeling", d: "sealed class UiState<out T> restricts all subclasses to the same compilation unit. The compiler can verify exhaustive when expressions. Perfect for: Loading/Success/Error states, navigation events, network results. Each subclass can carry different data." },
+    { t: "sealed interface (Kotlin 1.5+)", d: "sealed interface allows subclasses to be data classes or implement other interfaces — more flexible than sealed class. Use sealed interface when subclasses need to extend different base classes. Sealed classes and interfaces are the modern alternative to raw enum+data approaches." },
+    { t: "enum class basics", d: "enum class Status { PENDING, APPROVED, REJECTED } creates a fixed set of constants with automatic name() and ordinal. Enums can implement interfaces. ordinal is fragile for persistence — use name or a custom code field instead." },
+    { t: "enum with properties and methods", d: "enum class Priority(val level: Int, val label: String) { HIGH(1,'High'), MEDIUM(2,'Medium'), LOW(3,'Low') }. Enum entries can override abstract methods. Enums are singletons — you cannot create new instances." },
+    { t: "sealed class vs enum", d: "Enums: fixed constants, all instances have the same type shape. Sealed classes: each subclass can have different fields and constructors. Use enum for fixed constants, use sealed class when different states carry different payloads (Success carries data, Error carries exception)." },
+    { t: "object declaration (singleton)", d: "object AppConfig { val BASE_URL = '...' } is a thread-safe, lazily initialized singleton. The JVM generates it as a class with a static INSTANCE field. Use for app-wide constants, service locators (with caution), or stateless utility objects." },
+    { t: "companion object", d: "companion object { } inside a class is the Kotlin equivalent of Java static members. factory fun create(): MyClass is the idiomatic factory method pattern. Companion objects can implement interfaces and are actual objects, not just static scopes." },
+    { t: "object expression (anonymous object)", d: "val listener = object : View.OnClickListener { override fun onClick(v: View) { } } is an anonymous class instance. Each creation makes a new object. In Kotlin, prefer lambdas for SAM (Single Abstract Method) interfaces, but object expressions for multi-method interfaces." },
+    { t: "when exhaustiveness with sealed classes", d: "val result: UiState<User> = ... ; when(result) { is Loading -> ; is Success -> result.data ; is Error -> result.exception } — compiler REQUIRES all subclasses to be handled when when is an expression. Removes need for else branch." },
+    { t: "Nesting sealed classes", d: "Sealed classes can be nested: sealed class NetworkResult { data class Success<T>(val data: T) : NetworkResult() ; data class Error(val code: Int, val message: String) : NetworkResult() ; object Loading : NetworkResult() }. The Loading singleton needs no data." },
+    { t: "companion object @JvmStatic for Java interop", d: "companion object { @JvmStatic fun create(): MyClass } makes the factory method callable as MyClass.create() from Java (without .Companion). Required when your Kotlin code is called from Java, including some Android framework callbacks." },
+    { t: "Enum serialization pitfall", d: "Never persist enum ordinal — if you add/reorder enum entries, existing persisted data breaks. Always persist enum.name (String) or use a custom serialized value. With Gson/Moshi/kotlinx.serialization, configure enum serialization explicitly." }
+  ],
+  whatIs: "Sealed classes model bounded type hierarchies where every possible state is known at compile time. Enums model fixed constant sets. Objects are thread-safe singletons. Companion objects provide class-level factory methods and constants. Together, these form the building blocks of type-safe state management in MVVM and MVI architectures.",
+  realWorld: "In a real-time SaaS collaboration app, UiState<T> sealed class (Loading/Success/Error) drives the UI layer. NetworkResult sealed class wraps API responses. The enum class SyncStatus tracks document sync state. A companion object factory method creates the ViewModel with proper dependencies. The object SocketManager is the app-wide singleton managing the WebSocket connection.",
+  code: `// Sealed class for UI state — the standard pattern
+sealed class UiState<out T> {
+    object Loading : UiState<Nothing>()
+    data class Success<T>(val data: T) : UiState<T>()
+    data class Error(val message: String, val cause: Throwable? = null) : UiState<Nothing>()
+}
+
+// Sealed interface (Kotlin 1.5+) — more flexible
+sealed interface DocumentEvent {
+    data class Opened(val docId: String, val userId: String) : DocumentEvent
+    data class Edited(val docId: String, val delta: Delta) : DocumentEvent
+    object Closed : DocumentEvent
+}
+
+// Enum with properties — avoid ordinal for persistence
+enum class SyncStatus(val code: String, val isTerminal: Boolean) {
+    PENDING("pending", false),
+    IN_PROGRESS("in_progress", false),
+    SYNCED("synced", true),
+    FAILED("failed", true);
+
+    companion object {
+        fun fromCode(code: String): SyncStatus =
+            values().firstOrNull { it.code == code } ?: PENDING
+    }
+}
+
+// object singleton — WebSocket manager
+object SocketManager {
+    private var socket: WebSocket? = null
+
+    fun connect(url: String) { /* ... */ }
+    fun disconnect() { socket?.close(1000, "User disconnected") }
+}
+
+// companion object factory
+class DocumentRepository private constructor(
+    private val api: DocumentApi,
+    private val db: DocumentDao
+) {
+    companion object {
+        fun create(api: DocumentApi, db: DocumentDao) =
+            DocumentRepository(api, db)
+    }
+}
+
+// Exhaustive when — compiler enforces all cases
+fun renderUiState(state: UiState<List<Document>>) = when (state) {
+    is UiState.Loading  -> showShimmer()
+    is UiState.Success  -> showDocuments(state.data)
+    is UiState.Error    -> showError(state.message)
+}`,
+  funFact: "Google's official Android architecture samples and Compose documentation use the sealed class UiState<T> pattern as the standard way to model screen states. This pattern has become so universal that interviewers often ask candidates to implement it from memory as a live coding exercise.",
+  quiz: [
+    {
+      q: "What makes a when expression on a sealed class exhaustive without an else branch?",
+      opts: [
+        "The sealed keyword tells the compiler all subclasses exist in the same module, so it can verify all are handled",
+        "else is always required — sealed classes don't enable compile-time exhaustiveness checks",
+        "Only enums enable exhaustiveness checking in when expressions",
+        "You must annotate the when with @Exhaustive"
+      ],
+      ans: 0
+    },
+    {
+      q: "Why should you NEVER use enum.ordinal for database persistence?",
+      opts: [
+        "ordinal is always 0 for all enum entries in Kotlin",
+        "ordinal is positional — adding or reordering enum entries changes the ordinal of existing entries, corrupting previously saved data",
+        "Room database does not support storing integer enum ordinals",
+        "ordinal is deprecated in Kotlin 1.9+"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between a sealed class and a sealed interface?",
+      opts: [
+        "Sealed interfaces cannot have subclasses that are data classes",
+        "Sealed classes can have state; sealed interfaces cannot",
+        "Sealed interfaces allow subclasses to extend different base classes (more flexibility); sealed classes force a single class hierarchy",
+        "They are identical — sealed interface is just the newer syntax"
+      ],
+      ans: 2
+    },
+    {
+      q: "When is object expression preferred over a lambda in Android?",
+      opts: [
+        "Always — object expressions are more explicit and readable than lambdas",
+        "When implementing a SAM (Single Abstract Method) interface",
+        "When implementing an interface with multiple abstract methods (multi-method interfaces cannot use SAM conversion)",
+        "When the callback needs to be stored in a variable"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does 'out' in sealed class UiState<out T> mean?",
+      opts: [
+        "T can only be output (read), not input (written) — making UiState covariant in T, so UiState<Dog> is a subtype of UiState<Animal>",
+        "T is an output parameter for the sealed class constructor",
+        "out means the type parameter is nullable",
+        "out restricts T to primitive types for performance"
+      ],
+      ans: 0
+    },
+    {
+      q: "How does object declaration ensure thread safety?",
+      opts: [
+        "object uses synchronized blocks internally",
+        "The JVM initializes object declarations using class loading, which is guaranteed to be thread-safe (initialization-on-demand holder pattern)",
+        "object declarations use AtomicReference internally",
+        "Thread safety must be manually implemented in object declarations"
+      ],
+      ans: 1
+    },
+    {
+      q: "A companion object implements an interface — what real use case does this enable?",
+      opts: [
+        "It allows the companion to extend another class",
+        "It enables the class itself to be passed where the interface is expected (e.g., Parcelable.Creator pattern or factory interfaces)",
+        "It makes companion object methods accessible from Java without .Companion",
+        "It allows companion objects to be mocked in unit tests"
+      ],
+      ans: 1
+    },
+    {
+      q: "In an MVI architecture, a developer uses sealed class Intent vs sealed class UiState. What's the correct separation?",
+      opts: [
+        "Intent models user actions/events flowing INTO the ViewModel; UiState models the rendered state flowing OUT to the UI",
+        "Intent is for navigation events; UiState is for data loading states",
+        "They are interchangeable — use whichever is more descriptive",
+        "Intent should be an enum; UiState should be a sealed class"
+      ],
+      ans: 0
+    }
+  ],
+  challenge: "Model the full state for a document collaboration screen in a SaaS app. Create: 1) A sealed class DocumentUiState<T> with Loading, Success(data, lastUpdated: Long), Error(message, isRetryable: Boolean). 2) A sealed interface UserAction for LoadDocument(id), EditContent(delta), ShareDocument(emails: List<String>), and CloseDocument. 3) An enum class CollaboratorRole(val permissions: Set<Permission>) with VIEWER, COMMENTER, EDITOR, OWNER. Write a processAction() function with exhaustive when.",
+  resources: [
+    { type: "docs", title: "Sealed Classes and Interfaces", url: "https://kotlinlang.org/docs/sealed-classes.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Enum Classes in Kotlin", url: "https://kotlinlang.org/docs/enum-classes.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Object Declarations and Companion Objects", url: "https://kotlinlang.org/docs/object-declarations.html", source: "kotlinlang.org" },
+    { type: "docs", title: "UI State Management in Android", url: "https://developer.android.com/topic/architecture/ui-layer/stateholders", source: "developer.android.com" }
+  ],
+  eli5: "Sealed class is like a board game with EXACTLY 4 types of cards — you know every possible card type ahead of time, so when you draw one, you always know how to play it. Enum is like a traffic light — exactly 3 states, always the same shape. Object is like the principal's office — there's only ONE, and everyone in school knows where it is.",
+  codeWalkthrough: [
+    "sealed class UiState<out T> — 'out' makes it covariant; UiState<Dog> can be used as UiState<Animal>",
+    "object Loading : UiState<Nothing>() — singleton object; Nothing is Kotlin's bottom type, compatible with any UiState<T>",
+    "data class Success<T>(val data: T) — each Success carries actual data; type-safe, no casting needed",
+    "sealed interface DocumentEvent — allows Opened/Edited to be data classes, Closed to be object; more flexible than sealed class",
+    "enum class SyncStatus(val code: String, val isTerminal: Boolean) — each entry has typed properties; use code for persistence, not ordinal",
+    "companion object { fun fromCode() } inside enum — factory method on the enum itself; idiomatic Kotlin lookup pattern",
+    "object SocketManager — thread-safe singleton; initialized once by JVM class loading; accessible everywhere as SocketManager.connect()",
+    "class DocumentRepository private constructor() — private constructor forces use of factory method",
+    "companion object { fun create() } — factory method; allows validation before construction; testable by swapping implementation",
+    "when(state) { is Loading -> ; is Success -> state.data } — no else needed; compiler verifies all sealed subclasses are handled"
+  ],
+  bugChallenge: {
+    code: `sealed class ApiResult {
+    data class Success(val data: String) : ApiResult()
+    data class Error(val message: String) : ApiResult()
+}
+
+fun handleResult(result: ApiResult) {
+    when (result) {
+        is ApiResult.Success -> println(result.data)
+        // Missing Error case
+    }
+}
+
+enum class Direction { NORTH, SOUTH, EAST, WEST }
+
+fun saveDirection(dir: Direction) {
+    database.save("direction", dir.ordinal)  // bug here
+}`,
+    hint: "One bug is a missing sealed class branch; one is an ordinal persistence anti-pattern",
+    answer: "Bug 1: when as a statement (not expression) won't fail at compile time for missing branches — but it's a logic bug. If used as an expression (returning a value), it would be a compile error. Best practice: always handle all cases. Add 'is ApiResult.Error -> println(result.message)'. Bug 2: dir.ordinal stores the position (0,1,2,3). If NORTHWEST is added between NORTH and SOUTH, existing saved '1' now maps to NORTHWEST not SOUTH. Fix: database.save('direction', dir.name) stores the stable string 'NORTH', 'SOUTH', etc."
+  },
+  difficulty: "intermediate",
+  prereqs: [3]
+},
+{
+  id: 5,
+  title: "Generics, Variance, Extension Functions & Inline/Reified",
+  subtitle: "Advanced Kotlin type system mastery for senior-level interviews",
+  analogy: "Generics are like a universal adapter — one design that works with any plug type. Variance is the rule about whether a USA-to-EU adapter can be substituted for a USA-to-UK adapter. Extension functions are like adding a new tool to someone else's toolbox without opening it.",
+  points: [
+    { t: "Generic classes and functions", d: "fun <T> wrapInList(item: T): List<T> = listOf(item). T is a type parameter — the compiler infers it at call sites. Generic constraints: fun <T : Comparable<T>> max(a: T, b: T): T — T must implement Comparable." },
+    { t: "where clause for multiple bounds", d: "fun <T> process(item: T) where T : Serializable, T : Comparable<T> — T must satisfy both bounds. Use when a single upper bound isn't sufficient. Common in repository layers with generic entity constraints." },
+    { t: "Covariance with 'out' (producer)", d: "class Box<out T>(val value: T) — out means Box<Dog> is a subtype of Box<Animal>. T can only appear in 'out' positions (return types). Makes sense for producers: List<out T> produces T, never consumes it." },
+    { t: "Contravariance with 'in' (consumer)", d: "class Comparator<in T> — in means Comparator<Animal> is a subtype of Comparator<Dog>. T can only appear in 'in' positions (function parameters). Makes sense for consumers: a function that accepts Animal can accept Dog." },
+    { t: "Star projection <*>", d: "List<*> is like List<out Any?> — you can read from it (getting Any?) but cannot write to it (type unknown). Use when you need to handle a generic type but don't know or care about the exact type parameter." },
+    { t: "Extension functions", d: "fun String.toSlug(): String = lowercase().replace(' ', '-') adds a method to String without subclassing. Resolved statically at compile time (not virtual dispatch). Defined in a file, scoped to where they're imported. Cannot access private members." },
+    { t: "Extension functions for clean APIs", d: "fun Context.showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() eliminates verbose Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() everywhere. Common pattern in Android for View, Context, Fragment extensions." },
+    { t: "inline keyword", d: "inline fun <T> measureTime(block: () -> T): T inlines the lambda body at the call site — no Function object created, no virtual dispatch. Critical for performance in hot paths. Required for reified type parameters." },
+    { t: "reified type parameters", d: "inline fun <reified T> Gson.fromJson(json: String): T = fromJson(json, T::class.java) — reified allows T to be accessed at runtime as an actual class. Only possible with inline functions. Eliminates class: Class<T> parameters." },
+    { t: "noinline and crossinline", d: "noinline fun param: () -> Unit prevents a specific lambda from being inlined (when you need to store it). crossinline fun param: () -> Unit prevents non-local returns from the lambda (when lambda runs in a different execution context)." },
+    { t: "Generic extension functions", d: "fun <T : View> T.visibleIf(condition: Boolean): T { visibility = if (condition) View.VISIBLE else View.GONE; return this } — generic extension preserves the concrete type for chaining. Used in view builder DSLs." },
+    { t: "Type erasure and its limits", d: "At runtime, List<String> and List<Int> are both just List — type parameters are erased by the JVM. This is why is List<String> doesn't compile (Unchecked cast warning). reified + inline is Kotlin's workaround for accessing erased types at runtime." }
+  ],
+  whatIs: "Generics enable type-safe reusable code. Variance (in/out) controls type substitutability — critical for understanding Kotlin's collection API design. Extension functions add behavior to existing classes without modification — the backbone of idiomatic Kotlin Android code. Inline + reified solves the JVM's type erasure problem for generic functions.",
+  realWorld: "In a fintech app's networking layer, a generic ApiResult<T> sealed class with out variance allows a function returning ApiResult<Transaction> to be stored in a variable of type ApiResult<Any>. Extension functions like Response<T>.toApiResult() clean up Retrofit response handling. An inline reified function parseResponse<T>() eliminates class parameter boilerplate in every API call.",
+  code: `// Generic sealed result with covariance
+sealed class ApiResult<out T> {
+    data class Success<T>(val data: T) : ApiResult<T>()
+    data class Error(val code: Int, val message: String) : ApiResult<Nothing>()
+    object Loading : ApiResult<Nothing>()
+}
+
+// Generic function with constraint
+fun <T : Comparable<T>> List<T>.minMax(): Pair<T, T>? {
+    if (isEmpty()) return null
+    return Pair(min(), max())
+}
+
+// Extension function on Response — clean API layer
+fun <T> Response<T>.toApiResult(): ApiResult<T> = when {
+    isSuccessful -> body()?.let { ApiResult.Success(it) }
+        ?: ApiResult.Error(204, "Empty response body")
+    else -> ApiResult.Error(code(), message())
+}
+
+// inline + reified — eliminates Class<T> parameter
+inline fun <reified T> String.parseJson(): T =
+    Gson().fromJson(this, T::class.java)
+
+// Usage — clean, no class param needed
+val user: User = jsonString.parseJson()
+val orders: List<Order> = ordersJson.parseJson()
+
+// Generic View extension preserving concrete type
+fun <T : View> T.visibleIf(condition: Boolean): T {
+    visibility = if (condition) View.VISIBLE else View.GONE
+    return this
+}
+
+// Star projection — handle unknown generic type
+fun logListContents(list: List<*>) {
+    list.forEach { element -> println(element) }  // element is Any?
+}
+
+// Multiple bounds with where
+fun <T> syncToServer(item: T): Boolean
+    where T : Serializable, T : HasId {
+    return api.upload(item.id, item)
+}`,
+  funFact: "Kotlin's extension functions are resolved at compile time, not runtime — this means they don't participate in virtual dispatch. If you have a val x: Animal = Dog() and call x.speak() where speak() is an extension on Animal and Dog, the Animal version is called. This surprises many Java developers who expect polymorphic behavior.",
+  quiz: [
+    {
+      q: "What does 'out T' in class Producer<out T> guarantee?",
+      opts: [
+        "T can only appear as a function parameter type (input position)",
+        "T can only appear as a return type (output position), making Producer<Dog> a subtype of Producer<Animal>",
+        "T must extend a specific base class",
+        "T is covariant only at runtime, not at compile time"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why can't you do: if (list is List<String>) in Kotlin without an unchecked cast warning?",
+      opts: [
+        "Kotlin doesn't support runtime type checks on collections",
+        "JVM type erasure removes generic type information at runtime — at runtime, List<String> and List<Int> are both just List",
+        "is operator doesn't work with parameterized types in any JVM language",
+        "You must use instanceOf instead of is for generic types"
+      ],
+      ans: 1
+    },
+    {
+      q: "What makes reified type parameters possible, and what is the trade-off?",
+      opts: [
+        "reified uses reflection at runtime, making it slower but more flexible",
+        "reified requires inline, which inlines the function body at every call site — slightly larger bytecode, but T is accessible as a real class at runtime, eliminating Class<T> parameters",
+        "reified stores type information in a separate metadata file",
+        "reified is only supported on Kotlin/JVM, not Kotlin/Native or Kotlin/JS"
+      ],
+      ans: 1
+    },
+    {
+      q: "An extension function fun String.truncate(max: Int) is defined in FileA.kt. FileB.kt also defines fun String.truncate(max: Int) differently. What happens?",
+      opts: [
+        "Compile error — duplicate extension function",
+        "The last imported version wins at runtime",
+        "Both can coexist — they're resolved by import; the calling file's import determines which is used",
+        "Extension functions cannot have the same signature in the same module"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the key behavioral difference between extension functions and member functions?",
+      opts: [
+        "Extension functions run on a background thread; member functions run on the main thread",
+        "Extension functions are resolved statically at compile time based on the declared type; member functions use virtual dispatch based on the runtime type",
+        "Extension functions can access private members; member functions cannot",
+        "Extension functions are always inline; member functions are never inline"
+      ],
+      ans: 1
+    },
+    {
+      q: "When would you use crossinline on a lambda parameter of an inline function?",
+      opts: [
+        "When the lambda parameter should not be inlined for performance reasons",
+        "When the lambda will be executed in a different execution context (e.g., passed to another lambda or Runnable) and non-local returns must be prevented",
+        "When the lambda captures a variable from the outer scope",
+        "crossinline is equivalent to noinline — just different syntax"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does List<*> mean and what can you do with its elements?",
+      opts: [
+        "A list of Any — you can add Any elements to it",
+        "A list with an unknown type parameter — you can read elements as Any?, but cannot write (type-unsafe to add)",
+        "A list that accepts wildcard/multiple types simultaneously",
+        "List<*> is equivalent to List<Any?> in all operations"
+      ],
+      ans: 1
+    },
+    {
+      q: "In the context of Android's Repository pattern, how does variance help with ApiResult<out T>?",
+      opts: [
+        "It allows ApiResult<Transaction> to be passed where ApiResult<Any> is expected, enabling a single generic handler for all result types",
+        "It makes ApiResult thread-safe for concurrent access",
+        "out variance is required for data classes",
+        "It enables ApiResult to be serialized by Gson automatically"
+      ],
+      ans: 0
+    }
+  ],
+  challenge: "Build a type-safe local cache for an offline-first field ops app. Create a generic class Cache<T : Any> with get(key: String): T?, put(key: String, value: T), and remove(key: String). Add an inline reified extension fun <reified T : Any> Cache<*>.getTyped(key: String): T? that safely retrieves and casts. Add a generic extension fun <T : Expirable> Cache<T>.evictExpired() using a where bound. Write a fun <T : Any> Cache<T>.getOrFetch(key: String, fetcher: () -> T): T.",
+  resources: [
+    { type: "docs", title: "Generics in Kotlin", url: "https://kotlinlang.org/docs/generics.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Extension Functions", url: "https://kotlinlang.org/docs/extensions.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Inline Functions and Reified", url: "https://kotlinlang.org/docs/inline-functions.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Kotlin Type System — Variance", url: "https://kotlinlang.org/docs/generics.html#variance", source: "kotlinlang.org" }
+  ],
+  eli5: "Generics are like a magic backpack that can hold ANY type of item, but only one type at a time — you tell it 'this backpack is for books' and it only holds books. Variance is the rule about whether a book-backpack can be used as a thing-backpack. Extension functions are like sticking a new pocket onto someone else's jacket without sewing — it looks like it was always there!",
+  codeWalkthrough: [
+    "sealed class ApiResult<out T> — out makes it covariant; ApiResult<Transaction> is usable where ApiResult<Any> is expected",
+    "ApiResult<Nothing>() for Error and Loading — Nothing is subtype of all types; covariant Nothing works as any ApiResult<T>",
+    "fun <T : Comparable<T>> List<T>.minMax() — generic extension with upper bound; T must be comparable to call min()/max()",
+    "fun <T> Response<T>.toApiResult() — extension on Retrofit Response; transforms network response to domain result type",
+    "body()?.let { ApiResult.Success(it) } ?: ApiResult.Error(...) — safe call chain; null body becomes Error, not NPE",
+    "inline fun <reified T> String.parseJson() — inline required for reified; T::class.java accessible at runtime",
+    "Gson().fromJson(this, T::class.java) — 'this' is the String; T::class.java is the runtime class thanks to reified",
+    "fun <T : View> T.visibleIf(): T — returns T (not View), so button.visibleIf(true).setOnClickListener{} works without cast",
+    "fun logListContents(list: List<*>) — star projection; can iterate (reads as Any?), cannot add elements"
+  ],
+  bugChallenge: {
+    code: `class Container<T>(val value: T)
+
+fun fillContainers(animals: MutableList<Animal>): MutableList<Animal> {
+    val dogs: MutableList<Dog> = mutableListOf(Dog("Rex"))
+    return dogs  // type mismatch
+}
+
+inline fun <reified T> parseResponse(json: String): T {
+    return Gson().fromJson(json, T::class.java)
+}
+
+fun useParser() {
+    val user = parseResponse(userJson)  // missing type hint
+}`,
+    hint: "MutableList is invariant (unlike List). The parser call needs explicit type specification.",
+    answer: "Bug 1: MutableList<Dog> is NOT a subtype of MutableList<Animal> — MutableList is invariant because you could add a Cat to an Animal list, violating type safety. Fix: return List<Animal> (read-only covariant) or use List<Dog> if Dog is what you need. Bug 2: parseResponse(userJson) — the compiler cannot infer T without a type hint. Fix: val user = parseResponse<User>(userJson) or val user: User = parseResponse(userJson)."
+  },
+  difficulty: "intermediate",
+  prereqs: [1, 2, 3]
+},
+{
+  id: 6,
+  title: "Exceptions, Result & Defensive Kotlin",
+  subtitle: "Production-grade error handling patterns for robust Android apps",
+  analogy: "Exception handling is like a safety net under a trapeze artist — you hope it never fires, but it must be there. Kotlin's Result type is like a delivery service that either gives you the package or a note explaining why it couldn't deliver — no surprise crashes.",
+  points: [
+    { t: "try/catch/finally basics", d: "try { } catch (e: IOException) { } finally { } — finally always runs (cleanup, closing resources). Kotlin try is an expression: val result = try { parse(json) } catch (e: Exception) { null }. Catch specific exceptions before general ones." },
+    { t: "Kotlin Result type", d: "Result<T> is a built-in Kotlin type wrapping either a success value (T) or a failure (Throwable). Created by runCatching { } or Result.success(value) / Result.failure(exception). Avoids exceptions for expected error paths." },
+    { t: "runCatching", d: "val result = runCatching { api.fetchUser(id) } wraps any exception into a Result.failure. Idiomatic way to convert throwing code into Result-returning code. Catches all Throwable subclasses including CancellationException — beware in coroutines." },
+    { t: "Result.fold", d: "result.fold(onSuccess = { data -> }, onFailure = { error -> }) processes both cases inline. Returns a value from both branches. More concise than if/else on result.isSuccess." },
+    { t: "getOrElse and getOrNull", d: "result.getOrElse { throwable -> defaultValue } — returns default on failure. result.getOrNull() — returns null on failure (no default). result.getOrThrow() — unwraps or rethrows the original exception." },
+    { t: "Custom exception hierarchy", d: "sealed class AppException : Exception() with subclasses (NetworkException, DatabaseException, ValidationException) creates a domain-specific exception hierarchy. Senior interviewers look for this vs throwing generic RuntimeException everywhere." },
+    { t: "Checked vs unchecked in Kotlin", d: "Kotlin has NO checked exceptions (unlike Java). All exceptions are unchecked. This simplifies APIs but means callers won't be warned by the compiler. Document throwing behavior with @Throws for Java interop. Use Result/sealed class for expected failure paths." },
+    { t: "Defensive programming with require/check/error", d: "require(id > 0) { 'ID must be positive' } throws IllegalArgumentException. check(isInitialized) { 'Not initialized' } throws IllegalStateException. error('Should not reach here') throws IllegalStateException. Use for invariant enforcement." },
+    { t: "Nullable return vs exception — when to choose", d: "Return null for 'not found' (expected empty result). Throw exception for 'unexpected system failure'. Return Result for operations that can fail in multiple known ways. Never throw exception for user input errors — return validation result." },
+    { t: "Exception swallowing anti-pattern", d: "catch (e: Exception) { } — swallowing exceptions silently is one of the most dangerous bugs in production apps. Always at minimum log the exception. In Android, report to Crashlytics: catch (e: Exception) { Crashlytics.recordException(e); handleError(e) }" },
+    { t: "@Throws annotation for Java interop", d: "@Throws(IOException::class) fun readFile(): String tells Java callers this method throws IOException (Java checked exception behavior). Without it, Java code won't be warned and may skip catching it." },
+    { t: "try-with-resources equivalent", d: "Kotlin uses use { } extension: FileInputStream(file).use { stream -> stream.read() }. use automatically calls close() even if an exception occurs. Works on any Closeable/AutoCloseable." }
+  ],
+  whatIs: "Kotlin's error handling toolkit includes traditional try/catch for unexpected failures, the Result type for expected failure paths, and defensive functions (require/check) for invariant enforcement. The key senior-level skill is knowing WHEN to use each approach — not throwing exceptions for normal control flow, not returning nullable when the failure reason matters.",
+  realWorld: "In a fintech claims app, parsing a claim document uses runCatching{} because network/parse failures are expected. A custom AppException sealed hierarchy (NetworkException, ParseException, ValidationException) provides structured error handling. The ViewModel uses Result.fold to update UiState.Error or UiState.Success. require() guards business rule invariants before claim submission.",
+  code: `// Custom exception hierarchy
+sealed class AppException(message: String, cause: Throwable? = null) : Exception(message, cause) {
+    class NetworkException(message: String, val httpCode: Int, cause: Throwable? = null)
+        : AppException(message, cause)
+    class DatabaseException(message: String, cause: Throwable? = null)
+        : AppException(message, cause)
+    class ValidationException(val field: String, message: String)
+        : AppException(message)
+}
+
+// Repository returning Result — explicit failure contract
+suspend fun fetchClaim(id: String): Result<Claim> = runCatching {
+    val response = api.getClaim(id)
+    if (!response.isSuccessful) {
+        throw AppException.NetworkException(
+            message = response.message(),
+            httpCode = response.code()
+        )
+    }
+    response.body() ?: throw AppException.NetworkException("Empty body", 204)
+}
+
+// ViewModel consuming Result
+fun loadClaim(id: String) {
+    viewModelScope.launch {
+        _uiState.value = UiState.Loading
+        repository.fetchClaim(id).fold(
+            onSuccess = { claim ->
+                _uiState.value = UiState.Success(claim)
+            },
+            onFailure = { error ->
+                val message = when (error) {
+                    is AppException.NetworkException -> "Network error \${error.httpCode}"
+                    is AppException.ValidationException -> "Invalid \${error.field}"
+                    else -> "Unexpected error: \${error.message}"
+                }
+                _uiState.value = UiState.Error(message)
+            }
+        )
+    }
+}
+
+// Defensive programming with require/check
+fun submitClaim(claim: Claim) {
+    require(claim.amount > 0) { "Claim amount must be positive, got \${claim.amount}" }
+    require(claim.documents.isNotEmpty()) { "At least one document required" }
+    check(userSession.isAuthenticated) { "User must be authenticated to submit" }
+    processClaim(claim)
+}
+
+// Safe resource handling with use
+fun readClaimDocument(path: String): ByteArray =
+    FileInputStream(path).use { stream -> stream.readBytes() }`,
+  funFact: "Kotlin's runCatching catches CancellationException — this is a known footgun in coroutines. When a coroutine is cancelled, CancellationException is thrown and must propagate for structured concurrency to work. Wrapping a suspend function in runCatching can silently swallow cancellation, causing coroutines to continue running after they should be cancelled.",
+  quiz: [
+    {
+      q: "Why is catching CancellationException in a coroutine with runCatching dangerous?",
+      opts: [
+        "CancellationException causes ANR if caught",
+        "Catching CancellationException prevents it from propagating, breaking structured concurrency — the coroutine continues running after its scope is cancelled",
+        "runCatching doesn't catch CancellationException — it only catches IOException",
+        "CancellationException is a checked exception in Kotlin"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between require() and check() in Kotlin?",
+      opts: [
+        "require() is for null checks; check() is for boolean assertions",
+        "require() validates function ARGUMENTS and throws IllegalArgumentException; check() validates OBJECT STATE and throws IllegalStateException",
+        "They are identical — just different naming conventions",
+        "require() is for production code; check() is for test assertions only"
+      ],
+      ans: 1
+    },
+    {
+      q: "When should you return null vs throw an exception vs return Result in an Android repository?",
+      opts: [
+        "Always return null — it's the safest option",
+        "null for 'not found' (expected empty); throw for programmer errors/invariant violations; Result for operations with multiple known failure modes (network, parse, auth)",
+        "Always use Result — it's the most modern approach",
+        "throw for all cases and catch at the top-level ViewModel"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does @Throws(IOException::class) do in Kotlin?",
+      opts: [
+        "Forces the Kotlin compiler to require callers to handle IOException",
+        "Adds a throws declaration to the JVM bytecode so Java callers see it as a checked exception and are warned by the Java compiler",
+        "Converts IOException from an unchecked to a checked exception in Kotlin",
+        "It is equivalent to a Kotlin try/catch block"
+      ],
+      ans: 1
+    },
+    {
+      q: "How does Kotlin's use {} extension function handle exceptions compared to Java's try-with-resources?",
+      opts: [
+        "use {} swallows exceptions from close(); try-with-resources suppresses them",
+        "They are functionally equivalent — use {} calls close() in finally, and if both the body and close() throw, the body's exception propagates (close() exception is suppressed, matching Java behavior)",
+        "use {} only works with Files; try-with-resources works with all Closeable",
+        "use {} requires the object to implement kotlinx.Closeable, not java.io.Closeable"
+      ],
+      ans: 1
+    },
+    {
+      q: "A developer does: catch (e: Exception) { Timber.e(e) }. A senior reviewer flags it as problematic. Why?",
+      opts: [
+        "Timber is not thread-safe",
+        "Catching Exception catches CancellationException in coroutines, breaking structured concurrency; it also catches OutOfMemoryError subclasses",
+        "The correct API is Timber.w() not Timber.e() for exceptions",
+        "catch (e: Exception) is a compile error in coroutine context"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does result.getOrElse { throwable -> defaultValue } return when the result is a failure?",
+      opts: [
+        "null",
+        "The defaultValue — the lambda receives the throwable and returns a fallback value of type T",
+        "Rethrows the original exception",
+        "Returns the throwable itself cast to T"
+      ],
+      ans: 1
+    },
+    {
+      q: "In a senior Android interview, why is a sealed class AppException better than using generic Exception subclasses?",
+      opts: [
+        "Sealed AppException compiles faster",
+        "when(error) exhaustiveness checking ensures all error types are handled; each subclass carries typed context (httpCode, field); and the domain language is explicit (NetworkException vs RuntimeException)",
+        "Generic exceptions cannot be caught in coroutines",
+        "Android Studio provides better autocomplete for sealed exceptions"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Design the complete error handling layer for a school management app's grade submission feature. Create: 1) A sealed class GradeException (ValidationException with field and rule, NetworkException with httpCode, ConcurrentEditException with conflictingUserId). 2) A suspend fun submitGrade(grade: Grade): Result<Grade> that uses runCatching and maps HTTP error codes to specific AppException types. 3) A ViewModel function handleSubmit() that processes the Result using fold and updates a UiState sealed class. Include require() guards for grade validation.",
+  resources: [
+    { type: "docs", title: "Exceptions in Kotlin", url: "https://kotlinlang.org/docs/exceptions.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Kotlin Result Class", url: "https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/", source: "kotlinlang.org" },
+    { type: "docs", title: "Error Handling in Android Architecture", url: "https://developer.android.com/topic/architecture/data-layer/result", source: "developer.android.com" },
+    { type: "docs", title: "runCatching and CancellationException", url: "https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/run-catching.html", source: "kotlinlang.org" }
+  ],
+  eli5: "Imagine you order pizza online. If the order works — great, you get pizza (success). If the restaurant is closed, or payment fails, or you gave the wrong address — each of these is a DIFFERENT kind of failure with different fix-it instructions. Kotlin's Result type is the delivery tracking app that tells you exactly WHAT went wrong, not just 'delivery failed'.",
+  codeWalkthrough: [
+    "sealed class AppException — all app failures have a common type; when(error) can exhaustively handle them",
+    "class NetworkException(val httpCode: Int) — carries the HTTP code; caller can check 401 vs 500 vs 404 differently",
+    "suspend fun fetchClaim(): Result<Claim> = runCatching { } — wraps entire suspend block; all exceptions become Result.failure",
+    "if (!response.isSuccessful) throw AppException.NetworkException(...) — converts HTTP error to domain exception inside runCatching",
+    "repository.fetchClaim(id).fold(onSuccess = {}, onFailure = {}) — processes both branches; fold returns a value from both",
+    "when(error) { is AppException.NetworkException -> } — smart cast inside when; error.httpCode accessible without explicit cast",
+    "require(claim.amount > 0) { 'message' } — throws IllegalArgumentException with message if false; use for parameter validation",
+    "check(userSession.isAuthenticated) — throws IllegalStateException; use for object state preconditions",
+    "FileInputStream(path).use { stream -> } — use calls close() in finally; safe even if stream.readBytes() throws"
+  ],
+  bugChallenge: {
+    code: `suspend fun loadData(): String {
+    return try {
+        api.fetchData()
+    } catch (e: Exception) {
+        "default"  // swallowing CancellationException!
+    }
+}
+
+fun validateAge(age: Int) {
+    if (age < 0) {
+        throw Exception("Age cannot be negative")  // too generic
+    }
+    if (age > 150) {
+        throw RuntimeException("Age unrealistic")  // wrong exception type
+    }
+}`,
+    hint: "CancellationException must propagate. Prefer specific exception types and require() for validation.",
+    answer: "Bug 1: catch (e: Exception) catches CancellationException, breaking coroutine cancellation. Fix: catch (e: Exception) { if (e is CancellationException) throw e; return 'default' } or use catch (e: IOException) for specific errors only. Bug 2: throw Exception() and throw RuntimeException() are too generic — lose semantic meaning. Fix: Use require(age >= 0) { 'Age cannot be negative' } and require(age <= 150) { 'Age unrealistic' } which throw IllegalArgumentException — the semantically correct type for argument validation."
+  },
+  difficulty: "intermediate",
+  prereqs: [1]
+},
+{
+  id: 7,
+  title: "Coroutines Fundamentals: suspend, Structured Concurrency & Dispatchers",
+  subtitle: "The #1 most asked Android interview topic — master coroutines cold",
+  analogy: "A coroutine is like a pauseable recipe. You're baking a cake: you start mixing, then PAUSE while waiting for the oven to preheat (suspend), go do something else, and RESUME when it's ready — all on the same chef (thread), without blocking the kitchen. Dispatchers are the kitchens: Main (presentation), IO (dishwashing), Default (math).",
+  points: [
+    { t: "What coroutines ARE (not threads)", d: "Coroutines are lightweight, cooperative concurrency primitives — NOT threads. Thousands of coroutines run on a handful of threads. A suspended coroutine releases its thread (doesn't block it), which can then run other coroutines. This is why coroutines scale better than threads for I/O-heavy Android apps." },
+    { t: "suspend keyword", d: "A suspend function can pause execution without blocking the thread. It can only be called from another suspend function or a coroutine builder. The Kotlin compiler transforms suspend functions into state machines under the hood — a Continuation object tracks where to resume." },
+    { t: "Coroutine builders: launch vs async", d: "launch { } starts a coroutine that runs concurrently and returns a Job (fire-and-forget). async { } starts a coroutine that computes a result and returns Deferred<T> — call .await() to get the result. Use launch for side effects, async for parallel value computation." },
+    { t: "withContext", d: "withContext(Dispatchers.IO) { } switches the coroutine to a different dispatcher for the block, then switches back. Does NOT create a new coroutine — it's a suspend function. Use for thread switching within a single coroutine (e.g., run database query on IO, then update UI on Main)." },
+    { t: "Dispatchers", d: "Main: Android main thread — UI updates, ViewModel operations. IO: Thread pool optimized for blocking I/O (network, disk) — 64 threads by default. Default: CPU-bound work (JSON parsing, sorting, computation) — number of CPU cores threads. Unconfined: not confined to any thread — rare, used in testing." },
+    { t: "CoroutineScope", d: "Every coroutine runs in a CoroutineScope. The scope defines the lifetime: if the scope is cancelled, all coroutines in it are cancelled. viewModelScope is tied to ViewModel lifecycle. lifecycleScope is tied to Activity/Fragment lifecycle. Prevents memory leaks from leaked coroutines." },
+    { t: "Structured concurrency", d: "The core principle: parent coroutines wait for all children to complete. If a child fails, the parent is notified and cancels other children. If the parent is cancelled, all children are cancelled. This creates a predictable, leak-free tree of coroutines. The opposite is 'fire-and-forget' which is an anti-pattern." },
+    { t: "viewModelScope vs lifecycleScope", d: "viewModelScope: cancelled when ViewModel is cleared (outlives Activity recreation). Use for data operations. lifecycleScope: cancelled when lifecycle is destroyed. Use for UI-driven coroutines. repeatOnLifecycle: suspends and relaunches on lifecycle state changes — the correct way to collect Flow in UI." },
+    { t: "Parallel decomposition with async/await", d: "val userDeferred = async { fetchUser(id) }; val ordersDeferred = async { fetchOrders(id) }; val user = userDeferred.await(); val orders = ordersDeferred.await() — both requests run in parallel. If either fails, the exception propagates and the other is cancelled." },
+    { t: "coroutineScope builder", d: "coroutineScope { } creates a new scope that waits for all child coroutines to complete before returning. If any child fails, all others are cancelled and the exception propagates. Use for parallel work that must all succeed together." },
+    { t: "Continuation and the state machine", d: "The compiler transforms every suspend function into a class implementing Continuation. Each suspension point becomes a state in a when expression. At resume(), the when dispatches to the correct state. This is why suspend functions have zero overhead compared to callbacks — it's compile-time transformation, not runtime magic." },
+    { t: "GlobalScope is an anti-pattern", d: "GlobalScope.launch { } creates coroutines not tied to any lifecycle — they run until the app process dies, cannot be cancelled by scope, and cause memory leaks. Use viewModelScope, lifecycleScope, or a custom CoroutineScope with proper lifecycle management instead." }
+  ],
+  whatIs: "Coroutines are Kotlin's solution to asynchronous programming — replacing callbacks and RxJava with sequential-looking code that suspends (pauses) without blocking threads. Structured concurrency ensures coroutines have defined lifetimes tied to scopes, preventing leaks. Dispatchers control which threads coroutines run on. This is the most frequently tested Android interview topic in 2025-2026.",
+  realWorld: "In an offline-first field operations enterprise app, a SyncManager uses coroutineScope to launch parallel sync operations for WorkOrders, Employees, and Assets. withContext(Dispatchers.IO) fetches from the network, withContext(Dispatchers.Default) processes and transforms the data, then viewModelScope updates the UI. lifecycleScope.launchWhenStarted collects sync progress Flow for the status bar.",
+  code: `// ViewModel using viewModelScope — lifecycle-safe
+class WorkOrderViewModel(
+    private val repository: WorkOrderRepository
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow<UiState<List<WorkOrder>>>(UiState.Loading)
+    val uiState: StateFlow<UiState<List<WorkOrder>>> = _uiState.asStateFlow()
+
+    fun loadWorkOrders(fieldId: String) {
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+            try {
+                val orders = repository.getWorkOrders(fieldId)
+                _uiState.value = UiState.Success(orders)
+            } catch (e: AppException) {
+                _uiState.value = UiState.Error(e.message ?: "Load failed")
+            }
+        }
+    }
+
+    // Parallel fetch with async/await
+    fun loadDashboard(userId: String) {
+        viewModelScope.launch {
+            val ordersDeferred = async { repository.getWorkOrders(userId) }
+            val statsDeferred = async { repository.getStats(userId) }
+            // Both requests run in parallel
+            val orders = ordersDeferred.await()
+            val stats = statsDeferred.await()
+            _uiState.value = UiState.Success(DashboardData(orders, stats))
+        }
+    }
+}
+
+// Repository — withContext for thread switching
+class WorkOrderRepository(
+    private val api: WorkOrderApi,
+    private val dao: WorkOrderDao
+) {
+    suspend fun getWorkOrders(fieldId: String): List<WorkOrder> {
+        return withContext(Dispatchers.IO) {
+            val remote = api.fetchWorkOrders(fieldId)  // network on IO thread
+            val mapped = withContext(Dispatchers.Default) {
+                remote.map { it.toDomain() }            // CPU work on Default
+            }
+            dao.insertAll(mapped)                       // DB write on IO thread
+            mapped
+        }
+    }
+}
+
+// UI layer — collect with repeatOnLifecycle (correct pattern)
+class WorkOrderFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    renderState(state)
+                }
+            }
+        }
+    }
+}`,
+  funFact: "Kotlin coroutines were inspired by similar constructs in Go (goroutines) and C# (async/await), but Kotlin's implementation uses compile-time state machine transformation rather than runtime scheduling — making them essentially zero-overhead compared to manual callback code. A simple Android app can have thousands of coroutines running simultaneously on just 2-3 threads.",
+  quiz: [
+    {
+      q: "What is the fundamental difference between a suspended coroutine and a blocked thread?",
+      opts: [
+        "A suspended coroutine sleeps the thread for the duration; a blocked thread does the same but faster",
+        "A suspended coroutine releases its thread to be used by other coroutines; a blocked thread holds the thread idle, wasting resources",
+        "There is no difference — suspend is just a keyword for readability",
+        "A suspended coroutine uses a background thread; a blocked thread uses the main thread"
+      ],
+      ans: 1
+    },
+    {
+      q: "When should you use async{} instead of launch{}?",
+      opts: [
+        "async is for UI updates; launch is for background work",
+        "async returns a Deferred<T> — use when you need a result value from the coroutine and plan to await() it, especially for parallel decomposition",
+        "async runs on Dispatchers.IO; launch runs on Dispatchers.Main",
+        "async is for sequential operations; launch is for parallel"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the correct way to collect a StateFlow in an Activity/Fragment to avoid collecting in the background?",
+      opts: [
+        "lifecycleScope.launch { flow.collect { } }",
+        "viewLifecycleOwner.lifecycleScope.launch { repeatOnLifecycle(State.STARTED) { flow.collect { } } }",
+        "GlobalScope.launch { flow.collect { } }",
+        "flow.observe(viewLifecycleOwner) { } using LiveData adapter"
+      ],
+      ans: 1
+    },
+    {
+      q: "What happens to child coroutines when a parent CoroutineScope is cancelled?",
+      opts: [
+        "Child coroutines continue running until they naturally complete",
+        "All child coroutines receive CancellationException and are cancelled — structured concurrency guarantees no orphaned coroutines",
+        "Only the most recently started child is cancelled",
+        "Children are paused but not cancelled — they resume when a new scope is created"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why is GlobalScope.launch considered an anti-pattern in Android?",
+      opts: [
+        "GlobalScope launches on the wrong thread by default",
+        "GlobalScope coroutines are not tied to any lifecycle — they run until the process dies, cannot be cancelled by component lifecycle, and cause memory leaks",
+        "GlobalScope is deprecated in Kotlin 1.9+",
+        "GlobalScope doesn't support structured concurrency operators"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between withContext() and launch()?",
+      opts: [
+        "withContext() and launch() are identical — just different naming",
+        "withContext() is a suspend function that switches dispatcher and waits for the block to complete, returning its result; launch() starts a new concurrent coroutine and returns a Job",
+        "withContext() creates a child coroutine; launch() switches the current coroutine's dispatcher",
+        "launch() runs on the current thread; withContext() always uses a background thread"
+      ],
+      ans: 1
+    },
+    {
+      q: "In Dispatchers.IO, what happens if all 64 threads are busy?",
+      opts: [
+        "New coroutines throw an exception immediately",
+        "New coroutines are queued and suspended until a thread becomes available — they don't block, they wait cooperatively",
+        "Dispatchers.IO automatically scales beyond 64 threads without limit",
+        "The coroutine falls back to Dispatchers.Default automatically"
+      ],
+      ans: 1
+    },
+    {
+      q: "How does the Kotlin compiler implement suspend functions under the hood?",
+      opts: [
+        "It creates a new Thread for each suspend function call",
+        "It transforms the function into a state machine (Continuation) — each suspension point is a state; at resume(), the state machine dispatches to the correct code point",
+        "It uses Java's CompletableFuture behind the scenes",
+        "It generates callback-based code identical to Java async patterns"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Design a SyncManager for an offline-first field operations app. It must: 1) Use coroutineScope to run parallel sync for WorkOrders, Assets, and Employees simultaneously. 2) Report sync progress via a Flow<SyncProgress> — emit SyncProgress(stage, percentage) as each completes. 3) Use withContext(Dispatchers.IO) for all network/database calls. 4) Implement retry logic (3 attempts) for each sync operation using a loop with delay(). 5) Ensure full cancellation support — if the scope is cancelled midway, no partial writes occur (use transactions).",
+  resources: [
+    { type: "docs", title: "Kotlin Coroutines Guide", url: "https://kotlinlang.org/docs/coroutines-guide.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Android Coroutines Best Practices", url: "https://developer.android.com/kotlin/coroutines/coroutines-best-practices", source: "developer.android.com" },
+    { type: "docs", title: "CoroutineScope and Structured Concurrency", url: "https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency", source: "kotlinlang.org" },
+    { type: "docs", title: "repeatOnLifecycle API Guide", url: "https://developer.android.com/topic/libraries/architecture/coroutines#lifecyclescope", source: "developer.android.com" },
+    { type: "docs", title: "viewModelScope and lifecycleScope", url: "https://developer.android.com/topic/libraries/architecture/coroutines", source: "developer.android.com" }
+  ],
+  eli5: "Imagine you're a chef (thread) cooking multiple dishes. Old way: you stand at the stove staring at water boiling (blocking thread — wasteful). Coroutine way: you put the water on to boil, go chop vegetables, come back when the water's ready — same chef doing more work. Dispatchers.IO is the kitchen for washing dishes, Dispatchers.Default is the kitchen for complicated recipes, Dispatchers.Main is the dining room where you serve guests.",
+  codeWalkthrough: [
+    "viewModelScope.launch { } — coroutine is tied to ViewModel lifecycle; cancelled when ViewModel is cleared",
+    "_uiState.value = UiState.Loading — runs on Dispatchers.Main (launch inherits Main in ViewModel)",
+    "val orders = repository.getWorkOrders(fieldId) — suspend call; coroutine suspends here, thread is free",
+    "async { fetchWorkOrders() } and async { fetchStats() } — both start immediately, run in parallel",
+    "ordersDeferred.await() — suspends until orders are ready; if stats complete first, both are available immediately",
+    "withContext(Dispatchers.IO) { } — switches to IO thread pool for network and database; resumes on caller's dispatcher after block",
+    "withContext(Dispatchers.Default) { remote.map { it.toDomain() } } — CPU mapping on Default pool; not blocking IO threads",
+    "repeatOnLifecycle(State.STARTED) — pauses collection when app goes to background; resumes on STARTED; prevents wasted work",
+    "viewModel.uiState.collect { state -> renderState(state) } — terminal operator; runs for every emission from StateFlow"
+  ],
+  bugChallenge: {
+    code: `class UserViewModel : ViewModel() {
+    fun loadUser(id: String) {
+        GlobalScope.launch {                    // bug 1
+            val user = repository.getUser(id)
+            binding.nameText.text = user.name   // bug 2
+        }
+    }
+}
+
+class UserRepository {
+    fun getUser(id: String): User {             // bug 3
+        return api.getUser(id).execute().body()!!
+    }
+}`,
+    hint: "Three bugs: wrong scope, wrong thread for UI update, blocking network call on wrong thread",
+    answer: "Bug 1: GlobalScope not tied to ViewModel lifecycle — causes memory leaks. Fix: viewModelScope.launch { }. Bug 2: UI update (binding.nameText.text) inside a coroutine may run on a background thread — must use withContext(Dispatchers.Main) or the launch will inherit Main in ViewModel context but it's fragile. Better: update _uiState StateFlow and let UI observe it. Bug 3: getUser() is NOT a suspend function but calls execute().body() which is a blocking network call — will throw NetworkOnMainThreadException if called from Main. Fix: make it suspend fun getUser(), use withContext(Dispatchers.IO) { api.getUser(id) }, use Retrofit suspend support."
+  },
+  difficulty: "intermediate",
+  prereqs: [3, 6]
+},
+{
+  id: 8,
+  title: "Coroutine Cancellation, SupervisorScope & Exception Handling",
+  subtitle: "Advanced coroutine patterns that separate mid-level from senior Android developers",
+  analogy: "Coroutine cancellation is like a polite fire drill — the alarm goes off (CancellationException), everyone cooperates and exits orderly (checks isActive), and no one is abandoned in the building (structured concurrency). SupervisorScope is a fire drill where if one person panics, the others calmly continue.",
+  points: [
+    { t: "Cooperative cancellation", d: "Coroutines must cooperate to be cancelled — they check for cancellation at suspension points (any suspend function call). A coroutine doing pure computation with no suspend calls will NOT be cancelled until it calls ensureActive() or yield() or hits a suspend point." },
+    { t: "isActive check", d: "while (isActive) { processNextChunk() } — check isActive in computation-heavy loops. isActive is a property on CoroutineScope and Continuation. Returning false means the coroutine has been cancelled and should stop work." },
+    { t: "ensureActive() and yield()", d: "ensureActive() throws CancellationException if the coroutine is cancelled (explicit check point). yield() suspends the coroutine briefly, allowing other coroutines to run AND checking for cancellation. Use yield() in tight loops processing large datasets." },
+    { t: "CancellationException is special", d: "CancellationException is NOT treated as a failure by coroutine machinery — it's a normal termination signal. It does NOT cancel the parent scope. NEVER catch CancellationException without rethrowing it. catch (e: Exception) { } silently swallows it — a critical bug." },
+    { t: "try/finally in coroutines", d: "try { suspendWork() } finally { cleanup() } — finally blocks run even when a coroutine is cancelled. Use finally for cleanup (closing connections, resetting state). Inside finally of a cancelled coroutine, you are in a cancellation state — avoid new suspend calls unless using NonCancellable." },
+    { t: "withContext(NonCancellable)", d: "withContext(NonCancellable) { criticalCleanup() } runs the block even if the coroutine is cancelled. Use ONLY in finally blocks for critical cleanup that must complete (e.g., committing a database transaction, sending a telemetry event)." },
+    { t: "Job vs SupervisorJob", d: "Regular Job: if one child fails, all siblings are cancelled and the parent fails. SupervisorJob: if one child fails, siblings continue running. Use SupervisorJob in scopes where failures of individual operations should be independent (e.g., loading multiple sections of a screen independently)." },
+    { t: "supervisorScope builder", d: "supervisorScope { launch { task1() }; launch { task2() } } — if task1 fails, task2 continues. The scope itself fails only if the block itself throws. Use for parallel operations that should be independent (sidebar: vs coroutineScope where one failure cancels all)." },
+    { t: "CoroutineExceptionHandler", d: "val handler = CoroutineExceptionHandler { _, exception -> logError(exception) }; launch(handler) { } — handles uncaught exceptions from launch{} coroutines. Does NOT work with async{} (exceptions are stored in Deferred and thrown on await()). CoroutineExceptionHandler is a last-resort handler, not a try/catch replacement." },
+    { t: "Exception propagation rules", d: "launch{}: exceptions propagate to parent immediately, cancelling siblings. async{}: exceptions are stored in Deferred — thrown when you call await(). So wrap await() calls in try/catch, not the async{} block itself." },
+    { t: "Cancellation and resource cleanup", d: "When a coroutine is cancelled mid-operation (e.g., user navigates away during API call), resources must be cleaned up. Retrofit/OkHttp calls are cancellable — the HTTP request is aborted. Room queries are cancellable. Custom code must check isActive in loops." },
+    { t: "timeout and withTimeout", d: "withTimeout(5000) { longRunningOperation() } cancels the coroutine and throws TimeoutCancellationException if it doesn't complete within 5 seconds. withTimeoutOrNull returns null on timeout instead of throwing. Use for network requests with strict SLAs." }
+  ],
+  whatIs: "Advanced coroutine handling covers the nuances that cause production bugs: cooperative cancellation (computing coroutines ignore cancellation without isActive checks), CancellationException propagation rules, SupervisorJob for independent failure isolation, CoroutineExceptionHandler for last-resort logging, and withContext(NonCancellable) for critical cleanup. These topics dominate senior Android interviews.",
+  realWorld: "In a real-time SaaS collaboration app, a DocumentSyncScope uses SupervisorJob so that a failed comment sync doesn't cancel the document content sync. Long-running export operations use withTimeout. The SyncWorker uses isActive checks in its processing loop to respond to WorkManager cancellation. withContext(NonCancellable) ensures the local database transaction commits even if the user navigates away mid-sync.",
+  code: `// Cooperative cancellation in a processing loop
+suspend fun processLargeDataset(items: List<Item>) {
+    items.forEach { item ->
+        ensureActive()  // throw CancellationException if cancelled
+        processItem(item)
+    }
+}
+
+// try/finally for cleanup — runs even on cancellation
+suspend fun syncWithCleanup(docId: String) {
+    val lock = acquireLock(docId)
+    try {
+        performSync(docId)
+    } finally {
+        // Runs even if coroutine is cancelled
+        withContext(NonCancellable) {
+            lock.release()           // suspend call safe in NonCancellable
+            logSyncAttempt(docId)    // telemetry must complete
+        }
+    }
+}
+
+// SupervisorJob — independent failure isolation
+class DocumentViewModel : ViewModel() {
+    // viewModelScope uses SupervisorJob internally — good!
+    fun loadDocumentSections(docId: String) {
+        viewModelScope.launch {
+            supervisorScope {
+                launch {
+                    val content = contentRepo.load(docId)
+                    _contentState.value = UiState.Success(content)
+                }
+                launch {
+                    val comments = commentsRepo.load(docId)  // failure here
+                    _commentsState.value = UiState.Success(comments) // won't cancel content
+                }
+            }
+        }
+    }
+}
+
+// CoroutineExceptionHandler — last resort
+val exceptionHandler = CoroutineExceptionHandler { context, throwable ->
+    if (throwable !is CancellationException) {
+        Crashlytics.recordException(throwable)
+        _errorEvent.tryEmit(throwable.message ?: "Unknown error")
+    }
+}
+
+// Exception propagation: async vs launch
+fun demonstrateExceptionDifference() {
+    viewModelScope.launch(exceptionHandler) {
+        // async — exception stored in Deferred, thrown on await()
+        val result = async { riskyOperation() }
+        try {
+            val value = result.await()  // exception thrown HERE
+        } catch (e: Exception) {
+            handleError(e)
+        }
+    }
+}
+
+// withTimeout for SLA-bound operations
+suspend fun fetchWithTimeout(id: String): Document? =
+    withTimeoutOrNull(5_000) {
+        api.fetchDocument(id)  // returns null if > 5 seconds
+    }`,
+  funFact: "viewModelScope actually uses SupervisorJob internally — that's why a crash in one launched coroutine doesn't cancel the entire ViewModel. This is by design: independent UI operations shouldn't cascade-fail each other. If you create a custom scope with a regular Job, one coroutine crash kills all siblings.",
+  quiz: [
+    {
+      q: "A coroutine runs a tight computation loop with no suspend calls. The scope is cancelled. What happens?",
+      opts: [
+        "The coroutine is immediately cancelled by the runtime",
+        "The coroutine continues running until it naturally completes — cancellation is cooperative and requires suspension points or isActive checks",
+        "The coroutine is interrupted at the next bytecode instruction",
+        "The coroutine throws CancellationException at the next variable access"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why must CancellationException NEVER be swallowed (caught without rethrowing)?",
+      opts: [
+        "CancellationException contains important debug information that must be logged",
+        "Swallowing CancellationException prevents the coroutine from being marked as cancelled, causing it to continue running after its scope is cancelled — breaking structured concurrency",
+        "CancellationException is a checked exception in coroutines",
+        "It can cause the Dispatchers.Main thread to deadlock"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between coroutineScope{} and supervisorScope{}?",
+      opts: [
+        "coroutineScope waits for children; supervisorScope doesn't",
+        "In coroutineScope, one child failure cancels all siblings; in supervisorScope, children fail independently — one failure doesn't affect siblings",
+        "supervisorScope runs children on a background thread; coroutineScope uses the current thread",
+        "They are identical — just different naming conventions"
+      ],
+      ans: 1
+    },
+    {
+      q: "Where does CoroutineExceptionHandler work — launch{} or async{}?",
+      opts: [
+        "It works with both launch{} and async{}",
+        "It works ONLY with launch{} — async{} stores exceptions in Deferred and throws them on await(), which must be caught with try/catch",
+        "It works only with top-level coroutines, not nested ones",
+        "It works only with supervisorScope children"
+      ],
+      ans: 1
+    },
+    {
+      q: "When is withContext(NonCancellable) { } appropriate?",
+      opts: [
+        "For all suspend calls inside a coroutine to prevent accidental cancellation",
+        "Only in finally blocks when you need to run critical cleanup suspend calls after cancellation — like committing a DB transaction or releasing a lock",
+        "In viewModelScope.launch to prevent the ViewModel from cancelling the coroutine",
+        "For network calls that must not be interrupted"
+      ],
+      ans: 1
+    },
+    {
+      q: "A developer wraps async{} with a CoroutineExceptionHandler. Why doesn't it catch the exception from the async block?",
+      opts: [
+        "CoroutineExceptionHandler only catches RuntimeException, not checked exceptions",
+        "async{} stores its exception in the Deferred result — it's only thrown when await() is called, at which point the handler is not in the exception propagation path",
+        "CoroutineExceptionHandler must be on the parent scope, not the async block",
+        "async{} exceptions are always ignored unless SupervisorJob is used"
+      ],
+      ans: 1
+    },
+    {
+      q: "withTimeoutOrNull(5000) { api.call() } returns null. What does this indicate?",
+      opts: [
+        "The API returned a null response body",
+        "The operation did not complete within 5000ms — the coroutine was cancelled by the timeout and null is returned instead of throwing TimeoutCancellationException",
+        "The API threw an exception that was converted to null",
+        "The coroutine scope was cancelled externally"
+      ],
+      ans: 1
+    },
+    {
+      q: "viewModelScope uses SupervisorJob internally. What practical effect does this have?",
+      opts: [
+        "All viewModelScope coroutines run sequentially, preventing race conditions",
+        "A crash in one viewModelScope.launch{} coroutine does NOT cancel other running coroutines in the same ViewModel — they fail independently",
+        "viewModelScope coroutines cannot be cancelled individually",
+        "It makes viewModelScope coroutines run on Dispatchers.IO automatically"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Build a robust ParallelSyncManager for a field operations app. It must: 1) Use supervisorScope to run WorkOrder, Asset, and Employee syncs in parallel — individual failures should not cancel siblings. 2) Each sync operation uses isActive checks in its processing loop and withTimeout(30_000). 3) Install a CoroutineExceptionHandler that logs failures to Crashlytics and emits error events. 4) Use try/finally with withContext(NonCancellable) to commit any partial DB transactions even on cancellation. 5) Collect and report per-sync results so the UI shows which succeeded and which failed.",
+  resources: [
+    { type: "docs", title: "Coroutine Cancellation and Timeouts", url: "https://kotlinlang.org/docs/cancellation-and-timeouts.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Exception Handling in Coroutines", url: "https://kotlinlang.org/docs/exception-handling.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Coroutines and Structured Concurrency", url: "https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency", source: "kotlinlang.org" },
+    { type: "docs", title: "SupervisorJob and Supervision", url: "https://kotlinlang.org/docs/exception-handling.html#supervision", source: "kotlinlang.org" }
+  ],
+  eli5: "Imagine you and three friends are building a sandcastle together. If a regular coroutine-team member trips and falls, everyone stops (regular Job). But with a supervisor (SupervisorJob), if one friend trips, the others keep building — only that friend needs to recover. CancellationException is like a walkie-talkie saying 'time to stop' — you can't just ignore it or put it in your pocket; you MUST pass the message along.",
+  codeWalkthrough: [
+    "ensureActive() inside forEach — throws CancellationException immediately if cancelled; converts non-cancellable loop into cancellable",
+    "val lock = acquireLock(docId) before try — ensures lock is captured even if acquisition itself can't be undone",
+    "withContext(NonCancellable) { lock.release() } in finally — NonCancellable context allows suspend calls after cancellation",
+    "supervisorScope { launch { content }; launch { comments } } — two independent children; comments failure doesn't cancel content",
+    "CoroutineExceptionHandler { _, throwable -> } — receives unhandled exceptions from launch{}; last resort for logging",
+    "if (throwable !is CancellationException) Crashlytics.recordException — never report cancellations as crashes; they're normal",
+    "val result = async { riskyOperation() } — exception stored in Deferred until await()",
+    "result.await() inside try/catch — this is where async exception is thrown; CORRECT place to catch it",
+    "withTimeoutOrNull(5_000) { } — returns null on timeout instead of throwing; safe for optional operations"
+  ],
+  bugChallenge: {
+    code: `fun loadData() {
+    viewModelScope.launch {
+        try {
+            val result = async { fetchFromNetwork() }
+            processResult(result.await())
+        } catch (e: CancellationException) {
+            // "safe" to ignore — it's just cancellation
+            showError("Cancelled")
+        } catch (e: Exception) {
+            showError(e.message)
+        }
+    }
+}
+
+suspend fun longProcess(items: List<Item>) {
+    for (item in items) {
+        heavyProcessing(item)  // CPU work, no suspend calls
+    }
+}`,
+    hint: "CancellationException must not be swallowed. Long CPU loop won't respond to cancellation.",
+    answer: "Bug 1: catch (e: CancellationException) { showError() } — this swallows the cancellation signal. The CancellationException must be rethrown: catch (e: CancellationException) { throw e }. Calling showError and not rethrowing causes the coroutine to continue in cancelled state, potentially causing memory leaks. Bug 2: longProcess() iterates with no suspend calls or isActive checks — it will NOT respond to scope cancellation. Fix: add ensureActive() or yield() inside the for loop: for (item in items) { ensureActive(); heavyProcessing(item) }."
+  },
+  difficulty: "advanced",
+  prereqs: [7]
+},
+{
+  id: 9,
+  title: "Flow Fundamentals: Cold Streams, Operators & Collection",
+  subtitle: "Kotlin Flow — reactive streams for modern Android data pipelines",
+  analogy: "Flow is like a newspaper subscription: nothing happens until someone subscribes (cold). Each subscriber gets their own fresh newspaper starting from the beginning. The operators (map/filter/onEach) are like editors who transform the newspaper before it reaches you.",
+  points: [
+    { t: "Flow is cold", d: "A Flow does nothing until it is collected — the producer code inside flow { } runs fresh for EACH collector, and only when collect {} is called. This is fundamentally different from hot streams (SharedFlow/StateFlow) which produce values regardless of collectors." },
+    { t: "flow {} builder", d: "flow { emit(value) } creates a cold flow. The lambda runs only when collected. Can call suspend functions and delay inside. Each collect{} call re-runs the entire producer from scratch — like re-running a function." },
+    { t: "flowOf and asFlow", d: "flowOf(1, 2, 3) creates a finite flow from fixed values. listOf(1,2,3).asFlow() converts a collection to a Flow. channelFlow { } for producer-consumer patterns with concurrent emissions." },
+    { t: "Terminal operators", d: "collect { }, first(), toList(), reduce(), fold() — these are terminal operators that trigger collection. They are suspend functions. The flow does not produce values until one of these is called. collect {} collects every value; first() collects just one." },
+    { t: "Intermediate operators: map/filter/onEach", d: "map { transform it } returns a new Flow with transformed values. filter { predicate } returns only matching values. onEach { sideEffect(it) } performs a side effect for each item without transforming (use for logging, analytics). All lazy — no execution until collect." },
+    { t: "catch operator", d: "flow.catch { e -> emit(defaultValue) } catches exceptions from upstream and can emit fallback values. ONLY catches upstream exceptions — not exceptions in collect{}. Place catch before the terminal operator." },
+    { t: "retry and retryWhen", d: "flow.retry(3) { e -> e is IOException } retries the entire flow up to 3 times when the exception matches. retryWhen { cause, attempt -> delay(exponentialBackoff(attempt)); true } for custom retry strategy with exponential backoff." },
+    { t: "flowOn operator", d: "flow.flowOn(Dispatchers.IO) changes the dispatcher for all UPSTREAM operators. The downstream collect{} runs on the caller's dispatcher. flowOn is the correct way to change Flow execution context — NOT launching on a different dispatcher." },
+    { t: "Flow vs Sequence vs Collection", d: "Collection: eager, all in memory. Sequence: lazy, synchronous (no suspend). Flow: lazy, asynchronous (suspend-capable, works across coroutines, can use delay). Use Flow for async data pipelines, Sequence for sync lazy transformations, Collection when you need random access." },
+    { t: "combine and zip operators", d: "combine(flow1, flow2) { a, b -> f(a,b) } — re-emits when EITHER flow emits. zip(flow1, flow2) { a, b -> f(a,b) } — emits only when BOTH emit one value (paired). Use combine for reactive UI that depends on multiple independent data sources." },
+    { t: "flatMapLatest and flatMapConcat", d: "flatMapLatest { searchTerm -> searchFlow(searchTerm) } — cancels previous inner flow when a new value arrives. Perfect for search-as-you-type. flatMapConcat processes inner flows sequentially. flatMapMerge processes concurrently." },
+    { t: "Flow completion and onCompletion", d: "flow.onCompletion { cause -> } runs when the flow completes (normally or due to exception/cancellation). cause is null on normal completion. Use for cleanup, analytics, hiding loading indicators regardless of success/failure." }
+  ],
+  whatIs: "Kotlin Flow is a cold asynchronous stream that emits multiple values over time. It is built on coroutines and is the idiomatic way to model reactive data streams in Android. Flow is used for database queries (Room returns Flow<List<T>>), network polling, sensor data, and UI state streams. Understanding cold vs hot, operator placement, and flowOn is essential for senior interviews.",
+  realWorld: "In a school management platform using Room + Firebase, Room returns Flow<List<Student>> — a cold flow that re-emits whenever the database changes. The ViewModel uses map to convert entities to UI models, filter to show only enrolled students, combine to merge attendance data, and flowOn(Dispatchers.IO) for the database work. The UI collects using repeatOnLifecycle to avoid collecting in the background.",
+  code: `// Room returns Flow — re-emits on every DB change
+@Dao
+interface StudentDao {
+    @Query("SELECT * FROM students WHERE section = :section")
+    fun getStudentsBySection(section: String): Flow<List<StudentEntity>>
+}
+
+// Repository — transform and combine flows
+class StudentRepository(
+    private val dao: StudentDao,
+    private val api: StudentApi
+) {
+    fun getEnrolledStudents(section: String): Flow<List<Student>> =
+        dao.getStudentsBySection(section)
+            .map { entities -> entities.map { it.toDomain() } }
+            .filter { students -> students.isNotEmpty() }
+            .flowOn(Dispatchers.IO)  // DB work on IO; collect on caller's dispatcher
+
+    // Combine two flows — emits when either changes
+    fun getDashboardData(sectionId: String): Flow<DashboardData> =
+        combine(
+            dao.getStudentsBySection(sectionId).map { it.map { e -> e.toDomain() } },
+            dao.getAttendanceFlow(sectionId)
+        ) { students, attendance ->
+            DashboardData(students, attendance)
+        }.flowOn(Dispatchers.IO)
+}
+
+// Retry with exponential backoff
+fun fetchWithRetry(id: String): Flow<Document> = flow {
+    emit(api.fetchDocument(id))
+}.retry(3) { e ->
+    if (e is IOException) {
+        delay(1000)
+        true  // retry
+    } else false  // don't retry other exceptions
+}.catch { e ->
+    emit(Document.empty())  // fallback on persistent failure
+}
+
+// flatMapLatest for search-as-you-type
+fun searchResults(queryFlow: Flow<String>): Flow<List<Student>> =
+    queryFlow
+        .debounce(300)
+        .flatMapLatest { query ->
+            if (query.isEmpty()) flowOf(emptyList())
+            else dao.searchStudents(query).flowOn(Dispatchers.IO)
+        }
+
+// ViewModel collecting Flow
+class StudentViewModel(private val repo: StudentRepository) : ViewModel() {
+    val students: StateFlow<UiState<List<Student>>> =
+        repo.getEnrolledStudents("A1")
+            .map<List<Student>, UiState<List<Student>>> { UiState.Success(it) }
+            .catch { emit(UiState.Error(it.message ?: "Error")) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = UiState.Loading
+            )
+}`,
+  funFact: "Room Database's Flow<List<T>> query uses SQLite's notification mechanism to re-run the query whenever the relevant table changes. This means a single @Query Flow in Room gives you a reactive database — no manual refresh needed. Google's architecture samples from 2022 onwards exclusively use Flow<List<T>> from Room instead of LiveData<List<T>>.",
+  quiz: [
+    {
+      q: "What does 'cold' mean for a Kotlin Flow?",
+      opts: [
+        "The Flow runs on a cold (background) thread by default",
+        "The Flow producer code does not execute until a terminal operator (like collect{}) is called, and each collector gets a fresh independent execution",
+        "Cold flows can only emit primitive types",
+        "Cold means the flow is paused — it needs to be started with flow.start()"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the correct operator to change the dispatcher for a Flow's upstream work?",
+      opts: [
+        "launch(Dispatchers.IO) { flow.collect{} }",
+        "flow.flowOn(Dispatchers.IO) — changes dispatcher for all upstream operators; downstream collect runs on caller's dispatcher",
+        "flow.subscribeOn(Dispatchers.IO) — RxJava equivalent",
+        "withContext(Dispatchers.IO) { flow.collect{} }"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does the catch operator in Flow catch?",
+      opts: [
+        "All exceptions including those thrown in collect{}",
+        "Only exceptions from UPSTREAM operators and the flow producer — not exceptions in the collect{} terminal operator",
+        "Only IOException subclasses by default",
+        "catch in Flow is equivalent to try/catch and intercepts all exceptions"
+      ],
+      ans: 1
+    },
+    {
+      q: "When should you use flatMapLatest vs flatMapConcat for a search box?",
+      opts: [
+        "flatMapConcat — it queues all searches and processes them in order",
+        "flatMapLatest — it cancels the previous search request when a new character is typed, preventing stale results from overwriting fresh ones",
+        "They are equivalent for search — the difference is only in performance",
+        "flatMapMerge — it processes all searches concurrently for maximum speed"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between combine() and zip() on two Flows?",
+      opts: [
+        "combine emits when EITHER source emits using the latest value from the other; zip emits only when BOTH emit one new value each (paired)",
+        "combine is synchronous; zip is asynchronous",
+        "zip combines any number of flows; combine only works with exactly two",
+        "They are identical with different syntax"
+      ],
+      ans: 0
+    },
+    {
+      q: "Room returns Flow<List<Student>>. What happens when no one is collecting this flow?",
+      opts: [
+        "Room still executes the query periodically and stores results in memory",
+        "Nothing — the flow is cold. Room only executes the query when a collector subscribes, and re-runs it when the table changes (while collected)",
+        "Room throws an exception if the flow is not collected within 30 seconds",
+        "The flow is automatically collected by Room's internal buffer"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does stateIn(scope, SharingStarted.WhileSubscribed(5000), initialValue) do to a Flow?",
+      opts: [
+        "Converts the cold Flow to a hot StateFlow that stays active for 5 seconds after the last subscriber unsubscribes, then stops (prevents rapid restart on config change)",
+        "Delays starting the flow collection by 5000ms",
+        "Keeps the flow active for exactly 5000ms total",
+        "Converts Flow to LiveData for Android lifecycle awareness"
+      ],
+      ans: 0
+    },
+    {
+      q: "What is the correct order of operators: map, flowOn, catch, collect?",
+      opts: [
+        "flowOn must always be first; catch must always be last before collect",
+        "flowOn applies to operators UPSTREAM of it; catch should be before terminal operator; map/filter can be anywhere in the chain",
+        "Order doesn't matter — Flow operators are declarative",
+        "catch must be between map and flowOn; collect must follow flowOn"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Build a real-time document search for the SaaS collaboration app. Create a Flow pipeline that: 1) Takes a Flow<String> of search queries. 2) Debounces by 300ms. 3) Uses flatMapLatest to cancel stale searches. 4) Queries Room with flowOn(Dispatchers.IO). 5) Maps entities to UI models. 6) Uses retry(2) for transient failures. 7) Uses catch to emit emptyList() on persistent failure. 8) Uses onEach to log search analytics. Convert the final Flow to StateFlow using stateIn with WhileSubscribed(5000).",
+  resources: [
+    { type: "docs", title: "Kotlin Flow Documentation", url: "https://kotlinlang.org/docs/flow.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Android Flow in ViewModel", url: "https://developer.android.com/kotlin/flow/stateflow-and-sharedflow", source: "developer.android.com" },
+    { type: "docs", title: "Room with Flow", url: "https://developer.android.com/training/data-storage/room/async-queries#flow", source: "developer.android.com" },
+    { type: "docs", title: "StateFlow and SharedFlow", url: "https://developer.android.com/kotlin/flow/stateflow-and-sharedflow", source: "developer.android.com" },
+    { type: "docs", title: "Flow operators reference", url: "https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/", source: "kotlinlang.org" }
+  ],
+  eli5: "Flow is like a water tap — nothing comes out until you turn it on (collect). Turning the tap is 'collecting'. The pipes before the tap are operators (map/filter) that shape the water. flowOn is like choosing which water source (hot spring, cold mountain) feeds the pipes. Each person who turns their own tap gets their own fresh stream from the beginning.",
+  codeWalkthrough: [
+    "Flow<List<StudentEntity>> from Room — Room automatically re-runs the query when students table changes; the Flow re-emits",
+    ".map { entities -> entities.map { it.toDomain() } } — transforms each DB entity list to domain model list; lazy, runs per emission",
+    ".filter { students -> students.isNotEmpty() } — drops empty lists from reaching the UI; upstream from flowOn",
+    ".flowOn(Dispatchers.IO) — all operators above this line run on IO thread pool; collect{} runs on caller's dispatcher",
+    "combine(flow1, flow2) { students, attendance -> } — emits a new DashboardData whenever students OR attendance changes",
+    ".retry(3) { e -> if (e is IOException) { delay(1000); true } else false } — retries with delay on IO errors only",
+    ".catch { e -> emit(Document.empty()) } — if 3 retries fail, emit a safe fallback; prevents crash",
+    "queryFlow.debounce(300) — waits 300ms of silence before emitting; prevents over-querying on each keystroke",
+    ".flatMapLatest { query -> dao.searchStudents(query) } — cancels previous DB query when new query arrives",
+    ".stateIn(viewModelScope, WhileSubscribed(5000), Loading) — converts cold Flow to hot StateFlow; 5s grace period on config change"
+  ],
+  bugChallenge: {
+    code: `fun getStudents(): Flow<List<Student>> =
+    dao.getAllStudents()
+        .flowOn(Dispatchers.IO)
+        .map { it.map { e -> e.toDomain() } }  // after flowOn
+        .catch { e -> emit(emptyList()) }
+
+fun collectInViewModel() {
+    viewModelScope.launch {
+        repository.getStudents().collect { students ->
+            throw RuntimeException("UI error")  // bug
+        }
+    }
+}`,
+    hint: "flowOn placement affects which operators run on which dispatcher. catch doesn't catch collect{} exceptions.",
+    answer: "Bug 1: .map{} is placed AFTER .flowOn(Dispatchers.IO) — this means map runs on the CALLER's dispatcher (Main), not IO. The domain mapping (CPU work) should run on IO or Default. Fix: move .map{} before .flowOn(Dispatchers.IO). Bug 2: throw RuntimeException inside collect{} is NOT caught by the .catch{} operator — catch only catches upstream exceptions. The exception will propagate to viewModelScope's CoroutineExceptionHandler. Fix: wrap collect{} lambda body in try/catch, or move error-prone logic to an upstream operator."
+  },
+  difficulty: "intermediate",
+  prereqs: [7]
+},
+{
+  id: 10,
+  title: "StateFlow vs SharedFlow vs LiveData vs Channels",
+  subtitle: "The hot stream comparison every senior Android developer must know",
+  analogy: "StateFlow is a scoreboard — it always shows the CURRENT score, new fans who arrive can immediately see it, and it always has a value. SharedFlow is a radio broadcast — you get only what's broadcast after you tune in. LiveData is a bulletin board only readable inside the building (lifecycle-aware). Channel is a one-way pipe — one sender, one receiver, one delivery.",
+  points: [
+    { t: "StateFlow — hot, always has value", d: "StateFlow<T>(initialValue) is a hot observable that always holds a current value. New collectors receive the current value immediately on subscription. Replay = 1 (always). Requires an initial value. Conflates — if no one is collecting, intermediate values are dropped and only the latest is kept." },
+    { t: "MutableStateFlow vs StateFlow", d: "_uiState = MutableStateFlow(Loading) — mutable, write from ViewModel. val uiState: StateFlow<UiState> = _uiState.asStateFlow() — read-only, exposed to UI. This is the standard ViewModel backing property pattern. The underscore prefix convention signals the mutable version is private." },
+    { t: "SharedFlow — hot, configurable", d: "MutableSharedFlow(replay = 0, extraBufferCapacity = 64) is a hot flow with configurable replay and buffer. replay = 0 means new collectors miss past events. replay = 1 behaves like StateFlow without requiring an initial value. Use for events, not state." },
+    { t: "StateFlow vs SharedFlow key differences", d: "StateFlow: requires initial value, always has current value, conflates (drops intermediate), equality-based emission (won't re-emit same value). SharedFlow: no initial value required, configurable replay, configurable buffer, always emits every value even if unchanged." },
+    { t: "LiveData — lifecycle-aware, legacy", d: "LiveData<T> is lifecycle-aware — only delivers updates when the observer is in STARTED/RESUMED state. Tied to Android lifecycle. No initial value required (starts null). Cannot use suspend functions natively. In 2025+, LiveData is considered legacy — prefer StateFlow + repeatOnLifecycle." },
+    { t: "Why StateFlow replaced LiveData", d: "StateFlow: Kotlin-first, works with Flow operators, testable without Android framework, works in non-UI layers, requires explicit lifecycle handling (repeatOnLifecycle). LiveData: Java-compatible, auto lifecycle-aware but requires Android context everywhere, harder to test, no operator support." },
+    { t: "Channel — point-to-point, once delivery", d: "Channel<T> is a non-broadcast queue — each value is consumed by EXACTLY one receiver. send()/receive() are suspend functions. Multiple collectors cannot all receive the same value. Use for producer-consumer patterns, not UI state. Channel is the foundation of channelFlow and actor patterns." },
+    { t: "One-shot events: the classic problem", d: "Navigation events, snackbar messages, and dialogs are one-time — they must not re-trigger on screen rotation. StateFlow conflates and re-emits current value on collection restart. Solutions: SharedFlow(replay=0), Channel, or UiEvent sealed class in StateFlow that gets cleared after consumption." },
+    { t: "Migrating LiveData to StateFlow", d: "Replace LiveData<T> with StateFlow<T>. Replace postValue/setValue with _flow.value = or _flow.update { }. Replace observe() with repeatOnLifecycle + collect. Replace observeAsState() in Compose with collectAsStateWithLifecycle() (Lifecycle-Compose library)." },
+    { t: "stateIn() and shareIn() operators", d: "flow.stateIn(scope, SharingStarted, initialValue) converts cold Flow to StateFlow. flow.shareIn(scope, SharingStarted) converts to SharedFlow. SharingStarted.WhileSubscribed(5000) stops the upstream after 5s with no subscribers — saves resources during config change." },
+    { t: "update {} function on MutableStateFlow", d: "_state.update { currentState -> currentState.copy(isLoading = false) } — atomically updates StateFlow using the current value. Thread-safe; avoids race conditions vs _state.value = _state.value.copy(...) which can lose updates under concurrency." },
+    { t: "Backpressure handling", d: "If producers emit faster than consumers collect: StateFlow silently drops intermediate values (conflation). SharedFlow with buffer: stores items in buffer up to extraBufferCapacity, then suspends or drops based on onBufferOverflow strategy. Channel: suspends sender by default (SUSPEND strategy)." }
+  ],
+  whatIs: "StateFlow, SharedFlow, LiveData, and Channel are all tools for observable state and event streaming in Android. StateFlow is the current industry standard for UI state. SharedFlow handles broadcast events. LiveData is legacy but still common in older codebases. Channels are for point-to-point messaging. Knowing when to use each and being able to migrate between them is a core senior Android interview topic.",
+  realWorld: "In a real-time SaaS collaboration app: DocumentViewModel exposes val uiState: StateFlow<DocumentUiState> for screen state. val navigationEvents: SharedFlow<NavigationEvent> handles one-shot navigation with replay=0. The room database query uses stateIn(WhileSubscribed(5000)) to avoid restarting on rotation. Legacy screens still using LiveData are migrated using asFlow() and asLiveData() bridge extensions.",
+  code: `// Standard ViewModel pattern — StateFlow for UI state
+class DocumentViewModel(
+    private val repo: DocumentRepository
+) : ViewModel() {
+
+    // Private mutable, public read-only — standard pattern
+    private val _uiState = MutableStateFlow<DocumentUiState>(DocumentUiState.Loading)
+    val uiState: StateFlow<DocumentUiState> = _uiState.asStateFlow()
+
+    // One-shot events — SharedFlow with replay=0
+    private val _events = MutableSharedFlow<DocumentEvent>(
+        replay = 0,
+        extraBufferCapacity = 16,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val events: SharedFlow<DocumentEvent> = _events.asSharedFlow()
+
+    // StateFlow backed by Room Flow — stops upstream 5s after no subscribers
+    val documents: StateFlow<List<Document>> =
+        repo.getAllDocuments()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList()
+            )
+
+    // Thread-safe state update
+    fun onDocumentSaved(doc: Document) {
+        _uiState.update { currentState ->
+            when (currentState) {
+                is DocumentUiState.Success -> currentState.copy(
+                    documents = currentState.documents + doc,
+                    lastSaved = System.currentTimeMillis()
+                )
+                else -> currentState
+            }
+        }
+    }
+
+    // Emit one-shot navigation event
+    fun onShareClicked(docId: String) {
+        viewModelScope.launch {
+            _events.emit(DocumentEvent.NavigateToShare(docId))
+        }
+    }
+}
+
+// UI layer — collect with repeatOnLifecycle
+class DocumentFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.uiState.collect { renderState(it) } }
+                launch { viewModel.events.collect { handleEvent(it) } }
+            }
+        }
+    }
+}
+
+// Compose — collectAsStateWithLifecycle (preferred over collectAsState)
+@Composable
+fun DocumentScreen(viewModel: DocumentViewModel) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    // ...
+}`,
+  funFact: "The debate between Channel and SharedFlow for one-shot events (like navigation) is one of the most discussed topics in the Android community. Google's official stance (2022+) is to use SharedFlow(replay=0) for events, or model events as part of UiState and clear them after consumption — never use Channel for UI events because it has no lifecycle awareness.",
+  quiz: [
+    {
+      q: "Why does StateFlow not re-emit when the same value is set?",
+      opts: [
+        "StateFlow uses a hash set internally to deduplicate values",
+        "StateFlow uses equals() comparison — if the new value equals the current value, no emission occurs. This is by design to prevent unnecessary recompositions in Compose",
+        "StateFlow is immutable — values cannot be changed once set",
+        "This behavior only applies to primitive types, not data classes"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the correct way to handle one-shot UI events (e.g., show snackbar) to prevent re-triggering on rotation?",
+      opts: [
+        "Store the event in StateFlow — it will only emit once automatically",
+        "Use SharedFlow(replay=0) — collectors only receive events emitted AFTER they subscribe; old events are not replayed on rotation",
+        "Use LiveData — it automatically clears events after delivery",
+        "Use a BroadcastChannel — it's designed specifically for one-shot events"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does SharingStarted.WhileSubscribed(5000) do in stateIn()?",
+      opts: [
+        "Waits 5 seconds before starting to collect the upstream flow",
+        "Keeps the upstream flow active for 5 seconds after the LAST subscriber disappears, then stops — prevents unnecessary restart on rapid config changes (like rotation)",
+        "Limits subscription to a maximum of 5 seconds",
+        "Buffers 5000ms of emissions before delivering to subscribers"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between Channel and SharedFlow for event delivery?",
+      opts: [
+        "They are identical — Channel was replaced by SharedFlow in Kotlin 1.5",
+        "Channel delivers each event to exactly ONE receiver (queue behavior); SharedFlow broadcasts to ALL active collectors simultaneously",
+        "SharedFlow is synchronous; Channel is asynchronous",
+        "Channel supports backpressure; SharedFlow does not"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why is _uiState.update { currentState -> currentState.copy(...) } safer than _uiState.value = _uiState.value.copy(...)?",
+      opts: [
+        "update {} uses a coroutine internally for better performance",
+        "update {} atomically reads and writes the state — if two coroutines update simultaneously, neither update is lost. Direct .value = .value.copy() can lose an update under race conditions",
+        "update {} validates the new value before assignment",
+        "They are equivalent — update {} is just a convenience function"
+      ],
+      ans: 1
+    },
+    {
+      q: "In a senior Android interview: 'When would you still use LiveData in 2025?'",
+      opts: [
+        "Always — LiveData is the officially recommended approach",
+        "When working in a legacy Java codebase, when the DataBinding library is used (it has native LiveData support), or when maintaining existing code where migration cost exceeds benefit",
+        "LiveData should never be used — always use StateFlow",
+        "Only in libraries — never in app code"
+      ],
+      ans: 1
+    },
+    {
+      q: "What happens when a SharedFlow with replay=1 gets a new subscriber?",
+      opts: [
+        "The subscriber misses all past events and only gets future ones",
+        "The subscriber immediately receives the LAST emitted value, then receives future values — like a StateFlow without requiring an initial value",
+        "The subscriber receives ALL past events since the SharedFlow was created",
+        "The subscriber must call start() before receiving any values"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the recommended way to collect a StateFlow in a Composable function?",
+      opts: [
+        "flow.collectAsState() — standard Compose collection",
+        "flow.collectAsStateWithLifecycle() from androidx.lifecycle:lifecycle-runtime-compose — stops collecting when the composable is not visible, saving resources",
+        "LaunchedEffect { flow.collect { } }",
+        "DisposableEffect { flow.collect { } }"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Design the complete reactive state layer for a document collaboration ViewModel. Include: 1) StateFlow<DocumentScreenState> for screen state using the private/public backing property pattern. 2) SharedFlow<OneTimeEvent> for navigation/snackbar events with replay=0 and a buffer of 32. 3) val collaborators: StateFlow<List<Collaborator>> backed by a Room Flow using stateIn with WhileSubscribed(5000). 4) A thread-safe addCollaborator() function using update{}. 5) An onError() that emits both a UiState update AND a one-time snackbar event. Show the Fragment/Composable collection code.",
+  resources: [
+    { type: "docs", title: "StateFlow and SharedFlow", url: "https://developer.android.com/kotlin/flow/stateflow-and-sharedflow", source: "developer.android.com" },
+    { type: "docs", title: "Migrating from LiveData to StateFlow", url: "https://developer.android.com/codelabs/advanced-kotlin-coroutines", source: "developer.android.com" },
+    { type: "docs", title: "StateFlow API Reference", url: "https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/", source: "kotlinlang.org" },
+    { type: "docs", title: "collectAsStateWithLifecycle", url: "https://developer.android.com/reference/kotlin/androidx/lifecycle/compose/package-summary", source: "developer.android.com" }
+  ],
+  eli5: "StateFlow is like a parking meter display — it always shows the CURRENT time remaining, and anyone who looks at it right now sees the current value. SharedFlow is like a radio station — you only hear songs that play AFTER you tune in. LiveData is like a school PA system that only broadcasts to classrooms when the teacher is actually in the room. Channel is like passing a note to exactly one person — they get it, no one else does.",
+  codeWalkthrough: [
+    "private val _uiState = MutableStateFlow(Loading) — underscore prefix signals mutable/private; class maintains single source of truth",
+    "val uiState = _uiState.asStateFlow() — read-only wrapper; UI can only read, not write state",
+    "MutableSharedFlow(replay=0, extraBufferCapacity=16) — replay=0: new collectors miss past events; buffer: prevents suspension on slow collectors",
+    "BufferOverflow.DROP_OLDEST — if buffer fills (16 events), oldest undelivered event is dropped; prevents backpressure blocking",
+    "repo.getAllDocuments().stateIn(viewModelScope, WhileSubscribed(5_000), emptyList()) — Room flow → hot StateFlow; stops 5s after no UI",
+    "_uiState.update { currentState -> } — atomic read-modify-write; safe under concurrent updates from multiple coroutines",
+    "currentState.copy(documents = ... + doc) — data class copy for immutable state update; original state unchanged",
+    "_events.emit(NavigateToShare(docId)) — must be in coroutine; suspends if buffer full (with SUSPEND strategy)",
+    "repeatOnLifecycle(STARTED) { launch{ uiState.collect } launch{ events.collect } } — both collections restart on STARTED, stop on STOPPED"
+  ],
+  bugChallenge: {
+    code: `class NotificationViewModel : ViewModel() {
+    val notifications = MutableStateFlow<List<Notification>>(emptyList())
+
+    // For showing one-time snackbar messages
+    val snackbarMessage = MutableStateFlow<String?>(null)
+
+    fun showMessage(msg: String) {
+        snackbarMessage.value = msg
+    }
+}
+
+// In Fragment:
+lifecycleScope.launch {
+    viewModel.snackbarMessage.collect { message ->
+        if (message != null) showSnackbar(message)
+        // After showing, never resets!
+    }
+}`,
+    hint: "Using StateFlow for one-time events causes re-showing the snackbar on rotation. StateFlow replays current value on new subscription.",
+    answer: "Bug: StateFlow(null) replays the current value to every new collector — on screen rotation, the snackbar will show again because the state still holds the message. Fix option 1: Use SharedFlow(replay=0) for events — new collectors miss past events. Fix option 2: After showing the snackbar, reset the state: viewModel.clearMessage() which sets snackbarMessage.value = null. Fix option 3 (best): Use a sealed class UiEvent that wraps one-time events, model them in UiState, and clear them after consumption using update { it.copy(pendingEvent = null) }."
+  },
+  difficulty: "advanced",
+  prereqs: [9]
+},
+{
+  id: 11,
+  title: "Android Architecture Timeline: MVC, MVP, MVVM, MVI & Clean Architecture",
+  subtitle: "Understanding the 'why' behind architectural choices — what every senior interview asks",
+  analogy: "Architecture is like the layout of a restaurant. MVC: the chef cooks AND takes orders AND does dishes (tangled). MVP: the waiter (Presenter) takes orders and carries food, the chef (Model) cooks, the dining room (View) just presents. MVVM: the kitchen posts a menu board (ViewModel) that updates automatically, guests just watch. MVI: the kitchen follows a strict recipe (single state update), no improvisation.",
+  points: [
+    { t: "MVC — the beginning", d: "Model-View-Controller: Controller handles user input and updates both Model and View. In Android's early days, Activity was both Controller AND View — causing 'Massive View Controller' syndrome. Logic was untestable because it was tied to Android framework classes that required running on a device." },
+    { t: "MVP — testability enters", d: "Model-View-Presenter: Presenter contains business logic and communicates with View through an interface. View (Activity/Fragment) is dumb — just calls Presenter methods and implements View interface. Presenter has no Android dependencies — fully unit testable. Problem: lots of interface boilerplate, memory leaks from View reference in Presenter." },
+    { t: "MVVM — the current standard", d: "Model-View-ViewModel: ViewModel holds UI state and business logic, exposes observable streams (StateFlow/LiveData). View observes and reacts. ViewModel has NO reference to the View — solves memory leaks. Configuration changes safe because ViewModel survives rotation. The officially recommended architecture since 2017." },
+    { t: "ViewModel survives rotation", d: "Android destroys and recreates Activity on rotation. ViewModel is stored in ViewModelStore which survives this — the same ViewModel instance is returned. This is the core problem MVVM solved: no more re-fetching data or saving state to Bundle for rotation." },
+    { t: "Clean Architecture layers", d: "Presentation (UI + ViewModel) → Domain (UseCases + Entities — pure Kotlin, no Android) → Data (Repositories + DataSources + API/DB). Dependency rule: outer layers depend on inner layers. The domain layer has ZERO Android dependencies — fully testable with JUnit." },
+    { t: "UseCase / Interactor pattern", d: "class GetDocumentsUseCase(private val repo: DocumentRepository) { operator fun invoke(): Flow<List<Document>> } — a single operation in the domain layer. Decouples ViewModel from repository details. Makes business rules testable in isolation. Controversial: some teams skip UseCases for simple CRUD apps." },
+    { t: "MVI — for Compose era", d: "Model-View-Intent: View emits user Intents (sealed class), ViewModel reduces them to produce a new State (sealed class), View renders the State. Unidirectional data flow — state changes only happen in one place (the reducer). Excellent for Compose where the whole screen re-renders on state change." },
+    { t: "MVI vs MVVM key difference", d: "MVVM: ViewModel has multiple observable streams for different parts of state. MVI: ViewModel has ONE state stream and an intent handler — each intent produces a new state via a pure function (reducer). MVI is more strict, MVVM is more pragmatic. Industry standard is MVVM with UiState sealed class (which borrows MVI ideas)." },
+    { t: "Why architecture matters in interviews", d: "Interviewers ask architecture questions to assess: Can you separate concerns? Can you write testable code? Do you understand the tradeoffs? Have you worked on a real team codebase? Wrong answers: 'I put all code in Activity' or 'I use whatever the tutorial showed'." },
+    { t: "Repository pattern", d: "Repository abstracts data sources — the ViewModel/UseCase doesn't know if data comes from network, cache, or database. Single source of truth principle: Room is the single source; API data is fetched and stored in Room; UI observes Room. Offline-first apps rely on this pattern." },
+    { t: "Dependency Injection and architecture", d: "Hilt (or Koin) wires the dependency graph: ViewModel is injected with UseCases, UseCases are injected with Repositories, Repositories are injected with Dao and ApiService. DI makes each layer independently testable with fake/mock dependencies." },
+    { t: "Multi-module architecture", d: "Large enterprise apps split by feature modules (:feature:documents, :feature:users) or by layer (:data, :domain, :presentation). Improves build times, enforces architectural boundaries (data module cannot import presentation module), enables independent team ownership." }
+  ],
+  whatIs: "Android architecture evolved from untestable Activity-driven code (MVC) through the testable but boilerplate-heavy MVP, to the current industry standard MVVM with Clean Architecture. MVI is gaining traction in Compose-based apps. Senior developers must not only know the patterns but also explain WHY each pattern emerged, what problem it solves, and when to apply each layer.",
+  realWorld: "A field operations enterprise app uses Clean Architecture: Domain layer has WorkOrderUseCase classes (pure Kotlin, tested with JUnit). Data layer has WorkOrderRepositoryImpl using Room (offline-first) and Retrofit (network). Presentation layer has WorkOrderViewModel (Hilt-injected) exposing StateFlow. The app is split into :feature:work-orders, :feature:assets, :core:data, :core:domain modules.",
+  code: `// Clean Architecture layers — field operations app
+
+// DOMAIN LAYER — pure Kotlin, zero Android imports
+data class WorkOrder(val id: String, val title: String, val status: Status)
+
+interface WorkOrderRepository {
+    fun getWorkOrders(): Flow<List<WorkOrder>>
+    suspend fun sync(): Result<Unit>
+}
+
+class GetWorkOrdersUseCase(private val repository: WorkOrderRepository) {
+    operator fun invoke(): Flow<List<WorkOrder>> =
+        repository.getWorkOrders()
+            .map { orders -> orders.sortedBy { it.status } }
+}
+
+// DATA LAYER — implements domain interfaces
+class WorkOrderRepositoryImpl(
+    private val api: WorkOrderApi,
+    private val dao: WorkOrderDao
+) : WorkOrderRepository {
+
+    // Single source of truth: Room is the source; API populates Room
+    override fun getWorkOrders(): Flow<List<WorkOrder>> =
+        dao.getAll()
+            .map { entities -> entities.map { it.toDomain() } }
+            .flowOn(Dispatchers.IO)
+
+    override suspend fun sync(): Result<Unit> = runCatching {
+        withContext(Dispatchers.IO) {
+            val remote = api.fetchWorkOrders()
+            dao.insertAll(remote.map { it.toEntity() })
+        }
+    }
+}
+
+// PRESENTATION LAYER — ViewModel with Hilt injection
+@HiltViewModel
+class WorkOrderViewModel @Inject constructor(
+    private val getWorkOrders: GetWorkOrdersUseCase,
+    private val syncOrders: SyncWorkOrdersUseCase
+) : ViewModel() {
+
+    val uiState: StateFlow<UiState<List<WorkOrder>>> =
+        getWorkOrders()
+            .map<List<WorkOrder>, UiState<List<WorkOrder>>> { UiState.Success(it) }
+            .catch { emit(UiState.Error(it.message ?: "Error")) }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState.Loading)
+
+    fun sync() {
+        viewModelScope.launch {
+            syncOrders().onFailure { error ->
+                // emit error event via SharedFlow
+            }
+        }
+    }
+}
+
+// MVI pattern — for Compose era
+data class WorkOrderScreenState(
+    val orders: List<WorkOrder> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+
+sealed class WorkOrderIntent {
+    object LoadOrders : WorkOrderIntent()
+    data class FilterByStatus(val status: Status) : WorkOrderIntent()
+    data class SelectOrder(val id: String) : WorkOrderIntent()
+}`,
+  funFact: "Google's Android team published the official 'Guide to App Architecture' in 2018. By 2022, they added explicit guidance for MVI-style unidirectional data flow with a single UiState class — acknowledging that pure MVVM with multiple observable fields was causing state consistency bugs in complex screens. The community had discovered MVI problems before the official guidance caught up.",
+  quiz: [
+    {
+      q: "Why was 'Massive View Controller' a problem with Android MVC?",
+      opts: [
+        "Activities in Android are Controllers, and they also had to manage the View, making them responsible for both UI and logic — untestable and bloated",
+        "The Model in MVC was too large for Android's memory constraints",
+        "MVC required too many Activities for complex apps",
+        "Android's MVC used XML controllers which were hard to maintain"
+      ],
+      ans: 0
+    },
+    {
+      q: "What specific problem did MVVM solve over MVP in Android?",
+      opts: [
+        "MVVM has less boilerplate than MVP",
+        "MVVM's ViewModel holds no reference to the View — solving memory leaks, and survives configuration changes — solving the rotation problem that MVP suffered from",
+        "MVVM is faster at runtime than MVP",
+        "MVVM supports coroutines while MVP does not"
+      ],
+      ans: 1
+    },
+    {
+      q: "In Clean Architecture, why must the Domain layer have ZERO Android dependencies?",
+      opts: [
+        "Android imports make compilation slower",
+        "Android classes (Context, Activity, etc.) can only run on a device/emulator — having them in Domain means you cannot unit test domain logic with plain JUnit; you'd need Robolectric or instrumentation tests",
+        "Android SDK version conflicts cause issues in the domain layer",
+        "Clean Architecture was designed before Android existed"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the key advantage of the Repository + Room single-source-of-truth pattern?",
+      opts: [
+        "It makes API calls faster by caching responses",
+        "The UI always observes Room (which has all data), API data is written to Room on sync — so the UI automatically reflects both cached and fresh data without complex state merging; works offline by default",
+        "It eliminates the need for ViewModels",
+        "Single source of truth means only one API endpoint is needed"
+      ],
+      ans: 1
+    },
+    {
+      q: "When would you choose MVI over MVVM for a screen?",
+      opts: [
+        "MVI is always better — it's the newer pattern",
+        "For complex screens with many interdependent state fields where MVVM's multiple observable streams cause state consistency issues, or when using Compose where unidirectional data flow aligns with the recomposition model",
+        "MVI is for simple screens; MVVM is for complex ones",
+        "MVI should be used only with RxJava, not coroutines"
+      ],
+      ans: 1
+    },
+    {
+      q: "A junior developer argues: 'UseCase classes are unnecessary — just call the Repository from the ViewModel.' When is this valid?",
+      opts: [
+        "Never — UseCases are always required by Clean Architecture",
+        "For simple CRUD apps where the domain logic IS just forwarding to the repository, UseCases add boilerplate without value. UseCases shine when there is real business logic (combining multiple repos, business rules, transformations)",
+        "Only if the app has fewer than 5 screens",
+        "Only if the team is small (1-2 developers)"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the Dependency Rule in Clean Architecture?",
+      opts: [
+        "Every class must declare all its dependencies via constructor injection",
+        "Source code dependencies must point INWARD — outer layers (Data, Presentation) depend on inner layers (Domain), never the reverse. Domain has no knowledge of Data or Presentation",
+        "All dependencies must be provided via Hilt or Koin",
+        "Inner layers can depend on outer layers if it improves performance"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why does ViewModel survive configuration changes (like screen rotation)?",
+      opts: [
+        "ViewModel saves its state to SharedPreferences automatically",
+        "ViewModelStore is retained during configuration changes — the Activity is destroyed and recreated but the ViewModelStore (and thus the ViewModel instance) is preserved by the framework",
+        "ViewModel uses onSaveInstanceState internally",
+        "ViewModel is stored in a singleton that outlives Activities"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Design the full architecture for a 'Field Technician Work Orders' screen. Specify: 1) Domain layer: WorkOrder entity, WorkOrderRepository interface, GetWorkOrdersUseCase, FilterWorkOrdersUseCase. 2) Data layer: WorkOrderRepositoryImpl with Room + Retrofit, offline-first sync strategy. 3) Presentation layer: WorkOrderViewModel with Hilt, UiState sealed class, MVI-style intent handling (sealed class WorkOrderIntent). 4) What module structure would you use for a 5-developer team? 5) How would you test each layer?",
+  resources: [
+    { type: "docs", title: "Guide to App Architecture", url: "https://developer.android.com/topic/architecture", source: "developer.android.com" },
+    { type: "docs", title: "UI Layer Architecture", url: "https://developer.android.com/topic/architecture/ui-layer", source: "developer.android.com" },
+    { type: "docs", title: "Domain Layer", url: "https://developer.android.com/topic/architecture/domain-layer", source: "developer.android.com" },
+    { type: "docs", title: "Data Layer", url: "https://developer.android.com/topic/architecture/data-layer", source: "developer.android.com" },
+    { type: "docs", title: "Hilt Dependency Injection", url: "https://developer.android.com/training/dependency-injection/hilt-android", source: "developer.android.com" }
+  ],
+  eli5: "Imagine your school has: a Library (data — stores everything), a Teacher (domain — knows the rules and makes decisions), and a Classroom (presentation — shows things to students). MVC: the teacher does everything including arranging desks. MVP: a teacher's assistant (presenter) takes instructions. MVVM: the classroom has a live scoreboard (ViewModel) that updates automatically. Clean Architecture says: the teacher should never need to talk directly to the library — there's a librarian (repository) in between.",
+  codeWalkthrough: [
+    "interface WorkOrderRepository in domain layer — no implementation details; domain only knows WHAT, not HOW",
+    "class GetWorkOrdersUseCase(private val repository: WorkOrderRepository) — zero Android imports; injectable; testable with fake repo",
+    "operator fun invoke() — allows calling the use case as a function: getWorkOrders() instead of getWorkOrders.execute()",
+    "class WorkOrderRepositoryImpl implements domain interface — data layer fulfills domain contract; domain never imports this class",
+    "dao.getAll().map { entities -> entities.map { toDomain() } } — entity-to-domain mapping in data layer; domain models are pure",
+    "@HiltViewModel class WorkOrderViewModel @Inject constructor — Hilt manages the dependency graph; ViewModel receives UseCases",
+    "getWorkOrders().map { UiState.Success(it) }.catch { UiState.Error }.stateIn — cold Flow to hot StateFlow pipeline",
+    "data class WorkOrderScreenState — MVI single state; entire screen state in one place",
+    "sealed class WorkOrderIntent — all user actions enumerated; ViewModel processes them in a when expression"
+  ],
+  bugChallenge: {
+    code: `// In the domain layer:
+import android.content.Context   // bug 1
+
+class GetUserUseCase(
+    private val repo: UserRepository,
+    private val context: Context  // bug 1
+) {
+    fun execute(): List<User> {       // bug 2
+        return repo.getUsers()
+    }
+}
+
+// In ViewModel:
+class UserViewModel : ViewModel() {
+    val users = MutableLiveData<List<User>>()  // bug 3
+
+    fun load() = viewModelScope.launch {
+        users.value = repo.getUsers()          // bug 3
+    }
+}`,
+    hint: "Domain layer must not import Android. UseCase should return Flow. LiveData.value must be set on main thread.",
+    answer: "Bug 1: android.content.Context in the domain layer violates Clean Architecture — domain must have zero Android dependencies. Remove Context from the use case; pass any needed configuration as plain Kotlin types. Bug 2: execute() returns List<User> synchronously — should return Flow<List<User>> or suspend fun execute(): List<User> for async operation. Bug 3: users.value = (setting LiveData) from a coroutine launched with Dispatchers.IO would crash — LiveData.value must be set on main thread. Fix: use postValue() or use StateFlow instead, or ensure the coroutine runs on Dispatchers.Main."
+  },
+  difficulty: "intermediate",
+  prereqs: []
+},
+{
+  id: 12,
+  title: "Android App Components: Activity, Fragment, Service, BroadcastReceiver & ContentProvider",
+  subtitle: "The 4 Android app components — fundamentals that every Android interview covers",
+  analogy: "Activity is your store's showroom — customers interact directly with it. Fragment is a modular display stand inside the showroom — you can swap them out. Service is the warehouse operations running 24/7 behind the scenes. BroadcastReceiver is the store's PA system — it listens for announcements. ContentProvider is the secure file room where you share documents with authorized visitors.",
+  points: [
+    { t: "The 4 app components", d: "Activity, Service, BroadcastReceiver, and ContentProvider are the 4 Android components that must be declared in AndroidManifest.xml. The Android system can start each component independently. Fragment is NOT a top-level component — it requires a host Activity." },
+    { t: "Activity lifecycle", d: "onCreate → onStart → onResume (visible and interactive) → onPause → onStop → onDestroy. onPause: called when losing focus (another Activity in front). onStop: Activity is no longer visible. onDestroy: called before Activity is destroyed (or by finish()). onRestart: from stopped back to started." },
+    { t: "Activity vs Fragment debate", d: "Modern Android recommendation (2019+): Single Activity architecture with multiple Fragments or Compose screens. Activity handles deep linking, permissions, and system integration. Fragments/Compose manage screen content. Benefits: shared ViewModel, simpler navigation, better transition animations." },
+    { t: "Fragment lifecycle complexity", d: "Fragments have TWO lifecycles: Fragment lifecycle and View lifecycle. viewLifecycleOwner (the View) is created in onCreateView and destroyed in onDestroyView — use for UI observations. Fragment lifecycle persists through view recreation (e.g., in backstack). Always use viewLifecycleOwner for view-related observers." },
+    { t: "Service types", d: "Started Service: runs in background until stopped (IntentService is deprecated — use WorkManager or coroutines). Bound Service: clients bind to it and interact via IBinder interface. Foreground Service: shows a persistent notification, higher priority, survives low memory. In 2025: prefer WorkManager over Services for deferrable work." },
+    { t: "Foreground Service requirements", d: "Since Android 8 (API 26), background execution is limited — apps cannot start background Services freely. Foreground Service requires calling startForeground() within 5 seconds of starting and showing a notification. Required for: music playback, navigation, real-time location tracking." },
+    { t: "BroadcastReceiver — explicit vs implicit", d: "Explicit broadcasts target a specific component (your app): Intent(context, MyReceiver::class.java). Implicit broadcasts declare an action (other apps or system can handle): action = Intent.ACTION_BOOT_COMPLETED. Since Android 8: most implicit broadcasts cannot be registered in Manifest — must use Context.registerReceiver() at runtime." },
+    { t: "BroadcastReceiver execution limits", d: "onReceive() runs on the MAIN thread and must complete within ~10 seconds (triggers ANR). For async work in onReceive(), use goAsync() to get a PendingResult, do async work, then call pendingResult.finish(). BroadcastReceiver has no lifecycle — it dies after onReceive() returns." },
+    { t: "ContentProvider for data sharing", d: "ContentProvider exposes structured data to other apps via a content URI (content://com.example.provider/table). It's the only way to safely share data between apps. Used by: MediaStore (photos), ContactsProvider (contacts), FileProvider (sharing files via Intent). Rarely built from scratch — use FileProvider for file sharing." },
+    { t: "AndroidManifest registration", d: "All 4 components must be declared in AndroidManifest.xml. Activity: <activity android:name='.MainActivity'>. Service: <service android:name='.SyncService'>. Receiver: <receiver android:name='.BootReceiver'> (for static registration). Provider: <provider android:authorities='...' android:exported='false'>." },
+    { t: "Pending Intent", d: "PendingIntent wraps an Intent with your app's identity — allows another app or the system to perform the action on your behalf later (notification click, alarm, widget button). Must specify mutability: PendingIntent.FLAG_IMMUTABLE (preferred) or FLAG_MUTABLE." },
+    { t: "WorkManager vs Service", d: "WorkManager (Jetpack): for deferrable, guaranteed background work that survives app kill (sync, upload). Foreground Service: for immediate, user-visible long-running work (music, navigation). AlarmManager: for exact time-triggered work (calendar reminders). Use WorkManager by default for background tasks." }
+  ],
+  whatIs: "Android's 4 application components (Activity, Service, BroadcastReceiver, ContentProvider) are the entry points through which the system and other apps can interact with your application. Each has a distinct purpose and lifecycle. Fragment is not a component but an architectural building block. Modern Android development minimizes direct component use — Fragments for screens, WorkManager for background work, FileProvider for sharing.",
+  realWorld: "In a school management platform: Activities handle the main entry point and deep links from notifications. Fragments implement each screen (student list, grade book, attendance). A Foreground Service with a notification plays audio during online classes. BroadcastReceivers listen for network changes to trigger sync. FileProvider shares grade report PDFs with other apps.",
+  code: `// Activity — Single Activity architecture entry point
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        // NavHostFragment handles all screen navigation
+    }
+
+    // Handle deep links / results from other apps
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleDeepLink(intent)
+    }
+}
+
+// Fragment — correctly using viewLifecycleOwner
+class StudentListFragment : Fragment() {
+    private val viewModel: StudentViewModel by viewModels()
+    private var _binding: FragmentStudentListBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentStudentListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Use viewLifecycleOwner — NOT 'this' — for view-related observations
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.students.collect { renderStudents(it) }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null  // prevent memory leak
+    }
+}
+
+// Foreground Service — audio playback for online class
+class ClassAudioService : Service() {
+    private var mediaPlayer: MediaPlayer? = null
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notification = buildNotification("Live Class in Progress")
+        startForeground(NOTIFICATION_ID, notification)  // required within 5s
+
+        when (intent?.action) {
+            ACTION_PLAY -> startAudio(intent.getStringExtra("stream_url"))
+            ACTION_STOP -> { stopAudio(); stopSelf() }
+        }
+        return START_STICKY  // restart if killed by system
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null  // not a bound service
+}
+
+// BroadcastReceiver — runtime registered for network changes
+class NetworkChangeReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        // onReceive runs on MAIN thread — keep it fast
+        val isConnected = isNetworkAvailable(context)
+        if (isConnected) {
+            WorkManager.getInstance(context).enqueue(
+                OneTimeWorkRequestBuilder<SyncWorker>().build()
+            )
+        }
+    }
+}
+
+// FileProvider — sharing grade report PDF
+fun shareGradeReport(file: File) {
+    val uri = FileProvider.getUriForFile(
+        requireContext(),
+        "\${requireContext().packageName}.fileprovider",
+        file
+    )
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "application/pdf"
+        putExtra(Intent.EXTRA_STREAM, uri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    startActivity(Intent.createChooser(intent, "Share Report"))
+}`,
+  funFact: "The ContentProvider was designed for inter-app data sharing, but Android's own system uses it heavily: the Contacts app, Camera (MediaStore), and Downloads all expose their data via ContentProviders. FileProvider, introduced to prevent the security issue of sharing raw file:// URIs, is the safe way to share files — raw file:// URIs are blocked on Android 7+ and throw FileUriExposedException.",
+  quiz: [
+    {
+      q: "Why should you use viewLifecycleOwner instead of 'this' (the Fragment) when observing LiveData/StateFlow in a Fragment?",
+      opts: [
+        "viewLifecycleOwner is faster to access than 'this'",
+        "The Fragment lifecycle persists when the Fragment is on the backstack (view is destroyed but Fragment isn't). Using 'this' as lifecycle owner causes observers to persist after the view is destroyed, leading to crashes on null binding references",
+        "LiveData requires viewLifecycleOwner; it's a compile requirement",
+        "viewLifecycleOwner provides automatic memory management for the observer"
+      ],
+      ans: 1
+    },
+    {
+      q: "Since Android 8 (Oreo), why can't most BroadcastReceivers be registered in the AndroidManifest?",
+      opts: [
+        "Google deprecated BroadcastReceivers in API 26",
+        "Static Manifest-registered receivers would launch apps in the background for every broadcast, draining battery. Android 8 restricted this — only explicitly targeted broadcasts and a few system broadcasts work statically; most require runtime registration",
+        "Manifest-registered receivers have a 1-second timeout; runtime receivers have 10 seconds",
+        "Manifest receivers require RECEIVE_BOOT_COMPLETED permission which is no longer granted"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is START_STICKY as a return value from Service.onStartCommand()?",
+      opts: [
+        "The Service runs with higher priority and cannot be killed",
+        "If the system kills the Service due to memory pressure, it will restart the Service with a null Intent — use for long-running services that should restart",
+        "The Service sticks to the foreground and shows a notification",
+        "START_STICKY is equivalent to START_NOT_STICKY in modern Android"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the purpose of PendingIntent.FLAG_IMMUTABLE?",
+      opts: [
+        "Prevents the Intent from being cancelled after creation",
+        "Specifies that the wrapped Intent cannot be modified by the recipient — required from Android 12 for security; prevents malicious apps from modifying your Intent before it executes",
+        "Makes the PendingIntent only usable once",
+        "FLAG_IMMUTABLE is required for all AlarmManager PendingIntents"
+      ],
+      ans: 1
+    },
+    {
+      q: "When should you use WorkManager instead of a Foreground Service?",
+      opts: [
+        "WorkManager is always better — Services are deprecated",
+        "WorkManager for deferrable, guaranteed background work that can be delayed and retried (sync, upload, compression). Foreground Service for immediate, user-visible long-running work that must run continuously (music, navigation, ongoing call)",
+        "WorkManager for tasks under 10 minutes; Foreground Service for longer tasks",
+        "Foreground Service when the app is in the foreground; WorkManager when it's in the background"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why does modern Android recommend Single Activity Architecture?",
+      opts: [
+        "Multiple Activities cause excessive memory usage",
+        "Single Activity enables shared ViewModels across screens, simpler NavGraph-based navigation with transitions, easier deep linking, and Compose compatibility — multiple Activities fragment the navigation stack and make shared state harder",
+        "Single Activity is required by Android 12+",
+        "Multiple Activities cannot use Hilt for dependency injection"
+      ],
+      ans: 1
+    },
+    {
+      q: "What happens if BroadcastReceiver.onReceive() takes more than 10 seconds?",
+      opts: [
+        "The broadcast is silently dropped",
+        "Android triggers an ANR (Application Not Responding) dialog for the user",
+        "The BroadcastReceiver is automatically killed and restarted",
+        "The operation completes but a warning is logged in Logcat"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why is sharing files with file:// URIs blocked on Android 7+ (FileUriExposedException)?",
+      opts: [
+        "File paths are too long for Intent extras",
+        "Direct file:// URIs expose your app's internal file system path to other apps and bypass Android's permission model. FileProvider creates content:// URIs with temporary, revocable read permission — the receiving app can read the file without accessing your storage directly",
+        "file:// URIs are deprecated in favor of content:// URIs for performance",
+        "Android 7 changed the file system to not support absolute paths"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Design the component architecture for the school management app's 'Live Class' feature. Specify: 1) Which Activity/Fragment handles the live class screen and why. 2) The Foreground Service for audio streaming with proper notification and START_STICKY. 3) A BroadcastReceiver for network changes — should it be manifest or runtime registered? What goAsync() usage is needed? 4) How WorkManager handles class recording upload after the session ends. 5) FileProvider setup for sharing class notes PDF. What entries go in AndroidManifest.xml for each component?",
+  resources: [
+    { type: "docs", title: "Android Application Components", url: "https://developer.android.com/guide/components/fundamentals", source: "developer.android.com" },
+    { type: "docs", title: "Activity Lifecycle", url: "https://developer.android.com/guide/components/activities/activity-lifecycle", source: "developer.android.com" },
+    { type: "docs", title: "Services Overview", url: "https://developer.android.com/guide/components/services", source: "developer.android.com" },
+    { type: "docs", title: "BroadcastReceiver Overview", url: "https://developer.android.com/guide/components/broadcasts", source: "developer.android.com" },
+    { type: "docs", title: "FileProvider", url: "https://developer.android.com/reference/androidx/core/content/FileProvider", source: "developer.android.com" }
+  ],
+  eli5: "Imagine your school as an Android app. Activity is the front door and main hallway — where guests enter. Fragments are the classrooms — you swap them out for different subjects. Service is the janitor working in the basement — you don't see them but they keep things running. BroadcastReceiver is the school secretary who listens to the PA system for important announcements. ContentProvider is the secure document office that shares files with other schools through an official process.",
+  codeWalkthrough: [
+    "@AndroidEntryPoint MainActivity — Hilt entry point; handles deep links and system integration; NavHostFragment does all navigation",
+    "private val viewModel: StudentViewModel by viewModels() — Hilt/AAC creates the ViewModel; same instance across config changes",
+    "viewLifecycleOwner.lifecycleScope — tied to Fragment's VIEW lifecycle, not Fragment lifecycle; avoids null binding crashes",
+    "_binding = null in onDestroyView() — view is destroyed when Fragment is backstacked; clearing prevents memory leak from view reference",
+    "startForeground(NOTIFICATION_ID, notification) — must be called within 5 seconds of Service start on Android 8+; shows persistent notification",
+    "return START_STICKY — system restarts Service with null Intent if killed; appropriate for ongoing audio/location services",
+    "override fun onBind(): IBinder? = null — returns null since this is a started Service, not a bound Service",
+    "WorkManager.enqueue in BroadcastReceiver — don't do long async work directly; enqueue WorkManager task and return immediately",
+    "FileProvider.getUriForFile(...) — converts File to content:// URI; FLAG_GRANT_READ_URI_PERMISSION gives receiving app temporary access"
+  ],
+  bugChallenge: {
+    code: `class SyncReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        // Sync takes 30 seconds
+        GlobalScope.launch {
+            repository.syncAllData()  // bug 1
+        }
+        // onReceive returns — receiver is dead
+    }
+}
+
+class StudentListFragment : Fragment() {
+    override fun onViewCreated(view: View, saved: Bundle?) {
+        // Using 'this' instead of viewLifecycleOwner
+        viewModel.students.observe(this) { students ->   // bug 2
+            binding.recyclerView.adapter = StudentAdapter(students)
+        }
+    }
+}`,
+    hint: "BroadcastReceiver dies after onReceive — GlobalScope launch may be killed. Fragment lifecycle != View lifecycle.",
+    answer: "Bug 1: BroadcastReceiver is dead after onReceive() returns — the process may be killed before GlobalScope.launch completes. Fix: use goAsync() to extend the receiver's life: val pendingResult = goAsync(); GlobalScope.launch { try { repository.syncAllData() } finally { pendingResult.finish() } }. Even better: enqueue a WorkManager OneTimeWorkRequest — it's guaranteed to complete even if the process is killed. Bug 2: observe(this) uses Fragment lifecycle — when the Fragment goes to the backstack, the view is destroyed but Fragment is alive and observers still run. Accessing binding in the observer causes NullPointerException. Fix: viewModel.students.observe(viewLifecycleOwner) { ... }"
+  },
+  difficulty: "intermediate",
+  prereqs: []
+},
+{
+  id: 13,
+  title: "Activity & Fragment Lifecycle, Configuration Changes",
+  subtitle: "Master the lifecycle — the most-asked Android interview topic of all time",
+  analogy: "Activity lifecycle is like a restaurant table. onCreate is when guests sit down, onResume is when food arrives and they're actively eating, onPause is when they're distracted by a phone call, onStop is when they step outside, and onDestroy is when they leave and the table is cleared. Configuration change is like the restaurant switching to a new layout — every guest (Activity) is re-seated from scratch unless you have a VIP reservation (ViewModel).",
+  points: [
+    { t: "onCreate()", d: "Called when Activity is first created. Initialize UI, set content view, restore saved state. Only called once per Activity instance (unless recreated). Use savedInstanceState to detect recreation vs fresh start. Call super.onCreate(savedInstanceState) first." },
+    { t: "onStart() & onStop()", d: "onStart: Activity becomes visible. onStop: Activity no longer visible (another Activity covers it fully or user presses Home). Register/unregister resources tied to visibility here — e.g., sensors, location updates, broadcast receivers that must only fire when visible." },
+    { t: "onResume() & onPause()", d: "onResume: Activity is in foreground and interactive — user can touch it. onPause: Activity partially obscured (dialog, split screen) or about to be stopped. onPause must be FAST — the next Activity won't start until it completes. Never do heavy work in onPause." },
+    { t: "onDestroy()", d: "Called before Activity is destroyed — either by user finishing it or system killing it. isFinishing() tells you which. Release non-UI resources here. If configuration change triggered onDestroy, isChangingConfigurations() returns true. ViewModel.onCleared() runs after this." },
+    { t: "Configuration changes", d: "Rotating the device, changing language, resizing in multi-window — Android destroys and recreates the Activity by default. This allows loading the correct resources (layout-land, values-es) for the new configuration. The process is: onPause → onStop → onDestroy → onCreate → onStart → onResume." },
+    { t: "onSaveInstanceState()", d: "Called before the Activity may be killed — called even during configuration changes. Bundle supports primitives, Parcelable, Serializable. Size limit ~1MB (shared with system). Use for transient UI state (scroll position, selected tab, user-typed text). NOT for large data — use ViewModel for that." },
+    { t: "onRestoreInstanceState()", d: "Called after onStart() with the same Bundle from onSaveInstanceState. Can also restore state in onCreate from savedInstanceState parameter. onRestoreInstanceState is only called if there is a non-null Bundle — convenient for always-restore logic." },
+    { t: "Fragment lifecycle vs Activity lifecycle", d: "Fragment has both Fragment lifecycle and View lifecycle (separate!). onCreateView inflates the layout, onViewCreated is where you set up views/observers. onDestroyView is called when the Fragment's view is destroyed (backstack) but Fragment instance survives. Always observe LiveData/Flow with viewLifecycleOwner, not the Fragment itself." },
+    { t: "Fragment backstack", d: "addToBackStack() saves Fragment transaction to the back stack — pressing Back pops it. replace() + addToBackStack() destroys old Fragment's view but keeps it in memory on the stack. add() keeps both Fragments alive simultaneously. Overuse causes deep stacks and memory issues in large apps." },
+    { t: "ViewModel survives configuration changes", d: "ViewModel lives as long as the ViewModelStore lives — which is scoped to the Activity/Fragment and survives configuration changes. On config change: Activity is destroyed but ViewModelStore is retained. New Activity instance retrieves the same ViewModel. This is the official solution to configuration change data loss." },
+    { t: "onSaveInstanceState vs ViewModel", d: "ViewModel survives config changes but NOT process death. onSaveInstanceState's Bundle survives both config changes AND process death (restored when user navigates back). Combine both: ViewModel for large runtime state, SavedStateHandle for small UI state that must survive process death." },
+    { t: "Lifecycle-aware components", d: "DefaultLifecycleObserver (or @OnLifecycleEvent) allows any class to observe Activity/Fragment lifecycle without subclassing. ProcessLifecycleOwner tracks app-level foreground/background. This decouples business logic from UI classes." }
+  ],
+  whatIs: "The Activity lifecycle defines how Android manages UI components through state transitions. Configuration changes (rotation, locale switch) destroy and recreate Activities — but ViewModels persist across this. onSaveInstanceState provides a Bundle-based escape hatch for small UI state that must survive process death. Fragment lifecycle adds a second dimension — the View lifecycle — that must be used correctly to avoid memory leaks and NPEs.",
+  realWorld: "In a field operations app, a WorkOrderDetailActivity must restore scroll position and expanded section state after rotation — these go in onSaveInstanceState. The WorkOrder data itself lives in a ViewModel so it doesn't reload from the server on every rotation. A MapFragment for GPS tracking uses onStart/onStop to register/unregister location updates, ensuring battery drain only occurs when the map is visible. The Fragment uses viewLifecycleOwner for LiveData observation to prevent leaks when navigating to sub-screens.",
+  code: `// Activity with proper lifecycle handling
+class WorkOrderDetailActivity : AppCompatActivity() {
+
+    private val viewModel: WorkOrderViewModel by viewModels()
+    private lateinit var binding: ActivityWorkOrderDetailBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityWorkOrderDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Restore UI state (scroll position) — NOT data
+        savedInstanceState?.let { state ->
+            binding.scrollView.scrollTo(0, state.getInt(KEY_SCROLL_Y, 0))
+            binding.detailsSection.isExpanded = state.getBoolean(KEY_DETAILS_EXPANDED, false)
+        }
+
+        // Data comes from ViewModel — survives config change
+        viewModel.workOrder.observe(this) { order ->
+            binding.titleText.text = order.title
+            binding.statusChip.text = order.status.label
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save transient UI state only
+        outState.putInt(KEY_SCROLL_Y, binding.scrollView.scrollY)
+        outState.putBoolean(KEY_DETAILS_EXPANDED, binding.detailsSection.isExpanded)
+    }
+
+    companion object {
+        private const val KEY_SCROLL_Y = "scroll_y"
+        private const val KEY_DETAILS_EXPANDED = "details_expanded"
+    }
+}
+
+// Fragment with CORRECT lifecycle usage
+class OrderMapFragment : Fragment(R.layout.fragment_order_map) {
+
+    private val viewModel: WorkOrderViewModel by activityViewModels()
+    private var _binding: FragmentOrderMapBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentOrderMapBinding.bind(view)
+
+        // viewLifecycleOwner — not 'this' — to avoid leaks when on backstack
+        viewModel.location.observe(viewLifecycleOwner) { loc ->
+            binding.mapView.updateMarker(loc)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null  // Prevent memory leak — view is gone but fragment lives
+    }
+}`,
+  funFact: "Android's configuration change system was designed in 2008 when devices had fixed orientations. The destroy-recreate cycle was meant to load landscape layouts automatically. Today, ViewModels and Jetpack Compose largely sidestep this problem — but every Android interview still tests it because legacy codebases are everywhere.",
+  quiz: [
+    { q: "Which callback is guaranteed to be called before the Activity might be killed by the system (even without process death)?", opts: ["onPause()", "onStop()", "onSaveInstanceState()", "onDestroy()"], ans: 2 },
+    { q: "A Fragment is on the back stack (not currently shown). Its view is destroyed. What happens to LiveData observers registered with 'this' (the Fragment) rather than viewLifecycleOwner?", opts: ["They are automatically paused", "They are automatically unregistered", "They remain active and can cause NPE when accessing views", "They queue updates until the Fragment is shown again"], ans: 2 },
+    { q: "The user rotates the device. Which sequence correctly describes what happens?", opts: ["onPause → onSaveInstanceState → onStop → onDestroy → onCreate → onStart → onResume", "onStop → onDestroy → onCreate → onStart → onResume", "onPause → onDestroy → onCreate → onResume", "onSaveInstanceState → onPause → onStop → onDestroy → onCreate → onStart → onResume"], ans: 0 },
+    { q: "What is the key difference between ViewModel and onSaveInstanceState for surviving configuration changes?", opts: ["ViewModel survives config changes AND process death; Bundle only survives config changes", "Both survive config changes and process death equally", "ViewModel survives config changes but NOT process death; Bundle survives both", "Bundle is faster but ViewModel holds more data"], ans: 2 },
+    { q: "When is onDestroy() called and isFinishing() returns false?", opts: ["User presses Back button", "Activity.finish() is called programmatically", "A configuration change (like rotation) destroys the Activity", "System kills the app due to low memory"], ans: 2 },
+    { q: "Why must onPause() be implemented quickly without heavy work?", opts: ["Android throttles the CPU during onPause", "The next Activity cannot start until the current Activity's onPause() returns", "Heavy work in onPause causes ANR immediately", "onPause runs on a background thread and blocks the UI"], ans: 1 },
+    { q: "In a Fragment, when is onDestroyView() called but the Fragment instance is NOT destroyed?", opts: ["Never — onDestroyView always leads to Fragment destruction", "When the Fragment is added to the back stack and replaced by another Fragment", "When the user presses Home button", "When the Activity is rotated"], ans: 1 },
+    { q: "You want a class that handles location updates to automatically stop when the Activity goes to the background without any manual lifecycle calls. What should you use?", opts: ["A regular class with manual start/stop calls in onResume/onPause", "A class implementing DefaultLifecycleObserver added to lifecycle.addObserver()", "A BroadcastReceiver registered in the manifest", "A Service that binds to the Activity"], ans: 1 }
+  ],
+  challenge: "Build a NoteEditorActivity that: (1) saves scroll position and cursor position in onSaveInstanceState, (2) restores them in onRestoreInstanceState, (3) keeps the Note object (with title, body, lastModified) in a ViewModel, (4) uses a NoteEditorFragment with viewLifecycleOwner for all LiveData observers, and (5) sets _binding = null in onDestroyView. Verify rotation doesn't lose the note content OR the UI state.",
+  resources: [
+    { type: "docs", title: "Activity Lifecycle — Android Developers", url: "https://developer.android.com/guide/components/activities/activity-lifecycle", source: "Android Developers" },
+    { type: "docs", title: "Fragment Lifecycle — Android Developers", url: "https://developer.android.com/guide/fragments/lifecycle", source: "Android Developers" },
+    { type: "docs", title: "Handle Configuration Changes", url: "https://developer.android.com/guide/topics/resources/runtime-changes", source: "Android Developers" },
+    { type: "article", title: "Lifecycle-aware components with LiveData", url: "https://developer.android.com/topic/libraries/architecture/lifecycle", source: "Android Developers" },
+    { type: "article", title: "ViewLifecycleOwner vs LifecycleOwner in Fragments", url: "https://medium.com/androiddevelopers/viewlifecycleowner-livedata-viewmodel-and-fragment-96b3aefb15a9", source: "Medium / Android Developers" }
+  ],
+  eli5: "Think of an Activity like a TV show playing on screen. onCreate is the show starting, onResume is you actively watching, onPause is someone calling you (show still visible but you're distracted), onStop is you leaving the room, onDestroy is turning the TV off. Rotating the device is like switching to a different TV — the show has to restart, but your remote control (ViewModel) remembers where you were. onSaveInstanceState is like writing a sticky note with where you paused so the new TV can jump to the right spot.",
+  codeWalkthrough: [
+    "WorkOrderDetailActivity extends AppCompatActivity and uses by viewModels() delegation — this hooks into ViewModelProvider under the hood and returns the same ViewModel instance across configuration changes.",
+    "savedInstanceState?.let { } in onCreate only runs if this is a recreation — not first launch. It restores scroll position and section expansion — small UI state that ViewModel doesn't own.",
+    "viewModel.workOrder.observe(this) uses 'this' (the Activity) as LifecycleOwner — correct for Activities because Activity lifecycle and view lifecycle are the same.",
+    "onSaveInstanceState saves scroll Y and details expansion state. putInt/putBoolean are efficient — this Bundle is stored in system memory and limited to ~1MB total.",
+    "OrderMapFragment uses by activityViewModels() to share the ViewModel with the Activity — both see the same WorkOrder and location data.",
+    "_binding is nullable and set to null in onDestroyView — this is the standard pattern. The backing property 'binding' asserts non-null via !! and will crash if accessed after onDestroyView, which is the desired behavior (fail fast).",
+    "viewModel.location.observe(viewLifecycleOwner) is the critical line — viewLifecycleOwner is tied to the Fragment's VIEW lifecycle, not the Fragment lifecycle. When the Fragment goes to the backstack, the view is destroyed, this observer is removed, preventing memory leaks.",
+    "onDestroyView sets _binding = null — without this, the binding holds a reference to the view hierarchy, and since the Fragment (which is still alive on the backstack) holds binding, the views can never be garbage collected — a classic memory leak."
+  ],
+  bugChallenge: {
+    code: `class ProfileFragment : Fragment() {
+    private val binding: FragmentProfileBinding by lazy {
+        FragmentProfileBinding.inflate(layoutInflater)
+    }
+    private val viewModel: ProfileViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View = binding.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.profile.observe(this) { profile ->  // bug 1
+            binding.nameText.text = profile.name
+            binding.emailText.text = profile.email
+        }
+    }
+
+    // No onDestroyView override
+}
+
+class SettingsActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        loadHeavyData()  // bug 2
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveAllSettings()    // bug 3
+        uploadSettingsToServer()
+    }
+}`,
+    hint: "Think about Fragment memory leaks with lazy binding, LiveData observer lifecycle, and heavy operations in lifecycle callbacks.",
+    answer: "Bug 1: observe(this) uses Fragment lifecycle — when the Fragment goes to backstack, its view is destroyed but Fragment survives. The observer still fires and accesses binding (which references destroyed views), risking NPE. Fix: observe(viewLifecycleOwner). Bug 2 (minor): loadHeavyData() in onCreate is fine for initialization, but if it blocks the main thread it causes jank. Better: call it and observe a ViewModel LiveData that does async loading. Bug 3: uploadSettingsToServer() in onPause is dangerous — onPause must return fast because the next Activity waits for it. Network call here causes visible lag on the incoming screen. Fix: enqueue a WorkManager task for reliable background upload, or at minimum move to a coroutine with lifecycleScope.launch."
+  },
+  difficulty: "intermediate",
+  prereqs: [12]
+},
+{
+  id: 14,
+  title: "Intents, PendingIntents, Task Stack & Launch Modes",
+  subtitle: "Navigate Android's multi-screen model — critical for deep linking and notification handling",
+  analogy: "An Intent is like a taxi request — you either specify the exact destination (explicit intent: 'take me to MainActivity') or describe what you need (implicit intent: 'I need a camera'). A PendingIntent is like a pre-paid taxi voucher you give to someone else — they can use it later on your behalf. Launch modes are the hotel's room assignment policy — standard gives a new room every time, singleTop reuses your current room if you're already in it, singleTask gives you a private suite no matter where you came from.",
+  points: [
+    { t: "Explicit intents", d: "Specify the exact component to start: Intent(this, DetailActivity::class.java). Used for starting Activities, Services, and BroadcastReceivers within your own app. Always use explicit intents for internal navigation — implicit intents for internal components are a security risk since other apps can intercept them." },
+    { t: "Implicit intents", d: "Describe an ACTION and optional DATA/CATEGORY — Android resolves which component handles it. ACTION_VIEW with a geo: URI opens Maps. ACTION_SEND opens a share dialog. ACTION_DIAL opens the dialer. The system checks all apps' IntentFilters in manifests and shows a chooser if multiple match." },
+    { t: "Intent flags", d: "FLAG_ACTIVITY_NEW_TASK: start Activity in a new task (required when starting from non-Activity context). FLAG_ACTIVITY_CLEAR_TOP: if Activity already in stack, destroy everything above it and call onNewIntent(). FLAG_ACTIVITY_SINGLE_TOP: don't create new instance if already at top of stack. Flags and launch modes often overlap — flags take precedence at runtime." },
+    { t: "PendingIntent", d: "Grants another app (System, NotificationManager, AlarmManager) permission to perform an Intent as if it were your app. Created with PendingIntent.getActivity(), getService(), getBroadcast(). The requestCode distinguishes multiple PendingIntents. FLAG_IMMUTABLE (required on API 23+ for notifications) means the extra cannot be changed by the recipient." },
+    { t: "PendingIntent flags", d: "FLAG_UPDATE_CURRENT: keep existing PendingIntent but replace its extras. FLAG_CANCEL_CURRENT: cancel existing, create new. FLAG_ONE_SHOT: can only be used once. FLAG_IMMUTABLE (API 23+): system cannot modify the intent. FLAG_MUTABLE: allows system to fill in components (required for bubbles and widgets that need fillInIntent)." },
+    { t: "Task and back stack", d: "A Task is a stack of Activities — user presses Back to pop the stack. By default each app launch creates a new Task for the root Activity. Tasks can be moved to background (Home button) and resumed. Multiple Tasks can exist — switching apps switches Tasks. Each Task has its own back stack." },
+    { t: "Launch modes — standard", d: "Default. Every startActivity() creates a new instance. Stack can have multiple instances of the same Activity. A → B → A → B → B creates a stack of 5. Good for independent screens like product detail pages where each instance has different data." },
+    { t: "Launch modes — singleTop", d: "If an instance is already at the TOP of the current task's stack, reuse it and call onNewIntent(). If it's NOT at top, create a new instance. Useful for notification deep links into an already-open detail screen — avoids duplicate instances when user taps notification repeatedly." },
+    { t: "Launch modes — singleTask", d: "Only one instance exists in the entire system. If already exists, Android brings its task to foreground, pops everything above it, and calls onNewIntent(). Used for main/hub Activities. WhatsApp's main chat list is singleTask — no matter where you come from, there's one instance." },
+    { t: "Launch modes — singleInstance", d: "Like singleTask but the Activity lives alone in its own Task — no other Activities can be pushed onto its task. Starting a new Activity from singleInstance creates it in a new Task. Rarely used — telephony-related screens (incoming call UI) are the canonical example." },
+    { t: "taskAffinity", d: "Defines which task an Activity 'belongs to'. Default is the app's package name. Set a custom taskAffinity to make an Activity prefer a different task. Combined with FLAG_ACTIVITY_NEW_TASK, forces an Activity into a specific task. Used for multi-window scenarios and document-centric apps." },
+    { t: "onNewIntent()", d: "Called when a singleTop or singleTask Activity receives a new Intent while already in the stack. The Activity is NOT recreated — you get the new Intent via this callback. Must call setIntent(intent) if you want getIntent() to return the new intent later. Forgetting this is a common bug in notification handling." }
+  ],
+  whatIs: "Intents are Android's inter-component messaging system. Explicit intents target specific components; implicit intents describe capabilities and let the system route them. PendingIntents are deferred, delegated intents used by notifications and alarms. Launch modes and task affinity control how Activities stack and whether instances are reused — critical for correct behavior in notification deep linking, multi-window, and back navigation.",
+  realWorld: "In a SaaS collaboration app, tapping a push notification for 'You were mentioned in Project Alpha' must deep-link to the correct ProjectDetailActivity. If the app is already open on ProjectDetailActivity for a different project, singleTop ensures a new instance is created (different data). A PendingIntent (FLAG_IMMUTABLE | FLAG_UPDATE_CURRENT) carries the projectId extra so the notification click always shows the right project. The NotificationHelper class creates unique requestCodes per project ID to ensure PendingIntents don't collide.",
+  code: `// Explicit intent — internal navigation with extras
+fun openWorkOrderDetail(context: Context, orderId: String) {
+    val intent = Intent(context, WorkOrderDetailActivity::class.java).apply {
+        putExtra(WorkOrderDetailActivity.EXTRA_ORDER_ID, orderId)
+        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+    }
+    context.startActivity(intent)
+}
+
+// Implicit intent — share content
+fun shareReport(context: Context, reportText: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, "Field Operations Report")
+        putExtra(Intent.EXTRA_TEXT, reportText)
+    }
+    context.startActivity(Intent.createChooser(shareIntent, "Share Report"))
+}
+
+// PendingIntent for notification deep link
+fun buildNotificationPendingIntent(
+    context: Context,
+    projectId: String,
+    mentionId: String
+): PendingIntent {
+    val deepLinkIntent = Intent(context, ProjectDetailActivity::class.java).apply {
+        putExtra(ProjectDetailActivity.EXTRA_PROJECT_ID, projectId)
+        putExtra(ProjectDetailActivity.EXTRA_MENTION_ID, mentionId)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+    }
+    return PendingIntent.getActivity(
+        context,
+        projectId.hashCode(),           // Unique requestCode per project
+        deepLinkIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+}
+
+// singleTop Activity handling onNewIntent
+class ProjectDetailActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleIntent(intent)
+    }
+
+    // Called when singleTop reuses existing instance
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)   // IMPORTANT: update getIntent() result
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val projectId = intent.getStringExtra(EXTRA_PROJECT_ID) ?: return
+        val mentionId = intent.getStringExtra(EXTRA_MENTION_ID)
+        viewModel.loadProject(projectId, mentionId)
+    }
+
+    companion object {
+        const val EXTRA_PROJECT_ID = "project_id"
+        const val EXTRA_MENTION_ID = "mention_id"
+    }
+}`,
+  funFact: "FLAG_IMMUTABLE was made mandatory for PendingIntents targeting Android 12 (API 31) after a security researcher demonstrated that mutable PendingIntents could be hijacked by malicious apps to escalate privileges — they could modify the Intent extras before the system delivered it, effectively making the target app perform unintended actions.",
+  quiz: [
+    { q: "You have a notification that deep links to ChatActivity. If the user taps the notification while ChatActivity for a DIFFERENT chat is already visible, you want a NEW instance. Which launch mode should ChatActivity use?", opts: ["singleTask", "singleTop", "singleInstance", "standard"], ans: 3 },
+    { q: "What happens if you call startActivity() with a singleTask Activity that already exists in the back stack (not at the top)?", opts: ["A new instance is created on top of the existing one", "The existing instance is brought to front, everything above is popped, onNewIntent is called", "The Activity is recreated from scratch (onCreate called)", "Nothing happens — the call is ignored"], ans: 1 },
+    { q: "Why is FLAG_IMMUTABLE required (strongly recommended) when creating PendingIntents for notifications on API 31+?", opts: ["It improves performance of PendingIntent delivery", "It prevents malicious apps from modifying the Intent extras before delivery", "It allows the notification to be updated after posting", "It ensures the PendingIntent survives process death"], ans: 1 },
+    { q: "You call startActivity() from an Application class (non-Activity context). What flag is required?", opts: ["FLAG_ACTIVITY_CLEAR_TOP", "FLAG_ACTIVITY_NEW_TASK", "FLAG_ACTIVITY_SINGLE_TOP", "FLAG_ACTIVITY_NO_HISTORY"], ans: 1 },
+    { q: "What is the purpose of calling setIntent(intent) inside onNewIntent()?", opts: ["It triggers a lifecycle restart for the Activity", "It ensures getIntent() returns the NEW intent in subsequent code, not the original launch intent", "It is required to call super.onNewIntent()", "It updates the task stack with the new intent data"], ans: 1 },
+    { q: "Which PendingIntent flag should you use when you want to update the extras of an existing PendingIntent without cancelling and recreating it?", opts: ["FLAG_ONE_SHOT", "FLAG_CANCEL_CURRENT", "FLAG_UPDATE_CURRENT", "FLAG_IMMUTABLE"], ans: 2 },
+    { q: "An Activity with singleInstance launch mode starts a new Activity. Where does that new Activity go?", opts: ["On top of the singleInstance Activity's task", "In a new separate task", "It replaces the singleInstance Activity", "It cannot start other Activities"], ans: 1 },
+    { q: "What does taskAffinity control for an Activity?", opts: ["Which process the Activity runs in", "Which task the Activity prefers to be associated with", "The order of Activities within a single task", "Whether the Activity can run in split-screen mode"], ans: 1 }
+  ],
+  challenge: "Build a notification system for a SaaS app: (1) Create a NotificationHelper that posts a 'New mention' notification with a PendingIntent targeting MentionDetailActivity (use FLAG_IMMUTABLE | FLAG_UPDATE_CURRENT, unique requestCode per mentionId). (2) Make MentionDetailActivity singleTop with correct onNewIntent handling. (3) Handle the case where the app is not running (cold start from notification) vs already running (onNewIntent path). (4) Test: post two notifications for different mentions — tapping each should show the correct mention.",
+  resources: [
+    { type: "docs", title: "Intents and Intent Filters — Android Developers", url: "https://developer.android.com/guide/components/intents-filters", source: "Android Developers" },
+    { type: "docs", title: "PendingIntent — Android Developers Reference", url: "https://developer.android.com/reference/android/app/PendingIntent", source: "Android Developers" },
+    { type: "docs", title: "Tasks and the Back Stack", url: "https://developer.android.com/guide/components/activities/tasks-and-back-stack", source: "Android Developers" },
+    { type: "article", title: "Android Launch Modes — A Visual Guide", url: "https://medium.com/androiddevelopers/android-activity-launch-mode-e0df1aa72242", source: "Medium / Android Developers" },
+    { type: "docs", title: "Create and manage notification channels", url: "https://developer.android.com/develop/ui/views/notifications/channels", source: "Android Developers" }
+  ],
+  eli5: "An Intent is like sending a letter. An explicit Intent has a specific address on the envelope (go to THIS house). An implicit Intent just says what you want (deliver birthday cake) and the postal system figures out which house does that. A PendingIntent is like giving a pre-addressed, pre-stamped letter to your friend — they can send it later on your behalf without knowing your address. Launch modes decide if you get a new room at the hotel (standard), or if you reuse your room if you're already there (singleTop), or if you have a single permanent suite no matter what (singleTask).",
+  codeWalkthrough: [
+    "openWorkOrderDetail uses an explicit Intent with the target class specified directly — no ambiguity, no interception risk. FLAG_ACTIVITY_SINGLE_TOP avoids duplicating the detail screen if it's already at the top.",
+    "shareReport uses ACTION_SEND with type 'text/plain' — an implicit intent. The system queries all installed apps for IntentFilters matching this action+type and shows a chooser. createChooser wraps it to always show the dialog even if only one app matches.",
+    "buildNotificationPendingIntent creates a PendingIntent.getActivity() — when the notification is tapped, it's equivalent to the user calling startActivity with deepLinkIntent from YOUR app's context.",
+    "projectId.hashCode() as requestCode gives each project a stable, unique integer. Two PendingIntents with the same requestCode and same action but different extras might be considered equal by the system — unique requestCodes prevent this.",
+    "FLAG_UPDATE_CURRENT means if a PendingIntent with this requestCode already exists (from a previous notification for the same project), its extras are updated with the new mentionId instead of creating a duplicate.",
+    "FLAG_IMMUTABLE prevents any recipient (system or other app) from modifying the Intent before delivery — security best practice required on API 31+.",
+    "In ProjectDetailActivity.onCreate, handleIntent(intent) processes the launch intent — this covers the cold-start-from-notification case.",
+    "onNewIntent is called when singleTop reuses the existing instance. setIntent(intent) is crucial — without it, getIntent() still returns the original launch intent, and any code elsewhere that calls getIntent() later will use stale data."
+  ],
+  bugChallenge: {
+    code: `// Notification helper
+fun createMentionNotification(context: Context, mentionId: String, text: String) {
+    val intent = Intent(context, MentionActivity::class.java).apply {
+        putExtra("mention_id", mentionId)
+    }
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,          // bug 1
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT   // bug 2 on API 31+
+    )
+    // ... build and post notification
+}
+
+// MentionActivity — declared singleTop in manifest
+class MentionActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val mentionId = intent.getStringExtra("mention_id")
+        loadMention(mentionId)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        // bug 3 — missing line
+        val mentionId = intent.getStringExtra("mention_id")
+        loadMention(mentionId)
+    }
+}`,
+    hint: "Think about PendingIntent collisions between different mentions, API 31 security requirements, and stale intent data.",
+    answer: "Bug 1: requestCode is always 0 — all mention notifications share the same PendingIntent slot. When you post notification for mention-B, it overwrites the PendingIntent for mention-A. Tapping mention-A's notification now opens mention-B. Fix: use mentionId.hashCode() as the requestCode. Bug 2: On API 31+ (Android 12+), PendingIntents must include FLAG_IMMUTABLE or FLAG_MUTABLE. Missing this flag causes an IllegalArgumentException crash at PendingIntent.getActivity(). Fix: PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE. Bug 3: onNewIntent does NOT call setIntent(intent) — if any other code in this Activity calls getIntent() after onNewIntent, it still gets the original launch intent (wrong mentionId). Fix: add setIntent(intent) as the first line of onNewIntent."
+  },
+  difficulty: "intermediate",
+  prereqs: [12, 13]
+},
+{
+  id: 15,
+  title: "ViewModel, Lifecycle-Aware State & SavedStateHandle",
+  subtitle: "The architecture cornerstone — survive configuration changes and process death correctly",
+  analogy: "A ViewModel is like a hotel concierge. Guests (Activities/Fragments) come and go — they check in, check out, switch rooms (rotate) — but the concierge stays at their desk holding all your requests and preferences. When a completely new guest arrives (process death + restore), the concierge has a special notebook (SavedStateHandle) given by the hotel management (system) that notes down what the previous guest wanted, so the new guest gets the right service immediately.",
+  points: [
+    { t: "What ViewModel is", d: "ViewModel is a lifecycle-aware class that stores and manages UI-related data. It survives configuration changes (rotation, language switch, window resize). One ViewModel instance per scope (Activity or Fragment) — retrieved via ViewModelProvider or by viewModels() delegate. ViewModelStore holds the instance until the scope is permanently destroyed." },
+    { t: "ViewModel does NOT survive process death", d: "When Android kills the process (low memory, user swipes away from recents), ViewModel is gone. On re-entry, a fresh ViewModel is created. Use SavedStateHandle for small UI state that must survive process death. Use Room/DataStore for large persistent data." },
+    { t: "ViewModelProvider and factory", d: "val vm = ViewModelProvider(this)[MyViewModel::class.java] is the manual way. Hilt provides @HiltViewModel and by viewModels() which auto-wires the factory. Custom factories are needed when ViewModel has constructor parameters (pre-Hilt). ComponentActivity.viewModels() and Fragment.viewModels() are extension functions that combine both." },
+    { t: "viewModelScope", d: "A CoroutineScope tied to ViewModel lifecycle — automatically cancelled when ViewModel.onCleared() is called. Use viewModelScope.launch { } for any async work started by the ViewModel. No manual cancellation needed. This prevents coroutine leaks when the user navigates away." },
+    { t: "Shared ViewModel between Fragments", d: "by activityViewModels() retrieves a ViewModel scoped to the parent Activity — all Fragments sharing the same Activity get the same instance. Used for Fragment-to-Fragment communication without direct references. Also works with NavGraph-scoped ViewModels: by navGraphViewModels(R.id.nav_graph)." },
+    { t: "SavedStateHandle", d: "A key-value store injected into ViewModel (via constructor) that survives process death. Backed by the same Bundle mechanism as onSaveInstanceState. get<T>(key) retrieves values, set(key, value) saves them. getLiveData(key) and getStateFlow(key) expose values as observable streams that update when state changes." },
+    { t: "SavedStateHandle for UI state", d: "Store only small, parcelable/serializable values: selected item ID, filter string, sort order, form input. NOT for large lists or complex objects — those belong in Room or a repository cache. The system automatically serializes SavedStateHandle contents into the saved state bundle." },
+    { t: "MutableStateFlow in ViewModel", d: "private val _uiState = MutableStateFlow(UiState.Loading) exposes val uiState: StateFlow<UiState> = _uiState.asStateFlow(). StateFlow always has a current value, replays the last emission to new collectors, and is the modern replacement for LiveData inside ViewModels." },
+    { t: "ViewModel onCleared()", d: "Called when the ViewModel is permanently destroyed — scope is done, no config change pending. Override to cancel non-coroutine resources: close database cursors, unregister callbacks, cancel third-party async tasks. viewModelScope coroutines are cancelled automatically before this." },
+    { t: "UiState sealed class pattern", d: "sealed class UiState { object Loading : UiState(); data class Success(val data: T) : UiState(); data class Error(val message: String) : UiState() } — ViewModel exposes one StateFlow<UiState>, UI renders based on sealed class variant. Eliminates boolean flag soup (isLoading, hasError, isEmpty)." },
+    { t: "ViewModel as single source of truth", d: "All user actions go to ViewModel (via functions or a Channel<UiEvent>), all UI state comes from ViewModel (StateFlow). The View never talks to the Repository directly. This makes the ViewModel independently testable with a fake repository and no Android framework dependencies." },
+    { t: "Process death simulation", d: "Test process death in Android Studio: run the app, navigate to the screen, use 'adb shell am kill <package>' or the 'terminate process' button in the Logcat toolbar, then navigate back via Recents. The system restores from saved state — verify your SavedStateHandle keys restore the correct UI." }
+  ],
+  whatIs: "ViewModel is the architecture component that survives configuration changes and holds UI state. viewModelScope handles coroutine lifecycle automatically. SavedStateHandle bridges the gap between configuration-change survival (ViewModel) and process-death survival (Bundle). The canonical pattern is: ViewModel exposes StateFlow<UiState>, UI collects and renders it, user interactions call ViewModel functions.",
+  realWorld: "In a school management app, a StudentListViewModel fetches student data from a Room database via a repository, exposes it as StateFlow<StudentListUiState>, and handles filter/search state via SavedStateHandle (so the search query survives both rotation and process death). viewModelScope launches the database query. Multiple Fragments (list + filter panel) share the ViewModel via by activityViewModels(). The ViewModel is tested with a FakeStudentRepository that returns test data without any Android framework involvement.",
+  code: `// UiState model
+sealed class StudentListUiState {
+    object Loading : StudentListUiState()
+    data class Success(
+        val students: List<Student>,
+        val totalCount: Int,
+        val filteredCount: Int
+    ) : StudentListUiState()
+    data class Error(val message: String) : StudentListUiState()
+}
+
+// ViewModel with SavedStateHandle + viewModelScope
+@HiltViewModel
+class StudentListViewModel @Inject constructor(
+    private val studentRepository: StudentRepository,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
+
+    // Small UI state in SavedStateHandle — survives process death
+    private val searchQuery = savedStateHandle.getStateFlow(KEY_SEARCH, "")
+    private val selectedGrade = savedStateHandle.getStateFlow(KEY_GRADE, ALL_GRADES)
+
+    private val _uiState = MutableStateFlow<StudentListUiState>(StudentListUiState.Loading)
+    val uiState: StateFlow<StudentListUiState> = _uiState.asStateFlow()
+
+    init {
+        // Combine filters and load data reactively
+        viewModelScope.launch {
+            combine(searchQuery, selectedGrade) { query, grade -> query to grade }
+                .debounce(300)  // Avoid querying on every keystroke
+                .collectLatest { (query, grade) ->
+                    loadStudents(query, grade)
+                }
+        }
+    }
+
+    fun onSearchQueryChanged(query: String) {
+        savedStateHandle[KEY_SEARCH] = query  // Auto-persisted to SavedStateHandle
+    }
+
+    fun onGradeFilterChanged(grade: String) {
+        savedStateHandle[KEY_GRADE] = grade
+    }
+
+    private suspend fun loadStudents(query: String, grade: String) {
+        _uiState.value = StudentListUiState.Loading
+        studentRepository.getStudents(query, grade)
+            .catch { e -> _uiState.value = StudentListUiState.Error(e.message ?: "Unknown error") }
+            .collect { students ->
+                _uiState.value = StudentListUiState.Success(
+                    students = students,
+                    totalCount = studentRepository.getTotalCount(),
+                    filteredCount = students.size
+                )
+            }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        // viewModelScope cancelled automatically
+        // Release any non-coroutine resources here
+    }
+
+    companion object {
+        private const val KEY_SEARCH = "search_query"
+        private const val KEY_GRADE = "selected_grade"
+        private const val ALL_GRADES = "ALL"
+    }
+}
+
+// Fragment collecting StateFlow
+class StudentListFragment : Fragment(R.layout.fragment_student_list) {
+
+    private val viewModel: StudentListViewModel by activityViewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    renderState(state)
+                }
+            }
+        }
+
+        binding.searchInput.doAfterTextChanged { text ->
+            viewModel.onSearchQueryChanged(text?.toString() ?: "")
+        }
+    }
+
+    private fun renderState(state: StudentListUiState) {
+        when (state) {
+            is StudentListUiState.Loading -> showLoading()
+            is StudentListUiState.Success -> showStudents(state.students, state.filteredCount)
+            is StudentListUiState.Error -> showError(state.message)
+        }
+    }
+}`,
+  funFact: "ViewModel was introduced in 2017 partly because developers were storing data in static variables or Application class singletons to survive configuration changes — both terrible patterns that led to memory leaks and stale data. ViewModel provides the same survival but with proper scoping and automatic cleanup.",
+  quiz: [
+    { q: "The user is filling out a long form in FormActivity. The system kills the process due to low memory. The user returns via Recents. What happens to data stored in ViewModel vs SavedStateHandle?", opts: ["Both are lost — only Room/DataStore survives process death", "ViewModel survives; SavedStateHandle is lost", "SavedStateHandle survives; ViewModel is recreated with empty state", "Both survive — they are serialized to disk automatically"], ans: 2 },
+    { q: "What is the correct pattern for exposing mutable state from a ViewModel to the UI?", opts: ["Expose MutableStateFlow directly so the UI can emit new values", "Use private MutableStateFlow internally, expose val as StateFlow via asStateFlow()", "Use LiveData internally but convert to StateFlow at the UI layer", "Expose suspend functions and have the UI call them in coroutines"], ans: 1 },
+    { q: "viewModelScope is cancelled at which point?", opts: ["When the Activity calls onStop()", "When the Activity calls onDestroy() due to configuration change", "When ViewModel.onCleared() is called (permanent destruction only)", "When the Fragment's view is destroyed"], ans: 2 },
+    { q: "Two Fragments in the same Activity need to share data. What is the correct approach?", opts: ["Pass data via Fragment arguments bundle", "Use a shared Activity field variable", "Use by activityViewModels() to share a ViewModel scoped to the Activity", "Use a singleton object in the companion object"], ans: 2 },
+    { q: "You want to reactively observe a SavedStateHandle value as a Flow in your ViewModel. Which API do you use?", opts: ["savedStateHandle.get<String>(key)", "savedStateHandle.getLiveData<String>(key).asFlow()", "savedStateHandle.getStateFlow(key, initialValue)", "savedStateHandle.observe(this) { }"], ans: 2 },
+    { q: "Why should a ViewModel NOT hold a reference to a Context (Application context aside)?", opts: ["Context is not serializable so it breaks SavedStateHandle", "ViewModel outlives the Activity — holding Activity context causes a memory leak", "Context references are not allowed in Kotlin data classes", "Performance reasons — context lookups are slow"], ans: 1 },
+    { q: "What does repeatOnLifecycle(Lifecycle.State.STARTED) do when collecting a StateFlow?", opts: ["Collects only the first emission and then stops", "Automatically starts collecting when lifecycle reaches STARTED and cancels when it drops below STARTED (e.g., onStop)", "Repeats the last emitted value every second", "Ensures collection happens on the Main dispatcher"], ans: 1 },
+    { q: "Which ViewModel anti-pattern does the UiState sealed class solve?", opts: ["Sharing state between multiple ViewModels", "Boolean flag soup (isLoading, hasError, isEmpty, hasData) that can produce impossible state combinations", "Memory leaks from context references", "Threading issues with MutableStateFlow"], ans: 1 }
+  ],
+  challenge: "Build a ProductSearchViewModel for a fintech app: (1) Accept a SearchRepository via Hilt injection. (2) Use SavedStateHandle for search query and selected category filter. (3) Expose StateFlow<ProductSearchUiState> (Loading, Success with List<Product> and page info, Error). (4) Implement pagination — loadNextPage() appends to current list. (5) Write a unit test using a FakeSearchRepository that returns test data, verify initial state is Loading, then Success after fake data loads, without any Android framework.",
+  resources: [
+    { type: "docs", title: "ViewModel Overview — Android Developers", url: "https://developer.android.com/topic/libraries/architecture/viewmodel", source: "Android Developers" },
+    { type: "docs", title: "SavedStateHandle — Android Developers", url: "https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-savedstate", source: "Android Developers" },
+    { type: "docs", title: "Kotlin flows on Android", url: "https://developer.android.com/kotlin/flow", source: "Android Developers" },
+    { type: "article", title: "A safer way to collect flows from Android UIs", url: "https://medium.com/androiddevelopers/a-safer-way-to-collect-flows-from-android-uis-23080b1f8bda", source: "Medium / Android Developers" },
+    { type: "docs", title: "UI Layer — Android App Architecture", url: "https://developer.android.com/topic/architecture/ui-layer", source: "Android Developers" }
+  ],
+  eli5: "A ViewModel is like a personal assistant who remembers everything about your work session. If you leave your desk and come back (rotate the phone), the assistant is still there with all your files. But if the office burns down (app process killed), even the assistant's memory is gone. SavedStateHandle is the assistant's emergency notebook — a tiny notepad they always carry that survives even if the building burns. When you rebuild the office, the assistant reads the notebook and picks up right where you left off.",
+  codeWalkthrough: [
+    "StudentListUiState is a sealed class with three variants — Loading, Success, Error. The UI renders exactly one of these states at a time, making impossible states (isLoading=true AND hasData=true) compile-time impossible.",
+    "@HiltViewModel and @Inject constructor enable Hilt to auto-wire the factory. savedStateHandle is injected automatically by Hilt — no manual factory needed.",
+    "savedStateHandle.getStateFlow(KEY_SEARCH, '') returns a StateFlow<String> backed by the saved state. When savedStateHandle[KEY_SEARCH] = query is called, the StateFlow emits the new value AND it's persisted for process death survival.",
+    "combine(searchQuery, selectedGrade) merges two StateFlows into one — emitting a new pair whenever either flow emits. debounce(300) prevents database queries on every keystroke.",
+    "collectLatest cancels the previous loadStudents call if a new combined value arrives — essential for search: if the user types quickly, only the latest query reaches the database.",
+    "onSearchQueryChanged writes directly to savedStateHandle[KEY_SEARCH] — the StateFlow from getStateFlow() automatically emits this new value, triggering the combine chain.",
+    "viewLifecycleOwner.lifecycleScope.launch with repeatOnLifecycle(STARTED) is the gold-standard pattern for collecting StateFlow in Fragments — collection pauses when app goes to background (STOPPED) and resumes on foreground, preventing wasted emissions.",
+    "renderState uses a when expression on the sealed class — the compiler guarantees all cases are handled. Adding a new UiState variant without updating this when causes a compile error."
+  ],
+  bugChallenge: {
+    code: `class OrderViewModel(
+    private val repository: OrderRepository
+) : ViewModel() {
+
+    // Bug 1
+    val orders = MutableStateFlow<List<Order>>(emptyList())
+
+    // Bug 2
+    private val _context: Context
+
+    init {
+        _context = MyApp.instance  // Application context
+        loadOrders()
+    }
+
+    fun loadOrders() {
+        // Bug 3
+        GlobalScope.launch {
+            try {
+                val result = repository.getOrders()
+                orders.value = result
+            } catch (e: Exception) {
+                // silently ignored
+            }
+        }
+    }
+
+    fun refreshOrders() {
+        loadOrders()
+        loadOrders()  // Bug 4
+        loadOrders()
+    }
+}`,
+    hint: "Think about encapsulation, coroutine scoping, duplicate launches, and whether Application context in ViewModel is acceptable.",
+    answer: "Bug 1: orders is MutableStateFlow exposed directly as public — any class outside ViewModel can emit new values, breaking the single source of truth pattern. Fix: private val _orders = MutableStateFlow<List<Order>>(emptyList()); val orders: StateFlow<List<Order>> = _orders.asStateFlow(). Bug 2: Holding Application context is actually acceptable (Application lives as long as the process), but a regular Activity/Fragment Context would be a leak. The comment implies it's Application context — this is a grey area; for clarity, inject AndroidApplication via Hilt or avoid context in ViewModel entirely. Bug 3: GlobalScope.launch is NOT tied to the ViewModel lifecycle — if the ViewModel is cleared, this coroutine keeps running, wasting resources. Fix: viewModelScope.launch { }. Bug 4: refreshOrders calls loadOrders three times — launches 3 concurrent coroutines all writing to orders.value. Results race condition: whichever coroutine finishes last wins. Fix: cancel previous job before launching: private var loadJob: Job? = null; loadJob?.cancel(); loadJob = viewModelScope.launch { loadOrders() }."
+  },
+  difficulty: "intermediate",
+  prereqs: [7, 13]
+},
+{
+  id: 16,
+  title: "LiveData Legacy Knowledge for Modern Interviews",
+  subtitle: "Know LiveData deeply — then know exactly why StateFlow replaced it",
+  analogy: "LiveData is like a newspaper subscription tied to your address. The newspaper only gets delivered when you're home (lifecycle-aware). If you move (Activity destroyed), the subscription auto-cancels. But the newspaper can only hold one edition at a time — if you were away, you missed all the news. StateFlow is like a digital news app — it remembers the latest headline (replay) and works from any thread or coroutine, not just when you're 'home'.",
+  points: [
+    { t: "What LiveData is", d: "LiveData is a lifecycle-aware, observable data holder. It only notifies active observers (STARTED or RESUMED lifecycle state). When the lifecycle owner is destroyed, observers are automatically removed — no memory leaks. This was revolutionary in 2017 and eliminated a whole class of lifecycle-related bugs." },
+    { t: "MutableLiveData vs LiveData", d: "MutableLiveData exposes setValue() (main thread) and postValue() (any thread). ViewModel pattern: private val _data = MutableLiveData<T>(); val data: LiveData<T> = _data — exposes read-only to the UI. Same pattern as MutableStateFlow/StateFlow." },
+    { t: "observe() vs observeForever()", d: "observe(lifecycleOwner, observer) auto-removes observer when lifecycle is destroyed. observeForever(observer) has no lifecycle — must manually call removeObserver(). observeForever is used in unit tests (no lifecycle) and repositories that need to react to data without a UI component." },
+    { t: "setValue vs postValue", d: "setValue() must be called on the main thread — throws exception otherwise. postValue() can be called from any thread — queues the update to be dispatched on the main thread. If postValue is called multiple times rapidly, intermediate values may be dropped (only the last value reaches observers). For streams, use Flow/Channel instead." },
+    { t: "Transformations.map()", d: "Returns a new LiveData that applies a function to each emission of the source. Transformations.map(userLiveData) { user -> user.name } returns a LiveData<String>. The transformation is only computed when there is an active observer — lazy evaluation. Used to derive UI-ready strings from model data." },
+    { t: "Transformations.switchMap()", d: "Similar to flatMapLatest in Flow. When the source LiveData emits, switchMap calls a function that returns a NEW LiveData — and observes THAT. Used for dependent queries: switchMap(selectedUserId) { id -> repository.getUser(id) }. When selectedUserId changes, the previous LiveData is unobserved and the new one subscribed." },
+    { t: "MediatorLiveData", d: "Combines multiple LiveData sources. addSource() registers a source with an observer. When any source changes, MediatorLiveData can merge, filter, or transform. Transformations.switchMap is built on MediatorLiveData. Used to merge network + cache LiveData into one stream." },
+    { t: "LiveData vs StateFlow — key differences", d: "StateFlow always has a value (no initial null). StateFlow replays latest to new collectors. StateFlow works with structured concurrency. StateFlow is testable without Android framework (no lifecycle). LiveData requires main thread for setValue. LiveData integrates with Data Binding natively. StateFlow needs lifecycleScope + repeatOnLifecycle to be lifecycle-aware." },
+    { t: "Why Google now recommends StateFlow", d: "StateFlow is pure Kotlin — no Android dependency. Better coroutine integration (collect in suspend functions, combine, map, filter operators). Works in shared Kotlin Multiplatform code. The UI layer should still use lifecycle-aware collection (repeatOnLifecycle) — but the ViewModel no longer needs to import Android framework classes." },
+    { t: "LiveData.asFlow() and Flow.asLiveData()", d: "Extension functions to bridge the two worlds. Existing LiveData APIs (Room, WorkManager) can be converted with .asFlow(). A Flow from the repository can be exposed as LiveData with flow.asLiveData(viewModelScope.coroutineContext) — useful for Data Binding compatibility while using Flow internally." },
+    { t: "SingleLiveEvent — the missing piece", d: "LiveData replays its last value to new observers — bad for one-time events (navigation, snackbar, toast). SingleLiveEvent (a community workaround) clears the value after first delivery. Modern solution: use a Channel<UiEvent> in the ViewModel exposed as SharedFlow with replay=0, collected in the UI with repeatOnLifecycle." },
+    { t: "When LiveData is still acceptable", d: "Data Binding in XML with LiveData is seamless — Binding auto-updates views. Room queries return LiveData<List<T>> natively. Legacy codebases migrating incrementally. Junior-friendly — simpler mental model than coroutines+flows. For new code, prefer StateFlow; for maintained legacy code, LiveData is not wrong." }
+  ],
+  whatIs: "LiveData is an observable data holder class that is lifecycle-aware — automatically managing subscriptions based on the observer's lifecycle state. It prevents memory leaks and crashes from delivering updates to stopped components. Transformations.map() and switchMap() enable reactive chains. MediatorLiveData combines multiple sources. StateFlow supersedes LiveData for new code by offering coroutine-native, Android-free observability — but LiveData remains prevalent in interviews because the vast majority of existing Android codebases use it.",
+  realWorld: "In a school management app built with Room + LiveData, studentDao.getAllStudents() returns LiveData<List<Student>> which the ViewModel exposes directly. Transformations.map converts it to LiveData<List<StudentUiModel>> with display-ready formatting. MediatorLiveData merges attendance LiveData and grade LiveData into a single StudentDetailLiveData. During migration to modern architecture, Flow.asLiveData() allows the repository to use Flow internally while the ViewModel still exposes LiveData for XML Data Binding compatibility.",
+  code: `// Classic LiveData ViewModel — what you'll see in most codebases
+class StudentViewModel(
+    private val repository: StudentRepository
+) : ViewModel() {
+
+    // MutableLiveData private, LiveData public
+    private val _selectedStudentId = MutableLiveData<String>()
+
+    // Transformations.switchMap — reacts to selectedStudentId changes
+    val studentDetail: LiveData<Student> = Transformations.switchMap(_selectedStudentId) { id ->
+        repository.getStudentByIdLiveData(id)  // Returns LiveData<Student> from Room
+    }
+
+    // Transformations.map — derive display-ready data
+    val studentDisplayName: LiveData<String> = Transformations.map(studentDetail) { student ->
+        "${student.firstName} ${student.lastName} (Grade ${student.grade})"
+    }
+
+    fun selectStudent(id: String) {
+        _selectedStudentId.value = id
+    }
+}
+
+// MediatorLiveData — combining two sources
+class StudentDetailViewModel(
+    private val repository: StudentRepository
+) : ViewModel() {
+
+    private val _studentLiveData = MutableLiveData<Student>()
+    private val _attendanceLiveData = MutableLiveData<AttendanceSummary>()
+
+    val mergedStudentDetail = MediatorLiveData<StudentDetailUiModel>().apply {
+        addSource(_studentLiveData) { student ->
+            val attendance = _attendanceLiveData.value ?: return@addSource
+            value = StudentDetailUiModel(student, attendance)
+        }
+        addSource(_attendanceLiveData) { attendance ->
+            val student = _studentLiveData.value ?: return@addSource
+            value = StudentDetailUiModel(student, attendance)
+        }
+    }
+
+    fun loadStudentData(studentId: String) {
+        viewModelScope.launch {
+            // Using postValue from background coroutine
+            val student = repository.getStudent(studentId)
+            _studentLiveData.postValue(student)
+
+            val attendance = repository.getAttendanceSummary(studentId)
+            _attendanceLiveData.postValue(attendance)
+        }
+    }
+}
+
+// Bridging: Flow in Repository → LiveData in ViewModel
+class ModernStudentViewModel(
+    private val repository: StudentRepository
+) : ViewModel() {
+
+    // Repository uses Flow, ViewModel bridges to LiveData for Data Binding
+    val students: LiveData<List<Student>> = repository
+        .getStudentsFlow()           // Returns Flow<List<Student>>
+        .asLiveData(viewModelScope.coroutineContext)
+
+    // One-time events — use Channel, not LiveData
+    private val _uiEvents = Channel<StudentUiEvent>(Channel.BUFFERED)
+    val uiEvents = _uiEvents.receiveAsFlow()
+
+    fun onDeleteStudent(studentId: String) {
+        viewModelScope.launch {
+            repository.deleteStudent(studentId)
+            _uiEvents.send(StudentUiEvent.ShowDeleteSuccess)
+        }
+    }
+}`,
+  funFact: "LiveData.postValue() silently drops intermediate values if called rapidly. This caused a subtle bug in real production apps where rapid API calls would post multiple values to LiveData, but the UI would only see the last one — leading to confusing state where, say, 3 loading spinner shows occurred but only 1 result appeared. Flow's Channel-based mechanisms handle backpressure explicitly, making this class of bug visible rather than silent.",
+  quiz: [
+    { q: "A LiveData has value 'A'. A new observer is registered. What value does the new observer immediately receive?", opts: ["Nothing — LiveData only emits on change", "'A' — LiveData replays its current value to new active observers", "null — observers must wait for the next setValue call", "It depends on whether the observer is in STARTED state"], ans: 1 },
+    { q: "What is the key behavioral difference between Transformations.map() and Transformations.switchMap()?", opts: ["map() works on any thread; switchMap() requires main thread", "map() applies a function to each value; switchMap() returns a new LiveData per value and observes that instead", "map() is for nullable types; switchMap() is for non-null", "map() is synchronous; switchMap() is asynchronous"], ans: 1 },
+    { q: "You call postValue() 5 times in rapid succession from a background thread. How many updates does the observer receive?", opts: ["Exactly 5", "At least 1, possibly fewer — intermediate values may be dropped", "Exactly 1 — only the first call", "Exactly 1 — only the last call is guaranteed"], ans: 1 },
+    { q: "What problem does SingleLiveEvent solve, and what is its modern replacement?", opts: ["It solves threading issues; modern replacement is postValue()", "It solves event replay (navigation/snackbar shown on re-subscribe); modern replacement is Channel/SharedFlow with replay=0", "It solves null initial value; modern replacement is StateFlow", "It solves backpressure; modern replacement is Flow with buffer()"], ans: 1 },
+    { q: "You observe a Room LiveData<List<Student>> in a Fragment using viewLifecycleOwner. The Fragment goes to the back stack (view destroyed). What happens to the LiveData subscription?", opts: ["It stays active and can deliver to null views", "It is automatically paused (not removed) and resumes when the Fragment returns", "It is removed because viewLifecycleOwner's lifecycle ends, and re-registered when Fragment returns", "It delivers updates to a buffer that is flushed when the Fragment returns"], ans: 2 },
+    { q: "What is the primary reason Google recommends StateFlow over LiveData for new code?", opts: ["StateFlow is faster than LiveData", "StateFlow is pure Kotlin with no Android framework dependency, integrating naturally with coroutines and KMM", "StateFlow automatically handles process death", "StateFlow supports multiple simultaneous values unlike LiveData's single slot"], ans: 1 },
+    { q: "observeForever() is used without a lifecycle owner. When MUST you call removeObserver()?", opts: ["Never — observeForever auto-cleans when the ViewModel is cleared", "Before the LiveData's value changes to null", "Manually, typically in onDestroy() or ViewModel.onCleared() — it never auto-removes", "When the LiveData is set to a new value"], ans: 2 },
+    { q: "Which Jetpack component still returns LiveData natively, making it relevant even in modern codebases?", opts: ["Hilt", "Navigation Component", "Room DAO queries (LiveData<List<T>>)", "WorkManager (only)"], ans: 2 }
+  ],
+  challenge: "Refactor a legacy StudentListViewModel from LiveData to StateFlow without breaking existing behavior: (1) Replace MutableLiveData<List<Student>> with MutableStateFlow<StudentListUiState>. (2) Replace Transformations.switchMap for student filtering with combine + collectLatest. (3) Replace a SingleLiveEvent<String> for error messages with Channel<String>.receiveAsFlow(). (4) Update the Fragment to use repeatOnLifecycle(STARTED) for collecting. (5) Ensure existing Room DAO (which returns LiveData) is bridged via .asFlow().",
+  resources: [
+    { type: "docs", title: "LiveData Overview — Android Developers", url: "https://developer.android.com/topic/libraries/architecture/livedata", source: "Android Developers" },
+    { type: "docs", title: "MediatorLiveData — Android Developers Reference", url: "https://developer.android.com/reference/androidx/lifecycle/MediatorLiveData", source: "Android Developers" },
+    { type: "article", title: "Migrating from LiveData to Kotlin's Flow", url: "https://medium.com/androiddevelopers/migrating-from-livedata-to-kotlins-flow-379292f419fb", source: "Medium / Android Developers" },
+    { type: "docs", title: "StateFlow and SharedFlow", url: "https://developer.android.com/kotlin/flow/stateflow-and-sharedflow", source: "Android Developers" },
+    { type: "article", title: "LiveData with Coroutines and Flow — Part 1", url: "https://medium.com/androiddevelopers/livedata-with-coroutines-and-flow-part-i-reactive-uis-b20f676d25d7", source: "Medium / Android Developers" }
+  ],
+  eli5: "LiveData is a magic bulletin board in a hallway. It only shows its message to people who are actually in the building (lifecycle-aware). New people entering the building immediately see the latest message (replay). If you leave the building, you stop getting messages. StateFlow is a smarter version — it works on any floor, any building, talks coroutine language natively, and doesn't need to know about the Android 'building rules' at all.",
+  codeWalkthrough: [
+    "private val _selectedStudentId = MutableLiveData<String>() follows the standard encapsulation pattern — ViewModel controls mutations, external classes only observe.",
+    "Transformations.switchMap activates only when there is an active observer. When no UI is observing, the lambda never runs — lazy evaluation that prevents wasted database queries.",
+    "Transformations.map(studentDetail) chains on top of switchMap — this creates a dependency chain: selectedStudentId → studentDetail → studentDisplayName, all lazy.",
+    "MediatorLiveData.addSource registers two sources. Each addSource block checks if the OTHER source's value is available before emitting — prevents partially-constructed UiModel from reaching the UI.",
+    "_studentLiveData.postValue(student) is used inside a coroutine (background dispatcher) — postValue is thread-safe, setValue would crash.",
+    "repository.getStudentsFlow().asLiveData(viewModelScope.coroutineContext) bridges a Flow from the repository to LiveData for the UI. The coroutineContext argument ties the collection to viewModelScope so it cancels when the ViewModel clears.",
+    "Channel<StudentUiEvent>(Channel.BUFFERED) with receiveAsFlow() is the modern one-time event pattern. BUFFERED means if the UI isn't collecting (background), events are queued rather than dropped. No replay — each event is consumed once.",
+    "_uiEvents.send() is a suspend function — safe to call inside viewModelScope.launch. Compared to LiveData's postValue, this won't drop events under rapid emission."
+  ],
+  bugChallenge: {
+    code: `class AttendanceViewModel : ViewModel() {
+
+    val attendanceRecords = MutableLiveData<List<AttendanceRecord>>()  // Bug 1
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
+
+    fun loadAttendance(classId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val records = repository.getAttendance(classId)
+                attendanceRecords.value = records  // Bug 2
+            } catch (e: Exception) {
+                _errorMessage.value = e.message  // Bug 3
+            }
+        }
+    }
+}
+
+// Fragment
+class AttendanceFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.attendanceRecords.observeForever { records ->  // Bug 4
+            adapter.submitList(records)
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) showSnackbar(error)  // Bug 5
+        }
+    }
+}`,
+    hint: "Check encapsulation, thread safety for setValue, observeForever leaks, and LiveData's replay behavior for one-time events.",
+    answer: "Bug 1: attendanceRecords is MutableLiveData exposed as public — any external class can call attendanceRecords.value = ... breaking encapsulation. Fix: private val _attendanceRecords = MutableLiveData<List<AttendanceRecord>>(); val attendanceRecords: LiveData<...> = _attendanceRecords. Bug 2: attendanceRecords.value = records called from Dispatchers.IO (background thread) — setValue() throws CalledFromWrongThreadException. Fix: use postValue() or switch to Dispatchers.Main with withContext. Bug 3: _errorMessage.value = e.message also called from background thread — same issue. Fix: postValue(). Bug 4: observeForever in Fragment with no removeObserver call — memory leak. The Fragment might be destroyed but the observer keeps the Fragment alive. Fix: observe(viewLifecycleOwner) instead. Bug 5: errorMessage is a regular LiveData — it replays its last value to new observers. If the user rotates the device, the same error snackbar appears again. Fix: use a SingleLiveEvent workaround or, better, a Channel<String>.receiveAsFlow() for one-time error events."
+  },
+  difficulty: "intermediate",
+  prereqs: [15]
+},
+{
+  id: 17,
+  title: "XML View System: Layouts, ConstraintLayout & RecyclerView",
+  subtitle: "Master traditional Views — still dominant in 80%+ of production codebases",
+  analogy: "ConstraintLayout is like a sophisticated IKEA assembly system — every piece (View) needs constraints connecting it to walls (parent) or other furniture (sibling views), otherwise it falls to the top-left corner (0,0). RecyclerView is like a restaurant with a limited number of plates — instead of buying new plates for every dish, the waiter takes plates from finished diners (recycles ViewHolders) and brings them to new diners with fresh food (new data).",
+  points: [
+    { t: "View hierarchy and inflation", d: "XML layouts are parsed and inflated into View objects at runtime. LayoutInflater.inflate() reads XML and creates the View tree. Deep hierarchies (View inside View inside View...) cause nested measure/layout passes — each extra level multiplies work. Flat hierarchies with ConstraintLayout perform better than deeply nested LinearLayouts." },
+    { t: "ConstraintLayout basics", d: "Every View must have horizontal AND vertical constraints — or it collapses to (0,0). Constraints connect to: parent edges, other Views' edges, guidelines (invisible lines at fixed percent), barriers (dynamic boundary based on multiple views). 0dp width/height means 'match constraint' — fill available constrained space." },
+    { t: "ConstraintLayout chains", d: "A chain is a bidirectional constraint between two or more Views. Chain styles: spread (equal space), spread_inside (space between, none at edges), packed (grouped together). Use chains instead of LinearLayout for groups of horizontally/vertically arranged Views within ConstraintLayout." },
+    { t: "View Binding vs findViewById", d: "View Binding generates a binding class per layout XML — type-safe, null-safe references to all Views with IDs. No more NullPointerException from wrong IDs. No reflection overhead. Enable in build.gradle: viewBinding { enabled = true }. Data Binding extends this further with layout expressions but adds compilation complexity." },
+    { t: "RecyclerView architecture", d: "RecyclerView has three main components: Adapter (provides ViewHolders and binds data), LayoutManager (arranges ViewHolders: linear, grid, staggered), ItemDecoration (adds dividers, spacing). RecyclerView recycles ViewHolder instances — onCreateViewHolder is expensive (inflate XML, create binding), onBindViewHolder is cheap (set data into existing views)." },
+    { t: "ListAdapter and DiffUtil", d: "ListAdapter extends Adapter with built-in DiffUtil support. Override DiffUtil.ItemCallback<T> with areItemsTheSame (same entity? compare IDs) and areContentsTheSame (same display data? compare fields). submitList() triggers async diffing on a background thread, then applies minimal animations. Never use notifyDataSetChanged() — it forces full rebind with no animation." },
+    { t: "ViewHolder pattern", d: "ViewHolder caches View references. Without it, every onBindViewHolder would call findViewById repeatedly — expensive because it traverses the view tree. With View Binding in ViewHolder: class OrderViewHolder(private val binding: ItemOrderBinding) : RecyclerView.ViewHolder(binding.root). binding.orderTitle.text = ... is O(1) — no traversal." },
+    { t: "RecyclerView click handling", d: "RecyclerView.Adapter has no built-in click listener. Best pattern: pass a lambda to the Adapter — class OrderAdapter(private val onOrderClick: (Order) -> Unit). In onBindViewHolder: binding.root.setOnClickListener { onOrderClick(order) }. Avoid setting click listeners in onCreateViewHolder (ViewHolder might be rebound to different data)." },
+    { t: "ConcatAdapter", d: "Combines multiple Adapters into one RecyclerView. Use for header+list+footer without hacking a single Adapter. Each sub-Adapter manages its own data. Useful for: static header, paginated content list, loading footer. Available in recyclerview:1.2.0+." },
+    { t: "RecyclerView performance", d: "setHasFixedSize(true) — if adapter content changes don't affect RecyclerView size, avoids full requestLayout. setItemViewCacheSize() — extra offscreen views kept before recycling. Use DiffUtil always. Avoid onBindViewHolder triggering layout inflation. Pre-compute item sizes in a background thread if complex." },
+    { t: "ConstraintLayout MotionLayout", d: "MotionLayout extends ConstraintLayout to add animated transitions between two constraint sets. Define start and end ConstraintSets, MotionLayout interpolates. Used for: toolbar collapse on scroll, drag-to-expand cards, animated onboarding. No code needed for most animations — purely XML-driven." },
+    { t: "include and merge tags", d: "<include> reuses layout files — extracts repeated UI into a shared file. <merge> eliminates redundant root ViewGroups when including — if the include target is already the right ViewGroup, merge prevents adding an extra layer. Reduces hierarchy depth and improves performance." }
+  ],
+  whatIs: "The XML View system is Android's original UI framework — still the foundation of the vast majority of production apps. Views are inflated from XML, arranged by LayoutManagers, and bound to data via Adapters. ConstraintLayout enables complex flat layouts with chaining and barrier constraints. RecyclerView with ListAdapter + DiffUtil is the standard for displaying dynamic lists efficiently with smooth animations. View Binding provides type-safe, null-safe access to XML-defined Views.",
+  realWorld: "In a field operations app, a WorkOrderListFragment uses RecyclerView with ListAdapter to display hundreds of work orders synced from the server. DiffUtil computes the minimal diff when orders are updated (status changes, new assignments) and animates only the changed items. Each item uses a ConstraintLayout with chains for the title/status/assignee layout. View Binding eliminates all findViewByIds. A ConcatAdapter adds a header showing active filter chips and a footer with 'Load more' pagination. The entire list updates without a full redraw when a single order's status changes.",
+  code: `// ListAdapter with DiffUtil — production pattern
+class WorkOrderAdapter(
+    private val onOrderClick: (WorkOrder) -> Unit,
+    private val onStatusChange: (WorkOrder, WorkOrderStatus) -> Unit
+) : ListAdapter<WorkOrder, WorkOrderAdapter.WorkOrderViewHolder>(WorkOrderDiffCallback()) {
+
+    // DiffUtil — called on background thread
+    class WorkOrderDiffCallback : DiffUtil.ItemCallback<WorkOrder>() {
+        override fun areItemsTheSame(old: WorkOrder, new: WorkOrder): Boolean =
+            old.id == new.id  // Same entity?
+
+        override fun areContentsTheSame(old: WorkOrder, new: WorkOrder): Boolean =
+            old == new  // Same display data? (data class equals checks all fields)
+    }
+
+    // ViewHolder with View Binding — inflated ONCE, reused
+    class WorkOrderViewHolder(
+        private val binding: ItemWorkOrderBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(order: WorkOrder, onClick: (WorkOrder) -> Unit, onStatus: (WorkOrder, WorkOrderStatus) -> Unit) {
+            binding.orderTitle.text = order.title
+            binding.assigneeChip.text = order.assignedTo?.name ?: "Unassigned"
+            binding.statusBadge.text = order.status.label
+            binding.statusBadge.setChipBackgroundColorResource(order.status.colorRes)
+            binding.root.setOnClickListener { onClick(order) }
+            binding.statusSpinner.setOnItemSelectedListener { _, _, position, _ ->
+                onStatus(order, WorkOrderStatus.entries[position])
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkOrderViewHolder {
+        // Inflate ONCE — this is the expensive operation
+        val binding = ItemWorkOrderBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return WorkOrderViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: WorkOrderViewHolder, position: Int) {
+        // Bind OFTEN — this must be cheap
+        holder.bind(getItem(position), onOrderClick, onStatusChange)
+    }
+}
+
+// Fragment setup
+class WorkOrderListFragment : Fragment(R.layout.fragment_work_order_list) {
+
+    private var _binding: FragmentWorkOrderListBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: WorkOrderViewModel by activityViewModels()
+
+    private val adapter = WorkOrderAdapter(
+        onOrderClick = { order -> viewModel.selectOrder(order.id) },
+        onStatusChange = { order, status -> viewModel.updateStatus(order, status) }
+    )
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentWorkOrderListBinding.bind(view)
+
+        binding.recyclerView.apply {
+            this.adapter = this@WorkOrderListFragment.adapter
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.workOrders.collect { orders ->
+                    adapter.submitList(orders)  // DiffUtil computes diff async
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.recyclerView.adapter = null  // Prevent adapter leak
+        _binding = null
+    }
+}`,
+  funFact: "RecyclerView's recycling pool is shared between multiple RecyclerViews by default if they use the same view types. In a complex screen with nested RecyclerViews (like Instagram's story + feed layout), you can set a shared RecycledViewPool so ViewHolders from one list can be reused by another, significantly reducing inflation cost during fast scrolling.",
+  quiz: [
+    { q: "In DiffUtil.ItemCallback, what is the purpose of areItemsTheSame() vs areContentsTheSame()?", opts: ["areItemsTheSame checks type; areContentsTheSame checks value", "areItemsTheSame checks if it's the same logical entity (by ID); areContentsTheSame checks if the displayed data changed", "areItemsTheSame checks reference equality; areContentsTheSame checks structural equality", "They do the same thing — only one needs to be implemented"], ans: 1 },
+    { q: "What happens if a View in ConstraintLayout has no horizontal constraints?", opts: ["It expands to fill the parent width", "It is placed at horizontal position 0 (left edge)", "ConstraintLayout throws an InflateException", "It is centered horizontally by default"], ans: 1 },
+    { q: "Why should you set binding.recyclerView.adapter = null in onDestroyView()?", opts: ["It is required by RecyclerView API — the app crashes otherwise", "The Adapter holds a reference to the RecyclerView; nulling it allows the RecyclerView (and its views) to be garbage collected when the Fragment view is destroyed", "It clears the DiffUtil queue to prevent stale animations", "It resets the scroll position for when the Fragment is recreated"], ans: 1 },
+    { q: "What does setHasFixedSize(true) tell RecyclerView?", opts: ["All items have the same height", "The RecyclerView's own size does not change when the adapter content changes — avoids full requestLayout cycles on data updates", "Item animations are disabled for performance", "The layout manager uses a fixed item count"], ans: 1 },
+    { q: "You want to display a header row, a list of items, and a footer loading indicator in one RecyclerView. What is the modern approach?", opts: ["Use a single Adapter with multiple viewType values and handle everything in one class", "Use ConcatAdapter to combine a HeaderAdapter, ContentAdapter, and FooterAdapter", "Use a NestedScrollView wrapping a LinearLayout and RecyclerView", "Use addHeaderView() method on RecyclerView"], ans: 1 },
+    { q: "View Binding is enabled in build.gradle. For a layout file named fragment_student_list.xml, what is the generated binding class name?", opts: ["ViewBinding_FragmentStudentList", "FragmentStudentListBinding", "StudentListFragmentBinding", "FragmentStudentListViewBinding"], ans: 1 },
+    { q: "In RecyclerView, which method should contain expensive operations like image loading or complex computations?", opts: ["onBindViewHolder — it has access to position data", "onCreateViewHolder — it runs less frequently", "Neither — precompute and cache results before submitList()", "onAttachedToRecyclerView — it runs once per list"], ans: 2 },
+    { q: "What is the constraint chain style that places equal space between items (no space at edges) in ConstraintLayout?", opts: ["packed", "spread", "spread_inside", "weighted"], ans: 2 }
+  ],
+  challenge: "Build a StudentGradeListFragment with RecyclerView: (1) Create StudentGradeAdapter using ListAdapter with DiffUtil (compare by student ID, full equality for contents). (2) Use View Binding in the ViewHolder. (3) Support two view types: regular grade items and a 'section header' for each grade level. (4) Implement click listener via lambda in the Adapter constructor. (5) In the Fragment, null the adapter in onDestroyView and set hasFixedSize(true). (6) The layout XML for each item uses ConstraintLayout with a chain for name/grade/score.",
+  resources: [
+    { type: "docs", title: "RecyclerView — Android Developers", url: "https://developer.android.com/develop/ui/views/layout/recyclerview", source: "Android Developers" },
+    { type: "docs", title: "ListAdapter and DiffUtil", url: "https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter", source: "Android Developers" },
+    { type: "docs", title: "ConstraintLayout — Android Developers", url: "https://developer.android.com/develop/ui/views/layout/constraint-layout", source: "Android Developers" },
+    { type: "docs", title: "View Binding — Android Developers", url: "https://developer.android.com/topic/libraries/view-binding", source: "Android Developers" },
+    { type: "article", title: "RecyclerView best practices — Google Developers", url: "https://medium.com/androiddevelopers/recyclerview-prefetch-c2f269075710", source: "Medium / Android Developers" }
+  ],
+  eli5: "RecyclerView is like a magic whiteboard eraser. Instead of getting a new whiteboard for each lesson (new view for each item), you erase the old lesson when it scrolls off screen and write new content on the same board. DiffUtil is the teacher's assistant who only erases and rewrites the parts that actually changed — not the whole board. ConstraintLayout is like a web of rubber bands connecting everything to walls and each other so nothing falls out of place when you resize the classroom.",
+  codeWalkthrough: [
+    "WorkOrderAdapter extends ListAdapter<WorkOrder, ViewHolder>(WorkOrderDiffCallback()) — the DiffCallback is passed to super so ListAdapter handles all diffing internally.",
+    "areItemsTheSame compares old.id == new.id — this tells DiffUtil 'is this the same work order?' even if its fields changed. areContentsTheSame uses data class equals which auto-compares all fields — 'has anything displayed changed?'",
+    "WorkOrderViewHolder holds ItemWorkOrderBinding — inflated once in onCreateViewHolder. bind() is called repeatedly on the same ViewHolder instance as it is recycled for different orders.",
+    "onCreateViewHolder inflates the XML via View Binding — this is the expensive step (XML parsing, view tree construction). RecyclerView calls this only when no cached ViewHolder is available.",
+    "onBindViewHolder calls holder.bind(getItem(position), ...) — getItem() is provided by ListAdapter and returns the correct item accounting for DiffUtil's async updates.",
+    "adapter.submitList(orders) in the Fragment triggers DiffUtil comparison on a background thread, then posts AnimatedStateListDrawable updates to the RecyclerView on the main thread.",
+    "binding.recyclerView.adapter = null in onDestroyView is critical — RecyclerView holds a reference to the Adapter which holds lambdas that may close over Fragment/ViewModel references. Nulling prevents a retention chain.",
+    "setHasFixedSize(true) is safe here because the RecyclerView fills the screen — submitting a new list doesn't change its dimensions, so Android skips the expensive parent re-measure cycle."
+  ],
+  bugChallenge: {
+    code: `class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+
+    private val students = mutableListOf<Student>()
+
+    fun updateStudents(newStudents: List<Student>) {
+        students.clear()
+        students.addAll(newStudents)
+        notifyDataSetChanged()  // Bug 1
+    }
+
+    inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {  // Bug 2
+        val nameText: TextView = itemView.findViewById(R.id.student_name)
+        val gradeText: TextView = itemView.findViewById(R.id.student_grade)
+
+        init {
+            // Bug 3
+            itemView.setOnClickListener {
+                val student = students[adapterPosition]
+                onStudentClick(student)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_student, parent, false)
+        return StudentViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
+        val student = students[position]
+        holder.nameText.text = student.name
+        holder.gradeText.text = student.grade
+        // Bug 4
+        val bitmap = BitmapFactory.decodeResource(
+            holder.itemView.resources, student.avatarResId
+        )
+        holder.avatarImage.setImageBitmap(bitmap)
+    }
+}`,
+    hint: "Think about animation/performance for updates, inner class memory leaks, deprecated adapterPosition, and expensive operations in onBindViewHolder.",
+    answer: "Bug 1: notifyDataSetChanged() forces a full rebind of all visible ViewHolders with no animations — poor UX and performance. Fix: extend ListAdapter and use submitList() with DiffUtil for animated, minimal updates. Bug 2: inner class StudentViewHolder holds an implicit reference to StudentAdapter (and its students list). This prevents garbage collection in edge cases. Fix: make it a static nested class (remove 'inner' keyword) and pass required references explicitly. Bug 3: adapterPosition is deprecated — it can return RecyclerView.NO_POSITION (-1) during animation. Fix: use bindingAdapterPosition or getBindingAdapterPosition() in click listeners, with a null/NO_POSITION check. Bug 4: BitmapFactory.decodeResource() in onBindViewHolder — called EVERY TIME a ViewHolder is bound (fast scrolling = dozens per second). Bitmap decoding is heavy and blocks the main thread causing dropped frames. Fix: use Glide or Coil for async image loading with caching: Glide.with(holder.itemView).load(student.avatarUrl).into(holder.avatarImage)."
+  },
+  difficulty: "intermediate",
+  prereqs: [12]
+},
+{
+  id: 18,
+  title: "Jetpack Compose Fundamentals: Composable Functions, State & Recomposition",
+  subtitle: "Android's modern declarative UI — the future of Android development",
+  analogy: "Jetpack Compose is like a smart whiteboard that redraws itself automatically when the data changes. With XML Views, you had to manually say 'erase name, write new name' every time data changed. With Compose, you describe WHAT the screen should look like given the current data — and the whiteboard figures out the minimum redraw needed. Recomposition is the whiteboard checking 'what changed?' and only updating those parts — not redrawing everything from scratch.",
+  points: [
+    { t: "@Composable functions", d: "Any function annotated with @Composable can emit UI. Composables are not classes — they are functions that describe UI as a function of state. They can only be called from other @Composable functions or from a Composition entry point (setContent, ComposeView). The Compose runtime tracks which composables ran and with what parameters." },
+    { t: "Recomposition", d: "When state changes, Compose re-executes only the composable functions whose inputs changed — not the entire UI tree. Compose compares parameters using structural equality (equals()). If nothing changed, the composable is skipped. This is called 'smart recomposition'. Composables must be idempotent and side-effect free for correct recomposition." },
+    { t: "State — remember and mutableStateOf", d: "var count by remember { mutableStateOf(0) } creates state that persists across recompositions. Without remember, state is reset on every recomposition. mutableStateOf creates a State<T> object — reading its value inside a composable subscribes that composable to changes. When value changes, subscribed composables recompose." },
+    { t: "rememberSaveable", d: "Like remember, but also survives configuration changes and process death — uses the same Bundle mechanism as onSaveInstanceState. Use rememberSaveable for UI state that should survive rotation: scroll position, selected tab, user input. For complex objects, implement Saver or use @Parcelize data classes." },
+    { t: "State hoisting", d: "Moving state UP from a composable to its caller — the composable becomes stateless and receives state + callbacks as parameters. Pattern: (value, onValueChange) -> Unit. Stateless composables are more reusable, testable, and previewable. Rule: hoist state to the lowest common ancestor of all composables that need it." },
+    { t: "Modifier", d: "Modifier is an immutable, ordered list of instructions applied to a composable — size, padding, background, click handling, drawing, layout behavior. Order matters: Modifier.padding(16.dp).background(Color.Blue) pads THEN draws background (background inside padding). Modifier.background(Color.Blue).padding(16.dp) draws background THEN pads (background outside padding)." },
+    { t: "Column, Row, Box", d: "Column: arranges children vertically (like vertical LinearLayout). Row: horizontal (like horizontal LinearLayout). Box: stacks children (like FrameLayout) — last child drawn on top. All support Arrangement (spacing between children) and Alignment (cross-axis positioning). These are the fundamental layout composables." },
+    { t: "LazyColumn and LazyRow", d: "Compose equivalents of RecyclerView — only compose and lay out items currently visible. items(list) and itemsIndexed(list) populate items. No Adapter or ViewHolder needed — just describe each item as a composable. LazyListState.animateScrollToItem() for programmatic scrolling. Use key parameter in items() for stable IDs and better animations." },
+    { t: "Material3 components", d: "Jetpack Compose ships with Material3 (Material Design 3) components: Scaffold (app structure with topBar, bottomBar, FAB, snackbarHost), TopAppBar, NavigationBar, Card, Button, OutlinedTextField, Chip, Dialog. Use MaterialTheme.colorScheme, MaterialTheme.typography for theming instead of hardcoded colors." },
+    { t: "Side effects — LaunchedEffect", d: "LaunchedEffect(key) launches a coroutine tied to the composition. Runs when the composable enters composition and re-runs if key changes. Use for one-time effects (load data, animate on first show, trigger navigation). The coroutine is cancelled when the composable leaves composition or key changes." },
+    { t: "Stability and performance", d: "Compose skips recomposition of a composable if all its parameters are 'stable' (implements equals() correctly) and haven't changed. Data classes are stable. Standard Kotlin collections (List, Map) are NOT stable — use Kotlin ImmutableList from kotlinx-collections-immutable or wrap in @Stable/@Immutable annotated classes for performance-critical composables." },
+    { t: "Interop — ComposeView and AndroidView", d: "ComposeView embeds Compose inside XML layouts — migrate screens incrementally. AndroidView embeds legacy Views inside Compose — wrap a MapView, WebView, or any View with no Compose equivalent. This enables gradual migration of existing apps without a full rewrite." }
+  ],
+  whatIs: "Jetpack Compose is Android's modern declarative UI toolkit. Instead of imperatively modifying Views, you describe the UI as a function of state using @Composable functions. When state changes, Compose automatically recomposes only the affected parts of the UI tree. Modifier controls layout and appearance. remember/rememberSaveable manages local state. LazyColumn replaces RecyclerView. Material3 provides a complete design system. LaunchedEffect handles coroutine-based side effects tied to composition lifecycle.",
+  realWorld: "In a fintech SaaS app migrating from XML to Compose, the TransactionListScreen is a new full-Compose screen while legacy AccountDetailActivity still uses XML. TransactionListScreen uses LazyColumn with key=transaction.id for smooth animated updates when new transactions arrive. A search bar uses state hoisting — the query string lives in the ViewModel (StateFlow), the SearchBar composable is stateless, receiving value and onValueChange as parameters. LaunchedEffect(Unit) triggers initial data load. The app uses Material3 Scaffold with a TopAppBar and FAB for new transaction entry.",
+  code: `// State hoisting pattern — stateless composable
+@Composable
+fun TransactionListScreen(
+    viewModel: TransactionViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
+
+    TransactionListContent(
+        uiState = uiState,
+        searchQuery = searchQuery,
+        onSearchQueryChange = viewModel::onSearchQueryChanged,
+        onTransactionClick = viewModel::onTransactionSelected,
+        onRetry = viewModel::loadTransactions
+    )
+}
+
+// Pure stateless composable — reusable, testable, previewable
+@Composable
+fun TransactionListContent(
+    uiState: TransactionUiState,
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
+    onTransactionClick: (Transaction) -> Unit,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Transactions") })
+        },
+        modifier = modifier
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            // Search bar — stateless, controlled by parent
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                label = { Text("Search transactions") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            when (uiState) {
+                is TransactionUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is TransactionUiState.Success -> {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(
+                            items = uiState.transactions,
+                            key = { it.id }  // Stable keys for smooth animations
+                        ) { transaction ->
+                            TransactionCard(
+                                transaction = transaction,
+                                onClick = { onTransactionClick(transaction) }
+                            )
+                        }
+                    }
+                }
+                is TransactionUiState.Error -> {
+                    ErrorScreen(
+                        message = uiState.message,
+                        onRetry = onRetry
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TransactionCard(
+    transaction: Transaction,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = transaction.description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = transaction.date,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Text(
+                text = transaction.formattedAmount,
+                style = MaterialTheme.typography.titleMedium,
+                color = if (transaction.isCredit) Color.Green else Color.Red
+            )
+        }
+    }
+}
+
+// LaunchedEffect for side effects
+@Composable
+fun TransactionDetailScreen(transactionId: String, viewModel: TransactionViewModel = hiltViewModel()) {
+    LaunchedEffect(transactionId) {  // Re-runs if transactionId changes
+        viewModel.loadTransactionDetail(transactionId)
+    }
+    // ... rest of UI
+}`,
+  funFact: "Jetpack Compose's recomposition can happen multiple times per second during animations. In the early betas, even a simple misconfiguration (like a lambda capturing unstable types) could trigger full-tree recomposition 60 times per second, completely negating any performance benefit. The Compose compiler plugin was updated to add @Composable function skipping analysis — it marks composables as skippable if all parameters are stable, and the runtime skips them if none changed.",
+  quiz: [
+    { q: "What does 'remember' do in Jetpack Compose?", opts: ["Saves the composable's state to the Bundle for process death survival", "Memoizes the calculation result across recompositions — the block only runs on first composition", "Caches the composable's UI output to avoid recomposition", "Registers the composable with the ViewModel"], ans: 1 },
+    { q: "Which is the correct state hoisting pattern for a stateless composable?", opts: ["@Composable fun Counter() { var count by remember { mutableStateOf(0) }; Button(onClick = { count++ }) { Text('$count') } }", "@Composable fun Counter(count: Int, onIncrement: () -> Unit) { Button(onClick = onIncrement) { Text('$count') } }", "@Composable fun Counter(viewModel: CounterViewModel) { val count by viewModel.count.collectAsState() }", "State hoisting is anti-pattern — all state should be local to the composable"], ans: 1 },
+    { q: "In Modifier chain: Modifier.padding(16.dp).background(Color.Blue) — where is the background drawn?", opts: ["Outside the padding — the full composable area including padding has blue background", "Inside the padding — only the content area (after padding) has blue background", "The order doesn't matter — background always covers the full view", "Modifier.padding and Modifier.background cannot be chained together"], ans: 1 },
+    { q: "What is the key advantage of using key parameter in LazyColumn items { }?", opts: ["It enables multiselect by associating each item with a unique key", "Compose uses stable keys to map old items to new items — enabling correct animations and preserving item state (like scroll or expanded state) across list updates", "It improves performance by pre-loading items with matching keys", "It prevents duplicate items from appearing in the list"], ans: 1 },
+    { q: "When does LaunchedEffect(key) re-run its coroutine block?", opts: ["Every recomposition", "When the composable first enters composition, and again whenever the key changes", "Only once when the composable first appears — key is ignored after first run", "When the current coroutine completes and the composable is still in composition"], ans: 1 },
+    { q: "Why are standard Kotlin List<T> types NOT stable for Compose recomposition?", opts: ["Lists cannot be passed as parameters to @Composable functions", "Kotlin List does not implement equals() correctly", "Compose cannot detect mutations to List — MutableList can change without creating a new object, so Compose cannot safely skip recomposition of composables that receive List parameters", "Lists are too large to compare in every recomposition frame"], ans: 2 },
+    { q: "What is the difference between remember and rememberSaveable?", opts: ["remember is for primitives; rememberSaveable is for complex objects", "remember survives recomposition only; rememberSaveable also survives configuration changes and process death via Bundle serialization", "rememberSaveable automatically syncs with ViewModel", "There is no difference — they are aliases"], ans: 1 },
+    { q: "How does Jetpack Compose decide which composables to recompose when state changes?", opts: ["It recomposes the entire composition tree from the root on every state change", "It recomposes only the composable functions that read the changed state value during their last execution", "It uses a virtual DOM diff algorithm comparing old and new trees", "It recomposes the parent composable which then decides which children to recompose"], ans: 1 }
+  ],
+  challenge: "Build a TransactionFilterSheet in Compose: (1) A bottom sheet with date range picker (start/end date), min/max amount sliders, and a category multi-select. (2) Use state hoisting — FilterSheetContent is stateless (receives current FilterState and onFilterChange callback). (3) The parent FilterScreen holds a FilterState in a ViewModel StateFlow. (4) Use LazyColumn for the category list with key=category.id. (5) Add a @Preview showing the sheet in different filter states. (6) Write a composable UI test verifying that selecting a category calls onFilterChange with the correct FilterState.",
+  resources: [
+    { type: "docs", title: "Jetpack Compose — Android Developers", url: "https://developer.android.com/jetpack/compose", source: "Android Developers" },
+    { type: "docs", title: "State and Jetpack Compose", url: "https://developer.android.com/jetpack/compose/state", source: "Android Developers" },
+    { type: "docs", title: "Compose performance — stability and recomposition", url: "https://developer.android.com/jetpack/compose/performance/stability", source: "Android Developers" },
+    { type: "article", title: "Thinking in Compose", url: "https://developer.android.com/jetpack/compose/mental-model", source: "Android Developers" },
+    { type: "docs", title: "Compose and other libraries — ViewModel, LiveData, Flow", url: "https://developer.android.com/jetpack/compose/libraries", source: "Android Developers" }
+  ],
+  eli5: "Jetpack Compose is like a magic coloring book. Instead of you coloring each picture manually (Android Views with setText, setImageBitmap, etc.), you write a recipe: 'if the number is 5, draw 5 stars.' Whenever the number changes, the book recolors itself automatically — but ONLY the pages with stars, not every page. remember is like writing your score in pencil on the page so it survives when you flip back. State hoisting is like the teacher keeping the master score sheet — individual students (composables) just read it and report changes back.",
+  codeWalkthrough: [
+    "TransactionListScreen is the stateful screen composable — it connects the ViewModel to the stateless UI. collectAsStateWithLifecycle() is lifecycle-aware — it stops collecting when the app goes to background, saving battery.",
+    "TransactionListContent receives only plain data and callbacks — it has zero knowledge of ViewModel, Flow, or lifecycle. This makes it @Preview-able and testable with pure data.",
+    "Scaffold provides Material3 app structure — topBar, FAB, snackbarHost, and content with correct padding insets. The paddingValues from the lambda MUST be applied to content to avoid overlap with system bars.",
+    "The when(uiState) block handles all three states exhaustively (sealed class). Compose recomposes only the relevant branch when uiState changes — Loading → Success transition only recomposes the LazyColumn area.",
+    "items(transactions, key = { it.id }) gives Compose stable identity for each transaction. When new transactions arrive, Compose animates additions/removals correctly and preserves any per-item state (like expanded/collapsed).",
+    "TransactionCard is fully stateless — it receives transaction data and an onClick lambda. Card uses the Material3 Card composable which handles elevation, shape, and ripple automatically.",
+    "Modifier.weight(1f) on the Column inside Row makes the text column expand to fill remaining space after the amount Text has taken its natural width — equivalent to layout_weight=1 in LinearLayout.",
+    "LaunchedEffect(transactionId) runs the load coroutine when the composable first appears AND whenever transactionId changes. The previous coroutine is cancelled before the new one starts — preventing race conditions when navigating between transactions."
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun ProductListScreen(viewModel: ProductViewModel = hiltViewModel()) {
+    val products = viewModel.products.collectAsState()  // Bug 1
+
+    var selectedCategory by mutableStateOf("All")  // Bug 2
+
+    LazyColumn {
+        items(products.value) { product ->   // Bug 3 — missing key
+            ProductCard(
+                product = product,
+                isSelected = product.id == viewModel.selectedId,  // Bug 4
+                onClick = { viewModel.selectProduct(product.id) }
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductCard(product: Product, isSelected: Boolean, onClick: () -> Unit) {
+    val backgroundColor = if (isSelected) Color.Yellow else Color.White
+    Box(
+        modifier = Modifier
+            .background(backgroundColor)
+            .padding(16.dp)  // Bug 5
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
+    ) {
+        Text(product.name)
+    }
+}`,
+    hint: "Think about lifecycle-aware collection, state without remember, missing stable keys, reading ViewModel state in composables, and Modifier order.",
+    answer: "Bug 1: collectAsState() is not lifecycle-aware — it keeps collecting even when the app is in background, wasting CPU. Fix: collectAsStateWithLifecycle() from lifecycle-compose library. Bug 2: mutableStateOf() without remember — selectedCategory is reset to 'All' on every recomposition. Fix: var selectedCategory by remember { mutableStateOf('All') }. Bug 3: items(products.value) has no key parameter — Compose cannot track item identity across list updates. Adding/removing items causes incorrect animations and may reuse composable state for the wrong items. Fix: items(products.value, key = { it.id }). Bug 4: Reading viewModel.selectedId directly inside a composable — if selectedId is not a State/StateFlow, this won't trigger recomposition when it changes. If it IS a StateFlow, it must be collected via collectAsStateWithLifecycle(). Fix: val selectedId by viewModel.selectedId.collectAsStateWithLifecycle() and pass selectedId to the composable. Bug 5: Modifier order is wrong — background is applied before padding, so the padding area has NO background. Then clickable is after padding but before fillMaxWidth. Correct order: Modifier.fillMaxWidth().clickable(onClick).background(backgroundColor).padding(16.dp) — fill width first, then handle clicks on full area, then background covers click area, then content padding."
+  },
+  difficulty: "intermediate",
+  prereqs: [1]
+},
+{
+  id: 19,
+  title: "Compose State: remember, rememberSaveable & State Hoisting",
+  subtitle: "Master state ownership, survival across recomposition, and the unidirectional data flow pattern interviewers love",
+  analogy: "remember is like a whiteboard in a meeting room — it holds info while the meeting is ongoing, but get wiped when everyone leaves. rememberSaveable is like taking a photo of the whiteboard before leaving — the info survives even if the room is cleared. State hoisting is like the meeting chair collecting all decisions and redistributing them — one source of truth, everyone else just listens.",
+  points: [
+    { t: "What remember does", d: "remember { } stores an object in the composition tree across recompositions. When the composable is removed from the tree (e.g. navigated away), the remembered value is discarded. It is purely in-memory, scoped to the composable's lifetime in the tree." },
+    { t: "rememberSaveable for process death", d: "rememberSaveable { } survives configuration changes AND process death by serializing to the SavedStateHandle-backed Bundle. Uses Saver interface internally. Ideal for transient UI state like scroll position, text input, toggle state that should not reset on rotation." },
+    { t: "Custom Saver with rememberSaveable", d: "For non-primitive types, implement Saver<Original, Saveable> or use listSaver / mapSaver helpers. Example: rememberSaveable(stateSaver = ColorSaver) { mutableStateOf(Color.Red) }. Interviewers ask this when dealing with complex UI state that must survive rotation." },
+    { t: "State hoisting definition", d: "State hoisting moves state up from a composable to its caller, replacing the internal state with a value: T + onValueChange: (T) -> Unit pair. The composable becomes stateless and therefore reusable, testable, and previewable." },
+    { t: "Unidirectional Data Flow (UDF)", d: "State flows DOWN the tree (parent to child), events flow UP (child calls lambdas). No child should ever mutate shared state directly. This mirrors MVI architecture and makes UI deterministic — the same state always produces the same UI." },
+    { t: "Stateful vs Stateless composables", d: "Stateful composables own their state (convenient but hard to test/preview). Stateless composables receive state and event callbacks (testable, reusable). Best practice: have a thin stateful wrapper that connects to the ViewModel, and pass hoisted state into a stateless inner composable." },
+    { t: "ViewModel as state owner", d: "For screen-level state that survives navigation and configuration changes, own state in ViewModel using StateFlow<UiState> or mutableStateOf inside ViewModel. The composable collects it via collectAsStateWithLifecycle() — never owns it. This is the correct pattern for production apps." },
+    { t: "When to use remember vs ViewModel", d: "Use remember for ephemeral, local UI state (is dropdown expanded?, current animation target). Use ViewModel for business-relevant state (user data, list items, loading/error). If losing the state on rotation would be annoying to the user, put it in ViewModel or rememberSaveable." },
+    { t: "mutableStateOf vs MutableStateFlow", d: "mutableStateOf is Compose-specific — it integrates directly with the snapshot system and triggers recomposition automatically. MutableStateFlow is coroutines-based — it works in ViewModel without Compose dependency. Convert to Compose state via .collectAsStateWithLifecycle() at the composable boundary." },
+    { t: "State delegation with by", d: "var text by remember { mutableStateOf('') } uses Kotlin property delegation. It unpacks to getValue/setValue operators so you read text directly instead of text.value. Makes code cleaner — but type is String not MutableState<String> so you cannot pass it as a MutableState reference." },
+    { t: "Derived state anti-pattern", d: "Avoid computing expensive values inline in the composable body — they run on every recomposition. Use derivedStateOf { } to memoize computations that depend on other state, so the derived value only recomputes when its inputs change, not on every recomposition cycle." },
+    { t: "Interview signal: state hoisting boundary", d: "Senior interviews ask: 'how far up should you hoist state?' Answer: hoist to the lowest common ancestor that needs it. Hoisting too high causes unnecessary recomposition of unrelated composables. Hoisting too low prevents sharing. The ViewModel boundary is the natural ceiling for screen-level state." }
+  ],
+  whatIs: "State in Jetpack Compose is the single source of truth that drives the UI. remember holds state across recompositions within the composable's lifetime. rememberSaveable additionally survives configuration changes and process death via bundle serialization. State hoisting extracts state ownership upward, enabling unidirectional data flow where state flows down as parameters and events flow up as lambda callbacks — making composables stateless, testable, and reusable.",
+  realWorld: "In a school management app, a GradeEntryScreen holds a text field for each student's score. The text field value is remembered locally with rememberSaveable (survives rotation mid-entry). Once the teacher taps Submit, the data flows up via an onSubmit lambda to the ViewModel which owns the canonical list of grades in a StateFlow<GradeUiState>. The composable is stateless — it receives the list and callbacks. Rotating the device or backgrounding the app does not lose the in-progress entry.",
+  code: `// --- State hoisting: stateless TextField ---
+@Composable
+fun ScoreTextField(
+    score: String,                    // state flows DOWN
+    onScoreChange: (String) -> Unit,  // events flow UP
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = score,
+        onValueChange = onScoreChange,
+        label = { Text("Score") },
+        modifier = modifier
+    )
+}
+
+// --- Stateful wrapper using rememberSaveable ---
+@Composable
+fun ScoreEntryCard(studentId: String, onSubmit: (String, String) -> Unit) {
+    // Survives rotation — teacher doesn't lose their in-progress entry
+    var score by rememberSaveable { mutableStateOf("") }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        ScoreTextField(score = score, onScoreChange = { score = it })
+        Button(onClick = { onSubmit(studentId, score) }) {
+            Text("Submit")
+        }
+    }
+}
+
+// --- ViewModel owns screen-level state ---
+class GradeViewModel(private val submitGradeUseCase: SubmitGradeUseCase) : ViewModel() {
+    private val _uiState = MutableStateFlow(GradeUiState())
+    val uiState: StateFlow<GradeUiState> = _uiState.asStateFlow()
+
+    fun submitGrade(studentId: String, score: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isSubmitting = true) }
+            submitGradeUseCase(studentId, score)
+                .onSuccess { _uiState.update { it.copy(isSubmitting = false, submitted = true) } }
+                .onFailure { e -> _uiState.update { it.copy(isSubmitting = false, error = e.message) } }
+        }
+    }
+}
+
+// --- Screen composable: collects from ViewModel ---
+@Composable
+fun GradeScreen(
+    viewModel: GradeViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    GradeScreenContent(
+        uiState = uiState,
+        onSubmit = viewModel::submitGrade
+    )
+}
+
+// --- Custom Saver example ---
+data class FilterState(val query: String, val sortAsc: Boolean)
+
+val FilterStateSaver: Saver<FilterState, *> = listSaver(
+    save = { listOf(it.query, it.sortAsc) },
+    restore = { FilterState(it[0] as String, it[1] as Boolean) }
+)
+
+@Composable
+fun FilterBar() {
+    var filter by rememberSaveable(stateSaver = FilterStateSaver) {
+        mutableStateOf(FilterState("", true))
+    }
+    // filter survives rotation and process death
+}`,
+  funFact: "rememberSaveable internally hooks into the Android SavedStateRegistry — the same mechanism that onSaveInstanceState() uses. This means Compose state saved with rememberSaveable lands in the same bundle as traditional View-based saved state, making hybrid Compose+View apps work seamlessly.",
+  quiz: [
+    { q: "What is the key difference between remember and rememberSaveable?", opts: ["remember is faster; rememberSaveable is slower", "remember survives configuration changes; rememberSaveable does not", "rememberSaveable survives configuration changes and process death; remember does not", "They are identical — just different naming conventions"], ans: 2 },
+    { q: "In state hoisting, which direction do events travel?", opts: ["Events flow DOWN from parent to child", "Events flow UP from child to parent via lambdas", "Events are broadcast to all composables simultaneously", "Events are stored in a shared ViewModel and polled"], ans: 1 },
+    { q: "You have a search query TextField that must survive rotation. Which approach is correct?", opts: ["var query = mutableStateOf('')", "var query by remember { mutableStateOf('') }", "var query by rememberSaveable { mutableStateOf('') }", "Store it directly in a companion object"], ans: 2 },
+    { q: "A stateless composable is best described as:", opts: ["A composable with no UI elements", "A composable that receives state and callbacks as parameters and owns no internal state", "A composable that uses remember but not rememberSaveable", "A composable that only displays static text"], ans: 1 },
+    { q: "Why should screen-level business state live in a ViewModel rather than remember?", opts: ["Because remember cannot hold complex objects", "Because ViewModel survives configuration changes and outlives individual composables", "Because remember is deprecated in Compose 1.5+", "Because ViewModel is faster than Compose snapshot state"], ans: 1 },
+    { q: "What does 'var text by remember { mutableStateOf('') }' — the 'by' keyword — do here?", opts: ["It creates an immutable state object", "It uses Kotlin property delegation to unwrap getValue/setValue so you access text directly instead of text.value", "It marks the state as saveable across process death", "It creates a two-way binding to an XML layout"], ans: 1 },
+    { q: "Which is the correct UDF (Unidirectional Data Flow) pattern?", opts: ["State flows up, events flow down", "State flows down, events flow up", "State and events both flow down", "State and events both flow up"], ans: 1 },
+    { q: "For a non-primitive type to work with rememberSaveable, you must:", opts: ["Annotate it with @Serializable only", "Implement or provide a custom Saver<T, S>", "Extend ViewModel so Compose can save it automatically", "Wrap it in a MutableStateFlow"], ans: 1 }
+  ],
+  challenge: "Build a multi-step form with 3 screens (PersonalInfo, ContactInfo, Review). Each step's entered data must survive rotation. The Review screen displays all collected data. Implement state hoisting so individual field composables are fully stateless. The ViewModel owns the final submission state. Use rememberSaveable with a custom Saver for a data class holding all form fields.",
+  resources: [
+    { type: "docs", title: "State and Jetpack Compose — Official Guide", url: "https://developer.android.com/jetpack/compose/state", source: "Android Developers" },
+    { type: "docs", title: "rememberSaveable and Saver", url: "https://developer.android.com/jetpack/compose/rememberSaveable", source: "Android Developers" },
+    { type: "article", title: "State Hoisting in Jetpack Compose", url: "https://developer.android.com/jetpack/compose/state-hoisting", source: "Android Developers" },
+    { type: "video", title: "Advanced State in Compose — Google I/O", url: "https://www.youtube.com/watch?v=rmv2ug-wW4U", source: "YouTube / Google" },
+    { type: "docs", title: "ViewModel and State in Compose", url: "https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-compose", source: "Android Developers" }
+  ],
+  eli5: "Imagine you're drawing a picture. remember is like drawing on a whiteboard — great while you're working, but erased when class ends. rememberSaveable is like drawing in a notebook — even if class is cancelled and rescheduled, your drawing is still there. State hoisting means the teacher (parent) holds the master copy of the drawing and lets you (child) look at it and suggest changes — but only the teacher can actually change it. That way everyone always sees the same picture.",
+  codeWalkthrough: [
+    "ScoreTextField receives 'score: String' (the current value) and 'onScoreChange: (String) -> Unit' (the event callback) — it owns NO state, purely renders what it's given",
+    "ScoreEntryCard is the stateful wrapper — it owns 'score' via rememberSaveable so rotating the device mid-entry does not wipe the teacher's in-progress work",
+    "When ScoreTextField's value changes, it calls onScoreChange which updates 'score' in ScoreEntryCard — event flows up, new state flows back down on recomposition",
+    "onSubmit is a lambda passed down from the screen — ScoreEntryCard does not know about ViewModels or coroutines, it just fires the callback",
+    "GradeViewModel holds '_uiState: MutableStateFlow<GradeUiState>' as the single source of truth for the entire screen",
+    "submitGrade() updates isSubmitting to true immediately for UI feedback, calls the use case, then updates state based on success or failure",
+    "GradeScreen is the composable that bridges ViewModel and UI — it collects uiState with collectAsStateWithLifecycle() (stops collecting when screen is backgrounded)",
+    "GradeScreenContent is fully stateless — receives uiState and onSubmit — it's what you write unit tests against",
+    "FilterStateSaver demonstrates listSaver — save converts FilterState to a List, restore reconstructs it from the List",
+    "rememberSaveable(stateSaver = FilterStateSaver) hooks the custom saver into the bundle serialization mechanism"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun CounterScreen() {
+    var count = remember { 0 }  // Bug 1
+
+    Column {
+        Text("Count: \${count}")
+        Button(onClick = { count++ }) {  // Bug 2
+            Text("Increment")
+        }
+    }
+}
+
+@Composable
+fun SearchBar(viewModel: SearchViewModel = hiltViewModel()) {
+    var query by remember { mutableStateOf("") }  // Bug 3
+
+    TextField(
+        value = query,
+        onValueChange = {
+            query = it
+            viewModel.search(it)
+        }
+    )
+}
+
+@Composable
+fun ParentScreen() {
+    ChildWidget(
+        onAction = { value ->
+            // Bug 4: parent tries to read child's internal state
+        }
+    )
+}
+
+@Composable
+fun ChildWidget(onAction: (String) -> Unit) {
+    var internalState by remember { mutableStateOf("") }
+    Button(onClick = { onAction(internalState) }) {
+        Text("Do Action")
+    }
+}`,
+    hint: "Look at state type, mutability, survival across rotation, and whether state hoisting boundaries are correct.",
+    answer: "Bug 1: 'var count = remember { 0 }' — remember wraps the MutableState but 'count' is typed as Int not MutableState<Int>. Changing count++ does NOT trigger recomposition because Compose is not observing a plain Int. Fix: var count by remember { mutableStateOf(0) } (delegation) or val count = remember { mutableStateOf(0) } then count.value++. Bug 2: Follows from Bug 1 — if count were correctly a MutableState, count++ would work with delegation. But with the broken code in Bug 1 it just mutates a local variable. Bug 3: The search query is in remember — if the user rotates the device while typing a long search query, it is lost. Fix: var query by rememberSaveable { mutableStateOf('') }. Bug 4: This is actually a correct pattern (not a bug) — the parent receives the value via the onAction callback, which IS the correct state hoisting / event-flowing-up approach. The comment implies a misunderstanding. The child correctly owns its internal state and surfaces it via a callback. No fix needed — this IS the UDF pattern."
+  },
+  difficulty: "intermediate",
+  prereqs: [18]
+},
+{
+  id: 20,
+  title: "Compose Side Effects: LaunchedEffect, SideEffect, DisposableEffect & derivedStateOf",
+  subtitle: "Control when and how effects run — the most commonly misused Compose APIs in senior interviews",
+  analogy: "Side effects in Compose are like scheduled maintenance on a live production server. You can't just run them at any random time — you need controlled windows. LaunchedEffect is like a scheduled job that re-runs when a parameter changes. DisposableEffect is like a job that also has a cleanup script that runs before the next execution. SideEffect is like a tiny synchronous note passed to the monitoring system on every successful deployment. derivedStateOf is like a pre-computed dashboard metric — only recalculated when its inputs change.",
+  points: [
+    { t: "The rule: composables must be side-effect free", d: "Compose may call your composable multiple times, in any order, potentially in parallel on multiple threads. Any code that modifies external state (network calls, analytics, subscriptions) must be in a side effect API — not in the composable body directly." },
+    { t: "LaunchedEffect(key)", d: "Launches a coroutine scoped to the composable's lifecycle. The coroutine is cancelled and relaunched whenever the key changes. LaunchedEffect(Unit) runs once on entry. LaunchedEffect(userId) reruns when userId changes. The coroutine is cancelled when the composable leaves the composition." },
+    { t: "LaunchedEffect key selection", d: "The key is the identity signal. LaunchedEffect(Unit) or LaunchedEffect(true) = run once. LaunchedEffect(someId) = rerun when someId changes. LaunchedEffect(state.event) = react to one-time events. Choosing the wrong key causes effects to run too often or not at all — a common interview trap." },
+    { t: "SideEffect", d: "Runs synchronously after every SUCCESSFUL recomposition. Used to push Compose state into non-Compose systems (e.g. updating an analytics object, synchronizing a legacy View). It is NOT a coroutine — it is synchronous and runs on the composition thread. Rare in practice but tested in interviews." },
+    { t: "DisposableEffect(key)", d: "For effects that need cleanup. The block runs when the key changes or the composable leaves composition. Must return onDispose { } which is the cleanup lambda. Classic use: subscribe to an event bus or register a listener onEntry, unregister onDispose. Like LaunchedEffect but synchronous and cleanup-aware." },
+    { t: "rememberCoroutineScope", d: "Returns a CoroutineScope tied to the composable's lifetime in the composition. Unlike LaunchedEffect, it does NOT automatically launch — you call scope.launch { } manually, typically from a click handler or event callback. Use this when you need to launch coroutines from event handlers, not from composition." },
+    { t: "derivedStateOf for memoized computation", d: "val filtered by remember { derivedStateOf { list.filter { it.isActive } } } — the filtered list only recomputes when 'list' changes, not on every recomposition. Without derivedStateOf, filter() runs on every recomposition regardless. Critical for performance in large lists." },
+    { t: "produceState", d: "Converts non-Compose async sources (Flow, LiveData, callbacks) into Compose State<T>. Launches a coroutine, you set value = ... to update the state. Useful for wrapping suspend functions directly into State without a ViewModel. produceState(initialValue = Loading) { value = repo.load() }." },
+    { t: "snapshotFlow", d: "Converts Compose State into a Flow. snapshotFlow { state.value } emits a new value whenever state changes. Used to bridge Compose state to coroutine-based operators (debounce, distinctUntilChanged, etc.) — e.g. debouncing a search query that lives in Compose state." },
+    { t: "Common mistake: LaunchedEffect vs rememberCoroutineScope", d: "LaunchedEffect is for composition-driven side effects (run this when X changes). rememberCoroutineScope is for user-driven side effects (run this when user taps). Using LaunchedEffect for click handlers means the coroutine starts on every recomposition. Using rememberCoroutineScope for data loading means it only loads when explicitly triggered." },
+    { t: "One-time events via Channel or SharedFlow", d: "For navigation or snackbar triggers, wrap the event in a Channel<Event> in the ViewModel and collect in LaunchedEffect. Avoid using MutableStateFlow for one-shot events — it replays the last value on collection, causing the navigation to fire again after process death restoration." },
+    { t: "Effect key Unit vs null vs specific value", d: "LaunchedEffect(Unit) and LaunchedEffect(true) both run once. LaunchedEffect(null) also runs once (null never changes). LaunchedEffect(viewModel) runs once if viewModel identity is stable. Passing a rapidly changing value as key (like a scroll offset) will cancel/relaunch the coroutine on every scroll — a severe performance bug." }
+  ],
+  whatIs: "Side effect APIs in Jetpack Compose provide controlled, lifecycle-aware windows for code that interacts with the outside world. LaunchedEffect runs coroutines keyed to state changes. DisposableEffect adds cleanup semantics. SideEffect synchronizes Compose state to non-Compose systems after every successful recomposition. rememberCoroutineScope enables event-driven coroutine launches. derivedStateOf memoizes expensive computations. produceState and snapshotFlow bridge between Compose and coroutine-based reactive systems.",
+  realWorld: "In a SaaS collaboration app, when a user opens a document, LaunchedEffect(documentId) starts a WebSocket subscription coroutine to receive real-time edits. DisposableEffect(documentId) registers the presence indicator (user is viewing) and onDispose {} unregisters it when the user navigates away. snapshotFlow { searchQuery } with debounce(300) prevents a search API call on every keystroke. derivedStateOf computes the filtered collaborator list without re-filtering on every cursor position change.",
+  code: `// LaunchedEffect — load data when documentId changes
+@Composable
+fun DocumentScreen(documentId: String, viewModel: DocumentViewModel = hiltViewModel()) {
+    // Re-runs whenever documentId changes; cancelled on composable exit
+    LaunchedEffect(documentId) {
+        viewModel.loadDocument(documentId)
+        viewModel.subscribeToEdits(documentId)
+    }
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    DocumentContent(uiState)
+}
+
+// DisposableEffect — presence tracking with cleanup
+@Composable
+fun CollaboratorPresence(documentId: String, userId: String) {
+    DisposableEffect(documentId, userId) {
+        PresenceManager.setPresent(documentId, userId)
+        onDispose {
+            PresenceManager.setAbsent(documentId, userId)  // Always called on key change or exit
+        }
+    }
+}
+
+// rememberCoroutineScope — user-initiated action
+@Composable
+fun SendMessageBar(onSend: suspend (String) -> Unit) {
+    var text by rememberSaveable { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+
+    Row {
+        TextField(value = text, onValueChange = { text = it })
+        Button(onClick = {
+            scope.launch {       // Launched on user tap, NOT on recomposition
+                onSend(text)
+                text = ""
+            }
+        }) { Text("Send") }
+    }
+}
+
+// derivedStateOf — expensive filter only recomputes when list changes
+@Composable
+fun CollaboratorList(viewModel: CollabViewModel = hiltViewModel()) {
+    val allUsers by viewModel.users.collectAsStateWithLifecycle()
+    var searchQuery by remember { mutableStateOf("") }
+
+    // Without derivedStateOf: filter runs on EVERY recomposition (e.g. cursor blinks)
+    // With derivedStateOf: filter runs only when allUsers or searchQuery changes
+    val filteredUsers by remember {
+        derivedStateOf { allUsers.filter { it.name.contains(searchQuery, ignoreCase = true) } }
+    }
+
+    LazyColumn {
+        items(filteredUsers, key = { it.id }) { user -> UserRow(user) }
+    }
+}
+
+// snapshotFlow — debounce a Compose state search query
+@Composable
+fun SearchWithDebounce(viewModel: SearchViewModel = hiltViewModel()) {
+    var query by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        snapshotFlow { query }
+            .debounce(300)
+            .distinctUntilChanged()
+            .collect { debouncedQuery -> viewModel.search(debouncedQuery) }
+    }
+
+    TextField(value = query, onValueChange = { query = it })
+}
+
+// produceState — wrap a suspend call into Compose State
+@Composable
+fun UserAvatar(userId: String) {
+    val avatarUrl by produceState<String?>(initialValue = null, userId) {
+        value = AvatarRepository.fetchUrl(userId)  // suspend call
+    }
+    if (avatarUrl != null) AsyncImage(model = avatarUrl, contentDescription = null)
+}
+
+// SideEffect — push Compose state to analytics (non-Compose system)
+@Composable
+fun TrackScreen(screenName: String) {
+    SideEffect {
+        Analytics.setCurrentScreen(screenName)  // Called after every successful recomposition
+    }
+}`,
+  funFact: "DisposableEffect was specifically designed to replace the pattern where developers put cleanup logic in onDispose inside remember { } — a fragile pattern that could miss cleanup if the composable was removed without recomposition. Google made onDispose a first-class return value from DisposableEffect so the compiler enforces that you always provide cleanup.",
+  quiz: [
+    { q: "LaunchedEffect(userId) will:", opts: ["Run once when the composable first enters composition and never again", "Run every time any state in the composable changes", "Cancel and relaunch its coroutine whenever userId changes", "Run on a background thread after every recomposition"], ans: 2 },
+    { q: "Which API should you use for a coroutine launched from a button click handler?", opts: ["LaunchedEffect(Unit)", "SideEffect", "rememberCoroutineScope", "DisposableEffect"], ans: 2 },
+    { q: "DisposableEffect is different from LaunchedEffect because:", opts: ["DisposableEffect runs on a background thread", "DisposableEffect requires returning an onDispose cleanup block", "DisposableEffect launches a coroutine; LaunchedEffect does not", "DisposableEffect only runs once regardless of key changes"], ans: 1 },
+    { q: "derivedStateOf is used to:", opts: ["Create a new MutableState from a ViewModel", "Memoize a computation so it only recalculates when its state inputs change", "Derive a StateFlow from a LiveData", "Produce state from a suspend function"], ans: 1 },
+    { q: "snapshotFlow converts:", opts: ["A Flow into Compose State", "Compose State into a Flow", "A LiveData into a StateFlow", "A StateFlow into a SharedFlow"], ans: 1 },
+    { q: "SideEffect runs:", opts: ["Before the first composition only", "Asynchronously on a background thread after recomposition", "Synchronously after every SUCCESSFUL recomposition", "Only when the composable is disposed"], ans: 2 },
+    { q: "What is the danger of using LaunchedEffect(scrollOffset) where scrollOffset changes on every frame?", opts: ["LaunchedEffect does not support Int keys", "The coroutine is cancelled and relaunched on every scroll frame — severe performance regression", "SideEffect should be used instead for scroll tracking", "It causes infinite recomposition"], ans: 1 },
+    { q: "produceState is best used for:", opts: ["Sharing state between two ViewModels", "Converting a suspend function or callback-based async source into Compose State", "Producing a SavedStateHandle entry for rememberSaveable", "Creating a derived StateFlow in the ViewModel"], ans: 1 }
+  ],
+  challenge: "Build a real-time typing indicator feature for a chat screen. When the local user types in the message TextField, send a 'typing' event to the server with 300ms debounce using snapshotFlow. Register presence on the screen using DisposableEffect (unregister on exit). Use LaunchedEffect(chatRoomId) to subscribe to incoming messages. Use derivedStateOf to compute unread count from the messages list. Handle the send button with rememberCoroutineScope.",
+  resources: [
+    { type: "docs", title: "Side Effects in Compose — Official Guide", url: "https://developer.android.com/jetpack/compose/side-effects", source: "Android Developers" },
+    { type: "docs", title: "derivedStateOf API Reference", url: "https://developer.android.com/reference/kotlin/androidx/compose/runtime/package-summary#derivedStateOf(kotlin.Function0)", source: "Android Developers" },
+    { type: "article", title: "Compose Side Effects Explained — ProAndroidDev", url: "https://proandroiddev.com/jetpack-compose-side-effects-launchedeffect-disposableeffect-sideeffect-5b37f35f0ecc", source: "ProAndroidDev" },
+    { type: "video", title: "Advanced Compose: Side Effects — Android Dev Summit", url: "https://www.youtube.com/watch?v=0z_dwBGQQWQ", source: "YouTube / Google" },
+    { type: "docs", title: "snapshotFlow and State-to-Flow bridge", url: "https://developer.android.com/jetpack/compose/kotlin#flows", source: "Android Developers" }
+  ],
+  eli5: "Imagine your composable is a chef who can only cook — they're not supposed to also be calling customers on the phone while cooking (that would be chaotic). Side effect APIs are the rules for when the chef IS allowed to make calls. LaunchedEffect is like: 'when a new order comes in (key changes), start a new phone call and hang up the old one.' DisposableEffect is the same but you also clean up before hanging up. rememberCoroutineScope is like: 'only call when the customer rings the bell (button tap).' derivedStateOf is like pre-computing the daily special board — only rewrite it when ingredients change, not every second.",
+  codeWalkthrough: [
+    "LaunchedEffect(documentId) — whenever documentId changes, cancel the previous coroutine and start a new one, loading the new document and subscribing to its real-time edits",
+    "The coroutine inside LaunchedEffect is automatically cancelled when DocumentScreen leaves the composition — no manual cleanup needed for the subscription",
+    "DisposableEffect(documentId, userId) runs when the composable enters composition or when either key changes",
+    "onDispose { PresenceManager.setAbsent(...) } is guaranteed to run before the next effect execution or when the composable exits — this is how you avoid presence leaks",
+    "rememberCoroutineScope() returns a scope tied to the composable's lifetime — scope.launch { } inside the Button's onClick fires only when the user taps, not on recomposition",
+    "derivedStateOf { allUsers.filter {...} } wraps the computation in a snapshot-aware memo — the filter only re-executes when allUsers or searchQuery actually changes",
+    "snapshotFlow { query } converts the Compose State 'query' into a regular Flow — then standard Flow operators like debounce and distinctUntilChanged apply cleanly",
+    "LaunchedEffect(Unit) around snapshotFlow means the collection coroutine starts once and lives until the composable exits — the flow itself emits on every query change",
+    "produceState(initialValue = null, userId) launches a coroutine; setting 'value = ...' updates the returned State<T> and triggers recomposition",
+    "SideEffect { Analytics.setCurrentScreen(screenName) } pushes the current Compose state into a non-Compose system synchronously after each successful recomposition"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun NotificationScreen(userId: String, viewModel: NotifViewModel = hiltViewModel()) {
+
+    // Bug 1
+    LaunchedEffect(Unit) {
+        viewModel.loadNotifications(userId)
+    }
+
+    val notifications by viewModel.notifications.collectAsStateWithLifecycle()
+    var filterRead by remember { mutableStateOf(false) }
+
+    // Bug 2
+    val unread = notifications.filter { !it.isRead }
+
+    // Bug 3
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        scope.launch { viewModel.trackScreenView() }
+    }
+
+    // Bug 4
+    DisposableEffect(userId) {
+        NotifManager.subscribe(userId)
+    }
+
+    LazyColumn {
+        items(if (filterRead) notifications else unread) { notif ->
+            NotifRow(notif)
+        }
+    }
+}`,
+    hint: "Consider: what happens when userId changes, expensive operations on recomposition, mixing scope types, and missing onDispose.",
+    answer: "Bug 1: LaunchedEffect(Unit) does NOT rerun when userId changes — if the screen recomposes with a different userId (e.g. account switch), notifications for the old userId are loaded. Fix: LaunchedEffect(userId) so it reruns when userId changes. Bug 2: notifications.filter { !it.isRead } runs on EVERY recomposition (including filterRead toggle, scroll events, etc.). Fix: val unread by remember { derivedStateOf { notifications.filter { !it.isRead } } } — only recomputes when notifications changes. Bug 3: Using rememberCoroutineScope inside LaunchedEffect mixes two scoping mechanisms unnecessarily — LaunchedEffect already gives you a coroutine context. Fix: Just call viewModel.trackScreenView() directly inside LaunchedEffect(Unit) without scope.launch. Bug 4: DisposableEffect block does not return an onDispose { } — this is a compile error in Compose. The block MUST return onDispose { }. Fix: DisposableEffect(userId) { NotifManager.subscribe(userId); onDispose { NotifManager.unsubscribe(userId) } }."
+  },
+  difficulty: "advanced",
+  prereqs: [7, 18, 19]
+},
+{
+  id: 21,
+  title: "Compose Performance: Recomposition Traps, Keys & Stability",
+  subtitle: "Know why Compose skips recomposition, when it fails to skip, and how to fix it — the difference between a smooth 60fps UI and a janky one",
+  analogy: "Recomposition in Compose is like a smart photo editor that only re-renders the layers that actually changed. @Stable and @Immutable are like telling the editor 'this layer never changes — skip it.' Unstable parameters are like a layer whose content is unknown — the editor must re-render it every time just to be safe. key() is like naming each layer — without names, adding a new layer causes the editor to shift everything and re-render all of them.",
+  points: [
+    { t: "Recomposition basics", d: "Compose re-runs composable functions when their inputs (state or parameters) change. This is efficient when composables are skipped — Compose compares parameters and skips recomposition if nothing changed. Skipping requires all parameters to be stable and equal to previous values." },
+    { t: "Skippable composables", d: "A composable is skippable if ALL its parameters are stable types. Stable means the type either never changes (immutable) or Compose is notified when it does (implements Stable contract via @Stable annotation or is a primitive/String/MutableState). Skippable composables are only recomposed when their inputs actually change." },
+    { t: "@Stable annotation", d: "@Stable tells the Compose compiler: 'if two instances of this type are equal() they are identical from Compose's perspective, AND if the object changes it will notify Compose.' It is a promise — if you lie and mutate @Stable objects silently, you get stale UI bugs. Use on classes with observable mutation (like SnapshotMutableState)." },
+    { t: "@Immutable annotation", d: "@Immutable is a stronger promise: the object and all its fields will NEVER change after construction. Compose trusts this completely and will always skip recomposition when the parameter value is equal. Use on data classes that are true value objects — if you annotate a class that mutates, you'll get ghost bugs." },
+    { t: "Unstable types that break skipping", d: "List<T>, Map<K,V>, Set<T> from Kotlin stdlib are considered UNSTABLE by Compose — they are interfaces and could be backed by mutable implementations. Passing a List<Item> as a parameter makes the composable non-skippable. Fix: use kotlinx.collections.immutable's ImmutableList<T> or wrap in a @Immutable data class wrapper." },
+    { t: "The key() composable for list identity", d: "In LazyColumn items(list, key = { it.id }) — key gives Compose a stable identity for each item. Without key, adding an item at position 0 causes Compose to treat item 0 as 'changed' and recompose all items. With key, Compose tracks by identity — only the truly new item is composed." },
+    { t: "Layout Inspector recomposition highlights", d: "Android Studio's Layout Inspector has a 'Recomposition counts' overlay that shows how many times each composable recomposed. Use this to find unexpected hot composables. A composable recomposing 60x/sec when only 1 item in a list changed is a red flag for missing stability or missing keys." },
+    { t: "derivedStateOf to reduce recomposition", d: "val isScrolled by remember { derivedStateOf { scrollState.firstVisibleItemIndex > 0 } } — the Boolean only changes when crossing 0, not on every scroll pixel. Without derivedStateOf, scrollState reading inside the composable triggers recomposition on every scroll frame. This is one of the most impactful micro-optimizations." },
+    { t: "Lambda stability and function references", d: "Lambdas in Kotlin are compiled to anonymous classes that are new instances on every recomposition — making them unstable. onClick = { doSomething() } creates a new lambda each recomposition, making the child non-skippable. Fix: use remembered lambdas (val onClick = remember { { doSomething() } }) or stable function references to ViewModel methods." },
+    { t: "Compose compiler metrics", d: "Run ./gradlew assembleRelease -PcomposeCompilerMetrics to generate reports showing which composables are skippable vs restartable, and which parameters are stable vs unstable. This is the authoritative tool for performance investigation — not guessing." },
+    { t: "Strong skipping mode (Compose 1.6+)", d: "From Compose 1.6, 'strong skipping mode' makes lambdas stable by default (they are remembered automatically) and allows skipping composables with unstable params if inputs are referentially equal. Opt in via composeCompiler { enableStrongSkippingMode = true }. Reduces the need for manual stability annotations in many cases." },
+    { t: "Baseline Profiles for startup", d: "Compose startup performance is improved by Baseline Profiles — pre-compiled instruction files that tell ART which code paths to AOT compile. Generate with the Macrobenchmark library and include the generated baseline-prof.txt in the app module. Critical for production Compose apps targeting fast cold start." }
+  ],
+  whatIs: "Compose performance centers on recomposition — how selectively Compose re-runs composable functions. Composables are skipped (not recomposed) when all their parameters are stable and unchanged. @Stable and @Immutable annotations inform the compiler about stability contracts. Unstable types like stdlib List break skipping. key() provides list item identity. derivedStateOf prevents reading rapidly-changing state directly. The Compose compiler metrics and Layout Inspector are the diagnostic tools.",
+  realWorld: "In a fintech app displaying a real-time transaction list, each TransactionRow composable must be skippable to maintain 60fps scrolling while prices update. Using ImmutableList<Transaction> instead of List<Transaction>, annotating the Transaction data class with @Immutable, passing a remembered lambda for the tap handler, and keying the LazyColumn items by transaction ID together eliminate unnecessary recompositions. Layout Inspector confirms rows not affected by a single price update are skipped entirely.",
+  code: `// Unstable param — composable is NOT skippable
+@Composable
+fun TransactionList(transactions: List<Transaction>) { // List<T> is unstable
+    LazyColumn {
+        items(transactions) { tx -> TransactionRow(tx) }  // No key — bad
+    }
+}
+
+// Fixed: ImmutableList + key + @Immutable data class
+@Immutable
+data class Transaction(val id: String, val amount: Double, val label: String)
+
+@Composable
+fun TransactionListFixed(transactions: ImmutableList<Transaction>) {  // Stable
+    LazyColumn {
+        items(transactions, key = { it.id }) { tx ->   // Stable key
+            TransactionRow(tx)
+        }
+    }
+}
+
+// Lambda stability — new lambda on every recomposition = child not skippable
+@Composable
+fun BadParent(viewModel: TxViewModel = hiltViewModel()) {
+    TransactionRow(
+        tx = viewModel.tx,
+        onClick = { viewModel.select(viewModel.tx.id) }  // New lambda every recomposition
+    )
+}
+
+@Composable
+fun GoodParent(viewModel: TxViewModel = hiltViewModel()) {
+    val tx by viewModel.selectedTx.collectAsStateWithLifecycle()
+    val onSelect = remember(tx.id) { { viewModel.select(tx.id) } }  // Stable lambda
+    TransactionRow(tx = tx, onClick = onSelect)
+}
+
+// derivedStateOf — FAB visibility without recomposing on every scroll frame
+@Composable
+fun TransactionScreen() {
+    val listState = rememberLazyListState()
+
+    // BAD: reads listState.firstVisibleItemIndex — recomposes on EVERY scroll frame
+    // val showFab = listState.firstVisibleItemIndex > 0
+
+    // GOOD: only recomposes when crossing the 0 threshold
+    val showFab by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
+
+    Box {
+        LazyColumn(state = listState) { /* items */ }
+        if (showFab) {
+            FloatingActionButton(onClick = { /* scroll to top */ }) {
+                Icon(Icons.Default.ArrowUpward, contentDescription = "Top")
+            }
+        }
+    }
+}
+
+// @Stable on a class with observable mutation
+@Stable
+class FilterState {
+    var query by mutableStateOf("")    // Changes notify Compose via snapshot
+    var sortAscending by mutableStateOf(true)
+}
+
+// Wrapper for unstable stdlib collections
+@Immutable
+data class TransactionList(val items: List<Transaction>)  // Wraps unstable List
+
+// Compose compiler metrics — build.gradle.kts
+// android {
+//     composeOptions {
+//         kotlinCompilerExtensionVersion = "..."
+//     }
+// }
+// tasks.withType<KotlinCompile>().configureEach {
+//     kotlinOptions.freeCompilerArgs += listOf(
+//         "-P", "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=\${rootProject.buildDir}/compose-metrics"
+//     )
+// }`,
+  funFact: "The Compose compiler is a Kotlin compiler plugin that rewrites your @Composable functions at compile time, injecting the Composer parameter and gap buffer calls. When it determines a composable is 'skippable', it wraps the body in an if-block that compares parameters before executing. You can see this generated code by decompiling the bytecode — the skip check is literally an if (changed == 0) return inside the generated function.",
+  quiz: [
+    { q: "Why does passing List<T> as a Composable parameter break recomposition skipping?", opts: ["List<T> is deprecated in Kotlin 2.0", "List<T> is an interface and may be mutable — Compose cannot guarantee it is stable", "Compose only supports Array<T>, not List<T>", "List<T> does not implement equals() correctly"], ans: 1 },
+    { q: "What does @Immutable promise to the Compose compiler?", opts: ["The class implements Parcelable", "The object and all its public fields will never change after construction", "The class is thread-safe and can be read from any thread", "The class will trigger recomposition whenever it changes"], ans: 1 },
+    { q: "key() in LazyColumn items is important because:", opts: ["It speeds up network requests", "It gives Compose stable identity for list items, preventing incorrect reuse of composable state when items are added/removed/reordered", "It enables offline caching of composable output", "It is required for items to be clickable"], ans: 1 },
+    { q: "Which tool shows recomposition counts per composable in real time?", opts: ["Profiler CPU Trace", "Android Studio Layout Inspector with recomposition highlights enabled", "Logcat with Compose tag filter", "Lint static analysis"], ans: 1 },
+    { q: "derivedStateOf { list.filter { it.active } } is better than computing it inline because:", opts: ["derivedStateOf runs on a background thread", "The filtered result only recomputes when 'list' changes, not on every recomposition triggered by other state", "derivedStateOf caches the result to disk", "Inline filter() does not support lambda predicates in Compose"], ans: 1 },
+    { q: "A lambda passed as a parameter creates a new instance on every recomposition. What is the recommended fix?", opts: ["Use SideEffect to memoize the lambda", "Wrap it with remember { } or remember(key) { } to create a stable lambda reference", "Annotate the lambda with @Stable", "Pass it as a String and parse it in the child"], ans: 1 },
+    { q: "Strong skipping mode (Compose 1.6+) primarily helps with:", opts: ["Reducing APK size", "Making lambdas stable by default and enabling skipping of composables with unstable params if referentially equal", "Enabling Compose on older API levels", "Replacing rememberSaveable with automatic process-death handling"], ans: 1 },
+    { q: "The Compose compiler metrics report is generated by:", opts: ["Running 'adb shell dumpsys compose'", "Enabling a compiler plugin flag and running a release build — outputs JSON/CSV reports per module", "Using the Layout Inspector export feature", "Running unit tests with ComposeTestRule"], ans: 1 }
+  ],
+  challenge: "Take an existing screen with a LazyColumn of 200 items where items render incorrectly after filtering (composable state bleeds between items), and the whole list recomposes when a header text changes. Fix: add keys to items, annotate the item data class with @Immutable, replace List with ImmutableList, memoize lambdas with remember. Then use Layout Inspector to confirm recomposition counts drop. Document the before/after recomposition counts.",
+  resources: [
+    { type: "docs", title: "Compose Performance — Official Guide", url: "https://developer.android.com/jetpack/compose/performance", source: "Android Developers" },
+    { type: "docs", title: "Stability in Compose", url: "https://developer.android.com/jetpack/compose/performance/stability", source: "Android Developers" },
+    { type: "article", title: "Jetpack Compose Stability Explained", url: "https://medium.com/androiddevelopers/jetpack-compose-stability-explained-79c10db270c8", source: "Android Developers Medium" },
+    { type: "docs", title: "Compose Compiler Metrics", url: "https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md", source: "AndroidX GitHub" },
+    { type: "video", title: "Optimizing Compose Performance — Google I/O 2023", url: "https://www.youtube.com/watch?v=EOQB8PTLkpY", source: "YouTube / Google" }
+  ],
+  eli5: "Think of Compose like a smart painter who repaints only what changed. If you give the painter a paint bucket with a sticky note saying 'this color never changes' (@Immutable), they skip that part entirely. But if you hand them an unmarked mystery bucket (List<T>), they repaint it just in case — even if it's the same color. key() is like labeling your paintings with names — so when you add a new painting to the gallery, the others don't get confused and mixed up.",
+  codeWalkthrough: [
+    "List<Transaction> as a parameter type makes TransactionList non-skippable — Compose cannot prove the list is stable",
+    "@Immutable on Transaction promises the compiler: fields never change after construction — Compose will always skip equal instances",
+    "ImmutableList<Transaction> from kotlinx.collections.immutable is recognized as stable — passing it as a parameter restores skippability",
+    "items(transactions, key = { it.id }) — the key lambda provides stable identity; Compose tracks each item by ID, not by position",
+    "BadParent's onClick = { viewModel.select(...) } creates a new lambda object every recomposition — TransactionRow receives a new parameter and cannot skip",
+    "GoodParent wraps the lambda in remember(tx.id) — the same lambda instance is returned as long as tx.id does not change",
+    "val showFab by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } } — reads scrollState inside derivedStateOf, which only notifies subscribers when the boolean result changes",
+    "Without derivedStateOf, reading listState.firstVisibleItemIndex directly in the composable body subscribes to every scroll event — recomposing the entire Box on every pixel scrolled",
+    "@Stable FilterState uses mutableStateOf fields — mutations go through the Compose snapshot system, which notifies only the composables that read the changed fields",
+    "The commented-out compiler metrics config shows how to enable the -P plugin flag that generates JSON reports listing every composable's stability and skippability status"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun PortfolioScreen(viewModel: PortfolioViewModel = hiltViewModel()) {
+    val stocks by viewModel.stocks.collectAsStateWithLifecycle()  // StateFlow<List<Stock>>
+
+    // Bug 1
+    val gainers = stocks.filter { it.change > 0 }
+
+    Column {
+        // Bug 2
+        Text(
+            text = "Total: \${stocks.sumOf { it.price }}",
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        LazyColumn {
+            // Bug 3
+            items(gainers) { stock ->
+                StockRow(
+                    stock = stock,
+                    // Bug 4
+                    onTap = { viewModel.selectStock(stock.id) }
+                )
+            }
+        }
+    }
+}
+
+data class Stock(val id: String, val ticker: String, val price: Double, val change: Double)`,
+    hint: "Consider: where expensive computations happen, key for list items, lambda stability, and List stability.",
+    answer: "Bug 1: stocks.filter { it.change > 0 } runs inline in the composable body — it executes on EVERY recomposition (including ones triggered by unrelated state like theme changes). Fix: val gainers by remember { derivedStateOf { stocks.filter { it.change > 0 } } }. Bug 2: stocks.sumOf { it.price } also runs on every recomposition. Fix: wrap in derivedStateOf or compute in the ViewModel. Bug 3: items(gainers) has no key — if a stock is removed from the middle, Compose shifts all items and may reuse composable state for wrong stocks. Fix: items(gainers, key = { it.id }). Bug 4: onTap = { viewModel.selectStock(stock.id) } creates a new lambda instance on every recomposition, making StockRow non-skippable. Fix: val onTap = remember(stock.id) { { viewModel.selectStock(stock.id) } } declared before the LazyColumn. Additionally, the Stock data class is not annotated @Immutable and stocks is List<Stock> (unstable) — annotate Stock with @Immutable and use ImmutableList<Stock> in the StateFlow for full skippability."
+  },
+  difficulty: "advanced",
+  prereqs: [18, 19, 20]
+},
+{
+  id: 22,
+  title: "Navigation in Android: Fragment Nav vs Compose Nav vs Deep Links",
+  subtitle: "Understand the full navigation stack — back stack management, type-safe routes, deep links, and nested graphs",
+  analogy: "Navigation is like a GPS system for your app. Fragment Navigation Component is an older GPS that tracks which physical roads (fragments) you've traveled. Compose Navigation is a modern GPS that tracks destinations described by addresses (route strings or typed objects) rather than physical roads. Deep links are like 'What3Words' addresses — a short external URL that the GPS translates directly to an exact destination, bypassing the normal journey.",
+  points: [
+    { t: "Fragment Navigation Component overview", d: "The Navigation Component (nav graph XML + NavController + NavHostFragment) was introduced to standardize fragment transactions. A nav_graph.xml declares all destinations (fragments) and actions (transitions). NavController.navigate(R.id.action_to_detail) performs the transaction. Handles back stack, deep links, and safe args code generation." },
+    { t: "Safe Args plugin (Fragment Nav)", d: "Safe Args generates type-safe Kotlin classes for navigation arguments, eliminating bundle key string errors. Navigate with DetailFragmentDirections.actionToDetail(productId = 42). Receive with val args: DetailFragmentArgs by navArgs(). Available for Fragment Nav only — Compose Nav has its own type-safety mechanism." },
+    { t: "Compose Navigation setup", d: "val navController = rememberNavController(); NavHost(navController, startDestination = 'home') { composable('home') { HomeScreen(navController) }; composable('detail/{id}') { DetailScreen() } }. Route strings are matched like URLs. Arguments are extracted from BackStackEntry.arguments." },
+    { t: "Type-safe Compose Nav (Navigation 2.8+)", d: "With Navigation 2.8+ and @Serializable data class/object routes, you replace string routes with type-safe objects: NavHost(startDestination = Home) { composable<Home> { HomeScreen() }; composable<Detail> { entry -> val args: Detail = entry.toRoute() } }. Eliminates string-based route bugs and enables IDE refactoring." },
+    { t: "Passing arguments in Compose Nav", d: "String-based: 'detail/{productId}' with navArgument('productId') { type = NavType.IntType }. Type-safe: @Serializable data class Detail(val productId: Int). Both approaches inject arguments into the composable via the BackStackEntry. Avoid passing large objects — pass IDs and load in the destination ViewModel." },
+    { t: "Deep links — App Links vs Custom Schemes", d: "App Links use HTTPS URLs (https://app.fieldops.com/order/123) verified by Google via Digital Asset Links JSON on the server. They open your app directly (no disambiguation dialog). Custom schemes (fieldops://order/123) are simpler to set up but show a disambiguation dialog and can be hijacked by other apps. Prefer App Links for production." },
+    { t: "Deep links in Compose Nav", d: "Add deepLinks = listOf(navDeepLink { uriPattern = 'https://app.fieldops.com/order/{orderId}' }) to the composable() block. The NavController handles the intent automatically. Declare the intent-filter in AndroidManifest with android:autoVerify='true' for App Links." },
+    { t: "Nested navigation graphs", d: "Group related destinations into nested NavGraphs: navigation(startDestination = 'login', route = 'auth') { composable('login') {...}; composable('register') {...} }. Navigate to the graph: navController.navigate('auth'). Back stack pops to the parent graph's start destination. Ideal for feature-module navigation." },
+    { t: "Back stack management", d: "navController.navigate('detail') pushes to the stack. navController.popBackStack() pops one. navigate with popUpTo('home') { inclusive = false } pops up to (but not including) 'home' before pushing — prevents large stacks. Single-top: launchSingleTop = true prevents duplicate destinations." },
+    { t: "Navigating from ViewModel (event channel)", d: "ViewModels should not hold a NavController reference (memory leak). Instead, emit navigation events via a Channel<NavEvent> and collect them in the composable inside a LaunchedEffect, then call navController.navigate() in the composable. This keeps ViewModel testable and lifecycle-safe." },
+    { t: "Shared ViewModel across destinations", d: "val viewModel: CheckoutViewModel = hiltViewModel(navController.getBackStackEntry('checkout_graph')) — scopes the ViewModel to a nested graph's lifetime. All destinations in the graph share the same ViewModel instance. Cleaned up when the graph is popped. The correct pattern for multi-step flows." },
+    { t: "Fragment Nav vs Compose Nav — when to use each", d: "Fragment Nav: existing Fragment-based apps, shared element transitions (fully supported), complex animations with Fragment API. Compose Nav: pure Compose screens, type-safe routes, simpler code. Hybrid: NavHostFragment wrapping a ComposeView — a migration pattern. In 2026+, new apps should use Compose Nav with typed routes." }
+  ],
+  whatIs: "Android Navigation manages how users move between screens. Fragment Navigation Component uses XML nav graphs and Safe Args. Compose Navigation uses NavController + NavHost with string-based or type-safe routes. Deep links map external URLs or custom scheme URIs to specific in-app destinations — App Links (HTTPS + verification) are preferred over custom schemes. Both systems handle back stack management, nested graphs, and argument passing.",
+  realWorld: "A field operations enterprise app uses a nested nav graph for the 'Work Order' flow (list → detail → edit → signature capture) scoped to a shared WorkOrderViewModel. Deep links from push notifications open directly to WorkOrderDetailScreen via an App Link (https://fieldops.com/orders/{id}). Navigating from the ViewModel uses a Channel<NavEvent> to avoid holding a NavController reference. The auth flow is a separate nested graph popped entirely on login success using popUpTo('auth') { inclusive = true }.",
+  code: `// ===== COMPOSE NAVIGATION — TYPE-SAFE ROUTES (Nav 2.8+) =====
+
+// Route definitions
+@Serializable object Home
+@Serializable object WorkOrderList
+@Serializable data class WorkOrderDetail(val orderId: String)
+@Serializable data class WorkOrderEdit(val orderId: String)
+
+// App-level NavHost
+@Composable
+fun AppNavHost(navController: NavHostController = rememberNavController()) {
+    NavHost(navController = navController, startDestination = Home) {
+
+        composable<Home> { HomeScreen(navController) }
+
+        // Nested graph — shared WorkOrderViewModel scoped to this graph
+        navigation<WorkOrderGraph>(startDestination = WorkOrderList) {
+            composable<WorkOrderList> {
+                WorkOrderListScreen(navController)
+            }
+            composable<WorkOrderDetail>(
+                deepLinks = listOf(navDeepLink<WorkOrderDetail>(
+                    basePath = "https://fieldops.com/orders"
+                ))
+            ) { entry ->
+                val route: WorkOrderDetail = entry.toRoute()
+                WorkOrderDetailScreen(orderId = route.orderId, navController = navController)
+            }
+            composable<WorkOrderEdit> { entry ->
+                val route: WorkOrderEdit = entry.toRoute()
+                WorkOrderEditScreen(orderId = route.orderId)
+            }
+        }
+    }
+}
+
+// Navigate to detail
+navController.navigate(WorkOrderDetail(orderId = "WO-001"))
+
+// Navigate with back stack management — clear auth graph on login
+navController.navigate(Home) {
+    popUpTo<AuthGraph> { inclusive = true }
+    launchSingleTop = true
+}
+
+// ===== ViewModel navigation events =====
+class WorkOrderViewModel : ViewModel() {
+    private val _navEvents = Channel<WorkOrderNavEvent>(Channel.BUFFERED)
+    val navEvents = _navEvents.receiveAsFlow()
+
+    fun onEditTapped(orderId: String) {
+        viewModelScope.launch { _navEvents.send(WorkOrderNavEvent.NavigateToEdit(orderId)) }
+    }
+}
+
+sealed class WorkOrderNavEvent {
+    data class NavigateToEdit(val orderId: String) : WorkOrderNavEvent()
+    object NavigateBack : WorkOrderNavEvent()
+}
+
+// Collect in composable
+@Composable
+fun WorkOrderDetailScreen(orderId: String, navController: NavController) {
+    val viewModel: WorkOrderViewModel = hiltViewModel()
+
+    LaunchedEffect(Unit) {
+        viewModel.navEvents.collect { event ->
+            when (event) {
+                is WorkOrderNavEvent.NavigateToEdit ->
+                    navController.navigate(WorkOrderEdit(event.orderId))
+                WorkOrderNavEvent.NavigateBack -> navController.popBackStack()
+            }
+        }
+    }
+}
+
+// ===== SHARED VIEWMODEL scoped to nested graph =====
+@Composable
+fun WorkOrderEditScreen(orderId: String) {
+    // ViewModel lives as long as the WorkOrderGraph is on the back stack
+    val sharedViewModel: WorkOrderViewModel =
+        hiltViewModel(LocalNavBackStackEntry.current.let { entry ->
+            val graph = entry.destination.parent!!
+            rememberNavController().getBackStackEntry(graph.id)
+        })
+}
+
+// ===== ANDROIDMANIFEST for App Links =====
+// <intent-filter android:autoVerify="true">
+//     <action android:name="android.intent.action.VIEW"/>
+//     <category android:name="android.intent.category.DEFAULT"/>
+//     <category android:name="android.intent.category.BROWSABLE"/>
+//     <data android:scheme="https" android:host="fieldops.com" android:pathPrefix="/orders"/>
+// </intent-filter>`,
+  funFact: "Android App Links verification works by Google (or the OS) fetching a JSON file from https://yourdomain.com/.well-known/assetlinks.json that lists your app's package name and SHA-256 certificate fingerprint. If this file is unreachable or incorrect, the OS falls back to showing the disambiguation dialog — the same behavior as a custom scheme. This is why deep link testing in CI should always verify the assetlinks.json is reachable.",
+  quiz: [
+    { q: "What is the main advantage of type-safe Compose Navigation routes over string-based routes?", opts: ["Type-safe routes are faster at runtime", "They use @Serializable data classes, giving compile-time argument type safety and IDE refactoring support", "String routes do not support deep links", "Type-safe routes work without the Navigation library"], ans: 1 },
+    { q: "App Links are preferred over custom URI schemes because:", opts: ["Custom schemes require more manifest configuration", "App Links use HTTPS and are verified by the OS, preventing other apps from intercepting them and avoiding disambiguation dialogs", "App Links work on older API levels than custom schemes", "Custom schemes do not support path parameters"], ans: 1 },
+    { q: "Why should a ViewModel NOT hold a NavController reference?", opts: ["NavController does not support Kotlin", "It causes a memory leak because NavController holds a reference to the Activity context", "ViewModels cannot import navigation library classes", "NavController is not Parcelable"], ans: 1 },
+    { q: "popUpTo('home') { inclusive = false } before navigating means:", opts: ["Navigate to home and do not include it in the new back stack", "Pop the back stack up to 'home' (keeping home) before pushing the new destination", "Pop all destinations including home before navigating", "Navigate without adding to the back stack"], ans: 1 },
+    { q: "Sharing a ViewModel between multiple composables in a nested nav graph is done by:", opts: ["Using a static singleton ViewModel", "Scoping the ViewModel to the NavBackStackEntry of the parent graph with hiltViewModel(graphEntry)", "Using rememberSaveable to pass the ViewModel across composables", "Declaring the ViewModel in the Application class"], ans: 1 },
+    { q: "For a multi-step checkout flow, which navigation pattern prevents duplicate screens on repeated taps?", opts: ["popUpTo with inclusive=true", "navigate() with launchSingleTop = true", "DisposableEffect in the destination composable", "Using a custom back stack implementation"], ans: 1 },
+    { q: "In Navigation 2.8+ with type-safe routes, you retrieve a route's arguments in the destination composable by:", opts: ["Parsing the NavController's currentBackStackEntry URI manually", "Calling entry.toRoute<MyRoute>() on the NavBackStackEntry", "Using by navArgs() delegate as in Fragment Navigation", "Passing them as Hilt bindings"], ans: 1 },
+    { q: "Nested NavGraphs in Compose Navigation are defined with:", opts: ["composable() with nestedGraph = true parameter", "navigation<RouteObject>(startDestination = ...) { ... } block inside NavHost", "A separate NavHostFragment for each nested graph", "The @NavGraph annotation on a ViewModel"], ans: 1 }
+  ],
+  challenge: "Build a 3-tab app (Home, Projects, Profile) where the Projects tab contains a nested nav graph: ProjectList → ProjectDetail → ProjectEdit. Deep link from a push notification to ProjectDetail using an App Link. The ProjectDetail and ProjectEdit share a ProjectViewModel scoped to the projects graph. Navigate from ViewModel using a Channel<NavEvent>. Ensure that pressing back from ProjectEdit returns to ProjectDetail, and back from ProjectDetail returns to ProjectList (not Home).",
+  resources: [
+    { type: "docs", title: "Navigation with Compose — Official Guide", url: "https://developer.android.com/jetpack/compose/navigation", source: "Android Developers" },
+    { type: "docs", title: "Type-safe Navigation in Compose (Nav 2.8+)", url: "https://developer.android.com/guide/navigation/design/type-safety", source: "Android Developers" },
+    { type: "docs", title: "Android App Links — Verification Guide", url: "https://developer.android.com/training/app-links/verify-android-applinks", source: "Android Developers" },
+    { type: "article", title: "Nested Navigation Graphs in Compose", url: "https://medium.com/androiddevelopers/nested-navigation-graphs-in-jetpack-compose-dc0ada1d4726", source: "Android Developers Medium" },
+    { type: "docs", title: "Navigate to a graph-scoped ViewModel", url: "https://developer.android.com/guide/navigation/navigation-programmatic", source: "Android Developers" }
+  ],
+  eli5: "Navigation is like the map of a treasure hunt. Fragment Navigation is the old paper map with specific paths drawn on it. Compose Navigation is a digital map where you type in the destination's name or address and it figures out the path. Deep links are like a QR code someone sends you — scan it (tap a notification) and your app's map instantly takes you to the right treasure chest, skipping all the steps in between. Nested graphs are like a map within a map — a sub-quest inside the main quest.",
+  codeWalkthrough: [
+    "Route definitions as @Serializable objects/data classes replace 'home', 'detail/{id}' strings — the serialization library handles URL encoding/decoding of parameters",
+    "NavHost(startDestination = Home) uses the object type as the destination, not a string — type-checked at compile time",
+    "navigation<WorkOrderGraph>(startDestination = WorkOrderList) creates a nested graph; all composables inside share back stack context with the graph",
+    "composable<WorkOrderDetail>(deepLinks = listOf(navDeepLink<WorkOrderDetail>(basePath = ...))) registers the App Link for this destination — basePath + serialized route fields form the full URL",
+    "entry.toRoute<WorkOrderDetail>() deserializes the route arguments back into the data class — type-safe access to orderId",
+    "navController.navigate(Home) { popUpTo<AuthGraph> { inclusive = true } } removes the entire auth graph from the back stack on successful login — prevents back navigation to login",
+    "Channel<WorkOrderNavEvent>(BUFFERED) in the ViewModel buffers events if the composable is not yet collecting — prevents dropped events during recomposition",
+    "LaunchedEffect(Unit) in the composable collects the channel flow — receives navigation events and calls navController.navigate() from the composable layer where NavController lives",
+    "hiltViewModel(backStackEntry) scopes the ViewModel to the graph's NavBackStackEntry — the same instance is returned for all composables in the graph",
+    "android:autoVerify='true' in the manifest intent-filter triggers OS verification of the assetlinks.json — required for App Links to open without disambiguation dialog"
+  ],
+  bugChallenge: {
+    code: `class OrderViewModel @Inject constructor(
+    private val repo: OrderRepository,
+    private val navController: NavController  // Bug 1
+) : ViewModel() {
+
+    fun onOrderTapped(orderId: String) {
+        navController.navigate("order_detail/\$orderId")  // Bug 2
+    }
+}
+
+@Composable
+fun OrderListScreen() {
+    val navController = rememberNavController()  // Bug 3
+    val viewModel: OrderViewModel = hiltViewModel()
+
+    LazyColumn {
+        items(viewModel.orders, key = { it.id }) { order ->
+            OrderRow(order = order, onClick = { viewModel.onOrderTapped(order.id) })
+        }
+    }
+}
+
+// NavHost somewhere in app root
+NavHost(navController = appNavController, startDestination = "orders") {
+    composable("orders") { OrderListScreen() }
+    composable("order_detail/{orderId}") { entry ->
+        val orderId = entry.arguments?.getString("orderId")  // Bug 4
+        OrderDetailScreen(orderId = orderId!!)
+    }
+}`,
+    hint: "Think about memory leaks, ViewModel navigation responsibility, NavController scope, and type safety.",
+    answer: "Bug 1: Injecting NavController into a ViewModel causes a memory leak — NavController holds an Activity reference. ViewModels outlive Activities. Fix: Remove NavController from ViewModel. Use a Channel<NavEvent> in the ViewModel and collect it in the composable to trigger navigation. Bug 2: String-based route 'order_detail/\$orderId' bypasses type safety. With Navigation 2.8+ use @Serializable data class OrderDetail(val orderId: String) and navController.navigate(OrderDetail(orderId)). Bug 3: rememberNavController() inside OrderListScreen creates a SEPARATE NavController — it is not connected to the app-level NavHost. This NavController cannot navigate to 'order_detail'. Fix: Pass the app-level navController as a parameter to OrderListScreen, or retrieve it via LocalNavController (if set up). Bug 4: entry.arguments?.getString('orderId') is the old string-based approach — fragile and requires the key string to match exactly. With type-safe routes, use entry.toRoute<OrderDetail>().orderId for compile-time safety."
+  },
+  difficulty: "intermediate",
+  prereqs: [14, 18]
+},
+{
+  id: 23,
+  title: "Clean Architecture for Android",
+  subtitle: "The architectural foundation that separates every senior Android developer from a junior — layers, dependency rules, and why it matters",
+  analogy: "Clean Architecture is like a hospital. The doctors (Domain layer) make medical decisions using universal medical knowledge — they don't care if the patient record is on paper, a computer, or a tablet. The nurses (Data layer) handle where records come from and store them. The reception desk (Presentation layer) deals with patients (users) and routes their needs to the right doctor. Crucially, doctors never walk to reception — communication only flows inward.",
+  points: [
+    { t: "The three layers", d: "Presentation (UI + ViewModel), Domain (business logic — use cases + entities), Data (repositories + remote/local data sources). Each layer has a specific responsibility. Dependencies point INWARD only — Presentation depends on Domain, Data depends on Domain, Domain depends on nothing." },
+    { t: "The Dependency Rule", d: "Source code dependencies must point inward toward higher-level policies. The Domain layer must have zero knowledge of Android, Retrofit, Room, or Compose. It is pure Kotlin. This makes it independently testable with plain JUnit — no Robolectric, no instrumented tests required." },
+    { t: "Domain entities vs data models", d: "Entities are the core business objects defined in the Domain layer (data class Order, data class User). They represent business concepts, not database schemas or API shapes. Data models (network DTOs, Room entities) live in the Data layer and are mapped to/from Domain entities. Never leak ORM annotations into Domain." },
+    { t: "Use Cases (Interactors)", d: "A Use Case encapsulates a single business action: class GetActiveOrdersUseCase(private val repo: OrderRepository) { operator fun invoke(): Flow<List<Order>> = repo.getActiveOrders() }. ViewModels call use cases — not repositories directly. Each use case has one job, making it unit-testable in isolation." },
+    { t: "Repository interface in Domain", d: "interface OrderRepository is defined in the Domain layer. It declares what data operations the domain needs, in domain terms (Order entities, not DTOs). The concrete implementation (OrderRepositoryImpl) lives in the Data layer and is never imported by the Domain or Presentation layers." },
+    { t: "Mapper pattern", d: "Mappers convert between layers: OrderDto.toDomain(): Order, OrderEntity.toDomain(): Order, Order.toEntity(): OrderEntity. Each layer converts to its own model at the boundary. This isolates model changes — a backend API field rename only touches OrderDto and its mapper, not the Domain or UI code." },
+    { t: "Package structure by layer", d: "Organize packages by feature + layer: com.app.feature.order.presentation (ViewModel, composables), com.app.feature.order.domain (entities, use cases, repository interface), com.app.feature.order.data (DTOs, Room entities, repo impl, API service). Horizontal slicing by layer is an anti-pattern for large apps — vertical feature slicing is preferred." },
+    { t: "Why ViewModels call Use Cases, not Repositories", d: "ViewModel calling repositories directly couples the Presentation layer to Data concepts (DTOs, Room DAOs). Use cases provide a stable API surface — the ViewModel does not change if the data source changes from REST to GraphQL. Use cases also compose — GetDashboardUseCase can call multiple repository operations." },
+    { t: "Testing at each layer", d: "Domain: pure JUnit unit tests — no mocks for Android (no Android SDK dependency). Use fake repository implementations instead of mocks for use case tests. Data: integration tests with Room in-memory DB and MockWebServer for Retrofit. Presentation: ViewModel unit tests with fake use cases, UI tests with ComposeTestRule." },
+    { t: "The Dependency Inversion Principle (DIP)", d: "High-level modules (Domain) should not depend on low-level modules (Data). Both should depend on abstractions. The OrderRepository interface in Domain is the abstraction — Domain defines it, Data implements it, DI provides the binding. This is implemented via Hilt @Binds in the Data module." },
+    { t: "Common violations in real codebases", d: "Domain entity with @Entity annotation (Room leaked in), ViewModel importing Retrofit Response<T> directly, Use case returning a DTO instead of a domain entity, Repository impl in the same module as Domain entities. These shortcuts accumulate into unmaintainable spaghetti at scale." },
+    { t: "Multi-module support", d: "Clean Architecture maps naturally to Gradle modules: :feature:order:domain, :feature:order:data, :feature:order:presentation. Compile-time enforcement of the dependency rule — :domain module has no Android dependency (apply plugin: 'kotlin'), :presentation cannot import :data directly. Enforced by Gradle, not just convention." }
+  ],
+  whatIs: "Clean Architecture organizes Android apps into three concentric layers: Presentation (UI/ViewModel), Domain (entities, use cases, repository interfaces — pure Kotlin), and Data (repository implementations, DTOs, Room entities, Retrofit services). The Dependency Rule mandates that all dependencies point inward toward the Domain. Mappers translate between layer-specific models at boundaries. This structure makes the business logic testable without Android, and makes each layer independently changeable.",
+  realWorld: "A school management app has a GetStudentAttendanceUseCase in the Domain layer that returns Flow<List<AttendanceRecord>>. The AttendanceRepository interface is defined in Domain. The AttendanceRepositoryImpl in Data decides whether to fetch from Firebase (online) or Room (offline), mapping FirebaseAttendance DTOs and AttendanceEntity Room objects to the domain AttendanceRecord. The AttendanceViewModel calls the use case — it has zero knowledge of Firebase or Room. Swapping Firebase for a REST API touches only the Data layer.",
+  code: `// ===== DOMAIN LAYER — pure Kotlin, zero Android imports =====
+// com.schoolapp.attendance.domain.model
+data class AttendanceRecord(
+    val studentId: String,
+    val date: LocalDate,
+    val status: AttendanceStatus,
+    val recordedBy: String
+)
+
+enum class AttendanceStatus { PRESENT, ABSENT, LATE }
+
+// com.schoolapp.attendance.domain.repository
+interface AttendanceRepository {
+    fun getAttendanceForClass(classId: String, date: LocalDate): Flow<List<AttendanceRecord>>
+    suspend fun markAttendance(record: AttendanceRecord): Result<Unit>
+}
+
+// com.schoolapp.attendance.domain.usecase
+class GetClassAttendanceUseCase @Inject constructor(
+    private val repository: AttendanceRepository
+) {
+    operator fun invoke(classId: String, date: LocalDate): Flow<List<AttendanceRecord>> =
+        repository.getAttendanceForClass(classId, date)
+}
+
+class MarkAttendanceUseCase @Inject constructor(
+    private val repository: AttendanceRepository
+) {
+    suspend operator fun invoke(record: AttendanceRecord): Result<Unit> =
+        repository.markAttendance(record)
+}
+
+// ===== DATA LAYER — knows about Room, Firebase, Retrofit =====
+// com.schoolapp.attendance.data.remote.dto
+data class AttendanceDto(
+    @SerialName("student_id") val studentId: String,
+    @SerialName("date") val date: String,
+    @SerialName("status") val status: String,
+    @SerialName("recorded_by") val recordedBy: String
+)
+
+// com.schoolapp.attendance.data.local.entity
+@Entity(tableName = "attendance")
+data class AttendanceEntity(
+    @PrimaryKey val id: String,
+    val studentId: String,
+    val date: String,
+    val status: String,
+    val recordedBy: String
+)
+
+// com.schoolapp.attendance.data.mapper
+fun AttendanceDto.toDomain(): AttendanceRecord = AttendanceRecord(
+    studentId = studentId,
+    date = LocalDate.parse(date),
+    status = AttendanceStatus.valueOf(status.uppercase()),
+    recordedBy = recordedBy
+)
+
+fun AttendanceEntity.toDomain(): AttendanceRecord = AttendanceRecord(
+    studentId = studentId,
+    date = LocalDate.parse(date),
+    status = AttendanceStatus.valueOf(status.uppercase()),
+    recordedBy = recordedBy
+)
+
+fun AttendanceRecord.toEntity(id: String): AttendanceEntity = AttendanceEntity(
+    id = id,
+    studentId = studentId,
+    date = date.toString(),
+    status = status.name,
+    recordedBy = recordedBy
+)
+
+// com.schoolapp.attendance.data.repository
+class AttendanceRepositoryImpl @Inject constructor(
+    private val remoteDataSource: AttendanceRemoteDataSource,
+    private val localDataSource: AttendanceLocalDataSource
+) : AttendanceRepository {
+
+    override fun getAttendanceForClass(
+        classId: String, date: LocalDate
+    ): Flow<List<AttendanceRecord>> =
+        localDataSource.observeAttendance(classId, date.toString())
+            .map { entities -> entities.map { it.toDomain() } }
+
+    override suspend fun markAttendance(record: AttendanceRecord): Result<Unit> = runCatching {
+        val entity = record.toEntity(id = UUID.randomUUID().toString())
+        localDataSource.insert(entity)
+        remoteDataSource.sync(entity)
+    }
+}
+
+// ===== PRESENTATION LAYER =====
+// com.schoolapp.attendance.presentation
+@HiltViewModel
+class AttendanceViewModel @Inject constructor(
+    private val getClassAttendance: GetClassAttendanceUseCase,   // Domain use cases only
+    private val markAttendance: MarkAttendanceUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(AttendanceUiState())
+    val uiState: StateFlow<AttendanceUiState> = _uiState.asStateFlow()
+
+    fun loadAttendance(classId: String, date: LocalDate) {
+        viewModelScope.launch {
+            getClassAttendance(classId, date)
+                .collect { records ->
+                    _uiState.update { it.copy(records = records.toImmutableList()) }
+                }
+        }
+    }
+}
+
+// ===== DI BINDING — Data module =====
+@Module @InstallIn(SingletonComponent::class)
+abstract class AttendanceModule {
+    @Binds @Singleton
+    abstract fun bindAttendanceRepository(
+        impl: AttendanceRepositoryImpl
+    ): AttendanceRepository  // Domain interface ← Data impl
+}`,
+  funFact: "Clean Architecture was introduced by Robert C. Martin (Uncle Bob) in 2012, but the principles trace back to Ivar Jacobson's Use Case Driven Design from the early 1990s and even earlier to David Parnas' information hiding principle from 1972. The Android community adopted it around 2017-2018 as apps grew complex enough that the God Activity and MVC patterns became unmaintainable. Now, Google's official Architecture Guide directly recommends it.",
+  quiz: [
+    { q: "In Clean Architecture, the Domain layer should:", opts: ["Import Retrofit for network operations", "Contain only pure Kotlin with zero Android or framework dependencies", "Define Room entities for the database schema", "Hold the NavController for navigation"], ans: 1 },
+    { q: "The Dependency Rule states:", opts: ["Data layer can import Presentation layer classes", "All dependencies point inward — Presentation depends on Domain, Data depends on Domain, Domain depends on nothing", "Domain layer imports Data layer repositories", "Presentation layer can directly call Repository implementations"], ans: 1 },
+    { q: "Why should mappers exist at layer boundaries?", opts: ["To reduce the number of data classes in the project", "To isolate model changes — a DTO field rename only affects the DTO and its mapper, not Domain or UI code", "Because Room entities cannot be used with Retrofit", "Mappers are required by the Hilt DI framework"], ans: 1 },
+    { q: "A Use Case should:", opts: ["Hold a reference to the ViewModel and update UI state directly", "Encapsulate a single business action and be callable by the ViewModel", "Be defined in the Data layer next to the Repository implementation", "Contain database queries directly"], ans: 1 },
+    { q: "What is wrong with annotating a Domain entity with @Entity (Room annotation)?", opts: ["Nothing — it is a recommended pattern for simplicity", "It violates the Dependency Rule by making Domain dependent on the Data (Room) layer", "Room entities cannot use data classes", "@Entity requires a companion object which conflicts with data classes"], ans: 1 },
+    { q: "The AttendanceRepository interface should be defined in:", opts: ["The Data layer, next to its implementation", "The Presentation layer, because ViewModels call it", "The Domain layer, so Domain defines what data operations it needs without knowing the implementation", "A shared :core module accessible by all layers"], ans: 2 },
+    { q: "For a large app, the preferred package structure is:", opts: ["All ViewModels in one package, all Repositories in one package (horizontal/layer slicing)", "Packages grouped by feature, with layer sub-packages inside each feature (vertical/feature slicing)", "One package per screen", "Following the default structure generated by Android Studio templates"], ans: 1 },
+    { q: "Testing Domain use cases requires:", opts: ["Robolectric to run on the JVM with Android SDK stubs", "Plain JUnit tests with a fake/stub Repository implementation — no Android dependencies", "Espresso for UI interaction tests", "MockK mocking of Room DAOs"], ans: 1 }
+  ],
+  challenge: "Design the Clean Architecture structure for a 'Task Management' feature: GetPendingTasksUseCase, CompleteTaskUseCase, SyncTasksUseCase. Define the Task domain entity, TaskRepository interface, TaskDto (API), TaskEntity (Room), and all mappers. Implement TaskRepositoryImpl with offline-first logic (return Room flow, sync with API on background). Write unit tests for CompleteTaskUseCase using a FakeTaskRepository. No Android imports in Domain or tests.",
+  resources: [
+    { type: "docs", title: "Guide to App Architecture — Android Official", url: "https://developer.android.com/topic/architecture", source: "Android Developers" },
+    { type: "article", title: "Clean Architecture on Android — ProAndroidDev", url: "https://proandroiddev.com/kotlin-clean-architecture-1ad42fcd97fa", source: "ProAndroidDev" },
+    { type: "article", title: "Now in Android — Architecture Case Study", url: "https://github.com/android/nowinandroid", source: "Google GitHub" },
+    { type: "video", title: "Android Architecture: Clean Architecture Deep Dive", url: "https://www.youtube.com/watch?v=Mr8YKDh3li4", source: "YouTube / PhilippLackner" },
+    { type: "docs", title: "Dependency Injection with Hilt", url: "https://developer.android.com/training/dependency-injection/hilt-android", source: "Android Developers" }
+  ],
+  eli5: "Think of Clean Architecture like a sandwich shop. The inside of the sandwich (Domain) is the most important part — it's pure food, it doesn't care what kind of wrapper it comes in. The wrapper (Data) knows where the ingredients come from — the fridge (Room), the delivery truck (API). The cashier (Presentation/ViewModel) takes your order and communicates it inward. Crucially, the filling never knows about the cashier or the packaging — it's just food. That's why you can change the wrapper (swap API for GraphQL) without touching the filling.",
+  codeWalkthrough: [
+    "AttendanceRecord is a pure Kotlin data class in the Domain layer — no @Entity, no @SerialName, no Android imports — it represents the business concept of an attendance record",
+    "AttendanceRepository interface is defined in Domain — it speaks in domain terms (AttendanceRecord, LocalDate) not in data terms (AttendanceEntity, String dates)",
+    "GetClassAttendanceUseCase takes the interface (not the impl) via constructor injection — it cannot see Room or Firebase even if it wanted to",
+    "AttendanceDto in the Data layer mirrors the API response shape with @SerialName annotations — totally separate from the domain entity",
+    "AttendanceEntity in the Data layer has @Entity for Room — this annotation never escapes the Data layer",
+    "toDomain() extension functions are the mappers — they live in the Data layer and convert outward to Domain. Domain never has toDtoOrToEntity functions",
+    "AttendanceRepositoryImpl implements the Domain interface — it decides the offline-first logic (Room as source, remote for sync) entirely within the Data layer",
+    "AttendanceViewModel only imports from the Domain layer — GetClassAttendanceUseCase and MarkAttendanceUseCase. Zero data layer imports",
+    "@Binds in the Hilt module tells Hilt: when Domain asks for AttendanceRepository, inject AttendanceRepositoryImpl — this is the inversion of control that makes the Dependency Rule work at runtime",
+    "Multi-module enforcement: :feature:attendance:domain module has no Android SDK plugin — if a developer accidentally imports Room, the Gradle build fails"
+  ],
+  bugChallenge: {
+    code: `// Domain layer — com.app.orders.domain
+import androidx.room.Entity  // Bug 1
+import retrofit2.Response     // Bug 2
+
+@Entity(tableName = "orders")  // Bug 3
+data class Order(
+    val id: String,
+    val total: Double,
+    val status: String
+)
+
+class GetOrdersUseCase @Inject constructor(
+    private val repository: OrderRepositoryImpl  // Bug 4
+) {
+    suspend fun execute(): Response<List<Order>> =  // Bug 5
+        repository.fetchOrders()
+}
+
+// Presentation layer — ViewModel
+class OrderViewModel @Inject constructor(
+    private val repository: OrderRepositoryImpl  // Bug 6
+) : ViewModel() {
+    fun load() {
+        viewModelScope.launch {
+            val result = repository.fetchOrders()  // Bug 7
+        }
+    }
+}`,
+    hint: "Count the layer violations, leaked dependencies, and wrong return types.",
+    answer: "Bug 1 & 2: Domain layer imports androidx.room and retrofit2 — both are framework/data-layer dependencies. Domain must be pure Kotlin with zero Android/framework imports. Bug 3: @Entity on a Domain entity leaks Room into Domain — the Order class is now a Room entity, coupling Domain to the Data layer's persistence technology. Fix: Create a separate OrderEntity in the Data layer with @Entity, and keep Order in Domain clean. Bug 4: GetOrdersUseCase depends on OrderRepositoryImpl (the concrete class) instead of OrderRepository (the interface). This defeats the Dependency Inversion Principle — Domain should only know the interface it defines, never the concrete implementation in the Data layer. Bug 5: Use case returns Response<List<Order>> — Response<T> is a Retrofit type, leaking Data layer concerns into Domain. Use cases should return domain-native types like Result<List<Order>> or Flow<List<Order>>. Bug 6: ViewModel injects OrderRepositoryImpl directly instead of calling use cases. This couples Presentation to Data. Fix: Inject GetOrdersUseCase instead. Bug 7: Calling repository.fetchOrders() directly from ViewModel skips the use case layer entirely — business logic that should be in the use case (validation, transformation, caching policy) is bypassed or duplicated in the ViewModel."
+  },
+  difficulty: "advanced",
+  prereqs: [3, 11]
+},
+{
+  id: 24,
+  title: "Repository Pattern, Use Cases & Dependency Inversion",
+  subtitle: "Implement offline-first with Room + Retrofit behind a clean Repository, wire Use Cases into ViewModels with Hilt — the pattern in every production Android codebase",
+  analogy: "The Repository is like a smart librarian who knows exactly where to get any book — they check the local shelves first (Room cache), and if the book isn't there or is outdated, they order it from the central warehouse (Retrofit/API). The Use Case is like a specific request slip — 'Get me all books on Kotlin published after 2023.' The ViewModel is the student who fills out the slip and waits for the result. The student never talks to the librarian directly — the slip (Use Case) is the contract.",
+  points: [
+    { t: "Repository as single source of truth", d: "The Repository pattern centralizes all data access. The ViewModel asks 'give me orders' — the repository decides whether to fetch from network, return cached data, or combine both. The caller is shielded from data source complexity. This is the core offline-first pattern." },
+    { t: "Offline-first strategy", d: "1) Return local data immediately as a Flow. 2) Trigger a background network fetch. 3) Save to local DB. 4) Room Flow emits the updated data automatically. The UI always reads from Room — the network only feeds Room, never feeds UI directly. This ensures the app works without connectivity." },
+    { t: "NetworkBoundResource pattern", d: "A formalized offline-first helper: emit loading state, emit cached data, fetch from network, save to cache, emit updated data. Can be implemented as a generic Flow<Resource<T>> builder function or using the Paging 3 RemoteMediator for paginated data." },
+    { t: "Use Case design principles", d: "Single Responsibility: one use case = one business action. Named as verbs: GetActiveOrdersUseCase, SubmitTimesheetUseCase, SyncWorkOrdersUseCase. Operate on domain entities only. May combine multiple repository calls. May apply business rules (filter, validate, transform). Must not know about UI or data source specifics." },
+    { t: "operator fun invoke()", d: "Implementing operator fun invoke() in a use case lets you call it like a function: getActiveOrders(userId) instead of getActiveOrders.execute(userId). This is idiomatic Kotlin and the recommended pattern for use cases. It reads naturally at the call site in the ViewModel." },
+    { t: "Dependency Inversion with Hilt @Binds", d: "@Binds in a Hilt @Module binds the Repository interface to its implementation. The ViewModel and UseCase only know the interface. The concrete class is an implementation detail wired by Hilt at compile time. Changing from a Retrofit impl to a GraphQL impl requires only a Hilt module change — no ViewModel or UseCase changes." },
+    { t: "Injecting into ViewModels", d: "@HiltViewModel + @Inject constructor is the standard pattern. Use cases are injected via constructor — not repositories (except in rare cases where no use case layer exists). ViewModels should not have more than 3-5 use case dependencies — more suggests the ViewModel is doing too much and should be split." },
+    { t: "Flow vs suspend for repository methods", d: "Use Flow<T> for operations that produce multiple values over time (observing DB, real-time updates). Use suspend fun for one-shot operations (POST to API, insert to DB). Never use LiveData in the Domain or Data layer — it is an Android-lifecycle-aware wrapper that belongs in the Presentation layer at most." },
+    { t: "Error handling in the data layer", d: "Wrap network calls in runCatching { } or use a sealed Result<T>. Map exceptions to domain-specific error types (NetworkError, AuthError, NotFoundError). The ViewModel receives Result<T> and maps it to UI state — it never catches raw IOException or HttpException. Error mapping happens at the Data layer boundary." },
+    { t: "Concrete example — Retrofit + Room + Use Case", d: "WorkOrderRemoteDataSource wraps Retrofit API service. WorkOrderLocalDataSource wraps Room DAO. WorkOrderRepositoryImpl coordinates them. GetPendingWorkOrdersUseCase calls repository.getPendingOrders(). WorkOrderViewModel calls the use case. Each layer is independently testable: mock Retrofit for data layer, fake repo for use case, fake use case for ViewModel." },
+    { t: "Testing with fake repositories", d: "Prefer FakeOrderRepository(fakeData) over mocking. Fakes implement the real Repository interface with in-memory lists. They are easier to set up, more readable in tests, and catch interface contract violations. Use MockK for Retrofit API service tests where you need to verify HTTP calls." },
+    { t: "The data layer in multi-module apps", d: "Each feature's data module depends on the domain module for interfaces and entities. Data modules depend on :core:network (Retrofit client) and :core:database (Room DB). No cross-feature data dependencies — feature A's ViewModel never imports feature B's repository. Shared data goes through a :core:data module." }
+  ],
+  whatIs: "The Repository pattern provides a single source of truth for data by abstracting Retrofit (remote) and Room (local) behind a clean interface. Offline-first is achieved by always reading from Room and using the network only to refresh the cache. Use Cases encapsulate single business actions, operate on domain entities, and are injected into ViewModels via Hilt. Dependency Inversion ensures the Domain and Presentation layers depend on abstractions, with Hilt's @Binds wiring the concrete implementations at runtime.",
+  realWorld: "An enterprise field ops app implements offline-first work order management: WorkOrderRepositoryImpl reads from Room (returns a Flow that emits on every DB change) and triggers Retrofit sync in the background. When the device is offline, engineers still see their work orders and can mark them complete — changes queue in Room. On reconnect, SyncWorkOrdersUseCase pushes pending changes to the API. The ViewModel is unaware of sync logic — it just calls GetPendingWorkOrdersUseCase.",
+  code: `// ===== DOMAIN LAYER =====
+data class WorkOrder(
+    val id: String, val title: String, val status: WorkOrderStatus,
+    val assignedTo: String?, val dueDate: LocalDate
+)
+enum class WorkOrderStatus { PENDING, IN_PROGRESS, COMPLETED, SYNCED }
+
+interface WorkOrderRepository {
+    fun getPendingOrders(): Flow<List<WorkOrder>>
+    suspend fun completeOrder(orderId: String): Result<Unit>
+    suspend fun syncPendingOrders(): Result<Int>  // returns synced count
+}
+
+class GetPendingWorkOrdersUseCase @Inject constructor(
+    private val repository: WorkOrderRepository
+) {
+    operator fun invoke(): Flow<List<WorkOrder>> = repository.getPendingOrders()
+        .map { orders -> orders.sortedBy { it.dueDate } }  // Business rule: sort by due date
+}
+
+class CompleteWorkOrderUseCase @Inject constructor(
+    private val repository: WorkOrderRepository
+) {
+    suspend operator fun invoke(orderId: String): Result<Unit> {
+        require(orderId.isNotBlank()) { "Order ID cannot be blank" }  // Business validation
+        return repository.completeOrder(orderId)
+    }
+}
+
+// ===== DATA LAYER =====
+// Remote data source
+class WorkOrderRemoteDataSource @Inject constructor(
+    private val api: WorkOrderApiService
+) {
+    suspend fun fetchOrders(assigneeId: String): List<WorkOrderDto> =
+        api.getOrders(assigneeId)
+
+    suspend fun updateOrderStatus(orderId: String, status: String): WorkOrderDto =
+        api.updateOrder(orderId, UpdateOrderRequest(status))
+}
+
+// Local data source
+class WorkOrderLocalDataSource @Inject constructor(
+    private val dao: WorkOrderDao
+) {
+    fun observePendingOrders(): Flow<List<WorkOrderEntity>> =
+        dao.observeByStatus(WorkOrderStatus.PENDING.name, WorkOrderStatus.IN_PROGRESS.name)
+
+    suspend fun insertAll(orders: List<WorkOrderEntity>) = dao.insertAll(orders)
+    suspend fun updateStatus(orderId: String, status: String) = dao.updateStatus(orderId, status)
+    fun observeUnsynced(): Flow<List<WorkOrderEntity>> = dao.observeByStatus(WorkOrderStatus.COMPLETED.name)
+}
+
+// Repository implementation — offline-first
+class WorkOrderRepositoryImpl @Inject constructor(
+    private val remote: WorkOrderRemoteDataSource,
+    private val local: WorkOrderLocalDataSource,
+    private val userSession: UserSession
+) : WorkOrderRepository {
+
+    override fun getPendingOrders(): Flow<List<WorkOrder>> {
+        // Step 1: Return Room flow immediately (offline-first)
+        // Step 2: Trigger background refresh
+        return local.observePendingOrders()
+            .map { entities -> entities.map { it.toDomain() } }
+            .onStart { refreshFromNetwork() }  // Trigger sync without blocking the flow
+    }
+
+    private suspend fun refreshFromNetwork() = runCatching {
+        val dtos = remote.fetchOrders(userSession.userId)
+        local.insertAll(dtos.map { it.toEntity() })
+    }
+
+    override suspend fun completeOrder(orderId: String): Result<Unit> = runCatching {
+        local.updateStatus(orderId, WorkOrderStatus.COMPLETED.name)
+        // Optimistic local update — sync will push to API
+    }
+
+    override suspend fun syncPendingOrders(): Result<Int> = runCatching {
+        var syncedCount = 0
+        local.observeUnsynced().first().forEach { entity ->
+            remote.updateOrderStatus(entity.id, entity.status)
+            local.updateStatus(entity.id, WorkOrderStatus.SYNCED.name)
+            syncedCount++
+        }
+        syncedCount
+    }
+}
+
+// ===== HILT DI =====
+@Module @InstallIn(SingletonComponent::class)
+abstract class WorkOrderModule {
+    @Binds @Singleton
+    abstract fun bindWorkOrderRepository(
+        impl: WorkOrderRepositoryImpl
+    ): WorkOrderRepository
+}
+
+// ===== PRESENTATION LAYER =====
+data class WorkOrderUiState(
+    val orders: ImmutableList<WorkOrder> = persistentListOf(),
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val syncMessage: String? = null
+)
+
+@HiltViewModel
+class WorkOrderViewModel @Inject constructor(
+    private val getPendingOrders: GetPendingWorkOrdersUseCase,
+    private val completeOrder: CompleteWorkOrderUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(WorkOrderUiState())
+    val uiState: StateFlow<WorkOrderUiState> = _uiState.asStateFlow()
+
+    init {
+        loadOrders()
+    }
+
+    private fun loadOrders() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            getPendingOrders()
+                .catch { e -> _uiState.update { it.copy(isLoading = false, error = e.message) } }
+                .collect { orders ->
+                    _uiState.update { it.copy(orders = orders.toImmutableList(), isLoading = false) }
+                }
+        }
+    }
+
+    fun onCompleteOrder(orderId: String) {
+        viewModelScope.launch {
+            completeOrder(orderId)
+                .onFailure { e -> _uiState.update { it.copy(error = e.message) } }
+        }
+    }
+}
+
+// ===== FAKE REPOSITORY for tests =====
+class FakeWorkOrderRepository(
+    private val initialOrders: List<WorkOrder> = emptyList()
+) : WorkOrderRepository {
+    private val _orders = MutableStateFlow(initialOrders)
+
+    override fun getPendingOrders(): Flow<List<WorkOrder>> = _orders
+
+    override suspend fun completeOrder(orderId: String): Result<Unit> {
+        _orders.update { orders ->
+            orders.map { if (it.id == orderId) it.copy(status = WorkOrderStatus.COMPLETED) else it }
+        }
+        return Result.success(Unit)
+    }
+
+    override suspend fun syncPendingOrders(): Result<Int> = Result.success(0)
+}
+
+// Unit test for use case
+class CompleteWorkOrderUseCaseTest {
+    private val fakeRepo = FakeWorkOrderRepository(
+        initialOrders = listOf(WorkOrder("WO-1", "Fix leak", WorkOrderStatus.PENDING, null, LocalDate.now()))
+    )
+    private val useCase = CompleteWorkOrderUseCase(fakeRepo)
+
+    @Test
+    fun \`completing order updates status\`() = runTest {
+        val result = useCase("WO-1")
+        assertTrue(result.isSuccess)
+        assertEquals(WorkOrderStatus.COMPLETED, fakeRepo.getPendingOrders().first().first().status)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun \`blank order id throws\`() = runTest { useCase("") }
+}`,
+  funFact: "The Repository pattern predates Android — it was documented by Martin Fowler in his 2003 book 'Patterns of Enterprise Application Architecture' as a way to abstract database access in Java EE applications. Google's Architecture Guide adopted and adapted it for Android around 2017, and it is now so standard that it is included in the official Now in Android sample app (NiA) which has over 14,000 GitHub stars and is Google's recommended reference architecture.",
+  quiz: [
+    { q: "In offline-first architecture, the UI always reads data from:", opts: ["Retrofit API response directly", "Room database, with network refreshing the cache in the background", "A ViewModel LiveData updated by both Room and Retrofit", "SharedPreferences for offline data"], ans: 1 },
+    { q: "operator fun invoke() on a Use Case allows you to:", opts: ["Call the use case like a function: useCase(args) instead of useCase.execute(args)", "Override the use case in subclasses", "Make the use case a Singleton without Hilt", "Automatically serialize the use case for IPC"], ans: 0 },
+    { q: "Why should ViewModels inject Use Cases rather than Repositories directly?", opts: ["Hilt cannot inject Repository implementations into ViewModels", "Use cases encapsulate business logic and provide a stable API; repositories expose raw data access that violates layer boundaries", "Repositories must be injected as singletons which conflicts with ViewModel scoping", "Use cases are faster than repositories at runtime"], ans: 1 },
+    { q: "In offline-first with Room + Retrofit, the network call typically:", opts: ["Returns data directly to the ViewModel", "Writes to Room, and Room's Flow emits the update to the UI automatically", "Updates a LiveData in the Repository", "Bypasses Room for fresh data"], ans: 1 },
+    { q: "FakeOrderRepository is preferred over MockOrderRepository in use case tests because:", opts: ["Mockito cannot mock Kotlin interfaces", "Fakes implement real behavior, catch interface contract violations, and are more readable than mock-heavy test setup", "Fakes work in instrumented tests; mocks only work in unit tests", "Hilt requires fake implementations for test modules"], ans: 1 },
+    { q: "Hilt's @Binds annotation is used to:", opts: ["Bind a ViewModel to its composable", "Tell Hilt to inject a concrete implementation when the interface type is requested", "Bind a Room database to its DAO", "Register a WorkManager task"], ans: 1 },
+    { q: "Flow<List<WorkOrder>> is preferred over suspend fun List<WorkOrder> for getPendingOrders() because:", opts: ["suspend functions cannot return Lists", "Flow emits continuously — Room automatically emits when data changes, giving the UI reactive updates without polling", "Flows are faster than suspend functions", "Suspend functions require more memory than Flows"], ans: 1 },
+    { q: "In a multi-module app, a feature's data module should depend on:", opts: ["Other features' data modules for shared repository access", "Only its own domain module and core modules (:core:network, :core:database)", "The Presentation module to access ViewModel state", "The Application module for DI setup"], ans: 1 }
+  ],
+  challenge: "Implement offline-first SyncTimesheet feature: TimesheetRepository with getMyTimesheets(): Flow<List<Timesheet>> (Room-backed), submitTimesheet(entry: TimesheetEntry): Result<Unit> (optimistic local, background sync), syncPending(): Result<Int>. Create SubmitTimesheetUseCase with business validation (no future dates, no duplicates). Wire with Hilt @Binds. Write FakeTimesheetRepository. Write unit tests for SubmitTimesheetUseCase covering success, duplicate entry, and network error cases.",
+  resources: [
+    { type: "docs", title: "Data layer — Android Architecture Guide", url: "https://developer.android.com/topic/architecture/data-layer", source: "Android Developers" },
+    { type: "docs", title: "Domain layer — Android Architecture Guide", url: "https://developer.android.com/topic/architecture/domain-layer", source: "Android Developers" },
+    { type: "article", title: "Now in Android — Repository and UseCase patterns", url: "https://github.com/android/nowinandroid/tree/main/core/data", source: "Google GitHub" },
+    { type: "video", title: "Repository Pattern in Android — Philipp Lackner", url: "https://www.youtube.com/watch?v=ME3LH2bib3g", source: "YouTube / PhilippLackner" },
+    { type: "docs", title: "Hilt dependency injection — @Binds and modules", url: "https://developer.android.com/training/dependency-injection/hilt-android#inject-interfaces", source: "Android Developers" }
+  ],
+  eli5: "The Repository is like a school cafeteria that always has food ready (Room cache) and places new orders in the background (Retrofit). Students (ViewModels) never go to the kitchen directly — they order from the cafeteria counter (Use Case). If the kitchen gets a delivery, the cafeteria automatically updates the trays — students get fresh food without asking again (Room Flow emitting on DB change). Dependency Inversion is like the school not caring which catering company supplies the kitchen — they just need food delivered. The school (Domain) sets the menu (interface), and whoever wins the catering contract (Retrofit or Firebase) delivers to spec.",
+  codeWalkthrough: [
+    "WorkOrderRepository interface in Domain declares getPendingOrders() as Flow<List<WorkOrder>> — returning domain entities, not DTOs or Room entities",
+    "GetPendingWorkOrdersUseCase adds a business rule on top of the repository: sort by dueDate — this is business logic, not UI logic, so it belongs in the use case",
+    "CompleteWorkOrderUseCase validates the orderId is not blank — business validation lives in the use case, not the ViewModel or repository",
+    "WorkOrderRepositoryImpl.getPendingOrders() returns local.observePendingOrders() immediately — the UI gets data without waiting for network",
+    "onStart { refreshFromNetwork() } triggers a background network sync when collection starts — the Flow emits local data first, then Room re-emits when the network data lands",
+    "completeOrder() does an optimistic local update only — marks COMPLETED in Room, leaves SYNCED for later. The offline engineer's completion persists immediately",
+    "syncPendingOrders() queries COMPLETED (unsynced) orders, pushes each to the API, then marks as SYNCED — this is called by a WorkManager job on network availability",
+    "@Binds in WorkOrderModule tells Hilt: WorkOrderRepository interface → inject WorkOrderRepositoryImpl. The ViewModel and use cases see only the interface",
+    "WorkOrderViewModel injects GetPendingWorkOrdersUseCase and CompleteWorkOrderUseCase — zero data layer imports. Swapping the backend requires no ViewModel changes",
+    "FakeWorkOrderRepository implements the real interface with a MutableStateFlow<List<WorkOrder>> — tests call completeOrder() and assert the Flow emits the updated list, just like the real app would"
+  ],
+  bugChallenge: {
+    code: `// Data layer
+class OrderRepositoryImpl @Inject constructor(
+    private val api: OrderApiService,
+    private val dao: OrderDao
+) : OrderRepository {
+
+    override fun getOrders(): Flow<List<Order>> = flow {
+        // Bug 1
+        val response = api.fetchOrders()
+        emit(response.map { it.toDomain() })
+    }
+
+    override suspend fun placeOrder(order: Order): Result<Unit> = runCatching {
+        // Bug 2
+        val response = api.placeOrder(order.toDto())
+        // Bug 3: no local save
+    }
+}
+
+// Domain layer
+class GetOrdersUseCase @Inject constructor(private val repo: OrderRepository) {
+    // Bug 4
+    suspend fun getOrders(): List<Order> = repo.getOrders().first()
+}
+
+// ViewModel
+@HiltViewModel
+class OrderViewModel @Inject constructor(
+    private val getOrders: GetOrdersUseCase,
+    private val orderRepo: OrderRepositoryImpl  // Bug 5
+) : ViewModel() {
+    fun load() {
+        viewModelScope.launch {
+            val orders = getOrders.getOrders()  // Bug 6
+            // use orders
+        }
+    }
+}`,
+    hint: "Find the offline-first violation, missing local persistence, wrong return type from use case, concrete class injection, and non-idiomatic use case invocation.",
+    answer: "Bug 1: getOrders() fetches directly from the API and emits — this is NOT offline-first. If the device is offline, the flow fails immediately. Fix: emit from dao.observeOrders() (Room Flow), and trigger an API refresh separately with onStart { refreshFromApi() } that saves to Room. Room's Flow handles re-emitting. Bug 2: placeOrder maps Order to DTO and calls the API but never saves the result to Room. For offline-first, fix: save to Room first (optimistic update), then sync with API in background, handle API failure by keeping the local record for later sync. Bug 3: Follows from Bug 2 — there is no dao.insert() call. Room never receives the new order, so the orders Flow never emits it — the UI will not show the newly placed order. Bug 4: GetOrdersUseCase returns suspend fun List<Order> by calling .first() on the Flow — this kills the reactive updates. The ViewModel will load orders once and never see updates. Fix: return Flow<List<Order>> directly: operator fun invoke(): Flow<List<Order>> = repo.getOrders(). Bug 5: ViewModel injects OrderRepositoryImpl (concrete class) alongside the use case — this violates Clean Architecture (Presentation importing Data) and bypasses the use case layer. Fix: remove orderRepo injection; if additional operations are needed, create more use cases. Bug 6: getOrders.getOrders() is non-idiomatic — with operator fun invoke(), the call site should be getOrders() not getOrders.getOrders(). Also, since getOrders should return a Flow (Bug 4 fix), the ViewModel should collect it: getOrders().collect { orders -> ... }."
+  },
+  difficulty: "advanced",
+  prereqs: [23]
+},
+{
+  id: 25,
+  title: "MVVM vs MVI vs Clean — Tradeoffs & Interview Answers",
+  subtitle: "Compare architectures, show real tradeoffs, and answer 'why this architecture?' without dogma",
+  analogy: "Choosing an architecture is like choosing a kitchen layout. MVVM is the classic home kitchen — familiar, flexible, works great for most meals. MVI is a professional restaurant kitchen — strict stations, one-way ticket system, zero ambiguity, but more setup. Clean Architecture is the full restaurant operation — front-of-house, back-of-house, supply chain all separated, ultimate scale but you need the team to justify it.",
+  points: [
+    { t: "MVVM core contract", d: "Model (data/domain) — ViewModel (state holder, business logic) — View (UI observes state). ViewModel exposes StateFlow/LiveData. View collects and renders. Two-way data binding optional. Android Jetpack ViewModel survives config changes. Most widely used in Android today." },
+    { t: "MVVM strengths", d: "Low boilerplate for simple screens. Jetpack-native (ViewModel, LiveData, DataBinding). Easy to onboard new developers. Google-recommended baseline. Works perfectly for 80% of screens — forms, lists, detail views. Tests focus on ViewModel state transformations." },
+    { t: "MVVM weaknesses", d: "State can be scattered across multiple LiveData/StateFlow fields. ViewModel can bloat over time (God ViewModel). Events (one-shot side effects like navigation, toasts) need special handling — SharedFlow/Channel. No enforced unidirectional data flow — two-way binding can create hard-to-trace state bugs in large teams." },
+    { t: "MVI core contract", d: "Model (immutable state) — View (renders state, emits Intents) — Intent (user action/event) — Reducer (Intent + current state = new state). Strictly unidirectional: View → Intent → ViewModel reduces → new State → View. State is a single sealed class/data class." },
+    { t: "MVI strengths", d: "Single source of truth — one UI state object captures everything. Time-travel debugging and state logging are trivial. Predictable: given the same state + intent, output is always the same. Excellent for complex screens with many interactions. Natural fit with Jetpack Compose's recomposition model." },
+    { t: "MVI weaknesses", d: "Higher boilerplate — every action needs an Intent class, every state needs a sealed class. Learning curve for teams new to functional thinking. Over-engineering for simple CRUD screens. State class can become large for complex screens unless broken into sub-states carefully." },
+    { t: "Clean Architecture layers", d: "Presentation (ViewModels, UI) → Domain (UseCases, Repository interfaces, Entities) → Data (Repository implementations, Room DAOs, Retrofit services). Dependencies point inward only — Data and Presentation depend on Domain, never the reverse. Domain has zero Android dependencies." },
+    { t: "Clean Architecture strengths", d: "Domain layer is pure Kotlin — unit testable without Android emulator. Swap data sources without touching domain or UI. Multiple delivery mechanisms (app + widget + tile) share the same domain. Enforces team boundaries in large codebases. Scales to 50+ screen apps." },
+    { t: "Clean Architecture weaknesses", d: "Significant upfront investment — 3+ modules, interfaces everywhere, mappers between layers. For a 5-screen app it's overkill. UseCase-per-action can become verbose. Requires team discipline to maintain layer boundaries — easy to leak Android imports into domain accidentally." },
+    { t: "When to use what — interview answer", d: "MVVM alone: small-medium apps, solo/small teams, tight deadlines, simple screens. MVVM + Clean: medium-large apps, team of 3+, need testability, clear feature boundaries. MVI + Clean: complex interactive screens (dashboards, editors), Compose-first projects, teams that value predictability over simplicity. Never be dogmatic — real-world is hybrid." },
+    { t: "How to answer 'why this architecture?'", d: "Structure answer as: (1) Context — app size, team size, deadline. (2) Tradeoffs considered — what alternatives you evaluated. (3) Decision — what you chose and why. (4) What you'd change in retrospect. Shows engineering maturity. Interviewers want to hear 'it depends' backed by reasoning, not religious devotion." },
+    { t: "Architecture in Compose era", d: "Jetpack Compose pushes toward MVI naturally — composables are pure functions of state, so single UiState data class + sealed Intent/Event fits perfectly. Google's Compose samples use UiState + Channel for events. MVVM with multiple StateFlows still works but state consistency becomes harder to guarantee." }
+  ],
+  whatIs: "MVVM, MVI, and Clean Architecture are patterns for separating concerns in Android apps. MVVM is the Jetpack-native baseline — low ceremony, widely understood. MVI adds strict unidirectionality and a single immutable state object — predictable but verbose. Clean Architecture adds layer separation (Presentation/Domain/Data) for testability and scalability. The winning interview answer shows you understand each pattern's tradeoffs and can match the right tool to the context.",
+  realWorld: "At Tixio (SaaS real-time collaboration), the team adopted MVI + Clean for the workspace board screen because 15+ user interactions (drag, resize, invite, comment, sync) all mutate the same canvas state — MVVM's multiple StateFlows caused consistency bugs. For the simpler settings and profile screens, plain MVVM was kept. At BRAC's field operations app, Clean Architecture allowed swapping the sync backend from Firebase to a custom REST API without touching domain UseCases or any ViewModel.",
+  code: `// MVVM — standard ViewModel approach
+class OrderListViewModel(
+    private val getOrders: GetOrdersUseCase
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(OrderListState())
+    val uiState: StateFlow<OrderListState> = _uiState.asStateFlow()
+
+    fun loadOrders() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            getOrders().collect { orders ->
+                _uiState.update { it.copy(orders = orders, isLoading = false) }
+            }
+        }
+    }
+}
+
+// MVI — Intent + Reducer pattern
+sealed class OrderIntent {
+    object LoadOrders : OrderIntent()
+    data class DeleteOrder(val id: String) : OrderIntent()
+    data class FilterByStatus(val status: OrderStatus) : OrderIntent()
+}
+
+data class OrderUiState(
+    val orders: List<Order> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val filter: OrderStatus? = null
+)
+
+class OrderMviViewModel(
+    private val getOrders: GetOrdersUseCase,
+    private val deleteOrder: DeleteOrderUseCase
+) : ViewModel() {
+    private val _state = MutableStateFlow(OrderUiState())
+    val state: StateFlow<OrderUiState> = _state.asStateFlow()
+
+    fun process(intent: OrderIntent) {
+        when (intent) {
+            is OrderIntent.LoadOrders -> loadOrders()
+            is OrderIntent.DeleteOrder -> delete(intent.id)
+            is OrderIntent.FilterByStatus -> filter(intent.status)
+        }
+    }
+
+    private fun loadOrders() { /* ... */ }
+    private fun delete(id: String) { /* ... */ }
+    private fun filter(status: OrderStatus) {
+        _state.update { it.copy(filter = status) }
+    }
+}
+
+// Clean Architecture — Domain layer (zero Android imports)
+// Domain/UseCase
+class GetOrdersUseCase(private val repo: OrderRepository) {
+    operator fun invoke(): Flow<List<Order>> = repo.getOrders()
+}
+
+// Domain/Repository interface
+interface OrderRepository {
+    fun getOrders(): Flow<List<Order>>
+    suspend fun syncOrders()
+}
+
+// Data/Repository implementation
+class OrderRepositoryImpl(
+    private val dao: OrderDao,
+    private val api: OrderApiService,
+    private val mapper: OrderMapper
+) : OrderRepository {
+    override fun getOrders(): Flow<List<Order>> =
+        dao.observeAll().map { entities -> entities.map(mapper::toDomain) }
+
+    override suspend fun syncOrders() {
+        val remote = api.fetchOrders()
+        dao.upsertAll(remote.map(mapper::toEntity))
+    }
+}`,
+  funFact: "Google's own Android architecture samples on GitHub have changed recommended patterns four times since 2017 — from MVP to MVVM to MVVM+LiveData to MVVM+StateFlow to now MVI-leaning with Compose. The pattern war is real, which is why interviewers ask about tradeoffs rather than 'which is correct'.",
+  quiz: [
+    { q: "What is the primary weakness of MVVM in complex screens with many interactions?", opts: ["It doesn't support LiveData", "State can scatter across multiple fields leading to consistency issues and God ViewModels", "It requires Dagger for dependency injection", "It cannot be used with Jetpack Compose"], ans: 1 },
+    { q: "In MVI, what does 'Intent' represent?", opts: ["Android's Intent class for navigation", "A user action or event emitted by the View", "The ViewModel's internal state mutation function", "A Kotlin coroutine suspend function"], ans: 1 },
+    { q: "In Clean Architecture, which direction do dependencies flow?", opts: ["Domain depends on Data and Presentation", "Presentation and Data both depend on Domain; Domain has no outward dependency", "Data depends on Presentation for UI callbacks", "All three layers depend on each other bidirectionally"], ans: 1 },
+    { q: "Why does MVI pair naturally with Jetpack Compose?", opts: ["Compose requires MVI by framework design", "Composables are pure functions of state, matching MVI's single immutable state model", "MVI uses XML layouts which Compose converts automatically", "Compose's remember() API only works with MVI reducers"], ans: 1 },
+    { q: "What is the key benefit of having a pure Kotlin Domain layer in Clean Architecture?", opts: ["It allows using Java libraries in the domain", "Domain UseCases and Entities can be unit tested without an Android emulator", "It removes the need for a ViewModel entirely", "It enables the app to run on iOS via Kotlin Multiplatform automatically"], ans: 1 },
+    { q: "When should you prefer MVI over plain MVVM?", opts: ["Always — MVI is strictly superior", "For simple CRUD forms and list screens with few interactions", "For complex screens with many interactions where a single consistent state object prevents bugs", "Only when the team has fewer than 3 developers"], ans: 2 },
+    { q: "How should you handle one-shot events (navigation, toasts) in MVVM to avoid issues?", opts: ["Store them as Boolean flags in the UiState data class", "Use SharedFlow or Channel so the event is consumed exactly once and not re-emitted on recomposition", "Use Android's Intent system to broadcast events", "Trigger them directly from the Repository layer"], ans: 1 },
+    { q: "What is the strongest signal of engineering maturity when answering 'why did you choose this architecture?' in an interview?", opts: ["Stating that the architecture you used is always the best choice", "Explaining the context, tradeoffs considered, the decision made, and what you would change in retrospect", "Memorising the official Google recommendation and repeating it", "Defending the architecture without acknowledging any weaknesses"], ans: 1 }
+  ],
+  challenge: "Take a ViewModel you've written with 3+ separate StateFlow properties representing parts of the same screen's state. Refactor it to a single UiState data class. Then identify all one-shot events (navigation, Snackbars) and move them to a SharedFlow<UiEvent>. Write the before/after and explain what problems the refactor solves.",
+  resources: [
+    { type: "docs", title: "Guide to App Architecture — Android Developers", url: "https://developer.android.com/topic/architecture", source: "Android Developers" },
+    { type: "docs", title: "UI Layer — StateFlow & UiState patterns", url: "https://developer.android.com/topic/architecture/ui-layer", source: "Android Developers" },
+    { type: "article", title: "MVI Architecture with Kotlin Flows", url: "https://medium.com/swlh/mvi-architecture-with-android-fcde123e3c4a", source: "Medium" },
+    { type: "article", title: "Android Architecture: MVVM vs MVI — Real Comparison", url: "https://proandroiddev.com/mvvm-vs-mvi-architecture-in-android-7f5d3b66f0b2", source: "ProAndroidDev" },
+    { type: "docs", title: "Now in Android — Google's reference app with Clean + MVI", url: "https://github.com/android/nowinandroid", source: "GitHub" }
+  ],
+  eli5: "Imagine your bedroom. MVVM is keeping your stuff in labeled boxes — toys here, books there. Easy to find things. MVI is having ONE master list of everything in your room at all times — you never lose track but writing the list takes longer. Clean Architecture is like separating your room, your house, and your neighbourhood — each has its own rules and doesn't mess with the others. All three keep things organised, just at different scales.",
+  codeWalkthrough: [
+    "MVVM ViewModel exposes a single _uiState MutableStateFlow backed by an immutable StateFlow — the UI collects from the public val only.",
+    "uiState.update { it.copy(...) } is the idiomatic way to update a data class state atomically — thread-safe and concise.",
+    "MVI sealed class OrderIntent models every possible user action as a type — exhaustive when in process() forces handling all cases.",
+    "OrderUiState is a single data class — the entire screen state is one object, making it easy to log, snapshot, and restore.",
+    "process(intent) is the single entry point for the MVI ViewModel — the View calls this for every user action, no other public functions needed.",
+    "Clean Architecture: GetOrdersUseCase wraps the repository call — this is the Domain layer, zero Android imports, pure Kotlin.",
+    "OrderRepository is an interface in the Domain layer — Data layer provides the implementation, dependency inversion principle in action.",
+    "OrderRepositoryImpl bridges Domain and Data — it reads from Room DAO (Flow for reactivity) and writes to Room on sync, never exposing Data models to Domain.",
+    "mapper::toDomain transforms Entity (database model) to Domain model — each layer has its own model class, decoupled from the others.",
+    "The repository exposes Flow<List<Order>> so any collector (ViewModel, UseCase) gets real-time updates when Room data changes."
+  ],
+  bugChallenge: {
+    code: `// Spot all architecture violations — there are 5
+class DashboardViewModel(
+    private val orderDao: OrderDao,              // Bug 1
+    private val api: RetrofitApiService,         // Bug 2
+    private val prefs: SharedPreferences         // Bug 3
+) : ViewModel() {
+    private val _orders = MutableStateFlow<List<OrderEntity>>(emptyList())  // Bug 4
+    val orders = _orders.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    private val _error = MutableStateFlow<String?>(null)
+
+    fun loadDashboard() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val orders = api.getOrders().body()!!  // Bug 5
+                _orders.value = orders.map { OrderEntity(it.id, it.title, it.status) }
+                prefs.edit().putLong("last_sync", System.currentTimeMillis()).apply()
+            } catch (e: Exception) {
+                _error.value = e.message
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+}`,
+    hint: "Look at what the ViewModel imports, what it exposes, how many state flows it has, how it accesses data, and how it handles the API response.",
+    answer: "Bug 1: ViewModel directly imports OrderDao (Data layer) — violates Clean Architecture. Presentation must not depend on Data. Fix: inject a UseCase that wraps the repository. Bug 2: ViewModel directly imports RetrofitApiService (Data layer) — same violation. The ViewModel should never know about Retrofit. Fix: GetOrdersUseCase handles all data orchestration. Bug 3: SharedPreferences access in ViewModel — infrastructure concern leaked into Presentation. Fix: create a SyncRepository or SyncUseCase that handles the last_sync timestamp internally. Bug 4: ViewModel exposes List<OrderEntity> — Data layer model exposed to Presentation, violating layer boundaries. Fix: map to a Domain model (Order) or a UI model (OrderUiItem) before emitting. Bug 5: .body()!! — force unwraps a nullable Response body, will crash if the API returns a non-2xx response or empty body. Fix: use a safe wrapper like response.body() ?: emptyList() or use a Result-based API wrapper that maps errors to domain exceptions before they reach the ViewModel."
+  },
+  difficulty: "advanced",
+  prereqs: [23, 24]
+},
+{
+  id: 26,
+  title: "Dependency Injection: Manual DI vs Hilt vs Dagger",
+  subtitle: "Why DI matters, how Hilt simplifies Dagger, and what every senior Android dev must know about scopes",
+  analogy: "Manual DI is like hand-delivering every package yourself — you control everything but it doesn't scale. Dagger is like building your own automated delivery network from scratch — incredibly powerful, zero magic, but weeks of setup. Hilt is like using FedEx — it's Dagger under the hood but someone already built the trucks, routes, and depots; you just label the packages and they arrive.",
+  points: [
+    { t: "Why Dependency Injection?", d: "DI decouples object creation from object use. Without DI, classes construct their own dependencies (new Retrofit(), new Database()) making them untestable, hard to swap, and tightly coupled. With DI, dependencies are provided from outside — you can inject fakes in tests, swap implementations without changing callers." },
+    { t: "Manual DI pattern", d: "Create an AppContainer class that constructs and holds all dependencies. Pass sub-containers to Activities/Fragments via constructor. No framework needed. Perfect for learning and small apps (< 5 screens). Breaks down when the dependency graph grows — you end up with massive constructor chains and manual lifecycle management." },
+    { t: "@HiltAndroidApp", d: "Annotates the Application class. Triggers Hilt code generation — creates the application-level component (AppComponent) that survives the app's lifetime. Required once per app. Under the hood generates a Hilt_MyApplication base class that MyApplication extends." },
+    { t: "@AndroidEntryPoint", d: "Annotates Activity, Fragment, View, Service, or BroadcastReceiver to enable field injection. Hilt generates a component for each annotated class with the correct scope. Without this annotation, @Inject fields will be null — common mistake in interviews." },
+    { t: "@Inject constructor", d: "Marks a class's constructor for Hilt to use when constructing it. If all constructor parameters are also @Inject-able or provided via @Module, Hilt wires it automatically. Prefer constructor injection over field injection — it makes dependencies explicit and enables easier testing." },
+    { t: "@Module and @InstallIn", d: "@Module annotates a class that tells Hilt how to provide types it can't construct directly (interfaces, third-party classes like Retrofit, Room). @InstallIn(SingletonComponent::class) scopes the module to the app. Other options: ActivityComponent, ViewModelComponent, FragmentComponent." },
+    { t: "@Provides vs @Binds", d: "@Provides is a function that returns the dependency — used for Retrofit, Room, OkHttp (anything needing construction logic). @Binds is an abstract function that binds an interface to its implementation — compile-time only, zero runtime overhead vs @Provides. Prefer @Binds whenever you are binding interface to impl." },
+    { t: "Hilt scopes", d: "@Singleton — one instance per app. @ActivityScoped — one per Activity. @FragmentScoped — one per Fragment. @ViewModelScoped — one per ViewModel. Wrong scope = memory leaks or unexpected shared instances. Rule: scope to the shortest lifetime that satisfies the use case." },
+    { t: "@HiltViewModel", d: "Annotates a ViewModel to enable Hilt injection into it. Use with viewModels() delegate in Activity/Fragment. Hilt manages the ViewModel factory automatically — no more ViewModelProvider.Factory boilerplate. Dependencies injected into the ViewModel follow @ViewModelScoped or @Singleton scopes." },
+    { t: "Dagger basics for legacy", d: "Hilt is built on Dagger 2. In legacy codebases you will see: @Component (defines the dependency graph), @Subcomponent (child component with narrower scope), @Module (same as Hilt), @Scope annotations (custom like @PerActivity). Understanding Dagger helps you debug Hilt's generated code and work in pre-Hilt projects." },
+    { t: "Testing with Hilt", d: "Replace production modules in tests using @UninstallModules + @BindValue or @TestInstallIn. HiltAndroidTest + HiltTestRunner for instrumented tests. For unit tests, do NOT use Hilt — just construct the class under test directly with fakes/mocks (constructor injection makes this trivial)." },
+    { t: "DI interview answer structure", d: "Answer: (1) Problem DI solves — testability, loose coupling, single source of truth for dependencies. (2) Manual DI — how you'd do it without a framework. (3) Why Hilt/Dagger — compile-time validation, scope management, no manual container wiring. (4) Scoping — knowing @Singleton vs @ViewModelScoped. Shows progression from first principles." }
+  ],
+  whatIs: "Dependency Injection is the practice of providing objects' dependencies from the outside rather than letting them construct their own. Manual DI is hand-wiring an AppContainer. Dagger 2 is a compile-time annotation processor that generates the wiring code. Hilt is Google's opinionated Dagger wrapper for Android that provides standard components (Application, Activity, ViewModel) so you only write business logic — not infrastructure.",
+  realWorld: "At Payback (fintech), the token refresh interceptor, the encrypted Room database, and the analytics tracker all need to be singletons shared across the app. Hilt's @Singleton scope guarantees exactly one instance. The AuthRepository is @Singleton but the SessionManager is @ActivityScoped — it's destroyed when the auth Activity is destroyed, preventing stale session state from leaking across Activities. In tests, the real AuthService is replaced with a FakeAuthService via @TestInstallIn without touching any production code.",
+  code: `// 1. Application setup
+@HiltAndroidApp
+class FieldOpsApp : Application()
+
+// 2. Network Module — third-party classes need @Provides
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
+        .addInterceptor(loggingInterceptor)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.API_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideOrderApiService(retrofit: Retrofit): OrderApiService =
+        retrofit.create(OrderApiService::class.java)
+}
+
+// 3. Repository binding — interface to implementation
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    // @Binds is abstract, zero runtime cost — preferred over @Provides for bindings
+    @Binds
+    @Singleton
+    abstract fun bindOrderRepository(
+        impl: OrderRepositoryImpl
+    ): OrderRepository
+}
+
+// 4. Constructor injection — Hilt wires all params automatically
+@Singleton
+class OrderRepositoryImpl @Inject constructor(
+    private val api: OrderApiService,
+    private val dao: OrderDao,
+    private val mapper: OrderMapper
+) : OrderRepository {
+    override fun getOrders(): Flow<List<Order>> =
+        dao.observeAll().map { it.map(mapper::toDomain) }
+}
+
+// 5. ViewModel with Hilt
+@HiltViewModel
+class OrderViewModel @Inject constructor(
+    private val getOrders: GetOrdersUseCase,
+    private val syncOrders: SyncOrdersUseCase
+) : ViewModel() {
+    val orders = getOrders().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
+}
+
+// 6. Activity — just annotate + delegate
+@AndroidEntryPoint
+class OrderActivity : AppCompatActivity() {
+    private val viewModel: OrderViewModel by viewModels()
+    // Hilt injects viewModel with all its dependencies
+}
+
+// 7. Test — swap real module for fake
+@UninstallModules(RepositoryModule::class)
+@HiltAndroidTest
+class OrderViewModelTest {
+    @BindValue
+    val orderRepository: OrderRepository = FakeOrderRepository()
+    // test proceeds with fake
+}`,
+  funFact: "Dagger was originally created at Square in 2012 as a compile-time alternative to Guice's runtime reflection. Dagger 2 (Google fork, 2014) eliminated all reflection — every dependency is resolved at compile time. Hilt (2020) added Android-specific components on top. The entire Android DI ecosystem traces back to one engineer's frustration with slow startup times from runtime DI.",
+  quiz: [
+    { q: "What is the primary advantage of @Binds over @Provides when binding an interface to its implementation?", opts: ["@Binds allows binding multiple implementations at once", "@Binds is abstract and resolved at compile-time with zero runtime overhead, unlike @Provides which executes a function body", "@Binds works without @InstallIn whereas @Provides requires it", "@Binds can inject Android Context automatically"], ans: 1 },
+    { q: "What happens if you forget @AndroidEntryPoint on a Fragment that uses @Inject field injection?", opts: ["Hilt throws a compile-time error", "The app compiles and runs, but @Inject fields remain null causing NullPointerException at runtime", "The @Inject fields are silently ignored and default values are used", "Hilt falls back to manual injection automatically"], ans: 1 },
+    { q: "Which scope should you use for a dependency that must be unique per ViewModel but destroyed when the ViewModel is cleared?", opts: ["@Singleton", "@ActivityScoped", "@ViewModelScoped", "@FragmentScoped"], ans: 2 },
+    { q: "Why should you avoid Hilt injection in unit tests?", opts: ["Hilt doesn't support test environments", "Unit tests don't run on Android so Hilt components can't initialise; just construct the class under test directly with fakes via constructor injection", "Hilt's @TestInstallIn annotation is only available in instrumented tests and causes compile errors in unit tests", "Unit tests require Dagger instead of Hilt"], ans: 1 },
+    { q: "What is the role of @HiltAndroidApp?", opts: ["It registers all Activities and Fragments for DI automatically", "It triggers Hilt code generation and creates the application-level singleton component", "It replaces the need for @Module annotations across the app", "It enables hot-reload of dependency bindings at runtime"], ans: 1 },
+    { q: "In a legacy Dagger 2 codebase (pre-Hilt), what does @Subcomponent represent?", opts: ["A module that provides only interface bindings", "A child component with a narrower scope and lifetime than its parent component", "An alternative to @Component for testing only", "A way to share singletons across different app processes"], ans: 1 },
+    { q: "Which Hilt annotation marks a ViewModel for automatic factory generation?", opts: ["@AndroidEntryPoint", "@HiltAndroidApp", "@HiltViewModel", "@ViewModelScoped"], ans: 2 },
+    { q: "What is the correct approach to replacing a real module with a fake in an instrumented Hilt test?", opts: ["Modify the production module directly and revert after the test", "Use @UninstallModules on the test class combined with @BindValue or @TestInstallIn to provide the fake", "Create a separate Application class for tests and manually install fake modules", "Use Mockito to mock the Hilt component interface at runtime"], ans: 1 }
+  ],
+  challenge: "Take a class that constructs its own Retrofit instance and Room database inside its body (no DI). Refactor it step-by-step: first to Manual DI with an AppContainer, then to Hilt with proper @Module/@Provides/@Binds. Identify the correct scope for each dependency. Write the test double strategy for each approach.",
+  resources: [
+    { type: "docs", title: "Hilt for Android — Official Guide", url: "https://developer.android.com/training/dependency-injection/hilt-android", source: "Android Developers" },
+    { type: "docs", title: "Dependency Injection in Android — Manual DI first", url: "https://developer.android.com/training/dependency-injection/manual", source: "Android Developers" },
+    { type: "docs", title: "Hilt Testing Guide", url: "https://developer.android.com/training/dependency-injection/hilt-testing", source: "Android Developers" },
+    { type: "article", title: "@Binds vs @Provides — When to use each", url: "https://proandroiddev.com/dagger-hilt-binds-vs-provides-b8ff437d6a6a", source: "ProAndroidDev" },
+    { type: "docs", title: "Dagger 2 — User's Guide (for legacy codebases)", url: "https://dagger.dev/dev-guide/", source: "dagger.dev" }
+  ],
+  eli5: "Imagine you run a burger restaurant. Without DI, every chef makes their own ketchup from scratch — that's crazy. Manual DI is the head chef making one big batch and handing it out. Dagger is a robot that reads a recipe book and automatically prepares every ingredient for every chef in the right amount. Hilt is that same robot but pre-programmed specifically for burger restaurants — you just tell it 'I need ketchup' and it knows exactly when and how much to bring.",
+  codeWalkthrough: [
+    "@HiltAndroidApp on the Application class is the entry point — Hilt generates the root component here that owns all @Singleton dependencies.",
+    "NetworkModule is annotated @InstallIn(SingletonComponent::class) — all @Provides methods here produce @Singleton-scoped objects unless overridden.",
+    "provideOkHttpClient receives AuthInterceptor and HttpLoggingInterceptor as parameters — Hilt injects these automatically from other @Provides methods or @Inject constructors.",
+    "provideOrderApiService creates the Retrofit service interface implementation — Retrofit.create() uses a proxy under the hood, so it must be provided by @Provides, not @Inject.",
+    "RepositoryModule is abstract — @Binds only works in abstract classes/objects and generates no runtime code, unlike @Provides which generates a method call.",
+    "@Binds abstract fun bindOrderRepository(impl: OrderRepositoryImpl): OrderRepository — Hilt substitutes impl wherever OrderRepository is requested.",
+    "OrderRepositoryImpl uses @Inject constructor — all three params (api, dao, mapper) are automatically provided by Hilt without any manual wiring.",
+    "@HiltViewModel on OrderViewModel enables the auto-generated factory — viewModels() delegate in the Activity uses this factory without any boilerplate.",
+    "stateIn with SharingStarted.WhileSubscribed(5_000) — the Flow only collects while the UI is active, stops after 5 seconds in background to save resources.",
+    "@UninstallModules(RepositoryModule::class) in the test class removes the real binding, then @BindValue injects FakeOrderRepository — clean swap with zero production code changes."
+  ],
+  bugChallenge: {
+    code: `// Find 4 bugs in this Hilt setup
+// AppModule.kt
+@Module
+@InstallIn(ActivityComponent::class)   // Bug 1
+object AppModule {
+    @Provides
+    fun provideRetrofit(): Retrofit =   // Bug 2
+        Retrofit.Builder()
+            .baseUrl("https://api.example.com/")
+            .build()
+}
+
+// UserRepository.kt
+@Singleton
+class UserRepository @Inject constructor(
+    private val api: ApiService,
+    private val context: Context        // Bug 3
+)
+
+// MainActivity.kt
+class MainActivity : AppCompatActivity() {   // Bug 4
+    @Inject lateinit var repo: UserRepository
+
+    override fun onCreate(...) {
+        super.onCreate(savedInstanceState)
+        println(repo.toString())
+    }
+}`,
+    hint: "Check the component scope vs dependency scope, missing annotations, context injection, and Activity setup.",
+    answer: "Bug 1: Retrofit is installed in ActivityComponent but UserRepository is @Singleton — a singleton cannot depend on an activity-scoped dependency because the Activity can be destroyed while the singleton lives on. Fix: move AppModule to @InstallIn(SingletonComponent::class). Bug 2: provideRetrofit() is missing @Singleton annotation — without it, a new Retrofit instance is created every time one is requested. Fix: add @Singleton to provideRetrofit(). Bug 3: Context is injected as a raw type — this will fail or inject the wrong context. Fix: use @ApplicationContext Context for a singleton (application lifetime context) or @ActivityContext Context for activity-scoped dependencies. Hilt provides qualified contexts. Bug 4: MainActivity is missing @AndroidEntryPoint annotation — without it, Hilt does not generate the injection infrastructure for this Activity, so @Inject lateinit var repo will never be populated and will throw UninitializedPropertyAccessException."
+  },
+  difficulty: "intermediate",
+  prereqs: [24]
+},
+{
+  id: 27,
+  title: "Retrofit, OkHttp, Interceptors, Token Refresh & Pagination",
+  subtitle: "Production-grade networking: auth flows, retry logic, error mapping, and cursor/offset pagination patterns",
+  analogy: "Retrofit is the waiter who takes your order (API call) and brings back your food (response). OkHttp is the kitchen — it does the actual work. Interceptors are the kitchen stations the order passes through: the logging station writes everything down, the auth station stamps your order with your ID badge, and the retry station sends the order back if the kitchen is temporarily closed.",
+  points: [
+    { t: "Retrofit fundamentals", d: "Retrofit turns HTTP API definitions into Kotlin interfaces. @GET, @POST, @PUT, @DELETE, @PATCH annotate functions. @Path for URL segments, @Query for query params, @Body for request body, @Header for single headers, @Headers for static headers. Return types: suspend fun T, suspend fun Response<T>, Call<T>." },
+    { t: "OkHttp as the HTTP engine", d: "Retrofit delegates all HTTP work to OkHttp. OkHttp manages connection pooling, response caching, TLS, and request/response interception. Configure OkHttp via OkHttpClient.Builder() — set timeouts, add interceptors, configure TLS/certificate pinning, add cache. Pass to Retrofit via .client(okHttpClient)." },
+    { t: "Application interceptors", d: "Added via addInterceptor() — execute once per logical request, even if the request is cached. Use for: adding auth headers to every request, logging request/response bodies, transforming responses globally. Run in the order added. chain.proceed(request) passes the request down the chain." },
+    { t: "Network interceptors", d: "Added via addNetworkInterceptor() — execute for each network transmission (not for cached responses). Use for: monitoring actual network traffic, modifying cache headers, tracking raw bytes transferred. Useful for analytics on actual network usage vs. cache usage." },
+    { t: "Auth interceptor pattern", d: "Intercepts every request, reads the token from a TokenProvider/AuthRepository, and adds 'Authorization: Bearer <token>' header. Should NOT perform token refresh (that's the Authenticator's job). Keep the interceptor simple: add header, proceed, return response." },
+    { t: "OkHttp Authenticator for token refresh", d: "Authenticator.authenticate() is called automatically when a 401 response is received. Inside: synchronously refresh the token (critical — must be synchronized to prevent multiple concurrent refreshes), update stored token, return the original request with the new token. Return null to give up and propagate the 401. Use a Mutex or synchronized block." },
+    { t: "Retry interceptor", d: "Intercepts failed responses and retries with exponential backoff. Check for retryable conditions: network errors, 503, 429. Implement a retry count limit. Use Thread.sleep() (interceptors run on non-main threads) or coroutine delay if using CoroutineInterceptor. Important: do NOT retry non-idempotent requests (POST) without understanding business consequences." },
+    { t: "Error mapping to domain exceptions", d: "Map HTTP errors to typed domain exceptions before they reach the ViewModel. In a repository or network result mapper: 401 → UnauthorizedException, 404 → NotFoundException, 422 → ValidationException(errors), 503 → ServerUnavailableException, network exception → NoConnectivityException. ViewModel receives typed exceptions, not raw HttpException." },
+    { t: "Offset pagination", d: "Classic approach: pass page=1&pageSize=20 as query params. Server returns total count + items. Client tracks current page, increments on load-more. Simple to implement, easy to jump to arbitrary pages. Problem: if items are inserted/deleted between pages, you get duplicates or skipped items." },
+    { t: "Cursor pagination", d: "Server returns a next_cursor with each response. Client passes the cursor in the next request. Cursor encodes the position (e.g., last item ID or timestamp). Handles insertions/deletions between pages correctly. No way to jump to arbitrary page. Preferred for real-time feeds (social, notifications). Twitter, Slack, GitHub all use cursor pagination." },
+    { t: "Paging 3 library integration", d: "PagingSource<Key, Value> defines how to load pages — loadBefore/loadAfter with LoadResult.Page or LoadResult.Error. RemoteMediator bridges network + Room for offline-first paging. Pager + PagingConfig creates a Flow<PagingData<T>>. UI uses LazyColumn + collectAsLazyPagingItems() in Compose or PagingDataAdapter in RecyclerView." },
+    { t: "Network result wrapper pattern", d: "Wrap all API calls in a sealed class: sealed class NetworkResult<T> { data class Success<T>(val data: T) : NetworkResult<T>(); data class Error<T>(val exception: DomainException) : NetworkResult<T>(); class Loading<T> : NetworkResult<T>() }. Repository returns NetworkResult, ViewModel maps to UiState. Eliminates try/catch scattered through ViewModels." }
+  ],
+  whatIs: "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.",
+  realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
+  code: `// 1. Retrofit interface definition
+interface PaybackApiService {
+    @GET("transactions")
+    suspend fun getTransactions(
+        @Query("cursor") cursor: String? = null,
+        @Query("limit") limit: Int = 20
+    ): TransactionPageResponse
+
+    @POST("payments")
+    suspend fun createPayment(@Body request: PaymentRequest): Response<PaymentResponse>
+
+    @GET("users/{userId}/profile")
+    suspend fun getProfile(@Path("userId") userId: String): ProfileResponse
+}
+
+// 2. Auth Interceptor — adds bearer token to every request
+class AuthInterceptor @Inject constructor(
+    private val tokenProvider: TokenProvider
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = tokenProvider.getAccessToken()
+        val request = chain.request().newBuilder()
+            .header("Authorization", "Bearer $token")
+            .header("X-App-Version", BuildConfig.VERSION_NAME)
+            .build()
+        return chain.proceed(request)
+    }
+}
+
+// 3. Authenticator — handles 401 token refresh
+class TokenAuthenticator @Inject constructor(
+    private val tokenProvider: TokenProvider,
+    private val authApi: AuthApiService
+) : Authenticator {
+    // Mutex prevents concurrent refresh races
+    private val refreshMutex = Mutex()
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        // If we've already retried, give up
+        if (response.request.header("X-Retry-Auth") != null) return null
+
+        return runBlocking {
+            refreshMutex.withLock {
+                // Check if another coroutine already refreshed while we waited
+                val currentToken = tokenProvider.getAccessToken()
+                val requestToken = response.request
+                    .header("Authorization")?.removePrefix("Bearer ")
+
+                if (currentToken != requestToken) {
+                    // Token already refreshed by another request — just retry
+                    return@withLock response.request.newBuilder()
+                        .header("Authorization", "Bearer $currentToken")
+                        .build()
+                }
+
+                // Actually refresh
+                try {
+                    val refreshResponse = authApi.refreshToken(
+                        tokenProvider.getRefreshToken()
+                    )
+                    tokenProvider.saveTokens(
+                        refreshResponse.accessToken,
+                        refreshResponse.refreshToken
+                    )
+                    response.request.newBuilder()
+                        .header("Authorization", "Bearer ${refreshResponse.accessToken}")
+                        .header("X-Retry-Auth", "true")
+                        .build()
+                } catch (e: Exception) {
+                    tokenProvider.clearTokens() // Force re-login
+                    null
+                }
+            }
+        }
+    }
+}
+
+// 4. Cursor pagination — PagingSource
+class TransactionPagingSource(
+    private val api: PaybackApiService
+) : PagingSource<String, Transaction>() {
+
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Transaction> {
+        return try {
+            val response = api.getTransactions(
+                cursor = params.key, // null on first load
+                limit = params.loadSize
+            )
+            LoadResult.Page(
+                data = response.transactions,
+                prevKey = null, // cursor pagination is forward-only
+                nextKey = response.nextCursor // null = no more pages
+            )
+        } catch (e: HttpException) {
+            LoadResult.Error(mapHttpException(e))
+        } catch (e: IOException) {
+            LoadResult.Error(NoConnectivityException())
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<String, Transaction>): String? = null
+}
+
+// 5. Error mapping — HTTP to domain exceptions
+fun mapHttpException(e: HttpException): DomainException = when (e.code()) {
+    401 -> UnauthorizedException("Session expired")
+    403 -> ForbiddenException("Insufficient permissions")
+    404 -> NotFoundException("Resource not found")
+    422 -> {
+        val errorBody = e.response()?.errorBody()?.string()
+        ValidationException(parseValidationErrors(errorBody))
+    }
+    503 -> ServerUnavailableException("Service temporarily unavailable")
+    else -> UnknownApiException(e.code(), e.message())
+}
+
+// 6. OkHttp client assembly
+@Provides @Singleton
+fun provideOkHttpClient(
+    authInterceptor: AuthInterceptor,
+    authenticator: TokenAuthenticator
+): OkHttpClient = OkHttpClient.Builder()
+    .addInterceptor(HttpLoggingInterceptor().apply {
+        level = if (BuildConfig.DEBUG)
+            HttpLoggingInterceptor.Level.BODY
+        else
+            HttpLoggingInterceptor.Level.NONE
+    })
+    .addInterceptor(authInterceptor)
+    .authenticator(authenticator)
+    .connectTimeout(30, TimeUnit.SECONDS)
+    .readTimeout(30, TimeUnit.SECONDS)
+    .build()`,
+  funFact: "OkHttp's connection pool reuses TCP connections by default (5 connections, 5 minutes idle). This means your second API call in an app session is typically 30-50% faster than the first because TLS handshake and TCP connection setup are skipped. On mobile networks with high latency, this can save 200-500ms per request.",
+  quiz: [
+    { q: "What is the key difference between addInterceptor() and addNetworkInterceptor() in OkHttp?", opts: ["addInterceptor runs before serialization; addNetworkInterceptor runs after", "addInterceptor executes once per logical request (including cached); addNetworkInterceptor executes only for actual network transmissions", "addInterceptor is for request modification only; addNetworkInterceptor is for response modification only", "addNetworkInterceptor requires INTERNET permission while addInterceptor does not"], ans: 1 },
+    { q: "Why must token refresh inside OkHttp Authenticator use a Mutex or synchronized block?", opts: ["OkHttp Authenticator runs on the main thread and needs thread safety for UI updates", "Multiple concurrent 401 responses would otherwise each trigger a separate refresh, causing race conditions and token invalidation", "The Mutex is required by the OkHttp API — without it the Authenticator method throws", "Refresh tokens are stored in SharedPreferences which is not thread-safe"], ans: 1 },
+    { q: "What is the main advantage of cursor pagination over offset pagination for real-time feeds?", opts: ["Cursor pagination allows jumping to arbitrary pages faster", "Cursor pagination correctly handles insertions and deletions between page loads, preventing duplicates or skipped items", "Cursor pagination uses less server memory than offset pagination", "Cursor pagination is the only approach supported by Android Paging 3"], ans: 1 },
+    { q: "In Retrofit, when should you use suspend fun Response<T> instead of just suspend fun T?", opts: ["Always — Response<T> is the recommended return type for all Retrofit calls", "When you need access to HTTP headers, status codes, or want to handle 4xx/5xx errors without an exception being thrown", "Only for POST and PUT requests — GET requests must return T directly", "When the response body can be null — Response<T> allows null bodies"], ans: 1 },
+    { q: "What does returning null from Authenticator.authenticate() signal to OkHttp?", opts: ["Retry the request with the existing token one more time", "Give up — propagate the 401 response to the caller without further retries", "Clear all cookies and session data automatically", "Switch to a fallback base URL defined in the OkHttp configuration"], ans: 1 },
+    { q: "What is the purpose of checking 'X-Retry-Auth' header in the Authenticator before proceeding?", opts: ["It marks the request as having elevated permissions", "It prevents infinite refresh loops — if the header is present, we already retried once and should give up", "It tells OkHttp to skip the auth interceptor for this request", "It is required by OAuth 2.0 specification for token refresh flows"], ans: 1 },
+    { q: "Where should HTTP-to-domain exception mapping happen in a Clean Architecture app?", opts: ["Inside the ViewModel so it can display specific error messages directly", "Inside the Repository implementation or a dedicated network result mapper in the Data layer", "Inside the Retrofit interface method using @Throws annotation", "Inside the Authenticator before returning the refreshed request"], ans: 1 },
+    { q: "In PagingSource, what should getRefreshKey() return for cursor-based pagination?", opts: ["The first cursor from the initial load to restart from the beginning", "null — cursor pagination cannot resume from an arbitrary position in the list, so refresh starts from the beginning", "The last loaded cursor so refresh continues from where it left off", "The total item count from the last loaded page"], ans: 1 }
+  ],
+  challenge: "Implement a RetryInterceptor that retries requests up to 3 times with exponential backoff (1s, 2s, 4s) for 503 responses and IOException. Ensure it does NOT retry POST requests. Then write the error mapping function that converts HttpException and IOException to a sealed class NetworkError with at least 5 subtypes. Wire both into the OkHttpClient builder.",
+  resources: [
+    { type: "docs", title: "OkHttp Interceptors — Official Guide", url: "https://square.github.io/okhttp/features/interceptors/", source: "OkHttp" },
+    { type: "docs", title: "Retrofit — Square Documentation", url: "https://square.github.io/retrofit/", source: "Square" },
+    { type: "docs", title: "Android Paging 3 Library", url: "https://developer.android.com/topic/libraries/architecture/paging/v3-overview", source: "Android Developers" },
+    { type: "article", title: "Token Refresh with OkHttp Authenticator — Race condition prevention", url: "https://proandroiddev.com/handling-token-refresh-with-okhttp-authenticator-b0c1b3a79af0", source: "ProAndroidDev" },
+    { type: "article", title: "Cursor vs Offset Pagination — When to use each", url: "https://medium.com/swlh/offset-vs-cursor-pagination-best-practices-b38ab7b7f40c", source: "Medium" }
+  ],
+  eli5: "Imagine ordering food through an app. Retrofit is the order screen — you pick what you want and press send. OkHttp is the delivery driver who actually goes to the restaurant. Interceptors are checkpoints on the way: one writes down every order in a notebook (logging), another shows your membership card at the restaurant door (auth). If your card expired (401), a special agent (Authenticator) runs to get you a new card, then the driver retries the delivery — you don't even notice.",
+  codeWalkthrough: [
+    "Retrofit interface uses @Query('cursor') with a nullable default — on first page load, cursor is null, server returns from the beginning.",
+    "AuthInterceptor.intercept() calls chain.request().newBuilder() to create a mutated copy of the request — OkHttp Requests are immutable so you must build a new one.",
+    "TokenAuthenticator uses runBlocking inside authenticate() because OkHttp Authenticator is a blocking Java interface — coroutine suspend is not directly supported here.",
+    "refreshMutex.withLock ensures only one coroutine performs the refresh — others wait, then find the token already updated and skip the refresh call.",
+    "Checking requestToken vs currentToken inside the lock detects 'token already refreshed by another request' — retry with new token without making another network call.",
+    "TransactionPagingSource.load() receives params.key as the cursor — null on initial load, nextCursor on subsequent loads.",
+    "LoadResult.Page sets prevKey = null because cursor pagination is forward-only — Paging 3 disables prepend loading.",
+    "mapHttpException() is a pure function that transforms HttpException codes to sealed class instances — no Android dependencies, unit testable.",
+    "HttpLoggingInterceptor level is set to BODY only in DEBUG builds — never log request/response bodies in production (security and performance).",
+    "addInterceptor(authInterceptor) runs before authenticator — the interceptor adds the current token, authenticator handles 401 renewal."
+  ],
+  bugChallenge: {
+    code: `// Find 4 bugs in this networking setup
+class BrokenAuthenticator(
+    private val tokenProvider: TokenProvider,
+    private val authApi: AuthApiService
+) : Authenticator {
+    override fun authenticate(route: Route?, response: Response): Request? {
+        val newTokens = runBlocking {
+            authApi.refreshToken(tokenProvider.getRefreshToken())  // Bug 1
+        }
+        tokenProvider.saveTokens(newTokens.accessToken, newTokens.refreshToken)
+        return response.request.newBuilder()
+            .header("Authorization", "Bearer ${newTokens.accessToken}")
+            .build()  // Bug 2
+    }
+}
+
+class BrokenAuthInterceptor(
+    private val tokenProvider: TokenProvider,
+    private val authApi: AuthApiService  // Bug 3
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = tokenProvider.getAccessToken()
+        val request = chain.request().newBuilder()
+            .header("Authorization", "Bearer $token")
+            .build()
+        val response = chain.proceed(request)
+        if (response.code == 401) {
+            runBlocking { authApi.refreshToken(tokenProvider.getRefreshToken()) }  // Bug 4
+        }
+        return response
+    }
+}`,
+    hint: "Look at concurrency safety, infinite loop prevention, separation of responsibilities, and which component should handle which concern.",
+    answer: "Bug 1: No mutex/synchronization around the token refresh — if two requests receive 401 simultaneously, both will call refreshToken() concurrently. The first refresh invalidates the refresh token; the second call will fail (most OAuth servers allow single-use refresh tokens), causing a logout. Fix: wrap with a Mutex and check if token was already refreshed before calling the API. Bug 2: Missing the 'X-Retry-Auth' guard — there's no check to detect if we've already retried. If the new token is also rejected (e.g., account suspended), authenticate() is called again infinitely. Fix: check if response.request.header('X-Retry-Auth') != null and return null (give up) before refreshing. Bug 3: AuthInterceptor injects AuthApiService — the interceptor that adds auth headers to ALL requests is also holding a reference to the auth API. This creates a circular dependency risk and violates single responsibility. The interceptor should only add headers; token refresh is the Authenticator's job. Bug 4: BrokenAuthInterceptor is doing token refresh itself on 401 — this is the Authenticator's responsibility. Having both the interceptor and authenticator handle 401 means token refresh can be triggered twice for the same request, causing race conditions. Remove the 401 check from the interceptor entirely — let OkHttp route 401s to the Authenticator."
+  },
+  difficulty: "advanced",
+  prereqs: [7, 24]
+},
+{
+  id: 28,
+  title: "Room, SQLite, Migrations, Transactions & Relations",
+  subtitle: "Production Room setup: CRUD, TypeConverters, migrations, relationships, reactive queries, and testing",
+  analogy: "Room is like a very organised filing cabinet where SQLite is the actual cabinet. Room gives you labeled folders (@Entity), an index card system (@Dao with typed queries), and a filing clerk (@Database) who makes sure everything is stored correctly. Migrations are like reorganising the cabinet without losing any files — you tell the clerk exactly how to move things around.",
+  points: [
+    { t: "@Database annotation", d: "@Database(entities = [Order::class, Employee::class], version = 3, exportSchema = true) — defines the schema version and all entity classes. exportSchema = true exports the schema to a JSON file for migration verification and version history tracking. Always increment version when schema changes." },
+    { t: "@Entity and primary keys", d: "@Entity(tableName = 'orders', indices = [Index(value = ['status', 'created_at'])]) — maps Kotlin class to a database table. @PrimaryKey(autoGenerate = true) for auto-increment IDs or @PrimaryKey for UUIDs. @ColumnInfo(name = 'created_at') maps field names to snake_case column names." },
+    { t: "@Dao interface", d: "@Dao annotates the query interface — Room generates the implementation at compile-time. @Insert(onConflict = OnConflictStrategy.REPLACE) for upserts. @Update, @Delete take entity instances. @Query for custom SQL. @Transaction for multi-step operations. Returns suspend fun for one-shot, Flow<T> for reactive." },
+    { t: "Flow from Room", d: "Returning Flow<List<Order>> from a DAO query makes Room emit a new list every time the underlying table changes. Collect in ViewModel with stateIn(). No polling needed — Room uses SQLite's invalidation tracker to push updates. Combine multiple DAOs' Flows with combine() for derived state." },
+    { t: "TypeConverters", d: "@TypeConverter converts non-primitive types SQLite can't store directly — List<String>, enums, dates, custom objects. @TypeConverters(Converters::class) on the @Database class registers them globally. Prefer storing enums as strings (not ints) — string is stable if enum ordering changes." },
+    { t: "Migrations", d: "val MIGRATION_2_3 = object : Migration(2, 3) { override fun migrate(db: SupportSQLiteDatabase) { db.execSQL('ALTER TABLE orders ADD COLUMN priority INTEGER NOT NULL DEFAULT 0') } }. Add to .addMigrations(MIGRATION_2_3) in the database builder. Missing migrations force a destructive fallback — all data lost." },
+    { t: "Transactions with @Transaction", d: "@Transaction on a DAO function wraps all contained database operations in a single SQLite transaction — all succeed or all rollback. Essential for multi-table writes (create order + create order items atomically). Also required when querying entities with @Relation to prevent inconsistent reads." },
+    { t: "@Relation for one-to-many", d: "data class OrderWithItems(val order: Order, val items: List<OrderItem>) — use @Relation(parentColumn = 'id', entityColumn = 'order_id') on the items field. Annotate the DAO function with @Transaction — Room issues multiple queries internally and @Transaction ensures data consistency." },
+    { t: "@Embedded for composition", d: "@Embedded embeds all columns of a nested object directly into the parent table row — no join needed. Useful for value objects like Address embedded into Employee. Use prefix parameter for column name disambiguation: @Embedded(prefix = 'billing_') for multiple embedded instances." },
+    { t: "Conflict strategies", d: "OnConflictStrategy.REPLACE — delete old row, insert new (triggers cascade deletions). IGNORE — skip if conflict. ABORT — rollback transaction (default). FAIL — fail but don't rollback outer transaction. For offline-first upserts, REPLACE is common but watch for cascade delete side effects on related tables." },
+    { t: "Testing Room", d: "Use in-memory database for unit tests: Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build(). No migration needed. Run DAO tests with runTest (coroutine test). For migration testing, use MigrationTestHelper with schema export files to verify migrations are correct before shipping." },
+    { t: "Room performance tips", d: "Add indices on columns used in WHERE and JOIN clauses. Use @Query with specific columns instead of SELECT * to reduce memory. Batch inserts with a single @Insert call taking List<T>. Use LIMIT in queries for pagination. Avoid accessing Room on the main thread — Room enforces this by default (allowMainThreadQueries() is test-only)." }
+  ],
+  whatIs: "Room is Android's official SQLite ORM — it provides compile-time SQL verification, type-safe queries, and reactive data streams via Flow. @Entity maps Kotlin classes to tables, @Dao defines typed queries, @Database assembles the schema. TypeConverters handle complex types, Migrations preserve user data across schema changes, and @Relation/@Embedded model complex relationships without manual joins in application code.",
+  realWorld: "Hazira Khata (school attendance/management app) stores student attendance records locally in Room for 500+ schools with intermittent connectivity. Migrations are critical — when a school added a 'late arrival' status, MIGRATION_1_2 added the column with a DEFAULT of 'present' to preserve historical records. The attendance DAO returns Flow<List<AttendanceRecord>> scoped to today's date — the UI updates instantly when the teacher marks a student present, even before the sync completes.",
+  code: `// 1. Entity definition
+@Entity(
+    tableName = "orders",
+    indices = [
+        Index(value = ["status"]),
+        Index(value = ["assigned_to_id", "created_at"])
+    ]
+)
+data class OrderEntity(
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "status") val status: String, // stored as string, not int
+    @ColumnInfo(name = "assigned_to_id") val assignedToId: String?,
+    @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "priority") val priority: Int = 0,
+    @ColumnInfo(name = "tags") val tags: List<String> = emptyList() // TypeConverter needed
+)
+
+// 2. TypeConverter for List<String>
+class Converters {
+    @TypeConverter
+    fun fromStringList(value: List<String>): String =
+        Json.encodeToString(ListSerializer(String.serializer()), value)
+
+    @TypeConverter
+    fun toStringList(value: String): List<String> =
+        Json.decodeFromString(ListSerializer(String.serializer()), value)
+}
+
+// 3. DAO interface
+@Dao
+interface OrderDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertAll(orders: List<OrderEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(order: OrderEntity)
+
+    @Update
+    suspend fun update(order: OrderEntity)
+
+    @Delete
+    suspend fun delete(order: OrderEntity)
+
+    @Query("SELECT * FROM orders ORDER BY created_at DESC")
+    fun observeAll(): Flow<List<OrderEntity>>
+
+    @Query("SELECT * FROM orders WHERE id = :id")
+    suspend fun getById(id: String): OrderEntity?
+
+    @Query("SELECT * FROM orders WHERE status = :status AND assigned_to_id = :employeeId")
+    fun observeByStatusAndEmployee(status: String, employeeId: String): Flow<List<OrderEntity>>
+
+    @Transaction
+    @Query("SELECT * FROM orders WHERE id = :orderId")
+    suspend fun getOrderWithItems(orderId: String): OrderWithItems?
+
+    @Query("DELETE FROM orders WHERE status = 'completed' AND created_at < :cutoffTime")
+    suspend fun deleteOldCompleted(cutoffTime: Long): Int
+}
+
+// 4. Relations
+@Entity(tableName = "order_items")
+data class OrderItemEntity(
+    @PrimaryKey val itemId: String,
+    @ColumnInfo(name = "order_id") val orderId: String,
+    val name: String,
+    val quantity: Int
+)
+
+data class OrderWithItems(
+    @Embedded val order: OrderEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "order_id"
+    )
+    val items: List<OrderItemEntity>
+)
+
+// 5. Database class
+@Database(
+    entities = [OrderEntity::class, OrderItemEntity::class],
+    version = 3,
+    exportSchema = true
+)
+@TypeConverters(Converters::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun orderDao(): OrderDao
+}
+
+// 6. Migration
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            "ALTER TABLE orders ADD COLUMN priority INTEGER NOT NULL DEFAULT 0"
+        )
+        db.execSQL(
+            "CREATE INDEX IF NOT EXISTS index_orders_status ON orders(status)"
+        )
+    }
+}
+
+// 7. Database builder (in Hilt module)
+@Provides @Singleton
+fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
+    Room.databaseBuilder(context, AppDatabase::class.java, "fieldops.db")
+        .addMigrations(MIGRATION_2_3)
+        .fallbackToDestructiveMigrationOnDowngrade()
+        .build()
+
+// 8. Atomic multi-table write (manual transaction)
+@Dao
+interface OrderTransactionDao {
+    @Transaction
+    suspend fun insertOrderWithItems(order: OrderEntity, items: List<OrderItemEntity>) {
+        upsert(order)
+        upsertItems(items)
+        // If either fails, SQLite rolls back both — atomicity guaranteed
+    }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(order: OrderEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertItems(items: List<OrderItemEntity>)
+}
+
+// 9. Testing Room in-memory
+@RunWith(AndroidJUnit4::class)
+class OrderDaoTest {
+    private lateinit var db: AppDatabase
+    private lateinit var dao: OrderDao
+
+    @Before
+    fun setup() {
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            AppDatabase::class.java
+        ).build()
+        dao = db.orderDao()
+    }
+
+    @After fun teardown() = db.close()
+
+    @Test
+    fun upsertAndObserve() = runTest {
+        val order = OrderEntity("1", "Fix pump", "open", null)
+        dao.upsert(order)
+        val result = dao.observeAll().first()
+        assertThat(result).hasSize(1)
+        assertThat(result[0].title).isEqualTo("Fix pump")
+    }
+}`,
+  funFact: "Room's compile-time SQL verification works by running your @Query SQL against a virtual in-memory SQLite during the annotation processing phase of your build. If you have a typo in a column name, your app won't compile — not crash at runtime. This feature alone prevents a class of bugs that affected millions of users in the SQLite-direct era.",
+  quiz: [
+    { q: "Why must @Transaction be added to a DAO function that queries an entity with @Relation?", opts: ["@Transaction is required by Room's annotation processor for all @Relation queries to compile", "Without @Transaction, Room issues multiple separate queries that can return inconsistent data if another thread modifies the database between queries", "@Transaction enables Room to use JOIN instead of multiple SELECT statements for better performance", "Without @Transaction, Flow from @Relation queries does not emit updates"], ans: 1 },
+    { q: "What is the consequence of missing a Migration when incrementing the Room database version?", opts: ["Room automatically generates a migration by comparing schema versions", "The app crashes on launch with an IllegalStateException unless fallbackToDestructiveMigration() is configured, in which case all user data is deleted", "Room rolls back to the previous version and shows a warning in Logcat", "Room applies the schema change silently and existing data remains intact"], ans: 1 },
+    { q: "Why should enum values stored in Room be converted to Strings rather than their ordinal Int?", opts: ["SQLite cannot store integer values natively — only text", "If the enum order changes (a new value is inserted between existing ones), ordinal-based storage silently corrupts historical data; String storage is stable regardless of enum reordering", "String storage is faster than integer storage in SQLite on Android", "Room's @TypeConverter annotation does not support Int return types"], ans: 1 },
+    { q: "What does OnConflictStrategy.REPLACE do when a row with the same primary key already exists?", opts: ["It updates only the changed columns of the existing row", "It deletes the existing row completely and inserts the new one — this can trigger cascade deletions on related tables", "It throws a SQLiteConstraintException that you must catch", "It merges the old and new row by keeping non-null values from both"], ans: 1 },
+    { q: "How does Room notify a Flow<List<T>> collector that the underlying data has changed?", opts: ["It polls the database on a background thread every 500ms by default", "Room uses SQLite's invalidation tracker — it registers which tables the query touches and emits a new result whenever any of those tables are modified", "The caller must call dao.refresh() to trigger a new emission", "Room uses Android's ContentObserver mechanism to detect table changes"], ans: 1 },
+    { q: "What is the purpose of exportSchema = true in @Database?", opts: ["It enables Room to export the database file to external storage for backup", "It generates a JSON schema history file per version, enabling MigrationTestHelper to verify migrations are correct before shipping", "It allows other apps to read the database schema via ContentProvider", "It enables Room to auto-generate migrations when the schema changes"], ans: 1 },
+    { q: "What is the difference between @Embedded and @Relation in Room?", opts: ["@Embedded is for one-to-many relationships; @Relation is for one-to-one", "@Embedded stores nested object columns in the same table row (no join); @Relation fetches related entities from a different table using a separate query", "@Embedded requires a foreign key; @Relation does not", "@Relation is faster than @Embedded because it uses a SQLite JOIN internally"], ans: 1 },
+    { q: "Which Room database builder method should be used for DAO unit tests?", opts: ["Room.databaseBuilder() with a test-specific database name", "Room.inMemoryDatabaseBuilder() — creates a database that lives only in memory, requires no cleanup between test classes, and supports all Room features", "Room.testDatabaseBuilder() — a special builder for test environments", "Room.databaseBuilder() with allowMainThreadQueries() enabled"], ans: 1 }
+  ],
+  challenge: "Design a Room schema for a school attendance system: Student (id, name, classId), Class (id, name, teacherId), AttendanceRecord (id, studentId, date, status). Write the @Dao with: (1) a Flow query returning all students with their attendance for today, (2) a @Transaction function that marks an entire class as present atomically, (3) a Migration that adds a 'note' column to AttendanceRecord. Write the in-memory test for the transaction function.",
+  resources: [
+    { type: "docs", title: "Room Persistence Library — Android Developers", url: "https://developer.android.com/training/data-storage/room", source: "Android Developers" },
+    { type: "docs", title: "Defining relationships in Room", url: "https://developer.android.com/training/data-storage/room/relationships", source: "Android Developers" },
+    { type: "docs", title: "Testing Room migrations", url: "https://developer.android.com/training/data-storage/room/migrating-db-versions", source: "Android Developers" },
+    { type: "article", title: "Room database — Advanced patterns and performance", url: "https://medium.com/androiddevelopers/room-flow-273acffe5b57", source: "Android Developers Medium" },
+    { type: "article", title: "Room TypeConverters — Best practices", url: "https://proandroiddev.com/room-database-typeconverters-best-practices-4a5b2f2f8e8d", source: "ProAndroidDev" }
+  ],
+  eli5: "Room is like a magical notebook for your app. You draw boxes on the pages (@Entity — like drawing a table). You write down rules for how to add, remove, and find things (@Dao — like a table of contents with instructions). When the notebook is old and you need more boxes, you write an upgrade note (Migration) so you don't rip out the old pages. And when you write on one page, anyone watching that page automatically sees the new writing right away (Flow).",
+  codeWalkthrough: [
+    "OrderEntity's tags field is List<String> — SQLite has no list type so the Converters TypeConverter serialises it to JSON string on write and deserialises on read.",
+    "@Index on ['assigned_to_id', 'created_at'] creates a composite index — queries filtering by both columns use the index instead of a full table scan.",
+    "observeAll() returns Flow<List<OrderEntity>> — the absence of 'suspend' is intentional; Flow is lazy and starts collecting when subscribed.",
+    "observeByStatusAndEmployee takes primitive parameters — Room validates these at compile time, catching typos in parameter names before the app ships.",
+    "@Transaction on getOrderWithItems ensures Room's two internal queries (one for OrderEntity, one for OrderItemEntity) run atomically.",
+    "@Relation parentColumn='id' entityColumn='order_id' — Room matches order.id to orderItem.order_id and groups items under their parent order automatically.",
+    "MIGRATION_2_3 uses ALTER TABLE — SQLite supports adding columns but not removing or renaming them (without rebuilding the table), so migrations must plan accordingly.",
+    "fallbackToDestructiveMigrationOnDowngrade() only triggers on version downgrade (reinstalling an older APK) — it does NOT affect normal upgrades.",
+    "insertOrderWithItems is annotated @Transaction and calls two @Insert DAOs — if the second insert fails, SQLite rolls back the first insert automatically.",
+    "inMemoryDatabaseBuilder creates a database backed by memory — all data is lost when the database is closed, making teardown trivial and tests fully isolated."
+  ],
+  bugChallenge: {
+    code: `// Find 4 bugs in this Room setup
+@Entity(tableName = "employees")
+data class EmployeeEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val department: Department,  // Bug 1
+    val skills: List<String>     // Bug 2
+)
+
+@Dao
+interface EmployeeDao {
+    @Insert
+    suspend fun insert(employee: EmployeeEntity)
+
+    @Query("SELECT * FROM employees WHERE departement = :dept")  // Bug 3
+    fun getByDepartment(dept: String): List<EmployeeEntity>      // Bug 4
+}`,
+    hint: "Look at unsupported field types, SQL typos, and missing reactive return type.",
+    answer: "Bug 1: Department is an enum (or custom class) — Room cannot store it directly. A @TypeConverter is needed to convert it to a String or Int for SQLite storage. Without a converter, Room throws a compile-time error: 'Cannot figure out how to save this field into database'. Bug 2: List<String> is not a SQLite-native type — same issue as Bug 1. A @TypeConverter that serialises/deserialises the list (e.g., as JSON) must be registered on the @Database with @TypeConverters(Converters::class). Bug 3: SQL typo — 'departement' has an extra 'e'. Room validates SQL at compile time against the actual schema, so this would be caught as a compile error if the column is named 'department'. However if you intended to store the enum as a string column named 'department', this typo in the query causes a compile failure. Fix: correct spelling to 'department'. Bug 4: getByDepartment() returns List<EmployeeEntity> (not a Flow or suspend fun) — this means Room will execute the query on whatever thread calls it. If called from the main thread, Room throws IllegalStateException ('Cannot access database on the main thread'). Fix: either make it suspend fun List<EmployeeEntity> for one-shot or Flow<List<EmployeeEntity>> for reactive updates."
+  },
+  difficulty: "advanced",
+  prereqs: [9, 24]
+},
+{
+  id: 29,
+  title: "DataStore vs SharedPreferences vs Room — When to Choose",
+  subtitle: "Pick the right storage primitive for every use case — preferences, proto, or relational",
+  analogy: "SharedPreferences is a Post-it note on your fridge — quick, easy, but chaotic when you have too many. Preferences DataStore is a well-organised sticky note board with labeled sections and a lock so two people can't write at the same time. Proto DataStore is a typed filing form — you define exactly what fields exist and their types, no surprises. Room is a full filing cabinet system — the right tool when Post-it notes and forms aren't enough.",
+  points: [
+    { t: "SharedPreferences problems", d: "Synchronous reads can block the main thread. No type safety — getInt() on a String key returns the default silently. No Flow support natively. commit() is synchronous, apply() is asynchronous but can lose data on process kill. No transactions — concurrent writes can corrupt. Officially in maintenance mode — no new features." },
+    { t: "Preferences DataStore", d: "Jetpack DataStore backed by Kotlin coroutines and Flow. Type-safe key declarations with Preferences.Key<T> (stringPreferencesKey, intPreferencesKey, etc.). Fully asynchronous — no blocking reads. Atomic writes via transactions. Survives process kills without data loss. Single-file key-value store, same use cases as SharedPreferences but correctly implemented." },
+    { t: "Proto DataStore", d: "Uses Protocol Buffers (protobuf) for strongly typed storage. Define your schema in a .proto file — the compiler generates Kotlin data classes. No stringly-typed keys — access via generated properties. Smaller file size than JSON, binary format. Best for complex structured preferences with nested objects. Requires protobuf dependency and .proto schema setup." },
+    { t: "When to use Preferences DataStore", d: "Simple key-value pairs: theme preference, language selection, first-launch flag, feature flags, last sync timestamp, notification settings. Replaces all SharedPreferences use cases. Not for: large datasets, relational data, frequently queried/filtered data, data that needs to be shared across processes (use ContentProvider + Room instead)." },
+    { t: "When to use Proto DataStore", d: "Structured user preferences that map naturally to a typed schema: UserSettings with nested fields (display options, notification prefs, privacy settings). Team enforces a contract for settings structure. Binary protobuf is more efficient than SharedPreferences' XML. Worth the setup cost when settings have 10+ fields with nested structure." },
+    { t: "When to use Room", d: "Any data that is: a list (more than one item), queried/filtered, relational (joins), paginated, updated independently per record, needed offline with sync. Examples: cached API responses, user-generated content, transaction history, attendance records, chat messages. Room is not overkill for medium datasets — it's the right tool." },
+    { t: "Reading from DataStore", d: "dataStore.data returns Flow<Preferences> — map to extract typed values. val themeFlow = dataStore.data.map { prefs -> prefs[THEME_KEY] ?: 'system' }. Collect in ViewModel with stateIn(). Never call dataStore.data.first() on the main thread — use withContext(IO) or let Flow handle it." },
+    { t: "Writing to DataStore", d: "dataStore.edit { prefs -> prefs[THEME_KEY] = 'dark' } — edit is a suspend function wrapping an atomic transaction. If you need to update multiple keys atomically, do it inside a single edit {} block — all changes commit together or not at all." },
+    { t: "Migrating from SharedPreferences to DataStore", d: "Use SharedPreferencesMigration — pass the SharedPreferences name to DataStore builder. DataStore reads existing SharedPreferences data on first access and migrates it automatically. After successful migration, the SharedPreferences file is deleted. Migration runs exactly once." },
+    { t: "Performance comparison", d: "SharedPreferences: synchronous reads (can block main thread ~1-5ms), XML parsing on init. DataStore: async IO only, Dispatchers.IO managed internally, no main thread risk. Room: SQLite queries on IO thread, efficient with indices. For 10 preference keys, Preferences DataStore and SharedPreferences are comparable in speed; DataStore wins on correctness and safety." },
+    { t: "Multi-process caution", d: "Neither SharedPreferences nor DataStore is safe for multi-process access (e.g., app + widget + service in separate processes). For multi-process data sharing, use a ContentProvider backed by Room. DataStore does support a multi-process variant (MultiProcessDataStore) added in 1.1.0 but requires explicit enablement." },
+    { t: "DataStore singleton pattern", d: "Instantiate DataStore once per process — use a top-level property delegate or inject via Hilt @Singleton. Creating multiple DataStore instances pointing to the same file causes data corruption. The by preferencesDataStore(name) property delegate on Context is the canonical approach and handles singleton enforcement automatically." }
+  ],
+  whatIs: "Android provides three key-value/structured storage primitives: SharedPreferences (synchronous XML, legacy), Preferences DataStore (async Flow-based key-value, SharedPrefs replacement), and Proto DataStore (typed protobuf schema, structured preferences). Room handles relational data. Choosing correctly means matching the data's shape, size, and access pattern to the right tool — key-value, typed schema, or relational.",
+  realWorld: "In Hazira Khata, the teacher's selected school (a single String ID) and theme preference are stored in Preferences DataStore — simple key-value, async, replaces SharedPreferences with zero risk of main thread blocking on older devices. The actual attendance records are in Room — they're a list, queried by date and class, and synced from Firebase. User profile preferences with 15+ nested notification settings use Proto DataStore with a generated UserSettings proto class for type safety.",
+  code: `// 1. Preferences DataStore — setup and usage
+// Single instance via property delegate (enforces singleton)
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_settings")
+
+// Key declarations
+object PreferencesKeys {
+    val THEME = stringPreferencesKey("theme")
+    val SELECTED_SCHOOL_ID = stringPreferencesKey("selected_school_id")
+    val NOTIFICATIONS_ENABLED = booleanPreferencesKey("notifications_enabled")
+    val LAST_SYNC_TIMESTAMP = longPreferencesKey("last_sync_ts")
+}
+
+// Repository wrapping DataStore
+class UserPreferencesRepository @Inject constructor(
+    private val dataStore: DataStore<Preferences>
+) {
+    // Reading — returns Flow for reactive UI
+    val theme: Flow<String> = dataStore.data
+        .catch { e ->
+            if (e is IOException) emit(emptyPreferences()) else throw e
+        }
+        .map { prefs -> prefs[PreferencesKeys.THEME] ?: "system" }
+
+    val selectedSchoolId: Flow<String?> = dataStore.data
+        .map { prefs -> prefs[PreferencesKeys.SELECTED_SCHOOL_ID] }
+
+    // Writing — suspend function, atomic
+    suspend fun setTheme(theme: String) {
+        dataStore.edit { prefs ->
+            prefs[PreferencesKeys.THEME] = theme
+        }
+    }
+
+    // Atomic multi-key update
+    suspend fun updateSchoolAndSync(schoolId: String, syncTimestamp: Long) {
+        dataStore.edit { prefs ->
+            prefs[PreferencesKeys.SELECTED_SCHOOL_ID] = schoolId
+            prefs[PreferencesKeys.LAST_SYNC_TIMESTAMP] = syncTimestamp
+            // Both keys commit together atomically
+        }
+    }
+}
+
+// 2. Proto DataStore — .proto schema
+// File: user_settings.proto
+// syntax = "proto3";
+// option java_package = "com.hazirakhata.proto";
+// message UserSettings {
+//   string theme = 1;
+//   bool notifications_enabled = 2;
+//   NotificationConfig notification_config = 3;
+// }
+// message NotificationConfig {
+//   bool daily_reminder = 1;
+//   int32 reminder_hour = 2;
+// }
+
+// Serializer for Proto DataStore
+object UserSettingsSerializer : Serializer<UserSettings> {
+    override val defaultValue: UserSettings = UserSettings.getDefaultInstance()
+    override suspend fun readFrom(input: InputStream): UserSettings =
+        UserSettings.parseFrom(input)
+    override suspend fun writeTo(t: UserSettings, output: OutputStream) =
+        t.writeTo(output)
+}
+
+// Proto DataStore usage
+val Context.userSettingsDataStore by dataStore(
+    fileName = "user_settings.pb",
+    serializer = UserSettingsSerializer
+)
+
+// Reading with type safety — no string keys!
+val notificationHour: Flow<Int> = context.userSettingsDataStore.data
+    .map { settings -> settings.notificationConfig.reminderHour }
+
+// Writing
+suspend fun setReminderHour(hour: Int) {
+    context.userSettingsDataStore.updateData { current ->
+        current.toBuilder()
+            .setNotificationConfig(
+                current.notificationConfig.toBuilder().setReminderHour(hour).build()
+            )
+            .build()
+    }
+}
+
+// 3. Migration from SharedPreferences to DataStore
+val MIGRATION = SharedPreferencesMigration(context, "legacy_prefs") { prefs, currentData ->
+    // Map old SharedPreferences keys to DataStore keys
+    if (prefs.contains("theme_key")) {
+        currentData.toMutablePreferences().apply {
+            set(PreferencesKeys.THEME, prefs.getString("theme_key", "system") ?: "system")
+        }.toPreferences()
+    } else {
+        currentData
+    }
+}
+
+// DataStore builder with migration
+val dataStore = PreferenceDataStoreFactory.create(
+    migrations = listOf(MIGRATION),
+    produceFile = { context.preferencesDataStoreFile("user_settings") }
+)
+
+// 4. Hilt module
+@Module
+@InstallIn(SingletonComponent::class)
+object DataStoreModule {
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        context.dataStore
+}`,
+  funFact: "SharedPreferences was introduced in Android 1.0 (2008) and has barely changed since. The data corruption bugs from concurrent writes were documented by Google engineers in 2019, leading to DataStore's creation. Despite DataStore's release in 2020, SharedPreferences still exists in millions of apps because migrations are risky — a reminder that in Android, nothing ever truly disappears.",
+  quiz: [
+    { q: "What is the primary correctness advantage of Preferences DataStore over SharedPreferences?", opts: ["DataStore stores data in a SQLite database which is more reliable than XML", "DataStore is fully asynchronous (coroutines + Flow), preventing main thread blocking and providing atomic writes that survive process kills", "DataStore automatically encrypts all stored values unlike SharedPreferences", "DataStore supports storing complex objects natively without TypeConverters"], ans: 1 },
+    { q: "When is Proto DataStore preferable to Preferences DataStore?", opts: ["Always — Proto DataStore is strictly better in every scenario", "When you need structured, strongly typed preferences with nested objects and want compile-time schema validation via Protocol Buffers", "When the app targets API level below 26 where Preferences DataStore is unavailable", "When you need to share preferences across multiple apps on the same device"], ans: 1 },
+    { q: "What happens when SharedPreferencesMigration is added to a DataStore builder?", opts: ["DataStore reads the SharedPreferences file on every app launch to check for changes", "DataStore reads and migrates existing SharedPreferences data on first access, then deletes the SharedPreferences file — migration runs exactly once", "The SharedPreferences file is kept in sync with DataStore for backward compatibility", "All SharedPreferences keys are automatically mapped to DataStore keys by name"], ans: 1 },
+    { q: "Why should you never create multiple DataStore instances pointing to the same file?", opts: ["DataStore enforces a file lock that causes ANR when two instances try to write simultaneously", "Multiple instances operate independently with separate in-memory caches, causing diverging state and potential data corruption on concurrent writes", "The second DataStore instance will delete the first instance's data on initialisation", "DataStore's Flow will stop emitting updates if more than one instance is active"], ans: 1 },
+    { q: "Which storage solution is appropriate for caching a list of 500 API responses that need filtering and sorting?", opts: ["Proto DataStore — it handles structured data efficiently", "Preferences DataStore — it can store serialised JSON lists", "Room — it handles lists, filtering (WHERE clauses), sorting (ORDER BY), and indexing correctly", "SharedPreferences — serialise the list to a JSON string and store under one key"], ans: 2 },
+    { q: "How should you handle an IOException when reading from DataStore's .data Flow?", opts: ["Wrap the entire ViewModel in a try-catch block", "Use .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e } in the Flow pipeline to emit defaults on IO errors without crashing", "Use dataStore.data.firstOrNull() which returns null on IOException", "IOException cannot occur when reading from DataStore — only on writes"], ans: 1 },
+    { q: "What is the correct way to update multiple DataStore keys that must change together atomically?", opts: ["Call dataStore.edit {} once for each key — DataStore batches consecutive edits automatically", "Update all keys inside a single dataStore.edit {} block — all changes in one edit commit together or not at all", "Use a DataStore transaction object obtained from dataStore.beginTransaction()", "Write a custom Serializer that handles multi-key updates as a single write operation"], ans: 1 },
+    { q: "Is DataStore safe for multi-process access (e.g., app process + widget process)?", opts: ["Yes — DataStore uses file locking to ensure safe multi-process access by default", "No — standard DataStore is single-process only; use MultiProcessDataStore (added in 1.1.0) or a ContentProvider backed by Room for multi-process scenarios", "Yes — DataStore's Flow ensures all processes receive updates via Android's Binder mechanism", "No — multi-process data access requires SQLite directly, not any Jetpack storage library"], ans: 1 }
+  ],
+  challenge: "Audit an existing Android app's SharedPreferences usage. Categorise each use: (1) simple key-value preference → migrate to Preferences DataStore, (2) structured nested settings → migrate to Proto DataStore, (3) lists or relational data incorrectly stored as JSON strings → migrate to Room. Write the SharedPreferencesMigration for category 1, and the .proto schema definition for category 2.",
+  resources: [
+    { type: "docs", title: "DataStore — Android Developers Guide", url: "https://developer.android.com/topic/libraries/architecture/datastore", source: "Android Developers" },
+    { type: "docs", title: "Migrate from SharedPreferences to DataStore", url: "https://developer.android.com/topic/libraries/architecture/datastore/migrate-from-sharedpreferences", source: "Android Developers" },
+    { type: "docs", title: "Proto DataStore — Protocol Buffers setup", url: "https://developer.android.com/topic/libraries/architecture/datastore/proto-datastore", source: "Android Developers" },
+    { type: "article", title: "SharedPreferences vs DataStore — The full migration guide", url: "https://medium.com/androiddevelopers/datastore-and-dependencies-4571bb384940", source: "Android Developers Medium" },
+    { type: "article", title: "When to use Room vs DataStore — Decision guide", url: "https://proandroiddev.com/room-vs-datastore-when-to-choose-which-storage-solution-8e9c0c7e2a1f", source: "ProAndroidDev" }
+  ],
+  eli5: "Imagine storing things at home. SharedPreferences is hiding stuff under your mattress — quick but messy and dangerous if two people try at the same time. Preferences DataStore is a tidy bedside drawer with labeled compartments — same stuff, but organised and safe. Proto DataStore is a typed organiser where each slot only fits exactly one thing (your phone charger, your watch, your keys) — no accidentally putting keys in the phone slot. Room is the whole wardrobe — right tool when your bedside drawer doesn't cut it.",
+  codeWalkthrough: [
+    "by preferencesDataStore(name) is a Kotlin property delegate on Context — it ensures only one DataStore instance is created per Context, preventing the multi-instance corruption bug.",
+    "PreferencesKeys groups all key declarations — stringPreferencesKey, booleanPreferencesKey etc. create typed keys; using the wrong type causes a ClassCastException at runtime.",
+    "dataStore.data.catch { e -> if (e is IOException) emit(emptyPreferences()) } — this pattern gracefully handles file read errors by emitting empty preferences instead of crashing the app.",
+    "map { prefs -> prefs[THEME_KEY] ?: 'system' } transforms the raw Preferences into a typed value — the ?: provides the default when the key has never been written.",
+    "dataStore.edit { prefs -> ... } is a suspend function — it writes atomically to a temporary file then renames it, ensuring the write is never half-complete.",
+    "Updating SELECTED_SCHOOL_ID and LAST_SYNC_TIMESTAMP in the same edit {} block ensures both values are always in sync — no state where one is new and the other is stale.",
+    "UserSettingsSerializer implements the Serializer interface — readFrom parses the protobuf binary stream, writeTo serialises back; the defaultValue is used when no file exists yet.",
+    "SharedPreferencesMigration receives the old prefs and current DataStore data — you manually map old string keys to new typed DataStore keys in the lambda.",
+    "The migration lambda runs once on first DataStore access — after successful migration, DataStore deletes the SharedPreferences file automatically.",
+    "Hilt provides DataStore as @Singleton — matching the singleton contract enforced by the by preferencesDataStore delegate, ensuring consistent single-instance access throughout the app."
+  ],
+  bugChallenge: {
+    code: `// Find 3 bugs in this DataStore usage
+// UserPreferencesRepo.kt
+class UserPreferencesRepo(private val context: Context) {
+
+    // Bug 1
+    private fun getDataStore() = PreferenceDataStoreFactory.create(
+        produceFile = { context.preferencesDataStoreFile("user_prefs") }
+    )
+
+    val theme: Flow<String> = getDataStore().data
+        .map { prefs -> prefs[stringPreferencesKey("theme")] ?: "system" }
+
+    suspend fun setTheme(newTheme: String) {
+        getDataStore().edit { prefs ->    // Bug 2
+            prefs[stringPreferencesKey("theme")] = newTheme
+        }
+    }
+
+    fun getThemeSync(): String {         // Bug 3
+        return runBlocking {
+            getDataStore().data.first()[stringPreferencesKey("theme")] ?: "system"
+        }
+    }
+}`,
+    hint: "Look at DataStore instantiation, key object equality, and blocking reads.",
+    answer: "Bug 1: getDataStore() creates a NEW DataStore instance every time it is called — this is the critical multi-instance bug. Each instance has its own in-memory cache, so reads from one instance do not see writes from another. The theme Flow and setTheme() are operating on different instances and will never be consistent. Fix: create DataStore once as a property (val dataStore = ...) or use the by preferencesDataStore delegate on Context. Bug 2: Follows from Bug 1 — setTheme() creates yet another DataStore instance via getDataStore(). The edit to this third instance is written to disk, but the theme Flow (from a second instance) will never emit the new value because it's watching a different in-memory cache. Fix: use a single shared DataStore reference. Bug 3: getThemeSync() uses runBlocking to block the current thread — if called on the main thread (common for 'just get the current theme' use cases), it blocks the UI thread during disk IO, causing potential ANR. DataStore was designed to eliminate this pattern. Fix: expose theme as a Flow and collect it in the ViewModel with stateIn(), or use a suspend function if a one-shot read is truly needed, and always call it from a background dispatcher."
+  },
+  difficulty: "intermediate",
+  prereqs: [28]
+},
+{
+  id: 30,
+  title: "Offline-First Sync, Caching, Conflict Resolution",
+  subtitle: "The senior Android differentiator: build apps that work perfectly without internet and sync reliably when connected",
+  analogy: "Offline-first is like a doctor's paper chart system in a hospital with spotty WiFi. The doctor writes everything on the paper chart immediately (Room) — no waiting for the network. When WiFi comes back, a nurse batch-uploads all charts to the central system (server sync). If two doctors updated the same patient chart offline (conflict), there's a triage protocol: newest timestamp wins for vital signs, but a human must resolve conflicting diagnoses (manual merge). The hospital never stops working because of internet problems.",
+  points: [
+    { t: "Offline-first principle", d: "The app reads from and writes to local storage (Room) first — the network is an optimisation, not a requirement. UI always reflects local state. Network sync happens in the background, asynchronously. Users can create, update, and delete data with zero connectivity — changes are queued and synced when connection is available. This is the defining feature of enterprise field apps." },
+    { t: "Single source of truth (SSOT)", d: "Room is the SSOT — the UI ONLY reads from Room, never directly from the network response. The sync engine writes API responses to Room; Room's Flow automatically pushes updates to the UI. This architecture means the UI code doesn't need to know anything about network state — it just observes Room." },
+    { t: "Pull sync strategy", d: "App periodically requests all changes from the server since the last sync timestamp (delta sync). GET /orders?updated_since=1710000000. Server returns only changed records. Client upserts them into Room. Efficient for read-heavy data where the server is the authority. Used in Hazira Khata for school schedule sync — teachers pull the latest timetable on app open." },
+    { t: "Push sync strategy", d: "App immediately POSTs local changes to the server when connectivity is available. Changes are queued in a local sync_queue table when offline. WorkManager processes the queue when connectivity is restored. Used in BRAC field ops — field workers submit work orders offline; the queue ensures zero data loss even with hours of offline time." },
+    { t: "Delta sync with sync_version or timestamp", d: "Server maintains a monotonically increasing sync_version or last_updated_at per record. Client stores the last successful sync_version. On next sync, sends ?since_version=<last_version>. Server returns only records changed after that version. Avoids downloading the entire dataset on every sync. Critical for 10K+ record datasets." },
+    { t: "Optimistic updates", d: "Immediately reflect the user's action in Room (and thus the UI) before the network request completes. If the server confirms: keep the local state. If the server fails: rollback the local state and show an error. Creates a snappy UX — the user sees instant feedback. Used in Tixio for workspace card moves — the card moves instantly; if sync fails, it snaps back with an error toast." },
+    { t: "Conflict resolution — last-write-wins", d: "Each record has a server_updated_at timestamp. When a conflict is detected (local version and server version both changed), the record with the newer timestamp wins. Simple, deterministic, but can silently discard valid offline changes. Appropriate for most non-critical preferences and non-financial data." },
+    { t: "Conflict resolution — merge strategy", d: "Merge non-conflicting fields from both versions — the server version wins for fields it changed, the local version wins for fields only changed locally. Requires field-level change tracking (dirty flags per field or operation log). Complex to implement but preserves maximum user intent. Used in collaborative document editing." },
+    { t: "Conflict resolution — manual resolution", d: "When automatic resolution is impossible (e.g., both server and client deleted the same record, or both changed the same financial amount), surface the conflict to the user. Show 'Your version' vs 'Server version' with a 'Choose one' UI. Appropriate for financial transactions, healthcare records, legal documents." },
+    { t: "WorkManager for background sync", d: "WorkManager is the only correct solution for guaranteed background work on Android. Use NetworkConstraint to wait for connectivity. Periodic sync: PeriodicWorkRequest with 15-minute minimum interval. One-time queue flush: OneTimeWorkRequest triggered by ConnectivityManager NetworkCallback. Chain work: sync → notify → update UI via LiveData/Flow from Room." },
+    { t: "Network connectivity monitoring", d: "ConnectivityManager.registerNetworkCallback() with NetworkCapabilities.NET_CAPABILITY_INTERNET — monitors real internet connectivity, not just WiFi association. Emit connectivity state as a Flow using callbackFlow. Combine with sync logic: when connectivity is restored, trigger WorkManager one-time sync job. Handle the initial state (app may start offline)." },
+    { t: "Sync queue table pattern", d: "Create a pending_sync table in Room: (id, entityType, entityId, operation [INSERT/UPDATE/DELETE], payload JSON, attempts, created_at). When offline, write changes to both the entity table (for UI) and the pending_sync table (for later upload). WorkManager processes pending_sync on connectivity, retries with exponential backoff, marks entries as synced on success." }
+  ],
+  whatIs: "Offline-first architecture makes Room the single source of truth — all reads come from Room, all writes go to Room first, and background sync reconciles local and remote state. Push sync queues local changes for upload; pull sync fetches server changes via delta/timestamp. Conflict resolution strategies (last-write-wins, merge, manual) handle diverged state. WorkManager provides guaranteed background sync. This architecture is the key differentiator between junior and senior Android engineers in enterprise contexts.",
+  realWorld: "BRAC's field operations app serves 10,000+ field workers across Bangladesh — many work in areas with no connectivity for hours. The offline-first architecture means a field worker can submit 50 work orders completely offline. Each order is written to Room instantly (UI shows it as 'pending sync'). A Room sync_queue table holds the pending POST requests. When connectivity returns, WorkManager flushes the queue with retry logic. If the server rejects an order (validation error), the order is flagged in Room and the worker is notified. Tixio's real-time workspace sync uses optimistic updates — dragging a card updates Room immediately, then POSTs to the server; if the WebSocket confirms the change, the optimistic update stands; if there's a conflict (another user moved the same card), the server version wins and the card snaps to the server position.",
+  code: `// 1. Room entity with sync metadata
+@Entity(tableName = "work_orders")
+data class WorkOrderEntity(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val status: String,
+    val assignedToId: String?,
+    @ColumnInfo(name = "server_updated_at") val serverUpdatedAt: Long = 0L,
+    @ColumnInfo(name = "local_updated_at") val localUpdatedAt: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "sync_status") val syncStatus: String = SyncStatus.PENDING_UPLOAD.name,
+    @ColumnInfo(name = "is_deleted") val isDeleted: Boolean = false
+)
+
+enum class SyncStatus { SYNCED, PENDING_UPLOAD, PENDING_DELETE, CONFLICT }
+
+// 2. Pending sync queue table
+@Entity(tableName = "pending_sync")
+data class PendingSyncEntity(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @ColumnInfo(name = "entity_type") val entityType: String,
+    @ColumnInfo(name = "entity_id") val entityId: String,
+    val operation: String, // "INSERT", "UPDATE", "DELETE"
+    val payload: String,   // JSON of the entity
+    val attempts: Int = 0,
+    @ColumnInfo(name = "created_at") val createdAt: Long = System.currentTimeMillis()
+)
+
+// 3. Repository — offline-first pattern
+class WorkOrderRepository @Inject constructor(
+    private val dao: WorkOrderDao,
+    private val syncDao: PendingSyncDao,
+    private val api: WorkOrderApiService,
+    private val connectivityMonitor: ConnectivityMonitor
+) {
+    // UI always reads from Room — SSOT
+    fun observeOrders(): Flow<List<WorkOrder>> =
+        dao.observeAll()
+            .map { entities -> entities.filter { !it.isDeleted }.map(::toDomain) }
+
+    // Optimistic create — write to Room first, queue for sync
+    suspend fun createOrder(order: WorkOrder) {
+        val entity = toEntity(order).copy(syncStatus = SyncStatus.PENDING_UPLOAD.name)
+        dao.upsert(entity)
+        syncDao.insert(
+            PendingSyncEntity(
+                entityType = "work_order",
+                entityId = entity.id,
+                operation = "INSERT",
+                payload = Json.encodeToString(entity)
+            )
+        )
+        // If online, trigger immediate sync
+        if (connectivityMonitor.isConnected()) {
+            triggerSync()
+        }
+    }
+
+    // Soft delete — mark for deletion, filter in observeOrders()
+    suspend fun deleteOrder(orderId: String) {
+        dao.markDeleted(orderId, SyncStatus.PENDING_DELETE.name)
+        syncDao.insert(
+            PendingSyncEntity(
+                entityType = "work_order",
+                entityId = orderId,
+                operation = "DELETE",
+                payload = orderId
+            )
+        )
+    }
+
+    // Pull sync — delta fetch from server
+    suspend fun syncFromServer(lastSyncTimestamp: Long): SyncResult {
+        return try {
+            val response = api.getOrders(updatedSince = lastSyncTimestamp)
+            dao.upsertAll(response.orders.map(::toEntity))
+            SyncResult.Success(response.serverTimestamp)
+        } catch (e: NoConnectivityException) {
+            SyncResult.Skipped
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    // Push sync — flush pending queue to server
+    suspend fun flushPendingSync(): Int {
+        val pending = syncDao.getPending(limit = 50)
+        var successCount = 0
+        pending.forEach { syncItem ->
+            try {
+                when (syncItem.operation) {
+                    "INSERT", "UPDATE" -> {
+                        val entity = Json.decodeFromString<WorkOrderEntity>(syncItem.payload)
+                        val serverOrder = api.upsertOrder(entity.toApiModel())
+                        dao.upsert(entity.copy(
+                            syncStatus = SyncStatus.SYNCED.name,
+                            serverUpdatedAt = serverOrder.updatedAt
+                        ))
+                        syncDao.delete(syncItem.id)
+                        successCount++
+                    }
+                    "DELETE" -> {
+                        api.deleteOrder(syncItem.entityId)
+                        dao.hardDelete(syncItem.entityId)
+                        syncDao.delete(syncItem.id)
+                        successCount++
+                    }
+                }
+            } catch (e: ConflictException) {
+                // Server has a newer version — resolve conflict
+                resolveConflict(syncItem, e.serverEntity)
+            } catch (e: Exception) {
+                // Increment attempts, will retry on next sync
+                syncDao.incrementAttempts(syncItem.id)
+            }
+        }
+        return successCount
+    }
+
+    // Last-write-wins conflict resolution
+    private suspend fun resolveConflict(local: PendingSyncEntity, serverEntity: WorkOrderEntity) {
+        val localEntity = Json.decodeFromString<WorkOrderEntity>(local.payload)
+        if (serverEntity.serverUpdatedAt > localEntity.localUpdatedAt) {
+            // Server wins — overwrite local
+            dao.upsert(serverEntity.copy(syncStatus = SyncStatus.SYNCED.name))
+            syncDao.delete(local.id)
+        } else {
+            // Local is newer — flag as conflict for user review
+            dao.updateSyncStatus(localEntity.id, SyncStatus.CONFLICT.name)
+        }
+    }
+}
+
+// 4. WorkManager sync worker
+@HiltWorker
+class SyncWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted params: WorkerParameters,
+    private val repository: WorkOrderRepository,
+    private val prefs: UserPreferencesRepository
+) : CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        return try {
+            val lastSync = prefs.getLastSyncTimestamp()
+            val pullResult = repository.syncFromServer(lastSync)
+            val pushCount = repository.flushPendingSync()
+
+            if (pullResult is SyncResult.Success) {
+                prefs.setLastSyncTimestamp(pullResult.serverTimestamp)
+            }
+
+            Result.success(workDataOf("pushed" to pushCount))
+        } catch (e: Exception) {
+            if (runAttemptCount < 3) Result.retry() else Result.failure()
+        }
+    }
+
+    companion object {
+        fun buildPeriodicRequest(): PeriodicWorkRequest =
+            PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 1, TimeUnit.MINUTES)
+                .build()
+
+        fun buildImmediateRequest(): OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder<SyncWorker>()
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
+                .build()
+    }
+}
+
+// 5. Connectivity monitoring as Flow
+class ConnectivityMonitor @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
+    private val connectivityManager =
+        context.getSystemService(ConnectivityManager::class.java)
+
+    fun observeConnectivity(): Flow<Boolean> = callbackFlow {
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onCapabilitiesChanged(
+                network: Network,
+                caps: NetworkCapabilities
+            ) {
+                trySend(caps.hasCapability(NET_CAPABILITY_INTERNET))
+            }
+            override fun onLost(network: Network) { trySend(false) }
+        }
+        val request = NetworkRequest.Builder()
+            .addCapability(NET_CAPABILITY_INTERNET)
+            .build()
+        connectivityManager.registerNetworkCallback(request, callback)
+        // Emit initial state
+        trySend(isConnected())
+        awaitClose { connectivityManager.unregisterNetworkCallback(callback) }
+    }.distinctUntilChanged()
+
+    fun isConnected(): Boolean {
+        val caps = connectivityManager
+            .getNetworkCapabilities(connectivityManager.activeNetwork)
+        return caps?.hasCapability(NET_CAPABILITY_INTERNET) == true
+    }
+}`,
+  funFact: "WhatsApp's offline-first architecture for message queueing was one of the technical reasons Facebook acquired it for $19 billion in 2014. Messages sent while offline are queued locally and delivered with exactly-once semantics when connectivity returns — a deceptively hard problem. The engineers who built this are now the reference point for 'how offline-first should work'.",
+  quiz: [
+    { q: "In an offline-first architecture, where should the UI read its data from?", opts: ["Directly from the API response when online, from Room only when offline", "Always from Room (the single source of truth) — the sync engine writes API data to Room and Room's Flow updates the UI automatically", "From a ViewModel-level cache that combines API and Room data", "From SharedPreferences for speed, falling back to Room for larger datasets"], ans: 1 },
+    { q: "What is the purpose of a soft delete (isDeleted flag) in offline-first apps instead of immediately calling DELETE on Room?", opts: ["Soft deletes improve Room query performance by avoiding table fragmentation", "The user may be offline — a hard delete removes the local record before the server can be notified, making it impossible to sync the deletion; soft delete queues the operation for later", "Room does not support DELETE operations — isDeleted is the only way to remove records", "Soft deletes enable undo functionality which hard deletes cannot support"], ans: 1 },
+    { q: "What is delta sync and why is it essential for large datasets?", opts: ["Syncing only the changed records since the last sync timestamp, avoiding downloading the full dataset every time — critical when datasets have 10K+ records", "Splitting a large sync operation into smaller chunks processed in parallel", "Using binary diff compression to reduce the size of each record transferred", "Syncing only the fields that changed within a record rather than the entire record"], ans: 0 },
+    { q: "When should you use WorkManager's PeriodicWorkRequest vs OneTimeWorkRequest for sync?", opts: ["Always use PeriodicWorkRequest — it handles both scheduled and triggered sync", "PeriodicWorkRequest for scheduled background sync (e.g. every 15 min); OneTimeWorkRequest triggered by ConnectivityManager callback when network is restored for immediate queue flush", "OneTimeWorkRequest for all sync tasks — chain them to simulate periodic behaviour", "Use PeriodicWorkRequest only when the app is in the foreground; OneTimeWorkRequest for background sync"], ans: 1 },
+    { q: "What is an optimistic update and what must you implement to support it correctly?", opts: ["A database write that is optimised for speed using batch inserts", "Immediately reflecting the user's action in the local state (Room) before server confirmation, with rollback logic to revert if the server rejects the change", "A UI pattern that shows a loading skeleton while the real data loads", "Pre-fetching data before the user requests it based on predicted navigation patterns"], ans: 1 },
+    { q: "In last-write-wins conflict resolution, what does 'wins' mean and what is its main risk?", opts: ["The local version always wins because the user's intent is prioritised; risk is overwriting valid server changes", "The record with the newer timestamp is kept as the authoritative version; risk is silently discarding valid offline changes that happened to be older by clock", "The server version always wins; risk is overwriting all offline changes", "A random tiebreaker selects the winner when timestamps are equal; risk is non-deterministic behaviour"], ans: 1 },
+    { q: "Why should a pending sync queue track the number of retry attempts per item?", opts: ["Room requires a attempts column to enable @Update optimisation for frequently changed rows", "To implement exponential backoff and abandon items that fail repeatedly (e.g. after 5 attempts), preventing the queue from retrying permanently unresolvable errors", "WorkManager requires attempt tracking for its retry policy to function correctly", "Android's battery optimisation kills WorkManager jobs with too many retries — the counter prevents this"], ans: 1 },
+    { q: "Why use NET_CAPABILITY_INTERNET in ConnectivityManager.NetworkCallback instead of just checking for WiFi or cellular connection?", opts: ["NET_CAPABILITY_INTERNET is faster to check than WiFi/cellular state", "A device can be associated with a WiFi network that has no actual internet access (captive portal, no routing); NET_CAPABILITY_INTERNET verifies actual internet reachability", "NET_CAPABILITY_INTERNET is required by Android 12+ API; older APIs use WiFi/cellular checks", "WiFi and cellular checks require additional permissions that NET_CAPABILITY_INTERNET avoids"], ans: 1 }
+  ],
+  challenge: "Design and implement a complete offline-first sync system for a task management app: (1) Room schema with sync_status and pending_sync table, (2) repository with optimistic create/update/delete, (3) WorkManager worker that pushes pending changes and pulls server updates with delta sync, (4) ConnectivityMonitor Flow that triggers immediate sync on reconnection, (5) last-write-wins conflict resolution. Identify which parts would need to change if you upgraded to merge-based conflict resolution.",
+  resources: [
+    { type: "docs", title: "Offline-first apps with WorkManager — Android Developers", url: "https://developer.android.com/topic/libraries/architecture/workmanager", source: "Android Developers" },
+    { type: "docs", title: "Network connectivity monitoring — Android Developers", url: "https://developer.android.com/training/monitoring-device-state/connectivity-status-type", source: "Android Developers" },
+    { type: "article", title: "Offline-first Android: The complete guide", url: "https://proandroiddev.com/offline-first-android-complete-guide-2024-8e9a7f2b3c1d", source: "ProAndroidDev" },
+    { type: "docs", title: "Now in Android — offline-first reference implementation", url: "https://github.com/android/nowinandroid/blob/main/core/data/src/main/kotlin/com/google/samples/apps/nowinandroid/core/data/repository/OfflineFirstNewsRepository.kt", source: "GitHub" },
+    { type: "article", title: "Conflict resolution strategies for mobile sync", url: "https://medium.com/swlh/conflict-resolution-strategies-for-offline-mobile-apps-3f8a9c7e2b4d", source: "Medium" }
+  ],
+  eli5: "Imagine you're a delivery driver with a notebook and no phone signal. You write down every delivery in your notebook (Room) — you never wait for signal to do your job. When you get back to the depot with signal (WiFi), you send all your notes to the office (sync). If the office already updated a delivery record while you were offline (conflict), your manager checks who wrote it down more recently and uses that version. The app works the same way — it writes everything locally first, then figures out the internet stuff later.",
+  codeWalkthrough: [
+    "WorkOrderEntity includes syncStatus and isDeleted columns — these metadata fields drive the sync state machine without affecting business logic columns.",
+    "PendingSyncEntity stores the full JSON payload — this allows the sync worker to reconstruct the exact state of the entity at the time the change was made, even if the entity was further modified before sync ran.",
+    "observeOrders() filters isDeleted=true records before mapping to domain — soft-deleted items are hidden from the UI but preserved in Room until the server confirms deletion.",
+    "createOrder() writes to Room first (dao.upsert), then enqueues in pending_sync, then optionally triggers immediate sync — the UI sees the new order instantly regardless of connectivity.",
+    "flushPendingSync() processes a batch of 50 at a time — bounded batch size prevents the worker from running too long and being killed by the OS on resource-constrained devices.",
+    "ConflictException handling in flushPendingSync calls resolveConflict — the conflict resolution strategy is isolated in one function, making it easy to swap from last-write-wins to merge.",
+    "resolveConflict compares serverUpdatedAt (from server) vs localUpdatedAt (set at creation time) — if the server is newer, it wins silently; if local is newer, it's flagged for user review.",
+    "@HiltWorker with @AssistedInject enables Hilt injection into WorkManager workers — without this, you cannot inject repository dependencies into the worker.",
+    "Result.retry() with runAttemptCount < 3 gives WorkManager permission to reschedule the worker with exponential backoff — after 3 failures it returns Result.failure() to stop retrying.",
+    "callbackFlow with registerNetworkCallback/unregisterNetworkCallback in awaitClose — the callback is automatically unregistered when the Flow collector is cancelled, preventing memory leaks."
+  ],
+  bugChallenge: {
+    code: `// Find 5 offline-first architecture bugs
+class BrokenOrderRepository(
+    private val dao: OrderDao,
+    private val api: OrderApiService
+) {
+    fun observeOrders(): Flow<List<Order>> {
+        return flow {
+            val orders = api.getOrders()  // Bug 1
+            emit(orders)
+        }
+    }
+
+    suspend fun createOrder(order: Order) {
+        val response = api.createOrder(order)  // Bug 2
+        dao.insert(response.toEntity())
+    }
+
+    suspend fun deleteOrder(orderId: String) {
+        dao.hardDelete(orderId)              // Bug 3
+        api.deleteOrder(orderId)
+    }
+
+    suspend fun syncFromServer() {
+        val orders = api.getOrders()        // Bug 4
+        dao.deleteAll()
+        dao.insertAll(orders.map { it.toEntity() })
+    }
+
+    suspend fun flushPending() {
+        val pending = dao.getPending()
+        pending.forEach { item ->
+            api.upsertOrder(item.toApiModel())  // Bug 5
+            dao.markSynced(item.id)
+        }
+    }
+}`,
+    hint: "Look at the data source for observeOrders, the order of operations in createOrder and deleteOrder, the sync strategy's approach to deletion, and error handling in flushPending.",
+    answer: "Bug 1: observeOrders() reads from the API directly — this is not offline-first. If offline, the Flow immediately fails. The UI never shows cached data. Fix: return dao.observeAll().map { entities -> entities.map(::toDomain) } — always read from Room. The sync engine (a separate function) handles fetching from API and writing to Room. Bug 2: createOrder() calls the API first and only writes to Room if the API succeeds — this is online-first. If offline, the order is never saved anywhere. Fix: write to Room first with PENDING_UPLOAD syncStatus, add to pending_sync queue, then optionally trigger sync. The order must survive app kill even if sync hasn't run. Bug 3: deleteOrder() hard-deletes from Room before the API call — if the device is offline or the API call fails, the order is gone locally but never deleted from the server, creating a ghost record on the server. Fix: soft delete (mark isDeleted=true in Room), add DELETE to pending_sync queue, hard delete from Room only after the server confirms deletion. Bug 4: syncFromServer() calls dao.deleteAll() before inserting new data — this is a destructive full resync with no delta. During the window between deleteAll and insertAll, any observer (UI) sees an empty list (flicker). More critically, any PENDING_UPLOAD records that haven't synced yet are permanently deleted. Fix: use upsertAll() (REPLACE strategy) instead of deleteAll + insertAll, use delta sync with a timestamp, never delete records that have unsynced local changes. Bug 5: flushPending() calls api.upsertOrder() and immediately marks as synced with no error handling — if the API call throws an exception, the forEach continues to the next item but the exception is silently swallowed (or propagates and marks nothing as synced). If the API call fails transiently, the item is lost from the queue or never retried properly. Fix: wrap each item's sync in try-catch, on success mark synced, on failure increment attempts and let WorkManager retry on next execution."
+  },
+  difficulty: "advanced",
+  prereqs: [27, 28]
+},
+{
+  id: 31,
+  title: "Firebase on Android: Auth, FCM, Analytics, Crashlytics, Remote Config",
+  subtitle: "Master Firebase's core pillars for production Android apps",
+  analogy: "Firebase is like a Swiss Army knife for your app's backend — Auth is the bouncer at the door, FCM is the postal service, Analytics is the CCTV system, Crashlytics is the incident report logger, and Remote Config is the light switches you can flip from HQ without touching the wiring.",
+  points: [
+    { t: "Firebase Auth flows", d: "Email/password, Google Sign-In (ActivityResultContracts + GoogleSignInClient), and phone OTP (PhoneAuthProvider). Always use FirebaseAuth.getInstance() and observe currentUser on resume, not just on sign-in." },
+    { t: "ID Token vs UID", d: "UID is a stable user identifier; the ID token is a short-lived JWT (1 hour) for authenticating requests to your backend. Call user.getIdToken(forceRefresh) before every authenticated API call to avoid 401s." },
+    { t: "FCM message types", d: "Notification messages are handled by the system when the app is in the background/killed — tray entry appears automatically. Data messages are always delivered to onMessageReceived() in FirebaseMessagingService. A message can contain both payloads." },
+    { t: "FCM in foreground", d: "When the app is foregrounded, notification payload is NOT shown automatically — you must build and display the notification manually inside onMessageReceived(). Data payload always arrives here regardless of app state." },
+    { t: "FCM token lifecycle", d: "Token is generated on first launch and can rotate (app reinstall, token expiry, user clears data). Override onNewToken() in FirebaseMessagingService and upload the new token to your server immediately. In BRAC field ops, stale tokens caused missed sync notifications." },
+    { t: "Analytics event logging", d: "FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle). Use predefined event names where possible (SELECT_ITEM, LOGIN, PURCHASE) for automatic dashboard integration. Custom events are also fully supported." },
+    { t: "Analytics user properties", d: "setUserProperty(name, value) segments users in dashboards. In Tixio, user_plan and workspace_size properties drove funnel analysis. Properties persist across sessions; set them once on login, update on plan change." },
+    { t: "Crashlytics setup", d: "Add google-services plugin, apply com.google.firebase.crashlytics plugin, and initialize automatically via manifest provider. For non-fatal errors: FirebaseCrashlytics.getInstance().recordException(e). For breadcrumbs: log(\"step description\")." },
+    { t: "Crashlytics custom keys", d: "setCustomKey(key, value) attaches metadata to every crash report. In Payback fintech, we set user_id, transaction_id, and screen_name so crashes were immediately actionable without reproducing blindly." },
+    { t: "Remote Config basics", d: "Define defaults in XML (res/xml/remote_config_defaults.xml), fetch with remoteConfig.fetchAndActivate(), then read values with getString/getBoolean/getLong. Always set in-app defaults so the app works offline or before first fetch." },
+    { t: "Remote Config fetch interval", d: "Default minimum fetch interval is 12 hours in production to prevent quota exhaustion. During development use setMinimumFetchIntervalInSeconds(0). Never rely on immediate propagation — remote config is eventually consistent." },
+    { t: "Feature flags with Remote Config", d: "Boolean flags like enable_new_checkout_flow let you roll out features to 1% of users, test in production, and kill-switch instantly without a Play Store update. In Tixio SaaS, this replaced multiple beta tracks." }
+  ],
+  whatIs: "Firebase is Google's Backend-as-a-Service platform for mobile apps. Auth handles identity, FCM delivers push notifications, Analytics tracks user behavior, Crashlytics captures crash reports, and Remote Config enables server-driven feature flags — all with offline-first SDKs and tight Android integration.",
+  realWorld: "In BRAC's enterprise field ops app, FCM data messages triggered WorkManager sync jobs when the server had new assignments. Crashlytics custom keys included the field officer's region and assignment ID so crashes were triaged by geography. Remote Config toggled an offline-first mode for areas with poor connectivity — no app update needed.",
+  code: `// 1. Firebase Auth — Google Sign-In
+class AuthViewModel : ViewModel() {
+    private val auth = FirebaseAuth.getInstance()
+
+    fun signInWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnSuccessListener { result ->
+                val user = result.user ?: return@addOnSuccessListener
+                // Refresh ID token for backend auth
+                user.getIdToken(false).addOnSuccessListener { tokenResult ->
+                    sendTokenToBackend(tokenResult.token!!)
+                }
+            }
+            .addOnFailureListener { e ->
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }
+    }
+}
+
+// 2. FCM Service — handle all states
+class AppMessagingService : FirebaseMessagingService() {
+
+    override fun onNewToken(token: String) {
+        // Upload to your server every time token rotates
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching { api.updateFcmToken(token) }
+                .onFailure { saveTokenLocally(token) } // retry later
+        }
+    }
+
+    override fun onMessageReceived(message: RemoteMessage) {
+        // Notification payload in foreground — must show manually
+        message.notification?.let { notif ->
+            showNotification(notif.title, notif.body)
+        }
+        // Data payload — always arrives here regardless of app state
+        message.data["sync_trigger"]?.let {
+            enqueueSyncWork() // kick WorkManager
+        }
+    }
+}
+
+// 3. Crashlytics with context
+fun processPayment(txnId: String, amount: Double) {
+    val crashlytics = FirebaseCrashlytics.getInstance()
+    crashlytics.setCustomKey("transaction_id", txnId)
+    crashlytics.setCustomKey("amount", amount)
+    crashlytics.log("Payment flow started")
+    try {
+        paymentGateway.charge(txnId, amount)
+    } catch (e: Exception) {
+        crashlytics.recordException(e) // non-fatal, won't crash app
+        throw e
+    }
+}
+
+// 4. Remote Config feature flag
+val remoteConfig = Firebase.remoteConfig
+remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+
+suspend fun isNewCheckoutEnabled(): Boolean {
+    remoteConfig.fetchAndActivate().await()
+    return remoteConfig.getBoolean("enable_new_checkout_flow")
+}`,
+  funFact: "FCM delivers over 700 billion messages per day globally — yet a single Android device can only hold one FCM token at a time. If a user logs into your app on two phones, the second login replaces the first token. Without multi-token management on the server side, you'll only notify one device.",
+  quiz: [
+    { q: "Where is an FCM notification payload processed when the app is in the foreground?", opts: ["System tray automatically", "onMessageReceived() in FirebaseMessagingService", "onResume() of the current Activity", "A BroadcastReceiver registered in the manifest"], ans: 1 },
+    { q: "What does user.getIdToken(forceRefresh=true) return and why would you call it?", opts: ["The user's Firebase UID for stable identification", "A short-lived JWT for authenticating backend API requests", "The FCM device token for push notifications", "The user's email and display name bundle"], ans: 1 },
+    { q: "When should onNewToken() upload the FCM token to your server?", opts: ["Only on the very first app install", "Only when the user explicitly logs in", "Every time the token is generated or rotated", "Only when a push notification arrives"], ans: 2 },
+    { q: "What is the default minimum fetch interval for Remote Config in production?", opts: ["1 minute", "1 hour", "12 hours", "24 hours"], ans: 2 },
+    { q: "Which Crashlytics method records a caught exception without crashing the app?", opts: ["FirebaseCrashlytics.getInstance().crash(e)", "FirebaseCrashlytics.getInstance().recordException(e)", "FirebaseCrashlytics.getInstance().log(e.message)", "FirebaseCrashlytics.getInstance().sendError(e)"], ans: 1 },
+    { q: "A Firebase Analytics user property is best described as:", opts: ["A one-time event that appears in the Events dashboard", "A persistent attribute used to segment users across sessions", "A crash key attached to individual crash reports", "A Remote Config parameter for feature flagging"], ans: 1 },
+    { q: "In Remote Config, what happens if fetch() has not yet completed and your code reads a value?", opts: ["It throws a RemoteConfigFetchException", "It returns null and logs a warning", "It returns the in-app default value defined in your XML file", "It blocks the calling thread until fetch completes"], ans: 2 },
+    { q: "A data-only FCM message (no notification key) sent while the app is killed will:", opts: ["Be silently dropped by the system", "Always arrive at onMessageReceived() when the app next opens", "Display a default system notification automatically", "Trigger the app's main Activity via an implicit Intent"], ans: 1 }
+  ],
+  challenge: "Build a FirebaseMessagingService that: (1) on onNewToken, saves the token to EncryptedSharedPreferences and enqueues a one-time WorkManager request to upload it with retry; (2) on onMessageReceived, if the data payload contains action=SYNC, enqueues a constrained WorkManager sync job; if it contains a notification payload and the app is foregrounded, displays a custom notification with a deep link PendingIntent; (3) attaches the current user UID as a Crashlytics custom key on every message received.",
+  resources: [
+    { type: "docs", title: "Firebase Auth Android Guide", url: "https://firebase.google.com/docs/auth/android/start", source: "Firebase Docs" },
+    { type: "docs", title: "FCM Android Setup & Message Handling", url: "https://firebase.google.com/docs/cloud-messaging/android/client", source: "Firebase Docs" },
+    { type: "docs", title: "Crashlytics Android Integration", url: "https://firebase.google.com/docs/crashlytics/get-started?platform=android", source: "Firebase Docs" },
+    { type: "docs", title: "Remote Config Android Quickstart", url: "https://firebase.google.com/docs/remote-config/get-started?platform=android", source: "Firebase Docs" },
+    { type: "article", title: "Firebase Analytics Best Practices for Android", url: "https://firebase.google.com/docs/analytics/get-started?platform=android", source: "Firebase Docs" }
+  ],
+  eli5: "Firebase is like a toolbox Google gives you for free. Auth is the ID checker at the door. FCM is the mailman that can deliver messages even when you're not home. Analytics is a notebook that secretly writes down what everyone does in your app. Crashlytics is a camera that takes a photo every time something breaks. Remote Config lets you change rules in the app without having to rebuild it — like a remote control.",
+  codeWalkthrough: [
+    "signInWithCredential(credential) exchanges the Google ID token for a Firebase session, giving you a FirebaseUser object.",
+    "user.getIdToken(false) retrieves a Firebase ID token (JWT) — pass this as a Bearer token to your own backend for authentication.",
+    "FirebaseCrashlytics.getInstance().recordException(e) logs the exception as non-fatal — it appears in Crashlytics under 'Non-fatals' without crashing the app.",
+    "onNewToken(token) is called on first install and every time the token rotates — upload it immediately; if offline, persist and retry via WorkManager.",
+    "onMessageReceived(message) is the single entry point for ALL FCM messages when the app is foregrounded, and for data-only messages in any app state.",
+    "message.notification?.let handles the notification payload — you must build and show the notification manually when foregrounded.",
+    "message.data[\"sync_trigger\"] reads a custom data key — use this to trigger background work without displaying a notification.",
+    "remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults) ensures your app always has fallback values before the first successful fetch.",
+    "remoteConfig.fetchAndActivate().await() atomically fetches and activates — values are only readable after activate().",
+    "remoteConfig.getBoolean(\"enable_new_checkout_flow\") reads the flag — returns the in-app default if fetch hasn't completed yet.",
+    "crashlytics.setCustomKey(key, value) attaches metadata to every subsequent crash/non-fatal report in the same session.",
+    "crashlytics.log(\"Payment flow started\") adds a breadcrumb visible in the Crashlytics console — trace the path that led to a crash."
+  ],
+  bugChallenge: {
+    code: `class AuthViewModel : ViewModel() {
+    private val auth = FirebaseAuth.getInstance()
+
+    fun getCurrentUserToken(): String {
+        val user = auth.currentUser ?: return ""
+        var token = ""
+        user.getIdToken(false).addOnSuccessListener { result ->
+            token = result.token ?: ""
+        }
+        return token  // Bug 1
+    }
+
+    fun signOut() {
+        auth.signOut()  // Bug 2 — Google sign-in not cleared
+    }
+}
+
+class AppMessagingService : FirebaseMessagingService() {
+    override fun onMessageReceived(message: RemoteMessage) {
+        message.notification?.let { notif ->
+            showNotification(notif.title, notif.body)  // Bug 3
+        }
+    }
+    // Bug 4 — missing override
+}
+
+fun setupRemoteConfig() {
+    val remoteConfig = Firebase.remoteConfig
+    // Bug 5 — no defaults set
+    remoteConfig.fetchAndActivate().addOnSuccessListener {
+        val flag = remoteConfig.getBoolean("new_feature")
+        enableNewFeature(flag)
+    }
+}`,
+    hint: "Look at token retrieval (async vs sync), sign-out completeness, foreground notification display conditions, a missing FirebaseMessagingService lifecycle override, and Remote Config defaults.",
+    answer: "Bug 1: getIdToken() is asynchronous — the success listener runs after return token, so token is always empty string. Fix: make getCurrentUserToken() a suspend function and use user.getIdToken(false).await().token ?: \"\". Bug 2: auth.signOut() only signs out of Firebase — it does NOT revoke the Google session. The next signInWithCredential will silently use the cached Google account without prompting. Fix: also call GoogleSignIn.getClient(context, options).signOut(). Bug 3: showNotification() is called unconditionally — but the FCM notification payload in foreground should only be shown manually; calling it also when the app is backgrounded would double-notify (the system already showed it). Add a foreground check: if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(STARTED)) showNotification(...). Bug 4: onNewToken() is not overridden — when the FCM token rotates, the new token is never uploaded to the server. This causes all future push notifications to be delivered to the old (invalid) token. Fix: override onNewToken(token: String) and upload the token to your backend. Bug 5: No defaults are set before fetchAndActivate() — if the device is offline or the fetch quota is exceeded, getBoolean(\"new_feature\") returns false (the SDK's internal default), which may silently disable a feature that should be on. Fix: call remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults) before any fetch, ensuring your intended defaults are used when the server is unreachable."
+  },
+  difficulty: "intermediate",
+  prereqs: [27]
+},
+{
+  id: 32,
+  title: "WorkManager, Background Tasks, Foreground Services & Alarm Limitations",
+  subtitle: "Reliable background execution in the age of battery optimization",
+  analogy: "WorkManager is like a reliable postal service — you hand it a package (task) with delivery requirements (constraints: needs WiFi, needs charging) and it guarantees delivery even if you go to sleep, restart your phone, or the postman's car breaks down. Foreground Services are like a courier who rings your doorbell and stays visible until they finish. AlarmManager after Android 12 is like the post office that now charges extra for guaranteed exact-time delivery.",
+  points: [
+    { t: "WorkManager guaranteed execution", d: "WorkManager guarantees task execution even if the app is killed or the device restarts. It uses JobScheduler (API 23+), AlarmManager+BroadcastReceiver (API <23), and BatteryOptimization-aware scheduling — you don't choose the backend, WorkManager does." },
+    { t: "OneTimeWorkRequest", d: "For tasks that run once: val request = OneTimeWorkRequestBuilder<SyncWorker>().setConstraints(constraints).setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build(). The exponential backoff with jitter prevents thundering herd on server recovery." },
+    { t: "PeriodicWorkRequest", d: "For recurring tasks with a minimum interval of 15 minutes: PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES).setConstraints(constraints).build(). The system may batch and delay periodic work — do not rely on exact timing." },
+    { t: "Constraints", d: "Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).setRequiresCharging(false).setRequiresBatteryNotLow(true).build(). In BRAC field ops, sync work required CONNECTED only — not UNMETERED — because field officers use mobile data." },
+    { t: "Chaining work", d: "WorkManager.getInstance(context).beginWith(uploadRequest).then(notifyRequest).enqueue(). For parallel branches: beginWith(listOf(req1, req2)).then(mergeRequest). Chaining is DAG-based — downstream tasks receive output data from upstream via workDataOf()." },
+    { t: "Worker vs CoroutineWorker", d: "Worker runs on a background thread (Executor). CoroutineWorker runs on Dispatchers.IO and supports suspend functions — strongly preferred for Kotlin codebases. Override doWork() in both; return Result.success(), Result.failure(), or Result.retry()." },
+    { t: "Foreground services requirement", d: "Since Android 8 (API 26), long-running background services MUST call startForeground(id, notification) within 5 seconds of starting or the system kills the service with ANR-like behavior. The notification must remain visible for the service lifetime." },
+    { t: "Foreground service types (Android 14+)", d: "Android 14 requires declaring foreground service type in the manifest: android:foregroundServiceType=\"dataSync|mediaPlayback|location\". The wrong or missing type causes a SecurityException at startForeground() call." },
+    { t: "Doze mode impact", d: "In Doze mode (screen off, stationary, unplugged), the system defers network access, wafers, and syncs to maintenance windows. WorkManager work with network constraints is automatically deferred. High-priority FCM messages can wake the device from Doze." },
+    { t: "AlarmManager exact alarms (Android 12+)", d: "Android 12 (API 31) requires SCHEDULE_EXACT_ALARM permission for setExact() and setExactAndAllowWhileIdle(). Android 13 made this permission not pre-granted — users must grant it in Special app access settings. Always check canScheduleExactAlarms() before scheduling." },
+    { t: "WorkManager vs AlarmManager", d: "Use WorkManager for deferrable, constraint-based, guaranteed background work (sync, upload, cleanup). Use AlarmManager only when exact timing is a hard user requirement (calendar reminders, medication alarms) — not for data sync or analytics flush." },
+    { t: "Battery optimization exemption", d: "Requesting battery optimization exemption (REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) triggers a Play Store policy review. Only request it for apps with a genuine always-on need (health monitoring, IoT). WorkManager handles most cases without it." }
+  ],
+  whatIs: "WorkManager is Jetpack's library for deferrable, guaranteed background work. It wraps JobScheduler, AlarmManager, and BroadcastReceiver into a single API that survives app kills and device restarts. Foreground Services handle user-visible ongoing tasks. AlarmManager handles exact-time alarms but faces increasing OS restrictions from Android 12 onward.",
+  realWorld: "In BRAC's field ops app, WorkManager handled offline data sync: a PeriodicWorkRequest every 15 minutes with CONNECTED constraint, chained with an upload task that had exponential backoff. When FCM delivered a data message (new assignment), it enqueued a OneTimeWorkRequest immediately. The foreground service ran during large file uploads so the system wouldn't kill the transfer mid-stream.",
+  code: `// 1. CoroutineWorker — preferred for Kotlin
+class SyncWorker(context: Context, params: WorkerParameters) :
+    CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        return try {
+            val repo = ServiceLocator.getRepository(applicationContext)
+            repo.syncFromServer()
+            Result.success()
+        } catch (e: IOException) {
+            if (runAttemptCount < 3) Result.retry()
+            else Result.failure(workDataOf("error" to e.message))
+        }
+    }
+}
+
+// 2. Enqueue with constraints and chaining
+fun scheduleSyncWork(context: Context) {
+    val constraints = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .setRequiresBatteryNotLow(true)
+        .build()
+
+    val periodicSync = PeriodicWorkRequestBuilder<SyncWorker>(
+        15, TimeUnit.MINUTES
+    )
+        .setConstraints(constraints)
+        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+        .addTag("sync")
+        .build()
+
+    // KEEP_EXISTING prevents duplicate periodic work
+    WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+        "periodic_sync",
+        ExistingPeriodicWorkPolicy.KEEP,
+        periodicSync
+    )
+}
+
+// 3. Foreground service (Android 8+ requirement)
+class UploadService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Uploading data...")
+            .setSmallIcon(R.drawable.ic_upload)
+            .setOngoing(true)
+            .build()
+        // Must call within 5 seconds — or system kills the service
+        startForeground(NOTIF_ID, notification)
+        CoroutineScope(Dispatchers.IO).launch {
+            runUploadPipeline()
+            stopSelf()
+        }
+        return START_NOT_STICKY
+    }
+    override fun onBind(intent: Intent?) = null
+}
+
+// 4. AlarmManager exact alarm (Android 12+)
+fun scheduleExactAlarm(context: Context, triggerAtMillis: Long) {
+    val alarmManager = context.getSystemService(AlarmManager::class.java)
+    if (alarmManager.canScheduleExactAlarms()) {
+        val intent = PendingIntent.getBroadcast(
+            context, 0,
+            Intent(context, AlarmReceiver::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP, triggerAtMillis, intent
+        )
+    } else {
+        // Request permission — launches system settings
+        val permIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+        context.startActivity(permIntent)
+    }
+}`,
+  funFact: "WorkManager uses a Room database internally to persist enqueued work across process death and device reboots. Every WorkRequest you enqueue is written to a SQLite table — that's why WorkManager can survive a force-stop and still execute your task after the device restarts.",
+  quiz: [
+    { q: "What is the minimum interval for a PeriodicWorkRequest?", opts: ["1 minute", "5 minutes", "15 minutes", "30 minutes"], ans: 2 },
+    { q: "A CoroutineWorker returning Result.retry() combined with BackoffPolicy.EXPONENTIAL will:", opts: ["Retry immediately on the same thread", "Retry after an exponentially increasing delay with jitter", "Retry exactly 3 times then call Result.failure()", "Retry only when the device is charging"], ans: 1 },
+    { q: "What happens if a foreground service does not call startForeground() within 5 seconds on Android 8+?", opts: ["The notification is automatically created by the system", "The service is killed by the system", "The service runs silently in the background indefinitely", "The app receives an ANR dialog after 20 seconds"], ans: 1 },
+    { q: "On Android 12+, calling alarmManager.setExact() without the SCHEDULE_EXACT_ALARM permission will:", opts: ["Schedule the alarm with a 1-minute tolerance window", "Work normally because exact alarms are always permitted", "Throw a SecurityException at runtime", "Fall back to setWindow() automatically"], ans: 2 },
+    { q: "Which WorkManager enqueue policy prevents duplicate periodic work from being enqueued?", opts: ["WorkManager.getInstance().enqueue() with a unique tag", "enqueueUniquePeriodicWork() with ExistingPeriodicWorkPolicy.KEEP", "setInputData() with a deduplication key", "addTag() with a globally unique string"], ans: 1 },
+    { q: "In Doze mode, which mechanism can wake the device from deep sleep to deliver a message?", opts: ["A PeriodicWorkRequest with no constraints", "A standard FCM notification message", "A high-priority FCM data message", "An AlarmManager.setInexactRepeating() alarm"], ans: 2 },
+    { q: "What is the correct return value from doWork() when a transient error occurs and you want WorkManager to retry?", opts: ["Result.success()", "Result.failure()", "Result.retry()", "throw RetryException()"], ans: 2 },
+    { q: "Android 14 introduced a requirement for foreground services that means:", opts: ["All foreground services must display a full-screen intent", "The foreground service type must be declared in the manifest and match the runtime type", "Foreground services can no longer run longer than 10 minutes", "Only system apps can use foreground services from Android 14"], ans: 1 }
+  ],
+  challenge: "Implement a production-ready sync architecture: (1) A CoroutineWorker that reads pending items from Room, uploads via Retrofit with retry logic (Result.retry() on IOException, Result.failure() on HttpException 4xx), and returns output data with the count of synced items; (2) A unique periodic work enqueue that survives app restarts and reuses an existing worker if already enqueued (KEEP policy); (3) A function triggered by an FCM data message that enqueues a one-time immediate sync with CONNECTED constraint; (4) A foreground service for large file upload that updates the notification progress percentage and calls stopSelf() on completion or failure.",
+  resources: [
+    { type: "docs", title: "WorkManager Guide — Android Developers", url: "https://developer.android.com/topic/libraries/architecture/workmanager", source: "Android Docs" },
+    { type: "docs", title: "Foreground Services Guide", url: "https://developer.android.com/guide/components/foreground-services", source: "Android Docs" },
+    { type: "docs", title: "Exact Alarms — Android 12 Changes", url: "https://developer.android.com/about/versions/12/behavior-changes-12#exact-alarm-permission", source: "Android Docs" },
+    { type: "docs", title: "Battery Optimization Overview", url: "https://developer.android.com/topic/performance/power/optimize-battery", source: "Android Docs" },
+    { type: "article", title: "WorkManager Advanced Topics — Chaining & Unique Work", url: "https://developer.android.com/topic/libraries/architecture/workmanager/advanced", source: "Android Docs" }
+  ],
+  eli5: "Imagine you have homework to do but you want to do it later. WorkManager is like a very reliable assistant who promises to do your homework even if you fall asleep, your computer restarts, or you forget about it entirely. A Foreground Service is like doing homework with a sticky note on your forehead saying 'I'm busy' so people don't interrupt you. And AlarmManager is like setting an alarm clock — but from Android 12, the alarm clock company says you need special permission to set alarms at exactly the right second.",
+  codeWalkthrough: [
+    "CoroutineWorker suspends on Dispatchers.IO automatically — no need to manage threads manually compared to the base Worker class.",
+    "runAttemptCount tracks how many times WorkManager has retried this worker instance — use it to limit retries before declaring failure.",
+    "Result.retry() signals WorkManager to reschedule with the configured backoff policy (EXPONENTIAL doubles the delay each attempt).",
+    "PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES) sets the repeat interval — the system may delay beyond 15 min for battery optimization.",
+    "enqueueUniquePeriodicWork with KEEP policy ensures only one periodic sync worker runs at a time — calling it again does nothing if one already exists.",
+    "startForeground(NOTIF_ID, notification) must be called within 5 seconds of onStartCommand() to keep the service alive on Android 8+.",
+    "START_NOT_STICKY means if the system kills the service, it won't be restarted unless there are pending intents — correct for one-shot upload services.",
+    "stopSelf() in the coroutine's completion block ensures the service stops after the upload finishes, removing the persistent notification.",
+    "alarmManager.canScheduleExactAlarms() is required before calling setExact() on Android 12+ to avoid SecurityException.",
+    "PendingIntent.FLAG_IMMUTABLE is required for PendingIntents on Android 12+ as a security requirement.",
+    "setExactAndAllowWhileIdle() fires the alarm even during Doze mode — use only for user-facing time-critical alarms.",
+    "WorkManager.enqueue() with addTag() allows you to cancel or observe a group of related tasks by tag using cancelAllWorkByTag()."
+  ],
+  bugChallenge: {
+    code: `class DataSyncWorker(ctx: Context, params: WorkerParameters) :
+    CoroutineWorker(ctx, params) {
+
+    override suspend fun doWork(): Result {
+        return try {
+            syncData()
+            Result.success()
+        } catch (e: Exception) {
+            Result.retry()  // Bug 1
+        }
+    }
+}
+
+class BackgroundSyncService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        CoroutineScope(Dispatchers.IO).launch {
+            longRunningSync()  // Bug 2
+            stopSelf()
+        }
+        return START_STICKY
+    }
+    override fun onBind(intent: Intent?) = null
+}
+
+fun scheduleSync(context: Context) {
+    val work = PeriodicWorkRequestBuilder<DataSyncWorker>(
+        5, TimeUnit.MINUTES  // Bug 3
+    ).build()
+    WorkManager.getInstance(context).enqueue(work)  // Bug 4
+}
+
+fun scheduleReminder(context: Context, timeMs: Long) {
+    val alarmManager = context.getSystemService(AlarmManager::class.java)
+    val pi = PendingIntent.getBroadcast(context, 0,
+        Intent(context, ReminderReceiver::class.java), 0)  // Bug 5
+    alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeMs, pi)
+}`,
+    hint: "Check retry logic for non-retryable errors, missing startForeground(), minimum periodic interval, unique work enqueueing, and PendingIntent flags on Android 12+.",
+    answer: "Bug 1: Catching all Exception and always returning Result.retry() means HTTP 4xx errors (bad request, unauthorized) will retry indefinitely until WorkManager gives up — wasting battery and generating server load. Fix: catch IOException separately for Result.retry(), catch HttpException and check statusCode — for 4xx return Result.failure(), for 5xx return Result.retry() if runAttemptCount < 3. Bug 2: BackgroundSyncService never calls startForeground() — on Android 8+, a service that does not call startForeground() within 5 seconds of onStartCommand() is killed by the system. This will cause a crash or silent failure. Fix: call startForeground(NOTIF_ID, buildNotification()) immediately at the top of onStartCommand(), before launching the coroutine. Bug 3: PeriodicWorkRequestBuilder with 5 minutes is below the 15-minute minimum — WorkManager will throw an IllegalArgumentException at runtime: 'Interval duration lesser than minimum allowed duration'. Fix: use 15, TimeUnit.MINUTES as the minimum. Bug 4: WorkManager.getInstance(context).enqueue(work) for periodic work does not deduplicate — every call to scheduleSync() enqueues another periodic worker. Over time, dozens of duplicate sync workers run simultaneously. Fix: use enqueueUniquePeriodicWork(\"data_sync\", ExistingPeriodicWorkPolicy.KEEP, work) to guarantee only one instance runs. Bug 5: PendingIntent flags value 0 is missing FLAG_IMMUTABLE — on Android 12+ this causes an IllegalArgumentException: 'Targeting S+ requires FLAG_IMMUTABLE or FLAG_MUTABLE'. Fix: use PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE."
+  },
+  difficulty: "advanced",
+  prereqs: [7, 12]
+},
+{
+  id: 33,
+  title: "Notifications, Channels, Push Flows, Deep Links & App Links",
+  subtitle: "Drive users back into your app with precision and intent",
+  analogy: "A NotificationChannel is like a radio station — you create it once (Classic Rock, News, Sports), and users tune in or tune out per channel from their settings. Each notification is a broadcast on that station. Deep links are like street addresses — anyone can navigate to your specific screen if they know the address. App Links are verified addresses — they come with an official deed (Digital Asset Links) proving you own the building.",
+  points: [
+    { t: "NotificationChannel (Android 8+)", d: "Channels must be created before posting any notification. createNotificationChannel() is idempotent — safe to call on every app start. Each channel has its own importance level, sound, vibration, and can be controlled by the user independently in Settings." },
+    { t: "Notification importance levels", d: "IMPORTANCE_HIGH (heads-up, sound), IMPORTANCE_DEFAULT (sound, no heads-up), IMPORTANCE_LOW (no sound), IMPORTANCE_MIN (silent, no status bar icon). Set at channel creation — users can lower but not raise importance. Choose conservatively to preserve user trust." },
+    { t: "NotificationCompat.Builder", d: "Always use NotificationCompat (not Notification.Builder) for backward compatibility. Key fields: setSmallIcon (required), setContentTitle, setContentText, setContentIntent (PendingIntent for tap), setAutoCancel(true) (dismiss on tap), setStyle for expanded layouts (BigTextStyle, InboxStyle, MessagingStyle)." },
+    { t: "PendingIntent for notification tap", d: "The PendingIntent opens the correct screen when the user taps the notification. Use TaskStackBuilder to build a proper back stack so the user doesn't get stranded on the target screen with no back navigation." },
+    { t: "FCM notification vs data messages", d: "Notification messages: system handles display when app is background/killed (no code needed). Data messages: always delivered to onMessageReceived(). A combined message behaves as a notification message when backgrounded. For maximum control, use data-only messages and build notifications yourself." },
+    { t: "Deep links with custom scheme", d: "myapp://product/123 — define an intent filter with action.VIEW, category.DEFAULT, category.BROWSABLE, and data scheme='myapp'. Handle in Activity via intent.data URI parsing. Works from any app, email, SMS, but browsers may warn users about unknown schemes." },
+    { t: "App Links (HTTP/HTTPS verified)", d: "https://teamzlab.com/product/123 — same as deep links but with the autoVerify='true' attribute on the intent filter. Android verifies ownership by fetching /.well-known/assetlinks.json from your domain. Verified links open directly in your app with no disambiguation dialog." },
+    { t: "assetlinks.json", d: "Must be hosted at https://yourdomain.com/.well-known/assetlinks.json. Contains your app's package name and SHA-256 signing certificate fingerprint. Get fingerprint via: keytool -list -v -keystore release.jks. Must be served with Content-Type: application/json." },
+    { t: "Handling deep link in Activity", d: "In onCreate() and onNewIntent(): val uri = intent.data ?: return. Parse uri.pathSegments to extract parameters. For Jetpack Navigation, use NavController.handleDeepLink(intent) or define deepLinks in the nav graph XML." },
+    { t: "NavDeepLink in Compose/Navigation", d: "In the nav graph: deepLinks = listOf(navDeepLink { uriPattern = \"https://teamzlab.com/product/{id}\" }). The {id} is automatically extracted as a NavArgument. Use NavController.navigate(deepLinkUri) programmatically from notification PendingIntent." },
+    { t: "Notification POST_NOTIFICATIONS permission (Android 13+)", d: "Android 13 (API 33) requires POST_NOTIFICATIONS permission — it's a runtime permission like CAMERA. Request it with ActivityResultContracts.RequestPermission(). Without it, no notifications are shown for your app. In Hazira Khata school app, this was a critical onboarding step." },
+    { t: "Deep link intent flags", d: "When launching an Activity from a notification deep link, use FLAG_ACTIVITY_SINGLE_TOP to avoid stacking duplicate Activities. Combine with TaskStackBuilder for correct back navigation. FLAG_ACTIVITY_CLEAR_TOP removes all instances above the target in the back stack." }
+  ],
+  whatIs: "Notifications re-engage users when the app is not in focus. Channels give users granular control over notification categories. Deep links and App Links route external URLs directly to specific screens within your app, enabling seamless flows from push notifications, emails, marketing campaigns, and shared content.",
+  realWorld: "In Hazira Khata school management app, three notification channels were created: Attendance Alerts (HIGH importance), Fee Reminders (DEFAULT), and General Announcements (LOW). FCM data messages built notifications with deep link PendingIntents to the specific student's profile. App Links on the school's domain meant clicking a shared attendance report URL opened the app directly without a browser detour.",
+  code: `// 1. Create notification channels on app start (idempotent)
+fun createNotificationChannels(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channels = listOf(
+            NotificationChannel(
+                "attendance_alerts",
+                "Attendance Alerts",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply { description = "Real-time attendance notifications" },
+
+            NotificationChannel(
+                "fee_reminders",
+                "Fee Reminders",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply { description = "Monthly fee reminders" }
+        )
+        val nm = context.getSystemService(NotificationManager::class.java)
+        channels.forEach { nm.createNotificationChannel(it) }
+    }
+}
+
+// 2. Build notification with deep link PendingIntent
+fun showAttendanceNotification(context: Context, studentId: String, name: String) {
+    // Build back stack: Home -> StudentDetail
+    val stackBuilder = TaskStackBuilder.create(context).apply {
+        addNextIntentWithParentStack(
+            Intent(context, StudentDetailActivity::class.java).apply {
+                data = Uri.parse("https://hazirakhata.com/student/$studentId")
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+        )
+    }
+    val pendingIntent = stackBuilder.getPendingIntent(
+        0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    val notification = NotificationCompat.Builder(context, "attendance_alerts")
+        .setSmallIcon(R.drawable.ic_attendance)
+        .setContentTitle("Attendance Marked")
+        .setContentText("$name marked absent today")
+        .setStyle(NotificationCompat.BigTextStyle()
+            .bigText("$name was marked absent at 9:15 AM. Tap to view full report."))
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .build()
+
+    NotificationManagerCompat.from(context)
+        .notify(studentId.hashCode(), notification)
+}
+
+// 3. App Links intent filter in AndroidManifest.xml
+/*
+<activity android:name=".StudentDetailActivity">
+    <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https"
+              android:host="hazirakhata.com"
+              android:pathPrefix="/student/"/>
+    </intent-filter>
+</activity>
+*/
+
+// 4. Handle deep link in Activity
+class StudentDetailActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleDeepLink(intent)
+    }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleDeepLink(intent)
+    }
+    private fun handleDeepLink(intent: Intent) {
+        val uri = intent.data ?: return
+        val studentId = uri.lastPathSegment ?: return
+        viewModel.loadStudent(studentId)
+    }
+}
+
+// 5. Request POST_NOTIFICATIONS on Android 13+
+val requestPermission = registerForActivityResult(
+    ActivityResultContracts.RequestPermission()
+) { granted ->
+    if (!granted) showPermissionRationale()
+}
+
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    requestPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+}`,
+  funFact: "Android verifies App Links by making an HTTP request to your domain's /.well-known/assetlinks.json file — not during app install, but asynchronously in the background. If the verification fails (404, wrong certificate, HTTP instead of HTTPS), Android falls back silently to showing the disambiguation dialog. You can check verification status with: adb shell pm get-app-links --user cur com.yourpackage",
+  quiz: [
+    { q: "What happens if you try to post a notification on Android 8+ without first creating a NotificationChannel?", opts: ["The notification is posted to a default channel automatically", "The notification is silently dropped — it never appears", "The app throws a NotificationChannelException", "The system prompts the user to create a channel"], ans: 1 },
+    { q: "Which type of FCM message is ALWAYS delivered to onMessageReceived() regardless of app state?", opts: ["Notification-only messages", "Data-only messages", "Combined notification+data messages when foregrounded", "High-priority notification messages"], ans: 1 },
+    { q: "What file must you host to enable Android App Links verification?", opts: ["/.well-known/apple-app-site-association", "/.well-known/assetlinks.json", "/android/app-links.json", "/.well-known/android-verified-links.json"], ans: 1 },
+    { q: "TaskStackBuilder is used when building notification PendingIntents primarily to:", opts: ["Ensure the notification sound plays correctly", "Build a synthetic back stack so users can navigate back from the deep-linked screen", "Prevent duplicate notifications from stacking", "Create a FLAG_IMMUTABLE PendingIntent automatically"], ans: 1 },
+    { q: "POST_NOTIFICATIONS is a runtime permission introduced in:", opts: ["Android 8 (API 26)", "Android 10 (API 29)", "Android 12 (API 31)", "Android 13 (API 33)"], ans: 3 },
+    { q: "A user receives an https://myapp.com/order/456 link but sees a disambiguation dialog instead of your app opening directly. The most likely cause is:", opts: ["The intent filter is missing android:autoVerify='true'", "The app's minSdkVersion is too low for App Links", "The notification channel importance is set to LOW", "The PendingIntent is missing FLAG_IMMUTABLE"], ans: 0 },
+    { q: "Which notification style is best suited for displaying a chat conversation thread?", opts: ["BigTextStyle", "InboxStyle", "MessagingStyle", "BigPictureStyle"], ans: 2 },
+    { q: "When an Activity is already in the back stack and a deep link notification is tapped, FLAG_ACTIVITY_SINGLE_TOP ensures:", opts: ["A brand new Activity instance is always created", "The existing instance receives onNewIntent() instead of being duplicated", "The Activity is moved to the top of the stack with a new intent", "The back stack is cleared and the Activity starts fresh"], ans: 1 }
+  ],
+  challenge: "Build a production notification system: (1) Create three channels with appropriate importance levels: ORDER_UPDATES (HIGH), PROMOTIONS (LOW), SYSTEM_ALERTS (DEFAULT); (2) A function that builds a notification for an order update with a BigTextStyle expanded view, two action buttons ('Track Order' and 'Contact Support'), each with their own deep link PendingIntent, and correct TaskStackBuilder back stack; (3) Handle the deep link in an Activity supporting both cold start (onCreate) and warm start (onNewIntent); (4) Write the assetlinks.json content for your domain; (5) Request POST_NOTIFICATIONS on Android 13+ with rationale shown on denial.",
+  resources: [
+    { type: "docs", title: "Create and Manage Notification Channels", url: "https://developer.android.com/develop/ui/views/notifications/channels", source: "Android Docs" },
+    { type: "docs", title: "Android App Links — Verification Guide", url: "https://developer.android.com/training/app-links/verify-android-applinks", source: "Android Docs" },
+    { type: "docs", title: "Create Deep Links to App Content", url: "https://developer.android.com/training/app-links/deep-linking", source: "Android Docs" },
+    { type: "docs", title: "FCM Message Types", url: "https://firebase.google.com/docs/cloud-messaging/concept-options", source: "Firebase Docs" },
+    { type: "article", title: "Notification Permission (POST_NOTIFICATIONS) Best Practices", url: "https://developer.android.com/develop/ui/views/notifications/notification-permission", source: "Android Docs" }
+  ],
+  eli5: "A notification channel is like a TV channel — your app creates a 'Sports' channel and a 'News' channel. Users can mute the News channel in their TV settings but keep Sports on. Deep links are like shortcuts — someone texts you 'go to room 42' and you know exactly where to go. App Links are like a VIP pass — the app has officially proven it owns that web address, so your phone skips asking and just opens the app.",
+  codeWalkthrough: [
+    "createNotificationChannel() is idempotent — calling it multiple times with the same ID does nothing, so calling it in Application.onCreate() every launch is safe and recommended.",
+    "IMPORTANCE_HIGH enables heads-up notifications (pop-up banner) and sound — use only for time-sensitive, user-requested alerts to avoid channel importance being degraded by the user.",
+    "TaskStackBuilder.addNextIntentWithParentStack() reads the parentActivityName from the manifest to build the correct back stack automatically.",
+    "PendingIntent.FLAG_IMMUTABLE is required on Android 12+ — always combine with FLAG_UPDATE_CURRENT so the PendingIntent's extras are updated if re-created.",
+    "NotificationCompat.Builder uses the channel ID string — if the channel doesn't exist on Android 8+, the notification is silently dropped.",
+    "BigTextStyle.bigText() shows expanded text when the user pulls down the notification — the regular contentText shows in the collapsed state.",
+    "setAutoCancel(true) dismisses the notification when tapped — without this, the notification remains in the tray after the user taps it.",
+    "android:autoVerify='true' in the intent filter triggers Android's automatic domain verification — without it, the link shows a disambiguation dialog.",
+    "handleDeepLink() is called from both onCreate() and onNewIntent() — onCreate handles cold start, onNewIntent handles warm start (Activity already in back stack).",
+    "uri.lastPathSegment extracts the last path component — for /student/123 it returns '123'. For complex URLs use uri.getQueryParameter(key) for query params.",
+    "Build.VERSION.SDK_INT >= TIRAMISU check prevents requesting POST_NOTIFICATIONS on older Android versions where the permission doesn't exist.",
+    "NotificationManagerCompat.from(context).notify(id, notification) — using studentId.hashCode() as the notification ID groups updates for the same student."
+  ],
+  bugChallenge: {
+    code: `fun showOrderNotification(context: Context, orderId: String) {
+    // Bug 1 — channel not created before posting
+    val notification = NotificationCompat.Builder(context, "order_updates")
+        .setContentTitle("Order Shipped!")
+        .setContentText("Your order #$orderId is on the way")
+        // Bug 2 — missing small icon
+        .setContentIntent(
+            PendingIntent.getActivity(
+                context, 0,
+                Intent(context, OrderActivity::class.java).apply {
+                    putExtra("order_id", orderId)
+                },
+                0  // Bug 3
+            )
+        )
+        .build()
+
+    NotificationManagerCompat.from(context).notify(1, notification)  // Bug 4
+}
+
+// AndroidManifest.xml
+/*
+<activity android:name=".ProductActivity">
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:scheme="https"
+              android:host="myapp.com"
+              android:pathPrefix="/product/"/>
+    </intent-filter>  Bug 5
+</activity>
+*/`,
+    hint: "Check channel creation timing, required notification fields, PendingIntent flags, notification ID collision, and App Links intent filter completeness.",
+    answer: "Bug 1: The notification channel 'order_updates' is never created before posting — on Android 8+ this silently drops the notification. Fix: call NotificationManagerCompat.createNotificationChannel() or NotificationManager.createNotificationChannel() at app startup (Application.onCreate) before any notification is posted. Bug 2: setSmallIcon() is missing — this is a required field. A notification without a small icon will throw an exception on some Android versions and will never display. Fix: add .setSmallIcon(R.drawable.ic_order) to the builder. Bug 3: PendingIntent flags are 0 — on Android 12+ this throws IllegalArgumentException because PendingIntents must specify FLAG_IMMUTABLE or FLAG_MUTABLE. Fix: use PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE. Bug 4: All order notifications use the same hardcoded ID (1) — if two orders ship simultaneously, the second notification silently replaces the first. Fix: use orderId.hashCode() as the notification ID to give each order a unique notification. Bug 5: The intent filter for App Links is missing android:autoVerify='true' and is missing the BROWSABLE category — without autoVerify, Android never verifies domain ownership and shows a disambiguation dialog instead of opening the app directly. Fix: add android:autoVerify='true' to the intent-filter element and add <category android:name='android.intent.category.BROWSABLE'/> inside the filter."
+  },
+  difficulty: "intermediate",
+  prereqs: [14, 31]
+},
+{
+  id: 34,
+  title: "Android Permissions, Storage Changes & Privacy-Safe Handling",
+  subtitle: "Navigate the evolving Android permission landscape without breaking user trust",
+  analogy: "Permissions are like asking your flatmate before borrowing something. Runtime permissions are knocking on the door each time you need the camera — they can say yes or deny. Scoped storage is like each flatmate having their own locked room — your app can only access its own room unless specifically invited into shared spaces. The photo picker is a vending machine — users select what to give you without ever handing over their house keys.",
+  points: [
+    { t: "Install-time vs runtime permissions", d: "Install-time (normal) permissions are granted automatically (INTERNET, VIBRATE). Runtime (dangerous) permissions must be explicitly requested and granted by the user at runtime: CAMERA, READ_CONTACTS, ACCESS_FINE_LOCATION, READ_MEDIA_IMAGES. The split is determined by the protection level in the Android framework." },
+    { t: "ActivityResultContracts.RequestPermission", d: "val launcher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted -> }. Call launcher.launch(Manifest.permission.CAMERA). Never call requestPermissions() directly — the contract-based API handles lifecycle correctly and works in Fragments and Activities." },
+    { t: "shouldShowRequestPermissionRationale()", d: "Returns true when the user has denied the permission once (but not 'Don't ask again'). Show a rationale explaining why you need the permission, then re-request. If it returns false after a denial, the user has permanently denied — redirect to app settings." },
+    { t: "Permission denial states", d: "First request: show rationale if needed, then request. After one denial: shouldShowRequestPermissionRationale()=true — explain and retry. After 'Don't ask again': shouldShowRequestPermissionRationale()=false — show settings deep link: Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)." },
+    { t: "Scoped storage (Android 10+)", d: "Apps can no longer access arbitrary file paths with READ_EXTERNAL_STORAGE. Each app has isolated storage: getExternalFilesDir() (no permission needed) and the shared MediaStore (requires READ_MEDIA_* on API 33+). WRITE_EXTERNAL_STORAGE is effectively a no-op on API 29+." },
+    { t: "MediaStore API", d: "ContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, ...) to query images. ContentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) to save images. Returns a content URI, not a file path. Use ContentResolver.openOutputStream(uri) to write." },
+    { t: "Storage Access Framework (SAF)", d: "ActivityResultContracts.OpenDocument() launches the system file picker — no permissions required. Returns a content URI. Use contentResolver.openInputStream(uri) to read. Persist URI access with contentResolver.takePersistableUriPermission() for long-term access." },
+    { t: "Photo Picker (Android 13+)", d: "ActivityResultContracts.PickVisualMedia() — the recommended approach. Lets users select photos/videos without granting your app access to their entire gallery. No permission required. Returns a content URI valid for the session. Falls back gracefully on older Android versions via Jetpack backport." },
+    { t: "READ_MEDIA_* permissions (Android 13)", d: "Android 13 split READ_EXTERNAL_STORAGE into: READ_MEDIA_IMAGES, READ_MEDIA_VIDEO, READ_MEDIA_AUDIO. Request only what you need. For displaying images from the gallery, prefer the Photo Picker over requesting READ_MEDIA_IMAGES when possible." },
+    { t: "MANAGE_EXTERNAL_STORAGE caution", d: "Grants access to all files on the device — equivalent to the old unrestricted file access. Google Play requires a policy declaration and review for apps requesting this permission. Approved only for file managers, antivirus, and backup apps. Using it in a regular app will get your app rejected." },
+    { t: "Privacy-first design principles", d: "Request permissions contextually (when the feature is used, not at launch). Request only the minimum scope (fine location only if coarse is insufficient). Provide value first, then request. In Hazira Khata, camera permission was requested when the user tapped 'Take Attendance Photo' — not on app open." },
+    { t: "Content URI vs file path", d: "Content URIs (content://authority/path) are the Android-safe way to share data between apps. File paths (/storage/emulated/0/...) are increasingly restricted. Use FileProvider to share your app's private files with other apps via content URIs, never by exposing raw file paths." }
+  ],
+  whatIs: "Android permissions define what sensitive resources an app can access. The permission model has evolved significantly: runtime permissions (API 23), scoped storage (API 29), granular media permissions (API 33), and the photo picker (API 33+). Building privacy-safe apps means requesting minimum permissions, at the right time, with clear user value — and gracefully handling all denial states.",
+  realWorld: "In Hazira Khata school management app, the app needed camera access for attendance photos and storage access for report exports. Scoped storage meant reports were saved to getExternalFilesDir() (no permission needed). For reading student photos uploaded by teachers, the Photo Picker was used — no READ_MEDIA_IMAGES required. CAMERA permission was requested contextually when the attendance feature was opened, with a rationale dialog explaining why.",
+  code: `// 1. Multiple permissions with proper rationale handling
+class AttendanceFragment : Fragment() {
+
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) openCamera()
+        else handleCameraPermissionDenied()
+    }
+
+    private fun requestCameraForAttendance() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> openCamera()
+
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                // User denied once — show rationale before asking again
+                showRationaleDialog(
+                    message = "Camera is needed to take attendance photos.",
+                    onConfirm = {
+                        cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                    }
+                )
+            }
+
+            else -> cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    private fun handleCameraPermissionDenied() {
+        if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            // 'Don't ask again' — send to settings
+            showSettingsDialog()
+        }
+        // else: user just denied, they can tap the button again
+    }
+
+    private fun showSettingsDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Camera Permission Required")
+            .setMessage("Enable camera in Settings to take attendance photos.")
+            .setPositiveButton("Open Settings") { _, _ ->
+                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", requireContext().packageName, null)
+                })
+            }.show()
+    }
+}
+
+// 2. Photo Picker — no permissions needed (Android 13+ / Jetpack backport)
+val photoPickerLauncher = registerForActivityResult(
+    ActivityResultContracts.PickVisualMedia()
+) { uri ->
+    uri ?: return@registerForActivityResult
+    // Use content URI to load image — Coil/Glide accept content URIs directly
+    imageView.load(uri)
+    // Persist permission for long-term access
+    requireContext().contentResolver.takePersistableUriPermission(
+        uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+    )
+}
+
+fun openPhotoPicker() {
+    photoPickerLauncher.launch(
+        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+    )
+}
+
+// 3. MediaStore — save a report image to shared storage
+suspend fun saveReportToGallery(context: Context, bitmap: Bitmap): Uri {
+    val values = ContentValues().apply {
+        put(MediaStore.Images.Media.DISPLAY_NAME, "report_${System.currentTimeMillis()}.jpg")
+        put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/HaziraKhata")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            put(MediaStore.Images.Media.IS_PENDING, 1) // atomic write
+        }
+    }
+    val uri = context.contentResolver.insert(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
+    ) ?: throw IOException("Failed to create MediaStore entry")
+
+    context.contentResolver.openOutputStream(uri)?.use { stream ->
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream)
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        values.clear()
+        values.put(MediaStore.Images.Media.IS_PENDING, 0)
+        context.contentResolver.update(uri, values, null, null)
+    }
+    return uri
+}`,
+  funFact: "The Android Photo Picker introduced in Android 13 doesn't grant your app any read permission to the user's gallery. Instead, it returns a temporary grant URI that your app can read. Even if the user selects a photo, your app cannot access any other photo in their gallery — this is a fundamental privacy-by-design approach that Google is actively expanding to older Android versions via a Jetpack backport.",
+  quiz: [
+    { q: "Which API should be used to request runtime permissions in a lifecycle-safe way?", opts: ["Activity.requestPermissions()", "ActivityResultContracts.RequestPermission() with registerForActivityResult()", "PermissionManager.request() from Jetpack", "ContextCompat.requestPermissions()"], ans: 1 },
+    { q: "shouldShowRequestPermissionRationale() returns false after a permission denial. What does this indicate?", opts: ["The permission was just denied for the first time", "The user selected 'Don't ask again' — redirect to settings", "The permission is not declared in the manifest", "The permission was granted but later revoked"], ans: 1 },
+    { q: "On Android 10+ (scoped storage), what is the correct way to save a file that should appear in the device gallery?", opts: ["Write directly to /sdcard/Pictures/ using FileOutputStream", "Use MediaStore.Images.Media with ContentResolver.insert()", "Request WRITE_EXTERNAL_STORAGE and use File(Environment.getExternalStorageDirectory())", "Use getFilesDir() and the file will auto-appear in gallery"], ans: 1 },
+    { q: "The Android Photo Picker (PickVisualMedia) requires which permission?", opts: ["READ_MEDIA_IMAGES", "READ_EXTERNAL_STORAGE", "No permission is required", "MANAGE_EXTERNAL_STORAGE"], ans: 2 },
+    { q: "MANAGE_EXTERNAL_STORAGE permission on Google Play:", opts: ["Is granted automatically for all apps targeting API 30+", "Requires a policy declaration and manual review — approved only for specific app categories", "Is equivalent to READ_EXTERNAL_STORAGE with write access", "Was removed in Android 13 and replaced by READ_MEDIA_ALL"], ans: 1 },
+    { q: "On Android 13+, READ_EXTERNAL_STORAGE was split into which permissions?", opts: ["READ_MEDIA_ALL and READ_MEDIA_DOCUMENTS", "READ_MEDIA_IMAGES, READ_MEDIA_VIDEO, READ_MEDIA_AUDIO", "READ_MEDIA_GALLERY and READ_MEDIA_FILES", "ACCESS_MEDIA_LOCATION and READ_MEDIA_VISUAL"], ans: 1 },
+    { q: "IS_PENDING = 1 in MediaStore.Images.Media ContentValues is used to:", opts: ["Mark the image as a draft that won't sync to cloud", "Perform an atomic write — hide the file until writing is complete", "Request exclusive write access to the media file", "Set the image as pending review by the system media scanner"], ans: 1 },
+    { q: "When sharing your app's private files with another app, you should use:", opts: ["The raw file path from getFilesDir()", "FileProvider to generate a content URI", "MANAGE_EXTERNAL_STORAGE to make the file accessible", "Environment.getExternalStorageDirectory() for shared access"], ans: 1 }
+  ],
+  challenge: "Build a privacy-safe photo feature: (1) A permission helper that checks CAMERA permission state, shows rationale on first denial, shows a settings dialog on permanent denial, and logs the permission decision to Analytics; (2) A photo capture flow using CameraX or camera Intent that saves the captured photo to app-private storage (getCacheDir()) for processing; (3) A gallery import flow using the Photo Picker (no permissions) with Coil image loading; (4) A save-to-gallery function using MediaStore with IS_PENDING for atomic write; (5) Request READ_MEDIA_IMAGES only if the device is below API 33 and you need direct gallery access.",
+  resources: [
+    { type: "docs", title: "Request Runtime Permissions — Android Developers", url: "https://developer.android.com/training/permissions/requesting", source: "Android Docs" },
+    { type: "docs", title: "Storage in Android — Scoped Storage Overview", url: "https://developer.android.com/training/data-storage", source: "Android Docs" },
+    { type: "docs", title: "Photo Picker — Android Developers", url: "https://developer.android.com/training/data-storage/shared/photopicker", source: "Android Docs" },
+    { type: "docs", title: "MediaStore API Guide", url: "https://developer.android.com/training/data-storage/shared/media", source: "Android Docs" },
+    { type: "article", title: "Privacy Changes in Android 13", url: "https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions", source: "Android Docs" }
+  ],
+  eli5: "Your phone has stuff you own (camera, photos, contacts) that apps want to borrow. Runtime permissions are asking permission each time — like knocking before entering a room. Scoped storage means each app gets its own drawer — it can't snoop in other drawers unless you hand something over. The Photo Picker is like a shop window — you point at exactly what you want to share, and the app only gets that thing, not your whole shop.",
+  codeWalkthrough: [
+    "ContextCompat.checkSelfPermission() returns PERMISSION_GRANTED or PERMISSION_DENIED — always check before requesting to avoid unnecessary permission dialogs.",
+    "shouldShowRequestPermissionRationale() true after first denial means show an explanation dialog before re-requesting the permission.",
+    "cameraPermissionLauncher.launch() triggers the system permission dialog — the callback is called with true/false on the main thread.",
+    "After denial with 'Don't ask again', shouldShowRequestPermissionRationale() returns false — at this point the only path is to open app settings.",
+    "Settings.ACTION_APPLICATION_DETAILS_SETTINGS with the package URI opens your app's specific settings page where the user can manually grant permission.",
+    "ActivityResultContracts.PickVisualMedia() launches the system photo picker — no permission required on any API level with the Jetpack backport.",
+    "takePersistableUriPermission() preserves read access to the selected URI across app restarts — without this, the URI becomes invalid after the process dies.",
+    "MediaStore.Images.Media.RELATIVE_PATH sets the subfolder within Pictures/ — 'Pictures/HaziraKhata' creates a named album in the gallery.",
+    "IS_PENDING = 1 hides the file from the gallery scanner until writing is complete — prevents half-written images from appearing.",
+    "contentResolver.openOutputStream(uri) gives you a stream to write bytes — always use .use {} to ensure the stream is closed even if an exception occurs.",
+    "IS_PENDING = 0 update after writing makes the file visible to other apps and the gallery — this is the atomic 'commit' of the write.",
+    "PickVisualMediaRequest(ImageOnly) restricts the picker to images only — use ImageAndVideo or VideoOnly for other media types."
+  ],
+  bugChallenge: {
+    code: `class ProfileFragment : Fragment() {
+
+    fun openGallery() {
+        // Bug 1 — old approach, fails on Android 13+
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+            launchGalleryIntent()
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100)
+        }
+    }
+
+    // Bug 2 — deprecated and lifecycle-unsafe
+    override fun onRequestPermissionsResult(requestCode: Int,
+        permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == 100 && grantResults[0] == PERMISSION_GRANTED) {
+            launchGalleryIntent()
+        }
+    }
+
+    fun savePhoto(context: Context, bitmap: Bitmap) {
+        // Bug 3 — direct file path access, broken on Android 10+
+        val file = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+            "profile_photo.jpg"
+        )
+        FileOutputStream(file).use { bitmap.compress(Bitmap.CompressFormat.JPEG, 90, it) }
+    }
+
+    fun shareFile(context: Context, file: File) {
+        // Bug 4 — exposes raw file path to other apps
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/jpeg"
+            putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file))
+        }
+        startActivity(Intent.createChooser(intent, "Share"))
+    }
+}`,
+    hint: "Check for deprecated permission APIs, lifecycle-unsafe permission handling, direct file path access on Android 10+, and raw file URI sharing.",
+    answer: "Bug 1: READ_EXTERNAL_STORAGE is deprecated on Android 13+ (API 33) and no longer grants access to images — it was replaced by READ_MEDIA_IMAGES. Also, requestPermissions() is deprecated and lifecycle-unsafe. Fix: Use the Photo Picker (PickVisualMedia) which requires no permission at all, or request READ_MEDIA_IMAGES on API 33+ and READ_EXTERNAL_STORAGE on API <33. Bug 2: onRequestPermissionsResult() is deprecated and lifecycle-unsafe — it can be called after the Fragment is detached. Fix: Use registerForActivityResult(ActivityResultContracts.RequestPermission()) which is lifecycle-aware and handles Fragment recreation correctly. Bug 3: Writing to getExternalStoragePublicDirectory() via FileOutputStream fails silently or throws IOException on Android 10+ (scoped storage) without MANAGE_EXTERNAL_STORAGE. Fix: Use MediaStore API — ContentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) then write via contentResolver.openOutputStream(uri). Bug 4: Uri.fromFile(file) creates a file:// URI which is blocked for sharing between apps since Android 7 (FileUriExposedException). Fix: Use FileProvider — declare it in the manifest, then use FileProvider.getUriForFile(context, authority, file) and add Intent.FLAG_GRANT_READ_URI_PERMISSION to the share intent."
+  },
+  difficulty: "intermediate",
+  prereqs: [12, 14]
+},
+{
+  id: 35,
+  title: "Security: JWT, Secure Storage, Encryption & Biometrics",
+  subtitle: "Build Android apps that protect user data at every layer",
+  analogy: "JWT is like a wristband at a festival — the bouncer stamps it at the gate (server issues token), and every booth checks it without calling the gate (stateless validation). EncryptedSharedPreferences is a lockbox inside a lockbox — Android Keystore holds the key, and nobody but your app (and the OS) can open it. BiometricPrompt is a fingerprint on a safe — the hardware scanner verifies identity, never exposing the biometric data to your app code.",
+  points: [
+    { t: "JWT structure", d: "Three base64url-encoded parts separated by dots: header.payload.signature. Header specifies algorithm (RS256, HS256). Payload contains claims (sub, iat, exp, custom fields). Signature is computed by the server — your Android app should NEVER trust a JWT without backend validation." },
+    { t: "JWT token lifecycle on Android", d: "Store access token in EncryptedSharedPreferences (never plain SharedPreferences or plain files). Attach as Authorization: Bearer <token> header. Check exp claim before requests and refresh proactively. Use an OkHttp Authenticator (not Interceptor) to refresh on 401." },
+    { t: "OkHttp Authenticator for token refresh", d: "The Authenticator.authenticate() callback is called only on 401 responses — the right place to refresh the token and retry the original request. Use @Synchronized or a Mutex to prevent simultaneous refresh calls from multiple in-flight requests." },
+    { t: "EncryptedSharedPreferences", d: "MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build(). Then EncryptedSharedPreferences.create(context, fileName, masterKey, AES256_SIV, AES256_GCM). Both keys and values are encrypted — even if the device is rooted, the data is unreadable without the Keystore key." },
+    { t: "Android Keystore", d: "Hardware-backed (TEE/StrongBox) key storage that never exposes the raw key material to the app process. Keys can be constrained: user authentication required, key expires after X seconds of non-use, hardware attestation. Use KeyPairGenerator or KeyGenerator with KeyGenParameterSpec." },
+    { t: "BiometricPrompt", d: "BiometricPrompt(activity, executor, callback) with BiometricPrompt.PromptInfo. On success, authenticate() returns a CryptoObject that can be used to unlock a Keystore-backed cipher. This ties biometric authentication to a specific cryptographic operation — not just a UI gate." },
+    { t: "BiometricManager availability check", d: "BiometricManager.from(context).canAuthenticate(BIOMETRIC_STRONG) returns: BIOMETRIC_SUCCESS (available), BIOMETRIC_ERROR_NO_HARDWARE, BIOMETRIC_ERROR_HW_UNAVAILABLE, BIOMETRIC_ERROR_NONE_ENROLLED. Always check before showing the biometric option." },
+    { t: "Certificate pinning with OkHttp", d: "CertificatePinner.Builder().add(\"api.teamzlab.com\", \"sha256/AAAA...\").build(). Attach to OkHttpClient.Builder(). Prevents MITM attacks even with compromised CA certificates. In Payback fintech, pinning was mandatory for payment API endpoints." },
+    { t: "ProGuard/R8 obfuscation", d: "R8 (the modern replacement for ProGuard) minifies, optimizes, and obfuscates bytecode. Enable with minifyEnabled = true and shrinkResources = true in release build config. Add -keep rules for classes used via reflection (Gson models, Retrofit interfaces, Firebase)." },
+    { t: "OWASP Mobile Top 10 — key items", d: "M1: Improper Credential Usage (hardcoded keys). M2: Inadequate Supply Chain Security. M4: Insufficient Input/Output Validation. M8: Security Misconfiguration (cleartext traffic). M9: Insecure Data Storage (plain SharedPreferences for tokens). Know these for senior interview questions." },
+    { t: "Cleartext traffic prevention", d: "Since Android 9, cleartext (HTTP) traffic is blocked by default. Ensure all API calls use HTTPS. For debug builds only, use a network security config XML to allow specific domains. Never allow cleartext in release builds — apps with cleartext traffic can be rejected from Play Store." },
+    { t: "Secure coding checklist", d: "No API keys in source code (use BuildConfig from local.properties, not committed). No sensitive data in logs (Timber.d in debug only). No sensitive data in Activity extras or deep link URIs (use POST body or session reference). Validate all input on the server, not just the client." }
+  ],
+  whatIs: "Android security spans multiple layers: network security (JWT, certificate pinning, HTTPS), data at rest (EncryptedSharedPreferences, Keystore), data in use (BiometricPrompt with CryptoObject), and code protection (ProGuard/R8). Senior engineers are expected to know not just how to implement each but why each layer is necessary and what attacks it mitigates.",
+  realWorld: "In Payback fintech app, the JWT was stored in EncryptedSharedPreferences backed by AES256_GCM. The OkHttp Authenticator handled 401 token refresh with a Mutex to prevent race conditions. Certificate pinning was applied to the payment endpoint. BiometricPrompt unlocked a Keystore-backed AES key that decrypted the locally cached balance — even a rooted device couldn't read the balance without passing biometric auth.",
+  code: `// 1. EncryptedSharedPreferences — secure token storage
+fun createSecurePrefs(context: Context): SharedPreferences {
+    val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+    return EncryptedSharedPreferences.create(
+        context,
+        "secure_prefs",
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+}
+
+fun saveToken(context: Context, token: String) {
+    createSecurePrefs(context).edit().putString("access_token", token).apply()
+}
+
+// 2. OkHttp Authenticator — thread-safe token refresh
+class TokenAuthenticator(
+    private val tokenRepo: TokenRepository
+) : Authenticator {
+    private val mutex = Mutex()
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        // Avoid infinite loop if refresh itself returns 401
+        if (response.request.header("Authorization")?.contains("refresh") == true) return null
+
+        val newToken = runBlocking {
+            mutex.withLock {
+                // Check if another coroutine already refreshed
+                val current = tokenRepo.getAccessToken()
+                if (current != response.request.header("Authorization")?.removePrefix("Bearer ")) {
+                    current // Already refreshed by another thread
+                } else {
+                    tokenRepo.refreshToken() // Perform the actual refresh
+                }
+            }
+        } ?: return null // Refresh failed — propagate 401
+
+        return response.request.newBuilder()
+            .header("Authorization", "Bearer $newToken")
+            .build()
+    }
+}
+
+// 3. BiometricPrompt with CryptoObject
+class BiometricAuthManager(private val activity: FragmentActivity) {
+
+    fun authenticate(onSuccess: (BiometricPrompt.AuthenticationResult) -> Unit, onError: (String) -> Unit) {
+        val biometricManager = BiometricManager.from(activity)
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            != BiometricManager.BIOMETRIC_SUCCESS) {
+            onError("Biometric not available")
+            return
+        }
+        val cipher = getOrCreateKeyStoreCipher() // Keystore-backed AES cipher
+
+        val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    onSuccess(result) // result.cryptoObject?.cipher can decrypt data
+                }
+                override fun onAuthenticationError(code: Int, msg: CharSequence) {
+                    onError(msg.toString())
+                }
+                override fun onAuthenticationFailed() {
+                    // Called for non-matching biometric — user can retry
+                }
+            })
+
+        val info = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Authenticate to access balance")
+            .setSubtitle("Use your fingerprint or face")
+            .setNegativeButtonText("Use PIN instead")
+            .build()
+
+        prompt.authenticate(info, BiometricPrompt.CryptoObject(cipher))
+    }
+
+    private fun getOrCreateKeyStoreCipher(): Cipher {
+        val keyStore = KeyStore.getInstance("AndroidKeyStore").also { it.load(null) }
+        if (!keyStore.containsAlias("balance_key")) {
+            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore").apply {
+                init(KeyGenParameterSpec.Builder("balance_key",
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .setUserAuthenticationRequired(true)
+                    .build())
+                generateKey()
+            }
+        }
+        val key = keyStore.getKey("balance_key", null) as SecretKey
+        return Cipher.getInstance("AES/CBC/PKCS7Padding").also { it.init(Cipher.ENCRYPT_MODE, key) }
+    }
+}
+
+// 4. Certificate pinning
+val okHttpClient = OkHttpClient.Builder()
+    .certificatePinner(
+        CertificatePinner.Builder()
+            .add("api.payback.com", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
+            .add("api.payback.com", "sha256/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=") // backup pin
+            .build()
+    )
+    .build()`,
+  funFact: "Android Keystore keys marked with setUserAuthenticationRequired(true) use a hardware-level binding. When the user changes their screen lock PIN or removes biometrics, the key becomes permanently invalid — the app can never decrypt data encrypted with that key again. This is intentional security behavior, not a bug — it's why secure apps must handle key invalidation and re-encrypt data after biometric enrollment changes.",
+  quiz: [
+    { q: "What are the three parts of a JWT, in order?", opts: ["Payload.Header.Signature", "Header.Payload.Signature", "Signature.Header.Payload", "Header.Signature.Payload"], ans: 1 },
+    { q: "Why should you use OkHttp's Authenticator (not an Interceptor) for JWT refresh?", opts: ["Interceptors run on a different thread and can't access the response code", "Authenticator is called only on 401 responses — the correct trigger for token refresh", "Interceptors cannot modify the request headers", "Authenticator automatically handles retry logic without code"], ans: 1 },
+    { q: "EncryptedSharedPreferences backed by Android Keystore means:", opts: ["The data is stored in the Keystore directly", "The encryption key is stored in the Keystore — the Keystore never exposes raw key material to the app process", "The data is encrypted using the user's screen lock PIN", "All SharedPreferences files on the device are automatically encrypted"], ans: 1 },
+    { q: "BiometricPrompt.CryptoObject is used to:", opts: ["Display the biometric UI in a custom style", "Tie biometric authentication to a specific cryptographic operation — not just a UI check", "Store the biometric template securely in the Keystore", "Verify the user's fingerprint against a stored hash"], ans: 1 },
+    { q: "Certificate pinning in OkHttp protects against:", opts: ["Expired SSL certificates causing app crashes", "Man-in-the-middle attacks using rogue but CA-signed certificates", "Replay attacks using old JWT tokens", "SQL injection in API responses"], ans: 1 },
+    { q: "In OWASP Mobile Top 10, M9 (Insecure Data Storage) is commonly caused by:", opts: ["Using HTTPS instead of HTTP for API calls", "Storing auth tokens in plain SharedPreferences or log files", "Enabling ProGuard/R8 code obfuscation", "Not implementing certificate pinning"], ans: 1 },
+    { q: "When a Keystore key has setUserAuthenticationRequired(true) and the user changes their PIN:", opts: ["The key is automatically re-encrypted with the new PIN", "The key becomes permanently invalid and encrypted data is inaccessible", "The app is prompted to re-authenticate before the key is updated", "The key remains valid for 24 hours then invalidates"], ans: 1 },
+    { q: "What R8 build config flags must both be enabled for full release code protection?", opts: ["debuggable = false and useProguard = true", "minifyEnabled = true and shrinkResources = true", "obfuscate = true and removeUnusedCode = true", "releaseMode = true and stripSymbols = true"], ans: 1 }
+  ],
+  challenge: "Build a secure token management system: (1) EncryptedSharedPreferences wrapper with save/get/clear methods for access token, refresh token, and expiry timestamp; (2) An OkHttp Authenticator that reads the current token, checks if it was already refreshed by another concurrent request (compare with response's Authorization header), refreshes if needed using a Mutex to prevent race conditions, and returns null (propagates 401) if refresh fails; (3) A BiometricAuth class that checks availability, creates or retrieves a Keystore-backed AES key with user authentication required, presents BiometricPrompt with a CryptoObject, and on success uses the cipher to decrypt a locally stored encrypted payload; (4) Certificate pinning on your OkHttpClient with a primary and backup pin.",
+  resources: [
+    { type: "docs", title: "EncryptedSharedPreferences — Security Library", url: "https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences", source: "Android Docs" },
+    { type: "docs", title: "Android Keystore System", url: "https://developer.android.com/training/articles/keystore", source: "Android Docs" },
+    { type: "docs", title: "BiometricPrompt Guide", url: "https://developer.android.com/training/sign-in/biometric-auth", source: "Android Docs" },
+    { type: "article", title: "OkHttp Certificate Pinning", url: "https://square.github.io/okhttp/4.x/okhttp/okhttp3/-certificate-pinner/", source: "OkHttp Docs" },
+    { type: "article", title: "OWASP Mobile Top 10", url: "https://owasp.org/www-project-mobile-top-10/", source: "OWASP" }
+  ],
+  eli5: "JWT is like a wristband you get at a concert — security checks it at the door (server creates it) and bouncers inside just glance at it (your app checks the stamp) without calling the door every time. EncryptedSharedPreferences is a diary with a combination lock where only your phone's special chip knows the combination — even if someone steals the diary, they can't read it. BiometricPrompt is putting your fingerprint on a safe — your fingerprint never leaves the safe scanner, it just unlocks it.",
+  codeWalkthrough: [
+    "MasterKey with AES256_GCM creates a hardware-backed master key in the Android Keystore — this key is used to encrypt all data in the EncryptedSharedPreferences file.",
+    "AES256_SIV encrypts the preference keys (so an attacker can't even see what keys you store). AES256_GCM encrypts the values with authentication.",
+    "The Mutex.withLock() in the Authenticator ensures only one coroutine performs the token refresh — others wait and then use the freshly refreshed token.",
+    "Comparing current token with the one in the response's Authorization header detects if another coroutine already refreshed — prevents redundant refresh calls.",
+    "Returning null from authenticate() tells OkHttp to stop retrying and propagate the 401 to the caller — critical for avoiding infinite refresh loops.",
+    "BiometricManager.canAuthenticate(BIOMETRIC_STRONG) checks hardware availability and enrollment — always check before showing the biometric option.",
+    "KeyGenParameterSpec with setUserAuthenticationRequired(true) binds the key to biometric authentication — the Keystore refuses to use the key without recent biometric auth.",
+    "BiometricPrompt.CryptoObject(cipher) ties the authentication result to the cipher — on success, result.cryptoObject?.cipher is initialized and ready to encrypt/decrypt.",
+    "KeyStore.getInstance(\"AndroidKeyStore\").load(null) loads the hardware-backed keystore — null means no password is needed, as the Keystore is protected by the device secure hardware.",
+    "CertificatePinner.add() with two pins provides a primary and backup — if the server rotates certificates, the backup pin prevents app breakage.",
+    "The sha256/ prefix in CertificatePinner specifies the pin is a SHA-256 hash of the certificate's SubjectPublicKeyInfo — not the full certificate.",
+    "minifyEnabled = true enables R8 — it shrinks, optimizes, and obfuscates in a single pass, making reverse engineering significantly harder."
+  ],
+  bugChallenge: {
+    code: `// Bug-ridden authentication implementation
+object TokenStore {
+    // Bug 1 — insecure storage
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+    fun saveToken(token: String) {
+        prefs.edit().putString("auth_token", token).apply()
+    }
+}
+
+class ApiAuthenticator(private val tokenRepo: TokenRepository) : Authenticator {
+    override fun authenticate(route: Route?, response: Response): Request? {
+        // Bug 2 — no loop prevention
+        val newToken = runBlocking { tokenRepo.refreshToken() }
+        return response.request.newBuilder()
+            .header("Authorization", "Bearer $newToken")
+            .build()
+    }
+}
+
+fun setupBiometric(activity: FragmentActivity) {
+    val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity),
+        object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                unlockApp()  // Bug 3 — no CryptoObject
+            }
+        })
+    val info = BiometricPrompt.PromptInfo.Builder()
+        .setTitle("Authenticate")
+        .build()  // Bug 4
+    prompt.authenticate(info)
+}
+
+val client = OkHttpClient.Builder()
+    .addInterceptor { chain ->  // Bug 5 — wrong hook for refresh
+        val response = chain.proceed(chain.request())
+        if (response.code == 401) {
+            val newToken = runBlocking { tokenRepo.refreshToken() }
+            chain.proceed(chain.request().newBuilder()
+                .header("Authorization", "Bearer $newToken").build())
+        } else response
+    }.build()`,
+    hint: "Check storage security, infinite loop prevention in Authenticator, CryptoObject usage in BiometricPrompt, PromptInfo required fields, and the correct OkHttp hook for token refresh.",
+    answer: "Bug 1: PreferenceManager.getDefaultSharedPreferences() stores data in plain XML — readable by anyone with root access or physical device access. Auth tokens stored here are a textbook OWASP M9 (Insecure Data Storage) violation. Fix: use EncryptedSharedPreferences with a MasterKey backed by Android Keystore. Bug 2: The Authenticator has no loop prevention — if refreshToken() itself returns a 401 (e.g., refresh token is expired), authenticate() is called again infinitely. Fix: check if the failing request was already a refresh attempt (e.g., check a header or URL) and return null to stop the loop. Also add Mutex to prevent concurrent refresh calls. Bug 3: BiometricPrompt is used as a simple UI gate with no CryptoObject — a sophisticated attacker could bypass the UI check. The cryptographic operation (decrypting sensitive data) is not tied to the biometric auth result. Fix: create a Keystore-backed cipher and pass it as BiometricPrompt.CryptoObject — use result.cryptoObject?.cipher to perform the actual decryption only after successful auth. Bug 4: PromptInfo is missing setNegativeButtonText() — BiometricPrompt requires either a negative button (for non-device-credential fallback) or setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL). Without this, authenticate() throws an IllegalArgumentException. Fix: add .setNegativeButtonText(\"Use PIN instead\") to the PromptInfo builder. Bug 5: Using an Interceptor for 401 token refresh is incorrect — Interceptors were designed for request/response transformation, not for retry-with-new-credentials flows. The Interceptor approach can also interfere with other interceptors and doesn't integrate with OkHttp's retry machinery. Fix: use OkHttpClient.Builder().authenticator(TokenAuthenticator()) — OkHttp's Authenticator is the correct, purpose-built hook for responding to 401 challenges."
+  },
+  difficulty: "advanced",
+  prereqs: [27]
+},
+{
+  id: 36,
+  title: "Android Performance: ANR, Jank, Memory Leaks & Startup Time",
+  subtitle: "Diagnose and eliminate the performance issues that kill user retention",
+  analogy: "ANR is like a waiter who disappears for 5 minutes — the restaurant (Android OS) eventually puts up a sign 'Is this place broken?' and customers (users) leave. Jank is like a film with missing frames — the brain notices the stutter even if most frames are smooth. A memory leak is like a conference room that's never released after the meeting ends — eventually there are no rooms left and the building shuts down. Cold start optimization is like pre-staging the restaurant before opening — so the first customer gets served instantly.",
+  points: [
+    { t: "ANR causes", d: "Application Not Responding is triggered when the main thread is blocked for 5+ seconds (input events), a BroadcastReceiver.onReceive() exceeds 10 seconds, or a Service.onCreate/onStartCommand() exceeds 20 seconds. Root causes: network/DB on main thread, deadlock, long synchronous computation, waiting on a locked Mutex on main." },
+    { t: "Detecting ANR", d: "ANRs appear in Play Console under Android Vitals. Use StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().build()) during development to catch main thread violations before they become ANRs in production. Crashlytics also captures ANR traces." },
+    { t: "Jank and the 16ms frame budget", d: "At 60fps, Android has 16.67ms per frame. If a frame takes longer (measured by Choreographer), it is dropped — the previous frame is shown again, causing visible stutter. On 90Hz/120Hz displays the budget is 11ms/8ms. Jank appears as stuttery scrolling, animation lag, or touch response delays." },
+    { t: "Detecting jank", d: "Android Studio Profiler (CPU trace with 'Render frames' view), GPU rendering bars in Developer Options, Perfetto traces. Key signals: long measure/layout passes, expensive onDraw() calls, overdraw (too many overlapping views), main thread work during Vsync window." },
+    { t: "RecyclerView jank", d: "Common causes: heavy work in onBindViewHolder() (image decoding, string formatting), creating objects inside onDraw(), incorrect stable IDs (triggers full re-layout on DiffUtil). Fix: pre-compute in background, use Coil/Glide for async image loading, implement DiffUtil.ItemCallback correctly with areContentsTheSame()." },
+    { t: "Memory leak sources", d: "Static reference to Context or Activity (use ApplicationContext for singletons). Inner class holding implicit reference to enclosing Activity (use static inner class + WeakReference). Unregistered listeners/callbacks (always unregister in onDestroy or use Lifecycle-aware components). ViewModel holding Fragment reference." },
+    { t: "Detecting memory leaks", d: "LeakCanary library automatically detects and reports leaks during development with a visual UI. Android Studio Profiler's Memory tab shows heap dump and object allocation. Look for Activity instances that should have been GC'd (filtered by class name in heap dump)." },
+    { t: "Cold start vs warm start vs hot start", d: "Cold: process not running — full initialization (Application.onCreate, Activity.onCreate, first frame). Warm: process running but Activity destroyed — Activity re-created, skips Application init. Hot: Activity in back stack — just resumed, fastest. Cold start is what users notice after install or force-stop." },
+    { t: "Cold start optimization", d: "Move heavy init (SDKs, DB prepopulation) out of Application.onCreate() — use lazy initialization or startup tasks. Use App Startup library (Jetpack) to control and sequence initialization with dependency ordering. Show a splash screen using SplashScreen API (not a separate Activity) to hide initialization time." },
+    { t: "Baseline Profiles", d: "A Baseline Profile is a list of critical code paths (classes, methods) that the Android Runtime (ART) pre-compiles from bytecode to native machine code on app install or update. This eliminates JIT compilation delays on the first run of those paths, significantly reducing cold start time and initial jank." },
+    { t: "Avoid overdraw", d: "Overdraw is drawing the same pixel multiple times per frame. Use Debug > Show GPU Overdraw in Developer Options. Remove unnecessary backgrounds (child views with same background as parent). Avoid translucent backgrounds in lists. Clip drawing in custom views with canvas.clipRect()." },
+    { t: "Lazy loading and pagination", d: "Never load all data upfront. Use Paging 3 for paginated lists — loads pages on demand, integrates with Room and Retrofit. Use LazyColumn/LazyRow in Compose (items are composed only when visible). In Tixio SaaS, switching task lists from full load to Paging 3 reduced initial load time by 70%." }
+  ],
+  whatIs: "Android performance encompasses: responsiveness (ANR prevention), smoothness (jank elimination), memory health (leak prevention), and startup speed (cold/warm start optimization). These four pillars directly impact app store ratings, user retention, and Play Store featuring in Android Vitals. Senior engineers are expected to diagnose all four using profiling tools and implement systematic fixes.",
+  realWorld: "In Tixio SaaS, cold start time was 3.2 seconds. After: moving Firebase init to App Startup library (lazy), pre-computing the navigation state in a background coroutine, and generating a Baseline Profile for the login and home flows — cold start dropped to 1.1 seconds. LeakCanary caught a ViewModel holding a Fragment reference (passed as lambda) causing Activity leaks during screen rotation.",
+  code: `// 1. StrictMode — catch violations in development
+class MyApplication : Application() {
+    override fun onCreate() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()  // Any network on main thread = violation
+                    .penaltyLog()     // Log to Logcat (use penaltyDeath() for hard fail)
+                    .build()
+            )
+        }
+        super.onCreate()
+    }
+}
+
+// 2. Memory leak — common patterns and fixes
+// BAD: Static reference holds Activity context
+object BadSingleton {
+    var context: Context? = null  // LEAK — Activity never GC'd
+}
+
+// GOOD: Use ApplicationContext
+object GoodSingleton {
+    lateinit var appContext: Context
+    fun init(ctx: Context) { appContext = ctx.applicationContext }
+}
+
+// BAD: Inner class holds implicit Activity reference
+class MainActivity : AppCompatActivity() {
+    inner class BadHandler : Handler(Looper.getMainLooper()) {  // LEAK
+        override fun handleMessage(msg: Message) { /* uses MainActivity.this implicitly */ }
+    }
+}
+
+// GOOD: Static inner class with WeakReference
+class MainActivity : AppCompatActivity() {
+    class SafeHandler(activity: MainActivity) : Handler(Looper.getMainLooper()) {
+        private val ref = WeakReference(activity)
+        override fun handleMessage(msg: Message) {
+            ref.get()?.onHandleMessage(msg)
+        }
+    }
+}
+
+// 3. App Startup — ordered lazy initialization
+class FirebaseInitializer : Initializer<FirebaseApp> {
+    override fun create(context: Context): FirebaseApp {
+        return FirebaseApp.initializeApp(context)!!
+    }
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+}
+
+class AnalyticsInitializer : Initializer<FirebaseAnalytics> {
+    override fun create(context: Context): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(context)
+    }
+    override fun dependencies() = listOf(FirebaseInitializer::class.java) // depends on Firebase
+}
+
+// AndroidManifest.xml entry for App Startup:
+// <provider android:name="androidx.startup.InitializationProvider" ... >
+//     <meta-data android:name="com.example.AnalyticsInitializer" android:value="androidx.startup"/>
+// </provider>
+
+// 4. Baseline Profile generation (macrobenchmark module)
+@RunWith(AndroidJUnit4::class)
+class BaselineProfileGenerator {
+    @get:Rule val rule = BaselineProfileRule()
+
+    @Test
+    fun generate() = rule.collect("com.example.tixio") {
+        // Critical user journeys — these paths get AOT compiled
+        pressHome()
+        startActivityAndWait()  // cold start — main activity
+        device.findObject(By.text("Login")).click()
+        waitForIdle()
+    }
+}
+
+// 5. DiffUtil for RecyclerView — prevent full re-layout
+class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
+    override fun areItemsTheSame(old: Task, new: Task) = old.id == new.id
+    override fun areContentsTheSame(old: Task, new: Task) = old == new // data class equals
+}`,
+  funFact: "The Android Choreographer fires a Vsync signal every 16.67ms. If your View's onDraw() method allocates any object (even a Paint or Rect), the garbage collector may pause the rendering thread mid-frame — causing a dropped frame. This is why Android Lint warns about object allocation in onDraw(): it's not just style, it's a real jank risk at 60fps.",
+  quiz: [
+    { q: "ANR is triggered when the main thread is blocked for how long processing input events?", opts: ["1 second", "3 seconds", "5 seconds", "10 seconds"], ans: 2 },
+    { q: "At 60fps, the frame budget per frame is approximately:", opts: ["8ms", "16ms", "33ms", "100ms"], ans: 1 },
+    { q: "Which tool automatically detects Activity and Fragment memory leaks during development?", opts: ["Android Studio Profiler only", "StrictMode with penaltyDeath()", "LeakCanary library", "Firebase Crashlytics"], ans: 2 },
+    { q: "What is a cold start?", opts: ["App process is running but the Activity was destroyed", "App process is not running — full initialization from scratch", "App Activity is in the back stack and resumed", "App is updated and restarted with a new process"], ans: 1 },
+    { q: "Baseline Profiles improve cold start by:", opts: ["Caching the entire app's UI in memory between launches", "Pre-compiling critical code paths from bytecode to native code during app install", "Reducing the number of classes loaded during Application.onCreate()", "Skipping the first Activity's onCreate() on subsequent launches"], ans: 1 },
+    { q: "A static inner class Handler is preferred over an inner class Handler because:", opts: ["Static inner classes run on a separate thread automatically", "Inner classes hold an implicit reference to the enclosing Activity, preventing garbage collection", "Static inner classes have access to a faster message queue", "Inner class Handlers require additional permissions on Android 12+"], ans: 1 },
+    { q: "Overdraw in Android refers to:", opts: ["Drawing more views than are visible on screen", "The same pixel being drawn multiple times in a single frame", "Allocating too many objects in onDraw() causing GC pauses", "A RecyclerView binding more ViewHolders than the screen can display"], ans: 1 },
+    { q: "StrictMode.ThreadPolicy with detectNetwork() will flag:", opts: ["Only HTTP requests on the main thread", "Any network socket operation on the main thread, including HTTPS", "DNS lookups but not actual data transfer on the main thread", "Only OkHttp network calls, not raw socket operations"], ans: 1 }
+  ],
+  challenge: "Performance audit a hypothetical app: (1) Add StrictMode with detectAll() + penaltyLog() in debug builds only, gated by BuildConfig.DEBUG; (2) Find and fix three memory leak patterns in provided code: static Context reference, inner class Runnable posted to a Handler, unregistered LiveData observer in a non-Lifecycle-aware class; (3) Move all SDK initialization from Application.onCreate() to App Startup Initializer classes with correct dependency ordering; (4) Write a Baseline Profile generator using MacroBenchmark that covers the cold start, login, and main feed loading user journeys; (5) Implement DiffUtil.ItemCallback for a Task list with proper areItemsTheSame (ID comparison) and areContentsTheSame (data class equality).",
+  resources: [
+    { type: "docs", title: "ANR Overview — Android Developers", url: "https://developer.android.com/topic/performance/vitals/anr", source: "Android Docs" },
+    { type: "docs", title: "App Startup Library", url: "https://developer.android.com/topic/libraries/app-startup", source: "Android Docs" },
+    { type: "docs", title: "Baseline Profiles Guide", url: "https://developer.android.com/topic/performance/baselineprofiles/overview", source: "Android Docs" },
+    { type: "article", title: "LeakCanary — Memory Leak Detection", url: "https://square.github.io/leakcanary/", source: "Square / LeakCanary" },
+    { type: "docs", title: "Android Vitals — Play Console", url: "https://developer.android.com/distribute/best-practices/develop/android-vitals", source: "Android Docs" }
+  ],
+  eli5: "ANR is when your app freezes like a spinning wheel — the phone waits 5 seconds then asks 'Is this broken?'. Jank is like a flipbook that skips pages — the animation stutters instead of flowing smoothly. A memory leak is like leaving all the lights on in every room you visit — eventually the electricity runs out. Cold start is how fast your app opens from completely closed — like starting a car from cold vs one that's already warm.",
+  codeWalkthrough: [
+    "StrictMode.setThreadPolicy() in Application.onCreate() — wrapping in BuildConfig.DEBUG ensures these developer-only penalties never run in production builds.",
+    "penaltyLog() writes violations to Logcat — use penaltyDeath() in CI to make violations cause test failures, catching regressions before code review.",
+    "ctx.applicationContext in GoodSingleton — ApplicationContext lives as long as the process, safe for singletons. Activity context is tied to the Activity lifecycle.",
+    "WeakReference(activity) in SafeHandler — allows the Activity to be garbage collected even if the Handler message is still in the queue. Always null-check ref.get().",
+    "App Startup Initializer.create() runs when the ContentProvider is initialized — before Application.onCreate() completes, in topological dependency order.",
+    "dependencies() returning listOf(FirebaseInitializer::class.java) ensures FirebaseApp is initialized before AnalyticsInitializer.create() is called.",
+    "BaselineProfileRule.collect() runs the provided block on a real device, records which classes and methods are executed, and outputs a baseline-prof.txt file.",
+    "startActivityAndWait() launches the app and waits for the first fully drawn frame — this is the cold start path that gets AOT compiled.",
+    "areItemsTheSame() uses only the stable ID — this determines if an item moved position (same item, new position triggers move animation).",
+    "areContentsTheSame() uses data class equals() — this determines if the item's visual content changed (triggers change animation or rebind).",
+    "In StrictMode, detectDiskReads/Writes catches SharedPreferences.commit() and Room queries on the main thread — force them to background threads.",
+    "Baseline Profiles are packaged in the APK/AAB and applied by ART during installation — no runtime overhead, purely an install-time optimization."
+  ],
+  bugChallenge: {
+    code: `class MainActivity : AppCompatActivity() {
+    // Bug 1 — inner class memory leak
+    private val updateHandler = object : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            updateUI(msg.obj as String)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Bug 2 — heavy work on main thread
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "app.db")
+            .build()
+        val user = db.userDao().getUser()  // synchronous query!
+
+        viewModel.data.observe(this) { items ->  // Bug 3 — leak if not lifecycle-aware
+            recyclerView.adapter = MyAdapter(items)  // Bug 4 — new adapter on every update
+        }
+    }
+}
+
+class MyAdapter(private val items: List<Item>) :
+    RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = items[position]
+        holder.icon.setImageBitmap(
+            BitmapFactory.decodeResource(holder.itemView.resources, item.iconRes)  // Bug 5
+        )
+        holder.title.text = item.title
+    }
+}`,
+    hint: "Check Handler inner class leak, synchronous Room query on main thread, LiveData observer lifecycle, adapter replacement vs update, and bitmap decoding in bind.",
+    answer: "Bug 1: Anonymous Handler object holds an implicit reference to MainActivity — if a message is queued when the Activity is destroyed (e.g., during rotation), the Handler keeps the Activity in memory (leak). Fix: use a static inner class with WeakReference<MainActivity>, or use lifecycleScope to post updates via coroutines which are automatically cancelled on destroy. Bug 2: db.userDao().getUser() is a synchronous Room database query called on the main thread — this blocks the UI thread and will trigger StrictMode violations and potentially ANR if the query is slow. Fix: use a suspend function in a CoroutineWorker or call within lifecycleScope.launch { withContext(Dispatchers.IO) { ... } }, or use LiveData/Flow from Room which delivers results on a background thread automatically. Bug 3: viewModel.data.observe(this, ...) with 'this' as the LifecycleOwner is actually correct in an Activity. However if this pattern were used in a Fragment, using 'this' instead of 'viewLifecycleOwner' would leak the observer across Fragment view recreations. Noting: in the Activity context this is fine, but the adapter replacement (Bug 4) is the critical issue. Bug 4: recyclerView.adapter = MyAdapter(items) creates and assigns a brand new adapter on every data update — this throws away all RecyclerView state (scroll position, item animations, ViewHolder recycling pool) and triggers a full layout pass. Fix: create the adapter once in onCreate(), use ListAdapter (which extends RecyclerView.Adapter and has built-in DiffUtil), and call adapter.submitList(items) on updates. Bug 5: BitmapFactory.decodeResource() in onBindViewHolder() performs synchronous bitmap decoding on the main thread for every visible item — this causes severe jank in lists (each scroll step decodes bitmaps on the UI thread). Fix: use Coil (imageView.load(item.iconRes)) or Glide which perform decoding on a background thread, cache decoded bitmaps, and cancel loads when ViewHolders are recycled."
+  },
+  difficulty: "advanced",
+  prereqs: [7, 12, 13]
+},
+{
+  id: 37,
+  title: "Profiling & Debugging: Logcat, Android Studio Profiler, LeakCanary & StrictMode",
+  subtitle: "Find and fix performance bugs before they find you in production",
+  analogy: "Profiling your app is like being a doctor with an X-ray machine. Logcat is your stethoscope — quick checks. The Profiler is your MRI — detailed internal scans. LeakCanary is the bloodwork that reveals what's slowly poisoning the patient. StrictMode is the health monitor that screams whenever you do something risky.",
+  points: [
+    { t: "Logcat basics and filtering", d: "Logcat is the Android system log. Use Log.d(TAG, msg), Log.w, Log.e, Log.i, Log.v for different severity levels. In Android Studio, filter by package name, tag, or log level. Use a companion object val TAG = 'MyClass'::class.simpleName constant for consistent tagging." },
+    { t: "Structured Logcat filtering", d: "Filter syntax in Android Studio: 'tag:MyTag level:DEBUG package:com.myapp'. You can also pipe Logcat in terminal: adb logcat -s MyTag:D. Regex filters are supported. Saves hours when debugging in large codebases with many logs." },
+    { t: "Android Studio CPU Profiler", d: "Reveals where CPU time is spent. Use 'Sample Java/Kotlin Methods' for low-overhead sampling. Use 'Trace Java/Kotlin Methods' for exact call trees (higher overhead). Identify long-running methods on the main thread — anything over 16ms per frame causes jank." },
+    { t: "Memory Profiler and heap dumps", d: "Shows live memory allocation over time. Capture a heap dump to see all live objects and their sizes. Look for classes with unexpectedly high instance counts (e.g., 50 instances of MainActivity means 50 Activity leaks). Use 'Record allocations' to find allocation hot spots." },
+    { t: "Network Profiler", d: "Inspect all HTTP requests made by OkHttp/Retrofit in real time — timing, payload size, response codes. Identify over-fetching (large payloads), N+1 request patterns, and slow API calls. Requires OkHttp 3.11+ with the network inspection interceptor enabled in debug builds." },
+    { t: "LeakCanary setup", d: "Add debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.x' — no other code needed. LeakCanary auto-installs in debug builds via ContentProvider. It watches Activities, Fragments, ViewModels, and Views by default and triggers heap analysis when suspected leaks occur." },
+    { t: "Reading LeakCanary traces", d: "A leak trace shows a chain of references from a GC root to the leaked object. Read from bottom (leaked object) to top (GC root). Look for the line marked with 'Leaking: YES' — the reference above it is the culprit. Common patterns: anonymous listeners, static references, Handler with implicit Activity reference." },
+    { t: "StrictMode for disk and network violations", d: "StrictMode detects policy violations at runtime in debug builds. ThreadPolicy catches disk reads/writes and network calls on the main thread. VmPolicy catches Activity leaks, Cursor leaks, and incorrect API usage. Enable in Application.onCreate() or Activity.onCreate() — crashes or logs on violation." },
+    { t: "Layout Inspector for Compose", d: "In Android Studio, use the Layout Inspector to see the live Compose component tree. Inspect recomposition counts — a component recomposing 100x/second indicates a stability problem. Identify deeply nested layouts causing measure/layout passes. Works with running devices and emulators." },
+    { t: "Systrace and Perfetto", d: "For advanced frame-timing analysis, use Perfetto (successor to Systrace). Captures system-level traces: scheduling, binder calls, RenderThread, MainThread. Identify which system call is causing dropped frames. Available via Android Studio's System Trace profiler or the Perfetto UI at ui.perfetto.dev." },
+    { t: "Debug builds vs release profiling", d: "Always profile release builds (or debuggable release builds) for accurate performance numbers. Debug builds run ~3-5x slower due to interpreter mode, disabled R8/ProGuard, and extra debug overhead. A method that takes 2ms in release may take 10ms in debug — never ship based on debug profiling numbers." },
+    { t: "Baseline Profiles for startup", d: "Baseline Profiles (Jetpack) pre-compile hot code paths to machine code at install time, reducing startup JIT compilation time by up to 40%. Generate using the Macrobenchmark library. Critical for enterprise apps where startup time directly affects user retention." }
+  ],
+  whatIs: "Profiling and debugging tools help you understand what your Android app is actually doing at runtime — where CPU time goes, how much memory is used, which objects are leaking, and whether disk or network calls block the main thread. Mastery of these tools is what separates senior engineers from juniors: you can reproduce, isolate, and fix production performance issues systematically rather than guessing.",
+  realWorld: "In an enterprise field operations app, technicians reported the app freezing when loading large work order lists. Using the Memory Profiler, the team discovered BitmapFactory.decodeFile() was being called on the main thread inside onBindViewHolder(). StrictMode had flagged this in debug builds for months but the logs were ignored. LeakCanary separately revealed that the MapFragment was leaking because a static GoogleMap listener held a reference to the Fragment. Combined, these two fixes reduced crash rate by 23% and improved frame rate from 42fps to 60fps on the list screen.",
+  code: `// StrictMode setup in Application class (debug only)
+class FieldOpsApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()          // log to Logcat
+                    .penaltyDialog()       // show dialog in debug
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .build()
+            )
+        }
+    }
+}
+
+// Structured Logcat tagging
+class WorkOrderRepository(private val dao: WorkOrderDao) {
+    companion object {
+        private val TAG = WorkOrderRepository::class.simpleName
+    }
+
+    suspend fun syncOrders() {
+        Log.d(TAG, "Starting sync — thread: \${Thread.currentThread().name}")
+        try {
+            val orders = api.fetchOrders()
+            Log.i(TAG, "Fetched \${orders.size} orders from network")
+            dao.insertAll(orders)
+            Log.d(TAG, "Inserted orders into Room")
+        } catch (e: Exception) {
+            Log.e(TAG, "Sync failed", e)   // includes full stack trace
+        }
+    }
+}
+
+// LeakCanary — just add the dependency, zero code needed:
+// debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
+
+// Manual watcher for custom objects (e.g., a long-lived service)
+class WorkOrderSyncService {
+    fun destroy() {
+        AppWatcher.objectWatcher.expectWeaklyReachable(
+            this, "WorkOrderSyncService should be GC'd after destroy()"
+        )
+    }
+}
+
+// Baseline Profile generation (macrobenchmark module)
+@ExperimentalBaselineProfilesApi
+class FieldOpsBaselineProfileGenerator {
+    @get:Rule val rule = BaselineProfileRule()
+
+    @Test
+    fun generate() = rule.collect("com.fieldops.app") {
+        pressHome()
+        startActivityAndWait()
+        // Interact with the critical path
+        device.findObject(By.text("Work Orders")).click()
+        device.waitForIdle()
+    }
+}`,
+  funFact: "LeakCanary was open-sourced by Square in 2015 and has since been used to detect leaks in apps with billions of combined installs. Its heap analysis engine uses the same HPROF format as standard Java heap dumps — meaning you can open LeakCanary captures in any JVM heap analysis tool like Eclipse Memory Analyzer (MAT).",
+  quiz: [
+    {
+      q: "A LeakCanary trace shows: GC Root → static field → MyListener → Activity. Which line contains the actual bug?",
+      opts: [
+        "The Activity class itself — it should not be referenced",
+        "The static field holding MyListener — it prevents the Activity from being GC'd",
+        "The GC root — GC roots should never hold references",
+        "MyListener — listeners should never reference Activities"
+      ],
+      ans: 1
+    },
+    {
+      q: "StrictMode reports a 'disk read on main thread' violation. Which is the correct fix?",
+      opts: [
+        "Wrap the disk read in a try/catch to suppress the violation",
+        "Add StrictMode.allowThreadDiskReads() around the offending code",
+        "Move the disk read to a coroutine with Dispatchers.IO",
+        "Disable StrictMode in the Application class"
+      ],
+      ans: 2
+    },
+    {
+      q: "You want to find which method is allocating the most memory during a list scroll. Which Android Studio profiler tool do you use?",
+      opts: [
+        "CPU Profiler with method tracing",
+        "Network Profiler timeline",
+        "Memory Profiler with 'Record allocations' during scroll",
+        "Layout Inspector recomposition counter"
+      ],
+      ans: 2
+    },
+    {
+      q: "Why should you always profile release builds rather than debug builds for performance numbers?",
+      opts: [
+        "Release builds include more features than debug builds",
+        "Debug builds run 3-5x slower due to interpreter mode and disabled optimizations",
+        "The profiler does not work with debug builds",
+        "Release builds use a different threading model"
+      ],
+      ans: 1
+    },
+    {
+      q: "In the Compose Layout Inspector, you see a component recomposing 200 times per second. The most likely cause is:",
+      opts: [
+        "The component has too many child composables",
+        "An unstable parameter type causing Compose to skip stability inference",
+        "The device's GPU is overloaded",
+        "The Profiler itself is causing additional recompositions"
+      ],
+      ans: 1
+    },
+    {
+      q: "LeakCanary is added with debugImplementation. What does this mean for production builds?",
+      opts: [
+        "LeakCanary runs in production but only logs, does not notify",
+        "LeakCanary is completely excluded from production APK/AAB — zero overhead",
+        "LeakCanary runs in production with reduced sensitivity",
+        "You must manually disable LeakCanary in release build config"
+      ],
+      ans: 1
+    },
+    {
+      q: "The Network Profiler shows 50 separate API calls made during a single screen load. This is most likely a:",
+      opts: [
+        "Crash caused by too many threads",
+        "N+1 query problem — fetching related resources one by one instead of batching",
+        "StrictMode violation from network on the main thread",
+        "Memory leak from unclosed OkHttp connections"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does Baseline Profiles improve in an Android app?",
+      opts: [
+        "Memory usage during background work",
+        "Network request latency",
+        "App startup and critical path performance by pre-compiling hot code at install time",
+        "Battery consumption during idle state"
+      ],
+      ans: 2
+    }
+  ],
+  challenge: "Set up LeakCanary in a sample Android project. Then intentionally create a leak: add a static field that holds a reference to an Activity. Run the app, navigate away from the Activity, and confirm LeakCanary detects the leak. Read the full leak trace and identify the exact line that is the root cause. Then fix the leak and confirm LeakCanary no longer reports it.",
+  resources: [
+    { type: "docs", title: "Android Studio Profilers Overview", url: "https://developer.android.com/studio/profile", source: "Android Developers" },
+    { type: "docs", title: "LeakCanary Documentation", url: "https://square.github.io/leakcanary/", source: "Square" },
+    { type: "docs", title: "StrictMode API Reference", url: "https://developer.android.com/reference/android/os/StrictMode", source: "Android Developers" },
+    { type: "docs", title: "Perfetto Tracing for Android", url: "https://perfetto.dev/docs/quickstart/android-tracing", source: "Perfetto" },
+    { type: "docs", title: "Baseline Profiles Guide", url: "https://developer.android.com/topic/performance/baselineprofiles/overview", source: "Android Developers" }
+  ],
+  eli5: "Imagine your app is a kitchen. Logcat is you standing in the kitchen yelling out what you are doing ('I am chopping onions now!'). The Profiler is a camera recording everything so you can rewind and see why dinner was slow. LeakCanary is like noticing old pots piling up in a corner that nobody is using — they are taking up space and nobody threw them away. StrictMode is a strict chef who shouts every time you answer your phone while cooking — because that is dangerous and you should not do it.",
+  codeWalkthrough: [
+    "StrictMode.setThreadPolicy() is called inside if (BuildConfig.DEBUG) so it only runs in debug builds — never ships to users.",
+    "detectDiskReads() + detectDiskWrites() + detectNetwork() cover the three most common main-thread violations in Android apps.",
+    "penaltyLog() writes the violation stack trace to Logcat; penaltyDialog() shows a popup — useful to make violations impossible to miss during development.",
+    "detectActivityLeaks() in VmPolicy watches for the classic pattern of Activities referenced longer than their lifecycle — the most common Android memory leak.",
+    "companion object val TAG = WorkOrderRepository::class.simpleName gives a stable, refactor-safe Logcat tag that automatically updates if the class is renamed.",
+    "Log.e(TAG, 'Sync failed', e) with the Throwable as the third argument prints the full stack trace in Logcat — crucial for diagnosing remote exceptions.",
+    "AppWatcher.objectWatcher.expectWeaklyReachable() lets you manually register custom objects with LeakCanary — useful for service classes, singletons, or custom view holders.",
+    "The Baseline Profile generator uses the Macrobenchmark library's BaselineProfileRule — it records the critical user journey and the Jetpack compiler uses this to pre-compile those paths.",
+    "pressHome() + startActivityAndWait() simulates a cold start — the most impactful scenario for Baseline Profile generation.",
+    "debugImplementation for LeakCanary means Gradle completely excludes the library from release builds at the dependency resolution level — no ProGuard rule needed."
+  ],
+  bugChallenge: {
+    code: `class OrderDetailActivity : AppCompatActivity() {
+
+    // Bug 1
+    companion object {
+        var currentActivity: OrderDetailActivity? = null
+    }
+
+    private var updateTimer: Timer? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentActivity = this  // Bug 1 continued
+
+        // Bug 2
+        val prefs = getSharedPreferences("orders", MODE_PRIVATE)
+        val lastId = prefs.getString("last_order_id", null)
+        textView.text = lastId
+
+        // Bug 3
+        updateTimer = Timer()
+        updateTimer?.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    refreshOrderStatus()  // Bug 3 continued
+                }
+            }
+        }, 0, 5000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Bug 4 — missing cleanup
+    }
+
+    private fun refreshOrderStatus() {
+        // Bug 5
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "orders.db").build()
+        val order = db.orderDao().getOrderSync(currentOrderId)
+        statusText.text = order?.status
+    }
+}`,
+    hint: "Check static Activity reference, SharedPreferences read location, Timer cleanup, onDestroy implementation, and Room database usage pattern.",
+    answer: "Bug 1: companion object var currentActivity holds a static reference to the Activity — this is a textbook memory leak. If the Activity is destroyed (rotation, back press) while this static field still holds it, the entire Activity (and everything it references — Views, Context, Bitmaps) cannot be GC'd. Fix: never store Activity references in static fields. Use WeakReference<Activity> if absolutely needed, or better yet restructure so the static reference is not needed (use a ViewModel or application-scoped state). Bug 2: getSharedPreferences() reads from disk and should not be called on the main thread in onCreate() — StrictMode will flag this as a disk read violation. Fix: use DataStore (which is coroutine-based and async by default) or move SharedPreferences reads to a background coroutine with lifecycleScope.launch { withContext(Dispatchers.IO) { ... } }. Bug 3: The anonymous TimerTask holds an implicit reference to the outer OrderDetailActivity (because it is an anonymous inner class). When the timer fires after the Activity is destroyed, it tries to call runOnUiThread on a dead Activity and holds the Activity in memory. Fix: use lifecycle-aware alternatives — a Handler with a WeakReference, or better yet replace the Timer entirely with lifecycleScope.launch { while(isActive) { delay(5000); refreshOrderStatus() } } which auto-cancels on destroy. Bug 4: onDestroy() does not cancel the timer — updateTimer?.cancel() is missing. Even if the TimerTask were fixed, the Timer thread keeps running until the app process dies, wasting CPU and battery. Always cancel timers, close connections, and unregister listeners in onDestroy(). Bug 5: Room.databaseBuilder().build() creates a brand new database instance on every call to refreshOrderStatus() — which is called every 5 seconds. This leaks database connections (SQLite connections are limited) and is extremely inefficient. Room database instances are expensive to create. Fix: inject the AppDatabase as a singleton (via Hilt/Koin or the Application class), use a suspend DAO function instead of getOrderSync(), and call it within a coroutine on Dispatchers.IO."
+  },
+  difficulty: "intermediate",
+  prereqs: [36]
+},
+{
+  id: 38,
+  title: "Testing Strategy: Unit vs Instrumentation vs UI Tests",
+  subtitle: "Know what to test, at which level, and why — before writing a single line of test code",
+  analogy: "The testing pyramid is like quality control in a car factory. Unit tests are like checking each bolt individually at the workbench — fast, cheap, done thousands of times a day. Instrumentation tests are like testing the assembled engine on a test bench — slower, more realistic. UI tests are like a full test drive on a track — the most realistic but you can only do a few before the day ends.",
+  points: [
+    { t: "The Android testing pyramid", d: "The recommended distribution: ~70% unit tests (fast, no device needed), ~20% integration/instrumentation tests (moderate speed, may need device or Robolectric), ~10% end-to-end UI tests (slow, require emulator or physical device). Invert this pyramid and your test suite becomes slow, brittle, and expensive to maintain." },
+    { t: "Unit tests — what they are", d: "Unit tests run on the JVM (no Android framework). They test a single class or function in isolation. Dependencies are replaced with test doubles. Run in milliseconds. The default location is src/test/java. Use JUnit, MockK, Truth. No Activity, no Context, no Room database — pure Kotlin/Java logic only." },
+    { t: "Instrumentation tests — what they are", d: "Instrumentation tests run on a real Android device or emulator. They have access to the full Android framework — Context, databases, file system, system services. Located in src/androidTest/java. Run with AndroidJUnitRunner. Much slower (30s–5min per test run). Use sparingly for things that genuinely require the device." },
+    { t: "UI tests with Compose Testing or Espresso", d: "UI tests drive the app's interface — find elements, click them, type text, assert visible state. Espresso for View-based UI, Compose Testing API for Jetpack Compose. These are instrumentation tests (need a device). Very brittle — UI changes break tests. Reserve for critical user journeys only." },
+    { t: "Robolectric — the middle ground", d: "Robolectric is a framework that simulates the Android runtime on the JVM without a device. Allows testing code that uses Android APIs (Context, SharedPreferences, etc.) faster than instrumentation tests. Not perfect — some APIs are stubbed or behave differently. Good for ViewModel, Repository tests that need lightweight Android context." },
+    { t: "Cost vs benefit of each level", d: "Unit tests: lowest cost, highest ROI — run in <1s, catch 80% of bugs, easy to debug. Integration tests: medium cost — run in seconds to minutes, catch wiring bugs. UI tests: highest cost — run in minutes, most brittle, catch only the most obvious UI regressions. Always maximize unit test coverage first before investing in higher-level tests." },
+    { t: "What to test first in a new project", d: "Priority order: (1) Business logic in use cases / domain layer — these encode the core rules of your product. (2) ViewModel state transitions. (3) Repository data fetching and caching logic. (4) Edge cases: null inputs, empty states, error states. UI tests last and only for mission-critical flows like login, checkout, or payment." },
+    { t: "Test doubles: mock vs fake vs stub", d: "Stub: returns hardcoded values, no verification. Mock: you verify exactly which methods were called (MockK, Mockito). Fake: a working lightweight implementation (e.g., an in-memory List-based repository instead of a real Room database). Fakes are more maintainable and realistic; mocks are faster to write but can lead to over-specification of implementation details." },
+    { t: "Fragile test smell — over-mocking", d: "Tests that mock every dependency and verify every method call become coupled to implementation rather than behavior. When you refactor (e.g., rename a method), 50 tests break even though the behavior is correct. Prefer testing observable output (returned values, emitted Flow items, UI state) over verifying internal method calls." },
+    { t: "Testing philosophy — test behavior, not implementation", d: "A good test answers: 'Does this class do what it is supposed to do?' not 'Does this class call method X in exactly this order?' Write tests from the user's perspective of the class. This makes tests resilient to refactoring and actually useful as regression protection." },
+    { t: "Code testability and design", d: "Hard-to-test code is a design smell. If you cannot unit test a class without spinning up a database, the class has too many responsibilities. Dependency injection (Hilt/Koin) makes classes testable by allowing dependencies to be swapped. Pure functions with no side effects are trivially testable. Design for testability from day one." },
+    { t: "Testing in CI/CD pipelines", d: "Unit tests run on every commit in CI (fast, <2 min for large projects). Instrumentation and UI tests run on PRs or nightly (slow, require emulator). Firebase Test Lab and AWS Device Farm provide real device testing at scale. A failing unit test blocks a merge; a failing UI test triggers investigation." }
+  ],
+  whatIs: "Testing strategy defines which types of tests you write, how many of each, and in what order — before writing any test code. The Android testing pyramid guides you to invest heavily in fast, cheap unit tests, moderately in integration tests, and minimally in slow UI tests. Understanding the cost-benefit of each level and the difference between test doubles (mock, fake, stub) lets you build a test suite that actually catches bugs without becoming a maintenance burden.",
+  realWorld: "When building a school management app from scratch, the team had zero tests. Rather than starting with UI tests (the most obvious choice for 'does the app look right'), the lead engineer prioritized unit tests for the grade calculation engine, attendance rule logic, and report card generation — the core business rules. These caught 12 bugs in the first week without running the app once. UI tests were added only for the parent-facing grade report flow and the admin login — the two journeys where bugs would cause the most damage.",
+  code: `// Project structure — where tests live
+//
+// src/
+//   main/java/com/schoolapp/       ← Production code
+//   test/java/com/schoolapp/       ← Unit tests (JVM only, fast)
+//   androidTest/java/com/schoolapp/ ← Instrumentation tests (device required)
+
+// ---- UNIT TEST example (src/test/) ----
+// Tests pure Kotlin business logic — no Android dependencies
+class GradeCalculatorTest {
+
+    private val calculator = GradeCalculator()  // Real instance, no mocks needed
+
+    @Test
+    fun \`passing score returns PASS grade\`() {
+        val result = calculator.evaluate(score = 75, maxScore = 100, passMark = 60)
+        assertThat(result.grade).isEqualTo(Grade.PASS)
+        assertThat(result.percentage).isEqualTo(75.0)
+    }
+
+    @Test
+    fun \`score below pass mark returns FAIL grade\`() {
+        val result = calculator.evaluate(score = 45, maxScore = 100, passMark = 60)
+        assertThat(result.grade).isEqualTo(Grade.FAIL)
+    }
+
+    @Test
+    fun \`zero max score throws IllegalArgumentException\`() {
+        assertThrows<IllegalArgumentException> {
+            calculator.evaluate(score = 0, maxScore = 0, passMark = 60)
+        }
+    }
+}
+
+// ---- Test doubles: Stub, Mock, Fake ----
+
+// STUB — returns hardcoded value, no verification
+class StubStudentRepository : StudentRepository {
+    override suspend fun getStudent(id: String) = Student("1", "Alice", grade = 10)
+    override suspend fun saveStudent(student: Student) { /* no-op */ }
+}
+
+// FAKE — real working implementation backed by in-memory storage
+class FakeStudentRepository : StudentRepository {
+    private val storage = mutableMapOf<String, Student>()
+
+    override suspend fun getStudent(id: String) = storage[id]
+        ?: throw NotFoundException("Student $id not found")
+
+    override suspend fun saveStudent(student: Student) {
+        storage[student.id] = student
+    }
+}
+
+// MOCK — created by MockK, allows call verification
+// val mockRepo = mockk<StudentRepository>()
+// every { mockRepo.getStudent("1") } returns Student("1", "Alice", 10)
+// coVerify { mockRepo.getStudent("1") }   ← verifies the call happened`,
+  funFact: "Google's internal study of their own Android codebases found that teams with >60% unit test coverage shipped features 2x faster than teams with <20% coverage — not because writing tests is fast, but because debugging production issues and manually verifying regressions takes far more time than the tests saved.",
+  quiz: [
+    {
+      q: "According to the Android testing pyramid, what should be the largest category of tests in a healthy test suite?",
+      opts: [
+        "UI tests — they test the full user experience",
+        "Instrumentation tests — they test real Android behavior",
+        "Unit tests — fast, cheap, run on JVM with no device required",
+        "Screenshot tests — they catch visual regressions"
+      ],
+      ans: 2
+    },
+    {
+      q: "A FakeRepository differs from a MockRepository in that:",
+      opts: [
+        "A Fake uses a real database; a Mock uses an in-memory one",
+        "A Fake is a working lightweight implementation; a Mock records calls for verification",
+        "A Fake is slower; a Mock is faster",
+        "A Fake requires MockK; a Mock is written manually"
+      ],
+      ans: 1
+    },
+    {
+      q: "You are starting a new fintech app from scratch with zero tests. Which should you write first?",
+      opts: [
+        "UI tests for the login and payment screens",
+        "Screenshot tests for every screen",
+        "Unit tests for the business logic: interest calculation, transaction rules, account validation",
+        "Instrumentation tests for the Room database"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the main problem with tests that verify every internal method call (over-mocking)?",
+      opts: [
+        "They run too slowly on the JVM",
+        "They become coupled to implementation details and break on refactoring even when behavior is correct",
+        "MockK does not support verifying method calls",
+        "They require an emulator to run"
+      ],
+      ans: 1
+    },
+    {
+      q: "Robolectric allows you to:",
+      opts: [
+        "Run UI tests without writing test code",
+        "Test code that uses Android APIs (Context, SharedPreferences) on the JVM without a device",
+        "Replace Espresso for all instrumentation tests",
+        "Profile memory usage in unit tests"
+      ],
+      ans: 1
+    },
+    {
+      q: "A class is very difficult to unit test — it needs a real database and a real network connection to instantiate. This is a sign of:",
+      opts: [
+        "Correct architecture — classes should be self-contained",
+        "A design smell — the class has too many responsibilities and is not using dependency injection",
+        "Normal Android development — all classes need Context",
+        "A MockK limitation that will be fixed in a future version"
+      ],
+      ans: 1
+    },
+    {
+      q: "Where should unit tests be placed in an Android project?",
+      opts: [
+        "src/androidTest/java — alongside instrumentation tests",
+        "src/test/java — runs on JVM without a device",
+        "src/debug/java — runs only in debug builds",
+        "The test location does not matter — Gradle detects test files automatically"
+      ],
+      ans: 1
+    },
+    {
+      q: "In CI/CD, which tests should run on every commit to block a merge on failure?",
+      opts: [
+        "UI tests — they are the most comprehensive",
+        "Instrumentation tests — they test real Android behavior",
+        "Unit tests — they are fast enough to run on every commit without slowing the pipeline",
+        "Screenshot tests — they catch visual regressions immediately"
+      ],
+      ans: 2
+    }
+  ],
+  challenge: "Map out a testing strategy for a SaaS mobile app with these features: user authentication, subscription management, dashboard with charts, offline data sync, and push notifications. For each feature, decide: (a) what would you unit test, (b) what would you integration/instrumentation test, (c) what UI journey (if any) deserves an end-to-end test. Write out your reasoning for each decision.",
+  resources: [
+    { type: "docs", title: "Android Testing Fundamentals", url: "https://developer.android.com/training/testing/fundamentals", source: "Android Developers" },
+    { type: "docs", title: "Test Doubles in Android", url: "https://developer.android.com/training/testing/fundamentals/test-doubles", source: "Android Developers" },
+    { type: "docs", title: "Robolectric Documentation", url: "https://robolectric.org/", source: "Robolectric" },
+    { type: "docs", title: "Testing on Android (Guide)", url: "https://developer.android.com/guide/topics/testing", source: "Android Developers" }
+  ],
+  eli5: "Testing is like checking your homework before you hand it in. Unit tests are checking one math problem at a time — very fast. Instrumentation tests are like checking your whole homework page — takes longer. UI tests are like having your teacher watch you do your homework in real time — the most realistic but you can only do it sometimes. The smart student checks each problem first (unit tests) before worrying about the whole page.",
+  codeWalkthrough: [
+    "src/test/java is for unit tests — Gradle runs these on the JVM with no Android device, so they run in milliseconds.",
+    "src/androidTest/java is for instrumentation tests — these require a connected device or emulator and take much longer to run.",
+    "GradeCalculatorTest instantiates the real GradeCalculator — no mocks needed for pure logic classes with no external dependencies.",
+    "Each @Test method tests exactly one behavior with a descriptive backtick string name — 'passing score returns PASS grade' reads like a specification.",
+    "assertThrows<IllegalArgumentException> verifies that the class correctly validates its inputs and fails fast with a meaningful error.",
+    "StubStudentRepository always returns the same hardcoded Student — useful when you only care about the system under test and not the repository behavior.",
+    "FakeStudentRepository uses a mutableMapOf as in-memory storage — it behaves like a real repository (throws on missing keys) without needing Room or SQLite.",
+    "The MOCK approach uses MockK's every { } to define return values and coVerify { } to assert that specific calls happened — useful when testing that side effects occur."
+  ],
+  bugChallenge: {
+    code: `// A developer wrote these tests for a payment processing use case.
+// Identify what is wrong with the testing approach.
+
+class ProcessPaymentUseCaseTest {
+
+    @Test
+    fun testProcessPayment() {
+        // Bug 1 — test setup
+        val mockRepo = mockk<PaymentRepository>()
+        val mockNotifier = mockk<NotificationService>()
+        val mockLogger = mockk<AuditLogger>()
+        val mockValidator = mockk<PaymentValidator>()
+        val mockFormatter = mockk<CurrencyFormatter>()
+        val useCase = ProcessPaymentUseCase(
+            mockRepo, mockNotifier, mockLogger, mockValidator, mockFormatter
+        )
+
+        every { mockValidator.validate(any()) } returns true
+        every { mockFormatter.format(any()) } returns "\$100.00"
+        every { mockRepo.save(any()) } returns Unit
+        every { mockNotifier.send(any()) } returns Unit
+        every { mockLogger.log(any()) } returns Unit
+
+        // Bug 2 — test body
+        useCase.process(Payment(amount = 100.0, currency = "USD"))
+
+        // Bug 3 — assertions
+        coVerify { mockValidator.validate(any()) }
+        coVerify { mockFormatter.format(100.0) }
+        coVerify { mockRepo.save(any()) }
+        coVerify { mockNotifier.send(any()) }
+        coVerify { mockLogger.log(any()) }
+    }
+}`,
+    hint: "Look at what is being asserted (method calls vs behavior), how many mocks are used, and what the test name tells you about what is being verified.",
+    answer: "Bug 1: The test mocks ALL dependencies — PaymentRepository, NotificationService, AuditLogger, PaymentValidator, AND CurrencyFormatter. This is a sign of over-mocking. If a class genuinely needs 5 mocked dependencies to function, the class itself may have too many responsibilities (violating Single Responsibility Principle). Consider using a Fake for the repository and only mocking the services where call verification matters. Alternatively, create a test data builder that sets up common state. Bug 2: useCase.process() is called with no assertion about its return value or observable effect. If process() returns a Result or emits a Flow item (the actual payment result — success or failure), the test is not checking the output that matters to the user. A payment test should verify 'did the payment succeed?' not just 'did a bunch of methods get called?' Bug 3: ALL assertions are coVerify checks — the test verifies that 5 internal methods were called. This is pure implementation testing, not behavior testing. If you refactor ProcessPaymentUseCase to combine validation and formatting into one step (calling a single validateAndFormat() method), all these tests break even if the payment logic is identical. Fix: assert on the USE CASE'S OUTPUT — the returned PaymentResult, emitted Flow state, or thrown exception. Only use coVerify for side effects that genuinely matter (like 'did we send the notification?') not for internal implementation steps. The test name 'testProcessPayment' is also too generic — rename it to 'successful payment with valid amount returns PaymentResult.Success' to document behavior."
+  },
+  difficulty: "intermediate",
+  prereqs: [23]
+},
+{
+  id: 39,
+  title: "Unit Testing Kotlin: Classes, Use Cases & Repositories",
+  subtitle: "Write fast, reliable JVM unit tests for your Kotlin business logic with JUnit5 and MockK",
+  analogy: "Unit testing a use case is like fact-checking a journalist's article by interviewing the source directly — you bypass the whole publication system (database, network, UI) and go straight to the logic. MockK is your interview script: you tell the 'source' (repository) exactly what to say, then check whether the journalist (use case) reported it correctly.",
+  points: [
+    { t: "JUnit5 setup for Android", d: "Add junit-jupiter to testImplementation in build.gradle. Use @Test, @BeforeEach, @AfterEach, @Nested for organizing tests. JUnit5 requires the android-junit5 Gradle plugin for Android projects. Backtick function names (fun \`returns error when network fails\`()) create self-documenting test names." },
+    { t: "MockK basics — mockk<T>()", d: "val repo = mockk<StudentRepository>() creates a mock. every { repo.getStudent('1') } returns Student(...) stubs a return value. coEvery { repo.getStudent('1') } returns Student(...) is for suspend functions. MockK is Kotlin-native — it handles suspend functions, object mocks, and companion object mocking natively." },
+    { t: "Verifying calls with verify and coVerify", d: "verify { repo.saveStudent(any()) } asserts that saveStudent was called at least once. verify(exactly = 1) { ... } asserts exactly one call. verify(exactly = 0) { ... } asserts the method was NOT called. coVerify is the suspend-function equivalent. Over-use of verify leads to brittle tests — prefer asserting output over verifying internal calls." },
+    { t: "Argument captors with slot<T>()", d: "val slot = slot<Student>(); every { repo.save(capture(slot)) } returns Unit. After calling the use case, slot.captured gives you the exact argument that was passed. Useful when you need to assert on the exact data passed to a dependency — e.g., checking that a payment amount was correctly converted before saving." },
+    { t: "Testing pure Kotlin classes", d: "Pure functions with no dependencies are the easiest to test — instantiate the class, call the method, assert the result. No mocks needed. Calculator, Validator, Formatter classes fall into this category. These should have the most thorough test coverage since they are cheapest to test." },
+    { t: "Testing use cases with mock repositories", d: "A use case orchestrates business logic using injected repositories. In tests: mock the repository (coEvery), call the use case, assert the returned Result or emitted value. The use case should be tested for: happy path, repository throws exception, invalid input, edge cases (empty list, null optional)." },
+    { t: "Testing suspend functions with runTest", d: "kotlinx-coroutines-test provides runTest { } — a coroutine builder for tests. It runs the test in a TestCoroutineScope, advances virtual time, and properly handles exceptions from suspend functions. Replace every coroutineScope.launch { } in your test with runTest { }." },
+    { t: "Turbine for Flow testing", d: "Turbine (by Cash App) makes testing Flow emissions simple. val item = flow.test { val item = awaitItem(); cancel() }. Use awaitItem() for each expected emission, awaitComplete() for finite flows, awaitError() for error flows. Without Turbine, testing Flows requires complex channel-based gymnastics." },
+    { t: "Testing error paths — just as important", d: "Every use case should handle errors from the repository. Test that when the repo throws an IOException, the use case returns Result.Error (or the appropriate error state). Test that error messages are correctly propagated. Error path tests catch the bugs that crash your app in production." },
+    { t: "Asserting with Truth or kotlin.test", d: "Google Truth: assertThat(result).isEqualTo(expected) — readable, extensible. Kotlin's built-in kotlin.test: assertEquals(expected, actual), assertNotNull(value). Avoid raw JUnit4 assertEquals where Truth reads more clearly. For collections: assertThat(list).containsExactly(...).inOrder()." },
+    { t: "Test naming conventions", d: "Method name format: 'given [context] when [action] then [expectation]' or 'action returns expected for valid input'. Backtick names in Kotlin allow natural language: fun \`getStudent throws NotFoundException when student does not exist\`(). Good names make test failures self-explanatory without reading the test body." },
+    { t: "Parameterized tests", d: "@ParameterizedTest with @MethodSource or @CsvSource runs the same test logic with multiple input sets. Great for testing boundary conditions: test grade boundaries (59=FAIL, 60=PASS, 100=PASS) in one test. Reduces test count while increasing coverage." }
+  ],
+  whatIs: "Unit testing Kotlin means writing JVM-based tests for your business logic classes — use cases, repositories (via mocks), domain models, and utility classes — without any Android dependencies. JUnit5 provides the test runner and lifecycle hooks. MockK provides idiomatic Kotlin mocking for suspend functions and coroutines. kotlinx-coroutines-test's runTest handles suspend function testing. Turbine simplifies Flow testing. Together these tools let you verify your app's core logic in milliseconds.",
+  realWorld: "In a school management app's SaaS backend-connected Android client, the CalculateGradeReportUseCase had complex logic: fetch raw scores from the repository, calculate weighted averages per subject, apply school-defined pass marks, generate a grade letter, and check if the student qualifies for honors. Unit tests for this use case ran in 8ms each, covered 14 scenarios (including missing scores, zero-weight subjects, and exact boundary grades), and caught 3 bugs during development — including one where honor roll qualification logic had an off-by-one error on the GPA threshold.",
+  code: `// build.gradle.kts (app module)
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation("com.google.truth:truth:1.1.5")
+}
+
+// --- Domain classes under test ---
+data class Student(val id: String, val name: String, val gradeLevel: Int)
+data class GradeReport(val studentId: String, val average: Double, val passed: Boolean)
+
+interface StudentRepository {
+    suspend fun getStudent(id: String): Student
+    suspend fun getScores(studentId: String): List<Double>
+}
+
+class GenerateGradeReportUseCase(private val repo: StudentRepository) {
+    suspend fun execute(studentId: String): Result<GradeReport> = runCatching {
+        val student = repo.getStudent(studentId)
+        val scores = repo.getScores(studentId)
+        if (scores.isEmpty()) throw IllegalStateException("No scores found for \${student.name}")
+        val average = scores.average()
+        GradeReport(studentId = student.id, average = average, passed = average >= 60.0)
+    }
+}
+
+// --- Unit Tests ---
+class GenerateGradeReportUseCaseTest {
+
+    private val mockRepo = mockk<StudentRepository>()
+    private val useCase = GenerateGradeReportUseCase(mockRepo)
+
+    @BeforeEach
+    fun setUp() {
+        // Common stub — individual tests can override
+        coEvery { mockRepo.getStudent("s1") } returns Student("s1", "Alice", gradeLevel = 10)
+    }
+
+    @Test
+    fun \`execute returns passing report for scores above 60\`() = runTest {
+        coEvery { mockRepo.getScores("s1") } returns listOf(70.0, 80.0, 90.0)
+
+        val result = useCase.execute("s1")
+
+        assertThat(result.isSuccess).isTrue()
+        val report = result.getOrThrow()
+        assertThat(report.average).isEqualTo(80.0)
+        assertThat(report.passed).isTrue()
+    }
+
+    @Test
+    fun \`execute returns failing report for average below 60\`() = runTest {
+        coEvery { mockRepo.getScores("s1") } returns listOf(40.0, 50.0, 55.0)
+
+        val result = useCase.execute("s1")
+
+        assertThat(result.getOrThrow().passed).isFalse()
+    }
+
+    @Test
+    fun \`execute returns failure when scores list is empty\`() = runTest {
+        coEvery { mockRepo.getScores("s1") } returns emptyList()
+
+        val result = useCase.execute("s1")
+
+        assertThat(result.isFailure).isTrue()
+        assertThat(result.exceptionOrNull()).isInstanceOf(IllegalStateException::class.java)
+    }
+
+    @Test
+    fun \`execute propagates repository exception as failure\`() = runTest {
+        coEvery { mockRepo.getStudent("s1") } throws IOException("Network error")
+
+        val result = useCase.execute("s1")
+
+        assertThat(result.isFailure).isTrue()
+    }
+}
+
+// --- Turbine for Flow testing ---
+class StudentScoreStreamTest {
+    private val fakeRepo = FakeStudentRepository()
+    private val viewModel = StudentScoreViewModel(fakeRepo)
+
+    @Test
+    fun \`score flow emits updated value after new score added\`() = runTest {
+        viewModel.scoreFlow.test {
+            assertThat(awaitItem()).isEmpty()      // initial empty state
+            fakeRepo.emitScore(Score("s1", 85.0))
+            assertThat(awaitItem()).hasSize(1)     // after emission
+            cancel()
+        }
+    }
+}`,
+  funFact: "MockK was created because Mockito — the dominant Java mocking library — has poor support for Kotlin features: it cannot mock final classes by default, cannot mock suspend functions, and produces confusing errors with Kotlin's null-safety. MockK was designed from the ground up for Kotlin and handles all these cases natively. It is now the most widely used mocking library in Android Kotlin projects.",
+  quiz: [
+    {
+      q: "What is the difference between every { } and coEvery { } in MockK?",
+      opts: [
+        "every { } is for MockK; coEvery { } is for Mockito compatibility",
+        "every { } stubs regular functions; coEvery { } stubs suspend functions",
+        "every { } runs synchronously; coEvery { } runs on a background thread",
+        "There is no difference — they are aliases"
+      ],
+      ans: 1
+    },
+    {
+      q: "runTest { } from kotlinx-coroutines-test is needed to test suspend functions because:",
+      opts: [
+        "Suspend functions cannot be called from regular functions",
+        "runTest provides a controlled TestScope and virtual time, allowing suspend functions to run deterministically in unit tests",
+        "runTest automatically mocks all coroutine dependencies",
+        "JUnit5 requires runTest for all async tests"
+      ],
+      ans: 1
+    },
+    {
+      q: "You want to verify the exact Student object passed to repo.saveStudent() in a test. Which MockK feature do you use?",
+      opts: [
+        "verify(exactly = 1) { repo.saveStudent(any()) }",
+        "slot<Student>() with capture() to capture the argument",
+        "coEvery { repo.saveStudent(any()) } answers { firstArg() }",
+        "mockk<Student>(relaxed = true)"
+      ],
+      ans: 1
+    },
+    {
+      q: "Turbine's awaitItem() in a flow.test { } block does what?",
+      opts: [
+        "Waits for any coroutine to complete",
+        "Suspends until the Flow emits the next item and returns it for assertion",
+        "Cancels the Flow and returns the last emitted item",
+        "Advances virtual time by one second"
+      ],
+      ans: 1
+    },
+    {
+      q: "A use case returns Result<T>. Which scenarios must your unit tests cover?",
+      opts: [
+        "Only the happy path — error paths are covered by integration tests",
+        "Happy path, repository throws exception, invalid input, and edge cases like empty collections",
+        "Only error paths — happy paths are obvious and do not need testing",
+        "Only the scenarios mentioned in the product requirements document"
+      ],
+      ans: 1
+    },
+    {
+      q: "val repo = mockk<StudentRepository>(relaxed = true) — what does relaxed = true do?",
+      opts: [
+        "Allows the mock to be used across multiple test classes",
+        "Returns default values (null, 0, empty list) for un-stubbed calls instead of throwing an exception",
+        "Makes all method calls asynchronous",
+        "Disables call verification for this mock"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which test naming style gives the most useful information when a test fails in CI output?",
+      opts: [
+        "fun test1(), fun test2(), fun test3()",
+        "fun testRepository(), fun testUseCase()",
+        "fun \`execute returns failure when student ID is blank\`()",
+        "fun executeTest_failure()"
+      ],
+      ans: 2
+    },
+    {
+      q: "You have a GradeCalculator class with no constructor parameters and no side effects. Which test approach is best?",
+      opts: [
+        "Mock the GradeCalculator to avoid depending on its implementation",
+        "Instantiate the real GradeCalculator and test its outputs directly — no mocks needed",
+        "Use Robolectric to run the GradeCalculator in an Android environment",
+        "Write an instrumentation test since calculators can behave differently on Android"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Write a complete unit test class for a TransferFundsUseCase from a fintech app. The use case: takes sourceAccountId, destinationAccountId, and amount; validates amount > 0 and account IDs are not blank; fetches both accounts from AccountRepository; checks source balance >= amount; calls repo.transfer(). Test: happy path, insufficient balance, invalid amount (<=0), blank account IDs, repository throws NetworkException. Use MockK and runTest.",
+  resources: [
+    { type: "docs", title: "MockK Documentation", url: "https://mockk.io/", source: "MockK" },
+    { type: "docs", title: "kotlinx-coroutines-test", url: "https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-test/", source: "Kotlin" },
+    { type: "docs", title: "Turbine by Cash App", url: "https://github.com/cashapp/turbine", source: "Cash App" },
+    { type: "docs", title: "JUnit 5 User Guide", url: "https://junit.org/junit5/docs/current/user-guide/", source: "JUnit" },
+    { type: "docs", title: "Android Unit Testing Guide", url: "https://developer.android.com/training/testing/local-tests", source: "Android Developers" }
+  ],
+  eli5: "Imagine you are testing whether a recipe works. You do not go to the grocery store (the real database). Instead you use plastic toy ingredients (mocks) that always give you exactly what you tell them to. Then you follow the recipe (the use case), and check if the dish came out right (assert the result). runTest is like a magic kitchen where time moves super fast so you do not have to wait for the oven.",
+  codeWalkthrough: [
+    "mockk<StudentRepository>() creates a mock — a fake object that records what you call on it and returns whatever you tell it to.",
+    "@BeforeEach fun setUp() runs before every single test method — use it to set up common stubs that most tests share, keeping individual tests short.",
+    "coEvery { mockRepo.getStudent('s1') } returns Student(...) stubs the suspend function — without the 'co' prefix MockK would throw an error for suspend functions.",
+    "runTest { } is the coroutine test builder — it creates a TestScope with virtual time control and properly propagates exceptions from suspend functions to the test framework.",
+    "result.isSuccess and result.getOrThrow() test the Result<T> wrapper — always check both the success flag AND the actual value.",
+    "The empty scores test asserts result.isFailure is true AND checks the exception type — verifying that the right kind of failure occurred, not just any failure.",
+    "The IOException propagation test simulates a network failure — asserting that the use case correctly converts repository exceptions into Result.Failure without crashing.",
+    "viewModel.scoreFlow.test { } from Turbine opens a collector for the Flow — all emissions are queued and accessible via awaitItem().",
+    "awaitItem() suspends until the next emission arrives — if the Flow does not emit within the timeout (default 1s), the test fails with a clear timeout message.",
+    "cancel() at the end of a Turbine test { } block is required for infinite flows — it signals that you are done collecting and prevents the test from hanging."
+  ],
+  bugChallenge: {
+    code: `class TransferFundsUseCaseTest {
+
+    private val repo = mockk<AccountRepository>()
+    private val useCase = TransferFundsUseCase(repo)
+
+    // Bug 1
+    @Test
+    fun testTransfer() = runTest {
+        coEvery { repo.getAccount("acc1") } returns Account("acc1", balance = 500.0)
+        coEvery { repo.getAccount("acc2") } returns Account("acc2", balance = 100.0)
+        coEvery { repo.transfer(any(), any(), any()) } returns Unit
+
+        useCase.transfer("acc1", "acc2", amount = 200.0)
+
+        // Bug 2
+        coVerify { repo.getAccount("acc1") }
+        coVerify { repo.getAccount("acc2") }
+        coVerify { repo.transfer("acc1", "acc2", 200.0) }
+    }
+
+    // Bug 3
+    @Test
+    fun testInsufficientFunds() = runTest {
+        coEvery { repo.getAccount("acc1") } returns Account("acc1", balance = 50.0)
+        coEvery { repo.getAccount("acc2") } returns Account("acc2", balance = 0.0)
+
+        val result = useCase.transfer("acc1", "acc2", amount = 200.0)
+
+        // Bug 4
+        assertThat(result).isNotNull()
+    }
+
+    // Bug 5
+    @Test
+    fun testNegativeAmount() {
+        val result = useCase.transfer("acc1", "acc2", amount = -50.0)
+        assertThat(result.isFailure).isTrue()
+    }
+}`,
+    hint: "Look at test names, what is being asserted vs what should be asserted, missing runTest wrapper, and the insufficient funds test assertions.",
+    answer: "Bug 1: The test method name 'testTransfer' is too generic and provides no information when it fails in CI. Rename it to 'transfer succeeds and returns success result when balance is sufficient' — this immediately tells you what broke without reading the test body. Bug 2: The happy path test only uses coVerify to check internal method calls — it never asserts the RETURN VALUE of useCase.transfer(). If transfer() returns a Result<Unit> or a TransferReceipt, the test should assert that Result.isSuccess is true. The current test would pass even if the use case returned a failure Result, as long as it called the repository methods. Bug 3: 'testInsufficientFunds' suffers from the same naming problem. Rename to 'transfer returns Result.Failure with InsufficientFundsException when source balance is less than amount'. Bug 4: assertThat(result).isNotNull() is an almost useless assertion — it only checks that transfer() returned something (not null), not that it returned the right thing. For an insufficient funds scenario, the test should assert: assertThat(result.isFailure).isTrue() AND assertThat(result.exceptionOrNull()).isInstanceOf(InsufficientFundsException::class.java). Currently a Result.Success would pass this assertion, meaning the test would pass even if the use case incorrectly approved the transfer. Bug 5: The testNegativeAmount test is missing the runTest { } wrapper — transfer() is a suspend function and cannot be called from a regular non-coroutine context. This test will likely fail to compile or throw an IllegalStateException at runtime. Wrap the body in runTest { }."
+  },
+  difficulty: "intermediate",
+  prereqs: [38, 24]
+},
+{
+  id: 40,
+  title: "ViewModel & Flow Testing: Coroutine Test Utilities",
+  subtitle: "Control virtual time and assert exact state sequences from ViewModels",
+  analogy: "Testing a ViewModel with coroutines is like directing a movie scene: you need to control when each actor (coroutine) moves, pause time on demand, and verify that every scene (UI state) appeared in the right order. StandardTestDispatcher gives you the director's clapperboard — nothing happens until you call 'action'. UnconfinedTestDispatcher is the improv actor — runs everything immediately without waiting.",
+  points: [
+    { t: "Why ViewModel testing is harder", d: "ViewModels launch coroutines on Dispatchers.Main (which does not exist on JVM) and emit state via StateFlow/SharedFlow over time. Tests run synchronously on JVM. You need: (1) a test replacement for Dispatchers.Main, (2) a way to control when coroutines execute, (3) a way to collect multiple StateFlow emissions in sequence." },
+    { t: "TestDispatcher setup", d: "val dispatcher = StandardTestDispatcher(); Dispatchers.setMain(dispatcher) replaces the Main dispatcher with a test-controlled one. Call Dispatchers.resetMain() in @AfterEach. This allows your ViewModel's viewModelScope.launch { } to run in the test-controlled dispatcher instead of crashing on JVM." },
+    { t: "StandardTestDispatcher — explicit control", d: "With StandardTestDispatcher, coroutines do NOT run until you explicitly advance time. Call testScheduler.advanceUntilIdle() to run all pending coroutines to completion. Or advanceTimeBy(1000) to simulate 1 second passing. Gives maximum control — ideal for testing state sequences with intermediate loading states." },
+    { t: "UnconfinedTestDispatcher — eager execution", d: "With UnconfinedTestDispatcher, coroutines run immediately on the same thread without needing advanceUntilIdle(). Simpler for tests that do not care about intermediate states — just need the final result. Caution: can miss intermediate loading states that StandardTestDispatcher would expose." },
+    { t: "runTest { } with TestDispatcher", d: "runTest(dispatcher) { } runs the entire test body in the test dispatcher. Inside runTest, you can call advanceUntilIdle() at any point to drain pending coroutines. Use advanceTimeBy() to simulate delays (e.g., debounce timers, retry delays) without actually waiting." },
+    { t: "Collecting StateFlow in tests", d: "The naive approach: viewModel.uiState.value — only reads current value, misses intermediate states. Correct approach: launch a collector coroutine, collect emissions into a list, then assert on the list. Or use Turbine's stateFlow.test { } for clean sequential assertions." },
+    { t: "Turbine for StateFlow sequences", d: "stateFlow.test { val loading = awaitItem(); assertThat(loading.isLoading).isTrue(); val success = awaitItem(); assertThat(success.data).isNotNull(); cancel() }. Turbine enforces that emissions arrive in order and provides clear failure messages when the wrong state is emitted." },
+    { t: "Testing ViewModel state sequences", d: "A typical ViewModel: emits Loading → Success (or Error). Test must verify BOTH states in order. If you only check the final state, you miss bugs where the loading state was never shown (causing the UI to freeze) or where the error state was shown before loading completed." },
+    { t: "Testing SharedFlow side effects", d: "SharedFlow is used for one-shot events (navigation, snackbars). Test with Turbine: events.test { viewModel.onSubmit(); assertThat(awaitItem()).isInstanceOf(NavigateToHome::class.java); cancel() }. Ensure SharedFlow replay is 0 for events so they are not replayed to new observers." },
+    { t: "Mocking ViewModel dependencies", d: "ViewModels typically depend on use cases. In tests: mock the use cases (coEvery), not the repositories. This tests the ViewModel's responsibility: translating use case results into UI state. The use case tests (lesson 39) already verified the business logic." },
+    { t: "Testing error states", d: "Test that when the use case throws or returns Result.Failure, the ViewModel emits an error UiState. Assert that error.message is a user-friendly string (not a raw exception message). Error state tests are critical for apps like fintech where an unhanded error state can be catastrophic." },
+    { t: "advanceTimeBy for debounce and retry", d: "viewModel.onSearchQuery('android'); advanceTimeBy(300) — simulates a 300ms debounce delay without waiting. advanceUntilIdle() after that runs the search coroutine. Essential for testing search ViewModels with input debouncing without making tests slow." }
+  ],
+  whatIs: "ViewModel and Flow testing requires replacing Android's main dispatcher with a TestDispatcher, controlling coroutine execution with advanceUntilIdle() or advanceTimeBy(), and collecting StateFlow emissions in sequence. StandardTestDispatcher gives explicit control over when coroutines run. UnconfinedTestDispatcher runs eagerly. Turbine provides a clean DSL for asserting ordered Flow emissions. Together these tools let you verify that your ViewModel transitions through exactly the right UI states in exactly the right order.",
+  realWorld: "In a SaaS project management app, the DashboardViewModel fetched project statistics from three separate network calls (total projects, due today, overdue). The original implementation had a bug: it emitted the success state after only the first API call completed, leaving the other two counts as zero in the UI. A ViewModel test using Turbine caught this: the test asserted three sequential state emissions and failed when it received a 'success' state with zero counts prematurely. The fix — using combine() to wait for all three flows — was confirmed by the test passing with all three counts correct.",
+  code: `// ViewModel under test
+data class DashboardUiState(
+    val isLoading: Boolean = true,
+    val projects: List<Project> = emptyList(),
+    val error: String? = null
+)
+
+class DashboardViewModel(
+    private val getProjectsUseCase: GetProjectsUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(DashboardUiState())
+    val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
+
+    private val _events = MutableSharedFlow<DashboardEvent>(replay = 0)
+    val events: SharedFlow<DashboardEvent> = _events.asSharedFlow()
+
+    fun loadProjects() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            getProjectsUseCase()
+                .onSuccess { projects ->
+                    _uiState.update { it.copy(isLoading = false, projects = projects) }
+                }
+                .onFailure { error ->
+                    _uiState.update { it.copy(isLoading = false, error = error.message) }
+                }
+        }
+    }
+
+    fun onProjectClick(project: Project) {
+        viewModelScope.launch {
+            _events.emit(DashboardEvent.NavigateToProject(project.id))
+        }
+    }
+}
+
+// Test class
+class DashboardViewModelTest {
+
+    private val testDispatcher = StandardTestDispatcher()
+    private val mockUseCase = mockk<GetProjectsUseCase>()
+    private lateinit var viewModel: DashboardViewModel
+
+    @BeforeEach
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        viewModel = DashboardViewModel(mockUseCase)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    @Test
+    fun \`loadProjects emits loading then success state in order\`() = runTest {
+        val projects = listOf(Project("1", "Field Ops"), Project("2", "School Portal"))
+        coEvery { mockUseCase() } returns Result.success(projects)
+
+        viewModel.uiState.test {
+            assertThat(awaitItem().isLoading).isTrue()   // initial state
+
+            viewModel.loadProjects()
+            advanceUntilIdle()                           // run all pending coroutines
+
+            val loadingState = awaitItem()
+            assertThat(loadingState.isLoading).isTrue()  // loading emitted
+            assertThat(loadingState.projects).isEmpty()
+
+            val successState = awaitItem()
+            assertThat(successState.isLoading).isFalse() // success emitted
+            assertThat(successState.projects).hasSize(2)
+            assertThat(successState.error).isNull()
+
+            cancel()
+        }
+    }
+
+    @Test
+    fun \`loadProjects emits error state when use case fails\`() = runTest {
+        coEvery { mockUseCase() } returns Result.failure(IOException("Server error"))
+
+        viewModel.uiState.test {
+            awaitItem() // consume initial state
+            viewModel.loadProjects()
+            advanceUntilIdle()
+            awaitItem() // loading state
+            val errorState = awaitItem()
+            assertThat(errorState.isLoading).isFalse()
+            assertThat(errorState.error).isNotNull()
+            cancel()
+        }
+    }
+
+    @Test
+    fun \`onProjectClick emits navigation event\`() = runTest {
+        val project = Project("1", "Field Ops")
+
+        viewModel.events.test {
+            viewModel.onProjectClick(project)
+            advanceUntilIdle()
+            val event = awaitItem()
+            assertThat(event).isInstanceOf(DashboardEvent.NavigateToProject::class.java)
+            assertThat((event as DashboardEvent.NavigateToProject).projectId).isEqualTo("1")
+            cancel()
+        }
+    }
+}`,
+  funFact: "The Kotlin coroutines team at JetBrains completely rewrote the coroutines test library between version 1.5 and 1.6, replacing TestCoroutineScope and TestCoroutineDispatcher with StandardTestDispatcher and runTest. The old APIs had subtle bugs where coroutines would run at unexpected times, making tests non-deterministic. The new APIs were designed with the principle that coroutines should never run unless you explicitly tell them to — making tests fully deterministic.",
+  quiz: [
+    {
+      q: "Why must you call Dispatchers.setMain(testDispatcher) before testing a ViewModel?",
+      opts: [
+        "To speed up the test by using a faster dispatcher",
+        "Dispatchers.Main does not exist on JVM — without replacement, viewModelScope.launch crashes",
+        "To enable coroutine cancellation in tests",
+        "The ViewModel requires a TestDispatcher to emit StateFlow"
+      ],
+      ans: 1
+    },
+    {
+      q: "With StandardTestDispatcher, what happens when you call viewModel.loadProjects() without calling advanceUntilIdle()?",
+      opts: [
+        "The coroutine runs immediately on the test thread",
+        "The coroutine is queued but does not execute — no state changes occur",
+        "An exception is thrown because the coroutine cannot find a dispatcher",
+        "The StateFlow emits its default value and completes"
+      ],
+      ans: 1
+    },
+    {
+      q: "You want to test a ViewModel that debounces search input by 300ms. How do you test this without waiting 300ms?",
+      opts: [
+        "Use Thread.sleep(300) in the test",
+        "Use advanceTimeBy(300) inside runTest to simulate 300ms of virtual time",
+        "Use UnconfinedTestDispatcher which skips delays automatically",
+        "You cannot test debounce in unit tests — use instrumentation tests"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the key difference between testing StateFlow (persistent state) and SharedFlow (events) with Turbine?",
+      opts: [
+        "Turbine cannot test SharedFlow — use channel.receive() instead",
+        "StateFlow always emits the current value immediately when collected; SharedFlow with replay=0 only emits future items",
+        "StateFlow and SharedFlow behave identically in tests",
+        "SharedFlow requires advanceUntilIdle(); StateFlow does not"
+      ],
+      ans: 1
+    },
+    {
+      q: "A ViewModel test only checks viewModel.uiState.value after calling loadProjects(). What bug could this miss?",
+      opts: [
+        "It cannot miss any bugs — the final value is all that matters",
+        "It misses intermediate states like loading=true that only exist briefly before the success state",
+        "It misses the error state if the error is non-fatal",
+        "It misses the initial state of the StateFlow"
+      ],
+      ans: 1
+    },
+    {
+      q: "UnconfinedTestDispatcher is best used when:",
+      opts: [
+        "You need to verify intermediate loading states appear in the correct order",
+        "You need to simulate debounce or retry delay timing",
+        "You want coroutines to run eagerly and only care about the final state, not intermediate states",
+        "Your ViewModel uses Dispatchers.IO for database operations"
+      ],
+      ans: 2
+    },
+    {
+      q: "In the ViewModel test for the SaaS dashboard, the test asserted THREE state emissions (initial, loading, success). Why not just assert the success state?",
+      opts: [
+        "Turbine requires collecting all emissions or it throws an error",
+        "Asserting only the final state misses bugs where loading was skipped or success arrived in the wrong order",
+        "StateFlow always emits exactly three items — the test must consume all of them",
+        "The runTest builder requires all Flow emissions to be consumed"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does Dispatchers.resetMain() in @AfterEach do?",
+      opts: [
+        "Cancels all running coroutines from the test",
+        "Restores the original Main dispatcher so subsequent tests are not affected by the TestDispatcher",
+        "Flushes all pending coroutines from the test queue",
+        "Resets the StateFlow to its initial value"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Write a complete test class for a SearchViewModel that: (a) debounces search input by 300ms, (b) emits Loading then Success states after the debounce, (c) emits an Error state if the search use case fails. Use StandardTestDispatcher, advanceTimeBy(), and Turbine. Verify that typing 'and' then 'android' within 200ms only triggers one API call (debounce working correctly).",
+  resources: [
+    { type: "docs", title: "kotlinx-coroutines-test Guide", url: "https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-test/", source: "Kotlin" },
+    { type: "docs", title: "Testing Kotlin Flows on Android", url: "https://developer.android.com/kotlin/flow/test", source: "Android Developers" },
+    { type: "docs", title: "Turbine GitHub Repository", url: "https://github.com/cashapp/turbine", source: "Cash App" },
+    { type: "docs", title: "Testing ViewModels (Android Guide)", url: "https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-testing", source: "Android Developers" }
+  ],
+  eli5: "Imagine your ViewModel is a vending machine. Normally when you press a button, it takes time to dispense the snack. In a test you do not want to wait 10 seconds for the snack. advanceUntilIdle() is like a fast-forward button that makes the machine dispense instantly. Turbine is like a tray that catches every snack in order so you can check: 'Did the loading light turn on? Did the snack come out? Was it the right snack?'",
+  codeWalkthrough: [
+    "MutableStateFlow(DashboardUiState()) initializes with isLoading=true as the default — the ViewModel starts in a loading state before any data is fetched.",
+    "MutableSharedFlow<DashboardEvent>(replay = 0) creates an event bus — replay=0 means new subscribers do not receive past events, preventing navigation from replaying on screen rotation.",
+    "StandardTestDispatcher() is created before the ViewModel so it can be passed to Dispatchers.setMain() before the ViewModel's viewModelScope is initialized.",
+    "Dispatchers.setMain(testDispatcher) in @BeforeEach ensures the ViewModel's viewModelScope.launch uses the test dispatcher instead of crashing on JVM.",
+    "Dispatchers.resetMain() in @AfterEach is essential — failing to reset leaks the test dispatcher into subsequent tests, causing non-deterministic failures.",
+    "viewModel.uiState.test { } from Turbine starts collecting the StateFlow — the first awaitItem() immediately receives the current value (initial state with isLoading=true).",
+    "viewModel.loadProjects() queues the coroutine but does NOT run it yet with StandardTestDispatcher.",
+    "advanceUntilIdle() runs all queued coroutines to completion — after this, the StateFlow has emitted all intermediate and final states.",
+    "Each awaitItem() call retrieves one emission in order — the test enforces the exact sequence: initial → loading → success (or error).",
+    "The navigation event test uses viewModel.events.test { } for SharedFlow — since replay=0, no event exists yet; we emit one and then awaitItem() retrieves it."
+  ],
+  bugChallenge: {
+    code: `class OrdersViewModelTest {
+
+    // Bug 1
+    private val mockUseCase = mockk<GetOrdersUseCase>()
+    private val viewModel = OrdersViewModel(mockUseCase)
+
+    @BeforeEach
+    fun setUp() {
+        val dispatcher = StandardTestDispatcher()
+        Dispatchers.setMain(dispatcher)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    @Test
+    fun \`loadOrders shows success state\`() = runTest {
+        val orders = listOf(Order("1"), Order("2"))
+        coEvery { mockUseCase() } returns Result.success(orders)
+
+        viewModel.loadOrders()
+
+        // Bug 2
+        val state = viewModel.uiState.value
+        assertThat(state.orders).hasSize(2)
+        assertThat(state.isLoading).isFalse()
+    }
+
+    @Test
+    fun \`loadOrders emits correct states\`() = runTest {
+        val dispatcher = UnconfinedTestDispatcher()
+        Dispatchers.setMain(dispatcher)
+
+        coEvery { mockUseCase() } returns Result.success(listOf(Order("1")))
+
+        viewModel.uiState.test {
+            viewModel.loadOrders()
+            // Bug 3
+            val success = awaitItem()
+            assertThat(success.isLoading).isFalse()
+            cancel()
+        }
+    }
+
+    @Test
+    // Bug 4
+    fun \`loadOrders shows error on failure\`() {
+        coEvery { mockUseCase() } returns Result.failure(Exception("error"))
+        viewModel.loadOrders()
+        assertThat(viewModel.uiState.value.error).isNotNull()
+    }
+}`,
+    hint: "Look at when the ViewModel is created relative to setMain, missing advanceUntilIdle, skipped intermediate states, and missing runTest wrapper.",
+    answer: "Bug 1: val viewModel = OrdersViewModel(mockUseCase) is initialized as a class-level property — this means the ViewModel is created BEFORE @BeforeEach runs, so Dispatchers.setMain() has not been called yet when the ViewModel's viewModelScope is initialized. This causes the ViewModel to use the real Main dispatcher (which crashes on JVM) for any coroutines launched during initialization. Fix: move viewModel creation into @BeforeEach after Dispatchers.setMain(): lateinit var viewModel: OrdersViewModel, then in setUp(): val dispatcher = StandardTestDispatcher(); Dispatchers.setMain(dispatcher); viewModel = OrdersViewModel(mockUseCase). Bug 2: The first test calls viewModel.loadOrders() and immediately reads viewModel.uiState.value — but with StandardTestDispatcher, coroutines do not run until you call advanceUntilIdle(). The state will still be the initial loading state when read. Fix: add advanceUntilIdle() before reading the state: viewModel.loadOrders(); advanceUntilIdle(); val state = viewModel.uiState.value. Bug 3: The second test switches to UnconfinedTestDispatcher (after StandardTestDispatcher was set in @BeforeEach) and correctly runs eagerly, but the Turbine block only calls awaitItem() once — skipping the initial StateFlow emission. With StateFlow, test { } always receives the current value first. If the ViewModel starts with isLoading=true, the first awaitItem() returns the initial state, and the test would incorrectly assert the initial state as the 'success' state. Fix: call awaitItem() twice — first for initial/loading state, second for success state. Bug 4: The 'loadOrders shows error on failure' test is missing the runTest { } wrapper entirely — it calls a suspend function (via viewModel.loadOrders() which launches a coroutine) from a regular non-coroutine function. The coroutine will be queued but never run, so viewModel.uiState.value.error will always be null and the assertion will always fail. Fix: annotate with runTest and add advanceUntilIdle()."
+  },
+  difficulty: "advanced",
+  prereqs: [10, 15, 39]
+},
+{
+  id: 41,
+  title: "Room/Repository/Network Testing: Mocks vs Fakes",
+  subtitle: "Test your data layer with confidence — in-memory databases, MockWebServer, and fake repositories",
+  analogy: "Testing your data layer is like testing a restaurant kitchen without real customers. MockWebServer is the fake food supplier — you control exactly what they deliver (good fish, spoiled fish, delayed delivery). An in-memory Room database is a temporary kitchen that resets after every service — same equipment, zero cleanup headaches. Fake repositories are the chef's training kitchen — looks and feels real but nothing actually leaves the building.",
+  points: [
+    { t: "Testing Room with in-memory database", d: "Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build() creates a fully functional Room database backed by SQLite in memory — no files, resets on close. Use @get:Rule val instantTaskExecutorRule = InstantTaskExecutorRule() for LiveData and provide a test coroutine context. In-memory DB is faster than disk and perfectly isolates tests." },
+    { t: "DAO unit tests — the right approach", d: "Test DAOs directly against the in-memory database: insert a record, query it, assert correctness. Test insert+query, update+query, delete+query cycles. Test Flow emissions from DAO queries: insert data, collect the Flow, assert the emission. These are technically instrumentation tests (need Context) but run fast on Robolectric." },
+    { t: "MockWebServer for Retrofit testing", d: "OkHttp's MockWebServer lets you run a real HTTP server locally in tests. enqueue(MockResponse().setBody(jsonString)) pre-loads responses. Your Retrofit client makes real HTTP calls to localhost:PORT. Assert on the request (path, headers, body) AND the response parsing. No network needed, fully deterministic." },
+    { t: "Testing JSON parsing and API contracts", d: "MockWebServer tests verify two things: (1) your Retrofit/Moshi/Gson correctly parses the API response JSON into your data models, and (2) your API service sends the correct request (right path, right headers, right body). This catches contract violations before they reach production." },
+    { t: "Fake vs Mock repository — when to use each", d: "Use a Fake repository (real in-memory implementation) when: the repository has complex state that matters to the test (e.g., pagination, caching). Use a Mock repository when: you only need the repository to return a specific value and do not care about its internal state. Fakes make tests more realistic; Mocks are faster to set up." },
+    { t: "Testing offline-first sync logic", d: "An offline-first repository fetches from the local database first, then updates from the network and saves to the local database. Test this by: (1) pre-populate the fake local DB, (2) enqueue a MockWebServer response, (3) call the repository, (4) assert the Flow emitted first from local DB, then updated with network data. This sequence tests the entire offline-first contract." },
+    { t: "Integration test patterns — @MediumTest", d: "Integration tests that test multiple layers together (e.g., DAO + Repository) are annotated with @MediumTest (conceptual categorization). They verify the wiring between components. Keep them focused: test one integration point per test, not the entire app stack. Use Room in-memory + MockWebServer for the most realistic integration tests." },
+    { t: "Testing error scenarios at the data layer", d: "Test: network timeout (MockWebServer sets no response, OkHttp times out), HTTP 4xx/5xx responses (MockWebServer.enqueue(MockResponse().setResponseCode(500))), malformed JSON (causes parsing exception), database constraint violations (duplicate primary key insert). Error tests at the data layer prevent cascading failures in ViewModels and use cases." },
+    { t: "Test isolation — each test is independent", d: "Every test should start with a clean state: close and recreate the in-memory database in @BeforeEach, use a new MockWebServer instance per test (or clear enqueued responses), clear the fake repository's storage. Non-isolated tests produce order-dependent failures — the most mysterious kind of test failure." },
+    { t: "Testing Room migrations", d: "Room migration tests verify that your database schema can migrate from version N to N+1 without losing data. Use MigrationTestHelper from androidx.room:room-testing. Create the DB at version N, insert test data, run the migration, verify the data is still present and schema is correct. Critical for apps that have been in production — a bad migration deletes user data." },
+    { t: "Verifying request content with MockWebServer", d: "val request = server.takeRequest() gives you the RecordedRequest — check request.path, request.method, request.body.readUtf8() to verify your API client sends the correct payload. For a fintech transfer API, verify the exact JSON body including amount precision and currency code — wrong request format = rejected transaction." },
+    { t: "Using TestCoroutineDispatcher with Room and Retrofit", d: "Room Flow emissions and Retrofit calls are async. Wrap in runTest, use advanceUntilIdle() for Room queries that return Flow, and use standard await patterns for one-shot suspend functions. Room with in-memory + coroutines works cleanly in runTest as long as the database is created with allowMainThreadQueries() for simple tests." }
+  ],
+  whatIs: "Data layer testing covers DAOs (with in-memory Room), network clients (with MockWebServer), and repositories (with fakes or mocks). In-memory Room databases provide a real SQLite engine with zero setup and instant reset. MockWebServer provides a real HTTP server on localhost, making Retrofit tests fully deterministic without network access. Fake repositories simulate real caching and state behavior without a database. Together these tools let you test your entire data layer — including offline-first sync, error handling, and JSON contracts — reliably and fast.",
+  realWorld: "An enterprise field operations app had an offline-first sync that was breaking intermittently in production: sometimes the app showed stale data after syncing. The bug was in the repository: it updated the in-memory cache before saving to the local database, so if the app crashed mid-sync, the cache showed new data but Room still had old data. An integration test with in-memory Room + MockWebServer caught this by crashing the repository mid-sync and verifying that the database and cache were consistent. The fix — writing to Room first, then updating the cache from the Room Flow — was verified by the test and eliminated the intermittent stale data reports.",
+  code: `// In-memory Room database test (instrumentation test with Robolectric or emulator)
+@RunWith(AndroidJUnit4::class)
+class WorkOrderDaoTest {
+
+    private lateinit var db: AppDatabase
+    private lateinit var dao: WorkOrderDao
+
+    @Before
+    fun setUp() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries()   // OK for tests only
+            .build()
+        dao = db.workOrderDao()
+    }
+
+    @After
+    fun tearDown() {
+        db.close()  // releases in-memory database, resets all state
+    }
+
+    @Test
+    fun insertAndQueryWorkOrder() = runTest {
+        val order = WorkOrder(id = "w1", title = "Fix Elevator", status = "OPEN")
+        dao.insert(order)
+
+        val retrieved = dao.getById("w1")
+        assertThat(retrieved?.title).isEqualTo("Fix Elevator")
+        assertThat(retrieved?.status).isEqualTo("OPEN")
+    }
+
+    @Test
+    fun updateWorkOrderStatus() = runTest {
+        dao.insert(WorkOrder(id = "w1", title = "Fix Elevator", status = "OPEN"))
+        dao.updateStatus("w1", "COMPLETED")
+        assertThat(dao.getById("w1")?.status).isEqualTo("COMPLETED")
+    }
+
+    @Test
+    fun workOrderFlow_emitsOnInsert() = runTest {
+        dao.getAllOrdersFlow().test {
+            assertThat(awaitItem()).isEmpty()         // initial empty state
+
+            dao.insert(WorkOrder("w1", "Fix Elevator", "OPEN"))
+            assertThat(awaitItem()).hasSize(1)         // emits after insert
+
+            dao.insert(WorkOrder("w2", "Replace HVAC", "OPEN"))
+            assertThat(awaitItem()).hasSize(2)         // emits after second insert
+            cancel()
+        }
+    }
+}
+
+// MockWebServer for Retrofit testing
+class WorkOrderApiTest {
+
+    private lateinit var server: MockWebServer
+    private lateinit var api: WorkOrderApi
+
+    @Before
+    fun setUp() {
+        server = MockWebServer()
+        server.start()
+        api = Retrofit.Builder()
+            .baseUrl(server.url("/"))        // points to local MockWebServer
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(WorkOrderApi::class.java)
+    }
+
+    @After
+    fun tearDown() {
+        server.shutdown()
+    }
+
+    @Test
+    fun \`fetchOrders parses response correctly\`() = runTest {
+        val json = """
+            [{"id":"w1","title":"Fix Elevator","status":"OPEN"},
+             {"id":"w2","title":"Replace HVAC","status":"OPEN"}]
+        """.trimIndent()
+        server.enqueue(MockResponse().setBody(json).setResponseCode(200))
+
+        val orders = api.fetchOrders()
+
+        assertThat(orders).hasSize(2)
+        assertThat(orders[0].id).isEqualTo("w1")
+        assertThat(orders[1].title).isEqualTo("Replace HVAC")
+
+        // Verify the request was correct
+        val request = server.takeRequest()
+        assertThat(request.path).isEqualTo("/orders")
+        assertThat(request.method).isEqualTo("GET")
+    }
+
+    @Test
+    fun \`fetchOrders throws on 500 response\`() = runTest {
+        server.enqueue(MockResponse().setResponseCode(500))
+
+        assertThrows<HttpException> {
+            api.fetchOrders()
+        }
+    }
+
+    @Test
+    fun \`createOrder sends correct request body\`() = runTest {
+        server.enqueue(MockResponse().setBody("""{"id":"w3","title":"New Order","status":"OPEN"}"""))
+
+        api.createOrder(CreateOrderRequest(title = "New Order", priority = "HIGH"))
+
+        val request = server.takeRequest()
+        assertThat(request.method).isEqualTo("POST")
+        assertThat(request.path).isEqualTo("/orders")
+        val body = request.body.readUtf8()
+        assertThat(body).contains("\"title\":\"New Order\"")
+        assertThat(body).contains("\"priority\":\"HIGH\"")
+    }
+}`,
+  funFact: "MockWebServer is part of OkHttp and was originally built by Square for testing their own Square Point-of-Sale and Cash App payment infrastructure. It has since become the standard for Retrofit testing across the Android ecosystem. The library processes real HTTP/1.1 and HTTP/2 traffic — meaning your tests catch real networking bugs like incorrect Content-Type headers, missing authentication tokens, and malformed JSON that only surface in actual HTTP calls.",
+  quiz: [
+    {
+      q: "Why use Room.inMemoryDatabaseBuilder() instead of a real database file in tests?",
+      opts: [
+        "In-memory databases support more SQL features than file-based databases",
+        "In-memory databases are faster, require no cleanup, and automatically reset between tests",
+        "Room.inMemoryDatabaseBuilder() is the only way to use Room in tests",
+        "File-based databases require network access in tests"
+      ],
+      ans: 1
+    },
+    {
+      q: "MockWebServer.server.enqueue(MockResponse().setResponseCode(500)) in a test simulates:",
+      opts: [
+        "A network timeout where no response is received",
+        "A server error response — allows testing how your Retrofit service handles 5xx errors",
+        "A malformed JSON response that causes a parsing exception",
+        "An SSL certificate error"
+      ],
+      ans: 1
+    },
+    {
+      q: "server.takeRequest() in a MockWebServer test is used to:",
+      opts: [
+        "Retrieve the next enqueued response",
+        "Inspect the actual HTTP request sent by the Retrofit client — path, method, headers, body",
+        "Cancel the current request and return a timeout error",
+        "Verify that exactly one request was made during the test"
+      ],
+      ans: 1
+    },
+    {
+      q: "In an offline-first repository test, you pre-populate the local database and enqueue a MockWebServer response. What must the test assert to fully verify the offline-first contract?",
+      opts: [
+        "Only the final network response — that is what the user sees",
+        "Only the local database contents after sync — network is irrelevant to the user",
+        "Both: the Flow first emits the local data, then emits updated data after the network response is processed",
+        "That the network request was made — offline-first means network-first"
+      ],
+      ans: 2
+    },
+    {
+      q: "When should you use a Fake repository over a Mock repository in tests?",
+      opts: [
+        "Always — fakes are always superior to mocks",
+        "When the repository has complex state behavior (caching, pagination) that matters to the test",
+        "When MockK is not available in the project",
+        "Fakes should never be used — they introduce too much complexity"
+      ],
+      ans: 1
+    },
+    {
+      q: "A Room migration test with MigrationTestHelper verifies that:",
+      opts: [
+        "The migration runs without crashing and the schema and data are correct after migration",
+        "Room generates the correct SQL schema at compile time",
+        "The database can be opened on all Android API levels",
+        "Migration is not needed if you use entity auto-migration"
+      ],
+      ans: 0
+    },
+    {
+      q: "db.close() in @After of a Room test is important because:",
+      opts: [
+        "Room requires explicit close() to flush pending writes",
+        "In-memory databases are released and their state is discarded — subsequent tests start with a clean database",
+        "Failing to close causes the test to hang indefinitely",
+        "Room throws a DatabaseNotClosedException if not closed"
+      ],
+      ans: 1
+    },
+    {
+      q: "You enqueue two MockResponses for a test that only makes one API call. What happens to the second response?",
+      opts: [
+        "MockWebServer throws an error because the queue is not empty at test end",
+        "The second response stays in the queue — server.shutdown() in @After discards it",
+        "MockWebServer automatically sends the second response as a push notification",
+        "MockWebServer replays both responses for the single request"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Build a complete integration test for an offline-first SchoolRepository that: (a) fetches student records from a local Room database first, (b) then fetches from a REST API via Retrofit, (c) saves the network response to Room, and (d) emits both the local-first and network-updated data via a Flow. Use in-memory Room, MockWebServer, and Turbine. Test the happy path AND the scenario where the network call fails (local data should still be served).",
+  resources: [
+    { type: "docs", title: "Test your Room database (Android)", url: "https://developer.android.com/training/data-storage/room/testing-db", source: "Android Developers" },
+    { type: "docs", title: "MockWebServer — OkHttp", url: "https://github.com/square/okhttp/tree/master/mockwebserver", source: "Square" },
+    { type: "docs", title: "Room Migration Testing", url: "https://developer.android.com/training/data-storage/room/migrating-db-versions#test", source: "Android Developers" },
+    { type: "docs", title: "Turbine Flow Testing", url: "https://github.com/cashapp/turbine", source: "Cash App" },
+    { type: "docs", title: "Android Integration Testing Guide", url: "https://developer.android.com/training/testing/integration-testing", source: "Android Developers" }
+  ],
+  eli5: "Testing your database is like practicing cooking in a pop-up kitchen — everything works the same as the real kitchen but when you are done, everything disappears and the next chef starts fresh. MockWebServer is like a pretend food supplier you completely control — you tell them to send you fresh fish, rotten fish, or nothing at all, and you see how your recipe handles each situation.",
+  codeWalkthrough: [
+    "Room.inMemoryDatabaseBuilder() creates a real SQLite database in RAM — all Room features (queries, transactions, Flow) work identically to a file database.",
+    "allowMainThreadQueries() is acceptable in tests — it removes the Room restriction that prevents running queries on the main thread, simplifying test code.",
+    "db.close() in @After is critical — it releases the in-memory SQLite engine and discards all data, ensuring the next test starts completely fresh.",
+    "dao.getAllOrdersFlow().test { } from Turbine collects Flow emissions from the DAO — Room automatically emits a new list every time the underlying table changes.",
+    "awaitItem() after dao.insert() works because Room's Flow support watches the table and emits on every write — Turbine suspends until that emission arrives.",
+    "MockWebServer.start() binds to a random available port on localhost — server.url('/') returns the base URL including the port, which you pass to Retrofit.",
+    "server.enqueue() pre-loads responses in a FIFO queue — the first HTTP request gets the first enqueued response, the second request gets the second, and so on.",
+    "server.takeRequest() dequeues the RecordedRequest for the last HTTP call — use it after making the API call to inspect what your Retrofit client actually sent.",
+    "assertThat(request.body.readUtf8()).contains() verifies the JSON request body — catches bugs where a field is missing or has the wrong key name.",
+    "server.shutdown() in @After stops the local HTTP server — failing to shut down leaks server threads, causing test suites to hang or subsequent tests to fail with port conflicts."
+  ],
+  bugChallenge: {
+    code: `class StudentRepositoryIntegrationTest {
+
+    private lateinit var db: AppDatabase
+    private lateinit var server: MockWebServer
+    private lateinit var repository: StudentRepository
+
+    // Bug 1
+    @Before
+    fun setUp() {
+        server = MockWebServer()
+        // server.start() missing
+
+        val api = Retrofit.Builder()
+            .baseUrl("https://api.schoolapp.com/")   // Bug 2
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(StudentApi::class.java)
+
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            AppDatabase::class.java
+        ).build()  // Bug 3 — missing allowMainThreadQueries() for test simplicity
+
+        repository = StudentRepositoryImpl(api, db.studentDao())
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+        // Bug 4 — server.shutdown() missing
+    }
+
+    @Test
+    fun \`fetchStudents returns local data first then network data\`() = runTest {
+        // Pre-populate local DB
+        db.studentDao().insert(Student("s1", "Alice", gradeLevel = 10))
+
+        server.enqueue(
+            MockResponse()
+                .setBody("""[{"id":"s1","name":"Alice Updated","gradeLevel":10}]""")
+                .setResponseCode(200)
+        )
+
+        repository.getStudents().test {
+            val localFirst = awaitItem()
+            assertThat(localFirst).hasSize(1)
+            assertThat(localFirst[0].name).isEqualTo("Alice")
+
+            // Bug 5
+            val networkUpdated = awaitItem()
+            assertThat(networkUpdated[0].name).isEqualTo("Alice Updated")
+        }
+    }
+}`,
+    hint: "Check the server setup, Retrofit base URL, Room query thread, server shutdown, and Turbine test block closure.",
+    answer: "Bug 1: server.start() is missing after creating the MockWebServer instance. Without server.start(), the MockWebServer is not bound to any port and is not listening for connections. When Retrofit tries to connect, it will fail with a ConnectException. Fix: add server.start() in setUp() before creating the Retrofit instance. Bug 2: The Retrofit baseUrl is hardcoded to 'https://api.schoolapp.com/' instead of server.url('/') (which returns the MockWebServer's localhost URL). This means Retrofit makes real network calls to the production API during tests — non-deterministic, requires network access, and could accidentally modify production data if the test makes POST/PUT calls. Fix: change to .baseUrl(server.url('/')) after server.start(). Bug 3: Room.inMemoryDatabaseBuilder() without allowMainThreadQueries() means any DAO call on the main test thread will throw an IllegalStateException ('Cannot access database on the main thread'). Since tests typically run on the main thread, this will cause the test to crash immediately. Fix: add .allowMainThreadQueries() to the builder chain for test simplicity, or configure a TestCoroutineDispatcher for the DAO calls. Bug 4: server.shutdown() is missing from @After. This leaves the MockWebServer's background thread running after the test completes, leaking resources. In test suites with many tests, this accumulates leaked threads and can cause port conflicts or OOM. Fix: add server.shutdown() after db.close() in tearDown(). Bug 5: The Turbine test { } block is never closed — cancel() is missing at the end. For a Flow that never completes (like a Room Flow), Turbine will wait indefinitely after the last awaitItem() for more emissions, causing the test to hang until the Turbine timeout (default 1 second) triggers a test failure with a confusing 'No more events' or timeout error. Fix: add cancel() as the last statement inside the test { } block to signal that you are done collecting."
+  },
+  difficulty: "advanced",
+  prereqs: [27, 28, 39]
+},
+{
+  id: 42,
+  title: "Compose UI Testing Fundamentals",
+  subtitle: "Test your Jetpack Compose UI without an emulator — find, interact, and assert on composables",
+  analogy: "Compose UI testing is like a blind quality inspector who uses a tactile map (the semantic tree) to navigate your UI. They cannot see pixels — they feel the labels, roles, and content descriptions. If your button has a clear content description and text, the inspector can find it, press it, and verify the result. If your UI has no semantic information, the inspector is lost — even if the UI looks beautiful on screen.",
+  points: [
+    { t: "createComposeRule() — the test entry point", d: "val composeTestRule = createComposeRule() sets up a Compose testing environment. Use composeTestRule.setContent { MyComposable() } to render any composable. For Activity-hosted Compose: createAndroidComposeRule<MyActivity>(). The rule handles the test Compose lifecycle — set up, rendering, and teardown." },
+    { t: "The semantic tree — how tests find UI", d: "Compose builds a parallel semantic tree alongside the visual UI tree. Every composable with text, role, or contentDescription adds nodes to the semantic tree. Tests navigate this tree using matchers — not pixel coordinates. The semantic tree is what accessibility services (TalkBack) also use — good accessibility = testable UI." },
+    { t: "Finding nodes — onNode and semantic matchers", d: "composeTestRule.onNodeWithText('Submit') finds a node containing 'Submit' text. onNodeWithTag('login_button') finds by testTag. onNodeWithContentDescription('Close') finds by accessibility description. onNode(hasText('Alice') and hasRole(Role.Button)) combines matchers. Prefer testTag for non-user-visible elements." },
+    { t: "Semantic Modifier.testTag()", d: "Modifier.testTag('order_list') adds a test-only semantic property. Use this for elements without visible text (icons, loading spinners, custom layouts). Best practice: define testTag strings as constants in a shared TestTags object to avoid typos between production and test code." },
+    { t: "Performing actions — click, input, scroll", d: "onNodeWithText('Submit').performClick() simulates a tap. onNodeWithTag('search_field').performTextInput('android') types text. onNodeWithTag('order_list').performScrollToIndex(20) scrolls a LazyList. performTextClearance() clears a text field. Actions trigger recomposition — assert after the action settles." },
+    { t: "Asserting state — assertIsDisplayed and more", d: "onNodeWithText('Success').assertIsDisplayed() checks visible. assertDoesNotExist() checks the node is not in the tree (gone, not just hidden). assertIsEnabled() / assertIsNotEnabled() for button state. assertTextEquals('100') for exact text. assertContentDescriptionContains('icon') for partial match." },
+    { t: "Testing navigation with NavController", d: "Use createComposeRule with a NavController. Provide a TestNavHostController in the test's composable content. After triggering navigation (button click), assert navController.currentBackStackEntry?.destination?.route equals the expected destination. Or use ComposeTestRule's onNode assertions if navigation renders a new screen composable." },
+    { t: "Testing state changes", d: "Compose UI tests are inherently state-driven. Pattern: (1) setContent with initial state, (2) assert initial UI, (3) perform action, (4) assert updated UI. For ViewModel-driven state: use real ViewModel with fake use cases (fast), or directly manipulate a MutableState in the test composable (for pure UI logic tests)." },
+    { t: "waitUntil for async state", d: "composeTestRule.waitUntil(timeoutMillis = 2000) { onNodeWithText('Loaded').fetchSemanticsNode() != null } waits for async state changes (network responses, animations completing). Use sparingly — prefer synchronous test doubles over waiting. waitForIdle() waits for recomposition and animations to settle." },
+    { t: "Testing loading and error states", d: "Set content with isLoading = true state — assert CircularProgressIndicator is displayed. Set content with error = 'Network error' state — assert error message text is shown. Test all three states (loading, success, error) in separate test functions. These are pure UI tests — no network needed." },
+    { t: "SemanticsNodeInteractionCollection — onAllNodes", d: "onAllNodesWithText('Delete') returns a list of all matching nodes. onAllNodesWithTag('order_item')[2].performClick() interacts with the third item. Use onAllNodes(hasRole(Role.Button)).fetchSemanticsNodeList() to count buttons. Essential for list-based UI where multiple nodes match the same criteria." },
+    { t: "Compose test vs Espresso — when to use each", d: "Use Compose Testing API for all Jetpack Compose screens — it understands the semantic tree natively. Use Espresso only for View-based screens or when testing hybrid Compose-in-View UI. Never mix Compose Testing and Espresso matchers for the same element — they operate on different trees." }
+  ],
+  whatIs: "Compose UI testing uses the Compose semantic tree — a parallel structure describing what composables are and do, not how they look — to find, interact with, and assert on UI elements. createComposeRule() hosts composables in a test environment. Finders (onNodeWithText, onNodeWithTag) locate semantic nodes. Actions (performClick, performTextInput) simulate user interactions. Assertions (assertIsDisplayed, assertTextEquals) verify state. Tests run on device or emulator but are much faster and less brittle than Espresso tests.",
+  realWorld: "A fintech app's secure payment flow required UI tests for PCI compliance documentation — the test suite needed to prove that the CVV field was cleared after form submission, that the 'Pay Now' button was disabled while processing, and that error messages appeared for invalid card numbers. Compose UI tests with testTag-based finders and assertIsNotEnabled() checks covered all three requirements reliably, ran in 8 seconds per test on a mid-range emulator, and became part of the required CI gate before any payment flow change could be merged.",
+  code: `// Test tags — define as constants to avoid typos
+object TestTags {
+    const val LOGIN_EMAIL_FIELD = "login_email_field"
+    const val LOGIN_PASSWORD_FIELD = "login_password_field"
+    const val LOGIN_BUTTON = "login_button"
+    const val LOGIN_ERROR_MESSAGE = "login_error_message"
+    const val LOADING_INDICATOR = "loading_indicator"
+    const val ORDER_LIST = "order_list"
+}
+
+// Composable using testTags
+@Composable
+fun LoginScreen(
+    uiState: LoginUiState,
+    onLoginClick: (email: String, password: String) -> Unit
+) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    Column {
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            modifier = Modifier.testTag(TestTags.LOGIN_EMAIL_FIELD)
+        )
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            modifier = Modifier.testTag(TestTags.LOGIN_PASSWORD_FIELD)
+        )
+        if (uiState.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.testTag(TestTags.LOADING_INDICATOR)
+            )
+        }
+        Button(
+            onClick = { onLoginClick(email, password) },
+            enabled = !uiState.isLoading,
+            modifier = Modifier.testTag(TestTags.LOGIN_BUTTON)
+        ) {
+            Text("Login")
+        }
+        if (uiState.error != null) {
+            Text(
+                text = uiState.error,
+                modifier = Modifier.testTag(TestTags.LOGIN_ERROR_MESSAGE)
+            )
+        }
+    }
+}
+
+// UI Tests
+class LoginScreenTest {
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Test
+    fun \`login button is enabled when not loading\`() {
+        composeTestRule.setContent {
+            LoginScreen(
+                uiState = LoginUiState(isLoading = false, error = null),
+                onLoginClick = { _, _ -> }
+            )
+        }
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_BUTTON).assertIsEnabled()
+        composeTestRule.onNodeWithTag(TestTags.LOADING_INDICATOR).assertDoesNotExist()
+    }
+
+    @Test
+    fun \`login button is disabled and spinner shown during loading\`() {
+        composeTestRule.setContent {
+            LoginScreen(
+                uiState = LoginUiState(isLoading = true, error = null),
+                onLoginClick = { _, _ -> }
+            )
+        }
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_BUTTON).assertIsNotEnabled()
+        composeTestRule.onNodeWithTag(TestTags.LOADING_INDICATOR).assertIsDisplayed()
+    }
+
+    @Test
+    fun \`error message is shown when uiState has error\`() {
+        composeTestRule.setContent {
+            LoginScreen(
+                uiState = LoginUiState(isLoading = false, error = "Invalid credentials"),
+                onLoginClick = { _, _ -> }
+            )
+        }
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_ERROR_MESSAGE)
+            .assertIsDisplayed()
+            .assertTextEquals("Invalid credentials")
+    }
+
+    @Test
+    fun \`tapping login button calls onLoginClick with entered credentials\`() {
+        var capturedEmail = ""
+        var capturedPassword = ""
+
+        composeTestRule.setContent {
+            LoginScreen(
+                uiState = LoginUiState(isLoading = false, error = null),
+                onLoginClick = { email, password ->
+                    capturedEmail = email
+                    capturedPassword = password
+                }
+            )
+        }
+
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_EMAIL_FIELD)
+            .performTextInput("alice@fintech.com")
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_PASSWORD_FIELD)
+            .performTextInput("SecurePass123")
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_BUTTON)
+            .performClick()
+
+        assertThat(capturedEmail).isEqualTo("alice@fintech.com")
+        assertThat(capturedPassword).isEqualTo("SecurePass123")
+    }
+
+    @Test
+    fun \`navigation to home screen after successful login\`() {
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+        composeTestRule.setContent {
+            navController.navigatorProvider.addNavigator(ComposeNavigator())
+            NavHost(navController, startDestination = "login") {
+                composable("login") {
+                    LoginScreen(
+                        uiState = LoginUiState(isLoading = false, error = null),
+                        onLoginClick = { _, _ -> navController.navigate("home") }
+                    )
+                }
+                composable("home") { Text("Home Screen") }
+            }
+        }
+
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_EMAIL_FIELD)
+            .performTextInput("alice@fintech.com")
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_PASSWORD_FIELD)
+            .performTextInput("pass")
+        composeTestRule.onNodeWithTag(TestTags.LOGIN_BUTTON).performClick()
+
+        composeTestRule.onNodeWithText("Home Screen").assertIsDisplayed()
+    }
+}`,
+  funFact: "Jetpack Compose's semantic tree was designed with accessibility as the primary use case — the same tree that TalkBack uses to announce UI elements to visually impaired users is the tree that tests use to find composables. This means writing testable Compose UI and writing accessible Compose UI are the exact same thing. Apps with great Compose test coverage tend to have significantly better TalkBack support as a side effect.",
+  quiz: [
+    {
+      q: "Why does Compose UI testing use the semantic tree rather than pixel coordinates?",
+      opts: [
+        "Pixel coordinates are too imprecise for modern high-DPI displays",
+        "The semantic tree represents what elements ARE and DO — making tests resilient to layout changes and pixel shifts",
+        "Compose does not render pixels — it renders semantic nodes directly",
+        "Pixel-based testing requires a physical device; semantic testing works on emulators"
+      ],
+      ans: 1
+    },
+    {
+      q: "onNodeWithTag('submit_btn').assertDoesNotExist() verifies that:",
+      opts: [
+        "The node is in the composition tree but is hidden (visibility = gone)",
+        "The node does not exist anywhere in the semantic tree — not rendered at all",
+        "The node exists but has no semantic properties",
+        "The node was found but its text is empty"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the recommended way to find a loading spinner (CircularProgressIndicator) that has no text in a Compose test?",
+      opts: [
+        "onNodeWithText('Loading...') — all spinners must have loading text for accessibility",
+        "onNode(hasRole(Role.ProgressBar)) — use the semantic role",
+        "Modifier.testTag('loading_indicator') on the composable, then onNodeWithTag('loading_indicator')",
+        "Compose tests cannot find elements without text"
+      ],
+      ans: 2
+    },
+    {
+      q: "composeTestRule.waitForIdle() in a Compose UI test does what?",
+      opts: [
+        "Pauses the test for 1 second to allow animations to complete",
+        "Waits for all pending recompositions and animations to settle before proceeding",
+        "Waits for the device to become idle (no CPU activity)",
+        "Flushes all pending coroutines in the test scope"
+      ],
+      ans: 1
+    },
+    {
+      q: "You want to test a list screen with 20 items. How do you click the 15th item's delete button?",
+      opts: [
+        "onAllNodesWithTag('delete_button')[14].performClick()",
+        "onNodeWithTag('order_list').performScrollToIndex(14); onAllNodesWithTag('delete_button').first().performClick()",
+        "onNodeAtPosition(14).onChildren().filterToOne(hasTag('delete_button')).performClick()",
+        "All of the above are valid approaches depending on the list implementation"
+      ],
+      ans: 3
+    },
+    {
+      q: "For a Compose screen driven by a ViewModel, the fastest test approach is:",
+      opts: [
+        "Real ViewModel with real repository and real database",
+        "Real ViewModel with fake use cases (no database or network), asserting UI state changes",
+        "No ViewModel — directly pass MutableState to the composable for complete isolation",
+        "Mock the ViewModel itself with MockK"
+      ],
+      ans: 1
+    },
+    {
+      q: "Modifier.testTag() properties should be defined as constants (in a TestTags object) because:",
+      opts: [
+        "Compose requires constants for testTag — string literals are not accepted",
+        "Constants prevent typos causing mismatches between the production testTag and the test finder",
+        "Constants make the testTag available across modules without importing the composable",
+        "The Compose compiler optimizes constant testTags at compile time"
+      ],
+      ans: 1
+    },
+    {
+      q: "assertIsDisplayed() and assertExists() differ in that:",
+      opts: [
+        "They are identical — all nodes that exist are displayed",
+        "assertExists() checks the node is in the semantic tree; assertIsDisplayed() additionally verifies it is visible on screen (not scrolled off, not zero size)",
+        "assertIsDisplayed() works only in instrumentation tests; assertExists() works in unit tests",
+        "assertExists() is deprecated in favor of assertIsDisplayed()"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Write a complete Compose UI test class for an OrderListScreen that: (a) shows a loading spinner while loading, (b) shows a list of orders when loaded, (c) shows an error message on failure, (d) navigates to OrderDetailScreen when an order is tapped. Use createComposeRule, testTags for all key elements, and separate test functions for each state. Pass all UI state directly to the composable (no ViewModel in the test) for maximum speed and isolation.",
+  resources: [
+    { type: "docs", title: "Compose Testing Overview", url: "https://developer.android.com/jetpack/compose/testing", source: "Android Developers" },
+    { type: "docs", title: "Compose Testing Cheat Sheet", url: "https://developer.android.com/jetpack/compose/testing-cheatsheet", source: "Android Developers" },
+    { type: "docs", title: "Semantics in Compose", url: "https://developer.android.com/jetpack/compose/semantics", source: "Android Developers" },
+    { type: "docs", title: "Testing Navigation in Compose", url: "https://developer.android.com/jetpack/compose/navigation#testing", source: "Android Developers" }
+  ],
+  eli5: "Testing your Compose UI is like playing a game blindfolded where you can only feel the buttons (the semantic tree). If a button has a clear label like 'Submit', you can find it, press it, and check if the right thing happened. If a button has no label, you are lost. That is why we add testTag — it is like putting a sticker on the button with its name so the blindfolded tester can always find it.",
+  codeWalkthrough: [
+    "object TestTags defines tag strings as constants — using the constant in the composable and the test ensures they always match, even after refactoring.",
+    "Modifier.testTag(TestTags.LOGIN_BUTTON) attaches a test-only semantic property to the Button — it does not affect visual appearance or behavior in production.",
+    "@get:Rule val composeTestRule = createComposeRule() sets up the Compose testing environment — this is the entry point for all Compose UI tests.",
+    "composeTestRule.setContent { LoginScreen(...) } renders the composable in the test environment — you control all inputs (uiState, callbacks) from the test.",
+    "Passing onLoginClick = { _, _ -> } as a no-op lambda isolates the UI test from navigation logic — the test only verifies UI behavior, not what happens after login.",
+    "assertDoesNotExist() is stronger than assertIsNotDisplayed() — it asserts the node is not in the semantic tree at all, not just invisible. Use it for conditionally-rendered composables.",
+    "assertIsNotEnabled() on the login button during loading state verifies that the UI prevents double submissions — a common and critical UI bug.",
+    "capturedEmail and capturedPassword variables in the click test capture the lambda's arguments — this pattern tests that the composable passes the correct values without needing a ViewModel.",
+    "TestNavHostController is the test-friendly NavController — it works inside createComposeRule without requiring a real Activity or Fragment.",
+    "composeTestRule.onNodeWithText('Home Screen').assertIsDisplayed() after the click verifies navigation succeeded — the new screen's content is now visible."
+  ],
+  bugChallenge: {
+    code: `class PaymentScreenTest {
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Test
+    fun \`pay button is disabled when processing\`() {
+        composeTestRule.setContent {
+            PaymentScreen(
+                uiState = PaymentUiState(isProcessing = true),
+                onPayClick = {}
+            )
+        }
+        // Bug 1
+        composeTestRule.onNodeWithText("Pay Now").assertIsDisplayed()
+    }
+
+    @Test
+    fun \`cvv field is cleared after payment submitted\`() {
+        var cvvValue by mutableStateOf("123")
+
+        composeTestRule.setContent {
+            CvvField(
+                value = cvvValue,
+                onValueChange = { cvvValue = it },
+                // Bug 2 — no testTag
+            )
+        }
+
+        composeTestRule.onNodeWithText("123").performTextClearance()
+        assertThat(cvvValue).isEmpty()
+    }
+
+    @Test
+    fun \`error message shown for invalid card number\`() {
+        composeTestRule.setContent {
+            PaymentScreen(
+                uiState = PaymentUiState(error = "Invalid card number"),
+                onPayClick = {}
+            )
+        }
+        // Bug 3
+        composeTestRule.onNodeWithTag("error_message").assertExists()
+    }
+
+    @Test
+    // Bug 4
+    fun testPaymentNavigation() {
+        composeTestRule.setContent {
+            PaymentScreen(
+                uiState = PaymentUiState(isProcessing = false),
+                onPayClick = {}  // Bug 5
+            )
+        }
+        composeTestRule.onNodeWithTag(TestTags.PAY_BUTTON).performClick()
+        composeTestRule.onNodeWithText("Payment Confirmation").assertIsDisplayed()
+    }
+}`,
+    hint: "Look at what is being asserted vs what should be asserted for the disabled state, the missing testTag, the wrong assertion method for error display, the test name, and the no-op onClick lambda.",
+    answer: "Bug 1: The test name says 'pay button is disabled when processing' but the assertion is assertIsDisplayed() — this only checks the button is visible, NOT that it is disabled. The correct assertion is assertIsNotEnabled(). The current test would pass even if the button is enabled (allowing double-payment), which is the exact PCI compliance requirement being tested. Fix: change to composeTestRule.onNodeWithText('Pay Now').assertIsNotEnabled(). Bug 2: CvvField has no Modifier.testTag — the test finds it using onNodeWithText('123'), which works but is fragile. If the CVV changes value (e.g., user typed a partial number), the finder breaks. Also, finding by current value couples the test to state that changes. Fix: add Modifier.testTag(TestTags.CVV_FIELD) to the CvvField composable and use onNodeWithTag(TestTags.CVV_FIELD).performTextClearance() in the test. Bug 3: assertExists() only checks the node is in the semantic tree — it does not verify it is visible to the user. For an error message, you want assertIsDisplayed() which additionally verifies the node is actually visible on screen (not zero size, not clipped, not scrolled off). A node can exist in the tree but be invisible. Fix: change to assertIsDisplayed(). Bug 4: The test name 'testPaymentNavigation' is too generic and provides no specification context. Rename to 'tapping pay button navigates to payment confirmation screen'. Bug 5: onPayClick = {} is a no-op lambda — clicking the pay button does nothing, so navigation never happens, and the assertion 'Payment Confirmation'.assertIsDisplayed() will always fail. Fix: either wire up a real NavController with TestNavHostController and navigate in the lambda, or change the assertion to verify that onPayClick was called (capture with a var called = false; onPayClick = { called = true } and then assertThat(called).isTrue())."
+  },
+  difficulty: "intermediate",
+  prereqs: [18, 38]
+},
+{
+  id: 43,
+  title: "Espresso Legacy Awareness & Instrumentation Basics",
+  subtitle: "Master Espresso for XML-view codebases — still asked in every senior Android interview",
+  analogy: "Espresso is like a meticulous restaurant inspector who waits until the kitchen is completely idle before tasting each dish. It synchronises with the UI thread and async operations automatically, so your test never taps a button before the screen is ready — unlike a human tester who might click too early.",
+  points: [
+    { t: "onView() is the entry point", d: "onView(ViewMatcher) selects a view in the hierarchy. It blocks until the matcher finds exactly one visible, non-ambiguous view or throws AmbiguousViewMatcherException." },
+    { t: "ViewMatchers identify views", d: "withId(R.id.submit), withText('Login'), withContentDescription(), isDisplayed(), isEnabled(), hasSibling(), withParent() — combinable with allOf() and anyOf()." },
+    { t: "ViewActions drive interaction", d: "perform(click()), perform(typeText('hello')), perform(scrollTo()), perform(swipeUp()), perform(pressBack()) — always called after onView()." },
+    { t: "ViewAssertions verify state", d: "check(matches(isDisplayed())), check(matches(withText('Error'))), check(doesNotExist()) — the assertion is the test's final verdict." },
+    { t: "ActivityScenarioRule launches activities", d: "@get:Rule val rule = ActivityScenarioRule(MainActivity::class.java) launches the Activity under test in a real device/emulator process with full lifecycle management." },
+    { t: "IdlingResource solves async timing", d: "Retrofit calls, coroutines, RxJava chains — Espresso does NOT know about them by default. Register an IdlingResource so Espresso waits until the async work is idle before proceeding." },
+    { t: "OkHttpIdlingResource for network", d: "Use CountingIdlingResource or OkHttp3IdlingResource (from espresso-idling-resource) to synchronise network calls made via OkHttp/Retrofit." },
+    { t: "Intents.intending() for external apps", d: "espresso-intents lets you intercept and stub startActivity() calls. Use intending(hasAction(Intent.ACTION_PICK)).respondWith(Instrumentation.ActivityResult(RESULT_OK, data)) to fake a photo picker." },
+    { t: "RecyclerView actions", d: "onView(withId(R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click())) or scrollToPosition(). Requires espresso-contrib dependency." },
+    { t: "DataInteraction for AdapterViews", d: "onData(allOf(instanceOf(Map::class.java), hasEntry('key', 'value'))).perform(click()) — for ListView/Spinner; Espresso scrolls to the item automatically." },
+    { t: "When Espresso still matters in 2026", d: "Millions of production apps still use XML layouts with Fragments. Any role maintaining a legacy codebase or migrating to Compose incrementally requires Espresso fluency alongside Compose testing APIs." },
+    { t: "Espresso vs Compose testing", d: "Compose uses ComposeTestRule.onNode(SemanticsMatcher) while Espresso uses onView(ViewMatcher). In a hybrid codebase use both rules in the same test class via @get:Rule annotations." }
+  ],
+  whatIs: "Espresso is Google's UI testing framework for Android that provides a fluent API to find views, perform actions, and assert state in instrumented tests running on a real device or emulator. It automatically synchronises with the main thread, ensuring test actions only execute when the UI is idle.",
+  realWorld: "In a large enterprise school management app with 200+ XML-based screens built over 5 years, the team used Espresso to write regression tests for the student grade-entry flow. When migrating to Compose, they added ComposeTestRule alongside Espresso to test the hybrid screens without rewriting every existing test, protecting against regressions during the migration.",
+  code: `// build.gradle.kts (app)
+androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
+androidTestImplementation("androidx.test:rules:1.5.0")
+
+// LoginActivityTest.kt
+@RunWith(AndroidJUnit4::class)
+class LoginActivityTest {
+
+    @get:Rule
+    val activityRule = ActivityScenarioRule(LoginActivity::class.java)
+
+    // Register IdlingResource so Espresso waits for Retrofit calls
+    private val idlingResource = CountingIdlingResource("NetworkCalls")
+
+    @Before
+    fun registerIdling() {
+        IdlingRegistry.getInstance().register(idlingResource)
+    }
+
+    @After
+    fun unregisterIdling() {
+        IdlingRegistry.getInstance().unregister(idlingResource)
+    }
+
+    @Test
+    fun successfulLogin_navigatesToDashboard() {
+        // Type credentials
+        onView(withId(R.id.etEmail))
+            .perform(typeText("user@school.edu"), closeSoftKeyboard())
+
+        onView(withId(R.id.etPassword))
+            .perform(typeText("secret123"), closeSoftKeyboard())
+
+        // Click login button
+        onView(withId(R.id.btnLogin)).perform(click())
+
+        // Espresso waits for idlingResource to reach 0
+        // Then asserts dashboard is visible
+        onView(withId(R.id.dashboardTitle))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun emptyEmail_showsValidationError() {
+        onView(withId(R.id.btnLogin)).perform(click())
+
+        onView(withId(R.id.tilEmail))
+            .check(matches(hasDescendant(withText("Email is required"))))
+    }
+
+    @Test
+    fun recyclerList_clicksThirdItem() {
+        onView(withId(R.id.rvStudents))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<StudentViewHolder>(2, click()))
+
+        onView(withId(R.id.studentDetailName))
+            .check(matches(isDisplayed()))
+    }
+}`,
+  funFact: "Espresso was created by an Googler (Valera Zakharov) and open-sourced in 2013. The name was chosen because, like a good espresso shot, tests should be fast, reliable, and jitter-free — no Thread.sleep() allowed!",
+  quiz: [
+    { q: "What does onView(withId(R.id.btn)).check(matches(isDisplayed())) do?", opts: ["Clicks the view with that ID", "Asserts the view with that ID is visible on screen", "Scrolls to the view with that ID", "Waits for the view to become clickable"], ans: 1 },
+    { q: "Why do you need IdlingResource with Espresso?", opts: ["To speed up tests by skipping animations", "To make Espresso aware of async operations so it waits before asserting", "To prevent OutOfMemoryErrors in instrumented tests", "To disable network calls during tests"], ans: 1 },
+    { q: "Which method is used to interact with RecyclerView items in Espresso?", opts: ["onData()", "onRecyclerItem()", "RecyclerViewActions.actionOnItemAtPosition()", "onListItem()"], ans: 2 },
+    { q: "What is the difference between check(matches(isDisplayed())) and check(doesNotExist())?", opts: ["They are identical — both verify visibility", "isDisplayed() checks the view is visible; doesNotExist() checks it is not in the view hierarchy at all", "doesNotExist() checks the view is invisible; isDisplayed() checks it is enabled", "isDisplayed() works only for TextViews"], ans: 1 },
+    { q: "Which rule is the modern replacement for ActivityTestRule in Espresso?", opts: ["ActivityScenarioRule", "IntentsTestRule", "LaunchActivityRule", "EspressoRule"], ans: 0 },
+    { q: "How does Espresso handle multiple views matching the same matcher?", opts: ["It picks the first one found", "It throws AmbiguousViewMatcherException", "It picks the topmost view", "It ignores the assertion"], ans: 1 },
+    { q: "What does intending(hasAction(Intent.ACTION_PICK)).respondWith(...) do in espresso-intents?", opts: ["Launches the camera app", "Stubs the result of an external Intent so no real app is launched", "Verifies an Intent was fired", "Blocks all Intents from firing"], ans: 1 },
+    { q: "In a codebase migrating from XML to Compose, which approach is recommended for testing?", opts: ["Rewrite all Espresso tests as Compose tests before migrating any screen", "Use both ActivityScenarioRule and createComposeRule in the same test class for hybrid screens", "Disable Espresso tests entirely and rely only on unit tests during migration", "Use only Robolectric for hybrid codebases"], ans: 1 }
+  ],
+  challenge: "Write an Espresso test for a login screen that: (1) types an invalid email, clicks Login, and asserts a TextInputLayout error appears; (2) types valid credentials, clicks Login, registers a CountingIdlingResource to wait for a fake network call (increment before the call, decrement after), and asserts the dashboard title is displayed. Use ActivityScenarioRule and closeSoftKeyboard() after typing.",
+  resources: [
+    { type: "docs", title: "Espresso — Android Developers", url: "https://developer.android.com/training/testing/espresso", source: "Android Developers" },
+    { type: "docs", title: "IdlingResource Guide", url: "https://developer.android.com/training/testing/espresso/idling-resource", source: "Android Developers" },
+    { type: "docs", title: "RecyclerViewActions — espresso-contrib", url: "https://developer.android.com/reference/androidx/test/espresso/contrib/RecyclerViewActions", source: "AndroidX" },
+    { type: "article", title: "Espresso vs Compose Testing — When to Use Each", url: "https://medium.com/androiddevelopers/migrating-to-compose-testing-5f5f3b93b5f0", source: "Android Developers Blog" }
+  ],
+  eli5: "Espresso is like a robot that tests your app by tapping buttons and reading the screen. It is smart enough to wait until the app stops loading before it taps anything — so it never taps too early. You tell it 'find the Login button' then 'tap it' then 'check that the Home screen appeared', and it does all that automatically.",
+  codeWalkthrough: [
+    "ActivityScenarioRule(LoginActivity::class.java) — launches LoginActivity in a real instrumented process before each test and tears it down after.",
+    "CountingIdlingResource('NetworkCalls') — a counter-based IdlingResource; Espresso treats the app as idle only when the counter is 0.",
+    "IdlingRegistry.getInstance().register(idlingResource) — must be registered @Before each test; unregistered @After to prevent leaks across tests.",
+    "onView(withId(R.id.etEmail)) — locates the view whose android:id is etEmail in the current activity's view hierarchy.",
+    "perform(typeText('user@school.edu'), closeSoftKeyboard()) — types the string character by character and then dismisses the keyboard so it does not obscure other views.",
+    "onView(withId(R.id.btnLogin)).perform(click()) — simulates a finger tap on the Login button; Espresso waits for the UI to be idle first.",
+    "onView(withId(R.id.dashboardTitle)).check(matches(isDisplayed())) — after Espresso sees the idlingResource counter reach 0 (network done), it asserts the dashboard title is visible.",
+    "RecyclerViewActions.actionOnItemAtPosition<StudentViewHolder>(2, click()) — scrolls the RecyclerView to position 2 if needed, then dispatches a click on that ViewHolder.",
+    "hasDescendant(withText('Email is required')) — a hierarchical matcher; asserts that somewhere inside the TextInputLayout there is a child view displaying that error string.",
+    "check(doesNotExist()) — asserts the matched view is completely absent from the hierarchy (not just hidden), useful for verifying dialogs have been dismissed."
+  ],
+  bugChallenge: {
+    code: `@RunWith(AndroidJUnit4::class)
+class GradeEntryTest {
+
+    @get:Rule
+    val rule = ActivityScenarioRule(GradeEntryActivity::class.java)
+
+    @Test
+    fun submitGrade_showsSuccessMessage() {
+        Thread.sleep(2000) // Bug 1
+
+        onView(withId(R.id.etGrade))
+            .perform(typeText("95"))
+
+        onView(withId(R.id.btnSubmit)).perform(click())
+
+        Thread.sleep(1000) // Bug 2
+
+        onView(withText("Grade saved"))
+            .check(matches(isDisplayed())) // Bug 3
+    }
+
+    @Test
+    fun invalidGrade_showsError() {
+        onView(withId(R.id.etGrade))
+            .perform(typeText("150"))
+
+        onView(withId(R.id.btnSubmit)).perform(click())
+
+        onView(withId(R.id.errorText))
+            .check(matches(withText("Invalid grade"))) // Bug 4
+    }
+}`,
+    hint: "Look at the Thread.sleep() calls, what check() is missing after an Espresso action on a Snackbar, and what matcher should be combined with withText() for the error assertion.",
+    answer: "Bug 1: Thread.sleep(2000) at the start is a timing hack to wait for the screen to load. Espresso already synchronises with the main thread and idles automatically — the sleep is unnecessary and makes the test slow and flaky on different devices. Fix: remove Thread.sleep() entirely; if there is async work (e.g., loading existing grade from DB), use IdlingResource instead. Bug 2: Thread.sleep(1000) after clicking Submit is another timing hack to wait for the network/database response. Same problem — register a CountingIdlingResource in the ViewModel or repository, increment before the async call, decrement in the callback, and Espresso will wait automatically without any sleep. Bug 3: onView(withText('Grade saved')).check(matches(isDisplayed())) — Snackbars are hosted in the decor view, not the activity's view hierarchy directly. This matcher can fail with NoMatchingViewException if the Snackbar appears in a parent view. Fix: use onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText('Grade saved'))).check(matches(isDisplayed())) to target the Snackbar's internal TextView specifically. Bug 4: check(matches(withText('Invalid grade'))) on a TextView only passes if the ENTIRE text is exactly 'Invalid grade'. If the error view shows 'Invalid grade: must be 0-100', this assertion fails. Fix: use check(matches(withText(containsString('Invalid grade')))) with a Hamcrest containsString matcher, or ensure the exact string matches the resource string used in the production code."
+  },
+  difficulty: "intermediate",
+  prereqs: [17, 38]
+},
+{
+  id: 44,
+  title: "Modularization, Feature Modules & Build Tradeoffs",
+  subtitle: "Architect large Android apps with clean module boundaries — the skill that separates seniors from juniors",
+  analogy: "Modularizing an app is like organizing a large hospital into specialized departments — Cardiology, Radiology, Pharmacy — each with its own staff, equipment, and entrance. A cardiologist does not need access to the pharmacy's prescription database. Clear boundaries mean each department can work independently, scale separately, and be rebuilt without disrupting the whole hospital.",
+  points: [
+    { t: "Why modularize?", d: "Single-module apps compile everything on every change. Modularization enables incremental compilation — only changed modules recompile — dramatically cutting build times on large enterprise codebases." },
+    { t: "Module types: app module", d: "The :app module is the entry point — it declares the Application class, main Activity, and depends on all feature modules. It knows about everything but contains minimal logic itself." },
+    { t: "Module types: feature modules", d: ":feature:login, :feature:dashboard, :feature:grades — each owns a vertical slice of the UI, ViewModel, and use cases for one product feature. They depend on :core modules but NOT on each other." },
+    { t: "Module types: core modules", d: ":core:network, :core:database, :core:design-system, :core:common — shared infrastructure used by all feature modules. They must have no dependency on feature modules (no cycles)." },
+    { t: "Module types: data modules", d: ":data:user, :data:grades — own repositories and data sources for a specific domain. Feature modules depend on data modules via interfaces defined in :domain." },
+    { t: "API vs implementation visibility", d: "Use 'api()' dependency only when the type from a dependency leaks into your module's public API. Use 'implementation()' for everything else — it keeps the dependency private and prevents accidental coupling downstream." },
+    { t: "No cross-feature dependencies", d: "Feature modules must NEVER depend on each other directly. Communication between features goes through shared :core or :domain modules, or via navigation contracts." },
+    { t: "Navigation between modules", d: "Use the Navigation Component with a top-level nav graph in :app, or define navigation contracts (interface + DeepLink) in :core:navigation so features expose destinations without referencing each other." },
+    { t: "Build speed improvements", d: "Gradle's parallel execution and configuration caching mean only modules with changed sources recompile. A 200-module enterprise app can go from 8-minute full builds to 30-second incremental builds." },
+    { t: "Code ownership & team scalability", d: "Each module can be owned by a separate team with independent review, versioning, and release cadence. Module boundaries enforce Conway's Law deliberately." },
+    { t: "Dynamic feature modules", d: "Google Play's on-demand delivery allows :feature:ar-tour to be downloaded only when the user requests it, reducing initial APK size. Declared with com.android.dynamic-feature plugin." },
+    { t: "Pitfalls: over-modularization", d: "Creating too many tiny modules increases Gradle configuration overhead. A 2-person team with 50 modules gets slower builds, not faster. Right-size modules to team size and feature boundaries." }
+  ],
+  whatIs: "Android modularization is the practice of splitting a single large Gradle module into multiple smaller, independently compilable modules with clear dependency rules. Each module has a defined responsibility, reducing coupling, enabling parallel builds, and allowing teams to work independently without merge conflicts.",
+  realWorld: "A large enterprise school management platform serving 500 schools grew from 1 module to 28 modules over two years. The :feature:attendance, :feature:grades, and :feature:timetable modules are owned by separate squads. Before modularization, a CSS change in the design system caused a full 11-minute recompile. After, only :core:design-system and the two feature modules using the changed component rebuild — 90 seconds total.",
+  code: `// settings.gradle.kts — declare all modules
+include(":app")
+include(":core:network")
+include(":core:design-system")
+include(":core:common")
+include(":domain:user")
+include(":data:user")
+include(":feature:login")
+include(":feature:dashboard")
+include(":feature:grades")
+
+// :core:network/build.gradle.kts
+plugins { id("com.android.library") }
+
+dependencies {
+    // 'api' — OkHttp type leaks into callers' public APIs
+    api("com.squareup.okhttp3:okhttp:4.12.0")
+    // 'implementation' — Gson is internal detail, hidden from callers
+    implementation("com.google.code.gson:gson:2.10.1")
+}
+
+// :feature:grades/build.gradle.kts
+plugins { id("com.android.library") }
+
+dependencies {
+    implementation(project(":core:network"))
+    implementation(project(":core:design-system"))
+    implementation(project(":domain:user"))   // interface only
+    // WRONG: implementation(project(":feature:login")) — never allowed!
+}
+
+// :app/build.gradle.kts — assembles everything
+plugins { id("com.android.application") }
+
+dependencies {
+    implementation(project(":feature:login"))
+    implementation(project(":feature:dashboard"))
+    implementation(project(":feature:grades"))
+    // :app knows all features; features do NOT know each other
+}
+
+// Navigation contract in :core:navigation
+object Destinations {
+    const val GRADES = "feature/grades"
+    const val DASHBOARD = "feature/dashboard"
+}
+
+// Each feature registers its NavGraph via a NavigationProvider interface
+// resolved by dependency injection — features never import each other`,
+  funFact: "The Google Play Store Android app itself is modularized into 200+ Gradle modules. Their engineers reported that modularization reduced p50 build times by 65% and allowed 500+ engineers to work simultaneously without constant merge conflicts.",
+  quiz: [
+    { q: "What is the primary build-time benefit of Android modularization?", opts: ["Smaller APK size", "Only changed modules recompile, enabling incremental builds", "Faster runtime performance", "Fewer method count issues"], ans: 1 },
+    { q: "Which dependency keyword should you use when a dependency's types appear in your module's public API?", opts: ["implementation", "compileOnly", "api", "runtimeOnly"], ans: 2 },
+    { q: "Why should feature modules NEVER depend directly on each other?", opts: ["It causes slower builds", "It creates circular dependencies and tight coupling that breaks team boundaries", "It is not supported by Gradle", "It causes duplicate class errors at runtime"], ans: 1 },
+    { q: "What module type owns repositories and data sources for a specific domain?", opts: ["feature module", "app module", "data module", "dynamic feature module"], ans: 2 },
+    { q: "How should two feature modules navigate to each other's screens?", opts: ["Direct Activity Intent with the target module's class name", "Via navigation contracts defined in a shared :core:navigation module", "By adding each other as implementation dependencies", "Via reflection to avoid compile-time coupling"], ans: 1 },
+    { q: "What is a dynamic feature module?", opts: ["A module that changes its code at runtime", "A Gradle module deliverable on-demand via Play Store to reduce initial download size", "A module that uses feature flags", "A module without a manifest"], ans: 1 },
+    { q: "Which Gradle plugin is used for library modules (non-app modules)?", opts: ["com.android.application", "com.android.library", "kotlin-multiplatform", "java-library"], ans: 1 },
+    { q: "What is the risk of over-modularization for a small team?", opts: ["Smaller APK sizes", "Increased Gradle configuration overhead that makes builds slower, not faster", "Inability to use Jetpack libraries", "Loss of code completion in Android Studio"], ans: 1 }
+  ],
+  challenge: "Design the module graph for a school management Android app with these features: student login/profile, grade viewing, timetable, attendance marking (teacher only), and an admin dashboard. Identify at least 3 :core modules and 5 :feature modules, define which depend on which, and explain where you would place the Room database and Retrofit client. Justify whether any module should use 'api()' vs 'implementation()' dependencies.",
+  resources: [
+    { type: "docs", title: "Guide to Android App Modularization", url: "https://developer.android.com/topic/modularization", source: "Android Developers" },
+    { type: "docs", title: "Dynamic Feature Modules", url: "https://developer.android.com/guide/playcore/feature-delivery", source: "Android Developers" },
+    { type: "article", title: "NowInAndroid — Real-world Multi-Module Architecture", url: "https://github.com/android/nowinandroid", source: "GitHub / Google" },
+    { type: "docs", title: "Gradle — api vs implementation", url: "https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation", source: "Gradle Docs" },
+    { type: "article", title: "Modularization at Scale — Slack Engineering", url: "https://slack.engineering/gradle-goodness-modularization-at-scale/", source: "Slack Engineering Blog" }
+  ],
+  eli5: "Imagine your school has one giant room for everyone — students, teachers, the library, the canteen, and the office. When you repaint a wall, EVERYONE must leave. Modularization gives each group their own room. Now when you repaint the canteen, only canteen staff need to leave. Building your Android app this way means changing the login screen does not force you to recompile the timetable screen.",
+  codeWalkthrough: [
+    "settings.gradle.kts include() calls — each string maps to a directory containing its own build.gradle.kts; Gradle discovers and wires them as project dependencies.",
+    ":core:network uses 'api(okhttp)' — because network module callers (like :data:user) likely expose OkHttp types (e.g., Response) in their own APIs; using 'api' propagates OkHttp to those callers automatically.",
+    ":core:network uses 'implementation(gson)' — Gson is only used internally for parsing; callers never see Gson types, so 'implementation' hides it and prevents accidental coupling.",
+    ":feature:grades depends on project(':core:network') and project(':domain:user') via 'implementation' — it uses these but does NOT expose their types in its own public surface.",
+    "The comment '// WRONG: implementation(project(':feature:login'))' — illustrates the cardinal rule: feature modules cannot reference sibling features. This would create a cycle if :feature:login ever needed to show a grade.",
+    ":app depends on all feature modules — it is the integration point; it adds each feature to the nav graph and provides the application-scoped DI container that wires everything together.",
+    "Destinations object in :core:navigation — defines route strings as constants in a module that both :app (for the nav graph) and individual features (for navigate() calls) can depend on without cross-feature coupling.",
+    "NavigationProvider interface — each feature module implements this interface and registers its NavGraph fragment; :app collects all implementations via DI (e.g., Hilt multibindings) at startup."
+  ],
+  bugChallenge: {
+    code: `// :feature:grades/build.gradle.kts
+dependencies {
+    api(project(":core:network"))          // Bug 1
+    api(project(":core:design-system"))    // Bug 2
+    implementation(project(":feature:login"))  // Bug 3
+    implementation(project(":data:grades"))
+}
+
+// GradeRepository.kt in :feature:grades
+class GradeRepository(
+    private val api: GradeApi,
+    private val db: AppDatabase  // Bug 4
+) {
+    suspend fun getGrades(): List<Grade> = api.fetchGrades()
+}
+
+// :app/build.gradle.kts
+dependencies {
+    implementation(project(":feature:grades"))
+    // :app now can use OkHttp directly without declaring it — Bug 5
+}`,
+    hint: "Check which dependencies should be 'api' vs 'implementation', which module should own the database, and the cross-feature dependency.",
+    answer: "Bug 1: 'api(project(:core:network))' — :feature:grades should NOT re-export :core:network to its consumers. The network client is an internal implementation detail of the grades feature. Fix: change to 'implementation(project(:core:network))'. Using 'api' here means :app accidentally gains access to OkHttp types via :feature:grades, which is the transitive leakage shown in Bug 5. Bug 2: 'api(project(:core:design-system))' — design system composables and themes are implementation details of the UI in :feature:grades. Callers of :feature:grades (i.e., :app) do not need design system types. Fix: change to 'implementation(project(:core:design-system))'. Bug 3: 'implementation(project(:feature:login))' — a feature module depending on another feature module is architecturally forbidden. It creates hidden coupling: if :feature:login now needs to link back to grades, you get a circular dependency. Fix: any shared types (e.g., a LoggedInUser) must live in :domain or :core:common; navigation to login from grades goes through a navigation contract in :core:navigation. Bug 4: AppDatabase in :feature:grades — the Room database should live in a :core:database or :data:grades module, not in a feature module. Placing it here means other data modules cannot share the database, and the feature module takes on infrastructure responsibility it should not own. Fix: move AppDatabase to :core:database and inject it via DI. Bug 5: :app can use OkHttp without declaring it — this is the consequence of Bug 1. When :feature:grades uses 'api' for :core:network, OkHttp leaks transitively into :app's compile classpath. This is an invisible dependency: if :feature:grades later changes to 'implementation', :app breaks at compile time even though :app never intentionally depended on OkHttp."
+  },
+  difficulty: "intermediate",
+  prereqs: [23]
+},
+{
+  id: 45,
+  title: "Gradle Basics, Dependencies, Build Variants & Product Flavors",
+  subtitle: "Control your entire build pipeline — version catalogs, flavors, and buildConfigField are daily senior tools",
+  analogy: "Gradle's build variants are like a restaurant's menu customization system. The same kitchen (your source code) can produce a 'dev meal' with extra debug sauce and verbose logging, a 'staging meal' that looks almost production-ready for QA reviewers, and a 'prod meal' with perfect presentation and no debug garnishes. The kitchen instructions (build.gradle.kts) specify exactly what goes into each variant.",
+  points: [
+    { t: "build.gradle.kts vs build.gradle", d: "Kotlin DSL (.kts) files provide type safety, IDE autocompletion, and compile-time error checking. They are the modern standard in 2026; Groovy .gradle files are legacy." },
+    { t: "Version Catalogs (libs.versions.toml)", d: "Centralize all dependency versions in gradle/libs.versions.toml. Reference via libs.retrofit, libs.hilt.android, etc. No more version strings scattered across 20 build files." },
+    { t: "buildTypes", d: "debug and release are the two default build types. debug has debuggable=true, minification off. release has minifyEnabled=true, R8/ProGuard shrinking, and must be signed with a release keystore." },
+    { t: "productFlavors", d: "Create dev, staging, and prod flavors with different applicationId suffixes, API base URLs, and feature flags. Each flavor × buildType combination produces a build variant." },
+    { t: "Build variant matrix", d: "2 buildTypes × 3 flavors = 6 build variants: devDebug, devRelease, stagingDebug, stagingRelease, prodDebug, prodRelease. Each is an independently installable APK." },
+    { t: "buildConfigField", d: "Inject values into BuildConfig.java at compile time: buildConfigField('String', 'API_URL', '\"https://api.dev.school.com\"'). Access via BuildConfig.API_URL in Kotlin code. Never hardcode URLs." },
+    { t: "flavorDimensions", d: "Multiple dimensions (e.g., 'environment' and 'payment') allow a matrix like devFreeDebug, devPaidRelease. Each dimension is independent and combinations multiply." },
+    { t: "sourceSets", d: "Each flavor and build type can have its own source directory: src/dev/java, src/prod/res. Files in flavor-specific directories override or supplement main/ files automatically." },
+    { t: "Dependency configurations", d: "implementation (compile + runtime), api (transitive), compileOnly (compile only, not runtime), runtimeOnly (runtime only), testImplementation, androidTestImplementation, debugImplementation." },
+    { t: "Version Catalog bundles", d: "Group related dependencies: [bundles] compose = ['compose-ui', 'compose-material3', 'compose-tooling']. Then: implementation(libs.bundles.compose) — one line for all Compose deps." },
+    { t: "Gradle caching & build speed", d: "Enable Gradle build cache (org.gradle.caching=true in gradle.properties) and configuration cache to skip configuration phase on repeated builds. Critical for CI speed." },
+    { t: "applicationIdSuffix", d: "Use applicationIdSuffix = '.dev' on debug/dev variants so dev and prod builds can coexist on the same device — essential for QA testers who need both installed simultaneously." }
+  ],
+  whatIs: "Gradle is Android's build system that compiles source code, packages resources, runs tests, and produces signed APKs or AABs. Build variants (the combination of buildTypes and productFlavors) let one codebase produce multiple distinct app variants for different environments, audiences, or monetization strategies — all from a single build command.",
+  realWorld: "A SaaS school management platform maintains three productFlavors: dev (points to localhost API, has debug menu), staging (points to staging API, has internal QA tools visible), and prod (points to production API, all debug code stripped by R8). Each flavor is installable side-by-side on a QA device using applicationIdSuffix. The CI pipeline builds all 6 variants on every PR using the version catalog to guarantee dependency consistency.",
+  code: `// gradle/libs.versions.toml
+[versions]
+kotlin = "2.0.0"
+agp = "8.4.0"
+retrofit = "2.11.0"
+hilt = "2.51"
+compose-bom = "2024.05.00"
+
+[libraries]
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+
+[bundles]
+retrofit = ["retrofit-core", "retrofit-gson"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
+// app/build.gradle.kts
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
+    id("kotlin-kapt")
+}
+
+android {
+    compileSdk = 35
+    defaultConfig {
+        applicationId = "com.teamzlab.schoolapp"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 42
+        versionName = "2.7.1"
+    }
+
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-DEV"
+            buildConfigField("String", "API_URL", "\\"https://api.dev.school.com\\"")
+            buildConfigField("Boolean", "SHOW_DEBUG_MENU", "true")
+        }
+        create("staging") {
+            dimension = "environment"
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-STAGING"
+            buildConfigField("String", "API_URL", "\\"https://api.staging.school.com\\"")
+            buildConfigField("Boolean", "SHOW_DEBUG_MENU", "false")
+        }
+        create("prod") {
+            dimension = "environment"
+            buildConfigField("String", "API_URL", "\\"https://api.school.com\\"")
+            buildConfigField("Boolean", "SHOW_DEBUG_MENU", "false")
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+        }
+    }
+
+    buildFeatures { buildConfig = true; compose = true }
+}
+
+dependencies {
+    implementation(libs.bundles.retrofit)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    val composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    debugImplementation("androidx.compose.ui:ui-tooling")  // Only in debug
+}`,
+  funFact: "Before Version Catalogs, large Android projects had dozens of Ext blocks in root build.gradle with hundreds of version strings. Googlers surveyed internally and found developers spent up to 15% of their time resolving dependency version conflicts. Version Catalogs, introduced in Gradle 7.0, cut that to near zero for teams that adopt them.",
+  quiz: [
+    { q: "What is the purpose of buildConfigField in a productFlavor?", opts: ["To add a new Activity to the manifest", "To inject a compile-time constant into BuildConfig that can be read in Kotlin code", "To set the minimum SDK version per flavor", "To define ProGuard rules per flavor"], ans: 1 },
+    { q: "How many build variants does 2 buildTypes × 3 productFlavors produce?", opts: ["2", "3", "5", "6"], ans: 3 },
+    { q: "What file centralizes all dependency versions in modern Android projects?", opts: ["build.gradle in the root module", "gradle.properties", "gradle/libs.versions.toml", "settings.gradle.kts"], ans: 2 },
+    { q: "What does applicationIdSuffix = '.dev' achieve?", opts: ["Changes the app's display name", "Appends to the package name so dev and prod builds can coexist on the same device", "Speeds up the build", "Enables R8 minification"], ans: 1 },
+    { q: "Which dependency configuration makes a dependency available only in release builds?", opts: ["compileOnly", "releaseImplementation", "runtimeOnly", "debugImplementation in reverse"], ans: 1 },
+    { q: "What does isMinifyEnabled = true do in a release buildType?", opts: ["Reduces image resolution", "Enables R8 code shrinking and obfuscation", "Disables all logging", "Strips unused resources only"], ans: 1 },
+    { q: "What is a Version Catalog bundle?", opts: ["A ZIP archive of compiled dependencies", "A named group of related dependencies that can be added with a single implementation() call", "A Gradle plugin that auto-updates versions", "A list of forbidden dependency versions"], ans: 1 },
+    { q: "Where should flavor-specific source files be placed to override the main/ source set?", opts: ["In src/main/java with an @Flavor annotation", "In src/[flavorName]/java or src/[flavorName]/res directories", "In a separate Gradle subproject per flavor", "In build/generated/source/[flavorName]"], ans: 1 }
+  ],
+  challenge: "Set up a build.gradle.kts for a fintech Android app with: (1) a Version Catalog entry for OkHttp 4.12.0 and a 'networking' bundle; (2) three productFlavors: sandbox, uat, production — each with a different API_URL buildConfigField and applicationIdSuffix for sandbox and uat; (3) a release buildType with minification enabled and a custom ProGuard file; (4) a debugImplementation dependency on LeakCanary. Write the complete build.gradle.kts android{} and dependencies{} blocks.",
+  resources: [
+    { type: "docs", title: "Version Catalogs — Gradle Docs", url: "https://docs.gradle.org/current/userguide/version_catalogs.html", source: "Gradle" },
+    { type: "docs", title: "Configure Build Variants — Android Developers", url: "https://developer.android.com/build/build-variants", source: "Android Developers" },
+    { type: "docs", title: "BuildConfig — Android Developers", url: "https://developer.android.com/build/gradle-tips#share-custom-fields-and-resource-values-with-your-app-code", source: "Android Developers" },
+    { type: "article", title: "Kotlin DSL for Gradle — Migration Guide", url: "https://developer.android.com/build/migrate-to-kotlin-dsl", source: "Android Developers" },
+    { type: "docs", title: "Shrink, obfuscate, and optimize — R8", url: "https://developer.android.com/build/shrink-code", source: "Android Developers" }
+  ],
+  eli5: "Imagine you are baking cookies for three different events: a test batch for yourself (dev), a batch for friends to try before the party (staging), and the real party batch (prod). The recipe is the same but you add different decorations and toppings for each batch. Gradle productFlavors do exactly this for your app — same code, different settings for each 'event'.",
+  codeWalkthrough: [
+    "libs.versions.toml [versions] table — single source of truth for version strings; changing 'retrofit = 2.11.0' here updates every module that references version.ref = 'retrofit'.",
+    "[libraries] section — defines library coordinates (group:artifact) linked to a version reference; generates a type-safe accessor (libs.retrofit.core) usable in any build.gradle.kts.",
+    "[bundles] retrofit — groups retrofit-core and retrofit-gson; any module calling implementation(libs.bundles.retrofit) gets both transitive dependencies in one line.",
+    "flavorDimensions += 'environment' — declares a dimension named 'environment'; every productFlavor must specify which dimension it belongs to or Gradle will error.",
+    "applicationIdSuffix = '.dev' in the dev flavor — the final applicationId becomes com.teamzlab.schoolapp.dev; this is a different app identity from prod, allowing parallel installation.",
+    "buildConfigField('String', 'API_URL', '\"https://api.dev.school.com\"') — generates public static final String API_URL = ... in BuildConfig; the escaped quotes inside the string literal are required for valid Java string generation.",
+    "isMinifyEnabled = true in release — activates R8 which shrinks unused classes, obfuscates names, and optimizes bytecode; essential for APK size and reverse-engineering protection in a fintech app.",
+    "proguardFiles(getDefaultProguardFile(...), 'proguard-rules.pro') — applies Google's baseline rules then your custom rules; keep rules for Retrofit models and Gson serialization are typically needed here.",
+    "debugImplementation('androidx.compose.ui:ui-tooling') — this dependency is ONLY included in debug builds; it provides Compose Preview support and layout inspector but adds size that must not reach production.",
+    "platform(libs.compose.bom) — a BOM (Bill of Materials) aligns all Compose library versions to a tested-compatible set; no individual Compose version strings are needed after this."
+  ],
+  bugChallenge: {
+    code: `// app/build.gradle.kts — SaaS school app
+android {
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            buildConfigField("String", "API_URL", "https://api.dev.school.com")  // Bug 1
+            applicationIdSuffix = "dev"  // Bug 2
+        }
+        create("prod") {
+            buildConfigField("String", "API_URL", "\\"https://api.school.com\\"")
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false  // Bug 3
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+        }
+    }
+
+    buildFeatures {
+        buildConfig = false  // Bug 4
+    }
+}
+
+dependencies {
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")  // Bug 5
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+}`,
+    hint: "Check the string quoting in buildConfigField, the applicationIdSuffix format, minification setting, buildConfig feature flag, and the duplicate dependency.",
+    answer: "Bug 1: buildConfigField('String', 'API_URL', 'https://api.dev.school.com') — the value is missing surrounding escaped quotes. BuildConfig generates Java code, so the value must be a valid Java string literal. It needs to be '\\\"https://api.dev.school.com\\\"' (with escaped double quotes inside the Kotlin string). Without them, the generated BuildConfig.java will have API_URL = https://api.dev.school.com (unquoted), which is a compile error. Bug 2: applicationIdSuffix = 'dev' — the suffix should start with a dot: applicationIdSuffix = '.dev'. Without the leading dot, the applicationId becomes com.teamzlabschoolappdev (no separator) instead of com.teamzlab.schoolapp.dev, which is invalid and will cause a build error or produce an unexpected package name. Bug 3: isMinifyEnabled = false in release — the release build type for a production SaaS app should have isMinifyEnabled = true. Without R8, the APK is large, slow to download, and trivially reverse-engineered. This is a critical security and performance oversight, especially for a school management platform handling PII. Bug 4: buildConfig = false — this disables generation of the BuildConfig class entirely. Since the productFlavors are using buildConfigField() to inject API_URL, those fields have nowhere to go — Gradle will error or silently discard them. Fix: remove this line or set it to true. Bug 5: Duplicate Retrofit dependency with conflicting versions — implementation is called twice for retrofit with versions 2.9.0 and 2.11.0. Gradle will resolve this to the higher version (2.11.0) but will emit a warning and the behavior may differ across Gradle versions. Fix: remove the 2.9.0 line and use only 2.11.0, ideally via a Version Catalog entry to avoid this class of mistake entirely."
+  },
+  difficulty: "intermediate",
+  prereqs: [44]
+},
+{
+  id: 46,
+  title: "Signing, Release Builds, Play Console & Versioning",
+  subtitle: "Ship production-ready Android apps safely — signing, R8, Play tracks, and versioning done right",
+  analogy: "App signing is like a wax seal on a royal decree — it proves the document came from you and has not been tampered with since. If even one byte of the APK changes after signing, the seal breaks and Android refuses to install it. The Play Store uses this seal to verify that every update to your app is genuinely from the same publisher, not an impersonator.",
+  points: [
+    { t: "Why signing matters", d: "Android requires every APK/AAB to be cryptographically signed before installation. The signature binds your identity to the app and prevents third parties from publishing fake updates under your package name." },
+    { t: "Keystore file", d: "A .jks or .keystore file containing your private key and certificate. Generated once with keytool. NEVER commit to version control — treat it like a password. Loss of the keystore means you cannot update your app on the Play Store." },
+    { t: "keytool generation command", d: "keytool -genkey -v -keystore release.jks -alias schoolapp -keyalg RSA -keysize 2048 -validity 10000. Use a 10,000+ day validity to avoid expiry issues during the app's lifetime." },
+    { t: "signingConfigs in Gradle", d: "Define a signingConfig block in build.gradle.kts with storeFile, storePassword, keyAlias, keyPassword. Reference environment variables — never hardcode passwords in build files." },
+    { t: "R8 and ProGuard", d: "isMinifyEnabled = true activates R8, which shrinks (removes unused classes), obfuscates (renames to a/b/c), and optimizes bytecode. isShrinkResources = true removes unused XML resources. Both reduce APK size and make reverse engineering harder." },
+    { t: "ProGuard keep rules", d: "R8 can break Retrofit models, Room entities, or Gson classes by renaming their fields. Add -keep rules in proguard-rules.pro to preserve classes inspected via reflection." },
+    { t: "versionCode and versionName", d: "versionCode is an integer incrementing monotonically for every Play Store upload — Play uses this to determine update order. versionName is the human-readable string (e.g., '2.7.1') shown to users. They are independent." },
+    { t: "App Bundle (AAB) vs APK", d: "Prefer AAB — Google Play uses it to build device-optimized APKs (correct ABI, screen density, language). AABs are ~20-40% smaller for end users. Direct APK distribution is needed only for sideloading." },
+    { t: "Play Console testing tracks", d: "Internal testing (up to 100 testers, instant publish), Closed testing/Alpha (invite-only groups), Open testing/Beta (public opt-in), Production (full rollout). Each track is a separate upload." },
+    { t: "Staged rollouts", d: "Release to 1% → 5% → 20% → 50% → 100% of users over days/weeks. Monitor crash rates and ANR rates in Android Vitals. Pause or halt the rollout if metrics degrade." },
+    { t: "Play App Signing", d: "Enrol in Play App Signing — Google re-signs your AAB with a Google-managed key stored in their HSM. You upload with an upload key; the distribution key is protected by Google. Losing your upload key is recoverable; losing the distribution key is not." },
+    { t: "Versioning strategy for teams", d: "Automate versionCode from CI build number (e.g., GITHUB_RUN_NUMBER). Use Semantic Versioning for versionName: MAJOR.MINOR.PATCH. Tag each release commit in git for traceability." }
+  ],
+  whatIs: "App signing is the cryptographic process of attaching a developer's private-key signature to an Android APK or AAB, enabling Android and the Play Store to verify authenticity and integrity. The Play Console's testing tracks and staged rollouts provide a controlled pipeline for delivering signed release builds to progressively larger user audiences while monitoring quality metrics.",
+  realWorld: "A fintech mobile banking app (handling real transactions) uses Play App Signing so the distribution key is protected by Google's HSM — if the development laptop is stolen, the upload key can be revoked without losing the ability to update the app. The CI pipeline automatically sets versionCode = GITHUB_RUN_NUMBER and deploys to the Internal track on every merge to main, with staged rollout to production starting at 1% with 24-hour monitoring windows.",
+  code: `// 1. Generate keystore (run once, store securely — NOT in git)
+// keytool -genkey -v -keystore fintech-release.jks
+//   -alias fintechapp -keyalg RSA -keysize 2048 -validity 10000
+
+// 2. app/build.gradle.kts — signing config
+android {
+    signingConfigs {
+        create("release") {
+            // Read from environment variables — NEVER hardcode
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "release.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("KEY_ALIAS") ?: ""
+            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
+    defaultConfig {
+        versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt()
+        versionName = "2.7.1"
+    }
+}
+
+// 3. proguard-rules.pro — keep Retrofit/Gson model fields
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.teamzlab.fintech.data.model.** { *; }
+-keep interface com.teamzlab.fintech.data.api.** { *; }
+-dontwarn okhttp3.**
+
+// 4. Build a release AAB for Play Store upload
+// ./gradlew :app:bundleProdRelease
+
+// 5. VersionCode strategy helper (in a buildSrc convention plugin)
+fun computeVersionCode(): Int {
+    val runNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
+    return runNumber ?: 1  // fallback for local builds
+}`,
+  funFact: "The Android signing system has a dark side: if you lose your original keystore AND you are NOT enrolled in Play App Signing, you can NEVER update your app on the Play Store. You must publish a brand-new app with a new package name and ask all users to migrate. This has happened to real companies — the Play Store has no key recovery for un-enrolled apps.",
+  quiz: [
+    { q: "What happens if you lose your keystore and are NOT enrolled in Play App Signing?", opts: ["You can reset the keystore via the Play Console", "You can never publish updates to the same package name on the Play Store", "You can re-sign with a new keystore", "Google automatically generates a replacement keystore"], ans: 1 },
+    { q: "What does isMinifyEnabled = true activate in an Android release build?", opts: ["Disables all logging", "Activates R8 for code shrinking, obfuscation, and optimization", "Reduces image assets resolution", "Enables ProGuard in interpret-only mode"], ans: 1 },
+    { q: "What does isShrinkResources = true do?", opts: ["Compresses PNG files", "Removes unused XML resources from the final APK/AAB", "Reduces the number of Activities", "Strips debug symbols only"], ans: 1 },
+    { q: "Why should signing passwords be read from environment variables rather than hardcoded in build.gradle.kts?", opts: ["Gradle cannot parse string literals in signingConfig blocks", "Hardcoded passwords in build files are committed to git, exposing credentials to anyone with repo access", "Environment variables make builds faster", "The Play Console requires environment variable format"], ans: 1 },
+    { q: "What is the primary advantage of uploading an AAB instead of an APK to the Play Store?", opts: ["AABs install faster on devices", "Play Store generates device-optimized APKs from the AAB, reducing download size by 20-40%", "AABs bypass the review process", "AABs support sideloading on all Android versions"], ans: 1 },
+    { q: "In a staged rollout, what should trigger a rollout pause?", opts: ["User complaints on social media", "A spike in crash rate or ANR rate in Android Vitals above your defined threshold", "The app receiving a low star rating", "The rollout percentage reaching 50%"], ans: 1 },
+    { q: "What is versionCode used for by the Play Store?", opts: ["Displaying the version to users in the listing", "Determining update order — a higher versionCode is always a newer version", "Generating the signing certificate", "Setting the minimum SDK version"], ans: 1 },
+    { q: "What is the benefit of enrolling in Play App Signing?", opts: ["Faster review times", "Google protects the distribution key in an HSM; losing your upload key is recoverable", "Free developer account", "Ability to publish without a signed keystore"], ans: 1 }
+  ],
+  challenge: "You are the Android lead for a fintech app. A CI run just published versionCode 187 to the Internal track. You now want to promote it to Closed testing (Alpha) for 200 beta testers, then do a 5% staged rollout to production. Write: (1) the Gradle signingConfig block reading from environment variables; (2) the proguard-rules.pro keep rules needed for a Retrofit API interface and its response data class; (3) the shell commands to build and sign the release AAB. Explain what Play App Signing buys you vs self-managed signing.",
+  resources: [
+    { type: "docs", title: "Sign Your App — Android Developers", url: "https://developer.android.com/studio/publish/app-signing", source: "Android Developers" },
+    { type: "docs", title: "Shrink, Obfuscate, and Optimize Your App (R8)", url: "https://developer.android.com/build/shrink-code", source: "Android Developers" },
+    { type: "docs", title: "Play App Signing", url: "https://support.google.com/googleplay/android-developer/answer/9842756", source: "Google Play Help" },
+    { type: "docs", title: "Staged Rollouts — Play Console Help", url: "https://support.google.com/googleplay/android-developer/answer/6346149", source: "Google Play Help" },
+    { type: "article", title: "App Bundle vs APK — Comparison", url: "https://developer.android.com/guide/app-bundle", source: "Android Developers" }
+  ],
+  eli5: "Signing your app is like putting your personal stamp on a sealed envelope — everyone can see it came from you and no one tampered with it. The Play Store checks this stamp every time you send an update. If you lose your stamp (keystore), you can never prove you are the same person who sent the original, so you cannot update anymore. That is why it is so important to keep the keystore safe.",
+  codeWalkthrough: [
+    "keytool -genkey ... -validity 10000 — 10,000 days (~27 years) ensures the key does not expire during the app's commercial lifetime; Android requires the certificate to be valid at the time of each update.",
+    "System.getenv('KEYSTORE_PATH') — reads the keystore path from a CI/CD environment variable; locally developers set this in their shell profile or local.properties (git-ignored). Never substitute a literal path here.",
+    "storePassword = System.getenv('KEYSTORE_PASSWORD') ?: '' — the Elvis operator provides an empty fallback for local builds where the env var is absent; the build will fail at signing time if the password is wrong, not at configuration time.",
+    "signingConfig = signingConfigs.getByName('release') inside buildTypes.release — links the release build type to the release signing config; without this, the release buildType uses the default debug key (not accepted by Play Store).",
+    "isMinifyEnabled = true + isShrinkResources = true — both must be enabled together for maximum size reduction; minify handles code, shrinkResources handles XML/drawables/layouts; enabling only one leaves significant waste.",
+    "-keep class com.teamzlab.fintech.data.model.** { *; } — prevents R8 from renaming fields in data model classes that Gson/Retrofit uses via reflection; without this, JSON fields like 'transaction_id' cannot be mapped to Kotlin properties after obfuscation.",
+    "versionCode = (System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInt() — ties versionCode to the CI run number, guaranteeing monotonic incrementing without manual intervention; local builds fall back to 1.",
+    "./gradlew :app:bundleProdRelease — the Gradle task name encodes the variant: 'bundle' (AAB not APK) + 'Prod' (flavor) + 'Release' (buildType); the output AAB is in app/build/outputs/bundle/prodRelease/."
+  ],
+  bugChallenge: {
+    code: `// app/build.gradle.kts — fintech banking app
+android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("fintech-release.jks")  // Bug 1
+            storePassword = "MyS3cr3tP@ss"            // Bug 2
+            keyAlias = "fintechkey"
+            keyPassword = "KeyP@ss123"                // Bug 3
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false    // Bug 4
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
+    defaultConfig {
+        versionCode = 1   // Bug 5
+        versionName = "1.0"
+    }
+}`,
+    hint: "Check what is hardcoded that should not be, the contradiction between minify and shrinkResources, and the versionCode strategy for production releases.",
+    answer: "Bug 1: storeFile = file('fintech-release.jks') — the keystore path is relative and assumes the file is in the app/ directory. More critically, if this file is tracked by git (even accidentally), the keystore is now in version history forever. Fix: read the path from an environment variable: storeFile = file(System.getenv('KEYSTORE_PATH') ?: 'local.jks'). Add *.jks and *.keystore to .gitignore. Bug 2: storePassword = 'MyS3cr3tP@ss' — hardcoded secret in a build file. If this file is committed to git, the password is visible to every developer and in the full git history. Fix: storePassword = System.getenv('KEYSTORE_PASSWORD') ?: ''. Same for Bug 3: keyPassword = 'KeyP@ss123' must become System.getenv('KEY_PASSWORD') ?: ''. For a fintech app, leaking signing credentials could allow an attacker to publish a malicious update under your identity. Bug 4: isMinifyEnabled = false with isShrinkResources = true is a contradiction — isShrinkResources requires isMinifyEnabled = true to function. Gradle will throw a build error. More importantly, for a fintech app, R8 minification is critical: it reduces APK size (smaller download = higher install conversion), obfuscates code (makes reverse engineering financial logic harder), and removes unused classes (reduces attack surface). Fix: set isMinifyEnabled = true and add proguardFiles(...) with keep rules for your data models. Bug 5: versionCode = 1 hardcoded — every CI build will produce versionCode 1. The Play Store rejects uploads where the versionCode is not greater than the currently published version. Fix: read from CI: versionCode = (System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInt(). This ensures every CI build has a unique, monotonically increasing versionCode automatically."
+  },
+  difficulty: "intermediate",
+  prereqs: [45]
+},
+{
+  id: 47,
+  title: "CI/CD for Android: GitHub Actions, Fastlane & Bitrise",
+  subtitle: "Automate your entire Android delivery pipeline — the skill that makes you invaluable on any team",
+  analogy: "A CI/CD pipeline is like a fully automated car assembly line. When a new design (code change) arrives, the line automatically inspects the parts (lint), tests every component (unit tests), assembles the car (build), and ships it to the showroom (deploy). No human stands on the factory floor watching each car roll by — the line runs 24/7 and stops itself if it detects a defect.",
+  points: [
+    { t: "What CI/CD solves", d: "Manual builds are slow, inconsistent, and error-prone. CI ensures every code change is automatically linted, tested, and built. CD automates deployment to test tracks so QA always has the latest build without waiting for a developer to upload manually." },
+    { t: "Pipeline stages in order", d: "1. Checkout code → 2. Cache Gradle → 3. Lint → 4. Unit tests → 5. Build debug APK → 6. Instrumented tests (optional) → 7. Build release AAB → 8. Sign → 9. Deploy to Play Console / Firebase App Distribution." },
+    { t: "GitHub Actions basics", d: "Workflows defined in .github/workflows/*.yml. Triggered by push, pull_request, or schedule. Jobs run on ubuntu-latest runners with actions/checkout and actions/setup-java for Android builds." },
+    { t: "Gradle caching in GitHub Actions", d: "actions/cache with key based on libs.versions.toml hash. A warm cache cuts 3-minute dependency download to under 10 seconds. Critical for keeping CI feedback under 5 minutes." },
+    { t: "Secrets management", d: "Store keystore password, API keys, and service account JSON in GitHub repository Secrets (Settings → Secrets). Access via ${{ secrets.KEYSTORE_PASSWORD }} in the workflow YAML. Never log secrets." },
+    { t: "Fastlane supply for Play deployment", d: "Fastlane's supply lane uploads AABs to a specified Play Console track using a Google Play service account JSON. One command: fastlane supply --aab app-release.aab --track internal." },
+    { t: "Fastlane screengrab for screenshots", d: "Automates capturing Play Store screenshots on all device sizes using Espresso. Runs on emulators in CI, uploads via deliver lane. Eliminates a day of manual screenshot work per release." },
+    { t: "Bitrise as a CI alternative", d: "Mobile-first CI with pre-built steps for Android build, sign, and deploy. Simpler YAML than GitHub Actions for mobile teams without DevOps expertise. Better emulator support out of the box." },
+    { t: "Branch protection rules", d: "Require CI to pass before merging to main. Set required status checks: lint, unit-tests, build. This prevents broken code from reaching main and ensures every merge is deployable." },
+    { t: "Artifact management", d: "Upload APKs and AABs as GitHub Actions artifacts for QA download. Use actions/upload-artifact. Set retention to 30 days. QA scans the QR code from the artifact URL, installs, and tests without touching Gradle." },
+    { t: "Emulator tests in CI", d: "reactivecircus/android-emulator-runner action spins up an emulator for instrumented tests. Slow (~8 min) — run only on main branch merges, not every PR. Separate fast-path (unit tests) from slow-path (UI tests)." },
+    { t: "Environment-specific pipelines", d: "PR → run lint + unit tests + build debug. Merge to main → also build prod release + deploy to Internal track. Tag v* → promote Internal to Production with staged rollout. Pipeline stages match deployment risk." }
+  ],
+  whatIs: "CI/CD (Continuous Integration / Continuous Delivery) for Android is the practice of automating code quality checks, building signed APKs/AABs, running tests, and deploying to the Play Store or distribution platforms on every code change. GitHub Actions workflows, Fastlane lanes, and platforms like Bitrise provide the infrastructure to implement this pipeline.",
+  realWorld: "A SaaS school management platform runs a GitHub Actions pipeline that: on every PR lint + unit tests complete in 4 minutes; on every merge to main a prodRelease AAB is built, signed, and uploaded to the Play Console Internal track in 12 minutes; on git tag v*.*.* the release is promoted to the 1% staged rollout automatically. The team of 6 ships updates to 50,000+ school users daily without any manual upload steps.",
+  code: `# .github/workflows/android-ci.yml
+name: Android CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-\${{ hashFiles('gradle/libs.versions.toml') }}
+          restore-keys: gradle-
+
+      - name: Run lint
+        run: ./gradlew lintProdRelease
+
+      - name: Run unit tests
+        run: ./gradlew testProdReleaseUnitTest
+
+  build-and-deploy:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { java-version: '17', distribution: 'temurin' }
+
+      - name: Restore Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-\${{ hashFiles('gradle/libs.versions.toml') }}
+
+      - name: Decode keystore
+        run: |
+          echo "\${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
+
+      - name: Build release AAB
+        env:
+          KEYSTORE_PATH: release.jks
+          KEYSTORE_PASSWORD: \${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: \${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: \${{ secrets.KEY_PASSWORD }}
+          GITHUB_RUN_NUMBER: \${{ github.run_number }}
+        run: ./gradlew :app:bundleProdRelease
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-aab
+          path: app/build/outputs/bundle/prodRelease/app-prod-release.aab
+          retention-days: 30
+
+      - name: Deploy to Play Internal track (Fastlane)
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: \${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          bundle exec fastlane supply \\
+            --aab app/build/outputs/bundle/prodRelease/app-prod-release.aab \\
+            --track internal \\
+            --json_key_data "$PLAY_SERVICE_ACCOUNT_JSON"`,
+  funFact: "GitHub Actions was originally designed as a generic automation platform, not a CI/CD tool. The Android community reverse-engineered its capabilities for mobile builds faster than GitHub anticipated. By 2022 GitHub Actions had overtaken Jenkins as the most-used CI system for Android open-source projects on GitHub, despite being only 3 years old at the time.",
+  quiz: [
+    { q: "What is the correct order of stages in an Android CI pipeline?", opts: ["Build → Test → Lint → Deploy", "Lint → Unit Tests → Build → Sign → Deploy", "Deploy → Build → Test → Lint", "Unit Tests → Lint → Deploy → Build"], ans: 1 },
+    { q: "Why is Gradle dependency caching critical in GitHub Actions?", opts: ["It prevents flaky tests", "It avoids re-downloading all dependencies on every run, cutting 3+ minutes from build time", "It enables parallel test execution", "It signs the APK automatically"], ans: 1 },
+    { q: "How should you pass a keystore file to a GitHub Actions workflow?", opts: ["Commit the .jks file to the repository", "Store the keystore as a base64-encoded GitHub Secret, then decode it in the workflow", "Upload it to a public S3 bucket", "Pass it as a command-line argument to Gradle"], ans: 1 },
+    { q: "What does Fastlane's supply lane do?", opts: ["Takes Play Store screenshots", "Uploads an AAB to a specified Play Console track using a service account", "Generates signing keystores", "Runs Android lint"], ans: 1 },
+    { q: "When should instrumented (UI) tests run in a CI pipeline, given they take 8+ minutes?", opts: ["On every commit to every branch", "Only on pull request branches to save time", "On merges to main or release branches — not on every PR", "Only in local development, never in CI"], ans: 2 },
+    { q: "What is a branch protection rule in the context of CI/CD?", opts: ["A Git feature that encrypts code on protected branches", "A GitHub repository setting requiring CI checks to pass before a PR can be merged to main", "A Gradle task that prevents building on the wrong branch", "A Fastlane lane that blocks deployments to production"], ans: 1 },
+    { q: "What does the 'needs: lint-and-test' field do in a GitHub Actions workflow?", opts: ["Copies artifacts from the lint-and-test job", "Makes the current job wait until the lint-and-test job succeeds before starting", "Runs the current job in parallel with lint-and-test", "Skips the current job if lint-and-test fails on a non-main branch"], ans: 1 },
+    { q: "Which GitHub Actions action is used to upload build artifacts for QA download?", opts: ["actions/deploy-artifact", "actions/upload-artifact", "actions/publish-artifact", "actions/store-artifact"], ans: 1 }
+  ],
+  challenge: "Design a GitHub Actions pipeline for a SaaS school management Android app with these requirements: (1) on every PR: run lint and unit tests in under 5 minutes; (2) on merge to main: build prodRelease AAB, sign it, upload to Play Internal track via Fastlane; (3) on git tag v*.*.*: promote to 10% staged rollout; (4) keystore stored as base64 secret, passwords as separate secrets. Write the complete .github/workflows/android-cd.yml YAML file with all jobs, steps, and secrets references.",
+  resources: [
+    { type: "docs", title: "GitHub Actions — Android Build Guide", url: "https://docs.github.com/en/actions/use-cases-and-examples/building-and-testing/building-and-testing-android", source: "GitHub Docs" },
+    { type: "docs", title: "Fastlane — Android Automation", url: "https://docs.fastlane.tools/getting-started/android/", source: "Fastlane Docs" },
+    { type: "article", title: "android-emulator-runner GitHub Action", url: "https://github.com/ReactiveCircus/android-emulator-runner", source: "ReactiveCircus / GitHub" },
+    { type: "docs", title: "Bitrise — Mobile CI/CD", url: "https://devcenter.bitrise.io/en/getting-started/getting-started-with-android-apps.html", source: "Bitrise Docs" },
+    { type: "article", title: "Automating Play Store Deployment with Fastlane Supply", url: "https://docs.fastlane.tools/actions/supply/", source: "Fastlane Docs" }
+  ],
+  eli5: "Imagine every time you finish drawing a page of a comic book, a robot automatically checks your spelling, tests that the story makes sense, prints it, and mails it to the comic book store — all in 10 minutes while you start the next page. CI/CD is that robot for your Android app. You push code, the robot does all the tedious deployment work while you keep coding.",
+  codeWalkthrough: [
+    "on: push: branches: [main] and tags: [v*.*.*] — the workflow triggers on pushes to main and on version tags; pull_request trigger runs lighter jobs on every PR without deploying.",
+    "actions/setup-java@v4 with java-version: '17' — GitHub-hosted ubuntu-latest runners do not have a JDK pre-configured; this action installs Temurin JDK 17 which is required by AGP 8.x.",
+    "actions/cache@v4 path: ~/.gradle/caches key: gradle-${{ hashFiles('libs.versions.toml') }} — the cache key changes only when the version catalog changes; unchanged dependencies are restored from cache in seconds.",
+    "echo '${{ secrets.KEYSTORE_BASE64 }}' | base64 --decode > release.jks — the keystore binary is stored in GitHub Secrets as a base64 string (since Secrets support only text); this step decodes it back to a binary .jks file.",
+    "env: KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD — injected as environment variables read by build.gradle.kts via System.getenv(); they are masked in GitHub Actions logs automatically.",
+    "GITHUB_RUN_NUMBER: ${{ github.run_number }} — maps the GitHub Actions run number to the env var that Gradle reads for versionCode; guarantees unique, monotonically increasing versionCode per build.",
+    "./gradlew :app:bundleProdRelease — the Gradle task builds a signed AAB for the prod flavor + release build type; the variant selection ensures only production code is bundled, not dev or staging.",
+    "actions/upload-artifact with retention-days: 30 — stores the AAB so QA can download it directly from the GitHub Actions run page via a browser; no separate distribution service needed for early QA builds.",
+    "bundle exec fastlane supply --track internal — uses the Fastlane supply action to upload the AAB to the Play Console Internal testing track; PLAY_SERVICE_ACCOUNT_JSON is a service account key with Play Developer API access.",
+    "needs: lint-and-test in the build-and-deploy job — enforces the dependency chain; if lint or unit tests fail, the build and deploy job never starts, preventing a broken build from reaching QA."
+  ],
+  bugChallenge: {
+    code: `# .github/workflows/android-ci.yml — school management SaaS
+name: Android CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build release
+        run: ./gradlew :app:bundleProdRelease  # Bug 1
+
+      - name: Deploy to Play Store
+        run: |
+          echo "$KEYSTORE_B64" | base64 --decode > release.jks  # Bug 2
+          ./gradlew :app:bundleProdRelease
+        env:
+          KEYSTORE_B64: \${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: MyHardcodedPass  # Bug 3
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: app/build/outputs/bundle/prodRelease/
+          retention-days: 365  # Bug 4
+
+  # No lint or unit test job — Bug 5`,
+    hint: "Look at job ordering, secret handling, artifact retention, missing test jobs, and the duplicate build command.",
+    answer: "Bug 1: ./gradlew :app:bundleProdRelease runs before the Java/JDK is set up. There is no actions/setup-java step in the workflow — the ubuntu-latest runner may have a JDK but not necessarily JDK 17 required by AGP 8.x. Fix: add 'uses: actions/setup-java@v4 with java-version: 17, distribution: temurin' before any Gradle command. Also missing: there is no Gradle cache step, so every build downloads all dependencies fresh (~3 minutes). Bug 2: echo '$KEYSTORE_B64' | base64 --decode > release.jks runs in the Deploy step, but Build release step (Bug 1) already ran bundleProdRelease without the keystore being present. The release build in the first step will fail signing (or use debug signing, which Play Store rejects). The steps are in the wrong order. Fix: decode the keystore BEFORE building, then build once, then deploy. Do not build twice. Bug 3: KEYSTORE_PASSWORD: MyHardcodedPass — the password is hardcoded directly in the workflow YAML file committed to git. Anyone with repository read access (current or future) can see this password in git history. Fix: KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }} — store it in GitHub repository Secrets. Bug 4: retention-days: 365 — storing AABs for a full year will exhaust GitHub Actions storage quota rapidly (each AAB can be 30-100MB; 365 builds × 30MB = 10GB+ per year just for one workflow). The default retention limit for GitHub Actions artifacts is 90 days for private repos. Fix: retention-days: 30 is sufficient for QA access. Bug 5: There is no lint or unit test job — the pipeline goes straight from checkout to building a release AAB without any code quality checks. A broken build with a crash on startup would be deployed directly to the Play Console internal track. Fix: add a separate job (lint-and-test) that runs lintProdRelease and testProdReleaseUnitTest, then make the build job 'needs: lint-and-test'."
+  },
+  difficulty: "intermediate",
+  prereqs: [46]
+},
+{
+  id: 48,
+  title: "Kotlin Flow vs Dart Stream vs Rx — Crossover Interview Advantage",
+  subtitle: "Turn your Flutter experience into an Android interview superpower — async stream models compared",
+  analogy: "Think of async streams like water delivery systems. Kotlin Flow is a pipe that only flows when someone connects a tap (cold, on demand). Dart Stream is similar but has two modes — a private pipe (single subscriber) and a municipal main (broadcast, many listeners). RxJava Observable is a vintage system with 200 types of valves and adaptors — incredibly powerful but you need a plumber's license to operate it safely.",
+  points: [
+    { t: "Cold vs hot streams", d: "Cold streams (Kotlin Flow, Dart Stream default) start producing data only when a collector/listener subscribes. Hot streams (StateFlow, SharedFlow, Dart broadcast stream, RxJava Subject) produce data regardless of subscribers — late subscribers miss past emissions." },
+    { t: "Kotlin Flow — cold, suspending", d: "Flow<T> is cold by default. Each collector gets its own independent execution. Built on coroutines — operators are suspend functions. collect{} is a terminal operator that suspends until the flow completes." },
+    { t: "StateFlow — hot, state holder", d: "StateFlow<T> always has a current value (like LiveData). New collectors immediately receive the current state. Perfect for UI state in MVVM: val uiState: StateFlow<UiState> = _uiState.asStateFlow()." },
+    { t: "SharedFlow — hot, event bus", d: "SharedFlow<T> is configurable: replay cache size, buffer size, extra buffer capacity. Used for one-time events (navigation, snackbars) that must not be replayed on screen rotation." },
+    { t: "Dart Stream — single subscription by default", d: "A regular Dart Stream allows only one listener. This mirrors Kotlin Flow's cold single-collection semantics. Adding a second listen() throws a StateError." },
+    { t: "Dart broadcast stream", d: "stream.asBroadcastStream() or StreamController.broadcast() allows multiple listeners — analogous to Kotlin SharedFlow or RxJava PublishSubject. Subscribers joining late miss past events." },
+    { t: "StreamController — Dart's flow builder", d: "StreamController<T>() is Dart's equivalent of Kotlin's MutableSharedFlow or MutableStateFlow. sink.add(value) emits, stream exposes the read-only view — exactly the backing property pattern in Kotlin." },
+    { t: "RxJava Observables — cold by default", d: "Observable.just(), .fromIterable() are cold. BehaviorSubject (has current value, like StateFlow), PublishSubject (no cache, like SharedFlow replay=0), ReplaySubject (full history) are hot Subjects." },
+    { t: "suspend vs async/await", d: "Kotlin suspend functions are the equivalent of Dart async functions returning Future<T>. Both pause execution without blocking the thread. Kotlin uses coroutineScope; Dart uses Zone for structured async context." },
+    { t: "coroutineScope vs Zone", d: "Kotlin's coroutineScope groups coroutines and cancels children on failure — structured concurrency. Dart's Zone is broader: it intercepts async callbacks, error handling, and schedulers for an entire async context tree." },
+    { t: "How Flutter experience helps in interviews", d: "You can explain hot vs cold streams, backpressure concepts, and reactive UI patterns with confidence — these are language-agnostic. Interviewers see a developer who understands async fundamentals, not just Kotlin APIs." },
+    { t: "Operator equivalents across platforms", d: "map, filter, take, debounce, combine, flatMap — these operators exist in Flow, Dart's stream package, and RxJava with nearly identical semantics. Knowing one deeply makes the others learnable in hours." }
+  ],
+  whatIs: "Kotlin Flow, Dart Stream, and RxJava Observable are all reactive stream implementations that model sequences of asynchronous values. They share core concepts — cold vs hot, operators, backpressure, cancellation — but differ in API style, integration with their language's async model, and ecosystem maturity. Understanding the mapping between them is a significant interview differentiator for multi-platform developers.",
+  realWorld: "A developer who built Flutter school apps using Dart StreamControllers for grade update notifications found that transitioning to Android Kotlin was straightforward: StreamController.sink.add() became MutableStateFlow.value =, stream.listen() became collectAsStateWithLifecycle(), and broadcast StreamController became SharedFlow. The conceptual model transferred entirely — only the API names changed.",
+  code: `// ======= KOTLIN FLOW (Cold) =======
+fun gradeUpdates(): Flow<Grade> = flow {
+    emit(Grade("Math", 95))
+    delay(1000)
+    emit(Grade("Science", 88))
+}
+
+// Collector 1 gets its own independent execution
+viewModelScope.launch {
+    gradeUpdates().collect { grade -> println(grade) }
+}
+
+// ======= KOTLIN StateFlow (Hot — current state) =======
+class GradeViewModel : ViewModel() {
+    private val _uiState = MutableStateFlow(GradeUiState())
+    val uiState: StateFlow<GradeUiState> = _uiState.asStateFlow()
+
+    fun loadGrades() {
+        viewModelScope.launch {
+            val grades = repository.fetchGrades()
+            _uiState.update { it.copy(grades = grades, isLoading = false) }
+        }
+    }
+}
+
+// Collect in Compose
+@Composable
+fun GradeScreen(viewModel: GradeViewModel = hiltViewModel()) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    GradeList(state.grades)
+}
+
+// ======= DART STREAM equivalent (single subscription) =======
+Stream<Grade> gradeUpdates() async* {
+    yield Grade('Math', 95);
+    await Future.delayed(Duration(seconds: 1));
+    yield Grade('Science', 88);
+}
+// Listen (single subscriber only)
+gradeUpdates().listen((grade) => print(grade));
+
+// ======= DART StreamController (MutableStateFlow equivalent) =======
+class GradeNotifier {
+    final _controller = StreamController<GradeState>.broadcast();
+    Stream<GradeState> get stream => _controller.stream;
+
+    void loadGrades(List<Grade> grades) {
+        _controller.sink.add(GradeState(grades: grades, isLoading: false));
+    }
+
+    void dispose() => _controller.close();
+}
+
+// ======= RxJava BehaviorSubject (StateFlow equivalent) =======
+val gradeSubject = BehaviorSubject.createDefault(GradeUiState())
+
+// Emit new state
+gradeSubject.onNext(GradeUiState(grades = newGrades))
+
+// Subscribe (gets current value immediately, like StateFlow)
+gradeSubject
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe { state -> renderUi(state) }
+
+// ======= Operator equivalents =======
+// Kotlin Flow
+gradeFlow.map { it.score }.filter { it >= 60 }.take(5)
+
+// Dart (using stream_transform package)
+gradeStream.map((g) => g.score).where((s) => s >= 60).take(5)
+
+// RxJava
+gradeObservable.map { it.score }.filter { it >= 60 }.take(5)`,
+  funFact: "The reactive streams specification (reactive-streams.org) that underpins Kotlin Flow and RxJava was co-authored by engineers from Netflix, Pivotal, Red Hat, Twitter, and Typesafe in 2014. Dart's Stream predates this spec (Dart 1.0 in 2013) and follows similar principles but was designed independently. All three converged on the same conceptual model through parallel evolution.",
+  quiz: [
+    { q: "What is the key difference between a cold and a hot stream?", opts: ["Cold streams are faster than hot streams", "Cold streams start producing data when a subscriber attaches; hot streams produce data regardless of subscribers", "Hot streams support more operators than cold streams", "Cold streams require a CoroutineScope; hot streams do not"], ans: 1 },
+    { q: "Which Kotlin Flow type always holds a current value and immediately delivers it to new collectors?", opts: ["SharedFlow", "Flow", "StateFlow", "ChannelFlow"], ans: 2 },
+    { q: "What is the Dart equivalent of Kotlin's MutableStateFlow?", opts: ["Stream.empty()", "StreamController with a single broadcast stream and a currentValue getter", "Future.value()", "Isolate"], ans: 1 },
+    { q: "What happens if you call listen() twice on a regular (non-broadcast) Dart Stream?", opts: ["Both listeners receive all events", "The second listen() call throws a StateError", "The first listener is automatically cancelled", "The stream buffers events for the second listener"], ans: 1 },
+    { q: "Which RxJava Subject is the closest equivalent to Kotlin StateFlow?", opts: ["PublishSubject", "ReplaySubject", "AsyncSubject", "BehaviorSubject"], ans: 3 },
+    { q: "How does understanding Dart Streams help in an Android interview?", opts: ["It allows you to write Dart code in an Android app", "It demonstrates understanding of cold/hot streams and reactive patterns that are language-agnostic", "Dart Stream APIs are identical to Kotlin Flow APIs", "Flutter experience is irrelevant for Android roles"], ans: 1 },
+    { q: "What is the Kotlin Flow equivalent of Dart's async* / yield syntax?", opts: ["suspend fun returning Flow", "flow { emit(...) } builder with suspend emit calls", "runBlocking { } with channel sends", "launch { } with StateFlow updates"], ans: 1 },
+    { q: "What does coroutineScope provide that Dart's Zone does not?", opts: ["Thread switching capability", "Structured concurrency — automatic cancellation of child coroutines when the parent scope is cancelled", "Operator methods like map and filter", "Hot stream semantics"], ans: 1 }
+  ],
+  challenge: "You are interviewing for a senior Android role and the interviewer knows you have Flutter experience. They ask: 'How does Dart Stream compare to Kotlin Flow? Give me a concrete example where you would use SharedFlow instead of StateFlow, and its Dart broadcast StreamController equivalent.' Write a full answer with code examples for both platforms, explain the hot vs cold distinction, and describe one scenario (e.g., one-time navigation events) where SharedFlow is the right choice over StateFlow.",
+  resources: [
+    { type: "docs", title: "Kotlin Flow — Official Docs", url: "https://kotlinlang.org/docs/flow.html", source: "Kotlin Docs" },
+    { type: "docs", title: "StateFlow and SharedFlow", url: "https://developer.android.com/kotlin/flow/stateflow-and-sharedflow", source: "Android Developers" },
+    { type: "docs", title: "Dart Streams — Official Docs", url: "https://dart.dev/tutorials/language/streams", source: "Dart Docs" },
+    { type: "article", title: "RxJava vs Kotlin Flow — Comparison", url: "https://medium.com/androiddevelopers/migrating-from-livedata-to-kotlins-flow-379292f419fb", source: "Android Developers Blog" },
+    { type: "docs", title: "Structured Concurrency with coroutineScope", url: "https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency", source: "Kotlin Docs" }
+  ],
+  eli5: "Imagine a TV channel (hot stream) — it broadcasts shows whether you are watching or not. If you turn on late, you miss the beginning. Now imagine a DVD player (cold stream) — it starts playing from the beginning for each person who presses play, just for them. Kotlin Flow is the DVD player by default. StateFlow is like a digital TV guide that always shows the current program — even if you check it late, you see what is on NOW. Dart Stream is also a DVD player but only one person can watch each DVD (no sharing). Broadcast Stream is the TV channel version.",
+  codeWalkthrough: [
+    "flow { emit(...) } — the flow builder is cold: this lambda does not execute until collect{} is called on the returned Flow. Each separate collector triggers a fresh, independent execution of the lambda.",
+    "MutableStateFlow(GradeUiState()) — creates a hot StateFlow with an initial state value; the private _uiState is mutable (backing property pattern), while uiState exposes it as read-only StateFlow.",
+    "_uiState.update { it.copy(...) } — atomically reads and updates StateFlow state using copy(); thread-safe and idiomatic for immutable data classes in Kotlin.",
+    "collectAsStateWithLifecycle() — lifecycle-aware Flow collection in Compose; automatically pauses collection when the composable leaves the STARTED state, preventing wasted work in the background.",
+    "async* / yield in Dart — the async* modifier marks a generator function that produces a Stream; yield emits a single value and suspends; equivalent to Kotlin's flow { emit() } builder.",
+    "StreamController<GradeState>.broadcast() — broadcast() allows multiple listeners; without this, the second listener throws StateError; mirrors Kotlin's MutableSharedFlow with replay=0.",
+    "_controller.sink.add(newState) — Dart's way of emitting to the stream; sink is the write side of the controller, stream is the read side — identical conceptual split to Kotlin's MutableStateFlow vs StateFlow.",
+    "BehaviorSubject.createDefault(initialState) — RxJava's stateful hot Observable; always holds the last emitted value and delivers it immediately to new subscribers, making it semantically equivalent to Kotlin StateFlow.",
+    "observeOn(AndroidSchedulers.mainThread()) — RxJava's equivalent of flowOn(Dispatchers.Main); ensures the subscriber's onNext callback runs on the Android main thread for UI updates.",
+    "gradeFlow.map { it.score }.filter { it >= 60 }.take(5) — demonstrates that operator names (map, filter, take) are shared across Flow, Dart streams, and RxJava; the semantics are identical even if the syntax differs slightly."
+  ],
+  bugChallenge: {
+    code: `// Android ViewModel using Kotlin Flow
+class SchoolViewModel : ViewModel() {
+
+    // Bug 1
+    private val _events = MutableStateFlow<UiEvent?>(null)
+    val events = _events.asStateFlow()
+
+    // Bug 2
+    private val _grades = MutableSharedFlow<List<Grade>>()
+    val grades = _grades.asSharedFlow()
+
+    fun navigateToDetail(gradeId: String) {
+        viewModelScope.launch {
+            _events.value = UiEvent.Navigate(gradeId)
+        }
+    }
+
+    fun loadGrades() {
+        viewModelScope.launch {
+            val result = repository.getGrades()
+            _grades.emit(result)
+        }
+    }
+}
+
+// Dart equivalent (for comparison)
+class SchoolNotifier {
+    // Bug 3
+    final _gradeController = StreamController<List<Grade>>();
+    Stream<List<Grade>> get gradeStream => _gradeController.stream;
+
+    void loadGrades(List<Grade> grades) {
+        _gradeController.sink.add(grades);
+        _gradeController.sink.add(grades); // emit twice for cache
+    }
+
+    // Bug 4 — missing dispose
+}`,
+    hint: "Check which Flow type should be used for one-time navigation events vs persistent state, which type should hold grade lists, the Dart StreamController broadcast issue, and resource cleanup.",
+    answer: "Bug 1: MutableStateFlow<UiEvent?>(null) for navigation events — StateFlow is wrong for one-time events like navigation. StateFlow replays its current value to every new collector. When the screen rotates and the composable re-subscribes, it will immediately re-receive the Navigate event, causing a double navigation. Fix: use MutableSharedFlow<UiEvent>(extraBufferCapacity = 1) with replay = 0 (the default). This emits the event once and does not replay it to late collectors. Bug 2: MutableSharedFlow<List<Grade>>() for the grade list — SharedFlow is wrong for UI state. SharedFlow does not hold a current value, so if the Compose UI re-subscribes after rotation, it receives nothing until the next emission and shows a blank/loading screen unnecessarily. Fix: use MutableStateFlow<List<Grade>>(emptyList()) which always holds the current grade list and delivers it immediately to new collectors. The bugs in 1 and 2 are inverted — the developer used StateFlow where SharedFlow was needed and SharedFlow where StateFlow was needed. Bug 3: StreamController<List<Grade>>() without .broadcast() — a regular StreamController allows only one listener. In Flutter with Provider/Riverpod, multiple widgets may subscribe to gradeStream. The second listener will throw a StateError ('Stream has already been listened to'). Fix: StreamController<List<Grade>>.broadcast(). Note: for state that should be replayed to new listeners (like a grade list), Dart's RxDart BehaviorSubject (which replays the last value) is the correct equivalent of MutableStateFlow. Bug 4: No dispose() method — the StreamController holds resources. If SchoolNotifier is used in a StatefulWidget or a Provider, the controller must be closed when it is no longer needed: void dispose() { _gradeController.close(); }. Without this, the Dart VM reports 'StreamSink was not closed' and may leak memory in long-running apps."
+  },
+  difficulty: "intermediate",
+  prereqs: [9, 10]
+},
+
+// ─── Lesson 49 ───────────────────────────────────────────────────────────────
+{
+  id: 49,
+  title: "Jetpack Compose vs Flutter — How to Answer Without Sounding Biased",
+  subtitle: "A senior engineer's balanced take on declarative UI, state, navigation, and ecosystem fit",
+  analogy: "Asking 'Compose or Flutter?' is like asking whether a Toyota built in Japan or Germany is better. Both are excellent cars. The smart answer is: it depends on the road, the team, and how far you need to go.",
+  points: [
+    { t: "Declarative UI — same idea, different DNA", d: "Both Compose and Flutter use a declarative model where UI is a function of state. Compose builds on Kotlin and integrates natively with the Android SDK. Flutter builds its own widget tree in Dart and bypasses native UI components entirely, rendering through Skia/Impeller." },
+    { t: "State — remember vs StatefulWidget/BLoC", d: "Compose uses remember{} and rememberSaveable{} for local state, and ViewModel + StateFlow/MutableState for screen-level state. Flutter uses StatefulWidget with setState() for local state, and BLoC, Riverpod, or Provider for structured state management — architecturally equivalent roles." },
+    { t: "Navigation — NavHost vs Navigator 2.0 / GoRouter", d: "Compose Navigation uses NavController and NavHost with typed routes. Flutter Navigator 2.0 is powerful but verbose; GoRouter (now officially recommended by the Flutter team) provides a declarative URL-based API close in spirit to Compose Navigation." },
+    { t: "Theming — MaterialTheme in both, but different depths", d: "Compose uses MaterialTheme with colorScheme, typography, and shapes — fully composable and type-safe. Flutter's ThemeData is a large flat object. Material 3 is supported in both but more naturally expressed in Compose because the Kotlin type system maps to M3 color roles precisely." },
+    { t: "Performance — two different rendering models", d: "Flutter skips native views and renders everything on its own GPU canvas, giving pixel-perfect consistency across platforms. Compose uses native Android Views under the hood (via Canvas/RenderNode) which integrates seamlessly with accessibility, IME, and system gestures. Neither is universally faster — profile before claiming." },
+    { t: "Interoperability — native or cross-platform?", d: "Compose interops with Views (AndroidView, ComposeView), Camera2, Maps SDK, and all Jetpack libraries out of the box. Flutter communicates with native Android/iOS code via Platform Channels, which adds serialization overhead for anything beyond basic calls." },
+    { t: "Ecosystem — Jetpack vs pub.dev", d: "Compose inherits the entire Jetpack ecosystem (Room, WorkManager, CameraX, Health Connect) with zero friction. Flutter's pub.dev packages vary widely in quality and maintenance; platform-specific features often require writing native plugins." },
+    { t: "Hiring & team fit", d: "Compose requires Kotlin expertise — a stronger hire bar for Android. Flutter requires Dart, which is easy to learn but less common. If a team already has strong Android engineers, Compose is faster to adopt. A cross-platform startup targeting Android + iOS with one team often picks Flutter." },
+    { t: "When to pick Compose", d: "Single-platform Android app, needs deep OS integration (biometrics, NFC, health data), team is Kotlin-fluent, app must follow Android platform conventions (edge-to-edge, predictive back, Material You)." },
+    { t: "When to pick Flutter", d: "True cross-platform (Android + iOS, optionally web/desktop), pixel-perfect custom UI that must look identical on all platforms, startup with a small team, game-like or highly animated interfaces." },
+    { t: "The interview answer template", d: "State: 'Both are excellent declarative UI frameworks. I prefer Compose for native Android because [reason]. I'd choose Flutter when [cross-platform scenario]. The decision should be driven by team skills, platform needs, and long-term maintainability — not trend.' This shows maturity." },
+    { t: "2026 landscape", d: "Compose is now the default Android UI recommendation from Google, with Compose Multiplatform (JetBrains) extending it to iOS/desktop. Flutter continues to grow, especially in emerging markets and fintech (Google Pay, Alibaba Xianyu). Both are production-grade." }
+  ],
+  whatIs: "Jetpack Compose is Google's native Android declarative UI toolkit built in Kotlin. Flutter is Google's cross-platform UI SDK built in Dart. Both use a reactive, widget/composable-based model, but they differ fundamentally in rendering strategy, ecosystem integration, and target platforms.",
+  realWorld: "Google's own apps — Google Pay, Maps, and Messages — use Jetpack Compose. eBay's mobile app, Alibaba's Xianyu, and BMW's companion app use Flutter. Neither choice is 'wrong' at scale; the decision is architectural, not tribal.",
+  code: `// ── Jetpack Compose — simple counter screen ──────────────────
+@Composable
+fun CounterScreen(viewModel: CounterViewModel = viewModel()) {
+    val count by viewModel.count.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Count: \$count",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Spacer(Modifier.height(16.dp))
+        Button(onClick = { viewModel.increment() }) {
+            Text("Increment")
+        }
+    }
+}
+
+class CounterViewModel : ViewModel() {
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow<Int> = _count.asStateFlow()
+
+    fun increment() { _count.update { it + 1 } }
+}
+
+// ── Flutter equivalent ────────────────────────────────────────
+// class CounterScreen extends StatefulWidget { ... }
+// class _CounterScreenState extends State<CounterScreen> {
+//   int _count = 0;
+//   void _increment() => setState(() => _count++);
+//
+//   Widget build(BuildContext context) => Column(children: [
+//     Text('Count: \$_count'),
+//     ElevatedButton(onPressed: _increment, child: Text('Increment')),
+//   ]);
+// }
+//
+// With BLoC:
+// BlocBuilder<CounterBloc, CounterState>(
+//   builder: (context, state) => Text('Count: \${state.count}'),
+// )`,
+  funFact: "Compose's compiler plugin transforms @Composable functions into a call graph that the Compose runtime can skip (recompose) selectively. Flutter's widget rebuild works similarly but must diff the entire subtree. Both arrived at the same performance insight independently.",
+  quiz: [
+    {
+      q: "Which rendering approach does Flutter use that makes it platform-independent?",
+      opts: [
+        "It calls native Android/iOS View APIs for every widget",
+        "It renders all UI on its own GPU canvas via Skia/Impeller, bypassing native views",
+        "It compiles Dart directly to native Kotlin/Swift",
+        "It uses a WebView to render HTML/CSS"
+      ],
+      ans: 1
+    },
+    {
+      q: "In Jetpack Compose, what is the correct way to hold screen-level UI state that survives configuration changes?",
+      opts: [
+        "remember { mutableStateOf(0) } directly in the composable",
+        "A ViewModel exposing StateFlow, collected with collectAsStateWithLifecycle()",
+        "A global Kotlin object (singleton)",
+        "SharedPreferences read on every recomposition"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which navigation library is now officially recommended by the Flutter team for structured routing?",
+      opts: ["Navigator 1.0 with push/pop", "GoRouter", "AutoRoute", "Beamer"],
+      ans: 1
+    },
+    {
+      q: "What is a key advantage of Compose over Flutter for Android-specific features?",
+      opts: [
+        "Compose renders faster on all devices",
+        "Compose requires less Kotlin knowledge than Flutter requires Dart",
+        "Compose integrates with Jetpack libraries (Room, CameraX, WorkManager) with zero friction",
+        "Compose supports iOS out of the box"
+      ],
+      ans: 2
+    },
+    {
+      q: "When is Flutter the stronger architectural choice?",
+      opts: [
+        "When the app needs deep NFC or health sensor integration",
+        "When the team is already fluent in Kotlin",
+        "When pixel-perfect identical UI across Android and iOS is required with one codebase",
+        "When the app targets Android only"
+      ],
+      ans: 2
+    },
+    {
+      q: "How does Flutter communicate with native Android/iOS code?",
+      opts: [
+        "Direct Dart-to-JVM/ObjC FFI with no overhead",
+        "Via Platform Channels, which serialize/deserialize messages",
+        "Via a Kotlin DSL bridge compiled at build time",
+        "It cannot communicate with native code"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does Compose Multiplatform (JetBrains) add beyond standard Jetpack Compose?",
+      opts: [
+        "A Dart runtime for better performance",
+        "Support for targeting iOS, desktop, and web from shared Kotlin/Compose code",
+        "A visual drag-and-drop layout editor",
+        "Automatic migration from Flutter to Compose"
+      ],
+      ans: 1
+    },
+    {
+      q: "A senior interviewer asks 'Compose or Flutter — which is better?' What is the best answer?",
+      opts: [
+        "Compose, because it is made by Google for Android",
+        "Flutter, because it supports more platforms",
+        "It depends on platform needs, team skills, and integration requirements — I can argue both cases",
+        "Neither; XML layouts are still the production standard"
+      ],
+      ans: 2
+    }
+  ],
+  challenge: "Implement a minimal two-screen app in Compose (a list screen and a detail screen) using NavController. Then sketch in comments how the equivalent GoRouter setup would look in Flutter. Identify two architectural differences between the two navigation approaches.",
+  resources: [
+    { type: "docs", title: "Jetpack Compose — Official Docs", url: "https://developer.android.com/jetpack/compose", source: "Android Developers" },
+    { type: "docs", title: "Flutter — Official Docs", url: "https://docs.flutter.dev", source: "flutter.dev" },
+    { type: "docs", title: "GoRouter for Flutter", url: "https://pub.dev/packages/go_router", source: "pub.dev" },
+    { type: "docs", title: "Compose Multiplatform", url: "https://www.jetbrains.com/lp/compose-multiplatform/", source: "JetBrains" },
+    { type: "docs", title: "Compose vs Flutter — Android Developers Blog", url: "https://android-developers.googleblog.com/", source: "Google" }
+  ],
+  eli5: "Compose is like building with Lego made specifically for your bedroom floor — it fits perfectly and works with all your other Lego sets. Flutter is like bringing a special Lego kit that works in any room of any house, but you need an adapter to use your other bedroom Lego with it.",
+  codeWalkthrough: [
+    "CounterScreen is a @Composable function — it describes UI as a function of state, not imperative commands",
+    "viewModel() retrieves or creates a CounterViewModel scoped to the current NavBackStackEntry, surviving rotation",
+    "collectAsStateWithLifecycle() converts StateFlow into Compose State, pausing collection when the app is in the background — battery-safe",
+    "Column with fillMaxSize, verticalArrangement, and horizontalAlignment replaces XML LinearLayout + gravity attributes",
+    "MaterialTheme.typography.headlineMedium is a Material 3 type role — guaranteed contrast and scale across the design system",
+    "Button's onClick lambda calls viewModel.increment(), keeping business logic out of the composable",
+    "CounterViewModel extends ViewModel — survives configuration changes automatically via ViewModelStore",
+    "MutableStateFlow(0) holds the current count; asStateFlow() exposes a read-only StateFlow to the UI",
+    "update{} is atomic and thread-safe — correct even if increment() is called from a background thread",
+    "The Flutter equivalent in comments shows setState() for local state and BlocBuilder for BLoC — structurally identical roles but different APIs"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun ProductListScreen() {
+    var products by remember { mutableStateOf(emptyList<Product>()) }
+
+    LaunchedEffect(Unit) {
+        products = fetchProductsFromNetwork() // suspend fun
+    }
+
+    LazyColumn {
+        items(products) { product ->
+            Text(product.name)
+        }
+    }
+}`,
+    hint: "Think about what happens to 'products' when the user rotates the device. Is remember enough here?",
+    answer: "The bug is that remember{} does not survive configuration changes (screen rotation, locale change). When the device rotates, the composable is recomposed from scratch, remember{} starts with emptyList() again, and LaunchedEffect re-fires, causing a redundant network call and a visible blank flash. Fix: move the state and network call into a ViewModel. Use a MutableStateFlow<List<Product>> in the ViewModel and collect it with collectAsStateWithLifecycle() in the composable. The ViewModel survives rotation; the network call is only made once."
+  },
+  difficulty: "intermediate",
+  prereqs: [18, 48]
+},
+
+// ─── Lesson 50 ───────────────────────────────────────────────────────────────
+{
+  id: 50,
+  title: "Accessibility on Android: TalkBack, Semantics & Touch Targets",
+  subtitle: "Build apps that work for every user — and pass accessibility audits in senior interviews",
+  analogy: "Accessibility is the curb cut. Cutting curbs into sidewalks was mandated for wheelchair users, but skateboarders, cyclists, and parents with strollers use them every day. Making your app accessible benefits everyone — users with motor impairments, users in bright sunlight, and users multitasking.",
+  points: [
+    { t: "TalkBack — Android's primary screen reader", d: "TalkBack is a system service that reads UI elements aloud and provides gesture navigation for blind and low-vision users. It uses the AccessibilityNodeInfo tree — a mirror of the View hierarchy or Compose semantic tree — to announce element labels, roles, and states." },
+    { t: "contentDescription in Views", d: "For ImageView, ImageButton, and any view without visible text, set android:contentDescription in XML or view.contentDescription in code. TalkBack reads this string. Empty string ('') signals 'decorative, skip me.' Null means TalkBack guesses — often wrong." },
+    { t: "Compose Modifier.semantics{}", d: "In Compose, semantics replace contentDescription. Use Modifier.semantics { contentDescription = 'Delete item' } for custom descriptions, and mergeDescendants = true to merge a card's children into one focusable unit. Compose auto-generates semantics for Text, Button, Checkbox — you only override when the default is wrong." },
+    { t: "Touch target minimum — 48dp", d: "Android accessibility guidelines (and Material Design) require interactive elements to have a minimum touch target of 48x48dp. A 24dp icon inside a button can have a 48dp clickable area via Modifier.minimumInteractiveComponentSize() or padding. Google Play's pre-launch report flags targets smaller than 48dp." },
+    { t: "Focus order and traversal", d: "TalkBack moves focus in view order by default. In Views, use android:accessibilityTraversalAfter/Before to override the order. In Compose, use Modifier.semantics { traversalIndex = -1f } to move a composable earlier in the focus order (lower index = earlier)." },
+    { t: "Live regions — dynamic content announcement", d: "When content changes without user interaction (a loading indicator becomes a result, an error appears), use ViewCompat.setAccessibilityLiveRegion(view, ACCESSIBILITY_LIVE_REGION_POLITE) in Views, or Modifier.semantics { liveRegion = LiveRegionMode.Polite } in Compose. POLITE waits for the current announcement to finish; ASSERTIVE interrupts." },
+    { t: "Heading semantics", d: "Screen reader users navigate by headings. Mark section titles with ViewCompat.setAccessibilityHeading(view, true) in Views, or Modifier.semantics { heading() } in Compose. This lets users jump between sections without traversing every element." },
+    { t: "State announcements — checked, selected, disabled", d: "Compose Button, Checkbox, Switch, and RadioButton all emit correct state semantics automatically. For custom components, declare state explicitly: Modifier.semantics { stateDescription = if (isOn) 'On' else 'Off' }. Avoid using color alone to communicate state." },
+    { t: "Testing — Accessibility Scanner and UI Automator", d: "The Accessibility Scanner app (by Google) overlays issues on your running app: missing labels, small touch targets, low contrast. In automated testing, use ComposeTestRule.onNode(hasContentDescription('Delete')).assertIsDisplayed() or UiAutomator with UiSelector.description() to assert accessibility properties." },
+    { t: "Contrast ratio — WCAG AA minimum 4.5:1", d: "Body text must have a contrast ratio of at least 4.5:1 against its background (WCAG AA). Large text (18sp+) requires 3:1. Material 3's color system is built to satisfy these ratios by default, but custom colors must be checked. Android Studio's Layout Inspector shows contrast ratios." },
+    { t: "Custom actions", d: "For swipe-to-delete or long-press actions that TalkBack cannot replicate, expose them as custom accessibility actions: ViewCompat.addAccessibilityAction(view, 'Delete', ...). In Compose: Modifier.semantics { customActions = listOf(CustomAccessibilityAction('Delete') { ... }) }." },
+    { t: "Audit before submission", d: "Run Accessibility Scanner on every screen before release. Google Play's pre-launch report includes an accessibility check. Apps on Google Play that fail basic accessibility may be flagged in accessibility-focused app stores and reviews. Senior engineers treat accessibility as a first-class requirement, not an afterthought." }
+  ],
+  whatIs: "Android accessibility is the set of APIs, guidelines, and tools that make apps usable by people with visual, motor, auditory, or cognitive impairments. It is implemented through the AccessibilityNodeInfo system in Views and the Semantics system in Jetpack Compose, surfaced to assistive technologies like TalkBack, Switch Access, and Voice Access.",
+  realWorld: "Google Maps, Gmail, and WhatsApp invest heavily in accessibility. WhatsApp labels every voice message play button with a content description including the contact name and duration. Google Maps announces 'Directions to [destination], 12 minutes' as a live region update. Apps that skip this lose 15% of the global population who have some form of disability.",
+  code: `// ── Compose: accessible product card ─────────────────────────
+@Composable
+fun ProductCard(
+    product: Product,
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) {}  // merge child semantics
+            .clickable { /* open detail */ }
+            .padding(16.dp)
+    ) {
+        AsyncImage(
+            model = product.imageUrl,
+            contentDescription = null,  // decorative; card semantics cover it
+            modifier = Modifier.size(48.dp)
+        )
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                text = product.name,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() }
+            )
+            Text(
+                text = product.price,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        IconButton(
+            onClick = onDelete,
+            modifier = Modifier
+                .minimumInteractiveComponentSize()  // enforces 48dp touch target
+                .semantics {
+                    contentDescription = "Delete \${product.name}"
+                    customActions = listOf(
+                        CustomAccessibilityAction("Delete") { onDelete(); true }
+                    )
+                }
+        ) {
+            Icon(Icons.Default.Delete, contentDescription = null)
+        }
+    }
+}
+
+// ── Live region for status updates ───────────────────────────
+@Composable
+fun SyncStatus(message: String) {
+    Text(
+        text = message,
+        modifier = Modifier.semantics {
+            liveRegion = LiveRegionMode.Polite
+        }
+    )
+}`,
+  funFact: "The AccessibilityNodeInfo tree in Android was introduced in API 14 (Android 4.0) — the same release that introduced the 48dp touch target guideline. That guideline is derived from the average adult fingertip width of approximately 9mm, which maps to ~48dp at 160dpi.",
+  quiz: [
+    {
+      q: "What is the minimum recommended touch target size for interactive elements per Android accessibility guidelines?",
+      opts: ["24x24dp", "36x36dp", "48x48dp", "64x64dp"],
+      ans: 2
+    },
+    {
+      q: "In Jetpack Compose, which modifier property merges child semantics into a single accessibility node?",
+      opts: [
+        "Modifier.semantics { mergeDescendants = true }",
+        "Modifier.semantics { groupChildren = true }",
+        "Modifier.accessibilityGroup(true)",
+        "Modifier.combineSemantics()"
+      ],
+      ans: 0
+    },
+    {
+      q: "When should you set contentDescription to an empty string (\"\") on a View?",
+      opts: [
+        "When the view has no content to describe",
+        "When the view is decorative and should be skipped by TalkBack",
+        "When the view is interactive",
+        "When the view is inside a RecyclerView"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does ACCESSIBILITY_LIVE_REGION_POLITE do?",
+      opts: [
+        "Announces the change immediately, interrupting any current speech",
+        "Suppresses all announcements for that view",
+        "Announces the change after the current speech finishes",
+        "Marks the view as a heading for screen reader navigation"
+      ],
+      ans: 2
+    },
+    {
+      q: "Which tool overlays accessibility issues (small touch targets, missing labels, low contrast) on a running Android app?",
+      opts: ["Android Studio Layout Inspector", "Accessibility Scanner by Google", "LeakCanary", "Perfetto"],
+      ans: 1
+    },
+    {
+      q: "What is the WCAG AA contrast ratio requirement for normal body text?",
+      opts: ["2:1", "3:1", "4.5:1", "7:1"],
+      ans: 2
+    },
+    {
+      q: "In Compose, how do you mark a Text composable as a section heading for TalkBack navigation?",
+      opts: [
+        "style = MaterialTheme.typography.headlineLarge",
+        "Modifier.semantics { heading() }",
+        "Modifier.accessibilityHeading(true)",
+        "Text role is always inferred from typography style"
+      ],
+      ans: 1
+    },
+    {
+      q: "A product card has an icon-only Delete button. TalkBack announces 'button'. What is the correct fix in Compose?",
+      opts: [
+        "Wrap the button in a Box with a visible Text label",
+        "Set Icon's contentDescription to 'Delete [product name]' or use Modifier.semantics { contentDescription = 'Delete ...' } on the button",
+        "Add android:labelFor to the parent Row",
+        "Use Modifier.clearAndSetSemantics {} to hide the button from TalkBack"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Audit one screen of an app you own using Accessibility Scanner. Fix the top three issues it reports. Then write a Compose test using onNode(hasContentDescription('Delete Apple')) and verify the IconButton is reachable and clickable via the semantic tree.",
+  resources: [
+    { type: "docs", title: "Accessibility in Jetpack Compose", url: "https://developer.android.com/jetpack/compose/accessibility", source: "Android Developers" },
+    { type: "docs", title: "Make apps more accessible — Android Guide", url: "https://developer.android.com/guide/topics/ui/accessibility", source: "Android Developers" },
+    { type: "docs", title: "Accessibility Scanner", url: "https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor", source: "Google Play" },
+    { type: "docs", title: "WCAG 2.1 — Contrast Guidelines", url: "https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html", source: "W3C" },
+    { type: "docs", title: "Material Design — Accessibility", url: "https://m3.material.io/foundations/accessible-design/overview", source: "Material Design" }
+  ],
+  eli5: "TalkBack is like a friend who reads everything on the screen out loud for people who can't see it. If you don't label your pictures and buttons, your friend has to guess — and they usually get it wrong. Adding labels is like writing a description on every sticky note so your friend can read it correctly.",
+  codeWalkthrough: [
+    "semantics(mergeDescendants = true) on the Row collapses all child semantic nodes into one — TalkBack reads the card as a single focused item, not a dozen separate elements",
+    "AsyncImage with contentDescription = null marks the image as decorative — the merged Row semantics already describe the product",
+    "Modifier.semantics { heading() } on the product name Text marks it as a heading — TalkBack users can swipe to jump between headings without traversing every element",
+    "minimumInteractiveComponentSize() on the IconButton enforces the 48dp touch target rule even when the visible icon is 24dp",
+    "contentDescription on the IconButton semantics block overrides the default 'button' announcement with the specific product name — critical for lists with many delete buttons",
+    "customActions exposes 'Delete' as an accessibility action — TalkBack users in 'explore by touch' mode can activate it from the actions menu instead of needing to precisely tap the icon",
+    "SyncStatus Text with liveRegion = LiveRegionMode.Polite announces status changes (e.g. 'Sync complete') to TalkBack after the current speech finishes — no extra user gesture needed",
+    "Icon inside the IconButton has contentDescription = null — the parent button's semantics already carry the description; double-announcing would confuse TalkBack"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun FavoriteButton(isFavorite: Boolean, onClick: () -> Unit) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = if (isFavorite) Icons.Filled.Favorite
+                          else Icons.Outlined.FavoriteBorder,
+            contentDescription = "Favorite",
+            tint = if (isFavorite) Color.Red else Color.Gray
+        )
+    }
+}`,
+    hint: "TalkBack will always say 'Favorite' regardless of state. How should the description communicate the current state to the user?",
+    answer: "Two bugs: (1) The contentDescription is always 'Favorite' — TalkBack announces the same label whether the item is favorited or not. A blind user cannot tell the current state. Fix: contentDescription = if (isFavorite) 'Remove from favorites' else 'Add to favorites'. This makes the label action-oriented and state-aware. (2) State is communicated only by color (Red vs Gray) — color alone is insufficient for users with color blindness or low vision. The description fix above also resolves this. Optionally add Modifier.semantics { stateDescription = if (isFavorite) 'Favorited' else 'Not favorited' } to expose state separately from the action label, which some screen readers announce as '[label], [state]'."
+  },
+  difficulty: "intermediate",
+  prereqs: [18]
+},
+
+// ─── Lesson 51 ───────────────────────────────────────────────────────────────
+{
+  id: 51,
+  title: "Localization, RTL, Formatting & Resource Management",
+  subtitle: "Internationalize your Android app the right way — strings, plurals, RTL, and locale-aware formatting",
+  analogy: "Localization is like building a restaurant menu. You don't rewrite the kitchen — you just print the menu in French, Arabic, or Japanese. But Arabic menus open from the right, prices show local currency symbols, and dates appear in local order. The kitchen (your code) stays the same; only the presentation adapts.",
+  points: [
+    { t: "strings.xml — the foundation", d: "All user-visible text lives in res/values/strings.xml. Locale-specific overrides go in res/values-fr/strings.xml, res/values-ar/strings.xml, etc. Android resolves the best-match file at runtime. Never hardcode strings in code — they cannot be translated." },
+    { t: "Plurals — quantity strings", d: "Use <plurals> in strings.xml for quantity-dependent text (e.g. '1 item' vs '2 items'). Quantities: zero, one, two, few, many, other. Load with resources.getQuantityString(R.plurals.item_count, count, count). Arabic has six plural forms — plurals.xml handles them all without code changes." },
+    { t: "String arrays — for lists of items", d: "Use <string-array> in strings.xml for ordered lists (e.g. day names, error messages). Load with resources.getStringArray(R.array.days). These are also locale-overridable." },
+    { t: "Locale-specific resources beyond strings", d: "Any resource folder can be locale-qualified: res/drawable-ar/ for RTL images (mirrored icons), res/layout-land-fr/ for French landscape layouts. Android's resource qualifier system supports language, region, layout direction, screen size, density, and more — combinable." },
+    { t: "RTL layout support", d: "Set android:supportsRtl='true' in AndroidManifest.xml. Use start/end instead of left/right in XML (paddingStart, layout_marginEnd). Compose uses Modifier.padding(start=) or LayoutDirection from LocalLayoutDirection. RTL is automatic when the user's locale is Arabic, Hebrew, or Persian." },
+    { t: "Compose and string resources", d: "Use stringResource(R.string.label) in Compose — never context.getString() in composables. For plural strings: pluralStringResource(R.plurals.item_count, count, count). These are composable-safe and work correctly across recompositions and locale changes." },
+    { t: "Date and time formatting — DateTimeFormatter and android.text.format", d: "Never hardcode date formats. Use DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT) with the user's Locale, or DateFormat.getDateFormat(context). These adapt to locale conventions: MM/dd/yyyy (US) vs dd/MM/yyyy (UK) vs yyyy-MM-dd (ISO). Joda-Time and ThreeTenABP are legacy — use java.time (API 26+) or kotlinx-datetime." },
+    { t: "Number and currency formatting", d: "Use NumberFormat.getCurrencyInstance(locale) for money, NumberFormat.getNumberInstance(locale) for decimals. In India, 1,00,000 is one lakh; in the US it is 100,000. In Germany, the decimal separator is a comma: 1.234,56 EUR. Always format with the user's locale, not Locale.US." },
+    { t: "Compose ProvideTextStyle and LocalConfiguration", d: "LocalConfiguration.current.locales.get(0) gives the current locale in Compose without a context. Wrap locale-sensitive composables in CompositionLocalProvider if you need to force a specific locale for previews or testing." },
+    { t: "Translation workflow", d: "Export strings.xml to translators via Android Studio's Translations Editor or integrate with a TMS (Crowdin, Phrase, Lokalise). The Translations Editor shows all languages in a grid, flags missing translations, and exports XLIFF files. Crowdin integrates with GitHub Actions for automatic pull request updates with new translations." },
+    { t: "Pseudolocales — en-XA and ar-XB", d: "Android ships two pseudolocales for testing. en-XA adds accents and expands strings by 30% — reveals truncation bugs. ar-XB forces RTL layout — reveals start/end vs left/right bugs. Enable them in Developer Options > Language. Test every screen with both before shipping." },
+    { t: "App language picker (Android 13+)", d: "Android 13 introduced per-app language preferences (AppCompatDelegate.setApplicationLocales()). Users can set an app to French while keeping the phone in English. Support this with the LocaleListCompat API and declare supported locales in res/xml/locales_config.xml." }
+  ],
+  whatIs: "Localization (l10n) is the process of adapting an app for a specific locale — language, region, and cultural conventions. Internationalization (i18n) is designing the app so localization is possible. In Android, this means string resources, locale-aware formatting APIs, RTL layout support, and a structured translation workflow.",
+  realWorld: "WhatsApp supports 60+ languages and 180+ countries. Its strings.xml has thousands of entries managed through an internal TMS. Duolingo, serving 40 languages, uses Android pseudolocales in their CI pipeline to catch layout bugs before translation is even complete. Google Maps switches street name direction and text alignment dynamically based on the map region's primary script.",
+  code: `<!-- res/values/strings.xml -->
+<resources>
+    <string name="welcome_message">Welcome, %1\$s!</string>
+    <string name="item_count_label">Items in cart</string>
+
+    <plurals name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+
+    <string-array name="sort_options">
+        <item>Newest first</item>
+        <item>Price: low to high</item>
+        <item>Price: high to low</item>
+    </string-array>
+</resources>
+
+<!-- res/values-ar/strings.xml (Arabic overrides) -->
+<!-- <string name="welcome_message">مرحباً، %1\$s!</string> -->
+
+// ── Compose: locale-aware string and number formatting ─────────
+@Composable
+fun OrderSummary(
+    userName: String,
+    itemCount: Int,
+    totalPrice: Double
+) {
+    val locale = LocalConfiguration.current.locales.get(0)
+    val formattedPrice = remember(totalPrice, locale) {
+        NumberFormat.getCurrencyInstance(locale).format(totalPrice)
+    }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(stringResource(R.string.welcome_message, userName))
+        Text(
+            pluralStringResource(
+                id = R.plurals.item_count,
+                count = itemCount,
+                itemCount
+            )
+        )
+        Text(text = formattedPrice)
+    }
+}
+
+// ── Date formatting ───────────────────────────────────────────
+fun formatOrderDate(epochMillis: Long, locale: java.util.Locale): String {
+    val formatter = DateTimeFormatter
+        .ofLocalizedDate(FormatStyle.MEDIUM)
+        .withLocale(locale)
+    val date = Instant.ofEpochMilli(epochMillis)
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
+    return formatter.format(date)
+}`,
+  funFact: "Arabic has six grammatical plural forms (zero, one, two, few, many, other) while English has only two (one, other). Android's <plurals> supports all six. Apps that use String.format('%d items', count) for Arabic UI always show the wrong plural form — a small but embarrassing bug.",
+  quiz: [
+    {
+      q: "Which resource folder provides Arabic string overrides?",
+      opts: ["res/values-rtl/", "res/values-ar/", "res/strings/ar/", "res/locale/ar/"],
+      ans: 1
+    },
+    {
+      q: "In Compose, what is the correct way to load a string resource?",
+      opts: [
+        "context.getString(R.string.label)",
+        "stringResource(R.string.label)",
+        "resources.getString(R.string.label)",
+        "LocalContext.current.getString(R.string.label)"
+      ],
+      ans: 1
+    },
+    {
+      q: "What must you set in AndroidManifest.xml to enable RTL layout support?",
+      opts: [
+        "android:theme='@style/RtlTheme'",
+        "android:layoutDirection='locale'",
+        "android:supportsRtl='true'",
+        "android:localeMode='rtl'"
+      ],
+      ans: 2
+    },
+    {
+      q: "Which pseudolocale forces RTL layout to test start/end alignment bugs?",
+      opts: ["en-XA", "ar-XB", "he-IL", "fa-IR"],
+      ans: 1
+    },
+    {
+      q: "What Android API provides correct locale-aware currency formatting?",
+      opts: [
+        "String.format('%.2f', price)",
+        "NumberFormat.getCurrencyInstance(locale).format(price)",
+        "DecimalFormat('#.##').format(price)",
+        "price.toString() + currency.symbol"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which XML element handles '1 item' vs '3 items' quantity strings?",
+      opts: ["<string-array>", "<quantity-string>", "<plurals>", "<string-plural>"],
+      ans: 2
+    },
+    {
+      q: "Android 13 introduced per-app language preferences. Which API sets the app locale independently of the system locale?",
+      opts: [
+        "Locale.setDefault(locale)",
+        "AppCompatDelegate.setApplicationLocales(LocaleListCompat.create(locale))",
+        "Configuration.setLocale(locale)",
+        "Resources.updateConfiguration(config)"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does the en-XA pseudolocale test?",
+      opts: [
+        "RTL text direction and mirrored layouts",
+        "String truncation by adding accents and expanding string length by ~30%",
+        "Arabic numeral substitution",
+        "Currency symbol placement"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Add a plurals resource for 'unread_notifications' (0, 1, N forms). Load it in a Compose composable using pluralStringResource. Then format a given epoch timestamp using DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT, FormatStyle.SHORT) and display it alongside the notification count, respecting the current device locale.",
+  resources: [
+    { type: "docs", title: "Localize your app — Android Guide", url: "https://developer.android.com/guide/topics/resources/localization", source: "Android Developers" },
+    { type: "docs", title: "Support different languages and cultures", url: "https://developer.android.com/training/basics/supporting-devices/languages", source: "Android Developers" },
+    { type: "docs", title: "Per-app language preferences (Android 13+)", url: "https://developer.android.com/guide/topics/resources/app-languages", source: "Android Developers" },
+    { type: "docs", title: "String resources — plurals", url: "https://developer.android.com/guide/topics/resources/string-resource#Plurals", source: "Android Developers" },
+    { type: "docs", title: "Pseudolocales for testing", url: "https://developer.android.com/guide/topics/resources/pseudolocales", source: "Android Developers" }
+  ],
+  eli5: "Imagine your app is a news presenter. For different countries, the presenter speaks a different language, shows the date the local way, and stands on the right side of the screen for Arabic news. The news itself (your code logic) doesn't change — only how it is presented to each audience does.",
+  codeWalkthrough: [
+    "strings.xml welcome_message uses %1\$s positional format — positional arguments are mandatory in Android strings because translation word order may differ from English",
+    "The plurals element item_count has quantity='one' and quantity='other' — Android picks the right form based on the integer passed to getQuantityString",
+    "The Arabic values-ar/strings.xml override automatically applies when the device locale is Arabic — zero code changes needed",
+    "LocalConfiguration.current.locales.get(0) retrieves the current locale inside a Composable without needing a Context parameter",
+    "remember(totalPrice, locale) caches the formatted price string — NumberFormat.format() is not free; avoid calling it on every recomposition",
+    "pluralStringResource takes the plural resource ID, the count for form selection, and vararg format args — both the count for form and the display number must be passed",
+    "DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale) produces locale-correct date strings automatically — no manual format patterns needed",
+    "Instant.ofEpochMilli().atZone(ZoneId.systemDefault()).toLocalDate() correctly converts epoch millis to a local calendar date accounting for the user's timezone"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun CartBadge(count: Int) {
+    val message = if (count == 1) {
+        "\$count item in cart"
+    } else {
+        "\$count items in cart"
+    }
+    Text(text = message)
+}`,
+    hint: "This works in English. What breaks in Arabic, Polish, or Croatian — languages with more than two plural forms?",
+    answer: "The code hardcodes English plural logic (1 = singular, else = plural). Arabic has six plural forms, Polish has four, and Croatian has three. For Arabic, 21 items should use the 'one' form, 11 items should use the 'many' form, and 100 items the 'other' form — none of which this code handles correctly. Fix: define a <plurals name='cart_item_count'> in strings.xml with all required quantity forms, and use pluralStringResource(R.plurals.cart_item_count, count, count) in Compose. Android's plural system uses CLDR plural rules per locale, handling all cases automatically. Additionally, embedding string fragments in Kotlin string templates makes translation impossible — the full sentence must be in strings.xml."
+  },
+  difficulty: "intermediate",
+  prereqs: [17, 18]
+},
+
+// ─── Lesson 52 ───────────────────────────────────────────────────────────────
+{
+  id: 52,
+  title: "Adaptive Android UI: Phones, Tablets, Foldables & Multi-Window",
+  subtitle: "Design once, adapt everywhere — WindowSizeClass, canonical layouts, and foldable support",
+  analogy: "A responsive UI is like water — it fills whatever container it is poured into. A phone is a small glass, a tablet is a pitcher, and a foldable is a glass that transforms into a pitcher mid-pour. Your UI must flow smoothly through all of them without spilling.",
+  points: [
+    { t: "The problem — Android's device diversity", d: "Android runs on phones (360dp wide), tablets (840dp+ wide), foldables (unfolded 600-900dp), Chromebooks, TVs, and cars. A single fixed layout that looks good on a Pixel 7 looks terrible on a Galaxy Z Fold 5 unfolded. Adaptive UI is not optional for production apps in 2026." },
+    { t: "WindowSizeClass — the three buckets", d: "Jetpack WindowManager's WindowSizeClass classifies width and height into Compact (<600dp), Medium (600-840dp), and Expanded (840dp+). Use calculateWindowSizeClass(activity) in Compose. Base layout decisions on size class, not raw dp, to avoid device-specific branching." },
+    { t: "Canonical layouts — list-detail, feed, supporting panel", d: "Google defines three canonical adaptive layouts: List-Detail (email/contacts), Feed (social/news), and Supporting Panel (map+list). These cover 90% of real app screens. Implement them with ListDetailPaneScaffold (Compose) or SlidingPaneLayout (View system)." },
+    { t: "ListDetailPaneScaffold — the modern API", d: "Part of Compose adaptive library (androidx.compose.material3.adaptive). Automatically shows list-only on Compact, list+detail side by side on Medium/Expanded. Handles back navigation, pane animations, and two-pane state automatically. Replaces manual two-fragment layouts." },
+    { t: "Foldable support — Jetpack WindowManager", d: "Foldable devices have a hinge. Use WindowInfoTracker.getOrCreate(activity).windowLayoutInfo to observe FoldingFeature — the hinge position and state (FLAT, HALF_OPENED). Avoid placing content under the hinge. Adapt layouts to be 'hinge-aware'." },
+    { t: "FoldingFeature states", d: "FLAT: device fully open (tablet mode). HALF_OPENED: tabletop or book mode. Orientation: HORIZONTAL (tabletop — phone on table hinged horizontally) or VERTICAL (book mode — held like a book). Each requires a different layout adaptation. Google Meet uses tabletop mode to show video on the top half and controls on the bottom." },
+    { t: "Multi-window and split-screen", d: "Since Android 7.0, apps can run in split-screen or freeform windows. Your Activity receives configuration changes with the new window size. Test by enabling multi-window in developer options and dragging your app to half the screen. Never assume the window is the full screen." },
+    { t: "SlidingPaneLayout — View-based adaptive two pane", d: "For apps still using Views, SlidingPaneLayout shows two panes side-by-side when space allows, and stacks them on small screens. NavigationRailView + BottomNavigationView can be swapped based on width. Compose-based apps should prefer ListDetailPaneScaffold." },
+    { t: "Adaptive navigation — Bottom vs Rail vs Drawer", d: "Compact width: BottomNavigationBar (max 5 items). Medium width: NavigationRail (vertical, left side). Expanded width: NavigationDrawer (always visible). Compose NavigationSuiteScaffold (Material 3 adaptive) switches automatically based on WindowSizeClass." },
+    { t: "Large screen testing — emulators and physical devices", d: "Android Studio ships Pixel Tablet, Pixel Fold, and Resizable emulators. Test with the Resizable emulator to drag window size dynamically. Physical device access: Firebase Test Lab includes foldable devices. The Large Screen Gallery at developer.android.com shows canonical implementations." },
+    { t: "Minimum touch target and density independence", d: "On large screens, users may use a mouse or stylus. Touch targets remain 48dp minimum. Use dp everywhere — never hardcode pixel values. Large screens use the same dp grid; a 360dp column will be narrower relative to the screen, so use weight-based layouts (Modifier.weight()) instead of fixed widths." },
+    { t: "Activity embedding — Android 12L+", d: "Activity embedding splits a single task into two Activities side by side using an XML rule file or the Jetpack WindowManager embedding API. Google Contacts uses this to show the contact list Activity and contact detail Activity simultaneously on tablets without a full rewrite to Compose." }
+  ],
+  whatIs: "Adaptive Android UI is the practice of designing layouts that respond to the available window size and device form factor — phone, tablet, foldable, multi-window. Android provides WindowSizeClass, ListDetailPaneScaffold, Jetpack WindowManager (for foldables), and NavigationSuiteScaffold to implement these patterns declaratively.",
+  realWorld: "Gmail on a Pixel Fold shows the inbox list and email detail side by side when unfolded, and stacks them when folded. Google Keep uses tabletop mode to show note content on the top half and a drawing toolbar on the bottom. Microsoft Outlook and Spotify both use NavigationRail on medium-width screens, switching from BottomNavigation seen on phones.",
+  code: `// ── WindowSizeClass-based adaptive layout ────────────────────
+@Composable
+fun AdaptiveShopScreen(
+    products: List<Product>,
+    selectedProduct: Product?,
+    onProductSelected: (Product) -> Unit
+) {
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+
+    when (windowSizeClass.windowWidthSizeClass) {
+        WindowWidthSizeClass.COMPACT -> {
+            // Phone: list only, navigate to detail on click
+            ProductListScreen(products, onProductSelected)
+        }
+        WindowWidthSizeClass.MEDIUM,
+        WindowWidthSizeClass.EXPANDED -> {
+            // Tablet/foldable: two panes side by side
+            ListDetailPaneScaffold(
+                listPane = {
+                    AnimatedPane {
+                        ProductListScreen(products, onProductSelected)
+                    }
+                },
+                detailPane = {
+                    AnimatedPane {
+                        selectedProduct?.let { ProductDetailScreen(it) }
+                            ?: EmptyDetailPlaceholder()
+                    }
+                }
+            )
+        }
+    }
+}
+
+// ── Foldable hinge awareness ──────────────────────────────────
+@Composable
+fun HingeAwareLayout(activity: ComponentActivity) {
+    val windowInfoTracker = WindowInfoTracker.getOrCreate(activity)
+
+    val layoutInfo by windowInfoTracker
+        .windowLayoutInfo(activity)
+        .collectAsStateWithLifecycle(null)
+
+    val foldingFeature = layoutInfo?.displayFeatures
+        ?.filterIsInstance<FoldingFeature>()
+        ?.firstOrNull()
+
+    if (foldingFeature?.state == FoldingFeature.State.HALF_OPENED &&
+        foldingFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) {
+        // Tabletop mode: split content above and below hinge
+        TabletopLayout()
+    } else {
+        // Default layout
+        DefaultLayout()
+    }
+}`,
+  funFact: "The Samsung Galaxy Z Fold series has a hinge positioned at approximately 50% of the unfolded screen width. Jetpack WindowManager's FoldingFeature.bounds gives the exact pixel rectangle of the hinge, allowing apps to position content precisely above and below — or left and right — of the physical crease.",
+  quiz: [
+    {
+      q: "What does WindowWidthSizeClass.COMPACT represent in Jetpack WindowManager?",
+      opts: [
+        "Screen width less than 360dp",
+        "Screen width less than 600dp",
+        "Screen width between 600dp and 840dp",
+        "Screen width greater than 840dp"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which Compose component automatically implements the List-Detail canonical layout for adaptive screens?",
+      opts: [
+        "SlidingPaneLayout",
+        "TwoPaneLayout",
+        "ListDetailPaneScaffold",
+        "AdaptiveScaffold"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does FoldingFeature.State.HALF_OPENED indicate?",
+      opts: [
+        "The device screen brightness is at 50%",
+        "The foldable device is partially folded — in tabletop or book mode",
+        "The app window is in split-screen at 50% width",
+        "The device hinge is broken"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which navigation component is recommended for WindowWidthSizeClass.EXPANDED screens?",
+      opts: [
+        "BottomNavigationBar",
+        "NavigationRail",
+        "NavigationDrawer (always visible)",
+        "A floating action button menu"
+      ],
+      ans: 2
+    },
+    {
+      q: "How should you avoid placing content under the foldable device hinge?",
+      opts: [
+        "Use hardcoded padding of 24dp in the center of the screen",
+        "Use FoldingFeature.bounds to get the hinge rectangle and avoid it in layout",
+        "Always use a vertical Divider in the center of the screen",
+        "Request FEATURE_FOLDABLE permission"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which Android version introduced multi-window (split-screen) support for all apps?",
+      opts: ["Android 5.0 (Lollipop)", "Android 7.0 (Nougat)", "Android 10 (Q)", "Android 12 (S)"],
+      ans: 1
+    },
+    {
+      q: "What is Activity Embedding introduced in Android 12L?",
+      opts: [
+        "Running two separate apps side by side",
+        "Splitting a single task to show two Activities simultaneously on large screens",
+        "Embedding a Fragment inside an Activity using XML",
+        "A new way to share data between Activities"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does NavigationSuiteScaffold (Material 3 adaptive) do automatically?",
+      opts: [
+        "Generates navigation routes from a data class",
+        "Switches between BottomNavigationBar, NavigationRail, and NavigationDrawer based on WindowSizeClass",
+        "Adds swipe gestures to all navigation destinations",
+        "Replaces NavController with a stack-based system"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Build a Compose screen that displays a list of notes. On Compact width, tapping a note navigates to a full-screen detail view. On Medium/Expanded width, list and detail appear side by side using ListDetailPaneScaffold. Add hinge detection: if a FoldingFeature with HORIZONTAL orientation and HALF_OPENED state is detected, display note metadata above the hinge and the note body below.",
+  resources: [
+    { type: "docs", title: "Adaptive layouts — Android Guide", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive", source: "Android Developers" },
+    { type: "docs", title: "WindowSizeClass — Jetpack", url: "https://developer.android.com/reference/kotlin/androidx/window/core/layout/WindowSizeClass", source: "Android Developers" },
+    { type: "docs", title: "Support foldable devices — Jetpack WindowManager", url: "https://developer.android.com/guide/topics/large-screens/make-apps-fold-aware", source: "Android Developers" },
+    { type: "docs", title: "ListDetailPaneScaffold", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive/list-detail", source: "Android Developers" },
+    { type: "docs", title: "Large screen canonical layouts", url: "https://developer.android.com/develop/ui/compose/layouts/adaptive/canonical-layouts", source: "Android Developers" }
+  ],
+  eli5: "Think of your app like a shop display. On a phone, you have a tiny shelf — you can only show a few items at a time, and you need to walk to the back room for details. On a tablet or foldable, you have a big counter — you can show the items list on the left and the item details on the right at the same time. The items don't change; the shelf adapts.",
+  codeWalkthrough: [
+    "currentWindowAdaptiveInfo().windowSizeClass retrieves the current WindowSizeClass — this recomposes automatically when the window size changes (rotation, multi-window, foldable)",
+    "The when block branches on windowWidthSizeClass — COMPACT renders a single-pane list; MEDIUM and EXPANDED render two panes side by side",
+    "ListDetailPaneScaffold manages all two-pane logic: how much space each pane gets, animations when navigating between panes, and back-press behavior",
+    "AnimatedPane wraps each pane with enter/exit animations aligned to the Material 3 motion spec for adaptive transitions",
+    "EmptyDetailPlaceholder shows when no product is selected on Expanded — avoids an empty right pane, which is confusing on tablets",
+    "WindowInfoTracker.getOrCreate(activity).windowLayoutInfo returns a Flow of WindowLayoutInfo — collected with collectAsStateWithLifecycle to respect lifecycle",
+    "filterIsInstance<FoldingFeature>() extracts the hinge feature from the list of display features (which may also include cutouts)",
+    "The condition FoldingFeature.State.HALF_OPENED with HORIZONTAL orientation identifies tabletop mode — the device is sitting flat with the screen bent open like a laptop"
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun ArticleScreen(articles: List<Article>) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+
+    if (screenWidth > 600) {
+        Row {
+            ArticleListPane(articles, Modifier.width(300.dp))
+            ArticleDetailPane(Modifier.fillMaxWidth())
+        }
+    } else {
+        ArticleListPane(articles, Modifier.fillMaxWidth())
+    }
+}`,
+    hint: "This uses raw dp values instead of WindowSizeClass, and the two-pane layout has a sizing bug. What two issues should a senior engineer fix?",
+    answer: "Two bugs: (1) LocalConfiguration.current.screenWidthDp returns the full screen width — not the window width. In multi-window mode, the app may occupy 400dp of a 900dp screen. screenWidthDp would return 900dp, triggering the two-pane layout incorrectly in a narrow split-screen window. Fix: use currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass and branch on COMPACT vs MEDIUM/EXPANDED. (2) ArticleListPane is fixed at Modifier.width(300.dp) while ArticleDetailPane uses fillMaxWidth(). This means the detail pane ignores the 300dp already consumed by the list. On a 700dp window, the detail pane would overflow by 300dp. Fix: use Modifier.weight() for both panes — e.g., list Modifier.weight(1f) and detail Modifier.weight(2f) — so they share available space proportionally regardless of screen width."
+  },
+  difficulty: "intermediate",
+  prereqs: [18]
+},
+
+// ─── Lesson 53 ───────────────────────────────────────────────────────────────
+{
+  id: 53,
+  title: "Material Design 3, Theming, Dark Mode & Dynamic Color",
+  subtitle: "Master Material You — from colorScheme to wallpaper-extracted dynamic color and custom theming architecture",
+  analogy: "A theme is like a brand manual for a company. It defines the colors, fonts, and shapes used everywhere so that every designer and engineer makes consistent choices. Material Design 3 is the brand manual; MaterialTheme is the library that enforces it in code so you cannot accidentally use the wrong shade of blue.",
+  points: [
+    { t: "Material Design 3 — what changed from M2", d: "Material 3 (Material You) introduced dynamic color from wallpaper, updated color roles (primary, secondary, tertiary, surface, error — each with container and on- variants), refined typography scale (Display, Headline, Title, Body, Label), and new components (FilledTonalButton, NavigationBar, SearchBar, DatePicker, BottomSheet)." },
+    { t: "MaterialTheme in Compose — three slots", d: "MaterialTheme provides three CompositionLocals: colorScheme (ColorScheme), typography (Typography), and shapes (Shapes). Composables read them via MaterialTheme.colorScheme.primary, MaterialTheme.typography.titleMedium, MaterialTheme.shapes.medium. Never hardcode Color(0xFF...) — always reference a color role." },
+    { t: "ColorScheme — the 30 color roles", d: "M3 defines 30 color roles: primary, onPrimary, primaryContainer, onPrimaryContainer, secondary, onSecondary, secondaryContainer, onSecondaryContainer, tertiary, error, background, surface, surfaceVariant, outline, and more. Each role has a defined contrast relationship. Use them semantically: primary for key actions, secondary for supporting actions, error for destructive states." },
+    { t: "Dark mode — two ColorScheme objects", d: "Create a lightColorScheme() and a darkColorScheme() using M3 color roles. Switch between them based on isSystemInDarkTheme() in Compose. Persist the user's override in DataStore or SharedPreferences. Never use Color.White / Color.Black directly — use surface/onSurface roles instead." },
+    { t: "Dynamic color — Android 12+ (Material You)", d: "On Android 12+, extract a ColorScheme from the user's wallpaper using dynamicLightColorScheme(context) / dynamicDarkColorScheme(context). This gives each user a personalized theme. Check with Build.VERSION.SDK_INT >= Build.VERSION_CODES.S before calling these APIs. Fall back to a static brand scheme on older versions." },
+    { t: "Typography — M3 type scale", d: "M3 defines 15 text styles across 5 groups: Display (3), Headline (3), Title (3), Body (3), Label (3). Create a Typography() object with custom TextStyle for each slot. Font families, weights, sizes, and tracking are all configurable. Use typography roles semantically: DisplayLarge for hero text, bodyMedium for reading content, labelSmall for captions." },
+    { t: "Shapes — the expressiveness lever", d: "M3 shapes replace the single cornerRadius with an ExtraSmall to ExtraLarge scale. Shapes.medium (12dp) is the default for Cards and Dialogs. Custom shapes can use CutCornerShape or RoundedCornerShape. Shape communicates brand personality — more rounded = friendly, more angular = professional." },
+    { t: "Custom theming architecture", d: "For design systems with brand colors that don't map to M3 roles, create a custom CompositionLocal (e.g., LocalAppColors) alongside MaterialTheme. This lets your brand colors be accessible throughout the Compose tree without polluting M3's semantic roles. Spotify, Airbnb, and Uber all maintain custom design systems layered over or alongside M3." },
+    { t: "Status bar and navigation bar theming", d: "Use WindowCompat.setDecorFitsSystemWindows(window, false) for edge-to-edge. Set status bar and navigation bar icon colors with WindowInsetsControllerCompat — isAppearanceLightStatusBars = !isDark. In Compose, accompanist-systemuicontroller is legacy; use the Activity's window directly or the native WindowInsetsController API." },
+    { t: "M3 components — FilledButton, Card, TopAppBar", d: "M3 Compose components (Button, OutlinedButton, FilledTonalButton, ElevatedButton) handle state (pressed, focused, hovered, dragged) and color automatically using the colorScheme. Do not wrap them in custom containers that override their internal colors — you break the M3 state layer system." },
+    { t: "Previewing themes in Android Studio", d: "Use @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) for dark mode preview. Wrap preview composables in your app's theme function. Multiple previews with different uiMode and fontScale catch contrast and text scaling issues without running the app. Use PreviewParameterProvider for data-driven previews." },
+    { t: "Color token vs color value — the key discipline", d: "Never commit a raw Color(0xFF_D9FE06) to production UI code. Define it as a named token in your color palette file (e.g., val Lime500 = Color(0xFF_D9FE06)) and reference it only in your theme (colorScheme.primary = Lime500). UI code references the role (primary), never the value. This makes theme switching and A/B testing possible." }
+  ],
+  whatIs: "Material Design 3 (M3, Material You) is Google's design system for Android apps. In Jetpack Compose it is implemented via MaterialTheme, which provides a ColorScheme, Typography, and Shapes to all composables in its tree. Dynamic color (Android 12+) extracts a personalized palette from the user's wallpaper. Dark mode is supported by swapping ColorScheme objects based on system preference.",
+  realWorld: "Google's own apps — Google Messages, Google Photos, Google Calendar — were the first to adopt Material You with dynamic color at Android 12's launch. Monzo Bank uses a custom color system layered over M3, with carefully tuned semantic color roles that map to their coral brand color. YouTube's dark mode uses M3's surface and surfaceVariant roles to create depth hierarchy without using elevation shadows.",
+  code: `// ── App theme with dynamic color and dark mode support ───────
+@Composable
+fun AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context)
+            else dynamicLightColorScheme(context)
+        }
+        darkTheme -> darkColorScheme(
+            primary = Color(0xFF_D9FE06),
+            onPrimary = Color(0xFF_12151A),
+            secondary = Color(0xFF_A8C7FA),
+            background = Color(0xFF_12151A),
+            surface = Color(0xFF_1D1F25)
+        )
+        else -> lightColorScheme(
+            primary = Color(0xFF_4A5900),
+            onPrimary = Color(0xFF_FFFFFF),
+            secondary = Color(0xFF_555F71),
+            background = Color(0xFF_FAFCF5),
+            surface = Color(0xFF_FFFFFF)
+        )
+    }
+
+    val typography = Typography(
+        titleLarge = TextStyle(
+            fontFamily = FontFamily(Font(R.font.poppins_semibold)),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 22.sp,
+            lineHeight = 28.sp
+        ),
+        bodyMedium = TextStyle(
+            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 20.sp
+        )
+    )
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = typography,
+        shapes = Shapes(
+            small = RoundedCornerShape(8.dp),
+            medium = RoundedCornerShape(16.dp),
+            large = RoundedCornerShape(24.dp)
+        ),
+        content = content
+    )
+}`,
+  funFact: "Material You's dynamic color algorithm is called 'Tonal Palette Extraction' and uses a quantization algorithm (similar to k-means clustering) to extract five key colors from the wallpaper, then generates a full 30-role ColorScheme from those five tones using the HCT (Hue, Chroma, Tone) color model — a perceptually uniform color space developed by Google specifically for this feature.",
+  quiz: [
+    {
+      q: "How many text style slots does Material Design 3's Typography scale define?",
+      opts: ["8", "12", "15", "20"],
+      ans: 2
+    },
+    {
+      q: "Which API extracts a dynamic ColorScheme from the user's wallpaper on Android 12+?",
+      opts: [
+        "WallpaperManager.getWallpaperColors()",
+        "dynamicLightColorScheme(context) / dynamicDarkColorScheme(context)",
+        "MaterialTheme.colorScheme.fromWallpaper()",
+        "WindowInsetsController.extractWallpaperPalette()"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the correct way to support dark mode in a Compose app?",
+      opts: [
+        "Wrap all Text composables in if (isDark) Text(color=White) else Text(color=Black)",
+        "Provide two ColorScheme objects and switch between them based on isSystemInDarkTheme()",
+        "Set android:forceDarkAllowed='true' in the manifest",
+        "Use Color.Unspecified for all text colors"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which color role should be used for a primary action button's background in M3?",
+      opts: [
+        "MaterialTheme.colorScheme.background",
+        "MaterialTheme.colorScheme.surface",
+        "MaterialTheme.colorScheme.primary",
+        "MaterialTheme.colorScheme.tertiary"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the recommended way to define a custom brand color not covered by M3 roles?",
+      opts: [
+        "Hardcode it with Color(0xFF...) wherever needed",
+        "Override Color.White with the brand color",
+        "Define it as a named color token in a palette file and reference it only in the theme",
+        "Add it as an extra parameter to MaterialTheme"
+      ],
+      ans: 2
+    },
+    {
+      q: "Which ShapeDefaults value is typically applied to Cards and Dialogs in M3?",
+      opts: ["ExtraSmall (4dp)", "Small (8dp)", "Medium (12dp)", "Large (16dp)"],
+      ans: 2
+    },
+    {
+      q: "When should you NOT use dynamic color?",
+      opts: [
+        "When the device is running Android 12+",
+        "When your brand requires specific colors for legal or identity reasons (banking, health apps with regulatory requirements)",
+        "When the user is in dark mode",
+        "Dynamic color should always be used"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does WindowCompat.setDecorFitsSystemWindows(window, false) enable?",
+      opts: [
+        "Disables the back gesture",
+        "Allows the app content to draw edge-to-edge behind the status bar and navigation bar",
+        "Forces the app to use a dark status bar",
+        "Prevents the keyboard from resizing the layout"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Build a complete AppTheme composable that supports: (1) dynamic color on Android 12+ with a static brand fallback, (2) a user-toggleable dark/light mode preference stored in DataStore, (3) a custom Typography using a Google Font loaded with the downloadable fonts API. Apply the theme to a screen with at least one Card, one Button, and one TopAppBar, and add dark/light @Preview annotations.",
+  resources: [
+    { type: "docs", title: "Material Design 3 — Official", url: "https://m3.material.io", source: "material.io" },
+    { type: "docs", title: "Material Design 3 in Compose", url: "https://developer.android.com/develop/ui/compose/designsystems/material3", source: "Android Developers" },
+    { type: "docs", title: "Dynamic color — Material You", url: "https://developer.android.com/develop/ui/compose/designsystems/material3#dynamic-color", source: "Android Developers" },
+    { type: "docs", title: "Dark theme — Android Guide", url: "https://developer.android.com/develop/ui/compose/designsystems/material3#dark-theme", source: "Android Developers" },
+    { type: "docs", title: "M3 Theme Builder", url: "https://m3.material.io/theme-builder", source: "material.io" }
+  ],
+  eli5: "A theme is like choosing clothes for your whole app before it gets dressed each morning. Instead of every button picking its own color, you tell the whole app 'today we wear blue' (or neon green, or whatever your wallpaper suggests). Every button, card, and text automatically wears the right shade of that color, matching perfectly.",
+  codeWalkthrough: [
+    "AppTheme accepts darkTheme and dynamicColor parameters — composable callers can override them for preview, testing, or user preference",
+    "The outermost when block checks for dynamic color availability: SDK >= S (Android 12) is required — older devices fall back to static brand schemes",
+    "dynamicDarkColorScheme(context) and dynamicLightColorScheme(context) call into the system wallpaper engine — they extract five seed colors and generate a full 30-role scheme",
+    "darkColorScheme() and lightColorScheme() are named constructors that set M3 role defaults — you only override the roles relevant to your brand, the rest default to M3 system values",
+    "Color(0xFF_D9FE06) is a raw color token — it is used only inside the theme block, never in UI composables directly",
+    "Typography() lets you override any of the 15 type scale slots — unspecified slots inherit M3 defaults, so you only define what differs from the baseline",
+    "FontFamily(Font(R.font.poppins_semibold)) loads a bundled font resource — the downloadable fonts API (GoogleFont) avoids bundling by fetching from Google Fonts at runtime",
+    "Shapes() takes small, medium, and large — M3 maps them to specific component groups; Cards use medium, FABs use large, Chips use small",
+    "MaterialTheme wraps content and provides colorScheme, typography, and shapes as CompositionLocals — every child composable in content can read them via MaterialTheme.colorScheme etc."
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun StatusBadge(isOnline: Boolean) {
+    val badgeColor = if (isOnline) Color(0xFF4CAF50) else Color(0xFFE53935)
+    Box(
+        modifier = Modifier
+            .background(badgeColor)
+            .padding(4.dp)
+    ) {
+        Text(
+            text = if (isOnline) "Online" else "Offline",
+            color = Color.White
+        )
+    }
+}`,
+    hint: "This works in light mode. What breaks in dark mode, and how does it violate the M3 theming contract?",
+    answer: "Three issues: (1) Hardcoded Color(0xFF4CAF50) and Color(0xFFE53935) bypass the M3 ColorScheme entirely. These colors are not checked against the surface they appear on — in dark mode with a dark surface, the contrast may be insufficient. Fix: define semantic color roles in the theme (e.g., a custom onlineColor and offlineColor token in a custom CompositionLocal, or map to M3 roles — green maps naturally to a tertiary container role, red to the error role). (2) Text color is hardcoded to Color.White — this fails on light backgrounds if the badge is placed on a white card in light mode. Fix: use MaterialTheme.colorScheme.onError for the text on the error (red) background, and MaterialTheme.colorScheme.onTertiaryContainer for the online badge. (3) The component will not adapt to dynamic color — if the user's wallpaper-derived M3 scheme uses a different primary hue, the hardcoded greens and reds will clash. Semantic color roles allow the design system to make coherent color decisions."
+  },
+  difficulty: "intermediate",
+  prereqs: [18]
+},
+
+// ─── Lesson 54 ───────────────────────────────────────────────────────────────
+{
+  id: 54,
+  title: "RecyclerView vs LazyColumn: Legacy vs Modern UI Tradeoffs",
+  subtitle: "Understand the internals of both, know when each is the right tool, and migrate confidently",
+  analogy: "RecyclerView is like a professional filing system with labeled folders, a strict filing clerk (ViewHolder), and elaborate color-coded dividers. LazyColumn is like a digital filing app — you just describe what each file looks like, and the app handles all the filing, refiling, and retrieval automatically. Both store the same documents; the difference is who does the administrative work.",
+  points: [
+    { t: "RecyclerView — the View system workhorse", d: "RecyclerView (introduced in API 21) replaced ListView by separating concerns: LayoutManager (how items are arranged), Adapter (how items are bound), ViewHolder (recycled view container), and ItemDecoration (dividers, spacing). It handles off-screen item recycling automatically." },
+    { t: "ViewHolder pattern — why it exists", d: "Before RecyclerView, ListView's getView() called findViewById() on every bind — expensive. ViewHolder caches the view references in the tag, so each item's views are found once (at inflation) and reused. RecyclerView enforces this pattern — you must implement a ViewHolder. ListAdapter<T, VH> builds on this with DiffUtil." },
+    { t: "DiffUtil — efficient list updates", d: "DiffUtil computes the minimum number of insertions, deletions, and moves between two lists using Eugene Myers' diff algorithm. ListAdapter<T, VH> wraps DiffUtil and calls submitList() — no more notifyDataSetChanged() which redraws everything. DiffUtil runs on a background thread via AsyncListDiffer." },
+    { t: "ItemDecoration — custom dividers and spacing", d: "Override RecyclerView.ItemDecoration.getItemOffsets() to add spacing around items, and onDraw() to draw dividers or backgrounds. DividerItemDecoration is the built-in convenience. In practice, item_view.xml margins often replace ItemDecoration for spacing." },
+    { t: "ItemAnimator — add/remove/change animations", d: "DefaultItemAnimator plays fade+translate animations for item add/remove/change. Replace it with a custom RecyclerView.ItemAnimator for branded motion. Disable animations with recyclerView.itemAnimator = null when fast updates cause flicker in chat or trading apps." },
+    { t: "LazyColumn — Compose's RecyclerView equivalent", d: "LazyColumn renders only visible items (lazy composables), just like RecyclerView recycles off-screen views. Internally it uses a LazyListState which tracks scroll position and visible items. items{}, itemsIndexed{}, and item{} are the DSL builders. No Adapter, ViewHolder, or LayoutManager needed." },
+    { t: "LazyColumn performance — key and contentType", d: "Provide a stable key parameter to items{}: key = { product -> product.id }. This lets Compose identify items for recomposition and animation. Without keys, adding or removing items recomposes everything. Use contentType to help Compose reuse composable instances across different item types — equivalent to RecyclerView's getItemViewType()." },
+    { t: "When RecyclerView is still the right choice", d: "Complex custom scroll physics, interaction with SurfaceView/TextureView (camera preview, video), apps with existing XML-based codebases where a full Compose migration is not yet feasible, or performance-critical lists on low-end devices where fine-grained View recycling control is needed. Google's Messages app uses RecyclerView for its chat list — millions of messages, complex media types." },
+    { t: "When LazyColumn is the right choice", d: "New screens built in Compose, lists with heterogeneous item types that are complex to express with getItemViewType(), lists where item content drives animations (AnimatedVisibility, animateItemPlacement), or lists that need tight integration with Compose state (ViewModel, collectAsStateWithLifecycle)." },
+    { t: "Migration patterns — AndroidView and ComposeView", d: "In a RecyclerView item, use ComposeView as the item's root view to render Compose content per item — useful for migrating one item type at a time. In a Compose screen, use AndroidView { RecyclerView(it) } to host a RecyclerView inside a Compose layout — useful when a mature RecyclerView adapter is not yet rewritten." },
+    { t: "Performance comparison — measured realities", d: "Benchmark: on a Pixel 7, LazyColumn with 1000 simple text items scrolls at a comparable frame rate to RecyclerView with DiffUtil on the same device. For very large lists (10,000+ items) with complex item types, RecyclerView with a well-tuned Adapter and setRecycledViewPool() may outperform a naive LazyColumn. Profile with Android Studio's Frame Timing before assuming." },
+    { t: "LazyColumn extras — LazyRow, LazyVerticalGrid, LazyVerticalStaggeredGrid", d: "LazyRow is the horizontal equivalent. LazyVerticalGrid supports fixed column counts or adaptive column widths (GridCells.Adaptive(minSize)). LazyVerticalStaggeredGrid (added in Compose 1.3) supports Pinterest-style variable-height grids. All share the lazy rendering principle — no RecyclerView.LayoutManager subclassing needed." }
+  ],
+  whatIs: "RecyclerView is Android's View-system component for displaying large, scrollable lists by recycling off-screen item views. LazyColumn is Jetpack Compose's equivalent, using a lazy composable DSL. Both render only visible items but differ fundamentally in the programming model — RecyclerView requires explicit Adapter/ViewHolder/DiffUtil boilerplate; LazyColumn uses declarative Kotlin lambdas and Compose's recomposition system.",
+  realWorld: "WhatsApp's chat screen is built on RecyclerView with a highly optimized Adapter handling text messages, images, videos, voice notes, and documents as distinct view types — all recycled from a shared pool. Google's Contacts app uses a mix: the main contacts list is RecyclerView (legacy XML codebase), while the new contact detail screen is built in Compose with LazyColumn. Twitter (X) migrated their timeline from RecyclerView to LazyColumn as part of their Compose adoption, reporting reduced boilerplate and easier A/B testing of item types.",
+  code: `// ── RecyclerView with ListAdapter and DiffUtil ───────────────
+class ProductAdapter : ListAdapter<Product, ProductAdapter.ViewHolder>(DiffCallback) {
+
+    inner class ViewHolder(private val binding: ItemProductBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(product: Product) {
+            binding.productName.text = product.name
+            binding.productPrice.text = NumberFormat
+                .getCurrencyInstance()
+                .format(product.price)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemProductBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(old: Product, new: Product) = old.id == new.id
+        override fun areContentsTheSame(old: Product, new: Product) = old == new
+    }
+}
+
+// Usage in Fragment:
+// adapter.submitList(products)
+
+// ── LazyColumn equivalent ─────────────────────────────────────
+@Composable
+fun ProductList(
+    products: List<Product>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(
+            items = products,
+            key = { product -> product.id },
+            contentType = { "product_card" }
+        ) { product ->
+            ProductCard(
+                product = product,
+                modifier = Modifier.animateItem()
+            )
+        }
+    }
+}`,
+  funFact: "DiffUtil's Eugene Myers' diff algorithm was originally designed for comparing text files (it is the algorithm behind Unix 'diff' and Git's line diff). Google adapted it for list diffing in 2016 when RecyclerView's notifyDataSetChanged() was causing visible screen flicker in the Google Photos app. LazyColumn's equivalent is Compose's slot reuse system, which tracks items by key identity rather than position.",
+  quiz: [
+    {
+      q: "Why was the ViewHolder pattern introduced with RecyclerView?",
+      opts: [
+        "To enforce a single item layout type",
+        "To cache view references and avoid expensive repeated findViewById() calls during binding",
+        "To enable DiffUtil to compare items",
+        "To allow items to be reordered via drag and drop"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does DiffUtil's areItemsTheSame() check?",
+      opts: [
+        "Whether two items have identical content",
+        "Whether two items represent the same entity (by unique ID)",
+        "Whether two items are at the same position in the list",
+        "Whether two items have the same view type"
+      ],
+      ans: 1
+    },
+    {
+      q: "In LazyColumn, what is the purpose of the key parameter in items()?",
+      opts: [
+        "It encrypts item data for security",
+        "It provides a sort key for reordering",
+        "It allows Compose to track item identity for efficient recomposition and animations",
+        "It sets the RecyclerView item's stable ID"
+      ],
+      ans: 2
+    },
+    {
+      q: "Which Compose API is equivalent to RecyclerView.Adapter's getItemViewType()?",
+      opts: [
+        "key parameter in items()",
+        "contentType parameter in items()",
+        "itemContent lambda type check",
+        "LazyItemScope.itemType"
+      ],
+      ans: 1
+    },
+    {
+      q: "When is RecyclerView still a better choice than LazyColumn?",
+      opts: [
+        "When you need heterogeneous item types",
+        "When the screen is built entirely in Compose",
+        "When items require tight integration with SurfaceView or TextureView, or when fine-grained View recycling control is needed on low-end devices",
+        "When items need AnimatedVisibility"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does notifyDataSetChanged() do, and why should it be avoided?",
+      opts: [
+        "Notifies individual changed items for efficient updates",
+        "Forces the RecyclerView to rebind and redraw all visible items, causing flicker and bypassing animations",
+        "Clears the RecyclerView's item cache",
+        "Triggers DiffUtil on a background thread"
+      ],
+      ans: 1
+    },
+    {
+      q: "How does ComposeView enable incremental migration from RecyclerView to Compose?",
+      opts: [
+        "It replaces the RecyclerView.LayoutManager with a Compose layout",
+        "It can be used as the root view of a RecyclerView item, rendering Compose content inside each item while the outer list remains RecyclerView",
+        "It converts a LazyColumn to RecyclerView at compile time",
+        "It is a Compose version of SurfaceView"
+      ],
+      ans: 1
+    },
+    {
+      q: "What LazyColumn DSL supports a Pinterest-style staggered grid layout?",
+      opts: [
+        "LazyVerticalGrid(cells = GridCells.Adaptive(...))",
+        "LazyVerticalStaggeredGrid",
+        "LazyColumn with staggeredItems()",
+        "StaggeredRecyclerView"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Implement a product list that works in both RecyclerView (for a legacy Fragment screen) and LazyColumn (for a new Compose screen). Ensure the RecyclerView version uses ListAdapter with DiffUtil. Ensure the LazyColumn version uses stable keys and animateItem(). Then benchmark both implementations using Android Studio's Frame Timing tool on a list of 500 items with a simulated 60fps scroll.",
+  resources: [
+    { type: "docs", title: "RecyclerView — Android Guide", url: "https://developer.android.com/develop/ui/views/layout/recyclerview", source: "Android Developers" },
+    { type: "docs", title: "LazyColumn — Compose Guide", url: "https://developer.android.com/develop/ui/compose/lists", source: "Android Developers" },
+    { type: "docs", title: "DiffUtil — Android Reference", url: "https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil", source: "Android Developers" },
+    { type: "docs", title: "Migrating to Compose — Interoperability", url: "https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views", source: "Android Developers" },
+    { type: "docs", title: "LazyVerticalStaggeredGrid", url: "https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/staggeredgrid/package-summary", source: "Android Developers" }
+  ],
+  eli5: "RecyclerView is like a restaurant with waiters who memorize each table's order (ViewHolder) and have a system for clearing and resetting tables (recycling). LazyColumn is like a magic restaurant where tables appear and disappear automatically as diners arrive — you just write the menu, and the restaurant handles everything else.",
+  codeWalkthrough: [
+    "ListAdapter<Product, ViewHolder>(DiffCallback) wires DiffUtil into the adapter — submitList() triggers an async diff and posts only the necessary notifyItemInserted/Removed/Changed calls",
+    "DiffCallback is a companion object implementing DiffUtil.ItemCallback — areItemsTheSame() checks ID equality (same entity), areContentsTheSame() checks deep equality (same data)",
+    "ItemProductBinding is generated by View Binding — eliminates all findViewById() calls; the ViewHolder holds the binding, not individual view references",
+    "onCreateViewHolder inflates the layout once per new ViewHolder; onBindViewHolder binds data to an already-inflated, recycled ViewHolder",
+    "LazyColumn with contentPadding = PaddingValues(16.dp) adds padding inside the scroll area — items scroll under the padding rather than being clipped by it",
+    "verticalArrangement = Arrangement.spacedBy(8.dp) adds 8dp between every item — replaces ItemDecoration for simple spacing",
+    "key = { product -> product.id } gives Compose a stable identity for each item — enables correct animations when items are added/removed/reordered",
+    "contentType = { 'product_card' } tells the Compose runtime that all items share the same composable structure — it can reuse composable instances across positions, like RecyclerView's view type pool",
+    "Modifier.animateItem() (formerly animateItemPlacement) adds Material-spec animations when the item changes position in the list — free with LazyColumn, requires custom ItemAnimator in RecyclerView"
+  ],
+  bugChallenge: {
+    code: `class MessageAdapter(
+    private var messages: List<Message>
+) : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
+
+    fun updateMessages(newMessages: List<Message>) {
+        messages = newMessages
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val text: TextView = view.findViewById(R.id.message_text)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder(LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_message, parent, false))
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.text.text = messages[position].content
+    }
+
+    override fun getItemCount() = messages.size
+}`,
+    hint: "There are two significant performance and correctness issues. One causes visible UI flicker. The other breaks RecyclerView animations and may cause incorrect item display during fast updates.",
+    answer: "Bug 1: notifyDataSetChanged() in updateMessages() — this forces RecyclerView to rebind and redraw every visible item, causing a visible flicker (all items flash white/blank then reappear). It also skips all item animations (no fade-in for new messages, no fade-out for deleted ones). Fix: migrate to ListAdapter<Message, ViewHolder> with a DiffUtil.ItemCallback. Call submitList(newMessages). DiffUtil computes the diff on a background thread and applies the minimum number of notifyItem* calls with animations. Bug 2: The adapter holds a mutable var messages reference. If updateMessages() is called from a background thread while RecyclerView is in the middle of a layout pass (reading messages.size or messages[position]), this can cause an IndexOutOfBoundsException or show stale item content. ListAdapter's submitList() is thread-safe and handles this correctly through AsyncListDiffer."
+  },
+  difficulty: "intermediate",
+  prereqs: [17, 18]
+}
+];
