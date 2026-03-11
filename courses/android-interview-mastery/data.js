@@ -2981,7 +2981,7 @@ class StudentViewModel(
 
     // Transformations.map — derive display-ready data
     val studentDisplayName: LiveData<String> = Transformations.map(studentDetail) { student ->
-        "${student.firstName} ${student.lastName} (Grade ${student.grade})"
+        "\${student.firstName} \${student.lastName} (Grade \${student.grade})"
     }
 
     fun selectStudent(id: String) {
@@ -5120,7 +5120,7 @@ class TokenAuthenticator @Inject constructor(
                         refreshResponse.refreshToken
                     )
                     response.request.newBuilder()
-                        .header("Authorization", "Bearer ${refreshResponse.accessToken}")
+                        .header("Authorization", "Bearer \${refreshResponse.accessToken}")
                         .header("X-Retry-Auth", "true")
                         .build()
                 } catch (e: Exception) {
@@ -5232,7 +5232,7 @@ class BrokenAuthenticator(
         }
         tokenProvider.saveTokens(newTokens.accessToken, newTokens.refreshToken)
         return response.request.newBuilder()
-            .header("Authorization", "Bearer ${newTokens.accessToken}")
+            .header("Authorization", "Bearer \${newTokens.accessToken}")
             .build()  // Bug 2
     }
 }
@@ -6609,7 +6609,7 @@ fun openPhotoPicker() {
 // 3. MediaStore — save a report image to shared storage
 suspend fun saveReportToGallery(context: Context, bitmap: Bitmap): Uri {
     val values = ContentValues().apply {
-        put(MediaStore.Images.Media.DISPLAY_NAME, "report_${System.currentTimeMillis()}.jpg")
+        put(MediaStore.Images.Media.DISPLAY_NAME, "report_\${System.currentTimeMillis()}.jpg")
         put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
         put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/HaziraKhata")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -11080,7 +11080,7 @@ fun sharePhoto(context: Context, photoFile: File) {
 
 // Launching camera and saving to FileProvider URI
 fun launchCamera(activity: AppCompatActivity, launcher: ActivityResultLauncher<Uri>): Uri {
-    val imageFile = File(activity.cacheDir, "images/capture_${System.currentTimeMillis()}.jpg")
+    val imageFile = File(activity.cacheDir, "images/capture_\${System.currentTimeMillis()}.jpg")
     imageFile.parentFile?.mkdirs()
 
     val photoUri = FileProvider.getUriForFile(
@@ -11146,7 +11146,7 @@ fun getPhotosFromMediaStore(context: Context): List<Uri> {
     val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
     val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME)
 
-    context.contentResolver.query(collection, projection, null, null, "${MediaStore.Images.Media.DATE_ADDED} DESC")?.use { cursor ->
+    context.contentResolver.query(collection, projection, null, null, "\${MediaStore.Images.Media.DATE_ADDED} DESC")?.use { cursor ->
         val idCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
         while (cursor.moveToNext()) {
             val id = cursor.getLong(idCol)
@@ -11260,7 +11260,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     fun takePhoto() {
-        val photoFile = File(cacheDir, "photo_${System.currentTimeMillis()}.jpg")
+        val photoFile = File(cacheDir, "photo_\${System.currentTimeMillis()}.jpg")
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this),
@@ -11269,7 +11269,7 @@ class CameraActivity : AppCompatActivity() {
                     // photo saved to photoFile
                 }
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e("Camera", "Capture failed: ${exc.message}", exc)
+                    Log.e("Camera", "Capture failed: \${exc.message}", exc)
                 }
             }
         )
@@ -11734,14 +11734,14 @@ class ReportGenerator(private val context: Context) {
         var y = 100f
         summaries.forEach { summary ->
             canvas.drawText(
-                "${summary.studentName}: ${summary.presentDays}/${summary.totalDays} days present",
+                "\${summary.studentName}: \${summary.presentDays}/\${summary.totalDays} days present",
                 40f, y, paint
             )
             y += 25f
         }
         pdfDocument.finishPage(page)
 
-        val file = File(context.cacheDir, "report_${System.currentTimeMillis()}.pdf")
+        val file = File(context.cacheDir, "report_\${System.currentTimeMillis()}.pdf")
         pdfDocument.writeTo(file.outputStream())
         pdfDocument.close()
         file
@@ -12026,7 +12026,7 @@ class DocumentUploader(private val api: ClaimsApi) {
                 .build()
         ).execute()
 
-        if (!response.isSuccessful) throw IOException("S3 upload failed: ${response.code}")
+        if (!response.isSuccessful) throw IOException("S3 upload failed: \${response.code}")
 
         // 3. Return the public CDN URL
         return presigned.publicUrl
@@ -12050,10 +12050,10 @@ class AuditLogger(private val db: AppDatabase, private val context: Context) {
 
     suspend fun log(eventType: String, userId: String, metadata: Map<String, String> = emptyMap()) {
         val lastLog = db.auditLogDao().getLastEntry()
-        val fingerprint = "${Build.MODEL}|${Build.VERSION.SDK_INT}|${BuildConfig.VERSION_NAME}"
-        val metaJson = metadata.entries.joinToString(",") { "${it.key}=${it.value}" }
+        val fingerprint = "\${Build.MODEL}|\${Build.VERSION.SDK_INT}|\${BuildConfig.VERSION_NAME}"
+        val metaJson = metadata.entries.joinToString(",") { "\${it.key}=\${it.value}" }
         val previousHash = lastLog?.entryHash ?: "GENESIS"
-        val content = "$eventType|$userId|${System.currentTimeMillis()}|$fingerprint|$metaJson|$previousHash"
+        val content = "$eventType|$userId|\${System.currentTimeMillis()}|$fingerprint|$metaJson|$previousHash"
         val entryHash = sha256(content)
 
         db.auditLogDao().insert(
