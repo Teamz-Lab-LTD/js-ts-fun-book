@@ -20,7 +20,7 @@ const COURSE_CONFIG = {
 
   // SEO
   description: 'Free interactive, project-based playbook: learn TypeScript, NestJS, and React by building real apps. {lessonCount} hands-on lessons, quizzes, code playground — no signup required.',
-  keywords: 'interactive typescript course, nestjs tutorial for beginners, nestjs course no signup, project based full stack course, react nestjs tutorial, fullstack roadmap with quizzes, free coding bootcamp no signup, learn nestjs by building api, typescript react nestjs course free, gamified coding course, full stack developer roadmap, build real apps from scratch',
+  keywords: 'interactive typescript course, nestjs tutorial for beginners, nestjs course no signup, project based full stack course, react nestjs tutorial, fullstack roadmap with quizzes, free coding bootcamp no signup, learn nestjs by building api, typescript react nestjs course free, gamified coding course, full stack developer roadmap, build real apps from scratch, learn typescript free 2026, nestjs crash course, typescript for beginners, free full stack course online, nestjs mongodb tutorial, react typescript tutorial free, rest api tutorial nestjs, jwt authentication tutorial, prisma orm tutorial, redis caching tutorial, websockets tutorial nestjs, docker for beginners, nestjs guards middleware, backend development course free, frontend backend tutorial, coding course with quizzes, learn programming free no signup',
   topics: ['TypeScript', 'JavaScript', 'NestJS', 'React', 'MongoDB', 'Docker', 'REST API', 'JWT Authentication', 'Prisma ORM', 'Redis', 'WebSockets', 'NestJS CRUD', 'NestJS Guards', 'NestJS Middleware'],
   educationalLevel: 'Beginner to Intermediate',
 

@@ -4823,6 +4823,60 @@ if(typeof COURSE_CONFIG!=='undefined'){
     }
   }
   document.title=COURSE_CONFIG.title+' — Free Interactive Lessons';
+  // Dynamic SEO: update meta tags, OG, Twitter, canonical, and JSON-LD from COURSE_CONFIG
+  var cc=COURSE_CONFIG;
+  var lc=typeof LESSONS_DATA!=='undefined'?LESSONS_DATA.length:0;
+  var qc=typeof LESSONS_DATA!=='undefined'?LESSONS_DATA.reduce(function(s,l){return s+l.quiz.length},0):0;
+  var descTag=document.querySelector('meta[name="description"]');
+  if(descTag&&cc.description) descTag.setAttribute('content',cc.description.replace('{lessonCount}',lc));
+  var kwTag=document.querySelector('meta[name="keywords"]');
+  if(kwTag&&cc.keywords) kwTag.setAttribute('content',cc.keywords);
+  else if(!kwTag&&cc.keywords){kwTag=document.createElement('meta');kwTag.name='keywords';kwTag.content=cc.keywords;document.head.appendChild(kwTag);}
+  var ogTitle=document.querySelector('meta[property="og:title"]');
+  if(ogTitle) ogTitle.setAttribute('content',cc.title);
+  var ogDesc=document.querySelector('meta[property="og:description"]');
+  if(ogDesc&&cc.description) ogDesc.setAttribute('content',cc.description.replace('{lessonCount}',lc));
+  var ogImg=document.querySelector('meta[property="og:image"]');
+  if(ogImg&&cc.ogImage) ogImg.setAttribute('content',cc.ogImage);
+  var ogUrl=document.querySelector('meta[property="og:url"]');
+  if(ogUrl&&cc.canonicalUrl) ogUrl.setAttribute('content',cc.canonicalUrl);
+  var twTitle=document.querySelector('meta[name="twitter:title"]');
+  if(twTitle) twTitle.setAttribute('content',cc.title);
+  var twDesc=document.querySelector('meta[name="twitter:description"]');
+  if(twDesc&&cc.description) twDesc.setAttribute('content',cc.description.replace('{lessonCount}',lc));
+  var twImg=document.querySelector('meta[name="twitter:image"]');
+  if(twImg&&cc.ogImage) twImg.setAttribute('content',cc.ogImage);
+  var canon=document.querySelector('link[rel="canonical"]');
+  if(canon&&cc.canonicalUrl) canon.setAttribute('href',cc.canonicalUrl);
+  // Update Course JSON-LD schema
+  var courseSchema=document.querySelector('script[type="application/ld+json"]');
+  if(courseSchema){
+    try{
+      var cs=JSON.parse(courseSchema.textContent);
+      if(cs['@type']==='Course'){
+        cs.name=cc.title;
+        cs.description=(cc.description||'').replace('{lessonCount}',lc);
+        cs.keywords=cc.topics||[];
+        cs.educationalLevel=cc.educationalLevel||cs.educationalLevel;
+        cs.numberOfLessons=lc;
+        if(cc.ogImage) cs.image=cc.ogImage;
+        if(cc.canonicalUrl) cs.url=cc.canonicalUrl;
+        courseSchema.textContent=JSON.stringify(cs);
+      }
+    }catch(e){}
+  }
+  // Update BreadcrumbList schema
+  var allSchemas=document.querySelectorAll('script[type="application/ld+json"]');
+  allSchemas.forEach(function(s){
+    try{
+      var d=JSON.parse(s.textContent);
+      if(d['@type']==='BreadcrumbList'&&d.itemListElement&&d.itemListElement.length>=3){
+        d.itemListElement[2].name=cc.shortTitle||cc.title;
+        d.itemListElement[2].item=cc.canonicalUrl||d.itemListElement[2].item;
+        s.textContent=JSON.stringify(d);
+      }
+    }catch(e){}
+  });
 }
 // View switching helper (avoids closure variable issues in onclick)
 function switchView(view){
