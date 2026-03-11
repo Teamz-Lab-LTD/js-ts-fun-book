@@ -3,8 +3,8 @@
 
 const COURSE_CONFIG = {
   // Course identity
-  title: 'Android Interview Mastery: Zero to Senior in 72 Lessons',
-  subtitle: 'Land Your Senior Android Role — <strong>72 Interview-Focused Lessons</strong> — Kotlin, Coroutines, Compose, Architecture, Testing & Behavioral | Free, No Signup | by Teamz Lab',
+  title: 'Android Interview Mastery: Zero to Senior in 83 Lessons',
+  subtitle: 'Land Your Senior Android Role — <strong>83 Interview-Focused Lessons</strong> — Kotlin, Coroutines, Compose, Architecture, Paging, Animations, Testing & Behavioral | Free, No Signup | by Teamz Lab',
   shortTitle: 'Android Interview Mastery',
 
   // Organization
@@ -20,7 +20,7 @@ const COURSE_CONFIG = {
   // SEO
   description: 'Free interactive Android interview preparation course with {lessonCount} lessons. Master Kotlin, Coroutines, Flow, Jetpack Compose, MVVM, Clean Architecture, Hilt, Room, Retrofit, testing, CI/CD, system design, DSA, and behavioral interviews. Built for mid-to-senior Android developers targeting remote roles in 2026-2027. No signup required.',
   keywords: 'android interview questions 2026, senior android interview preparation, kotlin interview questions, android coroutines interview, jetpack compose interview questions, android clean architecture interview, android testing interview, android system design interview, android behavioral interview, android remote jobs, senior android developer preparation, hilt dependency injection interview, room database interview, android performance interview, kotlin flow interview, android ci cd interview, android developer career 2027',
-  topics: ['Kotlin', 'Coroutines', 'Flow', 'Jetpack Compose', 'MVVM', 'Clean Architecture', 'Hilt', 'Room', 'Retrofit', 'WorkManager', 'Testing', 'CI/CD', 'System Design', 'Performance', 'Firebase', 'Security', 'DSA', 'Behavioral Interview', 'Material Design 3'],
+  topics: ['Kotlin', 'Coroutines', 'Flow', 'Jetpack Compose', 'MVVM', 'Clean Architecture', 'Hilt', 'Room', 'Retrofit', 'WorkManager', 'Testing', 'CI/CD', 'System Design', 'Performance', 'Firebase', 'Security', 'DSA', 'Behavioral Interview', 'Material Design 3', 'Paging 3', 'Compose Animations', 'KSP', 'R8/ProGuard', 'GraphQL', 'Baseline Profiles', 'Screenshot Testing'],
   educationalLevel: 'Mid-Level to Senior',
 
   // Footer tagline
@@ -42,7 +42,8 @@ const COURSE_CONFIG = {
     'Legacy & Platform APIs':   [55, 56, 57],
     'System Design':            [58, 59, 60, 61],
     'CS & DSA':                 [62, 63, 64, 65],
-    'Behavioral & Career':      [66, 67, 68, 69, 70, 71, 72]
+    'Behavioral & Career':      [66, 67, 68, 69, 70, 71, 72],
+    'Advanced Topics':           [73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83]
   },
 
   // Concept flow diagrams per lesson ID (4 concepts each)
@@ -118,7 +119,18 @@ const COURSE_CONFIG = {
     69: ['Salary', 'Negotiation', 'Remote', 'Relocation'],
     70: ['Technical Mock', 'Kotlin', 'Android', 'Scoring'],
     71: ['Architecture Mock', 'System Design', 'Tradeoffs', 'Scoring'],
-    72: ['Behavioral Mock', 'Mixed', 'Senior', 'Full Sim']
+    72: ['Behavioral Mock', 'Mixed', 'Senior', 'Full Sim'],
+    73: ['PagingSource', 'RemoteMediator', 'PagingData', 'LazyPaging'],
+    74: ['AnimatedVisibility', 'Transition', 'AnimatedContent', 'Motion'],
+    75: ['callbackFlow', 'channelFlow', 'Mutex', 'CustomDispatcher'],
+    76: ['KSP', 'KAPT', 'Serialization', 'CodeGen'],
+    77: ['R8', 'ProGuard', 'Shrinking', 'Obfuscation'],
+    78: ['PredictiveBack', 'PhotoPicker', 'EdgeToEdge', 'Android15'],
+    79: ['GraphQL', 'Apollo', 'NormalizedCache', 'Subscriptions'],
+    80: ['BaselineProfile', 'Macrobenchmark', 'Startup', 'Perfetto'],
+    81: ['Paparazzi', 'Roborazzi', 'Golden Image', 'Visual Regression'],
+    82: ['Architecture Stack', 'ART', 'Binder IPC', 'Zygote'],
+    83: ['Java Interop', 'Platform Types', '@JvmStatic', 'Migration']
   },
 
   // SRS settings

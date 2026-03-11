@@ -3,8 +3,8 @@
 
 const COURSE_CONFIG = {
   // Course identity
-  title: 'Flutter Interview Mastery: Zero to Senior in 68 Lessons',
-  subtitle: 'Land Your Senior Flutter Role — <strong>68 Interview-Focused Lessons</strong> — Dart, BLoC, Architecture, Testing, System Design & Behavioral | Free, No Signup | by Teamz Lab',
+  title: 'Flutter Interview Mastery: Zero to Senior in 77 Lessons',
+  subtitle: 'Land Your Senior Flutter Role — <strong>77 Interview-Focused Lessons</strong> — Dart, BLoC, Riverpod, Architecture, Animations, Testing, System Design & Behavioral | Free, No Signup | by Teamz Lab',
   shortTitle: 'Flutter Interview Mastery',
 
   // Organization
@@ -20,7 +20,7 @@ const COURSE_CONFIG = {
   // SEO
   description: 'Free interactive Flutter interview preparation course with {lessonCount} lessons. Master Dart, BLoC, Clean Architecture, testing, platform channels, CI/CD, system design, DSA, and behavioral interviews. Built for mid-to-senior Flutter developers targeting remote roles. No signup required.',
   keywords: 'flutter interview questions 2026, flutter senior interview preparation, dart interview questions, flutter bloc interview, clean architecture flutter interview, flutter testing interview, flutter system design interview, flutter behavioral interview, flutter remote jobs, flutter developer career, flutter platform channels interview, flutter ci cd interview, flutter performance optimization, flutter offline first architecture, flutter state management interview, senior flutter developer preparation, flutter job preparation course free',
-  topics: ['Dart Advanced', 'Flutter Widgets', 'BLoC/Cubit', 'Clean Architecture', 'Testing', 'CI/CD', 'Platform Channels', 'System Design', 'Performance', 'Firebase', 'Offline-First', 'Security', 'DSA', 'Behavioral Interview', 'Android Crossover', 'Flutter Web'],
+  topics: ['Dart Advanced', 'Flutter Widgets', 'BLoC/Cubit', 'Riverpod', 'Clean Architecture', 'Testing', 'CI/CD', 'Platform Channels', 'System Design', 'Performance', 'Animations', 'Firebase', 'Offline-First', 'Security', 'DSA', 'Behavioral Interview', 'Android Crossover', 'Flutter Web', 'Code Generation', 'gRPC', 'KMP', 'Package Dev'],
   educationalLevel: 'Mid-Level to Senior',
 
   // Footer tagline
@@ -45,7 +45,8 @@ const COURSE_CONFIG = {
     'Monetization & Ops':        [54, 55],
     'System Design':             [56, 57, 58, 59],
     'CS & DSA':                  [60, 61, 62, 63],
-    'Behavioral & Career':       [64, 65, 66, 67, 68]
+    'Behavioral & Career':       [64, 65, 66, 67, 68],
+    'Advanced Topics':           [69, 70, 71, 72, 73, 74, 75, 76, 77]
   },
 
   // Concept flow diagrams per lesson ID (4 concepts each)
@@ -117,7 +118,16 @@ const COURSE_CONFIG = {
     65: ['Projects', 'Decisions', 'Tradeoffs', 'Impact'],
     66: ['Leadership', 'Mentoring', 'Conflict', 'Ambiguity'],
     67: ['Salary', 'Negotiation', 'Remote', 'Relocation'],
-    68: ['Technical', 'Architecture', 'Behavioral', 'Full Mock']
+    68: ['Technical', 'Architecture', 'Behavioral', 'Full Mock'],
+    69: ['Riverpod', 'Notifier', 'Family', 'autoDispose'],
+    70: ['freezed', 'json_serializable', 'build_runner', 'codegen'],
+    71: ['Implicit', 'Explicit', 'Hero', 'CustomPainter'],
+    72: ['Memory', 'Leaks', 'DevTools', 'GC'],
+    73: ['RenderObject', 'Pipeline', 'Compositing', 'Impeller'],
+    74: ['gRPC', 'Protobuf', 'Streaming', 'Interceptors'],
+    75: ['KMP', 'Flutter', 'expect/actual', 'Tradeoffs'],
+    76: ['Package', 'pub.dev', 'Versioning', 'Federated'],
+    77: ['Manual API', 'No AI', 'Security', 'Fundamentals']
   },
 
   // SRS settings

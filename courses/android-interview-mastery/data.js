@@ -13790,5 +13790,3429 @@ and now I always make sure to communicate well with my team."`,
   },
   difficulty: "advanced",
   prereqs: [66, 67, 68, 69]
+},
+// Lessons 73-76: Paging 3, Compose Animations, Advanced Coroutines, KSP vs KAPT
+
+{
+  id: 73,
+  title: "Paging 3: PagingSource, RemoteMediator & Flow Integration",
+  subtitle: "Master infinite scrolling with offline-first architecture using Paging 3",
+  analogy: "Paging 3 is like a librarian who fetches books shelf by shelf instead of dumping the entire library on your desk. The PagingSource is the librarian's catalog, RemoteMediator is the inter-library loan system that also stocks your local shelves, and Flow<PagingData> is the conveyor belt delivering books to your reading table exactly when you need them.",
+  points: [
+    { t: "PagingSource & LoadResult", d: "PagingSource<Key, Value> defines how to load pages of data. You override the `load()` suspend function and return either `LoadResult.Page(data, prevKey, nextKey)` on success or `LoadResult.Error(throwable)` on failure. The Key is typically an Int (page number) or String (cursor). PagingSource is single-shot — a new instance is created for each refresh via PagingSourceFactory." },
+    { t: "PagingConfig Tuning", d: "PagingConfig controls loading behavior: `pageSize` sets items per page (typically 20-30), `prefetchDistance` triggers loading when the user is N items from the end (default: pageSize), `initialLoadSize` sets the first load size (default: 3 * pageSize), `maxSize` caps items in memory (must be >= pageSize + 2 * prefetchDistance), and `enablePlaceholders` shows null placeholders for unloaded items." },
+    { t: "RemoteMediator for Offline-First", d: "RemoteMediator<Key, Value> bridges network and local database. Its `load(loadType, state)` method handles REFRESH, PREPEND, and APPEND actions. It fetches from the API, saves to Room, and returns `MediatorResult.Success(endOfPaginationReached)` or `MediatorResult.Error(e)`. The PagingSource then reads exclusively from the database, achieving true offline-first paging." },
+    { t: "Pager & Flow<PagingData<T>>", d: "The Pager class takes PagingConfig and a PagingSourceFactory (plus optional RemoteMediator) and exposes `flow: Flow<PagingData<T>>`. This Flow emits new PagingData snapshots whenever invalidation occurs. You collect this in ViewModel and pass it to UI. PagingData is opaque — you cannot inspect its contents directly, only transform it via `.map()`, `.filter()`, `.insertSeparators()`." },
+    { t: "PagingDataAdapter & DiffUtil", d: "In RecyclerView, use PagingDataAdapter<T, VH> which extends RecyclerView.Adapter with built-in DiffUtil support. You provide a DiffUtil.ItemCallback<T> and call `adapter.submitData(lifecycle, pagingData)` from the Activity/Fragment. The adapter handles loading states, placeholders, and efficient diffing automatically." },
+    { t: "LazyPagingItems in Compose", d: "In Jetpack Compose, collect PagingData with `flow.collectAsLazyPagingItems()`. This returns LazyPagingItems<T> which integrates with LazyColumn via `items(lazyPagingItems)`. Access items with `lazyPagingItems[index]` which triggers loading. Check `loadState.refresh`, `loadState.append`, and `loadState.prepend` for loading/error states." },
+    { t: "LoadState & CombinedLoadStates", d: "CombinedLoadStates provides `refresh`, `prepend`, `append` each as LoadState (Loading, NotLoading, or Error). The `source` and `mediator` properties distinguish local vs remote states. Use `loadState.refresh is LoadState.Loading` for initial loading indicators and `loadState.append is LoadState.Error` for retry footers." },
+    { t: "PagingData Transformations", d: "Transform PagingData using `.map {}` for item transformation, `.filter {}` to exclude items, `.insertSeparators { before, after -> }` for headers/date separators, and `.insertHeaderItem()` / `.insertFooterItem()` for static items. All transformations are applied lazily and maintain paging behavior." },
+    { t: "Error Handling & Retry", d: "Implement retry by exposing `adapter.retry()` in XML or checking `lazyPagingItems.loadState` in Compose. For RemoteMediator errors, the system automatically retries on the next user scroll. Use `flow.cachedIn(viewModelScope)` to survive configuration changes and prevent redundant loads." },
+    { t: "Invalidation & Refresh", d: "Call `pagingSource.invalidate()` to trigger a fresh load — typically from Room's InvalidationTracker when data changes. For manual refresh, use `adapter.refresh()` or re-collect the Pager flow. RemoteMediator's REFRESH loadType handles pull-to-refresh scenarios by clearing and re-fetching." },
+    { t: "Testing PagingSource", d: "Test PagingSource by calling `load()` directly with `LoadParams.Refresh(key, loadSize, placeholders)` and asserting the LoadResult. Use `TestPager(PagingConfig, pagingSourceFactory)` for integration tests that simulate real paging behavior. For snapshot testing, use `AsyncPagingDataDiffer` to collect PagingData into a list." },
+    { t: "Performance & Memory", d: "Paging 3 manages memory via `maxSize` eviction. Use `cachedIn(scope)` to share PagingData across collectors. Avoid transforming PagingData outside the paging pipeline (e.g., `.toList()`) as it defeats lazy loading. Profile with Android Studio's Memory Profiler to verify items are evicted correctly." }
+  ],
+  whatIs: "Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator for network-plus-database offline-first patterns, and Flow<PagingData> for reactive data delivery to both RecyclerView (via PagingDataAdapter) and Compose (via LazyPagingItems), with built-in error handling, retry, and transformation support.",
+  realWorld: "Every production app with a feed, search results, or message list uses pagination. Instagram uses cursor-based paging for its feed, Slack pages message history with RemoteMediator-style caching, and Twitter's timeline relies on keyset pagination. Paging 3 is the standard approach in Android for all these patterns, handling the complex state management of multi-source, bidirectional loading.",
+  code: `// === PagingSource Implementation ===
+class ArticlePagingSource(
+    private val api: ArticleApi,
+    private val query: String
+) : PagingSource<Int, Article>() {
+
+    override suspend fun load(
+        params: LoadParams<Int>
+    ): LoadResult<Int, Article> {
+        val page = params.key ?: 1
+        return try {
+            val response = api.searchArticles(
+                query = query,
+                page = page,
+                pageSize = params.loadSize
+            )
+            LoadResult.Page(
+                data = response.articles,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (response.articles.isEmpty()) null else page + 1
+            )
+        } catch (e: IOException) {
+            LoadResult.Error(e)
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
+        return state.anchorPosition?.let { anchor ->
+            state.closestPageToPosition(anchor)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchor)?.nextKey?.minus(1)
+        }
+    }
+}
+
+// === RemoteMediator Implementation ===
+@OptIn(ExperimentalPagingApi::class)
+class ArticleRemoteMediator(
+    private val api: ArticleApi,
+    private val db: AppDatabase
+) : RemoteMediator<Int, ArticleEntity>() {
+
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, ArticleEntity>
+    ): MediatorResult {
+        val page = when (loadType) {
+            LoadType.REFRESH -> 1
+            LoadType.PREPEND -> return MediatorResult.Success(
+                endOfPaginationReached = true
+            )
+            LoadType.APPEND -> {
+                val remoteKey = db.remoteKeyDao().getKey("articles")
+                remoteKey?.nextPage
+                    ?: return MediatorResult.Success(
+                        endOfPaginationReached = true
+                    )
+            }
+        }
+
+        return try {
+            val response = api.getArticles(
+                page = page,
+                pageSize = state.config.pageSize
+            )
+
+            db.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    db.articleDao().clearAll()
+                    db.remoteKeyDao().deleteKey("articles")
+                }
+                db.remoteKeyDao().insertKey(
+                    RemoteKey("articles", nextPage = page + 1)
+                )
+                db.articleDao().insertAll(
+                    response.articles.map { it.toEntity() }
+                )
+            }
+
+            MediatorResult.Success(
+                endOfPaginationReached = response.articles.isEmpty()
+            )
+        } catch (e: Exception) {
+            MediatorResult.Error(e)
+        }
+    }
+}
+
+// === ViewModel ===
+class ArticleViewModel(
+    private val api: ArticleApi,
+    private val db: AppDatabase
+) : ViewModel() {
+
+    @OptIn(ExperimentalPagingApi::class)
+    val articles: Flow<PagingData<Article>> = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            prefetchDistance = 5,
+            initialLoadSize = 40,
+            maxSize = 200
+        ),
+        remoteMediator = ArticleRemoteMediator(api, db),
+        pagingSourceFactory = { db.articleDao().pagingSource() }
+    ).flow
+        .map { pagingData ->
+            pagingData.map { entity -> entity.toDomain() }
+        }
+        .cachedIn(viewModelScope)
+}
+
+// === Compose UI ===
+@Composable
+fun ArticleList(viewModel: ArticleViewModel) {
+    val lazyPagingItems = viewModel.articles
+        .collectAsLazyPagingItems()
+
+    LazyColumn {
+        items(
+            count = lazyPagingItems.itemCount,
+            key = lazyPagingItems.itemKey { it.id }
+        ) { index ->
+            val article = lazyPagingItems[index]
+            if (article != null) {
+                ArticleCard(article = article)
+            } else {
+                ArticlePlaceholder()
+            }
+        }
+
+        // Append loading indicator
+        when (lazyPagingItems.loadState.append) {
+            is LoadState.Loading -> {
+                item { LoadingFooter() }
+            }
+            is LoadState.Error -> {
+                item {
+                    ErrorFooter(
+                        onRetry = { lazyPagingItems.retry() }
+                    )
+                }
+            }
+            else -> {}
+        }
+    }
+
+    // Refresh state
+    if (lazyPagingItems.loadState.refresh is LoadState.Loading) {
+        FullScreenLoading()
+    }
+}`,
+  funFact: "Before Paging 3, Android had Paging 1 and 2 which used LiveData and required a DataSource.Factory pattern. Paging 3 was a complete rewrite with Kotlin coroutines and Flow at its core, and the RemoteMediator concept was inspired by the Boundary Callback pattern but made dramatically simpler. Google's own apps like Google News and Play Store use similar paging architectures handling millions of items.",
+  quiz: [
+    { q: "What does PagingSource.load() return on success?", opts: ["LoadResult.Page with data, prevKey, and nextKey", "PagingData<T> with the loaded items", "Flow<List<T>> with paginated results", "LoadResult.Success with endOfPaginationReached"], ans: 0 },
+    { q: "What is the default value of initialLoadSize in PagingConfig?", opts: ["Equal to pageSize", "2 * pageSize", "3 * pageSize", "5 * pageSize"], ans: 2 },
+    { q: "What is the primary role of RemoteMediator?", opts: ["Replace PagingSource for network calls", "Bridge network and local database for offline-first paging", "Handle UI rendering of paged data", "Manage DiffUtil calculations for RecyclerView"], ans: 1 },
+    { q: "How do you collect PagingData in Jetpack Compose?", opts: ["flow.collectAsState()", "flow.collectAsLazyPagingItems()", "flow.collectAsPagingState()", "flow.toLazyList()"], ans: 1 },
+    { q: "What does cachedIn(viewModelScope) do?", opts: ["Caches data to disk for offline access", "Shares PagingData across collectors and survives config changes", "Enables Room caching for the PagingSource", "Caches network responses in OkHttp"], ans: 1 },
+    { q: "When RemoteMediator receives LoadType.PREPEND for a feed that only appends, what should it return?", opts: ["MediatorResult.Error with UnsupportedOperationException", "MediatorResult.Success(endOfPaginationReached = true)", "MediatorResult.Success(endOfPaginationReached = false)", "It should throw an exception to signal no prepend support"], ans: 1 },
+    { q: "How do you add date separators between items in PagingData?", opts: ["Override getItemViewType in the adapter", "Use pagingData.insertSeparators { before, after -> }", "Add separator items directly in PagingSource", "Use LazyColumn's stickyHeader in Compose"], ans: 1 },
+    { q: "What triggers a PagingSource to reload its data?", opts: ["Calling adapter.notifyDataSetChanged()", "Calling pagingSource.invalidate()", "Emitting a new value on the Flow", "Calling PagingData.refresh()"], ans: 1 },
+    { q: "What is the minimum valid value for PagingConfig.maxSize?", opts: ["pageSize", "pageSize + prefetchDistance", "pageSize + 2 * prefetchDistance", "2 * pageSize"], ans: 2 },
+    { q: "How do you test a PagingSource in isolation?", opts: ["Use Robolectric to simulate scrolling", "Call load() directly with LoadParams and assert the LoadResult", "Use Espresso to scroll a RecyclerView", "Mock the Pager class and verify interactions"], ans: 1 }
+  ],
+  challenge: "Build a complete offline-first paging setup for a GitHub repository search. Implement: (1) A GithubPagingSource that uses cursor-based pagination with the GitHub API, (2) A RemoteMediator that caches results in Room with remote keys, (3) A ViewModel that exposes Flow<PagingData<Repo>> with .insertSeparators() to add star-count headers (e.g., '1000+ stars', '500+ stars'), (4) A Compose UI with LazyColumn showing loading, error, and retry states. Handle the GitHub API rate limit (403) gracefully by showing a countdown timer.",
+  resources: [
+    { type: "docs", title: "Paging 3 Official Guide", url: "https://developer.android.com/topic/libraries/architecture/paging/v3-overview", source: "Android Developers" },
+    { type: "codelab", title: "Android Paging Codelab", url: "https://developer.android.com/codelabs/android-paging", source: "Google Codelabs" },
+    { type: "video", title: "Paging 3 - Getting to the first page", url: "https://www.youtube.com/watch?v=Pw-jhS-ucYA", source: "Android Developers YouTube" },
+    { type: "article", title: "Paging 3 with RemoteMediator", url: "https://proandroiddev.com/paging-3-with-remote-mediator-caching-bb52f39f1199", source: "ProAndroidDev" }
+  ],
+  eli5: "Imagine you have a really long picture book with 10,000 pages. You can't carry the whole book at once — it's too heavy! So instead, a helper brings you 20 pages at a time. When you're almost done reading those, they run and grab the next 20. If the internet goes out (like the helper getting lost), you can still read the pages they already brought because they made copies and put them in your desk drawer (that's the database). That's Paging 3 — a smart helper that brings you just enough data, saves copies locally, and keeps the pages coming smoothly!",
+  codeWalkthrough: [
+    "ArticlePagingSource extends PagingSource<Int, Article> — Int is the page key type, Article is the data type.",
+    "load() receives LoadParams containing the key (page number) and loadSize. We default to page 1 if key is null (initial load).",
+    "On success, LoadResult.Page wraps the data with navigation keys. prevKey is null for page 1 (no previous), nextKey is null when data is empty (end reached).",
+    "getRefreshKey() determines which page to load on invalidation, using anchorPosition to find the closest page.",
+    "ArticleRemoteMediator handles LoadType.REFRESH (pull-to-refresh), PREPEND (load earlier), and APPEND (load more).",
+    "PREPEND returns Success with endOfPaginationReached=true since our feed only goes forward.",
+    "APPEND reads the next page number from a RemoteKey stored in Room. No key means we've reached the end.",
+    "db.withTransaction ensures clearing old data and inserting new data + remote keys happens atomically.",
+    "The ViewModel creates a Pager with PagingConfig, RemoteMediator, and a PagingSourceFactory from Room's DAO.",
+    "The flow is mapped to convert entities to domain models and cachedIn(viewModelScope) for configuration change survival.",
+    "In Compose, collectAsLazyPagingItems() bridges Flow<PagingData> to LazyColumn-compatible items.",
+    "loadState.append and loadState.refresh are checked to show loading indicators and error/retry UI."
+  ],
+  bugChallenge: {
+    code: `class UserPagingSource(
+    private val api: UserApi
+) : PagingSource<Int, User>() {
+
+    override suspend fun load(
+        params: LoadParams<Int>
+    ): LoadResult<Int, User> {
+        val page = params.key ?: 0
+        val response = api.getUsers(page, params.loadSize)
+        return LoadResult.Page(
+            data = response.users,
+            prevKey = page - 1,
+            nextKey = page + 1
+        )
+    }
+
+    override fun getRefreshKey(
+        state: PagingState<Int, User>
+    ): Int? = null
+}`,
+    hint: "What happens when prevKey is 0 - 1 = -1 on the first page? And what if the API returns an empty list?",
+    answer: "Two bugs: (1) prevKey should be `if (page == 0) null else page - 1` to prevent loading page -1. (2) nextKey should be `if (response.users.isEmpty()) null else page + 1` to signal end of pagination. Also missing try-catch for network errors — load() should catch exceptions and return LoadResult.Error(e)."
+  },
+  difficulty: "advanced",
+  prereqs: [9, 17, 27, 28]
+},
+{
+  id: 74,
+  title: "Compose Animations: Transition, AnimatedVisibility & Motion",
+  subtitle: "Create fluid, production-quality animations in Jetpack Compose",
+  analogy: "Compose animations are like a movie director's toolkit. animate*AsState is the simple camera pan — point A to point B, done. AnimatedVisibility is the stage curtain rising and falling. updateTransition is orchestrating multiple actors moving in sync during a scene change. And InfiniteTransition is the looping background music that never stops. MotionLayout is your stunt coordinator — handling complex, choreographed sequences that would be impossible to direct manually.",
+  points: [
+    { t: "animate*AsState Fundamentals", d: "The simplest animation API. Functions like `animateDpAsState`, `animateColorAsState`, `animateFloatAsState`, and `animateIntAsState` animate between values automatically when the target changes. They return a State<T> that recomposes smoothly. Customize with `animationSpec` parameter: `tween(durationMillis, easing)`, `spring(dampingRatio, stiffness)`, `keyframes {}`, or `snap()`." },
+    { t: "AnimatedVisibility", d: "Wraps content that appears/disappears with enter/exit transitions. EnterTransition combinators: `fadeIn() + slideInVertically() + expandVertically()`. ExitTransition: `fadeOut() + slideOutHorizontally() + shrinkVertically()`. Use `MutableTransitionState(false)` for initial animation on first composition. Each child can override with `Modifier.animateEnterExit()` for individual control." },
+    { t: "AnimatedContent & ContentTransform", d: "Animates between different composable content based on a target state. Uses `transitionSpec` returning `ContentTransform` created by combining `EnterTransition togetherWith ExitTransition`. The `using SizeTransform(clip = true)` controls how the container resizes. Use `targetState` in the content lambda for type-safe state-driven UI swaps like number counters or page transitions." },
+    { t: "updateTransition & Multi-property Animation", d: "`updateTransition(targetState)` creates a Transition object that coordinates multiple animated properties simultaneously. Use `transition.animateDp {}`, `transition.animateColor {}`, etc. with labels for inspection. All child animations are synchronized — they start, update, and complete together. MutableTransitionState enables observing `isIdle`, `currentState`, and `targetState`." },
+    { t: "Crossfade & AnimatedNavHost", d: "Crossfade is a simplified AnimatedContent that only does fade transitions between states. Ideal for tab switching or simple content swaps. For Navigation Compose, use `AnimatedNavHost` from accompanist (now integrated into navigation-compose) which provides `enterTransition`, `exitTransition`, `popEnterTransition`, and `popExitTransition` per route." },
+    { t: "InfiniteTransition", d: "`rememberInfiniteTransition()` creates animations that loop forever — perfect for loading indicators, pulsing effects, or rotating icons. Use `infiniteTransition.animateFloat(initialValue, targetValue, animationSpec = infiniteRepeatable(tween(), RepeatMode.Reverse))`. RepeatMode.Restart snaps back; RepeatMode.Reverse ping-pongs smoothly." },
+    { t: "AnimationSpec Deep Dive", d: "`spring()` is physics-based with DampingRatioNoBouncy/LowBouncy/MediumBouncy/HighBouncy and stiffness levels. `tween()` uses duration + easing (FastOutSlowInEasing, LinearEasing, etc.). `keyframes {}` defines values at specific times for complex curves. `repeatable()` wraps any spec with iteration count. `snap()` jumps instantly with optional delay." },
+    { t: "Gesture-Driven Animations", d: "Combine `Modifier.pointerInput {}` or `Modifier.draggable {}` with `Animatable` for gesture-driven motion. `Animatable` supports `animateTo()`, `snapTo()`, and crucially `stop()` for interrupting animations mid-flight. Use `animateDecay()` with `splineBasedDecay()` for fling physics. `AnchoredDraggable` (replacing `SwipeableState`) handles swipe-to-dismiss and bottom sheet snapping." },
+    { t: "Modifier.graphicsLayer for Performance", d: "Use `Modifier.graphicsLayer { }` for GPU-accelerated transforms: `translationX/Y`, `scaleX/Y`, `rotationZ`, `alpha`. These don't trigger recomposition or relayout — only redraw. Combine with `animateFloatAsState` for smooth, performant animations. For shared element transitions, `Modifier.sharedElement()` in Navigation Compose handles cross-screen hero animations." },
+    { t: "MotionLayout in Compose", d: "MotionLayout from ConstraintLayout Compose enables complex, coordinated animations between two constraint sets. Define `start` and `end` ConstraintSets, animate `progress` from 0f to 1f. Supports custom properties, arcs, stagger, and keyframes. Ideal for collapsing toolbars, coordinated reveal animations, and complex layout transitions that would be impractical with standard Compose animation APIs." },
+    { t: "Animation Testing & Inspection", d: "Use `createComposeRule()` with `mainClock.autoAdvance = false` to control animation timing. `advanceTimeBy(millis)` steps through animations frame by frame. Compose Animation Preview in Android Studio visualizes transitions. Add `label` parameters to animated values for identification in the Animation Inspector. Test final states with `waitForIdle()` after advancing time." },
+    { t: "Performance Best Practices", d: "Defer reads with `Modifier.graphicsLayer { }` lambda to skip recomposition. Use `derivedStateOf {}` to prevent unnecessary recompositions from rapid animation value changes. Prefer `Animatable` over `animate*AsState` when you need interruption handling. Profile with Layout Inspector's recomposition counter — animations should only trigger redraws, not recompositions." }
+  ],
+  whatIs: "Compose Animations is a comprehensive animation system built into Jetpack Compose that provides declarative, state-driven animation APIs. From simple value animations (animate*AsState) to complex choreographed transitions (updateTransition, MotionLayout), it handles enter/exit animations (AnimatedVisibility), content swaps (AnimatedContent), infinite loops (InfiniteTransition), and gesture-driven motion (Animatable), all designed to be interruptible, composable, and performant.",
+  realWorld: "Every polished app uses animations extensively. WhatsApp uses AnimatedVisibility-style animations for message reactions appearing. Instagram uses gesture-driven animations for story swiping and double-tap hearts. Twitter/X uses AnimatedContent for the like counter incrementing. Spotify uses InfiniteTransition for its equalizer bars. Google Maps uses MotionLayout-style coordinated transitions for its bottom sheet expanding into full screen.",
+  code: `// === animate*AsState basics ===
+@Composable
+fun ExpandableCard(title: String, content: String) {
+    var expanded by remember { mutableStateOf(false) }
+
+    val elevation by animateDpAsState(
+        targetValue = if (expanded) 8.dp else 2.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "cardElevation"
+    )
+
+    val backgroundColor by animateColorAsState(
+        targetValue = if (expanded)
+            MaterialTheme.colorScheme.primaryContainer
+        else
+            MaterialTheme.colorScheme.surface,
+        animationSpec = tween(300),
+        label = "cardColor"
+    )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded },
+        elevation = CardDefaults.cardElevation(elevation),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+
+            AnimatedVisibility(
+                visible = expanded,
+                enter = fadeIn(tween(300)) +
+                    expandVertically(
+                        animationSpec = spring(
+                            stiffness = Spring.StiffnessLow
+                        )
+                    ),
+                exit = fadeOut(tween(200)) +
+                    shrinkVertically()
+            ) {
+                Text(
+                    text = content,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+// === AnimatedContent with number counter ===
+@Composable
+fun AnimatedCounter(count: Int) {
+    AnimatedContent(
+        targetState = count,
+        transitionSpec = {
+            if (targetState > initialState) {
+                slideInVertically { height -> height } +
+                    fadeIn() togetherWith
+                    slideOutVertically { height -> -height } +
+                    fadeOut()
+            } else {
+                slideInVertically { height -> -height } +
+                    fadeIn() togetherWith
+                    slideOutVertically { height -> height } +
+                    fadeOut()
+            }.using(SizeTransform(clip = false))
+        },
+        label = "counter"
+    ) { targetCount ->
+        Text(
+            text = "\$targetCount",
+            style = MaterialTheme.typography.displayLarge
+        )
+    }
+}
+
+// === updateTransition for coordinated animation ===
+enum class BoxState { Collapsed, Expanded }
+
+@Composable
+fun TransitionBox() {
+    var currentState by remember {
+        mutableStateOf(BoxState.Collapsed)
+    }
+    val transition = updateTransition(
+        targetState = currentState,
+        label = "boxTransition"
+    )
+
+    val size by transition.animateDp(
+        transitionSpec = {
+            if (targetState == BoxState.Expanded) {
+                spring(stiffness = Spring.StiffnessLow)
+            } else {
+                spring(stiffness = Spring.StiffnessMedium)
+            }
+        },
+        label = "size"
+    ) { state ->
+        when (state) {
+            BoxState.Collapsed -> 64.dp
+            BoxState.Expanded -> 200.dp
+        }
+    }
+
+    val cornerRadius by transition.animateDp(
+        label = "corner"
+    ) { state ->
+        when (state) {
+            BoxState.Collapsed -> 32.dp
+            BoxState.Expanded -> 16.dp
+        }
+    }
+
+    val color by transition.animateColor(
+        label = "color"
+    ) { state ->
+        when (state) {
+            BoxState.Collapsed -> Color(0xFF6200EE)
+            BoxState.Expanded -> Color(0xFF03DAC5)
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .size(size)
+            .clip(RoundedCornerShape(cornerRadius))
+            .background(color)
+            .clickable {
+                currentState = if (currentState == BoxState.Collapsed)
+                    BoxState.Expanded else BoxState.Collapsed
+            }
+    )
+}
+
+// === InfiniteTransition for loading ===
+@Composable
+fun PulsingDot() {
+    val infiniteTransition = rememberInfiniteTransition(
+        label = "pulse"
+    )
+
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 0.8f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 600,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "scale"
+    )
+
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 0.4f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "alpha"
+    )
+
+    Box(
+        modifier = Modifier
+            .size(24.dp)
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+                this.alpha = alpha
+            }
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.primary)
+    )
+}
+
+// === Gesture-driven animation with Animatable ===
+@Composable
+fun SwipeToDismissCard(
+    onDismiss: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val offsetX = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+
+    Box(
+        modifier = Modifier
+            .offset {
+                IntOffset(offsetX.value.roundToInt(), 0)
+            }
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures(
+                    onDragEnd = {
+                        scope.launch {
+                            if (abs(offsetX.value) > size.width / 3) {
+                                val target = if (offsetX.value > 0)
+                                    size.width.toFloat()
+                                else
+                                    -size.width.toFloat()
+                                offsetX.animateTo(
+                                    targetValue = target,
+                                    animationSpec = tween(300)
+                                )
+                                onDismiss()
+                            } else {
+                                offsetX.animateTo(
+                                    targetValue = 0f,
+                                    animationSpec = spring(
+                                        dampingRatio = Spring
+                                            .DampingRatioMediumBouncy
+                                    )
+                                )
+                            }
+                        }
+                    }
+                ) { _, dragAmount ->
+                    scope.launch {
+                        offsetX.snapTo(
+                            offsetX.value + dragAmount
+                        )
+                    }
+                }
+            }
+    ) {
+        content()
+    }
+}`,
+  funFact: "The Compose animation system was designed by the same team that built Android's original Property Animation framework (ObjectAnimator), but they took the opposite approach. Instead of imperatively starting animations, Compose animations are declarative — you describe the target state, and the framework figures out how to get there. The spring() animation is the default because physics-based animations feel more natural and handle interruptions gracefully, unlike duration-based animations that can feel jarring when redirected mid-flight.",
+  quiz: [
+    { q: "Which animationSpec is used by default in most animate*AsState functions?", opts: ["tween(300)", "spring()", "snap()", "keyframes {}"], ans: 1 },
+    { q: "How do you trigger AnimatedVisibility to animate on first composition?", opts: ["Set initiallyVisible = true", "Use MutableTransitionState(initialState = false) and set targetState = true", "Call startAnimation() in LaunchedEffect", "Use Modifier.animateOnAttach()"], ans: 1 },
+    { q: "What operator combines enter/exit transitions in AnimatedContent's transitionSpec?", opts: ["plus (+)", "then", "togetherWith", "combine"], ans: 2 },
+    { q: "What is the key advantage of Modifier.graphicsLayer over Modifier.offset for animations?", opts: ["It supports more properties", "It triggers recomposition for smoother animation", "It skips recomposition and relayout, only redraws on GPU", "It automatically applies spring physics"], ans: 2 },
+    { q: "Which RepeatMode makes an InfiniteTransition smoothly ping-pong between values?", opts: ["RepeatMode.Restart", "RepeatMode.Reverse", "RepeatMode.Alternate", "RepeatMode.PingPong"], ans: 1 },
+    { q: "How do you coordinate multiple animated properties that should be in sync?", opts: ["Use multiple animate*AsState with the same duration", "Use updateTransition with child animate* functions", "Wrap them in a single LaunchedEffect", "Use rememberCoroutineScope to launch parallel animations"], ans: 1 },
+    { q: "What class should you use for gesture-driven animations that need interruption support?", opts: ["animate*AsState", "AnimatedVisibility", "Animatable", "InfiniteTransition"], ans: 2 },
+    { q: "How do you test animations in Compose UI tests?", opts: ["Use Thread.sleep() between assertions", "Set mainClock.autoAdvance = false and use advanceTimeBy()", "Use runBlocking with delay()", "Animations are not testable in Compose"], ans: 1 },
+    { q: "What does SizeTransform in AnimatedContent control?", opts: ["The font size during transition", "How the container resizes between content states", "The maximum size of the animated element", "The scale factor of the enter animation"], ans: 1 },
+    { q: "For a collapsing toolbar with complex coordinated layout changes, which API is most appropriate?", opts: ["AnimatedVisibility", "animate*AsState with multiple properties", "MotionLayout with start/end ConstraintSets", "Crossfade"], ans: 2 }
+  ],
+  challenge: "Build an animated task management card that demonstrates multiple animation techniques: (1) The card uses AnimatedVisibility to reveal a description and action buttons when tapped, (2) A priority indicator dot pulses using InfiniteTransition when the task is high priority, (3) Implement swipe-to-complete using Animatable with gesture detection that reveals a green checkmark underneath, (4) When the task status changes (todo -> in-progress -> done), use AnimatedContent with a sliding ContentTransform to swap the status badge, (5) Add updateTransition to coordinate the background color, border width, and icon rotation when toggling a 'starred' state. Ensure all animations use graphicsLayer where appropriate for performance.",
+  resources: [
+    { type: "docs", title: "Compose Animation Official Guide", url: "https://developer.android.com/develop/ui/compose/animation/introduction", source: "Android Developers" },
+    { type: "codelab", title: "Animating Elements in Jetpack Compose", url: "https://developer.android.com/codelabs/jetpack-compose-animation", source: "Google Codelabs" },
+    { type: "video", title: "Compose Animation Deep Dive", url: "https://www.youtube.com/watch?v=Z_T1bVjhMLk", source: "Android Developers YouTube" },
+    { type: "article", title: "A Visual Guide to Compose Animations", url: "https://proandroiddev.com/a-visual-guide-to-jetpack-compose-animation-2b1685de26a4", source: "ProAndroidDev" }
+  ],
+  eli5: "Imagine you have a magic coloring book. When you say 'make the box big,' it doesn't just jump to being big — it smoothly grows like a balloon being inflated (that's animate*AsState). When you say 'show the hidden picture,' it fades in like a ghost appearing (AnimatedVisibility). When you say 'change the picture,' the old one slides away and the new one slides in like a sliding door (AnimatedContent). And some pictures keep wiggling forever like a waving flag (InfiniteTransition). The magic book always makes changes look smooth and pretty!",
+  codeWalkthrough: [
+    "ExpandableCard uses animateDpAsState for elevation and animateColorAsState for background — both animate automatically when 'expanded' state changes.",
+    "The spring spec with DampingRatioMediumBouncy creates a playful bounce effect on the elevation change.",
+    "AnimatedVisibility wraps the content text — fadeIn + expandVertically creates a smooth reveal from top.",
+    "AnimatedCounter uses AnimatedContent where the transitionSpec checks direction (up vs down) to slide numbers appropriately.",
+    "slideInVertically { height -> height } slides in from the bottom (positive = below viewport), while { -height } slides from top.",
+    "togetherWith combines enter and exit into a ContentTransform. SizeTransform(clip = false) allows content to overflow during transition.",
+    "TransitionBox uses updateTransition to coordinate size, cornerRadius, and color — all animate in sync when BoxState changes.",
+    "Each transition.animate* call can have its own transitionSpec, allowing different physics per property while staying synchronized.",
+    "PulsingDot uses rememberInfiniteTransition with RepeatMode.Reverse for smooth scale and alpha oscillation.",
+    "graphicsLayer is used for scale and alpha — these are render-only changes that don't trigger recomposition.",
+    "SwipeToDismissCard uses Animatable for offsetX, enabling snapTo() during drag and animateTo() on release.",
+    "The drag threshold (size.width / 3) determines whether to dismiss or spring back — spring creates a natural bounce-back feel."
+  ],
+  bugChallenge: {
+    code: `@Composable
+fun FadeToggle(visible: Boolean, content: @Composable () -> Unit) {
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = tween(500),
+        label = "alpha"
+    )
+
+    Box(modifier = Modifier.alpha(alpha)) {
+        content()
+    }
+}`,
+    hint: "When alpha reaches 0, is the content actually removed from the composition? What about click handlers and accessibility?",
+    answer: "The content is still composed and in the layout tree even when alpha = 0. It remains clickable and accessible to screen readers. Use AnimatedVisibility instead, which actually removes content from the composition tree when the exit animation completes. If you must use alpha, add `.then(if (alpha == 0f) Modifier.size(0.dp) else Modifier)` or better yet use `AnimatedVisibility(visible = visible, enter = fadeIn(tween(500)), exit = fadeOut(tween(500))) { content() }`."
+  },
+  difficulty: "advanced",
+  prereqs: [18, 19, 20, 21]
+},
+{
+  id: 75,
+  title: "Advanced Coroutines: callbackFlow, channelFlow & Custom Dispatchers",
+  subtitle: "Master coroutine internals for complex async patterns and concurrent data streams",
+  analogy: "Think of coroutines like a restaurant kitchen. Regular flows are a single chef cooking dishes one at a time. channelFlow is having multiple chefs cooking simultaneously and putting dishes on a shared counter. callbackFlow is having an external delivery driver (callback API) dropping off ingredients through a window — you need awaitClose to keep the window open. Custom dispatchers are like deciding which kitchen stations (threads) each chef works at. Mutex is the single knife that chefs must take turns using, preventing them from cutting at the same time.",
+  points: [
+    { t: "callbackFlow for Callback APIs", d: "callbackFlow creates a Flow from callback-based APIs (listeners, SDKs, platform APIs). Inside the builder, register callbacks that call `trySend(value)` to emit values. Use `awaitClose { unregisterCallback() }` as the last statement to keep the flow active and handle cleanup when the collector cancels. Without awaitClose, the flow completes immediately. Channel capacity defaults to BUFFERED (64 elements)." },
+    { t: "channelFlow for Concurrent Emissions", d: "channelFlow allows launching multiple coroutines that emit concurrently into the same flow. Unlike regular `flow {}` builder which is sequential and restricted to the same CoroutineContext, channelFlow provides a ProducerScope where you can `launch {}` child coroutines that each call `send()` or `trySend()`. It's backed by a Channel, so emissions from different coroutines are thread-safe." },
+    { t: "awaitClose & ProducerScope", d: "awaitClose suspends the callbackFlow/channelFlow until the downstream collector cancels or the scope is cancelled. The lambda runs cleanup code (unregister listeners, close connections). ProducerScope extends CoroutineScope and SendChannel, providing `send()` (suspending), `trySend()` (non-suspending), `close()`, and `channel`. Use `trySend()` in callbacks since callbacks aren't suspend functions." },
+    { t: "Custom CoroutineDispatcher", d: "Create custom dispatchers by extending CoroutineDispatcher and overriding `dispatch(context, block)`. Use cases: dedicated thread for database operations, limiting concurrency with `Dispatchers.IO.limitedParallelism(n)`, or wrapping Java executors with `executor.asCoroutineDispatcher()`. In production, `limitedParallelism()` is preferred over custom dispatchers for concurrency control." },
+    { t: "CoroutineContext Composition", d: "CoroutineContext is a set of Elements combined with `+` operator. Elements include: Job (lifecycle), CoroutineDispatcher (threading), CoroutineName (debugging), CoroutineExceptionHandler (error handling). Combining contexts: `Dispatchers.IO + CoroutineName(\"fetcher\") + exceptionHandler`. Right-side elements override left-side for same key. Access elements via `coroutineContext[Job]` or `coroutineContext[CoroutineName]`." },
+    { t: "Mutex & Shared Mutable State", d: "Mutex provides mutual exclusion for coroutines (like synchronized but non-blocking). Use `mutex.withLock {}` to protect shared mutable state. Unlike synchronized blocks, Mutex suspends instead of blocking the thread. For atomic counters, use `AtomicInteger` or `MutableStateFlow.update {}`. Semaphore(permits) limits concurrent access to a resource (e.g., max 5 parallel network requests)." },
+    { t: "Flow Operators: conflate, buffer, debounce", d: "`buffer(capacity)` decouples producer and consumer into separate coroutines — producer doesn't wait for slow consumer. `conflate()` is buffer with CONFLATED capacity: drops intermediate values, consumer always gets the latest. `debounce(timeoutMillis)` waits for a pause in emissions before delivering (search-as-you-type). `sample(periodMillis)` emits the latest value at fixed intervals." },
+    { t: "Flow Operators: flatMapLatest, flatMapMerge, flatMapConcat", d: "`flatMapLatest {}` cancels the previous inner flow when a new value arrives — ideal for search queries. `flatMapMerge(concurrency) {}` runs inner flows concurrently up to the concurrency limit. `flatMapConcat {}` runs inner flows sequentially. `transformLatest {}` is the transform version of flatMapLatest for more control." },
+    { t: "Testing: UnconfinedTestDispatcher vs StandardTestDispatcher", d: "StandardTestDispatcher queues coroutines — they only execute when you call `advanceUntilIdle()`, `advanceTimeBy()`, or `runCurrent()`. Gives precise control over execution order. UnconfinedTestDispatcher executes coroutines eagerly (immediately at launch point). Use Standard for testing timing-sensitive code and Unconfined for simpler tests where execution order doesn't matter." },
+    { t: "Turbine for Flow Testing", d: "Turbine library provides `flow.test {}` for ergonomic Flow testing. Inside the block: `awaitItem()` gets the next emission, `awaitComplete()` verifies completion, `awaitError()` verifies error, `cancelAndIgnoreRemainingEvents()` for cleanup. Handles timeouts automatically. Much cleaner than manually collecting into lists." },
+    { t: "Exception Handling in Flows", d: "`catch {}` operator catches upstream exceptions and can `emit()` fallback values. It doesn't catch downstream exceptions. `onCompletion { cause -> }` runs on completion (normal or exceptional) for cleanup. `retry(retries) { cause -> }` and `retryWhen { cause, attempt -> }` implement retry logic. Use `flowOn(dispatcher)` to change upstream context without affecting downstream." },
+    { t: "SharedFlow & StateFlow Internals", d: "SharedFlow is a hot flow backed by a replay cache + buffer. `MutableSharedFlow(replay, extraBufferCapacity, onBufferOverflow)` configures behavior. StateFlow is a SharedFlow with replay=1 that requires initial value and uses distinctUntilChanged. `shareIn(scope, started, replay)` and `stateIn(scope, started, initialValue)` convert cold flows to hot. SharingStarted.WhileSubscribed(5000) is the recommended production config." }
+  ],
+  whatIs: "Advanced Coroutines covers the lower-level coroutine and Flow APIs needed for complex async patterns: callbackFlow bridges callback-based APIs to Flow, channelFlow enables concurrent emissions, custom Dispatchers control threading, Mutex/Semaphore manage shared state, and Flow operators like conflate/buffer/debounce handle backpressure and timing. These are essential tools for production Android apps dealing with real-world async complexity.",
+  realWorld: "callbackFlow is everywhere: wrapping Firebase Realtime Database listeners, location updates from FusedLocationProviderClient, Bluetooth scan results, sensor data streams, and WebSocket connections. channelFlow powers concurrent data aggregation like loading user profile + posts + stories simultaneously into a single stream. Mutex protects in-memory caches in multi-threaded environments. debounce powers every search bar. SharedFlow with WhileSubscribed manages expensive data streams in ViewModels.",
+  code: `// === callbackFlow: Wrapping Location Updates ===
+fun locationUpdates(
+    client: FusedLocationProviderClient,
+    request: LocationRequest
+): Flow<Location> = callbackFlow {
+    val callback = object : LocationCallback() {
+        override fun onLocationResult(result: LocationResult) {
+            result.lastLocation?.let { location ->
+                trySend(location).isSuccess
+            }
+        }
+    }
+
+    // Check permission before requesting
+    client.requestLocationUpdates(
+        request,
+        callback,
+        Looper.getMainLooper()
+    ).addOnFailureListener { e ->
+        close(e) // Close the flow with error
+    }
+
+    // CRITICAL: keeps flow alive & cleans up on cancel
+    awaitClose {
+        client.removeLocationUpdates(callback)
+    }
+}
+
+// === channelFlow: Concurrent Data Loading ===
+fun loadDashboard(
+    userApi: UserApi,
+    postApi: PostApi,
+    analyticsApi: AnalyticsApi
+): Flow<DashboardState> = channelFlow {
+    // All three load concurrently
+    launch {
+        val user = userApi.getProfile()
+        send(DashboardState.UserLoaded(user))
+    }
+    launch {
+        val posts = postApi.getRecent(limit = 10)
+        send(DashboardState.PostsLoaded(posts))
+    }
+    launch {
+        val stats = analyticsApi.getWeeklyStats()
+        send(DashboardState.StatsLoaded(stats))
+    }
+}
+
+// === Mutex for Thread-Safe Cache ===
+class InMemoryCache<K, V> {
+    private val mutex = Mutex()
+    private val map = mutableMapOf<K, V>()
+
+    suspend fun getOrPut(key: K, compute: suspend () -> V): V {
+        // Fast path: read without lock
+        map[key]?.let { return it }
+
+        // Slow path: compute with lock
+        return mutex.withLock {
+            // Double-check after acquiring lock
+            map[key] ?: compute().also { map[key] = it }
+        }
+    }
+
+    suspend fun evict(key: K): V? = mutex.withLock {
+        map.remove(key)
+    }
+
+    suspend fun clear() = mutex.withLock {
+        map.clear()
+    }
+}
+
+// === Flow Operators: Search with debounce ===
+class SearchViewModel(
+    private val repository: SearchRepository
+) : ViewModel() {
+
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query.asStateFlow()
+
+    val searchResults: StateFlow<SearchUiState> = _query
+        .debounce(300L)
+        .distinctUntilChanged()
+        .filter { it.length >= 2 }
+        .flatMapLatest { query ->
+            flow {
+                emit(SearchUiState.Loading)
+                val results = repository.search(query)
+                emit(SearchUiState.Success(results))
+            }.catch { e ->
+                emit(SearchUiState.Error(e.message ?: "Unknown"))
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = SearchUiState.Idle
+        )
+
+    fun onQueryChanged(newQuery: String) {
+        _query.value = newQuery
+    }
+}
+
+// === Semaphore for Limited Concurrency ===
+class ImageDownloader(
+    private val httpClient: HttpClient,
+    maxConcurrent: Int = 4
+) {
+    private val semaphore = Semaphore(maxConcurrent)
+
+    suspend fun downloadAll(
+        urls: List<String>
+    ): List<Result<ByteArray>> = coroutineScope {
+        urls.map { url ->
+            async {
+                semaphore.withPermit {
+                    runCatching {
+                        httpClient.download(url)
+                    }
+                }
+            }
+        }.awaitAll()
+    }
+}
+
+// === Custom Dispatcher with limitedParallelism ===
+object AppDispatchers {
+    // Max 4 concurrent DB operations
+    val database = Dispatchers.IO.limitedParallelism(4)
+
+    // Single-threaded for file I/O ordering
+    val fileIO = Dispatchers.IO.limitedParallelism(1)
+
+    // Dedicated for heavy computation
+    val computation = Dispatchers.Default.limitedParallelism(2)
+}
+
+// Usage
+class DatabaseRepository(private val dao: UserDao) {
+    suspend fun getUser(id: String): User =
+        withContext(AppDispatchers.database) {
+            dao.findById(id)
+        }
+}
+
+// === Testing with Turbine ===
+class SearchViewModelTest {
+    @Test
+    fun \`search emits loading then results\`() = runTest {
+        val fakeRepo = FakeSearchRepository(
+            results = listOf("Kotlin", "KSP")
+        )
+        val viewModel = SearchViewModel(fakeRepo)
+
+        viewModel.searchResults.test {
+            assertEquals(SearchUiState.Idle, awaitItem())
+
+            viewModel.onQueryChanged("Kot")
+            advanceTimeBy(350) // past debounce
+
+            assertEquals(SearchUiState.Loading, awaitItem())
+            assertEquals(
+                SearchUiState.Success(listOf("Kotlin", "KSP")),
+                awaitItem()
+            )
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun \`search cancels previous on new query\`() = runTest {
+        val slowRepo = FakeSearchRepository(
+            delay = 1000L,
+            results = listOf("Result")
+        )
+        val viewModel = SearchViewModel(slowRepo)
+
+        viewModel.searchResults.test {
+            awaitItem() // Idle
+
+            viewModel.onQueryChanged("first")
+            advanceTimeBy(350)
+            assertEquals(SearchUiState.Loading, awaitItem())
+
+            // New query before first completes
+            viewModel.onQueryChanged("second")
+            advanceTimeBy(350)
+            assertEquals(SearchUiState.Loading, awaitItem())
+
+            advanceTimeBy(1100)
+            val result = awaitItem()
+            assertTrue(result is SearchUiState.Success)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+}`,
+  funFact: "The callbackFlow builder was originally called channelFlow when first proposed, causing massive confusion. The Kotlin team split it into two: callbackFlow for wrapping callback APIs (with the awaitClose requirement) and channelFlow for general concurrent emissions. If you forget awaitClose in callbackFlow, you get an IllegalStateException at runtime — this was a deliberate design choice to prevent the extremely common bug of flows that complete instantly because the callback hasn't fired yet.",
+  quiz: [
+    { q: "What happens if you omit awaitClose in a callbackFlow?", opts: ["The flow works but leaks resources", "An IllegalStateException is thrown at runtime", "The flow completes immediately without emitting", "The callback is automatically cleaned up"], ans: 1 },
+    { q: "Why use trySend() instead of send() in a callback?", opts: ["trySend() is faster", "Callbacks are not suspend functions, so send() cannot be called", "trySend() handles backpressure automatically", "send() is deprecated in callbackFlow"], ans: 1 },
+    { q: "What is the key difference between channelFlow and the regular flow {} builder?", opts: ["channelFlow is faster", "channelFlow allows launching child coroutines that emit concurrently", "channelFlow supports error handling", "channelFlow uses less memory"], ans: 1 },
+    { q: "What does Dispatchers.IO.limitedParallelism(4) do?", opts: ["Creates a new thread pool with 4 threads", "Limits the entire IO dispatcher to 4 threads", "Creates a view of IO dispatcher limited to 4 concurrent coroutines", "Throws an exception if more than 4 coroutines are launched"], ans: 2 },
+    { q: "How does Mutex differ from a synchronized block in coroutines?", opts: ["Mutex is faster", "Mutex suspends the coroutine instead of blocking the thread", "Mutex allows multiple concurrent accesses", "There is no difference"], ans: 1 },
+    { q: "What does the conflate() operator do?", opts: ["Merges consecutive identical emissions", "Drops intermediate values so the collector always gets the latest", "Buffers all emissions until the collector is ready", "Combines multiple flows into one"], ans: 1 },
+    { q: "Which flatMap variant cancels the previous inner flow when a new value arrives?", opts: ["flatMapConcat", "flatMapMerge", "flatMapLatest", "flatMapFirst"], ans: 2 },
+    { q: "What is the difference between StandardTestDispatcher and UnconfinedTestDispatcher?", opts: ["Standard is for unit tests, Unconfined is for integration tests", "Standard queues coroutines for manual advancement, Unconfined executes them eagerly", "Standard runs on the main thread, Unconfined runs on a background thread", "There is no practical difference"], ans: 1 },
+    { q: "In Turbine's flow.test {}, what does awaitItem() do?", opts: ["Emits a new item to the flow", "Suspends until the next emission and returns it", "Waits for the flow to complete", "Skips the next emission"], ans: 1 },
+    { q: "What does SharingStarted.WhileSubscribed(5000) do?", opts: ["Shares the flow for exactly 5 seconds", "Keeps the upstream active for 5 seconds after the last subscriber disconnects", "Delays the first emission by 5 seconds", "Limits the flow to 5000 emissions"], ans: 1 }
+  ],
+  challenge: "Build a real-time stock ticker system: (1) Create a callbackFlow that wraps a WebSocket connection (use OkHttp WebSocketListener), emitting StockPrice updates and handling connection errors with retry, (2) Build a channelFlow that concurrently subscribes to 3 different stock symbols and merges their updates into a single stream, (3) Implement an InMemoryCache using Mutex that stores the latest price for each symbol with TTL expiration, (4) Create a ViewModel that uses debounce for user search, flatMapLatest to switch symbol subscriptions, and stateIn with WhileSubscribed(5000), (5) Write comprehensive tests using Turbine and StandardTestDispatcher that verify debounce timing, flow cancellation on new queries, and error recovery.",
+  resources: [
+    { type: "docs", title: "Kotlin Coroutines Flow Guide", url: "https://kotlinlang.org/docs/flow.html", source: "Kotlin Documentation" },
+    { type: "article", title: "callbackFlow: A Primitives Guide", url: "https://medium.com/androiddevelopers/simplifying-apis-with-coroutines-and-flow-a6fb65338765", source: "Android Developers Medium" },
+    { type: "video", title: "Advanced Coroutines with Kotlin Flow", url: "https://www.youtube.com/watch?v=fSB6_KE95bU", source: "Android Developers YouTube" },
+    { type: "library", title: "Turbine - Flow Testing Library", url: "https://github.com/cashapp/turbine", source: "Cash App" }
+  ],
+  eli5: "Imagine you're listening to a walkie-talkie (callbackFlow) — someone on the other end talks whenever they want, and you just listen. You keep the walkie-talkie on (awaitClose) until you're done. channelFlow is like having multiple walkie-talkies all feeding into one speaker. Mutex is like a talking stick — only the person holding it can speak. And debounce is like waiting for someone to stop talking before you respond, so you don't interrupt them mid-sentence!",
+  codeWalkthrough: [
+    "locationUpdates uses callbackFlow to bridge the callback-based FusedLocationProviderClient to a Flow.",
+    "trySend() is used inside onLocationResult because it's a regular function, not a suspend function.",
+    "addOnFailureListener calls close(e) to terminate the flow with an error if location registration fails.",
+    "awaitClose is CRITICAL — without it, the flow would complete immediately. The lambda removes the callback on cancellation.",
+    "loadDashboard uses channelFlow to launch 3 concurrent coroutines, each loading different data and sending results.",
+    "InMemoryCache uses Mutex.withLock for thread-safe access. The double-check pattern avoids redundant computation.",
+    "SearchViewModel chains debounce(300) -> distinctUntilChanged -> filter -> flatMapLatest for search-as-you-type.",
+    "flatMapLatest cancels the previous search API call when a new query arrives, preventing stale results.",
+    "stateIn with WhileSubscribed(5000) keeps the upstream alive for 5 seconds after the last collector, surviving rotation.",
+    "ImageDownloader uses Semaphore(4) to limit concurrent downloads, preventing server overload.",
+    "AppDispatchers uses limitedParallelism to create bounded dispatcher views without creating new thread pools.",
+    "Tests use Turbine's flow.test {} with advanceTimeBy to precisely control debounce timing and verify emissions."
+  ],
+  bugChallenge: {
+    code: `fun firebaseMessages(
+    ref: DatabaseReference
+): Flow<Message> = callbackFlow {
+    val listener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val msg = snapshot.getValue(Message::class.java)
+            send(msg!!)
+        }
+        override fun onCancelled(error: DatabaseError) {
+            close(error.toException())
+        }
+    }
+    ref.addValueEventListener(listener)
+}`,
+    hint: "There are two bugs: one will crash at compile time, the other will cause the flow to complete instantly.",
+    answer: "Bug 1: `send()` is a suspend function but `onDataChange` is not a suspend function — use `trySend()` instead. Bug 2: Missing `awaitClose { ref.removeEventListener(listener) }` at the end — without it, the callbackFlow completes immediately after registering the listener and also leaks the listener. Also, `msg!!` could crash on null — should use `msg?.let { trySend(it) }` for safety."
+  },
+  difficulty: "advanced",
+  prereqs: [7, 8, 9, 10]
+},
+{
+  id: 76,
+  title: "KSP vs KAPT, Code Generation & Serialization",
+  subtitle: "Understand annotation processing, build performance, and serialization strategies in modern Android",
+  analogy: "KAPT is like translating a Kotlin book to Japanese by first translating it to English (Java stubs), then to Japanese — slow and lossy. KSP is like having a translator who reads Kotlin directly — 2x faster and understands all the nuances. kotlinx.serialization is like having the author write the translation guide into the original book at print time (compile-time), while Gson is like hiring a translator who reads the book at runtime using a magnifying glass (reflection) — functional but slower and fragile.",
+  points: [
+    { t: "KAPT Mechanics", d: "KAPT (Kotlin Annotation Processing Tool) works by generating Java stubs from Kotlin code, then running standard Java annotation processors (javax.annotation.processing) against those stubs. This stub generation is expensive — it requires a full Kotlin compilation pass before annotation processing even begins. KAPT processes Java's Element API and cannot access Kotlin-specific features like inline classes, sealed hierarchies, or default parameter values directly." },
+    { t: "KSP Architecture", d: "KSP (Kotlin Symbol Processing) operates directly on Kotlin's compiler symbols without generating Java stubs. It provides a Kotlin-native API (KSNode, KSClassDeclaration, KSFunctionDeclaration) that understands all Kotlin features: suspend functions, value classes, sealed interfaces, type aliases, and multiplatform expect/actual. KSP runs as a compiler plugin, making it fundamentally faster than KAPT." },
+    { t: "KSP vs KAPT Performance", d: "KSP is typically 2x faster than KAPT because it eliminates the stub generation phase. In benchmarks: a project with Room + Hilt + Moshi saw build times drop from 45s to 28s after migrating to KSP. KSP also supports incremental processing out of the box, whereas KAPT's incremental support is limited and often disabled. Memory usage is also lower since no Java stubs are generated." },
+    { t: "Migration from KAPT to KSP", d: "Migration steps: (1) Replace `id 'kotlin-kapt'` with `id 'com.google.devtools.ksp'` in plugins block. (2) Change `kapt 'lib:compiler'` to `ksp 'lib:compiler'` in dependencies. (3) Replace `@JvmStatic` workarounds needed for KAPT. Not all libraries support KSP yet — check each library. Room, Hilt (via dagger-hilt-compiler), Moshi, and Glide all support KSP. You can run KAPT and KSP side-by-side during migration." },
+    { t: "kotlinx.serialization", d: "kotlinx.serialization is a Kotlin-first serialization framework using a compiler plugin (not annotation processing). Annotate classes with `@Serializable` and the compiler generates serializers at compile time — no reflection. Supports JSON (kotlinx.serialization.json), Protobuf, CBOR, Properties. Handles Kotlin features natively: default values, nullable types, sealed classes, inline classes. Use `Json.encodeToString()` and `Json.decodeFromString<T>()`." },
+    { t: "Gson vs Moshi vs kotlinx.serialization", d: "Gson: Java-based, uses reflection, no Kotlin null-safety (can create objects with null non-nullable fields), largest community. Moshi: Kotlin-aware with codegen option (KSP), respects nullability, supports adapters. kotlinx.serialization: compile-time, no reflection, smallest APK impact, handles all Kotlin types, multiplatform. For new projects, kotlinx.serialization is recommended. For existing Gson projects, Moshi is the easiest migration path." },
+    { t: "Custom KSP Processor Basics", d: "Create a KSP processor by implementing SymbolProcessorProvider and SymbolProcessor. Override `process(resolver: Resolver)` to find annotated symbols via `resolver.getSymbolsWithAnnotation()`. Generate code using `CodeGenerator.createNewFile()` with Dependencies for incremental processing. Return unprocessed symbols (deferred) from process() for multi-round processing. Package as a separate module with META-INF/services registration." },
+    { t: "kotlinx.serialization Advanced Features", d: "Custom serializers: implement KSerializer<T> with descriptor, serialize(), and deserialize(). `@Contextual` enables runtime serializer registration via SerializersModule. `@SerialName` customizes JSON key names. `Json { ignoreUnknownKeys = true; coerceInputValues = true; encodeDefaults = false }` configures parsing behavior. Polymorphic serialization handles sealed hierarchies with `classDiscriminator`." },
+    { t: "Room, Hilt, Moshi with KSP", d: "Room KSP: use `ksp 'androidx.room:room-compiler:version'` — generates DAO implementations and schema validation. Hilt KSP: use `ksp 'com.google.dagger:hilt-compiler:version'` — generates dependency injection code. Moshi KSP: use `ksp 'com.squareup.moshi:moshi-kotlin-codegen:version'` — generates JsonAdapter factories. All three see significant build time improvements with KSP over KAPT." },
+    { t: "Build Configuration & Debugging", d: "Configure KSP arguments via `ksp { arg('key', 'value') }` in build.gradle. Room's schema export: `arg('room.schemaLocation', '\$projectDir/schemas')`. View generated code in `build/generated/ksp/`. For KAPT, generated code is in `build/generated/source/kapt/`. Use `./gradlew kspDebugKotlin --info` for detailed processing logs. Enable KSP's incremental processing with `ksp.incremental=true` in gradle.properties." },
+    { t: "Serialization Performance Comparison", d: "Benchmarks on a typical Android data class: kotlinx.serialization JSON is 2-3x faster than Gson for both serialization and deserialization. Moshi with codegen is comparable to kotlinx.serialization. Gson with reflection is the slowest. For large lists (1000+ items), the difference is dramatic. kotlinx.serialization also has the smallest APK impact since no reflection library is bundled. Protobuf format is 3-5x faster than JSON for all libraries." },
+    { t: "Multiplatform Serialization", d: "kotlinx.serialization is the only option that works across Kotlin Multiplatform (Android, iOS, JS, Desktop, Server). The same @Serializable data classes and Json configuration work on all platforms. This is a major advantage for KMP projects. Gson and Moshi are JVM-only. When planning a KMP migration, standardizing on kotlinx.serialization early avoids a painful serialization layer rewrite later." }
+  ],
+  whatIs: "This lesson covers the annotation processing and serialization landscape in modern Android development. KAPT processes Kotlin via Java stubs (slow), while KSP processes Kotlin symbols directly (2x faster). For serialization, Gson uses runtime reflection, Moshi offers Kotlin-aware codegen, and kotlinx.serialization uses a compiler plugin for zero-reflection, compile-time serialization. Understanding these tools and their tradeoffs is essential for build performance, runtime performance, and architecture decisions.",
+  realWorld: "Every production Android app uses annotation processing (Room, Hilt, Moshi/serialization) and JSON serialization (API responses). Companies like Uber and Airbnb reported 20-30% build time improvements migrating from KAPT to KSP across hundreds of modules. Square created Moshi specifically because Gson's lack of Kotlin null-safety caused production crashes. Netflix uses kotlinx.serialization in their Kotlin Multiplatform SDK that powers Android, iOS, and TV apps with shared serialization logic.",
+  code: `// === kotlinx.serialization Setup & Usage ===
+// build.gradle.kts
+// plugins { kotlin("plugin.serialization") version "1.9.22" }
+// dependencies { implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3") }
+
+@Serializable
+data class ApiResponse<T : @Serializable Any>(
+    @SerialName("status_code")
+    val statusCode: Int,
+    val message: String,
+    val data: T,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+@Serializable
+data class User(
+    val id: Long,
+    val name: String,
+    val email: String,
+    @SerialName("avatar_url")
+    val avatarUrl: String? = null,
+    val role: UserRole = UserRole.MEMBER
+)
+
+@Serializable
+enum class UserRole {
+    @SerialName("admin") ADMIN,
+    @SerialName("member") MEMBER,
+    @SerialName("guest") GUEST
+}
+
+// Configured Json instance (reuse this!)
+val appJson = Json {
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+    encodeDefaults = false
+    prettyPrint = false
+    isLenient = false
+    explicitNulls = false
+}
+
+// Usage
+fun parseUser(jsonString: String): User {
+    return appJson.decodeFromString<User>(jsonString)
+}
+
+fun serializeUser(user: User): String {
+    return appJson.encodeToString(user)
+}
+
+// === Sealed Class Polymorphic Serialization ===
+@Serializable
+sealed interface NetworkResult<out T> {
+    @Serializable
+    @SerialName("success")
+    data class Success<T : @Serializable Any>(
+        val data: T
+    ) : NetworkResult<T>
+
+    @Serializable
+    @SerialName("error")
+    data class Error(
+        val code: Int,
+        val message: String
+    ) : NetworkResult<Nothing>
+}
+
+// === Custom Serializer ===
+object InstantSerializer : KSerializer<Instant> {
+    override val descriptor = PrimitiveSerialDescriptor(
+        "Instant",
+        PrimitiveKind.LONG
+    )
+
+    override fun serialize(
+        encoder: Encoder,
+        value: Instant
+    ) {
+        encoder.encodeLong(value.toEpochMilliseconds())
+    }
+
+    override fun deserialize(decoder: Decoder): Instant {
+        return Instant.fromEpochMilliseconds(
+            decoder.decodeLong()
+        )
+    }
+}
+
+@Serializable
+data class Event(
+    val name: String,
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant
+)
+
+// === Retrofit + kotlinx.serialization ===
+val retrofit = Retrofit.Builder()
+    .baseUrl("https://api.example.com/")
+    .addConverterFactory(
+        appJson.asConverterFactory(
+            "application/json".toMediaType()
+        )
+    )
+    .build()
+
+// === KSP Processor Example ===
+// In a separate :processor module
+class AutoFactoryProcessorProvider : SymbolProcessorProvider {
+    override fun create(
+        environment: SymbolProcessorEnvironment
+    ): SymbolProcessor = AutoFactoryProcessor(environment)
+}
+
+class AutoFactoryProcessor(
+    private val environment: SymbolProcessorEnvironment
+) : SymbolProcessor {
+
+    override fun process(
+        resolver: Resolver
+    ): List<KSAnnotated> {
+        val symbols = resolver.getSymbolsWithAnnotation(
+            "com.example.AutoFactory"
+        )
+
+        val unprocessed = mutableListOf<KSAnnotated>()
+
+        symbols.forEach { symbol ->
+            if (symbol !is KSClassDeclaration) {
+                environment.logger.error(
+                    "@AutoFactory must target a class",
+                    symbol
+                )
+                return@forEach
+            }
+
+            if (!symbol.validate()) {
+                unprocessed.add(symbol)
+                return@forEach
+            }
+
+            generateFactory(symbol)
+        }
+
+        return unprocessed
+    }
+
+    private fun generateFactory(
+        classDecl: KSClassDeclaration
+    ) {
+        val packageName = classDecl.packageName.asString()
+        val className = classDecl.simpleName.asString()
+        val factoryName = "\${className}Factory"
+
+        val file = environment.codeGenerator.createNewFile(
+            dependencies = Dependencies(
+                aggregating = false,
+                classDecl.containingFile!!
+            ),
+            packageName = packageName,
+            fileName = factoryName
+        )
+
+        val constructor = classDecl
+            .primaryConstructor
+            ?: return
+
+        val params = constructor.parameters.joinToString(
+            separator = ",\n    "
+        ) { param ->
+            val name = param.name?.asString() ?: return
+            val type = param.type.resolve()
+                .declaration.qualifiedName?.asString()
+            "\$name: \$type"
+        }
+
+        file.writer().use { writer ->
+            writer.write(
+                """
+                |package \$packageName
+                |
+                |object \$factoryName {
+                |    fun create(
+                |        \$params
+                |    ): \$className = \$className(
+                |        \${constructor.parameters.joinToString {
+                    it.name?.asString() ?: ""
+                }}
+                |    )
+                |}
+                """.trimMargin()
+            )
+        }
+    }
+}
+
+// === build.gradle.kts Migration Example ===
+// BEFORE (KAPT):
+// plugins { id("kotlin-kapt") }
+// dependencies {
+//     kapt("androidx.room:room-compiler:2.6.1")
+//     kapt("com.google.dagger:hilt-compiler:2.50")
+//     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+// }
+
+// AFTER (KSP):
+// plugins { id("com.google.devtools.ksp") version "1.9.22-1.0.17" }
+// dependencies {
+//     ksp("androidx.room:room-compiler:2.6.1")
+//     ksp("com.google.dagger:hilt-compiler:2.50")
+//     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+// }
+// Note: KSP version must match Kotlin version!
+
+// === Room KSP Configuration ===
+// ksp {
+//     arg("room.schemaLocation", "\$projectDir/schemas")
+//     arg("room.incremental", "true")
+//     arg("room.generateKotlin", "true")
+// }`,
+  funFact: "The KSP project was born from frustration inside Google's own Android team. They were building Kotlin-first libraries (Room, Hilt) but had to maintain Java annotation processors that couldn't understand Kotlin features. When Room encountered a Kotlin data class with default parameter values, it simply couldn't see them through KAPT's Java stubs. KSP was initially an internal project before being open-sourced. The version numbering (e.g., 1.9.22-1.0.17) ties the KSP version to the exact Kotlin compiler version because KSP hooks directly into the compiler — a version mismatch crashes the build instantly.",
+  quiz: [
+    { q: "Why is KAPT slower than KSP?", opts: ["KAPT uses an older Java version", "KAPT generates Java stubs from Kotlin before processing, adding a full compilation pass", "KAPT processes files sequentially while KSP is parallel", "KAPT downloads additional dependencies at build time"], ans: 1 },
+    { q: "What Kotlin feature can KSP access that KAPT cannot?", opts: ["Data classes", "Companion objects", "Suspend function modifiers and sealed hierarchies directly", "Annotations"], ans: 2 },
+    { q: "How does kotlinx.serialization generate serializers?", opts: ["Runtime reflection like Gson", "Annotation processing like Moshi", "A compiler plugin that generates code at compile time", "Bytecode transformation at build time"], ans: 2 },
+    { q: "What is the primary risk of using Gson with Kotlin data classes?", opts: ["Gson cannot parse JSON arrays", "Gson uses reflection and can create objects with null values in non-nullable fields", "Gson does not support nested objects", "Gson requires ProGuard rules for every class"], ans: 1 },
+    { q: "When migrating from KAPT to KSP, what must match in the KSP version number?", opts: ["The Android Gradle Plugin version", "The Kotlin compiler version", "The Java JDK version", "The Gradle wrapper version"], ans: 1 },
+    { q: "What does Json { ignoreUnknownKeys = true } do in kotlinx.serialization?", opts: ["Ignores JSON keys that have null values", "Allows JSON to contain keys not defined in the data class without throwing", "Skips serialization of keys with default values", "Treats all keys as case-insensitive"], ans: 1 },
+    { q: "In a custom KSP processor, what should process() return?", opts: ["The list of generated files", "A boolean indicating success", "A list of symbols that could not be processed (deferred to next round)", "Nothing — it returns Unit"], ans: 2 },
+    { q: "Which serialization library works with Kotlin Multiplatform?", opts: ["Gson", "Moshi", "kotlinx.serialization", "All of the above"], ans: 2 },
+    { q: "What is the recommended way to configure Room schema export with KSP?", opts: ["Add @Database(exportSchema = true)", "Use ksp { arg('room.schemaLocation', path) } in build.gradle", "Set a system property in gradle.properties", "Pass it as a command-line argument to gradlew"], ans: 1 },
+    { q: "Can KAPT and KSP run side-by-side in the same module during migration?", opts: ["No, they are mutually exclusive", "Yes, you can use kapt for some libraries and ksp for others simultaneously", "Only if you use a compatibility plugin", "Only in debug builds"], ans: 1 }
+  ],
+  challenge: "Build a complete serialization benchmark and migration project: (1) Create identical data models (User, Post, Comment with nested objects and lists) with Gson annotations, Moshi annotations, and @Serializable, (2) Write a benchmark that measures serialization and deserialization times for 1000 objects with each library, (3) Create a custom KSP processor that generates a `toMap()` extension function for any class annotated with @Mappable — the processor should read all properties and generate a Map<String, Any?> builder, (4) Demonstrate a Gson null-safety bug where a non-nullable Kotlin field receives null from JSON, and show how both Moshi and kotlinx.serialization handle it correctly, (5) Configure Room with KSP including schema export, and measure the build time difference between KAPT and KSP configurations.",
+  resources: [
+    { type: "docs", title: "KSP Official Documentation", url: "https://kotlinlang.org/docs/ksp-overview.html", source: "Kotlin Documentation" },
+    { type: "docs", title: "kotlinx.serialization Guide", url: "https://kotlinlang.org/docs/serialization.html", source: "Kotlin Documentation" },
+    { type: "article", title: "Migrating from KAPT to KSP", url: "https://developer.android.com/build/migrate-to-ksp", source: "Android Developers" },
+    { type: "video", title: "KSP: Kotlin Symbol Processing", url: "https://www.youtube.com/watch?v=bv-VyGM3HCY", source: "Android Developers YouTube" }
+  ],
+  eli5: "Imagine you write a letter in Korean. KAPT is like a translator who first converts it to English, then reads the English to understand what you wrote — it takes twice as long and some Korean jokes get lost in translation. KSP is a translator who reads Korean directly — much faster and they get all the jokes! For serialization: Gson is like taking apart a LEGO set by looking at the finished model (slow, might miss pieces). kotlinx.serialization is like having the instruction booklet built right into the box — it knows exactly how to build and take apart the set because the instructions were printed at the factory.",
+  codeWalkthrough: [
+    "The @Serializable annotation triggers the kotlinx.serialization compiler plugin to generate a serializer for each class at compile time.",
+    "@SerialName('status_code') maps the Kotlin property statusCode to the JSON key 'status_code' — no runtime reflection needed.",
+    "Default values (avatarUrl = null, role = MEMBER) are handled natively — Gson would ignore these and set null/first-enum.",
+    "The appJson instance configures parsing behavior. ignoreUnknownKeys prevents crashes when the API adds new fields.",
+    "explicitNulls = false omits null fields from serialized output, reducing payload size.",
+    "Sealed interface NetworkResult with @SerialName on subtypes enables type-safe polymorphic JSON parsing with a discriminator.",
+    "InstantSerializer demonstrates custom serialization — implementing KSerializer with descriptor, serialize, and deserialize.",
+    "The KSP processor's SymbolProcessorProvider is the entry point, registered via META-INF/services.",
+    "resolver.getSymbolsWithAnnotation() finds all @AutoFactory-annotated classes. validate() checks if the symbol is fully resolved.",
+    "CodeGenerator.createNewFile with Dependencies enables incremental processing — KSP only re-processes changed files.",
+    "The KAPT-to-KSP migration is a dependency-level change: swap 'kapt' for 'ksp' and update the plugin. Library APIs remain identical.",
+    "Room KSP args like room.generateKotlin = true enable Kotlin code generation instead of Java, improving null-safety and readability."
+  ],
+  bugChallenge: {
+    code: `// Gson deserialization
+data class UserProfile(
+    val id: Long,
+    val name: String,
+    val email: String,
+    val bio: String = "No bio provided"
+)
+
+val json = """{"id": 1, "name": "Alice", "email": null}"""
+val user = Gson().fromJson(json, UserProfile::class.java)
+println(user.email) // What happens here?
+println(user.bio)   // And here?`,
+    hint: "Gson uses reflection to create objects, bypassing Kotlin's constructor. What happens to non-nullable fields and default values?",
+    answer: "Bug 1: user.email is null at runtime even though it's declared as non-nullable String. Gson uses Unsafe allocation (bypassing the constructor) and sets null directly via reflection. This will throw a NullPointerException when email is used in Kotlin code expecting non-null. Bug 2: user.bio is null, NOT 'No bio provided' — Gson bypasses the Kotlin constructor so default parameter values are never applied. Fix: Use kotlinx.serialization (@Serializable) or Moshi with codegen, both of which respect Kotlin null-safety and default values."
+  },
+  difficulty: "advanced",
+  prereqs: [5, 26, 28, 45]
+},
+{
+  id: 77,
+  title: "R8, ProGuard & Release Optimization",
+  subtitle: "Shrink, obfuscate, and optimize your APK for production without breaking your app",
+  analogy: "R8 is like a professional editor for a novel. It removes chapters nobody reads (dead code), renames characters to single letters to save space (obfuscation), rewrites wordy sentences to be concise (optimization), and strips out unused illustrations (resource shrinking). But if someone is looking up characters by name in an index (reflection), the editor needs a 'do not rename' sticky note (-keep rules).",
+  points: [
+    { t: "ProGuard vs R8", d: "ProGuard was the original shrinker/obfuscator for Android. R8 replaced it as the default since AGP 3.4+. R8 is faster, produces smaller output, and operates directly on DEX bytecode rather than Java bytecode. R8 is a drop-in replacement — it reads ProGuard rule files but has its own optimizations like class merging and devirtualization." },
+    { t: "Enabling R8 in build.gradle", d: "Set minifyEnabled true and shrinkResources true in your release buildType. R8 runs automatically when minifyEnabled is true. proguardFiles points to your keep rules. Always test the release build thoroughly — minification can break reflection-based code." },
+    { t: "proguard-rules.pro vs consumer-rules.pro", d: "proguard-rules.pro applies to your app module only. consumer-rules.pro is for library modules — rules are automatically included when the library is consumed by the app. Libraries should use consumer-rules.pro to protect their public API from obfuscation." },
+    { t: "-keep rule syntax", d: "-keep class com.example.Model { *; } preserves the class and all its members. -keepclassmembers keeps members but allows class name obfuscation. -keepnames keeps names but allows shrinking unused code. -keepclasseswithmembernames keeps classes that have specific members. The granularity matters for APK size." },
+    { t: "-dontwarn and -dontnote", d: "-dontwarn com.thirdparty.** suppresses warnings for missing classes (common with optional dependencies). -dontnote suppresses informational messages. Use these sparingly — they can mask real problems. Prefer fixing the root cause over silencing warnings." },
+    { t: "Code shrinking (tree shaking)", d: "R8 analyzes the call graph from entry points (Activities, Services, etc.) and removes all unreachable code. This can reduce APK size by 20-50%. Entry points are determined by AndroidManifest.xml entries and -keep rules. Unused library code is also stripped." },
+    { t: "Obfuscation & name mangling", d: "R8 renames classes, methods, and fields to short names (a, b, c) making reverse engineering harder and reducing string pool size. It produces a mapping.txt file that maps obfuscated names back to originals. Always archive mapping.txt with each release for crash report deobfuscation." },
+    { t: "Reflection-based issues (Gson, Retrofit, Room)", d: "Gson uses reflection to map JSON fields to class properties — obfuscation renames fields and breaks deserialization. Solutions: use @SerializedName annotations, add -keep rules for model classes, or switch to Moshi/kotlinx.serialization with codegen. Retrofit needs -keep for API interfaces. Room handles its own rules via consumer-rules." },
+    { t: "Debugging with mapping.txt and retrace", d: "When a crash occurs in a minified build, the stack trace shows obfuscated names. Use the retrace tool (bundled with SDK) or upload mapping.txt to Play Console / Firebase Crashlytics for automatic deobfuscation. Command: retrace mapping.txt stacktrace.txt. Always upload mapping.txt to your crash reporting service." },
+    { t: "Resource shrinking", d: "shrinkResources true removes unused resources (drawables, layouts, strings) that code shrinking made unreachable. It works with minifyEnabled true. Use tools:keep and tools:discard in res/raw/keep.xml for resources loaded dynamically. Can save 10-30% additional size." },
+    { t: "Common crash patterns after enabling R8", d: "Top issues: (1) Serialization models obfuscated — JSON parsing fails silently or crashes. (2) Enum values stripped — when used via reflection. (3) Kotlin metadata removed — breaks Kotlin reflection. (4) Missing rules for DI frameworks (Dagger/Hilt). (5) WebView JavaScript interface methods obfuscated. Always add -keep for @JavascriptInterface methods." },
+    { t: "R8 full mode vs compat mode", d: "R8 full mode (android.enableR8.fullMode=true, default since AGP 8.0) applies more aggressive optimizations: class merging, more inlining, and assumes -keepattributes is not implicit. It may break libraries that relied on ProGuard compat behavior. Test thoroughly when upgrading." }
+  ],
+  whatIs: "R8 is Android's default code shrinker, obfuscator, and optimizer that processes your app's bytecode during release builds. It removes unused code (tree shaking), renames identifiers to short names (obfuscation), applies compiler optimizations, and works alongside resource shrinking to produce the smallest possible APK. ProGuard rule files (-keep rules) tell R8 which code must not be touched, especially code accessed via reflection.",
+  realWorld: "In a large e-commerce app, enabling R8 reduced the APK from 28MB to 16MB. But the first release broke Gson deserialization for the entire product catalog — all model classes were obfuscated, so JSON field names no longer matched. The fix required adding @SerializedName to 47 model classes and -keep rules for the API response package. After that, the team migrated to kotlinx.serialization with codegen, which generates serialization code at compile time and works perfectly with R8 — no keep rules needed.",
+  code: `// build.gradle.kts (app module)
+android {
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            // Upload mapping file to Crashlytics
+            firebaseCrashlytics {
+                mappingFileUploadEnabled = true
+            }
+        }
+    }
+}
+
+// proguard-rules.pro — Common rules for production apps
+
+# Keep all model classes used with Gson
+-keep class com.example.app.data.model.** { *; }
+
+# Keep Retrofit API interfaces
+-keep,allowobfuscation interface com.example.app.data.api.** {
+    @retrofit2.http.* <methods>;
+}
+
+# Keep classes with @SerializedName annotation
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+# Keep enum values (required for serialization)
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# Keep Parcelable implementations
+-keep class * implements android.os.Parcelable {
+    public static final android.os.Parcelable\$Creator *;
+}
+
+# Keep JavaScript interface methods for WebView
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# Keep Room entities (Room's consumer rules handle most,
+# but custom TypeConverters need explicit rules)
+-keep class com.example.app.data.db.converters.** { *; }
+
+# Kotlin metadata for reflection (if used)
+-keep class kotlin.Metadata { *; }
+
+# Suppress warnings for optional dependencies
+-dontwarn org.bouncycastle.**
+-dontwarn okhttp3.internal.platform.**
+
+// consumer-rules.pro (for a library module)
+// These rules are automatically applied when the library is consumed
+-keep public class com.example.library.PublicApi { *; }
+-keep public interface com.example.library.Callback { *; }`,
+  funFact: "R8 was developed by Google as a successor to ProGuard. The name 'R8' stands for 'Release 8' — it was the 8th iteration of Google's internal code shrinker experiments. In benchmarks, R8 produces APKs that are 5-10% smaller than ProGuard with 2-3x faster build times. Google Play requires apps targeting API 30+ to use App Bundles, where R8 optimization becomes even more critical since per-ABI and per-density splitting amplifies the savings.",
+  quiz: [
+    {
+      q: "What is the primary difference between R8 and ProGuard?",
+      opts: [
+        "R8 only handles obfuscation while ProGuard handles shrinking",
+        "R8 operates directly on DEX bytecode, is faster, and produces smaller output than ProGuard",
+        "ProGuard is newer and replaces R8 in modern AGP",
+        "R8 requires completely different rule syntax than ProGuard"
+      ],
+      ans: 1
+    },
+    {
+      q: "What must be true for shrinkResources to work?",
+      opts: [
+        "It works independently without any other flags",
+        "minifyEnabled must also be set to true",
+        "It requires a separate Gradle plugin",
+        "It only works with App Bundles, not APKs"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why does Gson deserialization break after enabling R8?",
+      opts: [
+        "R8 removes Gson from the dependency tree",
+        "R8 renames class fields, so JSON field names no longer match the obfuscated property names",
+        "R8 converts all classes to sealed classes incompatible with Gson",
+        "Gson requires Java bytecode but R8 only outputs Kotlin bytecode"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between -keep and -keepclassmembers?",
+      opts: [
+        "-keep preserves the class name and members; -keepclassmembers preserves members but allows class name obfuscation",
+        "They are identical — just aliases for the same rule",
+        "-keepclassmembers is more restrictive and keeps everything",
+        "-keep only works on interfaces; -keepclassmembers works on classes"
+      ],
+      ans: 0
+    },
+    {
+      q: "What file does R8 generate for deobfuscating crash stack traces?",
+      opts: [
+        "obfuscation.log",
+        "proguard-map.json",
+        "mapping.txt",
+        "retrace.config"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the purpose of consumer-rules.pro in a library module?",
+      opts: [
+        "It contains test-only ProGuard rules",
+        "It defines rules automatically included when the library is consumed by an app module",
+        "It overrides the app module's proguard-rules.pro",
+        "It specifies which consumers are allowed to use the library"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does R8 full mode (default since AGP 8.0) do differently from compat mode?",
+      opts: [
+        "It disables obfuscation for better debugging",
+        "It applies more aggressive optimizations like class merging and does not implicitly keep attributes",
+        "It only performs shrinking without optimization",
+        "It generates separate mapping files per build variant"
+      ],
+      ans: 1
+    },
+    {
+      q: "Which serialization approach works best with R8 WITHOUT requiring -keep rules?",
+      opts: [
+        "Gson with reflection",
+        "Jackson with reflection",
+        "kotlinx.serialization with code generation",
+        "Java Serializable interface"
+      ],
+      ans: 2
+    },
+    {
+      q: "How do you preserve resources that are loaded dynamically (e.g., via getIdentifier()) when shrinkResources is enabled?",
+      opts: [
+        "Add them to proguard-rules.pro with -keepresources",
+        "Use tools:keep attribute in res/raw/keep.xml",
+        "Set strictResourceShrinking = false in build.gradle",
+        "Dynamic resources are automatically detected and preserved"
+      ],
+      ans: 1
+    },
+    {
+      q: "A release build crashes on an enum deserialization. What is the most likely cause with R8 enabled?",
+      opts: [
+        "R8 does not support enums at all",
+        "The enum's values() and valueOf() methods were stripped because they appeared unused to the call graph analysis",
+        "R8 converts enums to integers automatically",
+        "Enums require the R8 full mode to be disabled"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Create a multi-module Android project setup with proper R8 configuration. In the app module, define a Gson-based API response model with nested objects and configure proguard-rules.pro to protect it. In a shared library module, create a public API class and write consumer-rules.pro that preserves it. Add rules for Retrofit interfaces, Parcelable classes, and JavaScript interface methods. Then demonstrate how to use the retrace command to deobfuscate a sample obfuscated stack trace.",
+  resources: [
+    { type: "docs", title: "Shrink, Obfuscate, and Optimize Your App", url: "https://developer.android.com/build/shrink-code", source: "developer.android.com" },
+    { type: "docs", title: "R8 Full Mode", url: "https://r8.googlesource.com/r8/+/refs/heads/main/compatibility-faq.md", source: "r8.googlesource.com" },
+    { type: "docs", title: "ProGuard Manual — Keep Rules", url: "https://www.guardsquare.com/manual/configuration/usage", source: "guardsquare.com" },
+    { type: "docs", title: "Firebase Crashlytics Deobfuscation", url: "https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports", source: "firebase.google.com" },
+    { type: "docs", title: "kotlinx.serialization Guide", url: "https://kotlinlang.org/docs/serialization.html", source: "kotlinlang.org" }
+  ],
+  eli5: "Imagine you wrote a giant book with 1000 pages, but people only read 200 of those pages. R8 is like a smart editor who rips out the 800 pages nobody reads, renames all the characters to just letters (A, B, C) so the book takes less ink, and removes all the pictures nobody looks at. But if someone has an index card saying 'look up Captain Hook on page 457,' and the editor renamed Captain Hook to 'C' and removed page 457, it breaks! So you give the editor a sticky note: 'Do NOT touch Captain Hook.' That sticky note is a -keep rule.",
+  codeWalkthrough: [
+    "isMinifyEnabled = true — enables R8 code shrinking and obfuscation for the release build type; without this, your APK contains all code including unused library methods",
+    "isShrinkResources = true — removes unused resources (images, layouts, strings) that became unreachable after code shrinking; requires minifyEnabled",
+    "getDefaultProguardFile('proguard-android-optimize.txt') — includes Google's default rules that keep Activity/Service/etc. referenced from AndroidManifest",
+    "-keep class com.example.app.data.model.** { *; } — preserves all model classes and their fields from obfuscation, critical for Gson reflection-based deserialization",
+    "-keep,allowobfuscation interface ... — keeps Retrofit interfaces but allows their names to be obfuscated; the method annotations are preserved for Retrofit's reflection",
+    "@com.google.gson.annotations.SerializedName <fields> — keeps any field annotated with @SerializedName, an alternative to keeping entire model packages",
+    "-keepclassmembers enum * { values(); valueOf(); } — preserves enum methods required for deserialization; without this, enums break when deserialized from JSON or Bundles",
+    "android.os.Parcelable$Creator — preserves the CREATOR field required by the Parcelable contract; without it, unparceling crashes at runtime",
+    "@android.webkit.JavascriptInterface <methods> — keeps methods callable from WebView JavaScript; obfuscation would make them unreachable from JS code",
+    "-dontwarn org.bouncycastle.** — suppresses warnings for optional crypto dependencies that may not be on the classpath; only use after verifying they are truly optional"
+  ],
+  bugChallenge: {
+    code: `// build.gradle.kts
+android {
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            // shrinkResources is missing
+        }
+    }
+}
+
+// Model class — no ProGuard rules defined
+data class ApiResponse(
+    val status: String,
+    val data: UserProfile
+)
+
+data class UserProfile(
+    val userId: String,
+    val displayName: String,
+    val avatarUrl: String?
+)
+
+// Retrofit usage
+val response = gson.fromJson(json, ApiResponse::class.java)
+// response.data.displayName is always null in release builds!`,
+    hint: "Two issues: missing resource shrinking, and model fields are obfuscated by R8 making Gson unable to match JSON keys to field names",
+    answer: "Bug 1: shrinkResources is not enabled — unused resources bloat the APK. Add isShrinkResources = true. Bug 2: R8 obfuscates UserProfile's fields (userId becomes 'a', displayName becomes 'b'), so Gson cannot match JSON keys 'userId'/'displayName' to the obfuscated names. Fix: Either add @SerializedName(\"userId\") annotations to each field, add -keep class ApiResponse { *; } and -keep class UserProfile { *; } to proguard-rules.pro, or migrate to kotlinx.serialization which uses code generation instead of reflection."
+  },
+  difficulty: "advanced",
+  prereqs: [45, 46]
+},
+{
+  id: 78,
+  title: "Android 14/15 Platform Features & Migration",
+  subtitle: "Stay current with the latest platform requirements and APIs that interviewers expect you to know",
+  analogy: "Android platform updates are like building code revisions for a city. Each year, the city council (Google) passes new regulations. Some are optional at first (targetSdk not bumped yet), but eventually become mandatory. Predictive back is like adding exit signs with preview windows — you can peek through the door before leaving. Edge-to-edge is like removing all window frames so you get a floor-to-ceiling glass wall.",
+  points: [
+    { t: "Predictive back gesture & animations", d: "Android 14+ supports predictive back — the system shows a preview of the destination (home screen, previous activity) as the user swipes back. Apps must opt in via android:enableOnBackInvokedCallback='true' in the manifest. Legacy onBackPressed() is deprecated — migrate to OnBackPressedCallback for proper handling. Custom back animations use Progress-based APIs." },
+    { t: "Per-app language preferences (LocaleManager)", d: "Android 13+ lets users set a different language per app via system settings. Use LocaleManager.setApplicationLocales() or the AppCompatDelegate.setApplicationLocales() compat API. Declare supported locales in res/xml/locales_config.xml and reference it in the manifest with android:localeConfig. This replaces hacky custom locale-switching implementations." },
+    { t: "Photo picker (PickVisualMedia)", d: "ActivityResultContracts.PickVisualMedia() provides a system-level media picker without requiring READ_EXTERNAL_STORAGE. Available on Android 13+ natively and backported to Android 11+ via Google Play Services. Supports filtering by ImageOnly, VideoOnly, or ImageAndVideo. Use PickMultipleVisualMedia(maxItems) for multi-select." },
+    { t: "Foreground service types (Android 14 requirement)", d: "Android 14 requires all foreground services to declare a type in the manifest: camera, connectedDevice, dataSync, health, location, mediaPlayback, mediaProjection, microphone, phoneCall, remoteMessaging, shortService, specialUse, systemExempted. Missing type declarations crash with MissingForegroundServiceTypeException. Each type requires corresponding permissions." },
+    { t: "Partial media access (READ_MEDIA_VISUAL_USER_SELECTED)", d: "Android 14 introduces partial photo/video access — users can grant access to selected media items instead of all photos. Apps must handle the new READ_MEDIA_VISUAL_USER_SELECTED permission and re-request access when they need more items. The photo picker is the recommended alternative to avoid permission complexity entirely." },
+    { t: "Edge-to-edge enforcement (Android 15)", d: "Android 15 enforces edge-to-edge display for apps targeting SDK 35+. The system draws behind status bar and navigation bar by default. Apps must use WindowInsets to handle padding — Modifier.windowInsetsPadding() in Compose or ViewCompat.setOnApplyWindowInsetsListener() in Views. Status bar and nav bar backgrounds become transparent — no opt-out." },
+    { t: "targetSdk migration checklist pattern", d: "When bumping targetSdkVersion: (1) Read the behavior changes doc for ALL versions between current and target. (2) Test with StrictMode enabled. (3) Check for deprecated API usage. (4) Update foreground service types (14+). (5) Handle new permissions model changes. (6) Test edge-to-edge layout (15+). (7) Verify back navigation behavior. Always bump one version at a time." },
+    { t: "Privacy Sandbox & advertising changes", d: "Privacy Sandbox replaces the Advertising ID with privacy-preserving APIs: Topics API (interest-based ads without tracking), Attribution Reporting (conversion measurement without cross-app tracking), and Protected Audiences (remarketing without user profiles). GAID will be deprecated. Apps using ads SDKs need to plan migration." },
+    { t: "Grammatical Inflection API (Android 14)", d: "Android 14 adds GrammaticalInflectionManager for gendered languages. Apps can set the user's grammatical gender so the system inflects UI strings correctly (e.g., masculine/feminine forms in French, German, etc.). Call setRequestedApplicationGrammaticalGender() with GENDER_MASCULINE, GENDER_FEMININE, or GENDER_NEUTRAL." },
+    { t: "Screenshot detection API (Android 14)", d: "Android 14 provides Activity.ScreenCaptureCallback for detecting when the user takes a screenshot. Register via registerScreenCaptureCallback(). Useful for financial/banking apps that want to warn users about sensitive content being captured. Replaces unreliable ContentObserver-based hacks for detecting screenshots." },
+    { t: "Credential Manager API", d: "Android 14 introduces Credential Manager as the unified API for sign-in. It consolidates passkeys, passwords, and federated identity (Google Sign-In) into a single flow. Replaces the legacy Smart Lock for Passwords API. Call CredentialManager.getCredential() with a GetCredentialRequest containing the supported credential types." }
+  ],
+  whatIs: "Android 14 (API 34) and Android 15 (API 35) introduce significant platform changes that affect how apps handle back navigation, media access, foreground services, display rendering, and privacy. These updates follow Google's pattern of introducing features as opt-in first, then making them mandatory when apps target the new SDK. Senior engineers must understand these changes for migration planning and interviews.",
+  realWorld: "A banking app targeting SDK 34 faced three major migration issues: (1) All 12 foreground services needed type declarations — the background sync service required the dataSync type with DATA_SYNC permission. (2) The custom back-handling in the transaction flow used onBackPressed(), which broke predictive back animations — migration to OnBackPressedCallback took 3 sprints because of complex navigation state. (3) The photo ID upload feature used READ_EXTERNAL_STORAGE which no longer grants access on Android 14 — migrating to the photo picker simplified the code from 200 lines to 15 lines.",
+  code: `// 1. Predictive Back — AndroidManifest.xml
+// <application android:enableOnBackInvokedCallback="true" ...>
+
+// Modern back handling with OnBackPressedCallback
+class CheckoutFragment : Fragment() {
+
+    private val backCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (hasUnsavedChanges()) {
+                showDiscardDialog()
+            } else {
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, backCallback)
+    }
+}
+
+// 2. Photo Picker — no permissions needed!
+class ProfileFragment : Fragment() {
+
+    private val pickMedia = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        uri?.let { uploadProfilePhoto(it) }
+    }
+
+    private fun selectPhoto() {
+        pickMedia.launch(
+            PickVisualMediaRequest(
+                ActivityResultContracts.PickVisualMedia.ImageOnly
+            )
+        )
+    }
+}
+
+// 3. Foreground Service Type — AndroidManifest.xml
+// <service
+//     android:name=".sync.DataSyncService"
+//     android:foregroundServiceType="dataSync"
+//     android:exported="false" />
+
+// Starting with type in code (Android 14+)
+class DataSyncService : Service() {
+
+    override fun onStartCommand(
+        intent: Intent?, flags: Int, startId: Int
+    ): Int {
+        val notification = createNotification()
+        ServiceCompat.startForeground(
+            this,
+            NOTIFICATION_ID,
+            notification,
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
+        performSync()
+        return START_NOT_STICKY
+    }
+}
+
+// 4. Edge-to-Edge (Android 15 mandatory)
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge() // From androidx.activity
+
+        setContent {
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                contentWindowInsets = ScaffoldDefaults
+                    .contentWindowInsets
+            ) { innerPadding ->
+                MainScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+        }
+    }
+}
+
+// 5. Per-App Language Preferences
+// res/xml/locales_config.xml:
+// <locale-config xmlns:android="...">
+//     <locale android:name="en" />
+//     <locale android:name="bn" />
+//     <locale android:name="hi" />
+//     <locale android:name="es" />
+// </locale-config>
+
+fun changeLanguage(context: Context, languageTag: String) {
+    val localeList = LocaleListCompat.forLanguageTags(languageTag)
+    AppCompatDelegate.setApplicationLocales(localeList)
+}
+
+// 6. Screenshot Detection (Android 14+)
+class SensitiveActivity : AppCompatActivity() {
+
+    private val screenshotCallback = Activity.ScreenCaptureCallback {
+        showWarningDialog("Screenshot detected on sensitive screen")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            registerScreenCaptureCallback(mainExecutor, screenshotCallback)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            unregisterScreenCaptureCallback(screenshotCallback)
+        }
+    }
+}`,
+  funFact: "Android 14's codename was 'Upside Down Cake' — the first Android version name since Android 10 (Q) that Google publicly used as a codename. The internal dessert naming tradition never stopped; Google just stopped using them publicly for marketing. The foreground service type requirement in Android 14 was one of the most impactful changes — it broke thousands of apps on the Play Store that had to rush updates before the targetSdk deadline.",
+  quiz: [
+    {
+      q: "What happens if a foreground service does NOT declare a foregroundServiceType in the manifest when targeting Android 14+?",
+      opts: [
+        "The service runs normally but without a notification",
+        "The system logs a warning but allows it",
+        "The app crashes with MissingForegroundServiceTypeException",
+        "The service is automatically converted to a background service"
+      ],
+      ans: 2
+    },
+    {
+      q: "How should apps handle back navigation to support predictive back gestures?",
+      opts: [
+        "Override onBackPressed() in the Activity as usual",
+        "Use OnBackPressedCallback registered with the OnBackPressedDispatcher",
+        "Handle back in onKeyDown() with KEYCODE_BACK",
+        "Use FragmentManager.popBackStack() directly"
+      ],
+      ans: 1
+    },
+    {
+      q: "What advantage does the Photo Picker (PickVisualMedia) have over READ_EXTERNAL_STORAGE?",
+      opts: [
+        "It provides higher resolution images",
+        "It requires no runtime permission — the system handles access scoping",
+        "It only works on Android 14+",
+        "It allows access to all files on the device"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does Android 15's edge-to-edge enforcement mean for apps targeting SDK 35?",
+      opts: [
+        "Apps must use full-screen immersive mode at all times",
+        "The system draws content behind status and navigation bars by default, and apps cannot opt out",
+        "Apps must remove all toolbars and app bars",
+        "The navigation bar is permanently hidden"
+      ],
+      ans: 1
+    },
+    {
+      q: "Where should supported locales be declared for per-app language preferences?",
+      opts: [
+        "In build.gradle resConfigs only",
+        "In strings.xml for each language",
+        "In res/xml/locales_config.xml, referenced from the manifest via android:localeConfig",
+        "In the Application class onCreate()"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does READ_MEDIA_VISUAL_USER_SELECTED permission represent in Android 14?",
+      opts: [
+        "Full access to all media on the device",
+        "The user granted access to specific selected photos/videos, not the entire library",
+        "Permission to read media from external SD cards only",
+        "A legacy permission replaced by MANAGE_EXTERNAL_STORAGE"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the Privacy Sandbox's Topics API designed to replace?",
+      opts: [
+        "Firebase Analytics",
+        "Google Analytics for Firebase",
+        "The Advertising ID (GAID) for interest-based advertising",
+        "The INTERNET permission"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the recommended approach for detecting screenshots on Android 14+?",
+      opts: [
+        "Monitor MediaStore with ContentObserver for new screenshots",
+        "Use Activity.ScreenCaptureCallback registered via registerScreenCaptureCallback()",
+        "Check the screenshot folder periodically with a WorkManager job",
+        "Use FLAG_SECURE which prevents screenshots entirely"
+      ],
+      ans: 1
+    },
+    {
+      q: "When migrating targetSdk from 33 to 35, what is the safest approach?",
+      opts: [
+        "Jump directly to 35 and fix all issues at once",
+        "Bump one version at a time (33→34→35), testing behavior changes at each level",
+        "Only change targetSdk without reading behavior change docs",
+        "Skip 34 since 35 includes all 34 changes"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does the Credential Manager API unify?",
+      opts: [
+        "Only Google Sign-In and Facebook Login",
+        "Passkeys, passwords, and federated identity providers into a single sign-in flow",
+        "Biometric authentication and PIN codes only",
+        "OAuth tokens and API keys"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Build an Activity that demonstrates four Android 14/15 features: (1) Register an OnBackPressedCallback that shows a confirmation dialog when there are unsaved changes. (2) Implement photo selection using PickVisualMedia with both single and multi-select modes. (3) Start a foreground service with the correct foregroundServiceType for location tracking. (4) Apply edge-to-edge display using enableEdgeToEdge() and handle WindowInsets properly so content is not hidden behind system bars. Add proper SDK version checks throughout.",
+  resources: [
+    { type: "docs", title: "Android 14 Behavior Changes", url: "https://developer.android.com/about/versions/14/behavior-changes-14", source: "developer.android.com" },
+    { type: "docs", title: "Android 15 Behavior Changes", url: "https://developer.android.com/about/versions/15/behavior-changes-15", source: "developer.android.com" },
+    { type: "docs", title: "Predictive Back Design Guide", url: "https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture", source: "developer.android.com" },
+    { type: "docs", title: "Photo Picker", url: "https://developer.android.com/training/data-storage/shared/photopicker", source: "developer.android.com" },
+    { type: "docs", title: "Edge-to-Edge Display", url: "https://developer.android.com/develop/ui/views/layout/edge-to-edge", source: "developer.android.com" }
+  ],
+  eli5: "Imagine your phone is a house that gets renovated every year. Android 14 said 'every room that runs while you sleep (foreground services) must now have a label on the door saying what it does.' Android 15 said 'we are removing all the window borders so you can see outside from floor to ceiling (edge-to-edge), and you cannot put the borders back.' The photo picker is like a librarian who brings you only the photos you ask for, instead of giving you the keys to the entire photo library.",
+  codeWalkthrough: [
+    "OnBackPressedCallback(true) — creates a callback that is initially enabled; when enabled, it intercepts back presses before the system handles them",
+    "addCallback(viewLifecycleOwner, backCallback) — ties the callback lifecycle to the Fragment's view; automatically removed when view is destroyed, preventing leaks",
+    "isEnabled = false; onBackPressed() — disables the callback and re-dispatches the back press so the system (or next callback) handles it normally",
+    "registerForActivityResult(PickVisualMedia()) — sets up the photo picker contract; the lambda receives a nullable Uri of the selected media",
+    "PickVisualMediaRequest(ImageOnly) — configures the picker to only show images; alternatives are VideoOnly and ImageAndVideo",
+    "ServiceCompat.startForeground(..., FOREGROUND_SERVICE_TYPE_DATA_SYNC) — starts foreground with explicit type; the type must match the manifest declaration",
+    "enableEdgeToEdge() — extends the app's drawing area behind system bars; must handle insets to avoid content overlap with status/navigation bars",
+    "Modifier.padding(innerPadding) — applies the insets-aware padding provided by Scaffold; ensures content does not render behind system bars",
+    "AppCompatDelegate.setApplicationLocales(localeList) — changes the app's locale using the compat API; works on Android 13+ natively and uses AppCompat on older versions",
+    "registerScreenCaptureCallback(mainExecutor, callback) — registers for screenshot notifications on the main thread; must be balanced with unregister in onStop()"
+  ],
+  bugChallenge: {
+    code: `class PaymentActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_payment)
+    }
+
+    // Legacy back handling — breaks predictive back
+    override fun onBackPressed() {
+        if (hasUnsavedTransaction()) {
+            showConfirmDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
+}
+
+// Service without foregroundServiceType
+// <service android:name=".LocationService" />
+
+class LocationService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, id: Int): Int {
+        startForeground(1, createNotification())
+        startLocationUpdates()
+        return START_STICKY
+    }
+}`,
+    hint: "Two issues: deprecated back navigation approach and missing foreground service type for Android 14+",
+    answer: "Bug 1: onBackPressed() is deprecated and prevents predictive back animations. Fix: Remove the override, add android:enableOnBackInvokedCallback='true' to manifest, and register an OnBackPressedCallback in onCreate with the unsaved transaction logic. Bug 2: LocationService has no foregroundServiceType in the manifest or startForeground() call. On Android 14+, this crashes with MissingForegroundServiceTypeException. Fix: Add android:foregroundServiceType='location' to the <service> tag, add ACCESS_FINE_LOCATION permission, and use ServiceCompat.startForeground(this, 1, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)."
+  },
+  difficulty: "advanced",
+  prereqs: [13, 34]
+},
+{
+  id: 79,
+  title: "GraphQL with Apollo Kotlin",
+  subtitle: "Schema-first API development with normalized caching and real-time subscriptions",
+  analogy: "REST is like ordering from a fixed menu — you get the whole plate even if you only want the salad. GraphQL is like a build-your-own-bowl restaurant — you specify exactly which ingredients (fields) you want, and the kitchen (server) gives you precisely that. Apollo Kotlin is your personal waiter who remembers your preferences (cache), can take complex orders (queries with fragments), and alerts you when new dishes are ready (subscriptions).",
+  points: [
+    { t: "GraphQL basics: queries, mutations, subscriptions", d: "Queries read data (GET equivalent), mutations write data (POST/PUT/DELETE equivalent), subscriptions push real-time updates via WebSocket. Unlike REST, all requests go to a single endpoint. The client specifies exactly which fields to return, solving over-fetching and under-fetching problems." },
+    { t: "Apollo Kotlin client setup", d: "Add the Apollo Gradle plugin and runtime dependency. The plugin downloads your schema.graphqls, and you write .graphql query files. At build time, Apollo generates type-safe Kotlin data classes for every query, mutation, and fragment. Call apolloClient.query(MyQuery()).execute() to fetch data." },
+    { t: "Schema-first development & codegen", d: "Download the schema using Apollo CLI or Gradle task (./gradlew downloadApolloSchema). Write .graphql files alongside your code. Apollo codegen generates: query/mutation data classes, input types, enum types, and fragment classes. The generated code is type-safe — schema mismatches are caught at compile time, not runtime." },
+    { t: "Normalized cache & cache policies", d: "Apollo's normalized cache breaks responses into individual objects keyed by __typename + id. When two queries return the same User, both read from the same cache entry. Cache policies: CacheOnly, NetworkOnly, CacheFirst, NetworkFirst, CacheAndNetwork. CacheFirst checks cache before network — ideal for reducing API calls." },
+    { t: "Optimistic UI updates", d: "For mutations, provide optimistic data that immediately updates the UI before the server responds. If the mutation fails, the cache rolls back to the previous state. Use .optimisticUpdates(MyMutation.Data(...)) on the mutation call. Critical for responsive UIs in social apps (likes, follows, etc.)." },
+    { t: "Error handling & partial data", d: "GraphQL can return partial data with errors — the errors array accompanies whatever data could be resolved. Apollo models this as ApolloResponse containing both data (nullable) and errors (list). Handle gracefully: show available data and display errors for failed fields. This is fundamentally different from REST's all-or-nothing responses." },
+    { t: "Pagination with GraphQL", d: "Cursor-based pagination uses endCursor/hasNextPage and is preferred for infinite lists (stable across insertions). Offset-based pagination uses offset/limit and is simpler but breaks when items are inserted mid-page. Apollo supports both via @typePolicy and custom merge functions in the normalized cache for seamless list appending." },
+    { t: "Apollo vs Retrofit+REST comparison", d: "Apollo advantages: type-safe queries generated from schema, precise field selection (no over-fetching), normalized caching built-in, real-time subscriptions. REST advantages: simpler caching (HTTP cache headers), broader backend support, easier file uploads, better tooling ecosystem. Use GraphQL for complex data graphs; REST for simple CRUD or when the backend mandates it." },
+    { t: "Fragments for reusable field sets", d: "GraphQL fragments define reusable field selections. fragment UserFields on User { id name avatar } can be spread into multiple queries with ...UserFields. Apollo generates a reusable Kotlin class for each fragment. Fragments reduce duplication and ensure consistency across queries that fetch the same entity type." },
+    { t: "Watchers for reactive cache updates", d: "apolloClient.query(MyQuery()).watch() returns a Flow that emits whenever the normalized cache changes for that query's data. This enables reactive UIs — when a mutation updates a User in cache, all watchers that include that User automatically re-emit. Pairs naturally with Compose's collectAsState()." },
+    { t: "Custom scalars & type adapters", d: "GraphQL schemas define custom scalars (DateTime, URL, JSON). Apollo requires type adapters to map them to Kotlin types. Register adapters via apollo { customScalarsMapping.set(mapOf('DateTime' to 'java.time.Instant')) } in build.gradle, then implement the adapter to serialize/deserialize. Without adapters, custom scalars default to Any." }
+  ],
+  whatIs: "Apollo Kotlin is a strongly-typed GraphQL client for Android/Kotlin that generates Kotlin data classes from your GraphQL schema and queries at build time. It provides a normalized cache that intelligently deduplicates data across queries, supports real-time subscriptions over WebSocket, and integrates with Kotlin coroutines and Flows for reactive data fetching. It replaces the traditional Retrofit+REST approach for APIs backed by GraphQL servers.",
+  realWorld: "A social media app migrated from REST to GraphQL with Apollo Kotlin to solve the 'profile screen problem' — the profile needed data from 5 different REST endpoints (user, posts, followers, following, settings), causing waterfall requests and over-fetching. With GraphQL, a single query fetches exactly the needed fields. The normalized cache meant that when a user updates their avatar in settings, the profile screen, comment sections, and follower lists all reflect the change instantly through cache watchers. Optimistic updates for likes made the UI feel instant — the heart animates immediately while the mutation fires in the background.",
+  code: `// 1. build.gradle.kts setup
+plugins {
+    id("com.apollographql.apollo3") version "3.8.2"
+}
+
+dependencies {
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
+    implementation("com.apollographql.apollo3:apollo-normalized-cache-sqlite:3.8.2")
+}
+
+apollo {
+    service("api") {
+        packageName.set("com.example.app.graphql")
+        // Custom scalar mapping
+        mapScalar("DateTime", "java.time.Instant",
+            "com.example.app.graphql.DateTimeAdapter")
+    }
+}
+
+// 2. GraphQL query file: src/main/graphql/GetUser.graphql
+// query GetUser(\$userId: ID!) {
+//     user(id: \$userId) {
+//         ...UserFields
+//         posts(first: 10) {
+//             edges {
+//                 node {
+//                     id
+//                     title
+//                     createdAt
+//                 }
+//                 cursor
+//             }
+//             pageInfo {
+//                 hasNextPage
+//                 endCursor
+//             }
+//         }
+//     }
+// }
+//
+// fragment UserFields on User {
+//     id
+//     name
+//     avatarUrl
+//     followerCount
+// }
+
+// 3. Apollo client with normalized cache
+object GraphQLClient {
+
+    val apolloClient: ApolloClient by lazy {
+        val sqlNormalizedCache = SqlNormalizedCacheFactory("apollo.db")
+
+        ApolloClient.Builder()
+            .serverUrl("https://api.example.com/graphql")
+            .normalizedCache(sqlNormalizedCache)
+            .addHttpHeader("Authorization", "Bearer \${TokenManager.accessToken}")
+            .build()
+    }
+}
+
+// 4. Repository with cache policies
+class UserRepository(
+    private val apollo: ApolloClient = GraphQLClient.apolloClient
+) {
+
+    // Cache-first: show cached data immediately, refresh in background
+    fun getUser(userId: String): Flow<UserState> = flow {
+        emit(UserState.Loading)
+
+        val response = apollo
+            .query(GetUserQuery(userId))
+            .fetchPolicy(FetchPolicy.CacheFirst)
+            .execute()
+
+        response.data?.user?.let { user ->
+            emit(UserState.Success(user.userFields))
+        } ?: emit(UserState.Error("User not found"))
+    }
+
+    // Watch for cache changes reactively
+    fun watchUser(userId: String): Flow<GetUserQuery.User?> {
+        return apollo
+            .query(GetUserQuery(userId))
+            .watch()
+            .map { it.data?.user }
+    }
+
+    // Mutation with optimistic update
+    suspend fun toggleFollow(userId: String, isFollowing: Boolean) {
+        val mutation = ToggleFollowMutation(userId)
+
+        val optimisticData = ToggleFollowMutation.Data(
+            toggleFollow = ToggleFollowMutation.ToggleFollow(
+                id = userId,
+                isFollowedByMe = !isFollowing,
+                followerCount = if (isFollowing) -1 else 1 // relative
+            )
+        )
+
+        apollo.mutation(mutation)
+            .optimisticUpdates(optimisticData)
+            .execute()
+    }
+
+    // Cursor-based pagination
+    suspend fun loadMorePosts(
+        userId: String,
+        cursor: String?
+    ): PostPage {
+        val response = apollo
+            .query(GetUserPostsQuery(userId, first = 10, after = cursor))
+            .fetchPolicy(FetchPolicy.NetworkOnly)
+            .execute()
+
+        val connection = response.data?.user?.posts
+        return PostPage(
+            posts = connection?.edges?.map { it.node } ?: emptyList(),
+            endCursor = connection?.pageInfo?.endCursor,
+            hasNextPage = connection?.pageInfo?.hasNextPage ?: false
+        )
+    }
+}
+
+// 5. ViewModel using Apollo
+class ProfileViewModel(
+    private val userRepo: UserRepository
+) : ViewModel() {
+
+    private val _userId = MutableStateFlow<String?>(null)
+
+    val userState: StateFlow<UserState> = _userId
+        .filterNotNull()
+        .flatMapLatest { userRepo.getUser(it) }
+        .stateIn(viewModelScope, SharingStarted.Lazily, UserState.Loading)
+
+    // Reactive cache watcher — auto-updates when cache changes
+    val user: StateFlow<GetUserQuery.User?> = _userId
+        .filterNotNull()
+        .flatMapLatest { userRepo.watchUser(it) }
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    fun loadUser(id: String) {
+        _userId.value = id
+    }
+
+    fun toggleFollow(userId: String, isFollowing: Boolean) {
+        viewModelScope.launch {
+            userRepo.toggleFollow(userId, isFollowing)
+        }
+    }
+}`,
+  funFact: "Apollo Kotlin was originally called 'Apollo Android' and was written in Java. The complete Kotlin rewrite (Apollo Kotlin 3.x) was one of the most significant migrations in the Android library ecosystem — it took 2 years and introduced a completely new API surface. The normalized cache was inspired by how Facebook's Relay client works internally. Fun fact: a well-configured Apollo cache can reduce API calls by 60-80% in typical social media apps because the same User/Post objects appear across dozens of different screens.",
+  quiz: [
+    {
+      q: "What is the fundamental difference between GraphQL and REST?",
+      opts: [
+        "GraphQL is faster because it uses binary protocols",
+        "The client specifies exactly which fields to return, avoiding over-fetching and under-fetching",
+        "GraphQL replaces HTTP with WebSockets for all communication",
+        "REST cannot handle nested data structures"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does Apollo's normalized cache do when two different queries return the same User object?",
+      opts: [
+        "Stores two separate copies for each query",
+        "Stores the object once, keyed by __typename + id, and both queries read from the same cache entry",
+        "Throws a duplicate key exception",
+        "Always fetches from network to resolve conflicts"
+      ],
+      ans: 1
+    },
+    {
+      q: "When should you use CacheFirst vs NetworkFirst fetch policy?",
+      opts: [
+        "CacheFirst for data that changes rarely (user profiles); NetworkFirst for real-time data (notifications)",
+        "They are interchangeable — no functional difference",
+        "CacheFirst for mutations; NetworkFirst for queries",
+        "CacheFirst only works with in-memory cache; NetworkFirst works with SQLite"
+      ],
+      ans: 0
+    },
+    {
+      q: "What happens to an optimistic update if the mutation fails?",
+      opts: [
+        "The optimistic data remains in the cache permanently",
+        "The app crashes with an unhandled exception",
+        "The cache rolls back to the previous state automatically",
+        "The user must manually clear the cache"
+      ],
+      ans: 2
+    },
+    {
+      q: "How does GraphQL handle a request where some fields resolve successfully and others fail?",
+      opts: [
+        "The entire request fails with an error",
+        "It returns partial data alongside an errors array describing what failed",
+        "It retries the failed fields automatically",
+        "Only the successful fields are returned with no error indication"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why is cursor-based pagination preferred over offset-based for infinite lists?",
+      opts: [
+        "Cursors are faster because they use binary search",
+        "Cursors are stable across insertions — items are not skipped or duplicated when new items are added",
+        "Offset-based pagination is not supported by GraphQL",
+        "Cursors allow sorting while offsets do not"
+      ],
+      ans: 1
+    },
+    {
+      q: "What does apolloClient.query(MyQuery()).watch() return?",
+      opts: [
+        "A single response that must be manually refreshed",
+        "A Flow that re-emits whenever the normalized cache data for that query changes",
+        "A LiveData that polls the server every 30 seconds",
+        "A coroutine Job that must be cancelled manually"
+      ],
+      ans: 1
+    },
+    {
+      q: "What happens at build time when you write .graphql query files with the Apollo plugin?",
+      opts: [
+        "The queries are sent to the server for validation",
+        "Apollo generates type-safe Kotlin data classes for each query, mutation, and fragment",
+        "The GraphQL files are converted to REST endpoint configurations",
+        "Nothing — .graphql files are only read at runtime"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the purpose of GraphQL fragments?",
+      opts: [
+        "To split a large query across multiple HTTP requests",
+        "To define reusable field selections that can be included in multiple queries for consistency and deduplication",
+        "To fragment the response into paginated chunks",
+        "To encrypt specific fields in the response"
+      ],
+      ans: 1
+    },
+    {
+      q: "When would REST+Retrofit be preferred over GraphQL+Apollo?",
+      opts: [
+        "When the data model is a complex graph with many relationships",
+        "When real-time subscriptions are needed",
+        "When the API is simple CRUD with HTTP caching, the backend mandates REST, or file upload is primary",
+        "REST is never preferred — GraphQL is objectively better in all cases"
+      ],
+      ans: 2
+    }
+  ],
+  challenge: "Build a book review app using Apollo Kotlin with: (1) A GraphQL schema defining Book (id, title, author, rating, reviews) and Review (id, text, rating, createdAt) types with queries, mutations, and a subscription. (2) Write the .graphql query files for: GetBooks (paginated with cursor), GetBookDetail (with reviews), AddReview mutation, and OnNewReview subscription. (3) Implement a repository with CacheFirst for book list, NetworkFirst for book detail, and optimistic updates for AddReview. (4) Create a ViewModel that uses watch() to reactively update the book list when a new review changes the average rating in the cache.",
+  resources: [
+    { type: "docs", title: "Apollo Kotlin Documentation", url: "https://www.apollographql.com/docs/kotlin/", source: "apollographql.com" },
+    { type: "docs", title: "GraphQL Introduction", url: "https://graphql.org/learn/", source: "graphql.org" },
+    { type: "docs", title: "Apollo Normalized Cache Guide", url: "https://www.apollographql.com/docs/kotlin/caching/normalized-cache", source: "apollographql.com" },
+    { type: "docs", title: "Apollo Pagination Guide", url: "https://www.apollographql.com/docs/kotlin/pagination/overview", source: "apollographql.com" },
+    { type: "docs", title: "GraphQL Cursor Connections Spec", url: "https://relay.dev/graphql/connections.htm", source: "relay.dev" }
+  ],
+  eli5: "Imagine you are at a salad bar. With REST, you order a 'Caesar salad' and get everything on it — even croutons you do not want. With GraphQL, you hand the chef a note saying 'I want lettuce, cheese, and dressing — skip the croutons.' The chef gives you exactly what you asked for. Apollo is your smart lunchbox that remembers what you ordered before — if you already have the lettuce from your last order, it only gets the new stuff from the chef.",
+  codeWalkthrough: [
+    "apollo { service('api') { packageName.set(...) } } — configures the Apollo Gradle plugin to generate code in the specified package; processes all .graphql files in src/main/graphql",
+    "mapScalar('DateTime', 'java.time.Instant', ...) — maps the GraphQL custom scalar DateTime to Kotlin's Instant type with a custom adapter for serialization",
+    "fragment UserFields on User { ... } — defines reusable field selections; Apollo generates a UserFields Kotlin class that can be used across queries",
+    "SqlNormalizedCacheFactory('apollo.db') — creates a persistent SQLite-backed normalized cache; survives app restarts unlike the in-memory cache",
+    "addHttpHeader('Authorization', ...) — adds auth headers to every request; for dynamic tokens use an HttpInterceptor instead",
+    ".fetchPolicy(FetchPolicy.CacheFirst) — checks the normalized cache first; only hits the network if data is not cached; ideal for reducing redundant API calls",
+    ".watch() — returns a Flow that re-emits data whenever the normalized cache entries for this query change; enables reactive UI updates across screens",
+    ".optimisticUpdates(optimisticData) — immediately applies the provided data to the cache before the network response; rolls back automatically on failure",
+    "GetUserPostsQuery(userId, first = 10, after = cursor) — cursor-based pagination; 'after' is the cursor of the last item; 'first' limits the page size",
+    "flatMapLatest { userRepo.watchUser(it) } — switches to the latest user's watcher Flow when userId changes; cancels the previous watcher automatically"
+  ],
+  bugChallenge: {
+    code: `class BookRepository(private val apollo: ApolloClient) {
+
+    suspend fun getBook(bookId: String): Book? {
+        val response = apollo
+            .query(GetBookQuery(bookId))
+            .fetchPolicy(FetchPolicy.CacheOnly)  // Bug 1
+            .execute()
+
+        return response.data?.book
+    }
+
+    suspend fun addReview(bookId: String, text: String, rating: Int) {
+        apollo
+            .mutation(AddReviewMutation(bookId, text, rating))
+            .execute()
+        // Bug 2: No optimistic update, no error handling
+    }
+
+    fun watchBooks(): Flow<List<Book>> {
+        return apollo
+            .query(GetBooksQuery())
+            .toFlow()  // Bug 3: not using watch()
+            .map { it.data?.books ?: emptyList() }
+    }
+}`,
+    hint: "Three bugs: a cache policy that will never show data on first launch, a mutation without optimistic updates or error handling, and a Flow that does not react to cache changes",
+    answer: "Bug 1: FetchPolicy.CacheOnly will return null on first launch because the cache is empty — nothing ever fetches from the network. Fix: Use CacheFirst or NetworkFirst so the data is fetched from the network when not cached. Bug 2: The mutation has no optimistic update (UI waits for network response) and no error handling (failures are silently ignored). Fix: Add .optimisticUpdates() for instant UI feedback, and check response.errors or wrap in try/catch. Bug 3: .toFlow() executes the query once and completes. It does NOT re-emit when the cache is updated by mutations. Fix: Use .watch() instead to get a Flow that re-emits whenever the normalized cache changes for this query."
+  },
+  difficulty: "advanced",
+  prereqs: [27]
+},
+{
+  id: 80,
+  title: "Baseline Profiles, Macrobenchmark & Startup Optimization",
+  subtitle: "Eliminate jank and slash startup time with AOT compilation hints and systematic benchmarking",
+  analogy: "Without baseline profiles, your app's first launch is like a chef who has to read the recipe for every dish while customers are waiting. Baseline profiles are like the chef prepping ingredients the night before — the most common dishes (critical user journeys) are pre-prepared so they are served instantly. Macrobenchmark is your stopwatch to measure exactly how long the chef takes, and Perfetto is the security camera that shows you exactly where the chef wastes time.",
+  points: [
+    { t: "What baseline profiles do (AOT compilation hints)", d: "Android normally uses JIT compilation — code is compiled during execution, causing jank on first use. Baseline profiles tell ART which methods and classes to AOT (ahead-of-time) compile during app installation. This eliminates JIT overhead for critical paths, improving startup by 15-40% and reducing frame drops during initial interactions." },
+    { t: "Generating baseline profiles with Macrobenchmark", d: "Use the Macrobenchmark library with BaselineProfileRule to generate profiles. Write a test that exercises critical user journeys (startup, scrolling, navigation). Run on a physical device or emulator with userdebug build. The test outputs a baseline-prof.txt file listing hot methods/classes. Copy this to src/main/baseline-prof.txt in your app module." },
+    { t: "BaselineProfileRule & profile types", d: "BaselineProfileRule generates profiles by tracing app execution. Startup profiles cover app launch to first frame. Interaction profiles cover scrolling, navigation, and common actions. Combine both for maximum coverage. The rule automatically handles app installation, launch, and trace collection. Generated profiles are human-readable text files listing methods and classes." },
+    { t: "Measuring cold/warm/hot start times", d: "Cold start: process not in memory, full initialization required (worst case). Warm start: process exists but Activity is recreated. Hot start: Activity is brought to front. Macrobenchmark measures all three via StartupMode.COLD, WARM, HOT. Aim for cold start < 500ms for good UX. Measure on low-end devices for realistic numbers — flagship phones hide performance issues." },
+    { t: "Startup tracing with Perfetto", d: "Perfetto provides nanosecond-precision tracing of app startup. Capture traces via System Tracing in Developer Options, Macrobenchmark (auto-captures), or adb shell perfetto. Open traces at ui.perfetto.dev. Look for: bindApplication duration, Activity creation, first draw, ContentProvider initialization, Dagger/Hilt injection time. Perfetto reveals exactly WHERE time is spent." },
+    { t: "App Startup library (Initializer pattern)", d: "The App Startup library (androidx.startup) replaces individual ContentProviders (used by many libraries for auto-init) with a single ContentProvider that lazily initializes components. Reduces cold start time by eliminating the overhead of multiple ContentProvider.onCreate() calls. Define Initializer<T> classes with dependencies and register in the manifest." },
+    { t: "Reducing DEX count & method references", d: "Each DEX file has a 65,536 method reference limit. More DEX files = more classloader overhead at startup. Reduce methods by: enabling R8 (removes unused code), using implementation instead of api in Gradle (limits transitive deps), removing unused libraries, and using multidex only when necessary. Monitor with APK Analyzer's DEX viewer." },
+    { t: "Compose baseline profiles & pre-compilation", d: "Jetpack Compose benefits enormously from baseline profiles because Compose's runtime has many methods that are JIT-compiled on first use, causing jank. The Compose libraries ship with their own baseline profiles (since 1.2.0), but app-specific profiles for YOUR composables add further improvement. ProfileInstaller auto-applies profiles on first install." },
+    { t: "Macrobenchmark setup & metrics", d: "Add a :macrobenchmark module with the macrobenchmark plugin. Tests extend MacrobenchmarkRule. Key metrics: StartupTimingMetric (time-to-initial-display, time-to-fully-drawn), FrameTimingMetric (frame duration, jank percentage), TraceSectionMetric (custom trace sections). Run benchmarks on CI to detect regressions. Use compilationMode = CompilationMode.DEFAULT for realistic results." },
+    { t: "Time-to-initial-display vs time-to-fully-drawn", d: "TTID measures when the first frame is drawn — controlled by the system. TTFD measures when all async content is loaded — you must call reportFullyDrawn() after data loads. Google Play Vitals tracks both. Optimize TTID by deferring heavy init. Optimize TTFD by parallelizing data loading. Show skeletons/placeholders between TTID and TTFD." },
+    { t: "Lazy initialization & deferred work", d: "Defer any initialization not needed for the first frame: analytics SDKs, image loaders, feature flag services. Use lazy { } for heavy singletons. Prefer Dispatchers.Default for CPU-intensive init over Dispatchers.Main. Move disk I/O to background — SharedPreferences.apply() on main thread during startup is a common bottleneck shown by StrictMode." }
+  ],
+  whatIs: "Baseline profiles are files that tell the Android Runtime (ART) which parts of your app to compile ahead-of-time during installation, rather than just-in-time during execution. Macrobenchmark is a testing library that measures real-world performance metrics (startup time, frame timing) on actual devices. Together, they form the foundation of Android startup optimization — profiles eliminate JIT jank, and benchmarks prove the improvement with hard numbers.",
+  realWorld: "A news app had a 2.1-second cold start on mid-range devices. Perfetto traces revealed: 600ms in ContentProvider initialization (6 libraries auto-initializing via separate ContentProviders), 400ms in Dagger setup, 300ms in first Compose frame JIT compilation, and 800ms loading initial data synchronously. The fixes: (1) Migrated to App Startup library — consolidated 6 ContentProviders into 1, saving 450ms. (2) Generated baseline profiles covering startup + first article scroll — eliminated Compose JIT jank, saving 280ms. (3) Parallelized data loading with async/coroutines and showed skeleton UI — TTID dropped to 600ms with TTFD at 1.1s. Total improvement: 2.1s to 0.6s TTID.",
+  code: `// 1. Module setup — :macrobenchmark/build.gradle.kts
+plugins {
+    id("com.android.test")
+    id("androidx.baselineprofile")
+}
+
+android {
+    namespace = "com.example.benchmark"
+    targetProjectPath = ":app"
+    experimentalProperties["android.experimental.self-instrumenting"] = true
+}
+
+dependencies {
+    implementation("androidx.benchmark:benchmark-macro-junit4:1.2.3")
+    implementation("androidx.test.ext:junit:1.1.5")
+}
+
+// 2. Baseline Profile Generator
+@RunWith(AndroidJUnit4::class)
+class BaselineProfileGenerator {
+
+    @get:Rule
+    val rule = BaselineProfileRule()
+
+    @Test
+    fun generateStartupProfile() {
+        rule.collect(
+            packageName = "com.example.app",
+            maxIterations = 5,
+            stableIterations = 3
+        ) {
+            // Cold start — measures startup path
+            pressHome()
+            startActivityAndWait()
+
+            // Critical user journey — scroll main feed
+            device.findObject(By.res("feed_list"))
+                .also { list ->
+                    list.setGestureMargin(device.displayWidth / 5)
+                    list.fling(Direction.DOWN)
+                    list.fling(Direction.DOWN)
+                }
+
+            // Navigate to detail screen
+            device.findObject(By.res("article_card"))
+                .click()
+            device.waitForIdle()
+        }
+    }
+}
+
+// 3. Startup Benchmark
+@RunWith(AndroidJUnit4::class)
+class StartupBenchmark {
+
+    @get:Rule
+    val rule = MacrobenchmarkRule()
+
+    @Test
+    fun startupCold() {
+        rule.measureRepeated(
+            packageName = "com.example.app",
+            metrics = listOf(StartupTimingMetric()),
+            compilationMode = CompilationMode.DEFAULT(),
+            startupMode = StartupMode.COLD,
+            iterations = 10
+        ) {
+            pressHome()
+            startActivityAndWait()
+        }
+    }
+
+    @Test
+    fun startupWithBaselineProfile() {
+        rule.measureRepeated(
+            packageName = "com.example.app",
+            metrics = listOf(StartupTimingMetric()),
+            compilationMode = CompilationMode.Partial(
+                baselineProfiles = listOf("baseline-prof.txt")
+            ),
+            startupMode = StartupMode.COLD,
+            iterations = 10
+        ) {
+            pressHome()
+            startActivityAndWait()
+        }
+    }
+
+    @Test
+    fun scrollPerformance() {
+        rule.measureRepeated(
+            packageName = "com.example.app",
+            metrics = listOf(FrameTimingMetric()),
+            compilationMode = CompilationMode.DEFAULT(),
+            iterations = 5
+        ) {
+            pressHome()
+            startActivityAndWait()
+
+            val list = device.findObject(By.res("feed_list"))
+            list.setGestureMargin(device.displayWidth / 5)
+            repeat(3) {
+                list.fling(Direction.DOWN)
+                device.waitForIdle()
+            }
+        }
+    }
+}
+
+// 4. App Startup library — replace multiple ContentProviders
+class AnalyticsInitializer : Initializer<Analytics> {
+
+    override fun create(context: Context): Analytics {
+        return Analytics.init(context, BuildConfig.ANALYTICS_KEY)
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>>> {
+        return emptyList() // No dependencies
+    }
+}
+
+class ImageLoaderInitializer : Initializer<ImageLoader> {
+
+    override fun create(context: Context): ImageLoader {
+        return ImageLoader.Builder(context)
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .memoryCache {
+                MemoryCache.Builder(context)
+                    .maxSizePercent(0.25)
+                    .build()
+            }
+            .build()
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>>> {
+        return listOf(AnalyticsInitializer::class.java)
+    }
+}
+
+// AndroidManifest.xml — App Startup provider
+// <provider
+//     android:name="androidx.startup.InitializationProvider"
+//     android:authorities="\${applicationId}.androidx-startup"
+//     android:exported="false"
+//     tools:node="merge">
+//     <meta-data
+//         android:name="com.example.app.AnalyticsInitializer"
+//         android:value="androidx.startup" />
+//     <meta-data
+//         android:name="com.example.app.ImageLoaderInitializer"
+//         android:value="androidx.startup" />
+// </provider>
+
+// 5. reportFullyDrawn() for TTFD tracking
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val viewModel: MainViewModel by viewModels()
+
+        setContent {
+            val uiState by viewModel.uiState.collectAsState()
+
+            when (uiState) {
+                is UiState.Loading -> SkeletonScreen()
+                is UiState.Success -> {
+                    MainScreen(data = (uiState as UiState.Success).data)
+                    // Report fully drawn after content is ready
+                    LaunchedEffect(Unit) {
+                        reportFullyDrawn()
+                    }
+                }
+                is UiState.Error -> ErrorScreen()
+            }
+        }
+    }
+}`,
+  funFact: "Google reported that apps with baseline profiles see a 30% improvement in time-to-initial-display on average. The Google Maps app was one of the first to extensively use baseline profiles — they measured a 40% reduction in cold start time and a 60% reduction in jank frames during first map render. The Perfetto tracing tool (used for startup analysis) was named after the Italian word for 'perfect' — fitting, since it provides near-perfect nanosecond-resolution visibility into what your app is doing during startup.",
+  quiz: [
+    {
+      q: "What do baseline profiles tell the Android Runtime (ART) to do?",
+      opts: [
+        "Cache network responses for faster data loading",
+        "AOT compile specified methods and classes during app installation, eliminating JIT overhead at runtime",
+        "Pre-download assets before the user opens the app",
+        "Reduce the APK size by removing unused code"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the difference between cold start and warm start?",
+      opts: [
+        "Cold start is faster because the process is fresh",
+        "Cold start requires full process creation and initialization; warm start reuses an existing process but recreates the Activity",
+        "Warm start always includes a splash screen; cold start does not",
+        "There is no meaningful difference — both take the same time"
+      ],
+      ans: 1
+    },
+    {
+      q: "What should you do in your Activity to enable time-to-fully-drawn tracking?",
+      opts: [
+        "Set a flag in the manifest",
+        "Call reportFullyDrawn() after all async content (data, images) has loaded",
+        "Override onFullyDrawn() lifecycle method",
+        "Register a FullyDrawnListener with the WindowManager"
+      ],
+      ans: 1
+    },
+    {
+      q: "What problem does the App Startup library solve?",
+      opts: [
+        "It speeds up Gradle build times",
+        "It consolidates multiple library ContentProviders into a single one with lazy initialization, reducing startup overhead",
+        "It pre-loads all Activities into memory during installation",
+        "It replaces the Application class entirely"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why do Jetpack Compose apps benefit significantly from baseline profiles?",
+      opts: [
+        "Compose apps are larger and need more optimization",
+        "Compose's runtime has many methods that are JIT-compiled on first use, causing jank; baseline profiles AOT compile these methods",
+        "Compose cannot run without baseline profiles at all",
+        "Baseline profiles replace the Compose compiler plugin"
+      ],
+      ans: 1
+    },
+    {
+      q: "What tool provides nanosecond-precision tracing of app startup bottlenecks?",
+      opts: [
+        "Logcat with verbose filtering",
+        "Android Profiler CPU tab",
+        "Perfetto (with traces opened at ui.perfetto.dev)",
+        "LeakCanary startup module"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does the 65,536 method reference limit per DEX file mean for startup?",
+      opts: [
+        "Apps with more than 65K methods cannot run on Android",
+        "More DEX files mean more classloader overhead at startup; R8 reduces method count to minimize DEX files",
+        "Each method takes 1ms to load, so 65K methods = 65 seconds",
+        "The limit only applies to debug builds"
+      ],
+      ans: 1
+    },
+    {
+      q: "How do you generate a baseline profile for your app?",
+      opts: [
+        "Manually list all methods in baseline-prof.txt",
+        "Use BaselineProfileRule in a Macrobenchmark test that exercises critical user journeys on a device",
+        "Enable a flag in build.gradle and rebuild",
+        "Download pre-built profiles from the Android SDK"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the recommended cold start time for good user experience?",
+      opts: [
+        "Under 5 seconds",
+        "Under 2 seconds",
+        "Under 500 milliseconds",
+        "Under 100 milliseconds"
+      ],
+      ans: 2
+    },
+    {
+      q: "What does CompilationMode.DEFAULT() mean in a Macrobenchmark test?",
+      opts: [
+        "No compilation at all — fully interpreted",
+        "Full AOT compilation of the entire app",
+        "Realistic mode that uses whatever profiles are installed, simulating real user experience",
+        "Debug mode with all optimizations disabled"
+      ],
+      ans: 2
+    }
+  ],
+  challenge: "Set up a complete performance optimization pipeline for an existing app: (1) Create a :macrobenchmark module with proper build.gradle configuration. (2) Write a BaselineProfileGenerator test that covers cold start, main feed scrolling, and detail screen navigation. (3) Write benchmark tests measuring cold/warm/hot start with StartupTimingMetric and scroll performance with FrameTimingMetric. (4) Implement the App Startup library to consolidate 3 library initializations (analytics, image loader, feature flags) into a single ContentProvider with proper dependency ordering. (5) Add reportFullyDrawn() to your main Activity after async data loads. (6) Document how to capture and analyze a Perfetto trace for the startup path.",
+  resources: [
+    { type: "docs", title: "Baseline Profiles", url: "https://developer.android.com/topic/performance/baselineprofiles/overview", source: "developer.android.com" },
+    { type: "docs", title: "Macrobenchmark Guide", url: "https://developer.android.com/topic/performance/benchmarking/macrobenchmark-overview", source: "developer.android.com" },
+    { type: "docs", title: "App Startup Library", url: "https://developer.android.com/topic/libraries/app-startup", source: "developer.android.com" },
+    { type: "docs", title: "Perfetto Tracing", url: "https://perfetto.dev/docs/", source: "perfetto.dev" },
+    { type: "docs", title: "App Startup Time", url: "https://developer.android.com/topic/performance/vitals/launch-time", source: "developer.android.com" }
+  ],
+  eli5: "Imagine it is your first day at a new school. Without baseline profiles, you have to figure out where every classroom is while running between classes — you are late to everything! With baseline profiles, someone gave you a map the night before showing the 5 most important rooms you will visit. You practiced the routes, so on your first day you walk straight there without getting lost. Macrobenchmark is your friend with a stopwatch timing how fast you get to each class. Perfetto is a drone following you and recording every wrong turn so you can improve tomorrow.",
+  codeWalkthrough: [
+    "BaselineProfileRule() — JUnit rule that manages device setup, app installation, and trace collection for profile generation",
+    "rule.collect(packageName, maxIterations = 5, stableIterations = 3) — runs the profile collection; stops after results stabilize for 3 consecutive iterations or reaches 5 max",
+    "pressHome(); startActivityAndWait() — simulates cold start by going home first, then launching the app and waiting for the first frame to render",
+    "device.findObject(By.res('feed_list')).fling(Direction.DOWN) — exercises the scroll path so those methods get included in the baseline profile",
+    "MacrobenchmarkRule().measureRepeated(...) — runs the benchmark multiple times and reports statistical results (median, P50, P90, P99)",
+    "StartupTimingMetric() — measures time-to-initial-display (TTID) and time-to-fully-drawn (TTFD) in milliseconds with high precision",
+    "CompilationMode.DEFAULT() — uses whatever profiles are installed, simulating real-world conditions; CompilationMode.None() is fully interpreted (worst case)",
+    "Initializer<Analytics>.create(context) — App Startup calls this lazily when the component is first needed; dependencies() declares initialization ordering",
+    "tools:node='merge' — merges App Startup's ContentProvider with any library-declared providers; use tools:node='remove' to disable a library's auto-initialization",
+    "reportFullyDrawn() — signals to the system (and Macrobenchmark) that all async content is loaded and the screen is fully interactive; tracked as TTFD in Play Vitals",
+    "LaunchedEffect(Unit) { reportFullyDrawn() } — calls reportFullyDrawn when the Success composable first enters composition; Unit key ensures it runs only once"
+  ],
+  bugChallenge: {
+    code: `// Startup benchmark — always shows 0ms
+@Test
+fun benchmarkStartup() {
+    rule.measureRepeated(
+        packageName = "com.example.app",
+        metrics = listOf(FrameTimingMetric()),  // Wrong metric
+        compilationMode = CompilationMode.Full(),  // Unrealistic
+        startupMode = StartupMode.HOT,  // Not cold start
+        iterations = 1  // Too few iterations
+    ) {
+        startActivityAndWait()  // Missing pressHome()
+    }
+}
+
+// App Startup — circular dependency
+class AInitializer : Initializer<A> {
+    override fun create(context: Context): A = A()
+    override fun dependencies() = listOf(BInitializer::class.java)
+}
+
+class BInitializer : Initializer<B> {
+    override fun create(context: Context): B = B()
+    override fun dependencies() = listOf(AInitializer::class.java)
+}`,
+    hint: "Five issues in the benchmark: wrong metric, unrealistic compilation mode, wrong startup mode, too few iterations, and missing pressHome(). Plus a circular dependency in App Startup.",
+    answer: "Bug 1: FrameTimingMetric measures frame duration, not startup time — use StartupTimingMetric() for measuring startup. Bug 2: CompilationMode.Full() AOT compiles everything, which is unrealistic — real users have partial compilation. Use CompilationMode.DEFAULT() or CompilationMode.Partial(). Bug 3: StartupMode.HOT measures bringing an existing Activity to front, not actual cold startup — use StartupMode.COLD. Bug 4: iterations = 1 gives unreliable data — use at least 5-10 iterations for statistical significance. Bug 5: Missing pressHome() before startActivityAndWait() means the app may already be in the foreground, making the cold start measurement invalid. Bug 6: AInitializer depends on BInitializer which depends on AInitializer — circular dependency causes a stack overflow at startup. Fix: restructure so one initializer does not depend on the other, or merge them."
+  },
+  difficulty: "advanced",
+  prereqs: [36, 37, 44]
+},
+{
+  id: 81,
+  title: "Screenshot Testing: Paparazzi, Roborazzi & Visual Regression",
+  subtitle: "Catch pixel-level regressions before your users do — master every major Android screenshot testing framework",
+  analogy: "Screenshot testing is like a museum curator who photographs every painting in exact lighting conditions. If someone accidentally bumps a frame or a cleaning crew leaves a smudge, comparing today's photo against the original instantly reveals the change — no human needs to walk through every gallery room each day.",
+  points: [
+    {
+      t: "Why Screenshot Testing Matters",
+      d: "Traditional unit and integration tests validate logic but miss visual regressions — a wrong color, broken padding, overlapping text, or theme inconsistency. Screenshot tests capture rendered UI as images and compare them against approved baselines (golden images), catching visual bugs that functional tests completely ignore."
+    },
+    {
+      t: "Paparazzi by Cash App — JVM-Based Speed",
+      d: "Paparazzi runs entirely on the JVM with no emulator or device required. It uses LayoutLib (the same renderer Android Studio uses for previews) to inflate Views and Compose UI, then captures them as PNG files. This makes it extremely fast — a suite of 500 screenshot tests can run in under 60 seconds. You record golden images with `./gradlew recordPaparazziDebug` and verify with `./gradlew verifyPaparazziDebug`."
+    },
+    {
+      t: "Paparazzi DeviceConfig & Multi-Config Testing",
+      d: "Paparazzi supports DeviceConfig presets (PIXEL_5, NEXUS_5, etc.) and lets you parameterize tests across screen sizes, font scales, dark/light themes, and locales including RTL. A single test class with @RunWith(TestParameterInjector::class) can generate dozens of golden images covering your entire device matrix without a single emulator boot."
+    },
+    {
+      t: "Roborazzi — Robolectric-Powered Screenshots",
+      d: "Roborazzi leverages Robolectric's native graphics mode (@GraphicsMode(GraphicsMode.Mode.NATIVE)) to render real Android UI on the JVM. It supports three modes: `record` (save new baselines), `compare` (generate diff images highlighting changes), and `verify` (fail if differences exceed threshold). Use `captureRoboImage()` on any View, Composable, or even ActivityScenario."
+    },
+    {
+      t: "Dropshots by Dropbox",
+      d: "Dropshots provides a simpler API focused on tolerance-based comparison. It runs on real devices/emulators via instrumentation tests but offers a Gradle plugin that manages golden image storage and comparison. Its key feature is configurable pixel tolerance — you set a percentage threshold (e.g., 0.1%) below which differences are treated as acceptable anti-aliasing noise rather than real regressions."
+    },
+    {
+      t: "Compose Preview Screenshot Testing (2025+)",
+      d: "Google's official Compose Preview Screenshot Testing lets you annotate @Preview composables and automatically generate screenshot tests from them. Combined with ComposablePreviewScanner and AndroidUiTestingUtils by Sergio Sastre, you can scan all @Preview functions in your codebase and generate parameterized screenshot tests for each — turning your preview catalog into a visual regression suite with near-zero boilerplate."
+    },
+    {
+      t: "Golden Image Management & Git Strategy",
+      d: "Golden images (baselines) are typically stored in the repo under a dedicated directory (e.g., `src/test/snapshots`). When UI intentionally changes, you re-record baselines and commit the updated PNGs. Best practice: use Git LFS for large image sets, require screenshot diff review in PRs, and keep golden images organized by test class name and device config for easy navigation."
+    },
+    {
+      t: "CI/CD Integration Patterns",
+      d: "In CI pipelines, screenshot tests run in `verify` mode — comparing current renders against committed baselines. Failed tests produce diff images showing exactly what changed. Advanced setups upload diff artifacts to PR comments (using Danger, GitHub Actions artifacts, or custom bots) so reviewers see visual changes inline. JVM-based tools (Paparazzi, Roborazzi) are CI-friendly since they need no emulator."
+    },
+    {
+      t: "Tolerance, Thresholds & Anti-Aliasing",
+      d: "Pixel-perfect comparison is often too strict — different JVM versions, rendering engines, or OS updates cause sub-pixel anti-aliasing differences. Most frameworks support tolerance thresholds: Paparazzi uses a max-percent-difference, Roborazzi supports custom comparators with pixel tolerance, and Dropshots has built-in percentage-based thresholds. A common sweet spot is 0.05-0.5% tolerance to catch real bugs while ignoring rendering noise."
+    },
+    {
+      t: "Multi-Configuration Matrix Testing",
+      d: "Production apps must look correct in dark mode, light mode, RTL layouts, large font accessibility settings, and various screen densities. Screenshot testing frameworks support parameterized runs across all these configurations. A single Composable can be tested in 8+ configurations automatically — dark+LTR, dark+RTL, light+LTR, light+RTL, each at normal and large font scale — creating a comprehensive visual safety net."
+    },
+    {
+      t: "Framework Comparison: Choosing the Right Tool",
+      d: "Paparazzi: JVM-only, fastest, great Compose support, Cash App maintained. Roborazzi: JVM via Robolectric, supports Activities/Fragments, good diff visualization. Dropshots: device-based, simple API, tolerance-focused. Android Testify: device-based, mature, good for legacy View code. Shot by Pedrovgs: device-based, widely used. For new Compose-first projects, Paparazzi or Roborazzi are the top choices; for legacy View-heavy apps needing real device rendering, Dropshots or Testify."
+    },
+    {
+      t: "AI-Assisted & Emerging Trends",
+      d: "Emerging tools use ML to distinguish meaningful visual changes from noise (anti-aliasing, shadow rounding). Services like Percy and Applitools (cross-platform) offer AI-powered visual comparison. In the Android ecosystem, expect tighter Compose Preview integration, IDE-inline diff previews, and smarter tolerance algorithms that understand semantic UI regions rather than raw pixel comparison."
+    }
+  ],
+  whatIs: "Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved versions as golden baselines, and compare future renders against those baselines to detect unintended visual changes. On Android, frameworks like Paparazzi (JVM-based, no emulator), Roborazzi (Robolectric-based), and Dropshots (device-based) automate this process, enabling teams to catch broken layouts, wrong colors, missing icons, and theme inconsistencies before they ship to users.",
+  realWorld: "At Cash App, Paparazzi was created because their design system team needed to validate hundreds of UI components across themes and screen sizes without maintaining a fleet of emulators. Companies like Dropbox, Square, and Google use screenshot testing to enforce design consistency across feature teams — when any PR changes a shared component, the screenshot tests immediately show which screens are affected. In large-scale apps with 50+ contributors, screenshot testing is the primary defense against 'it looked fine on my machine' visual bugs.",
+  code: `// ============================================
+// 1. PAPARAZZI SETUP — build.gradle.kts (module)
+// ============================================
+plugins {
+    id("app.cash.paparazzi") version "1.3.4"
+}
+
+// ============================================
+// 2. PAPARAZZI TEST — Compose Component
+// ============================================
+class PaymentCardScreenshotTest {
+
+    @get:Rule
+    val paparazzi = Paparazzi(
+        deviceConfig = DeviceConfig.PIXEL_5,
+        theme = "android:Theme.Material3.DayNight",
+        renderingMode = SessionParams.RenderingMode.NORMAL,
+        maxPercentDifference = 0.1 // 0.1% tolerance
+    )
+
+    @Test
+    fun paymentCard_defaultState() {
+        paparazzi.snapshot {
+            MyAppTheme(darkTheme = false) {
+                PaymentCard(
+                    amount = "$42.00",
+                    recipient = "Jane Doe",
+                    status = PaymentStatus.COMPLETED
+                )
+            }
+        }
+    }
+
+    @Test
+    fun paymentCard_darkMode() {
+        paparazzi.snapshot {
+            MyAppTheme(darkTheme = true) {
+                PaymentCard(
+                    amount = "$42.00",
+                    recipient = "Jane Doe",
+                    status = PaymentStatus.PENDING
+                )
+            }
+        }
+    }
+}
+
+// ============================================
+// 3. PARAMETERIZED MULTI-CONFIG TEST
+// ============================================
+@RunWith(TestParameterInjector::class)
+class DesignSystemScreenshotTest(
+    @TestParameter val darkMode: Boolean,
+    @TestParameter val isRtl: Boolean,
+    @TestParameter val fontScale: FontScale
+) {
+    enum class FontScale(val value: Float) {
+        NORMAL(1.0f), LARGE(1.3f), HUGE(1.5f)
+    }
+
+    @get:Rule
+    val paparazzi = Paparazzi(
+        deviceConfig = DeviceConfig.PIXEL_5.copy(
+            fontScale = fontScale.value,
+            layoutDirection = if (isRtl)
+                LayoutDirection.RTL else LayoutDirection.LTR
+        )
+    )
+
+    @Test
+    fun primaryButton_allConfigs() {
+        paparazzi.snapshot {
+            MyAppTheme(darkTheme = darkMode) {
+                PrimaryButton(
+                    text = "Submit Payment",
+                    onClick = {}
+                )
+            }
+        }
+    }
+    // Generates 12 screenshots:
+    // 2 themes x 2 directions x 3 font scales
+}
+
+// ============================================
+// 4. ROBORAZZI — Robolectric Screenshot Test
+// ============================================
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [33])
+class ProfileScreenRoborazziTest {
+
+    @get:Rule
+    val composeRule = createComposeRule()
+
+    @Test
+    fun profileScreen_loaded() {
+        composeRule.setContent {
+            MyAppTheme {
+                ProfileScreen(
+                    user = User("Alex", "alex@dev.com"),
+                    isEditing = false
+                )
+            }
+        }
+        composeRule.onRoot()
+            .captureRoboImage(
+                filePath = "src/test/snapshots/profile_loaded.png",
+                roborazziOptions = RoborazziOptions(
+                    compareOptions = CompareOptions(
+                        changeThreshold = 0.01 // 1% threshold
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun profileScreen_editMode_diff() {
+        composeRule.setContent {
+            MyAppTheme {
+                ProfileScreen(
+                    user = User("Alex", "alex@dev.com"),
+                    isEditing = true
+                )
+            }
+        }
+        // In compare mode, generates a 3-panel diff:
+        // [baseline] [actual] [highlighted diff]
+        composeRule.onRoot()
+            .captureRoboImage("src/test/snapshots/profile_edit.png")
+    }
+}
+
+// ============================================
+// 5. COMPOSE PREVIEW SCREENSHOT TESTING
+// ============================================
+// In your UI module — define previews as usual
+@Preview(name = "Light")
+@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun OrderSummaryPreview() {
+    MyAppTheme {
+        OrderSummary(
+            items = listOf("Burger", "Fries"),
+            total = "$12.99"
+        )
+    }
+}
+
+// In your test module — auto-scan and test all previews
+@RunWith(TestParameterInjector::class)
+class ComposePreviewTests(
+    @TestParameter(valuesProvider = PreviewProvider::class)
+    val preview: ComposablePreview<AndroidPreviewInfo>
+) {
+    @get:Rule
+    val paparazzi = Paparazzi()
+
+    class PreviewProvider : TestParameter.TestParameterValuesProvider {
+        override fun provideValues(): List<ComposablePreview<AndroidPreviewInfo>> =
+            AndroidComposablePreviewScanner()
+                .scanPackageTrees("com.myapp.ui")
+                .getPreviews()
+    }
+
+    @Test
+    fun previewScreenshot() {
+        paparazzi.snapshot {
+            preview()
+        }
+    }
+}
+
+// ============================================
+// 6. CI WORKFLOW — GitHub Actions
+// ============================================
+// .github/workflows/screenshot-tests.yml
+//
+// name: Screenshot Tests
+// on:
+//   pull_request:
+//     paths: ['app/src/**', 'design-system/**']
+//
+// jobs:
+//   verify-screenshots:
+//     runs-on: ubuntu-latest
+//     steps:
+//       - uses: actions/checkout@v4
+//         with:
+//           lfs: true  # golden images in Git LFS
+//
+//       - uses: actions/setup-java@v4
+//         with:
+//           java-version: '17'
+//           distribution: 'temurin'
+//
+//       - name: Verify Paparazzi Screenshots
+//         run: ./gradlew verifyPaparazziDebug
+//
+//       - name: Upload diff artifacts on failure
+//         if: failure()
+//         uses: actions/upload-artifact@v4
+//         with:
+//           name: screenshot-diffs
+//           path: '**/build/paparazzi/failures/'
+//
+//       - name: Comment PR with diff images
+//         if: failure()
+//         uses: marocchino/sticky-pull-request-comment@v2
+//         with:
+//           message: |
+//             Screenshot tests failed!
+//             Download diff artifacts to see changes.`,
+  funFact: "Paparazzi was named after the relentless photographers who chase celebrities — because like paparazzi, the tool relentlessly captures every visual detail of your UI! Cash App's team reported that after adopting Paparazzi, they caught over 200 visual regressions in their first quarter that had previously slipped through code review. The Android screenshot testing ecosystem has grown so fast that by 2025, there were more than 7 competing frameworks — leading to the community joke that 'choosing a screenshot testing library is harder than the actual testing.'",
+  quiz: [
+    {
+      q: "What is the primary advantage of Paparazzi over device-based screenshot testing frameworks?",
+      opts: [
+        "It runs on the JVM without an emulator, making tests significantly faster",
+        "It produces higher resolution images than emulator captures",
+        "It supports more Android API levels than emulators",
+        "It can test hardware-specific features like fingerprint sensors"
+      ],
+      ans: 0
+    },
+    {
+      q: "In Roborazzi, what annotation is required to enable native graphics rendering for screenshot capture?",
+      opts: [
+        "@GraphicsMode(GraphicsMode.Mode.NATIVE)",
+        "@RenderMode(RenderMode.NATIVE_GRAPHICS)",
+        "@ScreenshotMode(enabled = true)",
+        "@NativeRendering"
+      ],
+      ans: 0
+    },
+    {
+      q: "What are the three modes supported by Roborazzi for screenshot comparison?",
+      opts: [
+        "record, compare, verify",
+        "capture, diff, assert",
+        "snapshot, baseline, check",
+        "save, compare, validate"
+      ],
+      ans: 0
+    },
+    {
+      q: "Why do screenshot testing frameworks include tolerance thresholds?",
+      opts: [
+        "To handle sub-pixel anti-aliasing differences across rendering environments",
+        "To allow intentional design changes without updating baselines",
+        "To reduce the file size of golden images",
+        "To speed up image comparison algorithms"
+      ],
+      ans: 0
+    },
+    {
+      q: "How do you record new Paparazzi golden images from the command line?",
+      opts: [
+        "./gradlew :app:recordPaparazziDebug",
+        "./gradlew :app:updateScreenshots",
+        "./gradlew :app:captureGoldenImages",
+        "./gradlew :app:paparazziRecord --baseline"
+      ],
+      ans: 0
+    },
+    {
+      q: "What is the recommended strategy for storing golden images in a repository with hundreds of screenshots?",
+      opts: [
+        "Use Git LFS to avoid bloating the main repository with large binary files",
+        "Store them in a separate cloud bucket and download during CI only",
+        "Compress all images into a single ZIP file committed to the repo",
+        "Generate them on-the-fly during CI and never commit them"
+      ],
+      ans: 0
+    },
+    {
+      q: "In a multi-config parameterized Paparazzi test with 2 themes, 2 layout directions, and 3 font scales, how many screenshots are generated per component?",
+      opts: [
+        "12 screenshots (2 x 2 x 3)",
+        "7 screenshots (2 + 2 + 3)",
+        "6 screenshots (max of each parameter)",
+        "24 screenshots (2 x 2 x 3 x 2)"
+      ],
+      ans: 0
+    },
+    {
+      q: "What makes Compose Preview Screenshot Testing unique compared to writing individual Paparazzi tests?",
+      opts: [
+        "It automatically generates screenshot tests from existing @Preview composables, requiring near-zero boilerplate",
+        "It renders at higher fidelity than Paparazzi by using a real Compose compiler",
+        "It supports animations and transition screenshots that Paparazzi cannot capture",
+        "It runs tests directly in Android Studio without needing Gradle commands"
+      ],
+      ans: 0
+    },
+    {
+      q: "A senior engineer asks: 'Our screenshot tests keep failing on CI but pass locally.' What is the most likely cause?",
+      opts: [
+        "Different JVM versions or rendering engine differences between local and CI environments",
+        "The CI machine has a smaller screen resolution than the developer's machine",
+        "Golden images are gitignored and not available in CI",
+        "CI runs tests in parallel which corrupts screenshot output"
+      ],
+      ans: 0
+    },
+    {
+      q: "How would you set up visual regression testing for a design system library used across multiple apps?",
+      opts: [
+        "Use Paparazzi in the design system module with parameterized tests for all components across themes, sizes, and states, running in CI on every PR",
+        "Manually review every component in Android Studio previews before each release",
+        "Write Espresso tests that visually compare screenshots on a physical device farm",
+        "Rely on the consuming apps to test the design system components in their own screenshot suites"
+      ],
+      ans: 0
+    }
+  ],
+  challenge: "Set up a complete screenshot testing suite using Paparazzi for a design system module: (1) Add the Paparazzi Gradle plugin to a module. (2) Write a parameterized screenshot test for a Button composable that covers light/dark theme and normal/large font scale (4 configs). (3) Record the golden images locally. (4) Intentionally change the button's padding by 2dp and run verify to see the diff. (5) Write a GitHub Actions workflow that runs screenshot verification on PRs and uploads diff artifacts on failure. (6) Bonus: Integrate ComposablePreviewScanner to auto-generate screenshot tests from all @Preview functions in your module.",
+  resources: [
+    {
+      type: "documentation",
+      title: "Paparazzi GitHub — Official Repository & Documentation",
+      url: "https://github.com/cashapp/paparazzi",
+      source: "Cash App / GitHub"
+    },
+    {
+      type: "documentation",
+      title: "Roborazzi GitHub — Robolectric Screenshot Testing",
+      url: "https://github.com/takahirom/roborazzi",
+      source: "takahirom / GitHub"
+    },
+    {
+      type: "article",
+      title: "Screenshot Testing Compose UI — Android Developers Guide",
+      url: "https://developer.android.com/studio/preview/compose-screenshot-testing",
+      source: "Android Developers"
+    },
+    {
+      type: "video",
+      title: "Snapshot Testing on Android — Droidcon Talk",
+      url: "https://www.droidcon.com/2024/11/22/snapshot-testing-on-android/",
+      source: "Droidcon"
+    },
+    {
+      type: "article",
+      title: "Android Screenshot Testing Comparison — Sergio Sastre",
+      url: "https://sergiosastre.hashnode.dev/an-introduction-to-android-screenshot-testing",
+      source: "Hashnode"
+    },
+    {
+      type: "documentation",
+      title: "Dropshots GitHub — Dropbox Screenshot Testing",
+      url: "https://github.com/dropbox/dropshots",
+      source: "Dropbox / GitHub"
+    }
+  ],
+  eli5: "Imagine you draw a really nice picture and take a photo of it. The next day, your little brother adds a tiny scribble in the corner. You compare today's photo with yesterday's photo and instantly spot the scribble! Screenshot testing does the same thing for app screens — it takes photos of your app's pages, saves them, and whenever someone changes the code, it takes new photos and compares them to find anything that looks different. If something changed on purpose, you say 'that's fine, save the new photo.' If it changed by accident, you caught a bug!",
+  codeWalkthrough: [
+    "We start with the Gradle plugin declaration `id(\"app.cash.paparazzi\")` which adds the Paparazzi framework to our module — this gives us the Paparazzi test rule and the record/verify Gradle tasks.",
+    "The `PaymentCardScreenshotTest` class demonstrates basic Paparazzi usage. The `@get:Rule val paparazzi = Paparazzi(...)` creates a JUnit rule that handles the LayoutLib rendering engine lifecycle — no emulator needed.",
+    "In the Paparazzi constructor, `DeviceConfig.PIXEL_5` sets the virtual screen dimensions, density, and form factor. `maxPercentDifference = 0.1` means up to 0.1% pixel difference is tolerated before a test fails.",
+    "The `paparazzi.snapshot { ... }` block takes a Composable lambda. Paparazzi renders this Composable using Android's LayoutLib (the same engine Android Studio uses for previews) and saves it as a PNG file.",
+    "The `DesignSystemScreenshotTest` uses `@RunWith(TestParameterInjector::class)` with `@TestParameter` annotations to create a cartesian product of all parameter combinations — 2 themes x 2 directions x 3 font scales = 12 test runs from one test method.",
+    "The `DeviceConfig.PIXEL_5.copy(fontScale = ..., layoutDirection = ...)` call creates a modified device configuration for each parameter combination, letting us test accessibility and RTL scenarios without any emulator setup.",
+    "In the Roborazzi test, `@GraphicsMode(GraphicsMode.Mode.NATIVE)` tells Robolectric to use native graphics rendering instead of shadow implementations — this is essential for accurate screenshot capture.",
+    "The `captureRoboImage()` extension function captures the current state of a Compose node or View and saves it to the specified file path. The `RoborazziOptions` configure comparison behavior including the change threshold.",
+    "The Compose Preview Screenshot Testing section shows how `AndroidComposablePreviewScanner().scanPackageTrees(\"com.myapp.ui\")` automatically discovers all @Preview composables in the given package, converting your existing preview catalog into a screenshot test suite.",
+    "The CI workflow runs `verifyPaparazziDebug` which compares current renders against committed golden images. On failure, the `upload-artifact` step preserves diff images (showing baseline, actual, and highlighted differences) for developer review.",
+    "The `lfs: true` option in the checkout step ensures Git LFS files (golden images) are downloaded — without this, CI would have only LFS pointer files and all screenshot comparisons would fail.",
+    "The sticky PR comment step provides immediate visual feedback to developers when screenshots change, eliminating the need to manually download and inspect diff artifacts for every failed test."
+  ],
+  bugChallenge: {
+    code: `@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [33])
+class HomeScreenScreenshotTest {
+
+    @get:Rule
+    val composeRule = createComposeRule()
+
+    @Test
+    fun homeScreen_defaultState() {
+        composeRule.setContent {
+            MyAppTheme {
+                HomeScreen(viewModel = HomeViewModel())
+            }
+        }
+        composeRule.onRoot()
+            .captureRoboImage("snapshots/home_default.png")
+    }
+}`,
+    hint: "Roborazzi requires a specific annotation to enable native graphics rendering on Robolectric. Without it, the screenshot will be blank or use shadow rendering that produces incorrect output.",
+    answer: "The test is missing `@GraphicsMode(GraphicsMode.Mode.NATIVE)` annotation on the class. Without this annotation, Robolectric uses its default shadow-based rendering which does not support real graphics capture. Add `@GraphicsMode(GraphicsMode.Mode.NATIVE)` above the class declaration for Roborazzi to produce accurate screenshots."
+  },
+  difficulty: "advanced",
+  prereqs: [38, 42, 47]
+},
+{
+  id: 82,
+  title: "AOSP & Android Platform Internals for App Developers",
+  subtitle: "Understand the layers beneath your app — the senior interview questions that separate framework users from platform-aware engineers",
+  analogy: "Android's architecture is like a skyscraper. Your app lives in the penthouse (Application layer), but you ride the elevator (Binder IPC) through the management offices (Framework Services), past the engine room (ART Runtime), down to the basement generators (Linux Kernel). You don't need to rewire the generators, but knowing why the lights flicker helps you debug the penthouse.",
+  points: [
+    { t: "Android Architecture Stack Overview", d: "The stack has 6 layers from top to bottom: Application → Application Framework → Android Runtime (ART) → Native C/C++ Libraries → Hardware Abstraction Layer (HAL) → Linux Kernel. As an app developer, you primarily interact with the top two layers, but understanding the lower layers is critical for debugging performance issues, understanding ANRs, and answering senior interview questions." },
+    { t: "ART vs Dalvik — How Your Code Actually Runs", d: "Dalvik (pre-Android 5.0) used JIT (Just-In-Time) compilation — bytecode was compiled to native code at runtime, causing startup lag. ART uses AOT (Ahead-Of-Time) compilation during install, converting DEX bytecode to native OAT files. Since Android 7.0, ART uses a hybrid: JIT on first runs + profile-guided AOT compilation later. Your .kt/.java → .class → .dex → .oat. Understanding this explains why first-launch is slower and why R8/D8 optimization matters." },
+    { t: "DEX Files and Multidex", d: "DEX (Dalvik Executable) is Android's bytecode format, optimized for low-memory devices. A single DEX file has a 65,536 method reference limit. Before Android 5.0, you needed the multidex support library. ART natively supports multidex. R8 compiler (replacing ProGuard + D8) compiles Java bytecode to optimized DEX, performing tree-shaking, inlining, and class merging." },
+    { t: "Application Framework Layer — The Big Three Services", d: "ActivityManagerService (AMS) manages Activity lifecycle, task stacks, process lifecycle, and ANR detection. WindowManagerService (WMS) handles window layout, transitions, and z-ordering. PackageManagerService (PMS) handles app installation, permission checking, intent resolution, and package queries. These run in the system_server process, and your app communicates with them via Binder IPC transparently through Android SDK APIs." },
+    { t: "Zygote Process — How Apps Are Born", d: "Zygote is a special daemon process started at boot that preloads common Android classes and resources. When you launch an app, Zygote fork()s itself to create your app's process — this is much faster than starting from scratch because the forked process inherits preloaded classes via copy-on-write memory. This is why all Android apps share a common set of preloaded classes. Zygote is the parent of ALL app processes." },
+    { t: "App Startup Sequence — From Tap to onCreate()", d: "User taps icon → Launcher calls startActivity() → Binder IPC to AMS in system_server → AMS checks if process exists → if not, AMS asks Zygote to fork() → new process starts ActivityThread.main() → ActivityThread creates Application object → calls Application.onCreate() → AMS tells ActivityThread to create the Activity → Activity.onCreate() runs. Understanding this flow explains cold/warm/hot start metrics and is the classic senior interview question." },
+    { t: "Linux Kernel's Role in Android", d: "Android uses a modified Linux kernel that provides: process isolation (each app = separate Linux process with unique UID), memory management (Low Memory Killer daemon terminates low-priority apps), file system permissions, networking stack, power management (wakelocks), and the Binder IPC driver. The kernel assigns each installed app a unique Linux UID for sandboxing — this is the foundation of Android's security model." },
+    { t: "Binder IPC Mechanism", d: "Binder is Android's inter-process communication system. When your app calls getSystemService() or startActivity(), you're making Binder calls to system_server. Binder uses shared memory for efficiency, serializes data via Parcel objects, and is transactional (synchronous by default). AIDL (Android Interface Definition Language) generates Binder boilerplate. Every ContentProvider query, every system service call, and every bound Service connection uses Binder under the hood." },
+    { t: "HAL and System Services Architecture", d: "Hardware Abstraction Layer (HAL) provides standard interfaces between the Android framework and hardware-specific drivers (camera, sensors, Bluetooth). HAL modules are shared libraries loaded by system services. system_server is a single process that hosts ~100+ system services registered with ServiceManager. Apps look up services via ServiceManager — e.g., Context.getSystemService(LOCATION_SERVICE) resolves through ServiceManager to LocationManagerService." },
+    { t: "AOSP Build System Awareness", d: "AOSP (Android Open Source Project) is the open-source codebase for Android. The build uses 'repo' to manage 800+ git repositories, 'lunch' to select a build target, and 'make/m/mm' to compile. As an app developer, you won't build AOSP, but knowing that Android is open source helps you read framework source code on cs.android.com to debug tricky framework behaviors. This is a power skill for senior developers." },
+    { t: "Android Boot Sequence", d: "Power on → Bootloader (verifies boot partition integrity) → Linux Kernel (mounts filesystem, starts init) → init process (PID 1, reads init.rc, starts core daemons) → Zygote starts (preloads classes/resources) → system_server starts (initializes AMS, WMS, PMS, and 100+ services) → AMS starts Launcher app → Home screen appears. Understanding this explains why boot is slow and what happens during OTA updates." },
+    { t: "Custom ROMs & Android Forks Awareness", d: "LineageOS (community-driven, privacy-focused), /e/OS (de-Googled, used by Murena phones), Fire OS (Amazon's fork for Fire tablets/TV), One UI (Samsung), OxygenOS (OnePlus) — all are Android forks built from AOSP. When interviewing at companies like Murena, understanding that they build custom system images from AOSP, maintain their own forks, and merge upstream Android updates is essential context for contributing to their platform." }
+  ],
+  whatIs: "Android Platform Internals covers the architecture beneath the Application layer — from the ART runtime that executes your DEX bytecode, through the Application Framework services (AMS, WMS, PMS) that manage your app's lifecycle and windows, down to the Zygote process that births your app, the Binder IPC that connects everything, and the Linux Kernel that provides process isolation and security. For app developers, this knowledge transforms you from a framework user into someone who understands WHY things work, enabling you to debug deeper issues and answer senior-level interview questions with authority.",
+  realWorld: "When your app has a 3-second cold start, understanding the Zygote fork → ActivityThread.main() → Application.onCreate() → Activity.onCreate() chain tells you exactly where to optimize. When you get an ANR, knowing that AMS monitors your main thread Binder transactions helps you understand the 5-second timeout. When debugging a ContentProvider crash, knowing it's a cross-process Binder call explains why you see TransactionTooLargeException at 1MB. At companies like Murena that build on /e/OS (an AOSP fork), understanding the platform stack is daily work.",
+  code: `// ============================================
+// ANDROID ARCHITECTURE STACK (Simplified)
+// ============================================
+//
+// ┌─────────────────────────────────────┐
+// │        APPLICATION LAYER            │
+// │   Your apps, system apps, Launcher  │
+// ├─────────────────────────────────────┤
+// │     APPLICATION FRAMEWORK           │
+// │  ActivityManagerService (AMS)       │
+// │  WindowManagerService (WMS)         │
+// │  PackageManagerService (PMS)        │
+// │  LocationManager, NotificationMgr   │
+// ├─────────────────────────────────────┤
+// │     ANDROID RUNTIME (ART)           │
+// │  AOT + JIT compilation, DEX, GC    │
+// │  Core Libraries (java.*, kotlin.*)  │
+// ├─────────────────────────────────────┤
+// │     NATIVE C/C++ LIBRARIES          │
+// │  SQLite, OpenGL ES, WebKit, libc    │
+// ├─────────────────────────────────────┤
+// │     HAL (Hardware Abstraction)      │
+// │  Camera HAL, Audio HAL, Sensors     │
+// ├─────────────────────────────────────┤
+// │     LINUX KERNEL                    │
+// │  Binder IPC, Power Mgmt, Display   │
+// │  Process/Memory Mgmt, Networking   │
+// └─────────────────────────────────────┘
+
+// ============================================
+// AIDL Example — Binder Interface Definition
+// ============================================
+// File: IBookManager.aidl
+// package com.example.bookstore;
+//
+// import com.example.bookstore.Book;
+//
+// interface IBookManager {
+//     List<Book> getBookList();
+//     void addBook(in Book book);
+//     // 'in' = client → service, 'out' = service → client,
+//     // 'inout' = bidirectional
+// }
+
+// ============================================
+// What happens when you tap an app icon
+// (The classic senior interview question)
+// ============================================
+//
+// 1. Launcher.startActivity(intent)
+//       ↓ (Binder IPC)
+// 2. ActivityManagerService.startActivity()
+//       ↓ checks permissions, resolves intent
+// 3. AMS checks: is the app process running?
+//       ↓ NO → asks Zygote to fork
+// 4. Zygote.fork() → new process created
+//       ↓ inherits preloaded classes (copy-on-write)
+// 5. ActivityThread.main() starts in new process
+//       ↓ creates Looper, Handler, attaches to AMS
+// 6. AMS tells ActivityThread: "launch this Activity"
+//       ↓ via IApplicationThread Binder callback
+// 7. ActivityThread.handleLaunchActivity()
+//       ↓ creates Activity instance
+// 8. Activity.onCreate() → your code runs!
+
+// ============================================
+// ADB commands to inspect platform internals
+// ============================================
+
+// List all running system services
+// $ adb shell service list
+
+// Dump ActivityManagerService state
+// $ adb shell dumpsys activity
+
+// See your app's process info
+// $ adb shell dumpsys activity processes | grep com.your.app
+
+// View Zygote-forked processes
+// $ adb shell ps -A | grep zygote
+
+// Check ART compilation status for an app
+// $ adb shell dumpsys package com.your.app | grep -i compile
+
+// Monitor Binder transactions
+// $ adb shell dumpsys binder_stats
+
+// View app startup time (cold start)
+// $ adb shell am start-activity -W com.your.app/.MainActivity
+// → TotalTime = cold start duration
+
+// Check Low Memory Killer priorities
+// $ adb shell dumpsys meminfo
+
+// List all installed packages via PMS
+// $ adb shell pm list packages -f
+
+// View window hierarchy via WMS
+// $ adb shell dumpsys window windows | grep -E "mCurrentFocus|mFocusedApp"`,
+  funFact: "Zygote gets its name from biology — a zygote is the first cell formed after fertilization, which divides to create all other cells. Similarly, Android's Zygote process is the 'first cell' that fork()s to create all app processes. The name was chosen by Dan Bornstein, who also created the Dalvik VM (named after a fishing village in Iceland where his ancestors lived).",
+  quiz: [
+    {
+      q: "What is the correct order of the Android architecture stack from top to bottom?",
+      opts: [
+        "Application → ART → Framework → HAL → Native Libraries → Kernel",
+        "Application → Framework → ART → Native Libraries → HAL → Linux Kernel",
+        "Application → Framework → Native Libraries → ART → Kernel → HAL",
+        "Kernel → HAL → ART → Framework → Application → Native Libraries"
+      ],
+      ans: 1
+    },
+    {
+      q: "How does ART (Android 7.0+) compile app code differently from the original Dalvik VM?",
+      opts: [
+        "ART uses pure interpretation with no compilation, which is faster than Dalvik's JIT",
+        "ART uses a hybrid approach — JIT on first runs, then profile-guided AOT compilation for hot methods",
+        "ART uses only AOT compilation at install time, with no JIT component",
+        "ART and Dalvik both use identical JIT compilation, but ART has a faster JIT engine"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why does Zygote fork() to create new app processes instead of starting fresh processes?",
+      opts: [
+        "fork() is required by the Linux kernel for all new processes",
+        "Forking allows the new process to inherit preloaded classes and resources via copy-on-write memory, making app startup significantly faster",
+        "Zygote fork() ensures all apps share the same memory space for security",
+        "fork() is the only way to assign unique UIDs to app processes"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the primary role of ActivityManagerService (AMS) in the Android framework?",
+      opts: [
+        "Rendering the UI and handling touch events for all Activities",
+        "Managing Activity lifecycle, task/back stacks, process lifecycle, and ANR detection",
+        "Compiling DEX bytecode into native machine code via ART",
+        "Handling all network requests and caching for Activities"
+      ],
+      ans: 1
+    },
+    {
+      q: "What causes the 65,536 method reference limit in Android, and how is it resolved?",
+      opts: [
+        "The Java language spec limits classes to 65K methods; resolved by code splitting",
+        "A single DEX file can reference at most 65,536 methods; ART natively supports multiple DEX files (multidex)",
+        "The Android Manifest limits app methods to 65K; resolved by using dynamic feature modules",
+        "The Binder IPC protocol limits method calls to 65K; resolved by using AIDL pooling"
+      ],
+      ans: 1
+    },
+    {
+      q: "In the app startup sequence, what happens immediately AFTER Zygote forks a new process for your app?",
+      opts: [
+        "Activity.onCreate() is called directly by Zygote",
+        "ActivityThread.main() starts, creating a Looper and attaching to AMS via Binder",
+        "WindowManagerService creates the app's window and surface",
+        "PackageManagerService installs the app's APK into the new process"
+      ],
+      ans: 1
+    },
+    {
+      q: "How does Android's security sandboxing work at the Linux kernel level?",
+      opts: [
+        "Each app runs in a Docker container with its own kernel namespace",
+        "All apps share a single Linux UID but are separated by Java SecurityManager",
+        "Each installed app is assigned a unique Linux UID, and the kernel enforces process isolation and file permissions based on this UID",
+        "SELinux provides the only layer of app isolation; Linux UIDs are not used"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is Binder IPC and why is it central to Android's architecture?",
+      opts: [
+        "Binder is a database layer that stores app data in shared memory between processes",
+        "Binder is Android's inter-process communication mechanism using shared memory and Parcel serialization; it connects apps to system services like AMS, WMS, and ContentProviders",
+        "Binder is a networking protocol for communication between Android devices",
+        "Binder is a compile-time code generation tool that creates type-safe API stubs"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the purpose of system_server in Android's boot sequence?",
+      opts: [
+        "system_server is the web server that handles Google Play Store downloads",
+        "system_server hosts the Linux kernel's device drivers in userspace",
+        "system_server is a process that initializes and hosts 100+ system services including AMS, WMS, and PMS, registered via ServiceManager",
+        "system_server is the process that compiles all apps' DEX files during boot"
+      ],
+      ans: 2
+    },
+    {
+      q: "Why should a senior Android app developer know how to read AOSP source code on cs.android.com?",
+      opts: [
+        "Because Google requires all senior developers to contribute to AOSP",
+        "To understand undocumented framework behaviors, debug tricky issues by reading the actual implementation of system services and Android SDK classes",
+        "Because the Android SDK javadoc is never available online",
+        "To copy-paste framework code into their apps for better performance"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "Explain what happens when a user taps an app icon on the home screen, covering every layer of the Android stack. Include: which process handles the tap event, how the intent is resolved, the role of AMS, when/if Zygote forks, what ActivityThread does, and when your Activity.onCreate() finally runs. Then, using ADB commands, demonstrate how you would measure your app's cold start time, check which process ID your app is running under, and inspect the current Activity stack. Write your answer as if you're in a senior Android interview.",
+  resources: [
+    { type: "docs", title: "Android Platform Architecture", url: "https://developer.android.com/guide/platform", source: "developer.android.com" },
+    { type: "docs", title: "ART and Dalvik", url: "https://source.android.com/docs/core/runtime", source: "source.android.com" },
+    { type: "docs", title: "AIDL Overview", url: "https://developer.android.com/develop/background-work/services/aidl", source: "developer.android.com" },
+    { type: "article", title: "Android Boot Process Explained", url: "https://source.android.com/docs/core/architecture", source: "source.android.com" },
+    { type: "article", title: "How Android Apps Are Started — Zygote", url: "https://medium.com/android-news/android-application-launch-explained-from-zygote-to-your-activity-oncreate-8a8f036864b", source: "Medium" }
+  ],
+  eli5: "Imagine your phone is a huge apartment building. The building manager (system_server) runs everything — who gets which apartment, who gets mail, who's making too much noise. When you want to move in (launch an app), the manager doesn't build you a new apartment from scratch. Instead, there's a magic template apartment (Zygote) that can be instantly cloned. You move into the clone, decorate it your way (your app code runs), and whenever you need something from the building (like checking the weather), you call the front desk (Binder IPC) and they connect you to the right department.",
+  codeWalkthrough: [
+    "The architecture diagram shows the 6-layer stack — your app code only directly touches the top Application layer, but every API call traverses down through the Framework layer via Binder IPC",
+    "AIDL interface defines the contract for cross-process communication — the AIDL compiler generates Stub (server-side) and Proxy (client-side) classes that handle Binder serialization automatically",
+    "'in Book book' parameter direction means data flows from client to service — 'out' means service fills the object for the client, 'inout' is bidirectional but more expensive",
+    "The app launch sequence shows 8 steps from tap to onCreate() — steps 1-3 happen in the Launcher/system_server processes, step 4 is the Zygote fork, steps 5-8 happen in your new app process",
+    "'adb shell service list' reveals all registered Binder services — there are typically 100+ services including activity, window, package, location, notification, alarm, etc.",
+    "'dumpsys activity' is the most powerful debugging command — it shows all Activity stacks, running processes, recent tasks, broadcast queues, and pending intents",
+    "'am start-activity -W' measures cold start — TotalTime includes process creation + Application.onCreate() + Activity.onCreate() + first frame rendered; target is under 500ms",
+    "'dumpsys meminfo' shows memory allocation per process — the Low Memory Killer uses oom_adj scores to decide which background processes to kill when RAM is low",
+    "'pm list packages -f' shows PackageManagerService's view of installed apps — the -f flag shows the APK file path, useful for debugging installation issues",
+    "'dumpsys window windows' shows WindowManagerService state — mCurrentFocus tells you which Activity window currently has input focus, essential for debugging multi-window issues"
+  ],
+  bugChallenge: {
+    code: `// Developer is trying to communicate with a bound service
+// but gets a TransactionTooLargeException
+
+class DataSyncActivity : AppCompatActivity() {
+    private var syncService: ISyncService? = null
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+            syncService = ISyncService.Stub.asInterface(binder)
+        }
+        override fun onServiceDisconnected(name: ComponentName) {
+            syncService = null
+        }
+    }
+
+    fun syncAllData() {
+        val allRecords = database.getAllRecords() // Returns 50,000 records
+        syncService?.syncRecords(allRecords)      // Crashes here!
+    }
+}
+
+// Error: android.os.TransactionTooLargeException
+// Binder transaction buffer = 1MB shared across all transactions`,
+    hint: "The Binder transaction buffer has a 1MB limit shared across all ongoing transactions in a process. Sending 50,000 records in a single Binder call exceeds this limit.",
+    answer: "Bug: Binder IPC has a ~1MB transaction buffer limit (shared per process). Sending 50,000 records in a single syncRecords() call serializes too much data into the Parcel, exceeding the buffer. Fix: Batch the records into chunks — syncService?.syncRecords(allRecords.chunked(100).forEach { batch -> syncService?.syncBatch(batch) }). Alternative: Use a ContentProvider (which handles batching internally), write data to a shared file and pass the file descriptor via Binder, or use a database that both processes can access."
+  },
+  difficulty: "advanced",
+  prereqs: [12, 13, 14, 55]
+},
+{
+  id: 83,
+  title: "Java Interop, Legacy Code & Kotlin Migration Strategy",
+  subtitle: "Bridge two worlds — master Java-Kotlin interop and lead migration of real-world codebases confidently",
+  analogy: "Java-Kotlin interop is like two people who speak related languages (say Spanish and Portuguese). They understand each other mostly, but some words have different meanings (null!), some grammar rules clash (default parameters), and you need a translator's phrasebook (@JvmStatic, @JvmOverloads) to avoid miscommunication. Migration is like gradually renovating a house room by room while people still live in it — you can't tear everything down at once.",
+  points: [
+    { t: "Why Java Knowledge Still Matters", d: "The Android SDK itself is written in Java. Framework source code, stack traces, and many third-party libraries are Java. Legacy enterprise apps have millions of lines of Java. Companies like Murena and many US Android teams maintain Java codebases. Even in a pure-Kotlin project, you'll read Java code daily — in framework internals, decompiled bytecode, and library sources. Senior developers MUST be bilingual." },
+    { t: "Platform Types — Kotlin's Unknown Nullability", d: "When Kotlin calls Java code that lacks nullability annotations, the return type becomes a 'platform type' shown as Type! in the IDE. Platform types bypass Kotlin's null safety — the compiler won't force null checks. This means a Java method returning String (without @NonNull) becomes String! in Kotlin, and accessing it can throw NPE at runtime. Always add explicit type declarations when storing Java results: val name: String? = javaObj.getName()" },
+    { t: "Nullability Annotations — The Bridge", d: "@Nullable and @NonNull (from javax.annotation, androidx.annotation, org.jetbrains.annotations, or JSpecify) tell Kotlin's compiler about Java's null intentions. @NonNull String getName() becomes String in Kotlin (non-nullable). @Nullable String getName() becomes String? in Kotlin. Adding these annotations to Java code before migration dramatically improves interop safety and makes eventual Kotlin conversion cleaner." },
+    { t: "@JvmStatic — Exposing Companion Members to Java", d: "Kotlin companion object functions are accessed from Java as MyClass.Companion.myMethod(). Adding @JvmStatic generates a real static method on the class, so Java can call MyClass.myMethod() directly. Essential when Java code calls Kotlin factories, constants, or utility functions. Without @JvmStatic, Java callers must know about the Companion object pattern." },
+    { t: "@JvmField and @JvmOverloads", d: "@JvmField exposes a Kotlin property as a direct Java field (no getter/setter). Used for constants: @JvmField val MAX_RETRY = 3 → accessible as MyClass.MAX_RETRY from Java. @JvmOverloads generates Java overloaded methods for Kotlin functions with default parameters. Without it, Java must pass ALL parameters because Java doesn't support default values." },
+    { t: "SAM Conversions — Java Functional Interfaces in Kotlin", d: "Kotlin can convert a lambda to a Java functional interface (Single Abstract Method) automatically. setOnClickListener { view -> handleClick(view) } works because View.OnClickListener is a SAM interface. However, Kotlin interfaces are NOT SAM-compatible — you must use 'fun interface' keyword for Kotlin interfaces to support SAM conversion. This distinction trips up senior developers in interviews." },
+    { t: "Interop Gotchas — Default Parameters, Sealed Classes, Companions", d: "Java cannot use Kotlin default parameters without @JvmOverloads. Java sees Kotlin companion objects as a static inner class called Companion. Kotlin sealed classes compile to abstract classes with private constructors — Java can't add new subclasses (enforced at compile time since Kotlin 1.7). Kotlin's 'internal' visibility compiles to public with a mangled name in bytecode — Java can technically access it." },
+    { t: "Migration Strategy — Module by Module", d: "Don't convert an entire app at once. Strategy: (1) Add Kotlin support to the Gradle build, (2) Write all NEW code in Kotlin, (3) Add nullability annotations to Java code at interop boundaries, (4) Convert leaf modules first (utilities, models, data layer) because they have fewer dependents, (5) Convert feature modules next, (6) Convert the app module last. Each module should pass all tests before moving to the next." },
+    { t: "Android Studio Java-to-Kotlin Converter", d: "Code → Convert Java File to Kotlin File (Ctrl+Alt+Shift+K). The converter handles ~80% correctly but commonly produces issues: platform types without explicit nullability, unnecessary !! operators, non-idiomatic patterns (e.g., keeping Java-style builders instead of using apply), and broken complex generics. ALWAYS review and fix the output. Run tests immediately after conversion." },
+    { t: "Handling Java Libraries in Kotlin", d: "Gson with Kotlin data classes requires default values (Gson uses unsafe reflection that bypasses constructors). Prefer Moshi or kotlinx.serialization for Kotlin-first JSON. RxJava works well with Kotlin but consider migrating to Kotlin Coroutines + Flow for new code. Java Stream API is unnecessary — use Kotlin's collection operators instead (map, filter, fold). Retrofit works seamlessly with both languages." },
+    { t: "Testing Mixed Codebases", d: "JUnit 4/5 works identically for both Java and Kotlin test classes. Mockito works with Kotlin but needs mockito-kotlin library for idiomatic usage (inline functions, reified types). MockK is the Kotlin-native alternative. In a mixed codebase, you can write Kotlin tests for Java code and vice versa. When migrating, convert test files AFTER their production counterparts to maintain test coverage continuity." },
+    { t: "Open Source Fork Workflow — Merge Upstream Changes", d: "For companies maintaining AOSP forks or open-source projects (like Murena with /e/OS): (1) Fork the upstream repo, (2) Create feature branches for your changes, (3) Regularly fetch upstream: git fetch upstream, (4) Merge upstream into your main: git merge upstream/main, (5) Resolve conflicts — Kotlin-Java conflicts are common when upstream adds Java and you've converted to Kotlin, (6) Use 'git rerere' to remember conflict resolutions for repeated merges." }
+  ],
+  whatIs: "Java-Kotlin interop is the set of annotations, conventions, and compiler behaviors that allow Java and Kotlin code to coexist and call each other within the same project. Kotlin was designed for 100% Java interop — they compile to the same JVM bytecode and can freely reference each other's classes. However, differences in null safety, default parameters, static members, and functional interfaces create friction points that senior developers must understand. A migration strategy is the systematic approach to converting a Java codebase to Kotlin incrementally without breaking the running application.",
+  realWorld: "You join a company with a 400K-line Java Android app built over 5 years. New features are in Kotlin, but 70% of the codebase is still Java. Your ViewModel (Kotlin) calls a Java repository that returns User objects without nullability annotations — platform types everywhere. You add @NonNull/@Nullable annotations to the Java interfaces, use @JvmOverloads on your Kotlin factory functions so Java fragments can call them, and plan a module-by-module migration starting with the :data:models module. When merging upstream library updates, you resolve conflicts between their Java changes and your Kotlin conversions.",
+  code: `// ============================================
+// JAVA CLASS WITH NULLABILITY ANNOTATIONS
+// ============================================
+// File: UserRepository.java
+//
+// import androidx.annotation.NonNull;
+// import androidx.annotation.Nullable;
+//
+// public class UserRepository {
+//     // @NonNull → Kotlin sees this as String (non-nullable)
+//     @NonNull
+//     public String getUserName(int userId) {
+//         return database.queryName(userId); // Never returns null
+//     }
+//
+//     // @Nullable → Kotlin sees this as String? (nullable)
+//     @Nullable
+//     public String getUserBio(int userId) {
+//         return database.queryBio(userId); // Might return null
+//     }
+//
+//     // NO annotation → Kotlin sees this as String! (platform type!)
+//     public String getUserEmail(int userId) {
+//         return database.queryEmail(userId); // Unknown nullability
+//     }
+// }
+
+// ============================================
+// KOTLIN CALLING JAVA — HANDLING PLATFORM TYPES
+// ============================================
+
+// Safe: compiler knows nullability from annotations
+fun displayUser(repo: UserRepository, userId: Int) {
+    val name: String = repo.getUserName(userId)     // Safe: @NonNull
+    val bio: String? = repo.getUserBio(userId)       // Safe: @Nullable
+
+    // DANGEROUS: platform type String! — could be null at runtime!
+    // val email = repo.getUserEmail(userId)  // DON'T do this
+    val email: String? = repo.getUserEmail(userId)   // Safe: explicit type
+
+    println("Name: \${name}")
+    println("Bio: \${bio ?: "No bio provided"}")
+    println("Email: \${email ?: "No email"}")
+}
+
+// ============================================
+// @JvmStatic, @JvmField, @JvmOverloads
+// ============================================
+
+class ApiConfig {
+    companion object {
+        // Without @JvmField: Java calls ApiConfig.Companion.getMAX_RETRIES()
+        // With @JvmField:    Java calls ApiConfig.MAX_RETRIES
+        @JvmField
+        val MAX_RETRIES = 3
+
+        // Without @JvmStatic: Java calls ApiConfig.Companion.create()
+        // With @JvmStatic:    Java calls ApiConfig.create()
+        @JvmStatic
+        fun create(): ApiConfig = ApiConfig()
+    }
+}
+
+// Without @JvmOverloads, Java must pass ALL parameters:
+//   new UserQuery("Alice", 0, 20, "name", true)
+// With @JvmOverloads, Java gets overloaded constructors:
+//   new UserQuery("Alice")
+//   new UserQuery("Alice", 5)
+//   new UserQuery("Alice", 5, 50)
+class UserQuery @JvmOverloads constructor(
+    val searchTerm: String,
+    val page: Int = 0,
+    val pageSize: Int = 20,
+    val sortBy: String = "name",
+    val ascending: Boolean = true
+)
+
+// ============================================
+// SAM CONVERSION — Java interface in Kotlin
+// ============================================
+
+// Java interface (SAM — single abstract method):
+// public interface OnItemClickListener {
+//     void onItemClick(Item item);
+// }
+
+// Kotlin usage — lambda auto-converts to SAM:
+// adapter.setOnItemClickListener { item ->
+//     navigateToDetail(item.id)
+// }
+
+// Kotlin fun interface (supports SAM conversion):
+fun interface Validator {
+    fun validate(input: String): Boolean
+}
+// Usage: val emailValidator = Validator { it.contains("@") }
+
+// ============================================
+// MIGRATION EXAMPLE: Java Activity → Kotlin
+// ============================================
+
+// BEFORE (Java):
+// public class ProfileActivity extends AppCompatActivity {
+//     private TextView nameText;
+//     private ImageView avatar;
+//     private UserRepository repo;
+//
+//     @Override
+//     protected void onCreate(Bundle savedInstanceState) {
+//         super.onCreate(savedInstanceState);
+//         setContentView(R.layout.activity_profile);
+//         nameText = findViewById(R.id.nameText);
+//         avatar = findViewById(R.id.avatar);
+//         repo = new UserRepository();
+//         loadProfile();
+//     }
+//
+//     private void loadProfile() {
+//         String userId = getIntent().getStringExtra("USER_ID");
+//         if (userId != null) {
+//             User user = repo.getUser(userId);
+//             nameText.setText(user.getName());
+//         }
+//     }
+// }
+
+// AFTER (Kotlin — idiomatic, not just auto-converted):
+class ProfileActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityProfileBinding
+    private val viewModel: ProfileViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val userId = intent.getStringExtra("USER_ID")
+            ?: run { finish(); return }
+
+        viewModel.loadProfile(userId)
+        viewModel.user.observe(this) { user ->
+            binding.nameText.text = user.name
+        }
+    }
+}
+
+// ============================================
+// GIT WORKFLOW: Merging Upstream Fork Changes
+// ============================================
+//
+// # Initial setup (one time)
+// git remote add upstream https://github.com/AospProject/platform_packages_apps.git
+//
+// # Regular sync workflow
+// git fetch upstream
+// git checkout main
+// git merge upstream/main
+//
+// # When upstream adds Java files you've already converted to Kotlin:
+// # 1. Accept upstream's Java changes
+// # 2. Re-convert the changed Java file to Kotlin
+// # 3. Apply your Kotlin-specific improvements
+// git mergetool  # Resolve conflicts
+//
+// # Remember conflict resolutions for repeated merges
+// git config rerere.enabled true
+//
+// # After resolving:
+// git add .
+// git commit -m "Merge upstream Android 15 changes, re-convert to Kotlin"`,
+  funFact: "Kotlin was designed from day one to be 100% Java interoperable. JetBrains' internal codename for the project was 'Project Kotlin' — named after Kotlin Island near Saint Petersburg, Russia, mirroring how Java was named after the Indonesian island. When Google announced Kotlin as an official Android language at Google I/O 2017, they revealed that over 40% of professional Android developers had already adopted it. By 2024, Google reported that 95% of the top 1000 Android apps use Kotlin.",
+  quiz: [
+    {
+      q: "What is a 'platform type' in Kotlin, and when does it appear?",
+      opts: [
+        "A type that only works on the Android platform, not on JVM or Kotlin/Native",
+        "A type from Java code lacking nullability annotations, shown as Type! in the IDE, which bypasses Kotlin's null safety checks",
+        "A special type used by the Kotlin compiler for platform-specific optimizations",
+        "A type that is always non-nullable, generated from @NonNull Java annotations"
+      ],
+      ans: 1
+    },
+    {
+      q: "What is the safest way to handle a platform type (String!) returned from a Java method in Kotlin?",
+      opts: [
+        "Use !! to assert non-null since Java methods rarely return null",
+        "Leave it as the inferred type and let Kotlin handle it automatically",
+        "Explicitly declare the receiving variable's type as nullable: val result: String? = javaObj.getResult()",
+        "Wrap the call in a try-catch for NullPointerException"
+      ],
+      ans: 2
+    },
+    {
+      q: "Without @JvmStatic, how does Java code access a Kotlin companion object function?",
+      opts: [
+        "MyClass.myFunction() — directly as a static method",
+        "MyClass.Companion.myFunction() — through the Companion object reference",
+        "It cannot access companion object functions at all from Java",
+        "new MyClass().myFunction() — through an instance method"
+      ],
+      ans: 1
+    },
+    {
+      q: "Why is @JvmOverloads essential for Java-Kotlin interop?",
+      opts: [
+        "It makes Kotlin functions run faster when called from Java code",
+        "It allows Java to call Kotlin functions, which is otherwise impossible",
+        "It generates overloaded Java methods for Kotlin functions with default parameters, since Java doesn't support default parameter values",
+        "It converts Kotlin extension functions into Java static methods"
+      ],
+      ans: 2
+    },
+    {
+      q: "What is the key difference between SAM conversion for Java interfaces vs Kotlin interfaces?",
+      opts: [
+        "There is no difference — both support SAM conversion automatically",
+        "Java functional interfaces automatically support SAM conversion in Kotlin, but Kotlin interfaces require the 'fun interface' keyword to enable SAM conversion",
+        "Only Kotlin interfaces support SAM conversion; Java interfaces always need anonymous classes",
+        "SAM conversion is deprecated in Kotlin; you should always use explicit object expressions"
+      ],
+      ans: 1
+    },
+    {
+      q: "In a gradual Java-to-Kotlin migration, which modules should be converted FIRST and why?",
+      opts: [
+        "The app module first, because it's the entry point and most visible",
+        "UI modules first, because they benefit most from Kotlin's concise syntax",
+        "Leaf modules (utilities, models, data layer) first, because they have fewer dependents and lower risk of breaking other modules",
+        "Test modules first, because they don't affect production code"
+      ],
+      ans: 2
+    },
+    {
+      q: "What common issue does Android Studio's Java-to-Kotlin converter produce that developers must fix manually?",
+      opts: [
+        "It removes all comments and documentation",
+        "It converts all classes to data classes incorrectly",
+        "It often generates unnecessary !! operators, platform types without explicit nullability, and non-idiomatic patterns like keeping Java-style builders",
+        "It cannot handle any Java generics and replaces them with Any"
+      ],
+      ans: 2
+    },
+    {
+      q: "Why is Gson problematic with Kotlin data classes, and what is the recommended alternative?",
+      opts: [
+        "Gson is too slow for Kotlin; Moshi is faster",
+        "Gson uses unsafe reflection that bypasses Kotlin constructors, ignoring default values and non-null types; Moshi or kotlinx.serialization are Kotlin-aware alternatives",
+        "Gson cannot parse JSON into Kotlin classes at all",
+        "Gson requires Java 11+ which Android doesn't support"
+      ],
+      ans: 1
+    },
+    {
+      q: "How does Kotlin's 'internal' visibility modifier compile to JVM bytecode, and what interop issue does this create?",
+      opts: [
+        "It compiles to Java's package-private, making it truly internal to the module",
+        "It compiles to public with a mangled name in bytecode, meaning Java code can technically access it (though with an ugly name)",
+        "It compiles to protected, allowing subclasses in other modules to access it",
+        "It compiles to private, making it completely inaccessible from Java"
+      ],
+      ans: 1
+    },
+    {
+      q: "When maintaining an AOSP fork and upstream adds changes to a Java file you've already converted to Kotlin, what is the best resolution strategy?",
+      opts: [
+        "Revert your Kotlin conversion and keep the Java file to avoid future conflicts",
+        "Accept upstream's Java changes, re-convert the modified file to Kotlin, apply your Kotlin-specific improvements, and enable git rerere to remember resolution patterns",
+        "Always keep your Kotlin version and ignore upstream changes to those files",
+        "Maintain both the Java and Kotlin versions of the file in parallel"
+      ],
+      ans: 1
+    }
+  ],
+  challenge: "You are given a legacy Java Android app with a UserRepository (Java, no nullability annotations), a UserService (Java, uses callbacks), and a UserListActivity (Java, uses findViewById and AsyncTask). Design and execute a migration plan: (1) Add appropriate @Nullable/@NonNull annotations to the Java UserRepository interface, (2) Write a Kotlin UserViewModel that calls the Java repository safely handling platform types, (3) Convert UserListActivity to Kotlin idiomatically (not just auto-convert — use ViewBinding, ViewModel, LiveData), (4) Add @JvmStatic and @JvmOverloads to your Kotlin code so remaining Java code can call it easily. Document the order you'd do this in production and explain why.",
+  resources: [
+    { type: "docs", title: "Calling Java from Kotlin", url: "https://kotlinlang.org/docs/java-interop.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Calling Kotlin from Java", url: "https://kotlinlang.org/docs/java-to-kotlin-interop.html", source: "kotlinlang.org" },
+    { type: "docs", title: "Migrating to Kotlin — Android Guide", url: "https://developer.android.com/kotlin/migration", source: "developer.android.com" },
+    { type: "article", title: "Java-Kotlin Interop Best Practices", url: "https://developer.android.com/kotlin/interop", source: "developer.android.com" },
+    { type: "docs", title: "kotlinx.serialization Guide", url: "https://kotlinlang.org/docs/serialization.html", source: "kotlinlang.org" }
+  ],
+  eli5: "Imagine you speak English and your friend speaks French. You can mostly understand each other because the languages are related, but sometimes a word means something different — like 'null' in Java means 'could be anything' but in Kotlin it means 'DANGER! CHECK FIRST!' To help you communicate better, you use special stickers (@JvmStatic, @JvmOverloads) on your notes so your friend knows exactly what you mean. Moving the whole team from French to English is like migrating — you teach one room at a time, not the whole school at once.",
+  codeWalkthrough: [
+    "@NonNull on getUserName() tells Kotlin this is a guaranteed non-null String — the compiler allows direct usage without null checks",
+    "@Nullable on getUserBio() tells Kotlin this is String? — the compiler forces null handling via ?., ?:, or explicit checks",
+    "getUserEmail() with NO annotation becomes String! (platform type) — the compiler gives NO warning, but a runtime NPE can occur; always assign to an explicitly typed variable: val email: String?",
+    "@JvmField on MAX_RETRIES removes the getter/setter wrapper — Java accesses it as ApiConfig.MAX_RETRIES instead of ApiConfig.Companion.getMAX_RETRIES()",
+    "@JvmStatic on create() generates a real static method on ApiConfig — Java calls ApiConfig.create() naturally instead of ApiConfig.Companion.create()",
+    "@JvmOverloads on UserQuery constructor generates 5 Java constructors with progressively more parameters — each uses Kotlin's default values for omitted params",
+    "The SAM conversion example shows Kotlin automatically converting a lambda to View.OnClickListener — this works because it's a Java interface with exactly one abstract method",
+    "The migration example transforms Java's findViewById + manual lifecycle to Kotlin's ViewBinding + ViewModel + LiveData — this is idiomatic migration, not just syntax conversion",
+    "fun interface Validator enables SAM conversion for a Kotlin-defined interface — without the 'fun' keyword, callers would need object : Validator { override fun validate(...) }",
+    "git config rerere.enabled true tells git to Remember Recorded Resolutions — critical for fork maintenance where the same type of conflict (Java vs Kotlin) recurs on every upstream merge"
+  ],
+  bugChallenge: {
+    code: `// Java class (cannot modify):
+// public class LegacyApi {
+//     public static List<String> getUsers() { ... }
+//     public static String findUser(String query) { ... }
+// }
+
+// Kotlin code calling Java:
+fun displayUsers() {
+    val users = LegacyApi.getUsers()
+    users.forEach { user ->
+        val length = user.length  // Potential crash!
+        println("User (\${length} chars): \${user}")
+    }
+}
+
+fun searchUser(query: String): String {
+    val result = LegacyApi.findUser(query)
+    return result.uppercase()  // Potential crash!
+}
+
+// Kotlin class consumed by Java code:
+class EventTracker {
+    companion object {
+        val SCREEN_VIEW = "screen_view"
+
+        fun getInstance(): EventTracker = EventTracker()
+    }
+
+    fun track(event: String, label: String = "none", value: Int = 0) {
+        println("Track: \${event}, \${label}, \${value}")
+    }
+}
+
+// Java calling Kotlin (won't compile!):
+// EventTracker.SCREEN_VIEW          // Error: cannot find symbol
+// EventTracker.getInstance()        // Error: cannot find symbol
+// tracker.track("click")            // Error: missing parameters`,
+    hint: "Three categories of bugs: (1) Platform types from Java can be null but Kotlin doesn't warn you, (2) Companion object members need @JvmField/@JvmStatic for Java access, (3) Default parameters need @JvmOverloads for Java callers",
+    answer: "Bug 1: LegacyApi.getUsers() returns List<String!>! — any element could be null, and user.length crashes on null elements. Fix: val users: List<String?> = LegacyApi.getUsers(), then user?.length. Bug 2: LegacyApi.findUser() returns String! — could be null, and result.uppercase() throws NPE. Fix: val result: String? = LegacyApi.findUser(query), return result?.uppercase() ?: 'Not found'. Bug 3: Java can't access SCREEN_VIEW without @JvmField, can't call getInstance() without @JvmStatic, and can't use default parameters without @JvmOverloads. Fix: @JvmField val SCREEN_VIEW, @JvmStatic fun getInstance(), and @JvmOverloads fun track(...)."
+  },
+  difficulty: "advanced",
+  prereqs: [1, 3, 5]
 }
 ];

@@ -1,0 +1,53 @@
+const COURSE_CONFIG = {
+  title: 'Career Launchpad: Land Your Dream Dev Job in 2026',
+  subtitle: 'The Missing Piece — <strong>16 Action-Packed Lessons</strong> — Portfolio Projects, LeetCode Strategy, Mock Interviews, Resume & LinkedIn, Networking, AI Skills & Job Hunt | Free, No Signup | by Teamz Lab',
+  shortTitle: 'Career Launchpad',
+  org: 'Teamz Lab',
+  orgUrl: 'https://github.com/Teamz-Lab-LTD',
+  orgFull: 'Teamz Lab LTD',
+  siteUrl: 'https://learn.teamzlab.com/',
+  canonicalUrl: 'https://learn.teamzlab.com/learn.html?course=career-launchpad',
+  ogImage: 'https://learn.teamzlab.com/og-career-launchpad.png',
+  description: 'Free career preparation course for software developers. 15 lessons covering portfolio building, LeetCode strategy, mock interviews, resume optimization, LinkedIn presence, networking, salary negotiation, and job application strategy. Built for mid-to-senior developers targeting remote roles in 2026-2027.',
+  keywords: 'developer career guide 2026, software engineer job hunting, developer portfolio tips, leetcode interview strategy, mock interview preparation, developer resume optimization, linkedin for developers, salary negotiation developers, remote developer jobs, senior developer job search',
+  topics: ['Portfolio', 'GitHub', 'LeetCode', 'Mock Interviews', 'Resume', 'LinkedIn', 'Networking', 'Job Applications', 'Salary Negotiation', 'Remote Work', 'AI-Responsible Dev'],
+  educationalLevel: 'All Levels',
+  footerTagline: 'Knowledge gets you interviews. This course gets you hired.',
+  topicMap: {
+    'Portfolio & Projects':     [1, 2, 3],
+    'Coding Practice':          [4, 5, 6],
+    'Mock Interviews':          [7, 8, 9],
+    'Resume & LinkedIn':        [10, 11, 12],
+    'Job Hunt Strategy':        [13, 14, 15],
+    'AI & Fundamentals':        [16]
+  },
+  conceptFlows: {
+    1: ['GitHub Profile', 'README', 'Clean Code', 'CI/CD'],
+    2: ['Architecture', 'Testing', 'Documentation', 'Demo'],
+    3: ['Open Source', 'Contributions', 'Visibility', 'Impact'],
+    4: ['Patterns', 'Medium Problems', 'Time Boxing', 'Review'],
+    5: ['Arrays/Strings', 'Trees/Graphs', 'DP', 'System Design'],
+    6: ['Speed', 'Communication', 'Edge Cases', 'Optimization'],
+    7: ['Technical Mock', 'Live Coding', 'Whiteboard', 'Feedback'],
+    8: ['System Design Mock', 'Tradeoffs', 'Scale', 'Communication'],
+    9: ['Behavioral Mock', 'W-STAR', 'Stories', 'Confidence'],
+    10: ['Format', 'Keywords', 'Metrics', 'ATS Optimization'],
+    11: ['Headline', 'About', 'Posts', 'Connections'],
+    12: ['Cover Letter', 'Follow-up', 'Referrals', 'Tracking'],
+    13: ['Job Boards', 'Filters', 'Daily Routine', 'Volume'],
+    14: ['Networking', 'Recruiters', 'Cold Outreach', 'Community'],
+    15: ['Salary Research', 'Negotiation', 'Benefits', 'Remote'],
+    16: ['AI Dependency', 'Security', 'Fundamentals', 'No-AI Practice']
+  },
+  srsEnabled: true,
+  srsBoxIntervals: [1, 3, 7, 14, 30],
+  xpRewards: {
+    lessonComplete: 100,
+    quizCorrect: 20,
+    quizPerfect: 50,
+    challengeComplete: 75,
+    bugFound: 40,
+    flashcardReview: 10,
+    streakBonus: 25
+  }
+};
