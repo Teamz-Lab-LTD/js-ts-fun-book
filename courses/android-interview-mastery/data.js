@@ -10854,5 +10854,2941 @@ fun ProductList(
   },
   difficulty: "intermediate",
   prereqs: [17, 18]
+},
+{
+  id: 55,
+  title: "BroadcastReceiver, Services, Binder & Bound Services",
+  subtitle: "Android background components that every senior dev must know cold",
+  analogy: "A BroadcastReceiver is like a smoke detector — it sits dormant until it hears a specific signal, then springs to action. A Service is like a kitchen appliance that keeps running even when you leave the room. A Binder is the intercom system that lets two rooms talk directly.",
+  points: [
+    { t: "BroadcastReceiver — static vs dynamic", d: "Static receivers are declared in AndroidManifest and can receive system broadcasts even when the app is not running (with restrictions in API 26+). Dynamic receivers are registered in code via registerReceiver() and live only while the registering component is alive. Prefer dynamic for most use cases." },
+    { t: "LocalBroadcastManager (legacy awareness)", d: "LocalBroadcastManager was used for in-process broadcasts. It is deprecated since API 26. Modern replacement is LiveData, StateFlow, or EventBus for in-app messaging. Know it exists so you can explain why you would NOT use it today." },
+    { t: "Implicit vs explicit broadcasts", d: "Most implicit system broadcasts (e.g., ACTION_BATTERY_CHANGED) are no longer deliverable to static receivers since API 26 to save battery. Explicit broadcasts (targeting your own app) and a whitelist of critical system broadcasts still work. Mentioning this in interviews signals deep knowledge." },
+    { t: "Started Service", d: "Started with startService() or startForegroundService(). Runs until stopSelf() or stopService() is called. Has no direct communication channel back to the caller. Used for fire-and-forget tasks. Largely replaced by WorkManager for deferrable work." },
+    { t: "Foreground Service", d: "A Service that shows a persistent notification so the user is aware it is running. Required for long-running tasks that need to continue when the app is in the background (e.g., music playback, GPS tracking, file upload). Must call startForeground() within 5 seconds of starting or the system kills it." },
+    { t: "Bound Service", d: "Started with bindService(). Clients bind to it and receive an IBinder to communicate directly. The service lives as long as at least one client is bound. When all clients unbind, the service is destroyed. Used when you need a long-lived object with an API that multiple components can call." },
+    { t: "Binder for same-process IPC", d: "When the Service runs in the same process as the client, you return a concrete Binder subclass from onBind(). The client casts the IBinder to your concrete class and calls methods directly — no serialization overhead. This is the most common pattern." },
+    { t: "AIDL for cross-process IPC", d: "Android Interface Definition Language generates the Binder boilerplate for inter-process communication. You define an .aidl file, Android Studio generates a Stub class, you implement it in the service, and clients use the generated Proxy. Know AIDL exists and when it is needed (different process, system services). For most apps, use Messenger or broadcast instead." },
+    { t: "Messenger — simplified cross-process", d: "Messenger wraps a Handler and uses Binder under the hood. Safer than raw AIDL for simple request-reply patterns across processes. Messages are serialized as Parcelable Bundles. Good middle ground when full AIDL is overkill." },
+    { t: "Service lifecycle gotchas", d: "onStartCommand() return value matters: START_STICKY restarts the service after kill with null intent, START_REDELIVER_INTENT restarts with the original intent, START_NOT_STICKY does not restart. Wrong choice here causes silent reliability bugs in production." },
+    { t: "When to use each in 2026", d: "Foreground Service: ongoing user-visible work (audio, location). WorkManager: deferrable background work with constraints. BroadcastReceiver: react to system or app events. Bound Service: shared long-lived object within or across processes. Avoid plain started services for anything new." },
+    { t: "Interview framing", d: "Lead with 'In modern Android I reach for WorkManager or Foreground Service + notification. I know BroadcastReceiver and Bound Service deeply because they underpin many system integrations and I've debugged production issues caused by their lifecycle.'" }
+  ],
+  whatIs: "BroadcastReceiver, Service, and Binder are three of Android's four core application components. Together they handle background work, event listening, and inter-process communication. Though WorkManager has replaced many Service use cases, these components remain foundational for audio players, location trackers, system integrations, and any app that must react to OS-level events.",
+  realWorld: "A music player app uses a Foreground Service to keep playback alive when the user switches apps. It uses a Bound Service so the UI Activity can call play(), pause(), seekTo() directly on the player object. A BroadcastReceiver listens for ACTION_AUDIO_BECOMING_NOISY (headphones unplugged) and pauses playback automatically.",
+  code: `// Foreground Service example (music player)
+class MusicService : Service() {
+
+    private val binder = MusicBinder()
+    private var mediaPlayer: MediaPlayer? = null
+
+    inner class MusicBinder : Binder() {
+        fun getService(): MusicService = this@MusicService
+    }
+
+    override fun onBind(intent: Intent): IBinder = binder
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notification = buildNotification()
+        startForeground(NOTIF_ID, notification)
+        return START_STICKY
+    }
+
+    fun play(url: String) {
+        mediaPlayer = MediaPlayer().apply {
+            setDataSource(url)
+            prepareAsync()
+            setOnPreparedListener { start() }
+        }
+    }
+
+    fun pause() { mediaPlayer?.pause() }
+
+    fun stop() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+        stopForeground(true)
+        stopSelf()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+    }
+
+    private fun buildNotification(): Notification {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Now Playing")
+            .setSmallIcon(R.drawable.ic_music)
+            .setOngoing(true)
+            .build()
+    }
+}
+
+// Activity binding
+class PlayerActivity : AppCompatActivity() {
+    private var musicService: MusicService? = null
+    private var bound = false
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, binder: IBinder) {
+            musicService = (binder as MusicService.MusicBinder).getService()
+            bound = true
+        }
+        override fun onServiceDisconnected(name: ComponentName) {
+            bound = false
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Intent(this, MusicService::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (bound) {
+            unbindService(connection)
+            bound = false
+        }
+    }
+}
+
+// Dynamic BroadcastReceiver for headphones unplugged
+class NoisyReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+            // pause playback
+        }
+    }
+}
+
+// Register dynamically in service
+val filter = IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+registerReceiver(noisyReceiver, filter)`,
+  funFact: "The Binder IPC mechanism in Android is not just for app developers — it is the backbone of every system service call your app makes. When you call getSystemService(LOCATION_SERVICE), under the hood Android uses Binder to cross the process boundary into the system server. Every Activity launch, every permission check, every notification post — all Binder calls.",
+  quiz: [
+    { q: "Which Service return value from onStartCommand() will restart the service after being killed, passing the original Intent?", opts: ["START_STICKY", "START_REDELIVER_INTENT", "START_NOT_STICKY", "START_FLAG_RETRY"], ans: 1 },
+    { q: "Since API 26, most implicit system broadcasts can no longer be received by:", opts: ["Dynamic receivers registered in code", "Static receivers declared in the Manifest", "Receivers inside a foreground service", "Receivers registered with LocalBroadcastManager"], ans: 1 },
+    { q: "What is the primary difference between a Bound Service and a Started Service?", opts: ["Bound services run in a separate process", "Bound services allow direct method calls via IBinder; started services do not", "Started services show a notification; bound services do not", "Bound services are started with startForegroundService()"], ans: 1 },
+    { q: "When must a service call startForeground() after startForegroundService()?", opts: ["Within 30 seconds", "Within 5 seconds", "Before onStartCommand() returns", "Before the first network call"], ans: 1 },
+    { q: "AIDL is required when:", opts: ["Two components in the same app need to communicate", "A service must communicate across process boundaries with arbitrary data types", "You need to receive system broadcasts", "You want to share a file between apps"], ans: 1 },
+    { q: "What is the modern replacement for LocalBroadcastManager for in-app event passing?", opts: ["IntentService", "JobScheduler", "StateFlow or LiveData", "Messenger"], ans: 2 },
+    { q: "A Bound Service is destroyed when:", opts: ["The app goes to the background", "All clients have called unbindService()", "onStartCommand() returns START_NOT_STICKY", "The device screen turns off"], ans: 1 },
+    { q: "Messenger differs from raw AIDL in that it:", opts: ["Is faster due to no serialization", "Processes messages serially through a Handler, avoiding thread-safety issues", "Supports direct method calls without Bundles", "Only works within the same process"], ans: 1 }
+  ],
+  challenge: "Design a podcast player service: (1) Write the Service class with Binder, implementing play(url), pause(), resume(), stop(), and getCurrentPosition(). (2) Show how an Activity binds and unbinds correctly across onStart/onStop. (3) Register a BroadcastReceiver for ACTION_AUDIO_BECOMING_NOISY and handle it. (4) Ensure the foreground notification is shown immediately on startForegroundService() call. Identify the exact lifecycle method ordering when the user navigates away from the app.",
+  resources: [
+    { type: "docs", title: "Services overview — Android Developers", url: "https://developer.android.com/guide/components/services", source: "Android Docs" },
+    { type: "docs", title: "Bound services overview", url: "https://developer.android.com/guide/components/bound-services", source: "Android Docs" },
+    { type: "docs", title: "BroadcastReceiver — Android Developers", url: "https://developer.android.com/guide/components/broadcasts", source: "Android Docs" },
+    { type: "docs", title: "AIDL — Android Interface Definition Language", url: "https://developer.android.com/guide/components/aidl", source: "Android Docs" },
+    { type: "docs", title: "Foreground services", url: "https://developer.android.com/guide/components/foreground-services", source: "Android Docs" }
+  ],
+  eli5: "A BroadcastReceiver is like your phone's alarm app — it waits quietly and wakes up when the exact right signal arrives. A Service is like a TV that keeps playing even after you leave the room. A Bound Service is a TV that also has a remote control you can hold — you press buttons and it responds directly to you.",
+  codeWalkthrough: [
+    "MusicService extends Service and defines an inner MusicBinder class that extends Binder — this is the same-process Binder pattern.",
+    "getService() returns the outer Service instance so the bound client gets a direct reference — no serialization, no IPC overhead.",
+    "onBind() returns the binder instance; Android delivers this to the client's ServiceConnection.onServiceConnected().",
+    "onStartCommand() calls startForeground() immediately with a notification — this is mandatory within 5 seconds of startForegroundService().",
+    "START_STICKY ensures the system restarts the service after killing it to reclaim memory, which is correct for a music player.",
+    "play() creates a MediaPlayer asynchronously using prepareAsync() to avoid blocking the service thread.",
+    "The ServiceConnection in the Activity captures the IBinder, casts it to MusicBinder, and calls getService() — now the Activity has a direct reference to the running Service.",
+    "bindService() in onStart() and unbindService() in onStop() is the correct lifecycle pairing — ensures the service is not kept alive unnecessarily.",
+    "The NoisyReceiver's onReceive() triggers on headphone unplug — the ACTION_AUDIO_BECOMING_NOISY broadcast tells the app the audio route changed.",
+    "Registering the receiver dynamically (in code) instead of the Manifest means it only fires when our service is running — correct scoping."
+  ],
+  bugChallenge: {
+    code: `class UploadService : Service() {
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val fileUri = intent?.getStringExtra("file_uri")
+        uploadFile(fileUri)
+        return START_STICKY
+    }
+
+    private fun uploadFile(uri: String?) {
+        // simulated upload on calling thread
+        Thread.sleep(30000) // 30 second upload
+        stopSelf()
+    }
+
+    override fun onBind(intent: Intent): IBinder? = null
+}`,
+    hint: "There are two bugs: one causes an ANR, the other causes a silent failure on Android 8+ when the app is in the background.",
+    answer: "Bug 1: uploadFile() calls Thread.sleep(30000) on the main thread. Service methods run on the main thread by default. Sleeping for 30 seconds here will cause an Application Not Responding (ANR) error after 5 seconds. Fix: move the upload to a background thread (coroutine, Thread, or ExecutorService). Bug 2: This is a background service started via startService(). On Android 8+ (API 26+), the system will kill a background service shortly after the app goes to the background. The upload will be silently cancelled. Fix: use startForegroundService() and call startForeground() with a notification in onStartCommand() before the upload begins, OR use WorkManager for the upload task which handles background execution constraints correctly."
+  },
+  difficulty: "intermediate",
+  prereqs: [12, 32]
+},
+{
+  id: 56,
+  title: "ContentProvider, FileProvider & URI Permissions",
+  subtitle: "Secure data and file sharing between Android apps",
+  analogy: "A ContentProvider is like a bank teller — you cannot walk into the vault yourself, but you can request data through the official window with the right ID. FileProvider is the bank's secure courier service — it delivers a sealed package to another party without revealing where the vault is.",
+  points: [
+    { t: "ContentProvider purpose", d: "ContentProvider exposes structured data (usually from a SQLite database) to other apps via a standardized CRUD interface. It uses URI-based addressing: content://authority/table/id. The system routes queries through the provider, enforcing declared permissions. It is still the correct mechanism for sharing data with system components like the Contacts app or MediaStore." },
+    { t: "ContentResolver — the client side", d: "Apps never talk to a ContentProvider directly. They use ContentResolver (obtained via context.contentResolver) to issue query(), insert(), update(), delete(), and openInputStream() calls. The system resolves the URI to the correct provider and routes the call, handling cross-process marshalling transparently." },
+    { t: "CRUD operations through ContentProvider", d: "query() returns a Cursor. insert() returns the URI of the new row. update() and delete() return the number of affected rows. All four must be thread-safe because multiple apps can call them concurrently. SQLiteDatabase handles this internally, but custom providers must synchronize themselves." },
+    { t: "Declaring a ContentProvider", d: "Declare in AndroidManifest with android:authorities (globally unique, typically your package name), android:exported (true if other apps need access), and android:readPermission / android:writePermission. Without exported=true and correct permissions, other apps cannot use it." },
+    { t: "FileProvider — secure file sharing", d: "FileProvider is a special ContentProvider subclass that maps file paths to content:// URIs. It prevents exposing file:// URIs (which are blocked by FileUriExposedException since API 24) and instead grants time-limited, permission-scoped access to files. Essential for sharing photos, documents, and APKs with other apps or system intents." },
+    { t: "Configuring FileProvider", d: "Declare FileProvider in Manifest with android:authorities, android:exported='false', and android:grantUriPermissions='true'. Provide an XML file-paths resource that maps logical names to real directory paths (e.g., files-path, cache-path, external-path). Never expose the raw file system path — use logical names only." },
+    { t: "URI permission grants", d: "FLAG_GRANT_READ_URI_PERMISSION and FLAG_GRANT_WRITE_URI_PERMISSION are added to Intents when sharing a file. These grants are temporary and scoped to the receiving app's process. They expire when the receiving task stack is cleared. This is the correct way to give another app access to your private files without making them world-readable." },
+    { t: "getUriForFile() — the key FileProvider call", d: "FileProvider.getUriForFile(context, authority, file) converts a File object to a content:// URI. You then set this URI on an Intent along with the URI permission flags. Never pass a File path as a String extra — it bypasses the permission system entirely." },
+    { t: "MediaStore — the system ContentProvider", d: "MediaStore is Android's built-in ContentProvider for photos, videos, audio, and documents. In Android 10+ (scoped storage), your app can only access its own files and files the user explicitly picks via MediaStore queries or Storage Access Framework. Know how to query MediaStore for images and how to insert new media correctly." },
+    { t: "When ContentProvider is still the right choice in 2026", d: "System integrations (contacts, calendar, media), sharing structured data with third-party apps via a documented API, and search suggestions (SearchRecentSuggestionsProvider). For sharing within your own app across processes, prefer a database + ViewModel + repository pattern. ContentProvider adds complexity that is rarely justified for single-app use." },
+    { t: "CursorLoader deprecation awareness", d: "CursorLoader was the recommended way to load ContentProvider data asynchronously in the Loader API era. It is now deprecated. Use viewModelScope + coroutines + contentResolver queries on a background dispatcher instead. Know this transition for legacy codebase discussions." },
+    { t: "Security pitfalls", d: "Common bugs: setting exported=true on a ContentProvider without permissions (exposes all data to any app), using file:// URIs directly (causes crash on API 24+), not adding URI permission flags to the Intent (receiving app gets the URI but cannot read it). Mentioning these shows security awareness that impresses senior interviewers." }
+  ],
+  whatIs: "ContentProvider is Android's structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data source. FileProvider is a ContentProvider subclass that securely exposes files via content:// URIs with time-limited URI permission grants, replacing the dangerous file:// URI pattern. Together they form Android's inter-app data exchange system.",
+  realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
+  code: `// FileProvider setup in AndroidManifest.xml (shown as comment)
+// <provider
+//     android:name="androidx.core.content.FileProvider"
+//     android:authorities="com.example.app.fileprovider"
+//     android:exported="false"
+//     android:grantUriPermissions="true">
+//     <meta-data
+//         android:name="android.support.FILE_PROVIDER_PATHS"
+//         android:resource="@xml/file_paths" />
+// </provider>
+
+// res/xml/file_paths.xml (shown as comment)
+// <paths>
+//     <cache-path name="camera_images" location="images/" />
+//     <files-path name="documents" location="docs/" />
+// </paths>
+
+// Sharing a file using FileProvider
+fun sharePhoto(context: Context, photoFile: File) {
+    val photoUri: Uri = FileProvider.getUriForFile(
+        context,
+        "com.example.app.fileprovider",
+        photoFile
+    )
+
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "image/jpeg"
+        putExtra(Intent.EXTRA_STREAM, photoUri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(Intent.createChooser(shareIntent, "Share Photo"))
+}
+
+// Launching camera and saving to FileProvider URI
+fun launchCamera(activity: AppCompatActivity, launcher: ActivityResultLauncher<Uri>): Uri {
+    val imageFile = File(activity.cacheDir, "images/capture_${System.currentTimeMillis()}.jpg")
+    imageFile.parentFile?.mkdirs()
+
+    val photoUri = FileProvider.getUriForFile(
+        activity,
+        "com.example.app.fileprovider",
+        imageFile
+    )
+    launcher.launch(photoUri)
+    return photoUri
+}
+
+// Custom ContentProvider skeleton
+class NotesProvider : ContentProvider() {
+
+    private lateinit var dbHelper: NotesDatabaseHelper
+
+    override fun onCreate(): Boolean {
+        dbHelper = NotesDatabaseHelper(context!!)
+        return true
+    }
+
+    override fun query(
+        uri: Uri, projection: Array<String>?, selection: String?,
+        selectionArgs: Array<String>?, sortOrder: String?
+    ): Cursor? {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query("notes", projection, selection, selectionArgs, null, null, sortOrder)
+        cursor.setNotificationUri(context!!.contentResolver, uri)
+        return cursor
+    }
+
+    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        val db = dbHelper.writableDatabase
+        val id = db.insert("notes", null, values)
+        context!!.contentResolver.notifyChange(uri, null)
+        return ContentUris.withAppendedId(CONTENT_URI, id)
+    }
+
+    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?): Int {
+        val db = dbHelper.writableDatabase
+        val count = db.update("notes", values, selection, selectionArgs)
+        context!!.contentResolver.notifyChange(uri, null)
+        return count
+    }
+
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+        val db = dbHelper.writableDatabase
+        val count = db.delete("notes", selection, selectionArgs)
+        context!!.contentResolver.notifyChange(uri, null)
+        return count
+    }
+
+    override fun getType(uri: Uri): String = "vnd.android.cursor.dir/vnd.com.example.notes"
+
+    companion object {
+        val CONTENT_URI: Uri = Uri.parse("content://com.example.notes.provider/notes")
+    }
+}
+
+// Querying MediaStore for images (scoped storage, API 29+)
+fun getPhotosFromMediaStore(context: Context): List<Uri> {
+    val uris = mutableListOf<Uri>()
+    val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+    val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME)
+
+    context.contentResolver.query(collection, projection, null, null, "${MediaStore.Images.Media.DATE_ADDED} DESC")?.use { cursor ->
+        val idCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+        while (cursor.moveToNext()) {
+            val id = cursor.getLong(idCol)
+            uris.add(ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id))
+        }
+    }
+    return uris
+}`,
+  funFact: "The FileUriExposedException added in Android 7.0 (API 24) was a deliberate breaking change. Google enforced it because file:// URIs bypass all of Android's permission system — any app on the device with READ_EXTERNAL_STORAGE could read a file if it knew the path. ContentProvider URIs carry cryptographic tokens that only the system can validate, making them genuinely secure.",
+  quiz: [
+    { q: "What exception is thrown when you pass a file:// URI to another app on Android 7.0+?", opts: ["SecurityException", "FileUriExposedException", "IllegalArgumentException", "UriPermissionException"], ans: 1 },
+    { q: "Which flag must be added to an Intent when sharing a FileProvider URI so the receiving app can read it?", opts: ["FLAG_ACTIVITY_NEW_TASK", "FLAG_GRANT_READ_URI_PERMISSION", "FLAG_INCLUDE_STOPPED_PACKAGES", "FLAG_RECEIVER_REGISTERED_ONLY"], ans: 1 },
+    { q: "Why should a FileProvider be declared with android:exported='false'?", opts: ["To prevent it from appearing in the Play Store", "Because FileProvider manages its own permission grants via URI flags, and exported=true would allow unrestricted access", "To improve performance by skipping the Binder IPC layer", "To hide it from the Manifest merger"], ans: 1 },
+    { q: "What does ContentResolver.notifyChange() do inside a ContentProvider method?", opts: ["Commits a database transaction", "Notifies registered observers (e.g., CursorAdapter, ContentObserver) that data has changed", "Sends a broadcast to all apps using the provider", "Refreshes the provider's permission cache"], ans: 1 },
+    { q: "In Android 10+ scoped storage, which mechanism should you use to access the user's photos?", opts: ["Direct file path via Environment.getExternalStorageDirectory()", "MediaStore ContentProvider queries or Storage Access Framework", "READ_EXTERNAL_STORAGE permission + File API", "ContentProvider with android:exported=true"], ans: 1 },
+    { q: "FileProvider.getUriForFile() converts a File object into a URI with scheme:", opts: ["file://", "content://", "android://", "res://"], ans: 1 },
+    { q: "What is the correct modern approach to loading ContentProvider data asynchronously?", opts: ["CursorLoader inside a Fragment", "AsyncQueryHandler", "viewModelScope coroutine with contentResolver query on Dispatchers.IO", "IntentService with QUERY action"], ans: 2 },
+    { q: "Which ContentProvider method must return the MIME type for the data at a given URI?", opts: ["query()", "insert()", "getType()", "onCreate()"], ans: 2 }
+  ],
+  challenge: "Build a secure photo sharing flow: (1) Configure FileProvider in Manifest and file_paths.xml for cache directory. (2) Write a function that captures a photo using TakePicture ActivityResultContract and saves it to a FileProvider-managed cache path. (3) Write a function that shares the captured photo with FLAG_GRANT_READ_URI_PERMISSION. (4) Write a MediaStore query that returns all images taken in the last 7 days, sorted newest first. (5) Explain what happens to the URI permission grant when the receiving app's task is cleared from recents.",
+  resources: [
+    { type: "docs", title: "ContentProvider basics — Android Developers", url: "https://developer.android.com/guide/topics/providers/content-provider-basics", source: "Android Docs" },
+    { type: "docs", title: "FileProvider — AndroidX Core", url: "https://developer.android.com/reference/androidx/core/content/FileProvider", source: "Android Docs" },
+    { type: "docs", title: "URI permissions — Android Developers", url: "https://developer.android.com/guide/topics/providers/content-provider-basics#Permissions", source: "Android Docs" },
+    { type: "docs", title: "MediaStore access — scoped storage", url: "https://developer.android.com/training/data-storage/shared/media", source: "Android Docs" },
+    { type: "docs", title: "Storage Access Framework overview", url: "https://developer.android.com/guide/topics/providers/document-provider", source: "Android Docs" }
+  ],
+  eli5: "Imagine your photos are locked in a safe. ContentProvider is a bank teller who can look things up in that safe for you using a special code number. FileProvider is like a secure messenger service — it takes a file from your safe and delivers it to another app in a sealed envelope with a temporary key, so the other app can open it but cannot keep the key forever.",
+  codeWalkthrough: [
+    "FileProvider.getUriForFile() takes your real file path and maps it to a content:// URI using the file_paths.xml mapping — the receiving app never sees the real path.",
+    "addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) tells the system to create a temporary permission grant tied to this Intent's recipient — without this, the URI is useless.",
+    "Intent.createChooser() wraps the share intent so the system shows the app picker — each app in the picker automatically receives the URI permission.",
+    "In launchCamera, imageFile.parentFile?.mkdirs() ensures the directory exists before FileProvider tries to map the path — missing directory causes FileNotFoundException.",
+    "In NotesProvider.query(), cursor.setNotificationUri() wires the cursor to receive updates when notifyChange() is called, enabling live UI updates for registered observers.",
+    "notifyChange() after insert/update/delete propagates the change notification to all active cursors pointing at this URI — critical for consistent UI state.",
+    "ContentUris.withAppendedId() constructs a URI like content://authority/notes/42 for the newly inserted row — the standard way to return an item URI from insert().",
+    "MediaStore query uses use{} block on the cursor — this is idiomatic Kotlin that auto-closes the cursor even if an exception occurs, preventing cursor leak.",
+    "getColumnIndexOrThrow() throws if the column does not exist rather than returning -1 silently — prefer this over getColumnIndex() to catch schema mismatches early.",
+    "ContentUris.withAppendedId on MediaStore.Images.Media.EXTERNAL_CONTENT_URI builds a direct content URI for the image that Glide, Coil, or ImageDecoder can load directly."
+  ],
+  bugChallenge: {
+    code: `// In AndroidManifest.xml
+// <provider
+//     android:name="androidx.core.content.FileProvider"
+//     android:authorities="com.example.app.provider"
+//     android:exported="true"
+//     android:grantUriPermissions="true">
+//     <meta-data
+//         android:name="android.support.FILE_PROVIDER_PATHS"
+//         android:resource="@xml/file_paths" />
+// </provider>
+
+fun shareDocument(context: Context, file: File) {
+    val uri = FileProvider.getUriForFile(
+        context,
+        "com.example.app.provider",
+        file
+    )
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(uri, "application/pdf")
+    }
+    context.startActivity(intent)
+}`,
+    hint: "There are two bugs: one is a critical security misconfiguration in the Manifest, and one causes the receiving app to be unable to open the file.",
+    answer: "Bug 1: android:exported='true' on a FileProvider is a critical security vulnerability. With exported=true, any app on the device can query your FileProvider directly without needing a URI permission grant, potentially accessing all files in the declared paths. FileProvider must always have android:exported='false'. Its sharing mechanism works through URI permission grants, not direct exports. Bug 2: The Intent does not include FLAG_GRANT_READ_URI_PERMISSION. Even though FileProvider generated a content:// URI, the receiving app (e.g., a PDF viewer) does not have permission to read it. setDataAndType() sets the URI and MIME type, but the permission grant flag must be added explicitly: addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION). Without this flag, the receiving app gets a SecurityException when trying to open the file."
+  },
+  difficulty: "intermediate",
+  prereqs: [12]
+},
+{
+  id: 57,
+  title: "Native/Platform APIs: Camera, Bluetooth, NFC, Sensors & Maps",
+  subtitle: "Discussing hardware APIs confidently in senior Android interviews",
+  analogy: "Your Android phone is like a Swiss Army knife — Camera is the blade, Bluetooth is the connector cable, NFC is the tap-to-transfer button, sensors are the compass and spirit level, and Maps is the GPS. A senior developer does not need to be an expert in all of them, but must know which tool to grab and why.",
+  points: [
+    { t: "CameraX — the modern camera API", d: "CameraX is the Jetpack library that abstracts Camera2's complexity. It exposes three use cases: Preview (show viewfinder), ImageCapture (take photos), and ImageAnalysis (process frames in real time, e.g., ML Kit barcode scanning). Lifecycle-aware — bind use cases to a LifecycleOwner and CameraX handles open/close automatically. Always prefer CameraX over Camera2 unless you need fine-grained control." },
+    { t: "Camera permissions and result contracts", d: "REQUEST_CODE style camera is deprecated. Use ActivityResultContracts.TakePicture() for capturing to a URI, or TakePicturePreview() for a thumbnail Bitmap. Combine with FileProvider for secure storage. Always request Manifest.permission.CAMERA at runtime before launching." },
+    { t: "Bluetooth Classic vs BLE", d: "Bluetooth Classic (BR/EDR) is for high-bandwidth continuous connections: audio streaming, file transfer, HID devices (keyboards, mice). BLE (Bluetooth Low Energy) is for low-power, intermittent data: IoT sensors, fitness trackers, beacons. They use different APIs: BluetoothSocket for Classic, BluetoothGatt for BLE. Know which your use case needs before writing a line of code." },
+    { t: "BLE workflow", d: "BLE flow: 1) Get BluetoothAdapter. 2) Scan for devices (BluetoothLeScanner.startScan with ScanFilter). 3) Connect via device.connectGatt(). 4) Discover services in onServicesDiscovered callback. 5) Read/write Characteristics. 6) Enable Notifications for real-time updates. Each step is asynchronous and callback-driven. In 2026, wrap in coroutines with callbackFlow for a clean API." },
+    { t: "Bluetooth permissions (API 31+ changes)", d: "Android 12 (API 31) split Bluetooth permissions: BLUETOOTH_SCAN (scanning), BLUETOOTH_CONNECT (connecting to paired devices), BLUETOOTH_ADVERTISE (advertising as peripheral). The old BLUETOOTH and BLUETOOTH_ADMIN permissions are no longer sufficient. Missing these causes silent scan failures — a common production bug on Android 12+ devices." },
+    { t: "NFC — reading and writing NDEF tags", d: "NFC (Near Field Communication) uses the NDEF (NFC Data Exchange Format) for structured data on tags. enableForegroundDispatch() or enableReaderMode() puts your Activity in the NFC foreground, intercepting tag scans before other apps. Read NdefMessage from the discovered tag, parse NdefRecords. Write by formatting a tag with NdefFormatable. Used for smart posters, transit cards, and device pairing." },
+    { t: "Sensor framework", d: "SensorManager gives access to all hardware sensors: accelerometer (TYPE_ACCELEROMETER), gyroscope (TYPE_GYROSCOPE), magnetometer (TYPE_MAGNETIC_FIELD), proximity (TYPE_PROXIMITY), light (TYPE_LIGHT), step counter (TYPE_STEP_COUNTER). Register a SensorEventListener with the desired sampling rate (SENSOR_DELAY_NORMAL, SENSOR_DELAY_GAME, SENSOR_DELAY_FASTEST). Always unregister in onPause() to save battery." },
+    { t: "Google Maps SDK integration", d: "Add the Maps SDK dependency, get an API key from Google Cloud Console, add it to Manifest (com.google.android.geo.API_KEY). Use SupportMapFragment or MapView. Call getMapAsync() to get a GoogleMap instance. Add markers with MarkerOptions, draw routes with Polylines, customize map style with JSON style files. For location, use FusedLocationProviderClient — never the old LocationManager API." },
+    { t: "FusedLocationProviderClient — the right location API", d: "FusedLocationProviderClient (from Google Play Services) automatically selects the best location source (GPS, Wi-Fi, cell) and batches updates efficiently. Use requestLocationUpdates() for continuous tracking, getCurrentLocation() for one-shot. Request ACCESS_FINE_LOCATION for GPS-accurate, ACCESS_COARSE_LOCATION for approximate. Background location (ACCESS_BACKGROUND_LOCATION) requires extra permission and policy justification since Android 10." },
+    { t: "Permission handling for hardware APIs", d: "Pattern for any hardware API: 1) Declare permission in Manifest. 2) Check ContextCompat.checkSelfPermission() at runtime. 3) If denied, request via ActivityResultContracts.RequestPermission(). 4) If permanently denied, show Settings intent. 5) Handle the feature gracefully when permission is absent. Never assume permission is granted even if declared in Manifest." },
+    { t: "Interview breadth strategy", d: "For hardware APIs in interviews, demonstrate: you know what the API does, you know the key permission requirements, you know the modern Jetpack/Play Services approach vs the legacy approach, and you can name a real scenario where you have used or would use it. Depth is expected only for Camera and Location — breadth suffices for BLE, NFC, and sensors." },
+    { t: "Feature requirements in Manifest", d: "Use <uses-feature android:name='android.hardware.camera' android:required='false' /> for optional hardware. This prevents Play Store from filtering out your app on devices without the hardware while still letting you check feature availability at runtime with PackageManager.hasSystemFeature()." }
+  ],
+  whatIs: "Android's platform APIs provide programmatic access to device hardware: CameraX for photo and video, Bluetooth for device pairing and data transfer, NFC for contactless communication, the sensor framework for motion and environment data, and Google Maps SDK for mapping and location. Senior developers must know the correct modern API for each, common permission pitfalls, and how to discuss each one intelligently in an architecture conversation.",
+  realWorld: "A field inspection app uses CameraX to capture defect photos, BLE to read data from IoT sensors on equipment, NFC to identify equipment by tapping a tag, the accelerometer to detect phone orientation for AR overlays, and Maps to show where the equipment is located. All with proper runtime permission handling and graceful degradation when hardware is absent.",
+  code: `// CameraX — capture a photo
+class CameraActivity : AppCompatActivity() {
+    private lateinit var imageCapture: ImageCapture
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
+            }
+            imageCapture = ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build()
+
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageCapture)
+        }, ContextCompat.getMainExecutor(this))
+    }
+
+    fun takePhoto() {
+        val photoFile = File(cacheDir, "photo_${System.currentTimeMillis()}.jpg")
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    // photo saved to photoFile
+                }
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e("Camera", "Capture failed: ${exc.message}", exc)
+                }
+            }
+        )
+    }
+}
+
+// BLE scan and connect (simplified)
+class BleManager(private val context: Context) {
+    private val bluetoothAdapter: BluetoothAdapter? =
+        (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+
+    fun scanForDevices(onDeviceFound: (BluetoothDevice) -> Unit) {
+        val scanner = bluetoothAdapter?.bluetoothLeScanner ?: return
+        val filter = ScanFilter.Builder()
+            .setServiceUuid(ParcelUuid(SERVICE_UUID))
+            .build()
+        val settings = ScanSettings.Builder()
+            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+            .build()
+
+        scanner.startScan(listOf(filter), settings, object : ScanCallback() {
+            override fun onScanResult(callbackType: Int, result: ScanResult) {
+                onDeviceFound(result.device)
+            }
+        })
+    }
+
+    fun connect(device: BluetoothDevice, onDataReceived: (ByteArray) -> Unit): BluetoothGatt {
+        return device.connectGatt(context, false, object : BluetoothGattCallback() {
+            override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
+                if (newState == BluetoothProfile.STATE_CONNECTED) gatt.discoverServices()
+            }
+            override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
+                val char = gatt.getService(SERVICE_UUID)?.getCharacteristic(CHAR_UUID)
+                gatt.setCharacteristicNotification(char, true)
+            }
+            override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+                onDataReceived(characteristic.value)
+            }
+        })
+    }
+
+    companion object {
+        val SERVICE_UUID: UUID = UUID.fromString("0000180d-0000-1000-8000-00805f9b34fb")
+        val CHAR_UUID: UUID = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb")
+    }
+}
+
+// Sensor — step counter
+class StepCounterManager(context: Context) : SensorEventListener {
+    private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    private val stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+    var stepCount: Long = 0
+
+    fun register() {
+        sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+    fun unregister() { sensorManager.unregisterListener(this) }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_STEP_COUNTER) {
+            stepCount = event.values[0].toLong()
+        }
+    }
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+}
+
+// FusedLocationProviderClient
+class LocationManager(private val context: Context) {
+    private val fusedClient = LocationServices.getFusedLocationProviderClient(context)
+
+    fun getCurrentLocation(onResult: (Location?) -> Unit) {
+        fusedClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+            .addOnSuccessListener { location -> onResult(location) }
+    }
+}`,
+  funFact: "NFC tags can be as tiny as a grain of rice when implanted under the skin. There is a growing community of biohackers who implant NFC chips in their hands to unlock doors, store contact info, or even carry crypto wallet keys. Android's NFC API can read these the same way it reads a tap-to-pay card.",
+  quiz: [
+    { q: "Which CameraX use case is used for real-time frame analysis (e.g., barcode scanning)?", opts: ["Preview", "ImageCapture", "ImageAnalysis", "VideoCapture"], ans: 2 },
+    { q: "What new Bluetooth permissions are required on Android 12 (API 31) that were not needed before?", opts: ["BLUETOOTH_LEGACY and BLUETOOTH_MODERN", "BLUETOOTH_SCAN, BLUETOOTH_CONNECT, and BLUETOOTH_ADVERTISE", "BLUETOOTH_ADMIN and BLUETOOTH_PRIVILEGED", "ACCESS_BLUETOOTH_FINE and ACCESS_BLUETOOTH_COARSE"], ans: 1 },
+    { q: "Which API should you use for location in 2026 instead of the old LocationManager?", opts: ["GpsLocationClient", "FusedLocationProviderClient from Google Play Services", "LocationManager.getLastKnownLocation()", "SensorManager with TYPE_LOCATION"], ans: 1 },
+    { q: "What does enableForegroundDispatch() do in NFC development?", opts: ["Enables NFC writing in the foreground", "Makes your Activity intercept NFC tag scans before other apps", "Starts scanning for NFC devices in the background", "Formats a tag as NDEF"], ans: 1 },
+    { q: "What is the key difference between Bluetooth Classic and BLE?", opts: ["Classic uses WiFi spectrum; BLE uses cellular", "Classic is for high-bandwidth continuous connections; BLE is for low-power intermittent data", "Classic only works on Android; BLE works cross-platform", "Classic requires pairing; BLE never requires pairing"], ans: 1 },
+    { q: "Why should you declare hardware features with android:required='false' in the Manifest?", opts: ["To disable the feature for testing", "To prevent Play Store from filtering your app off devices that lack the hardware", "To request the feature permission automatically", "To enable hardware acceleration"], ans: 1 },
+    { q: "Which sensor type counts total steps since the last device reboot?", opts: ["TYPE_ACCELEROMETER", "TYPE_STEP_DETECTOR", "TYPE_STEP_COUNTER", "TYPE_SIGNIFICANT_MOTION"], ans: 2 },
+    { q: "In BLE communication, what callback fires when you should read/write characteristics?", opts: ["onConnectionStateChange with STATE_CONNECTED", "onServicesDiscovered", "onCharacteristicRead", "onDescriptorWrite"], ans: 1 }
+  ],
+  challenge: "Design a warehouse inventory app that uses: (1) NFC to identify bins by tapping a tag (read NDEF text record). (2) CameraX ImageAnalysis + ML Kit to scan barcodes on items. (3) BLE to connect to a weight sensor on a shelf. (4) Maps to show warehouse layout. For each feature, specify: the permission(s) required, the key API class used, and one gotcha that could cause a production bug. Then explain how you would gracefully degrade if any hardware is unavailable.",
+  resources: [
+    { type: "docs", title: "CameraX overview — Android Developers", url: "https://developer.android.com/training/camerax", source: "Android Docs" },
+    { type: "docs", title: "Bluetooth Low Energy — Android Developers", url: "https://developer.android.com/guide/topics/connectivity/bluetooth/ble-overview", source: "Android Docs" },
+    { type: "docs", title: "NFC basics — Android Developers", url: "https://developer.android.com/guide/topics/connectivity/nfc/nfc", source: "Android Docs" },
+    { type: "docs", title: "Sensors overview — Android Developers", url: "https://developer.android.com/guide/topics/sensors/sensors_overview", source: "Android Docs" },
+    { type: "docs", title: "FusedLocationProviderClient — Google Play Services", url: "https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient", source: "Google Developers" }
+  ],
+  eli5: "Your phone has special superpowers built in. Camera is its eyes. Bluetooth is like a wireless walkie-talkie to talk to other gadgets nearby. NFC is like a magic touch — tap your phone on a sticker and it instantly knows what the sticker says. Sensors are like the phone's sense of balance and feel. Maps is like giving the phone a brain that knows every road in the world.",
+  codeWalkthrough: [
+    "ProcessCameraProvider.getInstance() returns a ListenableFuture — the addListener callback runs on the main executor once the camera is ready.",
+    "bindToLifecycle() ties the camera session to the Activity lifecycle — CameraX automatically opens/closes the camera on resume/pause, preventing resource leaks.",
+    "ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY prioritizes speed over quality — use CAPTURE_MODE_MAXIMIZE_QUALITY for still photos where wait time is acceptable.",
+    "ImageCapture.takePicture() saves directly to a file via OutputFileOptions — more efficient than capturing to a Bitmap in memory for full-resolution photos.",
+    "BluetoothLeScanner.startScan with a ScanFilter targeting a specific ServiceUUID reduces battery usage — scanning without filters drains battery rapidly.",
+    "onServicesDiscovered fires after connectGatt triggers service discovery — this is the correct place to get Characteristic references, not in onConnectionStateChange.",
+    "setCharacteristicNotification enables client-side notification; you also typically need to write to the CCCD descriptor on the characteristic — omitting this is a common BLE bug.",
+    "SensorManager.registerListener in onResume and unregisterListener in onPause is the correct lifecycle pattern — sensors drain battery if left registered in background.",
+    "Sensor.TYPE_STEP_COUNTER returns total steps since reboot as a monotonically increasing float — you must save a baseline at session start and subtract to get session steps.",
+    "FusedLocationProviderClient.getCurrentLocation with PRIORITY_HIGH_ACCURACY uses GPS — for battery-sensitive apps, use PRIORITY_BALANCED_POWER_ACCURACY instead."
+  ],
+  bugChallenge: {
+    code: `class SensorActivity : AppCompatActivity(), SensorEventListener {
+    private lateinit var sensorManager: SensorManager
+    private var accelerometer: Sensor? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST)
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        val x = event.values[0]
+        val y = event.values[1]
+        val z = event.values[2]
+        updateUI(x, y, z)
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+}`,
+    hint: "There are two bugs: one drains battery and crashes when the screen rotates; the other causes thread safety issues in UI updates.",
+    answer: "Bug 1: registerListener() is called in onCreate() but there is no corresponding unregisterListener() in onPause() or onStop(). The sensor stays registered when the Activity goes to the background (screen off, user switches apps), continuously draining battery and CPU. Fix: register in onResume(), unregister in onPause(). Bug 2: SENSOR_DELAY_FASTEST delivers sensor events at the maximum hardware rate (up to 200Hz on some devices). onSensorChanged() fires on a background thread at this rate, but updateUI() presumably updates Views. Touching UI from a background thread causes CalledFromWrongThreadException. Additionally, at 200Hz, you may flood the UI thread with updates. Fix: Use SENSOR_DELAY_NORMAL (5 updates/sec) or SENSOR_DELAY_GAME (50 updates/sec) for UI purposes, and post UI updates via runOnUiThread{} or a Handler tied to the main Looper."
+  },
+  difficulty: "intermediate",
+  prereqs: [34]
+},
+{
+  id: 58,
+  title: "System Design I: Offline-First Field App at Scale",
+  subtitle: "Designing a field operations platform for 10,000+ workers in low-connectivity areas",
+  analogy: "Designing an offline-first field app is like building a network of village outposts that operate completely independently during the day, then send consolidated reports to headquarters every evening over a slow satellite link. Each outpost must be self-sufficient, handle conflicts when two outposts report the same event differently, and never lose data — even if the satellite link fails for three days.",
+  points: [
+    { t: "Requirements gathering — the interview opening move", d: "Never jump into architecture. Ask: How many concurrent users? 10K field workers. Read-heavy or write-heavy? Both — workers read task lists, write inspection results. How long can they be offline? Up to 72 hours in remote areas. What is the acceptable sync lag? 15 minutes when online. What data must never be lost? Inspection reports, GPS coordinates, photos. This framing shows senior-level thinking and sets up every architectural decision." },
+    { t: "Core entities and Room schema design", d: "Entities: Worker (id, role, region, syncedAt), Task (id, assignedTo, status, priority, dueAt, serverVersion), InspectionReport (id, taskId, workerId, answers JSON, photoUris, submittedAt, syncStatus), SyncQueue (id, entityType, entityId, operation, payload, retryCount, createdAt). SyncStatus enum: PENDING, SYNCING, SYNCED, FAILED. The SyncQueue table is the backbone — every local write generates a queue entry." },
+    { t: "Offline write path — the sync queue pattern", d: "When a worker submits a report offline: 1) Write InspectionReport to Room with syncStatus=PENDING. 2) Insert a SyncQueueEntry with operation=INSERT, entityType=REPORT, payload=serialized report JSON. 3) Show success UI immediately — the write is durable on device. 4) WorkManager enqueues a sync job constrained to network availability. The UI never blocks on network — this is the core offline-first contract." },
+    { t: "Delta sync vs full sync — the critical tradeoff", d: "Full sync: download all Tasks every sync cycle. Simple but expensive — 10K workers syncing 5MB task lists every 15 minutes = 50GB/hour of bandwidth. Delta sync: server tracks a lastModifiedAt timestamp per entity. Client sends its last sync timestamp; server returns only changed entities. Far more efficient but requires server-side change tracking and client-side merge logic. Always choose delta sync for field apps at scale." },
+    { t: "Conflict resolution strategy", d: "Conflicts arise when a record is modified on both client and server while offline. Strategies: Last-Write-Wins (LWW) — simpler, use serverVersion timestamp; server always wins on pull, client wins on push if serverVersion matches. Three-way merge — for complex documents, compare base, client change, and server change. For inspection reports, use server-wins for task metadata, client-wins for report content (the worker's answer is authoritative). Document this decision explicitly in interviews — it shows you understand the tradeoffs." },
+    { t: "WorkManager for background sync", d: "Use PeriodicWorkRequest with 15-minute interval and constraints: NetworkType.CONNECTED, battery not low. The SyncWorker reads all PENDING SyncQueueEntries, sends them in a batch POST to the server, and on 200 response marks them SYNCED and updates the corresponding Room entities. On failure, WorkManager retries with exponential backoff. Never use AlarmManager or JobScheduler directly in 2026." },
+    { t: "Photo upload strategy", d: "Photos are the heaviest payload. Strategy: 1) Save photo to local file storage immediately. 2) Store relative file path in InspectionReport, not the URI (URIs can become invalid after app restart). 3) Upload photos separately from report metadata — use a separate PhotoUploadQueue. 4) Server returns a CDN URL after upload; update the report with the URL. 5) Only mark the report SYNCED after all its photos are uploaded. Uploading in the background with WorkManager constraint: NetworkType.UNMETERED is ideal for large photos." },
+    { t: "Battery optimization", d: "Field workers use phones all day — battery is critical. Optimizations: batch sync (aggregate 50 queue entries per network request, not 50 individual requests), compress JSON payloads (gzip), upload photos only on UNMETERED or when battery > 30%, use SENSOR_DELAY_NORMAL for GPS polling, disable GPS when worker is stationary (detected via accelerometer), cache task lists in memory to avoid redundant Room queries. Show these in interviews as evidence of production thinking." },
+    { t: "Data integrity guarantees", d: "Use Room database transactions to write Report + SyncQueueEntry atomically — if the transaction fails, neither write happens, preventing orphaned queue entries. Use unique constraints on (taskId, workerId, submittedAt) to prevent duplicate submissions from UI double-tap. Use server-side idempotency keys (the local UUID of the report) so retried uploads do not create duplicate records on the server." },
+    { t: "Scaling considerations — server side awareness", d: "Mention these to show full-stack thinking: Server needs a change log table (entity_changes) to support delta sync queries efficiently. Index on (entity_type, last_modified_at, region) for fast delta queries by worker region. Background jobs on server aggregate regional stats (do not compute in sync API). CDN for photo delivery — workers download task photos from CDN, not the app server. Consider read replicas for task list queries under 10K concurrent sync requests." },
+    { t: "Reference: BRAC/FieldBuzz architecture patterns", d: "Field operations apps like BRAC's field management tools and FieldBuzz (a Bangladeshi field force management platform) face exactly this architecture. Key lessons from such systems: offline capability is not optional — 40% of work happens in areas with no signal. Photo evidence is legally required — loss of a photo can mean loss of compliance. Sync conflicts between supervisor override and worker submission must be logged for audit, not silently discarded." },
+    { t: "Interview narration strategy", d: "Structure your answer: 1) Requirements (2 min). 2) Core entities + Room schema (3 min). 3) Offline write path with sync queue (3 min). 4) Delta sync and conflict resolution (3 min). 5) WorkManager sync job (2 min). 6) Battery and photo optimizations (2 min). 7) Scaling and failure scenarios (2 min). Draw a simple box diagram: Device (Room + SyncQueue) -> WorkManager -> API Server -> Database + CDN. Interviewers evaluate whether you can narrate confidently under pressure, not just whether your architecture is perfect." }
+  ],
+  whatIs: "Offline-first field app system design is the most common advanced Android system design question for apps targeting developing markets. It requires combining Room for local persistence, a sync queue pattern for reliable offline writes, delta sync for bandwidth efficiency, WorkManager for background synchronization, conflict resolution strategies, and battery optimization — all while maintaining data integrity guarantees that satisfy compliance requirements.",
+  realWorld: "BRAC, one of the world's largest NGOs operating in Bangladesh, uses Android field apps for health workers visiting households in remote areas with no connectivity. FieldBuzz, a Bangladeshi SaaS platform, enables FMCG companies to manage field sales teams across areas with 2G-only coverage. Both require exactly this architecture: reliable offline writes, background sync, photo evidence capture, and GPS tracking that works for 10+ hours on a single charge.",
+  code: `// Core Room entities
+@Entity(tableName = "tasks")
+data class Task(
+    @PrimaryKey val id: String,
+    val assignedTo: String,
+    val title: String,
+    val status: TaskStatus,
+    val priority: Int,
+    val dueAt: Long,
+    val serverVersion: Long,
+    val syncStatus: SyncStatus = SyncStatus.SYNCED
+)
+
+@Entity(tableName = "inspection_reports",
+    indices = [Index(value = ["task_id", "worker_id", "submitted_at"], unique = true)])
+data class InspectionReport(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val taskId: String,
+    val workerId: String,
+    val answersJson: String,
+    val localPhotoPaths: String,
+    val serverPhotoUrls: String? = null,
+    val submittedAt: Long = System.currentTimeMillis(),
+    val syncStatus: SyncStatus = SyncStatus.PENDING
+)
+
+@Entity(tableName = "sync_queue")
+data class SyncQueueEntry(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val entityType: String,
+    val entityId: String,
+    val operation: String,
+    val payload: String,
+    val retryCount: Int = 0,
+    val createdAt: Long = System.currentTimeMillis()
+)
+
+enum class SyncStatus { PENDING, SYNCING, SYNCED, FAILED }
+
+// Repository — atomic offline write
+class FieldRepository(private val db: AppDatabase, private val api: FieldApi) {
+
+    suspend fun submitReport(report: InspectionReport) {
+        db.withTransaction {
+            db.reportDao().insert(report)
+            db.syncQueueDao().insert(
+                SyncQueueEntry(
+                    entityType = "REPORT",
+                    entityId = report.id,
+                    operation = "INSERT",
+                    payload = Json.encodeToString(report)
+                )
+            )
+        }
+        // WorkManager will pick this up when network is available
+    }
+
+    suspend fun syncPendingReports() {
+        val pending = db.syncQueueDao().getPendingByType("REPORT", limit = 50)
+        if (pending.isEmpty()) return
+
+        try {
+            val response = api.batchSubmitReports(pending.map { Json.decodeFromString(it.payload) })
+            db.withTransaction {
+                response.synced.forEach { id ->
+                    db.reportDao().updateSyncStatus(id, SyncStatus.SYNCED)
+                    db.syncQueueDao().deleteByEntityId(id)
+                }
+                response.conflicts.forEach { conflict ->
+                    db.reportDao().updateSyncStatus(conflict.localId, SyncStatus.FAILED)
+                    db.reportDao().updateWithServerVersion(conflict.serverReport)
+                }
+            }
+        } catch (e: IOException) {
+            db.syncQueueDao().incrementRetryCount(pending.map { it.id })
+        }
+    }
+}
+
+// WorkManager sync job
+class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        val repo = FieldRepository(AppDatabase.getInstance(applicationContext), FieldApi.create())
+        return try {
+            repo.syncPendingReports()
+            Result.success()
+        } catch (e: Exception) {
+            if (runAttemptCount < 3) Result.retry() else Result.failure()
+        }
+    }
+}
+
+// Scheduling periodic sync
+fun scheduleSync(context: Context) {
+    val constraints = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .setRequiresBatteryNotLow(true)
+        .build()
+
+    val syncWork = PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES)
+        .setConstraints(constraints)
+        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+        .build()
+
+    WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+        "field_sync",
+        ExistingPeriodicWorkPolicy.KEEP,
+        syncWork
+    )
+}
+
+// Delta sync — server request with last sync timestamp
+data class DeltaSyncRequest(
+    val workerId: String,
+    val region: String,
+    val lastSyncAt: Long,
+    val deviceTime: Long = System.currentTimeMillis()
+)
+
+suspend fun performDeltaSync(api: FieldApi, prefs: SyncPrefs) {
+    val request = DeltaSyncRequest(
+        workerId = prefs.workerId,
+        region = prefs.region,
+        lastSyncAt = prefs.lastSyncAt
+    )
+    val response = api.getDelta(request)
+    db.withTransaction {
+        response.updatedTasks.forEach { db.taskDao().upsert(it) }
+        response.deletedTaskIds.forEach { db.taskDao().markDeleted(it) }
+        prefs.lastSyncAt = response.serverTime
+    }
+}`,
+  funFact: "Bangladesh has one of the world's highest concentrations of field force apps — BRAC alone employs over 100,000 field staff. Apps like FieldBuzz process millions of field reports per month from areas where 2G EDGE (50 kbps) is the best available connectivity. Every byte of sync payload matters — gzip alone can reduce sync time by 70% on these connections.",
+  quiz: [
+    { q: "Why should the InspectionReport insert and SyncQueueEntry insert be wrapped in a single Room transaction?", opts: ["To improve query performance", "To ensure both writes succeed or both fail atomically, preventing orphaned queue entries", "To enable WAL mode in SQLite", "To avoid triggering LiveData observers twice"], ans: 1 },
+    { q: "What is the primary advantage of delta sync over full sync for a 10K user field app?", opts: ["Delta sync is simpler to implement", "Delta sync sends only changed entities since the last sync, dramatically reducing bandwidth", "Delta sync avoids the need for conflict resolution", "Delta sync works without server-side timestamps"], ans: 1 },
+    { q: "In last-write-wins conflict resolution, what does 'server wins on pull, client wins on push if serverVersion matches' mean?", opts: ["The server always discards client changes", "When downloading, server data overwrites local; when uploading, the client's version is accepted only if the server record has not changed since the client last synced", "Client data is always preferred", "Conflicts are flagged for manual resolution"], ans: 1 },
+    { q: "Why should photos be uploaded separately from report metadata with their own queue?", opts: ["Photos cannot be stored in Room", "Photos are large and their upload can fail independently; separating them allows partial retry without re-uploading already-synced metadata", "The API does not support multipart requests", "Photos must be compressed before metadata is sent"], ans: 1 },
+    { q: "What WorkManager constraint ensures photo uploads do not consume expensive mobile data?", opts: ["setRequiresBatteryNotLow(true)", "setRequiredNetworkType(NetworkType.UNMETERED)", "setRequiresCharging(true)", "setRequiredNetworkType(NetworkType.NOT_REQUIRED)"], ans: 1 },
+    { q: "What is the purpose of a unique constraint on (taskId, workerId, submittedAt) in the reports table?", opts: ["To speed up sync queries", "To prevent duplicate report submissions from UI double-taps or sync retries", "To enforce foreign key relationships", "To enable delta sync queries"], ans: 1 },
+    { q: "What server-side index is most important for efficient delta sync queries across 10K workers?", opts: ["Index on primary key only", "Index on (entity_type, last_modified_at, region) for fast filtering by time and region", "Full-text search index on report content", "Composite index on (worker_id, task_id)"], ans: 1 },
+    { q: "ExistingPeriodicWorkPolicy.KEEP in WorkManager means:", opts: ["Cancel the existing work and schedule fresh", "Keep the existing scheduled work if one is already enqueued with the same name", "Run both the old and new work in parallel", "Keep only the most recent work result"], ans: 1 }
+  ],
+  challenge: "Design the complete sync architecture for a field inspection app with these requirements: 100K reports per day, photos up to 5MB each, 72-hour max offline window, compliance requires audit trail of every sync attempt. Specify: (1) The exact Room schema with all tables and indices. (2) The SyncWorker implementation including retry logic and failure recording. (3) How you handle a scenario where the server rejects a report due to conflict (supervisor already updated the task status). (4) How you ensure photos are not uploaded twice if the app crashes mid-upload. (5) Battery impact analysis and mitigation for a 10-hour work shift.",
+  resources: [
+    { type: "docs", title: "WorkManager guide — Android Developers", url: "https://developer.android.com/topic/libraries/architecture/workmanager", source: "Android Docs" },
+    { type: "docs", title: "Room database with coroutines", url: "https://developer.android.com/training/data-storage/room", source: "Android Docs" },
+    { type: "docs", title: "Offline-first app architecture — Android Developers", url: "https://developer.android.com/topic/architecture/data-layer/offline-first", source: "Android Docs" },
+    { type: "docs", title: "Data and file storage overview", url: "https://developer.android.com/training/data-storage", source: "Android Docs" },
+    { type: "docs", title: "Battery optimization for background work", url: "https://developer.android.com/training/efficient-downloads/efficient-network-access", source: "Android Docs" }
+  ],
+  eli5: "Imagine you are a postal worker in a village with no phone signal. You still write down all your deliveries in your notebook all day. In the evening, when you pass through a town with signal, you send all your reports at once. If your notebook and the main office have different info about the same package, the rules say which version wins. That is exactly what an offline-first field app does — your phone is the notebook, and Room + WorkManager are the rules.",
+  codeWalkthrough: [
+    "InspectionReport uses a unique index on (task_id, worker_id, submitted_at) — this is the database-level guard against duplicate submissions, enforcing idempotency without application logic.",
+    "UUID.randomUUID().toString() as the primary key means the client generates the ID, not the server — this is essential for offline-first because the ID must exist before the network call.",
+    "db.withTransaction{} in submitReport() wraps both the report insert and sync queue insert — if either fails, both roll back, maintaining the invariant that every report in the DB has a corresponding queue entry.",
+    "syncPendingReports() fetches in batches of 50 — batching reduces network round trips from O(N) to O(N/50), critical on slow connections.",
+    "The conflict handling block updates the local record with serverReport data — this implements server-wins for conflicts, and the FAILED status allows the worker to review and resubmit.",
+    "incrementRetryCount on IOException — only network failures increment retry; application errors (conflict, validation) are handled separately and do not consume retry budget.",
+    "PeriodicWorkRequestBuilder with 15 minutes is the minimum interval WorkManager allows — Android may batch this with other work and delay up to 5 minutes in Doze mode.",
+    "ExistingPeriodicWorkPolicy.KEEP prevents duplicate sync chains if scheduleSync() is called multiple times (e.g., on every app launch).",
+    "DeltaSyncRequest sends lastSyncAt and deviceTime separately — deviceTime lets the server detect clock skew and adjust the comparison window, preventing missed updates from devices with wrong clocks.",
+    "response.serverTime is stored as the new lastSyncAt — using server time, not device time, eliminates drift from devices with incorrect clocks in the field."
+  ],
+  bugChallenge: {
+    code: `class SyncWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        val db = AppDatabase.getInstance(applicationContext)
+        val api = FieldApi.create()
+        val pending = db.syncQueueDao().getAllPending()
+
+        pending.forEach { entry ->
+            try {
+                api.submitReport(Json.decodeFromString(entry.payload))
+                db.syncQueueDao().delete(entry)
+                db.reportDao().updateSyncStatus(entry.entityId, SyncStatus.SYNCED)
+            } catch (e: Exception) {
+                // silently continue
+            }
+        }
+        return Result.success()
+    }
+}`,
+    hint: "There are three significant bugs: one causes data loss on partial failure, one hides all errors making retry impossible, and one is a performance problem that will cause timeouts on slow connections.",
+    answer: "Bug 1: Processing queue entries one-by-one with forEach and individual API calls (api.submitReport per entry) results in N network requests for N pending entries. On a 2G connection with 500ms RTT, 50 pending reports = 25+ seconds of network time, likely causing a WorkManager timeout (10 minutes default, but real timeout is often shorter). Fix: batch all entries into a single batchSubmitReports() API call. Bug 2: The catch block silently swallows all exceptions and continues. This means network errors, auth errors, and server errors all result in the queue entry being skipped without retry. Since the entry is neither deleted (success) nor marked for retry (failure), it will be re-attempted next cycle — but there is no retry count limit, so permanently failing entries accumulate and bloat the queue indefinitely. Fix: distinguish IOException (retry) from HttpException (check status code — 4xx is client error, 5xx retry). Bug 3: The delete(entry) and updateSyncStatus() are not in a transaction. If the app crashes between these two operations, the queue entry is deleted but the report is still marked PENDING — it will never sync again (orphaned PENDING report). Fix: wrap both in db.withTransaction{}."
+  },
+  difficulty: "advanced",
+  prereqs: [28, 30, 32]
+},
+{
+  id: 59,
+  title: "System Design II: School/Productivity App with Local DB & Sync",
+  subtitle: "Architecting Hazira Khata — attendance, reports, offline-first, multi-role",
+  analogy: "Designing a school management app is like building a distributed gradebook that every teacher carries in their pocket, that works even when the school's internet goes down, syncs to the principal's dashboard overnight, and generates printable report cards on demand. The tricky part: the principal, teacher, parent, and student all see different versions of the same data.",
+  points: [
+    { t: "Requirements gathering for Hazira Khata context", d: "Hazira Khata (Attendance Ledger in Bengali) is a school management app concept for Bangladeshi schools. Key requirements: 5K schools, 50K teachers, 500K students. Teachers mark attendance offline (no internet in classrooms). Admins generate monthly reports. Parents view attendance and results via read-only access. Multi-role: Super Admin, School Admin, Teacher, Parent, Student. Core features: attendance tracking, exam results, fee payment status, notification system, export to PDF/Excel." },
+    { t: "Multi-role data access — the permission layer", d: "Design a role-based entity: Role (SUPER_ADMIN, SCHOOL_ADMIN, TEACHER, PARENT, STUDENT). Each role sees a filtered view: Teachers see only their class's students. Admins see all classes in their school. Parents see only their own children. Implement this at the ViewModel layer — query Room with workerId/classId scoped queries. Never return all students and filter in UI — that leaks data and wastes memory." },
+    { t: "Room schema for attendance and results", d: "Key entities: School(id, name, district), Class(id, schoolId, grade, section, teacherId), Student(id, classId, name, rollNo, parentId), AttendanceRecord(id, studentId, classId, date, status[PRESENT/ABSENT/LATE/LEAVE], markedBy, syncStatus), ExamResult(id, studentId, examId, subject, marks, grade, syncStatus), Notification(id, targetRole, targetId, title, body, isRead, createdAt). Index on (studentId, date) for fast attendance queries." },
+    { t: "Firebase + Room hybrid architecture", d: "Firebase Realtime Database or Firestore for live sync when connectivity exists. Room as the local cache that is always the source of truth for UI. Sync flow: UI reads from Room (always fast, always available). Background job syncs Room to Firebase when online. Firebase listeners push server changes to Room via a sync service. This hybrid gives the speed of local reads with the collaboration power of Firebase's real-time capabilities." },
+    { t: "Attendance marking — offline-first flow", d: "Teacher opens class roster (loaded from Room — instant). Marks each student present/absent by tapping. Each tap: 1) Writes AttendanceRecord to Room with syncStatus=PENDING. 2) Inserts SyncQueueEntry. 3) Updates UI via Flow. No network call. When connectivity returns, WorkManager syncs the batch. Idempotency key: (studentId, classId, date) unique constraint prevents double-marking." },
+    { t: "Report generation — on-device vs server-side", d: "Monthly attendance reports: on-device generation is feasible for a single class (100 students, 30 days = 3000 records). Use Room queries with aggregation: SELECT studentId, COUNT(*) FILTER (WHERE status='PRESENT') as presentCount FROM attendance WHERE classId=? AND date BETWEEN ? AND ?. Generate PDF using Android's PdfDocument API or iTextG library. Server-side generation for school-wide or district-wide reports — offload to a backend job and deliver via download link." },
+    { t: "Export features — PDF and Excel", d: "PDF export: Android PdfDocument API for simple layouts; iTextG for rich formatted reports with tables and charts. Excel export: Apache POI (heavyweight) or a lightweight CSV export that Excel can open. Share via FileProvider + ACTION_SEND intent. For large exports, run in a coroutine on Dispatchers.IO and show progress notification. Never generate large exports on the main thread." },
+    { t: "Notification system design", d: "Push notifications via Firebase Cloud Messaging (FCM). Notification types: attendance summary (daily to parents), exam result published, fee due reminder, school announcement. Targeting: FCM topic subscription per school (all teachers in a school subscribe to /topics/school_{id}). Individual notifications use FCM token stored server-side per user. On-device, store notifications in Room Notification table for in-app inbox — FCM delivers to notification tray, but app inbox requires local persistence." },
+    { t: "Offline capability analysis", d: "Teachers: fully offline for attendance marking and viewing class roster. Admins: offline for viewing pre-loaded reports; report generation requires sync. Parents: offline for viewing last-synced attendance and results. Data pre-loading strategy: on app launch with connectivity, pre-load the next 30 days of schedule and current term's data into Room. This covers the most common offline scenarios." },
+    { t: "Firebase security rules — critical for multi-tenancy", d: "Firestore security rules must enforce: a Teacher can only read/write attendance for classes where teacher_id == request.auth.uid. A Parent can only read students where parent_id == request.auth.uid. School Admin scoped to school_id. Badly written rules that allow any authenticated user to read any data are the most common security bug in Firebase-backed school apps. Test rules with the Firebase Rules Playground before shipping." },
+    { t: "Performance: report queries at scale", d: "500K students x 300 school days = 150M attendance records per year. Simple full-table Room queries will be slow without proper indexing. Required indices: (classId, date), (studentId, date). For school-wide monthly reports, do not compute in Android — push aggregation to the server. Use Paging 3 for long student lists in the UI — never load 500 students into memory at once." },
+    { t: "Interview narration: Hazira Khata reference", d: "Mentioning a Bangladeshi-context app by name (Hazira Khata) immediately signals local market awareness, which is a differentiator in Bangladeshi tech interviews. Frame it as: 'I designed this system with constraints relevant to our market — intermittent connectivity, low-end Android devices (2GB RAM), and a user base that includes non-technical teachers who need zero-friction UX.' This shows product thinking alongside technical depth." }
+  ],
+  whatIs: "School management app system design combines multi-role access control, offline-first attendance marking, Firebase+Room hybrid sync, on-device report generation, push notification targeting, and export features. It is a common system design question in Bangladeshi and South Asian tech interviews, where edtech and school management apps are a significant market. The Hazira Khata framing adds local market context that interviewers find impressive.",
+  realWorld: "Hazira Khata is a conceptual school management app for Bangladesh's 100,000+ schools. Similar real apps include Shikho (edtech), 10MS (Math Solution), and various government school management systems used by the Bangladesh Directorate of Primary Education. These apps must handle patchy 3G coverage in rural schools, extremely varied device hardware, and non-technical primary users.",
+  code: `// Room schema — core entities
+@Entity(tableName = "attendance_records",
+    indices = [
+        Index(value = ["student_id", "date"], unique = true),
+        Index(value = ["class_id", "date"])
+    ])
+data class AttendanceRecord(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val studentId: String,
+    val classId: String,
+    val date: String,
+    val status: AttendanceStatus,
+    val markedBy: String,
+    val syncStatus: SyncStatus = SyncStatus.PENDING
+)
+
+enum class AttendanceStatus { PRESENT, ABSENT, LATE, LEAVE }
+
+// DAO with aggregation query for reports
+@Dao
+interface AttendanceDao {
+    @Query("""
+        SELECT studentId,
+               SUM(CASE WHEN status = 'PRESENT' THEN 1 ELSE 0 END) as presentDays,
+               SUM(CASE WHEN status = 'ABSENT' THEN 1 ELSE 0 END) as absentDays,
+               SUM(CASE WHEN status = 'LATE' THEN 1 ELSE 0 END) as lateDays,
+               COUNT(*) as totalDays
+        FROM attendance_records
+        WHERE classId = :classId AND date BETWEEN :from AND :to
+        GROUP BY studentId
+    """)
+    suspend fun getMonthlyReport(classId: String, from: String, to: String): List<AttendanceSummary>
+
+    @Query("SELECT * FROM attendance_records WHERE classId = :classId AND date = :date")
+    fun getTodayAttendance(classId: String, date: String): Flow<List<AttendanceRecord>>
+
+    @Upsert
+    suspend fun upsert(record: AttendanceRecord)
+}
+
+// Firebase + Room hybrid repository
+class AttendanceRepository(
+    private val db: AppDatabase,
+    private val firestore: FirebaseFirestore,
+    private val prefs: SyncPrefs
+) {
+    // Read always from Room (offline-safe)
+    fun observeTodayAttendance(classId: String, date: String): Flow<List<AttendanceRecord>> =
+        db.attendanceDao().getTodayAttendance(classId, date)
+
+    // Write to Room first, then sync to Firebase
+    suspend fun markAttendance(record: AttendanceRecord) {
+        db.attendanceDao().upsert(record)
+        // WorkManager will sync later
+    }
+
+    // Firebase -> Room sync (called when online)
+    suspend fun syncFromFirebase(classId: String) {
+        val lastSync = prefs.getLastSyncTime(classId)
+        firestore.collection("attendance")
+            .whereEqualTo("classId", classId)
+            .whereGreaterThan("updatedAt", lastSync)
+            .get()
+            .await()
+            .documents
+            .forEach { doc ->
+                val record = doc.toObject(AttendanceRecord::class.java) ?: return@forEach
+                db.attendanceDao().upsert(record)
+            }
+        prefs.setLastSyncTime(classId, System.currentTimeMillis())
+    }
+}
+
+// PDF report generation
+class ReportGenerator(private val context: Context) {
+
+    suspend fun generateMonthlyPdf(
+        className: String,
+        summaries: List<AttendanceSummary>
+    ): File = withContext(Dispatchers.IO) {
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+
+        val paint = Paint().apply {
+            textSize = 16f
+            color = Color.BLACK
+        }
+        canvas.drawText("Monthly Attendance Report — $className", 40f, 60f, paint)
+
+        paint.textSize = 12f
+        var y = 100f
+        summaries.forEach { summary ->
+            canvas.drawText(
+                "${summary.studentName}: ${summary.presentDays}/${summary.totalDays} days present",
+                40f, y, paint
+            )
+            y += 25f
+        }
+        pdfDocument.finishPage(page)
+
+        val file = File(context.cacheDir, "report_${System.currentTimeMillis()}.pdf")
+        pdfDocument.writeTo(file.outputStream())
+        pdfDocument.close()
+        file
+    }
+}
+
+// FCM notification targeting
+class NotificationService {
+    private val messaging = FirebaseMessaging.getInstance()
+
+    fun subscribeToSchool(schoolId: String) {
+        messaging.subscribeToTopic("school_$schoolId")
+    }
+
+    fun subscribeToClass(classId: String) {
+        messaging.subscribeToTopic("class_$classId")
+    }
+
+    // Server-side: send to topic (shown as pseudo-code)
+    // POST https://fcm.googleapis.com/fcm/send
+    // { "to": "/topics/school_123", "notification": { "title": "...", "body": "..." } }
+}
+
+// Paging 3 for large student lists
+class StudentPagingSource(private val db: AppDatabase, private val classId: String) : PagingSource<Int, Student>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Student> {
+        val page = params.key ?: 0
+        return try {
+            val students = db.studentDao().getStudentsPaged(classId, params.loadSize, page * params.loadSize)
+            LoadResult.Page(
+                data = students,
+                prevKey = if (page == 0) null else page - 1,
+                nextKey = if (students.size < params.loadSize) null else page + 1
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
+    override fun getRefreshKey(state: PagingState<Int, Student>): Int? = state.anchorPosition
+}`,
+  funFact: "Bangladesh has approximately 130,000 primary schools and 20,000 secondary schools. If even 10% adopted a digital attendance system, that would mean 1.5 million daily attendance records generated on Android devices — most with patchy connectivity. This is why every Bangladeshi edtech startup eventually confronts the offline-first architecture problem.",
+  quiz: [
+    { q: "Why should role-based data filtering happen at the ViewModel/DAO layer rather than loading all data and filtering in the UI?", opts: ["UI filtering is slower to implement", "Loading all data leaks sensitive records and wastes memory; server/DB-level filtering scopes the query correctly", "Room cannot filter data in queries", "ViewModel does not have access to user role information"], ans: 1 },
+    { q: "What is the correct unique constraint for attendance records to prevent double-marking?", opts: ["Unique on studentId only", "Unique on (studentId, date) — one attendance record per student per day", "Unique on (classId, date)", "Unique on the auto-generated id field"], ans: 1 },
+    { q: "In the Firebase + Room hybrid pattern, what should always be the source of truth for the UI?", opts: ["Firebase Realtime Database", "Room local database", "In-memory ViewModel state", "SharedPreferences"], ans: 1 },
+    { q: "Why use Paging 3 for displaying student lists instead of loading all students at once?", opts: ["Room cannot return more than 100 rows", "Loading 500+ students into memory causes excessive GC pressure and potential OOM on low-RAM devices", "Paging 3 automatically syncs with Firebase", "RecyclerView requires Paging 3 to function"], ans: 1 },
+    { q: "What is the most common security bug in Firebase-backed multi-tenant school apps?", opts: ["Using FCM instead of APNS", "Security rules that allow any authenticated user to read any data, regardless of school or class membership", "Storing student data in Room instead of Firestore", "Not encrypting the Firebase API key"], ans: 1 },
+    { q: "For a school-wide monthly report covering 500K students, the correct approach is:", opts: ["Run a Room query on the Android device and display results in a RecyclerView", "Offload aggregation to a server-side background job and deliver via download link", "Use Firebase Analytics to generate the report automatically", "Run the query on a background thread with Dispatchers.IO"], ans: 1 },
+    { q: "FCM topic subscription (/topics/school_123) is most appropriate for:", opts: ["Sending individual notifications to a specific parent", "Broadcasting a message to all teachers in a school simultaneously", "Sending OTP verification codes", "Triggering background sync jobs"], ans: 1 },
+    { q: "PdfDocument.finishPage() must be called before writeTo() because:", opts: ["It compresses the PDF content", "It finalizes the page rendering; writing before finishing results in an incomplete or corrupted PDF", "It applies the app's digital signature", "It releases the canvas memory"], ans: 1 }
+  ],
+  challenge: "Design the attendance marking and reporting system for Hazira Khata with these constraints: 50K teachers, 500K students, 300 school days/year. Specify: (1) Complete Room schema with all indices justified. (2) The offline attendance marking flow with idempotency guarantees. (3) Firebase security rules that enforce teacher-to-class scoping. (4) The on-device PDF generation flow including how to handle 40+ students on a single report page. (5) How parent notifications are triggered when attendance is synced — define the exact event flow from teacher tap to parent FCM notification. (6) How you handle a teacher who marks attendance offline for 3 days then syncs — what conflict strategy applies if the admin manually entered absence records during that period?",
+  resources: [
+    { type: "docs", title: "Room with Flow and coroutines", url: "https://developer.android.com/training/data-storage/room/async-queries", source: "Android Docs" },
+    { type: "docs", title: "Firebase Firestore Android quickstart", url: "https://firebase.google.com/docs/firestore/quickstart", source: "Firebase Docs" },
+    { type: "docs", title: "Paging 3 library overview", url: "https://developer.android.com/topic/libraries/architecture/paging/v3-overview", source: "Android Docs" },
+    { type: "docs", title: "Firebase Cloud Messaging — Android", url: "https://firebase.google.com/docs/cloud-messaging/android/client", source: "Firebase Docs" },
+    { type: "docs", title: "PdfDocument API — Android Developers", url: "https://developer.android.com/reference/android/graphics/pdf/PdfDocument", source: "Android Docs" }
+  ],
+  eli5: "Imagine every teacher has a magic notebook that works even without internet. They write attendance in the notebook all day. When they get home and connect to Wi-Fi, the notebook automatically sends everything to a giant school filing cabinet in the cloud. The principal can look at the cloud cabinet. Parents get a text message summary. The notebook always has the latest info, even if the cloud is slow.",
+  codeWalkthrough: [
+    "The unique index on (student_id, date) in AttendanceRecord enforces one record per student per day at the database level — INSERT OR REPLACE semantics with @Upsert handles re-marking correctly.",
+    "The second index on (class_id, date) supports the daily class roster query efficiently — without it, retrieving all attendance for a class on a given day requires a full table scan.",
+    "The SQL aggregation query uses CASE WHEN inside SUM — this is a single-pass aggregation that computes present, absent, and late counts without multiple queries, efficient for report generation.",
+    "observeTodayAttendance returns Flow<List<AttendanceRecord>> — Room emits a new list on every change, driving the RecyclerView to update immediately when a teacher taps a student status.",
+    "syncFromFirebase uses whereGreaterThan('updatedAt', lastSync) — this is the delta sync pattern for Firestore, fetching only documents changed since last sync.",
+    "prefs.setLastSyncTime() uses server-returned timestamp, not device clock — prevents missed records from devices with clock drift.",
+    "withContext(Dispatchers.IO) in generateMonthlyPdf ensures PDF generation never blocks the main thread — PdfDocument.writeTo() is a disk write that can take 500ms+ for large reports.",
+    "PdfDocument requires explicit startPage/finishPage pairing — each page is rendered to a canvas then finalized before writing; multiple pages require looping this pattern.",
+    "FCM topic subscription (subscribeToTopic) happens on the client — the app subscribes the current device to the school's topic. Server sends to the topic, FCM fans out to all subscribed devices.",
+    "StudentPagingSource.load() computes offset as page * params.loadSize — this converts the page index to a SQL OFFSET value for the Room query, enabling efficient pagination without loading all records."
+  ],
+  bugChallenge: {
+    code: `class AttendanceViewModel(private val repo: AttendanceRepository) : ViewModel() {
+
+    fun markAllPresent(students: List<Student>, classId: String) {
+        val today = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        students.forEach { student ->
+            viewModelScope.launch {
+                repo.markAttendance(
+                    AttendanceRecord(
+                        studentId = student.id,
+                        classId = classId,
+                        date = today,
+                        status = AttendanceStatus.PRESENT,
+                        markedBy = "current_teacher"
+                    )
+                )
+            }
+        }
+    }
+}`,
+    hint: "There are two bugs: one is a performance/correctness issue caused by excessive coroutine launches, and one causes a crash on devices with non-English locale settings.",
+    answer: "Bug 1: Launching a separate viewModelScope.launch{} coroutine for each student in a forEach creates N concurrent coroutines for N students. For a class of 50 students, this fires 50 simultaneous Room write operations. Room uses a single write connection — these will serialize internally but create unnecessary coroutine overhead and make it impossible to wrap all inserts in a single transaction. If any one fails (e.g., duplicate key), the others continue independently, resulting in partial state. Fix: launch a single coroutine, collect all records into a list, and call a batch @Upsert that takes List<AttendanceRecord> in one Room transaction. Bug 2: SimpleDateFormat('yyyy-MM-dd').format(Date()) without a Locale parameter uses the device's default locale. On devices with Arabic locale, date formatting can produce Arabic-Indic numerals (e.g., '٢٠٢٦-٠٣-١١' instead of '2026-03-11'). This causes date comparison queries to fail silently — attendance is stored with a locale-specific string but queried with an ASCII date string. Fix: SimpleDateFormat('yyyy-MM-dd', Locale.US) or use Java time's ISO_LOCAL_DATE which is locale-independent."
+  },
+  difficulty: "advanced",
+  prereqs: [28, 30, 31]
+},
+{
+  id: 60,
+  title: "System Design III: Secure Auth/Payment/Claims Flow",
+  subtitle: "Architecting a fintech claims and payment app — security, encrypted storage, and audit trails",
+  analogy: "Designing a fintech claims app is like designing a bank vault with a transparent audit camera. Every door that opens must be logged. Every action must require two keys (biometric + server token). Every error must be handled gracefully — a crashed payment screen is not just a bug, it is a compliance incident. The vault must stay locked even if one guard falls asleep.",
+  points: [
+    { t: "Requirements gathering — fintech specifics", d: "Reference apps: Payback (loyalty points and payment), TapMeHome (transport payment and expense claims). Requirements: 50K users, JWT + biometric auth, encrypted local storage for sensitive data, document upload for claims (photos, PDFs), claim status tracking pipeline (SUBMITTED -> UNDER_REVIEW -> APPROVED/REJECTED -> PAID), real-time status updates via FCM, compliance requirement: all auth events logged with timestamp and device fingerprint, session timeout after 5 minutes idle." },
+    { t: "Security architecture layer 1 — JWT + refresh token", d: "Access token (JWT, 15-minute TTL) stored in memory only — never in SharedPreferences or file. Refresh token (30-day TTL) stored in EncryptedSharedPreferences (Jetpack Security). On app launch: check refresh token validity, exchange for new access token silently. On 401 response: trigger token refresh flow. On refresh token expiry: force logout. This 2-token pattern balances security and UX — short-lived access tokens limit exposure window." },
+    { t: "Security architecture layer 2 — biometric auth", d: "BiometricPrompt with CryptoObject binds biometrics to cryptographic operations. Pattern: generate a secret key in AndroidKeyStore tied to biometric authentication (setUserAuthenticationRequired(true)). On successful biometric prompt, the key becomes available. Use it to decrypt the locally stored refresh token or to sign a server challenge. The key never leaves the secure hardware — even a rooted device cannot extract it." },
+    { t: "EncryptedSharedPreferences and EncryptedFile", d: "Jetpack Security's EncryptedSharedPreferences wraps SharedPreferences with AES-256-GCM encryption using a master key stored in AndroidKeyStore. Use for: refresh token, user ID, cached sensitive profile fields. For sensitive files (claim documents before upload): use EncryptedFile with AES-256-GCM. Never store plaintext tokens, PII, or financial data in regular SharedPreferences, Room without encryption, or external storage." },
+    { t: "Auth interceptor — the OkHttp layer", d: "Add an OkHttp Authenticator (not Interceptor) for 401 handling: on 401 response, attempt token refresh, retry the original request with new token. Add an Interceptor that attaches Authorization: Bearer {accessToken} to every request. If refresh also returns 401, clear all tokens and navigate to login. Crucially: use synchronized{} or a Mutex around the refresh call to prevent multiple parallel requests all triggering refresh simultaneously (refresh token race condition)." },
+    { t: "Claims status tracking pipeline", d: "Claim entity: ClaimId, userId, type, amount, status(DRAFT/SUBMITTED/UNDER_REVIEW/APPROVED/REJECTED/PAID), submittedAt, reviewedAt, paidAt, rejectionReason, documents[]. Status is a state machine — define valid transitions server-side and enforce them. Client tracks status via polling or FCM push. FCM notification on status change: 'Your claim #1234 has been approved — payment processing.' Tapping notification deep-links to the specific claim detail screen." },
+    { t: "Document upload architecture", d: "Flow: 1) User selects document (photo via CameraX or PDF via Storage Access Framework). 2) Compress if image (Bitmap.compress to JPEG 80%). 3) Encrypt locally with EncryptedFile before storing in cache. 4) Upload via presigned S3 URL (server generates URL, client uploads directly to S3, avoiding the app server as a data proxy). 5) Server confirms receipt via webhook. 6) Client polls claim status or listens for FCM confirmation. 7) Delete local encrypted cache after confirmed upload." },
+    { t: "Error handling cascades — the fintech standard", d: "Every network call must handle: NetworkException (no connectivity — show retry with offline indicator), HttpException 4xx (client error — parse error body, show specific message: 'Claim amount exceeds policy limit'), HttpException 5xx (server error — show generic retry, log to analytics), TimeoutException (show slow connection message with retry). Payment-specific: if payment initiation succeeds but confirmation times out, do NOT show error — show 'Processing' state and poll for status. Double-payment is worse than a pending state." },
+    { t: "Session timeout and idle detection", d: "5-minute idle timeout: record last user interaction timestamp. Use a LifecycleObserver that triggers a countdown when app goes to background. On foreground return after timeout: show biometric prompt before allowing access. Implementation: SharedFlow of user interaction events, collect in a ViewModel with a debounce-based timer. On timeout, emit SessionExpired event, ViewModel observes and navigates to lock screen. Never use Handler.postDelayed for this — it does not survive process death." },
+    { t: "Compliance: audit logging", d: "Every auth event must be logged: login success/failure (with device fingerprint: model, OS version, app version), biometric success/failure, token refresh, logout, session timeout. Log locally to an append-only Room table (AuditLog: id, eventType, timestamp, deviceFingerprint, userId, metadata). Sync audit logs to server with high priority — even before syncing claims data. Logs must be tamper-evident: include a hash of the previous log entry (linked list pattern) so the server can detect if logs were deleted or modified." },
+    { t: "Root detection and certificate pinning", d: "Root detection: use Google Play Integrity API (replacement for SafetyNet Attestation) to verify device integrity. On failed integrity check, show warning and optionally block sensitive operations. Certificate pinning: configure OkHttp CertificatePinner with your API server's certificate hash. Prevents man-in-the-middle attacks on compromised networks (common on public Wi-Fi). Include backup pins for certificate rotation. For critical financial transactions, require additional step-up auth (biometric re-verification)." },
+    { t: "Interview narration strategy for fintech design", d: "Structure: 1) Security architecture (auth flow + token storage) — 4 min. 2) Encrypted storage for sensitive data — 2 min. 3) Claims state machine with status tracking — 3 min. 4) Document upload with S3 presigned URLs — 2 min. 5) Error handling philosophy (processing > error for payments) — 2 min. 6) Compliance: audit logging, root detection, certificate pinning — 3 min. Key signal to interviewers: mention what you would NOT do (store JWT in SharedPreferences, show payment error on timeout, trust device root without Play Integrity) — negative knowledge is a strong senior indicator." }
+  ],
+  whatIs: "Fintech claims and payment app system design is the highest-stakes Android architecture question. It combines JWT authentication with biometric binding, encrypted local storage, OkHttp auth interceptors with race-condition-safe token refresh, a document upload pipeline using presigned URLs, claims status machine tracking, compliant audit logging, and security hardening (root detection, certificate pinning). Every architectural decision has security and compliance implications.",
+  realWorld: "Payback Bangladesh manages loyalty points and payment claims for retail customers — requiring secure token management, offline claim drafting, and status tracking. TapMeHome handles transport expense claims for corporate clients — requiring document upload (receipts), multi-step approval workflows, and financial audit trails. Both apps operate in Bangladesh's regulated fintech space under Bangladesh Bank guidelines, which mandate specific security and logging requirements.",
+  code: `// AndroidKeyStore + BiometricPrompt key binding
+class BiometricKeyManager(private val context: Context) {
+    private val keystore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+    private val keyAlias = "biometric_auth_key"
+
+    fun generateKey() {
+        if (keystore.containsAlias(keyAlias)) return
+
+        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+        keyGenerator.init(
+            KeyGenParameterSpec.Builder(keyAlias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .setUserAuthenticationRequired(true)
+                .setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC_STRONG)
+                .build()
+        )
+        keyGenerator.generateKey()
+    }
+
+    fun getCipher(): Cipher {
+        val key = keystore.getKey(keyAlias, null) as SecretKey
+        return Cipher.getInstance("AES/GCM/NoPadding").apply {
+            init(Cipher.DECRYPT_MODE, key)
+        }
+    }
+}
+
+// BiometricPrompt with CryptoObject
+class AuthManager(private val activity: FragmentActivity) {
+    private val keyManager = BiometricKeyManager(activity)
+
+    fun authenticateWithBiometric(onSuccess: (Cipher) -> Unit, onError: (String) -> Unit) {
+        keyManager.generateKey()
+        val cipher = keyManager.getCipher()
+
+        val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    result.cryptoObject?.cipher?.let(onSuccess)
+                }
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    onError(errString.toString())
+                }
+                override fun onAuthenticationFailed() {
+                    onError("Biometric not recognized")
+                }
+            }
+        )
+        val info = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Verify your identity")
+            .setSubtitle("Use biometrics to access your account")
+            .setNegativeButtonText("Use PIN")
+            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            .build()
+
+        prompt.authenticate(info, BiometricPrompt.CryptoObject(cipher))
+    }
+}
+
+// OkHttp Authenticator — thread-safe token refresh
+class TokenAuthenticator(
+    private val tokenRepo: TokenRepository
+) : Authenticator {
+    private val refreshMutex = Mutex()
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        if (response.request.header("Authorization") == null) return null
+
+        val newToken = runBlocking {
+            refreshMutex.withLock {
+                val currentToken = tokenRepo.getAccessToken()
+                if (currentToken != null && response.request.header("Authorization") == "Bearer $currentToken") {
+                    tokenRepo.refreshToken()
+                } else {
+                    currentToken
+                }
+            }
+        }
+        return newToken?.let {
+            response.request.newBuilder()
+                .header("Authorization", "Bearer $it")
+                .build()
+        }
+    }
+}
+
+// EncryptedSharedPreferences for token storage
+class TokenRepository(context: Context) {
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private val prefs = EncryptedSharedPreferences.create(
+        context, "secure_prefs", masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    var refreshToken: String?
+        get() = prefs.getString("refresh_token", null)
+        set(value) = prefs.edit().putString("refresh_token", value).apply()
+
+    // Access token stored in memory only
+    private var _accessToken: String? = null
+    fun getAccessToken() = _accessToken
+    fun setAccessToken(token: String) { _accessToken = token }
+    fun clearAccessToken() { _accessToken = null }
+
+    suspend fun refreshToken(): String? {
+        val refresh = refreshToken ?: run {
+            clearAll()
+            return null
+        }
+        return try {
+            val response = AuthApi.create().refresh(RefreshRequest(refresh))
+            setAccessToken(response.accessToken)
+            if (response.refreshToken != null) refreshToken = response.refreshToken
+            response.accessToken
+        } catch (e: HttpException) {
+            if (e.code() == 401) clearAll()
+            null
+        }
+    }
+
+    fun clearAll() {
+        clearAccessToken()
+        refreshToken = null
+    }
+}
+
+// Claims state machine
+enum class ClaimStatus {
+    DRAFT, SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED, PAID;
+
+    fun validTransitions(): Set<ClaimStatus> = when (this) {
+        DRAFT -> setOf(SUBMITTED)
+        SUBMITTED -> setOf(UNDER_REVIEW)
+        UNDER_REVIEW -> setOf(APPROVED, REJECTED)
+        APPROVED -> setOf(PAID)
+        REJECTED -> setOf(DRAFT)
+        PAID -> emptySet()
+    }
+
+    fun canTransitionTo(next: ClaimStatus) = validTransitions().contains(next)
+}
+
+// Document upload via presigned S3 URL
+class DocumentUploader(private val api: ClaimsApi) {
+
+    suspend fun uploadDocument(file: File, claimId: String): String {
+        // 1. Get presigned URL from server
+        val presigned = api.getPresignedUrl(
+            PresignedUrlRequest(claimId = claimId, fileName = file.name, contentType = "image/jpeg")
+        )
+
+        // 2. Upload directly to S3
+        val requestBody = file.asRequestBody("image/jpeg".toMediaType())
+        val response = OkHttpClient().newCall(
+            Request.Builder()
+                .url(presigned.uploadUrl)
+                .put(requestBody)
+                .build()
+        ).execute()
+
+        if (!response.isSuccessful) throw IOException("S3 upload failed: ${response.code}")
+
+        // 3. Return the public CDN URL
+        return presigned.publicUrl
+    }
+}
+
+// Audit log with tamper-evident chaining
+@Entity(tableName = "audit_logs")
+data class AuditLog(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val eventType: String,
+    val userId: String,
+    val timestamp: Long = System.currentTimeMillis(),
+    val deviceFingerprint: String,
+    val metadata: String,
+    val previousHash: String,
+    val entryHash: String
+)
+
+class AuditLogger(private val db: AppDatabase, private val context: Context) {
+
+    suspend fun log(eventType: String, userId: String, metadata: Map<String, String> = emptyMap()) {
+        val lastLog = db.auditLogDao().getLastEntry()
+        val fingerprint = "${Build.MODEL}|${Build.VERSION.SDK_INT}|${BuildConfig.VERSION_NAME}"
+        val metaJson = metadata.entries.joinToString(",") { "${it.key}=${it.value}" }
+        val previousHash = lastLog?.entryHash ?: "GENESIS"
+        val content = "$eventType|$userId|${System.currentTimeMillis()}|$fingerprint|$metaJson|$previousHash"
+        val entryHash = sha256(content)
+
+        db.auditLogDao().insert(
+            AuditLog(
+                eventType = eventType,
+                userId = userId,
+                deviceFingerprint = fingerprint,
+                metadata = metaJson,
+                previousHash = previousHash,
+                entryHash = entryHash
+            )
+        )
+    }
+
+    private fun sha256(input: String): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        return digest.digest(input.toByteArray()).joinToString("") { "%02x".format(it) }
+    }
+}`,
+  funFact: "Bangladesh Bank's Payment Systems Department mandates that digital payment platforms maintain tamper-evident audit logs for a minimum of 5 years. This is why fintech apps in Bangladesh cannot simply use a regular log file — they need exactly the blockchain-inspired linked hash pattern shown in this lesson, implemented in a local Room database synced to secure server storage.",
+  quiz: [
+    { q: "Why should the JWT access token be stored in memory only, never in SharedPreferences?", opts: ["SharedPreferences is too slow for token reads", "SharedPreferences stores data in a plaintext XML file readable by anyone with root access or a backup extraction", "Memory storage survives process death unlike SharedPreferences", "Access tokens are too large for SharedPreferences"], ans: 1 },
+    { q: "What is the race condition in token refresh that a Mutex solves?", opts: ["Multiple threads reading the access token simultaneously", "Multiple parallel 401 responses each triggering a separate refresh call, potentially revoking a just-issued refresh token", "BiometricPrompt being shown twice", "Room database lock contention during token storage"], ans: 1 },
+    { q: "When a payment initiation call times out (no response), what should the app show?", opts: ["An error message: Payment failed — please try again", "A Processing/Pending state and poll for actual status", "Cancel the payment automatically", "Show a retry button that triggers an identical API call"], ans: 1 },
+    { q: "Why use a presigned S3 URL for document upload instead of uploading through your own API server?", opts: ["S3 is faster than a custom server", "Direct upload avoids sending large files through your server, reducing server bandwidth cost and load", "App servers cannot receive multipart file uploads", "S3 automatically encrypts files; your server does not"], ans: 1 },
+    { q: "setUserAuthenticationRequired(true) in KeyGenParameterSpec means:", opts: ["The key can only be used after PIN entry", "The cryptographic key is unlocked only after successful biometric (or device credential) authentication, making it unusable without the user's physical presence", "Biometric must be set up to generate the key", "The key expires after one use"], ans: 1 },
+    { q: "What is the tamper-evidence property of the audit log's linked hash pattern?", opts: ["Each log entry is encrypted with AES-256", "Each entry includes a hash of the previous entry; deleting or modifying any entry breaks the hash chain, detectable by server verification", "Logs are stored in a write-once Room table", "Log timestamps are signed with the server's private key"], ans: 1 },
+    { q: "Certificate pinning in OkHttp prevents which specific attack?", opts: ["SQL injection through API parameters", "Man-in-the-middle attacks where a rogue certificate authority issues a fake certificate for your API domain", "Replay attacks using captured JWT tokens", "Brute force attacks on the user's PIN"], ans: 1 },
+    { q: "Google Play Integrity API (successor to SafetyNet) is used to:", opts: ["Verify the user's Google account status", "Detect rooted, emulated, or tampered devices and check if the app is genuine (not repackaged)", "Enforce biometric authentication policies", "Check if the app has the latest Play Store update"], ans: 1 }
+  ],
+  challenge: "Design the complete auth and claims flow for a fintech app with these security requirements: JWT + biometric binding, 5-minute idle timeout, tamper-evident audit logs, document upload with encryption at rest. Specify: (1) The exact token storage strategy — what goes in memory, EncryptedSharedPreferences, and AndroidKeyStore, and why. (2) The OkHttp Authenticator implementation with Mutex-protected refresh and the exact condition that triggers forced logout. (3) The complete claims status machine with all valid transitions and the FCM notification triggered at each transition. (4) The document upload flow from camera capture to confirmed server receipt, including the local encryption step before upload. (5) How you implement idle timeout without breaking it across process death. (6) What security checks you run at app launch (root detection, integrity check, certificate pinning test) and how you handle failures gracefully.",
+  resources: [
+    { type: "docs", title: "BiometricPrompt with CryptoObject — Android Developers", url: "https://developer.android.com/training/sign-in/biometric-auth", source: "Android Docs" },
+    { type: "docs", title: "Jetpack Security — EncryptedSharedPreferences", url: "https://developer.android.com/topic/security/data", source: "Android Docs" },
+    { type: "docs", title: "OkHttp Authenticator for token refresh", url: "https://square.github.io/okhttp/features/authentication/", source: "OkHttp Docs" },
+    { type: "docs", title: "Google Play Integrity API", url: "https://developer.android.com/google/play/integrity", source: "Android Docs" },
+    { type: "docs", title: "AndroidKeyStore system — Android Developers", url: "https://developer.android.com/training/articles/keystore", source: "Android Docs" }
+  ],
+  eli5: "Imagine a magic safe at the bank. To open it, you need to press your thumb on a scanner AND have a special code card. The scanner checks your thumb, and only then does the safe unlock — even if someone stole the code card, they cannot open the safe without your actual thumb. That is what biometric + AndroidKeyStore does. And every time you open or close the safe, a security camera records it with a unique code that proves the recording was not tampered with.",
+  codeWalkthrough: [
+    "KeyGenParameterSpec with setUserAuthenticationRequired(true) and setUserAuthenticationParameters(0, AUTH_BIOMETRIC_STRONG) creates a key that is gated behind biometric — 0 seconds means the key becomes available only immediately after successful biometric, with no time window.",
+    "BiometricPrompt.CryptoObject(cipher) binds the biometric authentication event to the cryptographic operation — the system only unlocks the key if biometric succeeds, making it impossible to use the key programmatically without user presence.",
+    "TokenAuthenticator extends Authenticator (not Interceptor) — Authenticator is called only on 401 responses, while Interceptor is called on every request. Using Interceptor for auth would retry non-auth failures incorrectly.",
+    "refreshMutex.withLock{} ensures only one coroutine performs token refresh at a time — without this, 5 parallel requests all getting 401 would trigger 5 simultaneous refresh calls, likely revoking all tokens.",
+    "The condition 'if currentToken equals the token used in the failed request' prevents a second request from re-triggering refresh when another coroutine already refreshed — the token in memory is now different, so skip refresh.",
+    "EncryptedSharedPreferences is backed by AndroidKeyStore for its master key — unlike app-level encryption, the master key cannot be extracted even with root access because it lives in secure hardware.",
+    "_accessToken stored as a private in-memory var means it is cleared when the process is killed — this is intentional; access tokens should not survive process death, forcing a refresh (which requires the refresh token in EncryptedSharedPreferences).",
+    "ClaimStatus.canTransitionTo() enforces the state machine on the client — prevents UI bugs like double-submitting a claim. The server also enforces transitions, but client-side validation gives immediate feedback.",
+    "Presigned URL upload sends the file directly from the device to S3 — the server never touches the file bytes, dramatically reducing server bandwidth costs for a document-heavy claims app.",
+    "AuditLog.entryHash = sha256(content including previousHash) creates a cryptographic chain — server can verify integrity by recomputing hashes from GENESIS and checking every entry matches, detecting any modification or deletion."
+  ],
+  bugChallenge: {
+    code: `class TokenInterceptor(private val tokenRepo: TokenRepository) : Interceptor {
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = tokenRepo.getAccessToken()
+        val request = chain.request().newBuilder()
+            .header("Authorization", "Bearer $token")
+            .build()
+        val response = chain.proceed(request)
+
+        if (response.code == 401) {
+            val newToken = runBlocking { tokenRepo.refreshToken() }
+            val retryRequest = chain.request().newBuilder()
+                .header("Authorization", "Bearer $newToken")
+                .build()
+            return chain.proceed(retryRequest)
+        }
+        return response
+    }
+}`,
+    hint: "There are three bugs: one causes infinite retry loops, one causes race conditions in multi-threaded scenarios, and one leaks a response body causing memory issues.",
+    answer: "Bug 1: When the 401 retry itself returns 401 (e.g., refresh token also expired), the interceptor calls chain.proceed() again, which fires another 401, which calls proceed again — an infinite retry loop causing a StackOverflowError or request loop. Fix: use OkHttp's Authenticator interface instead of Interceptor for auth retries — Authenticator has built-in protection against retry loops (it is called at most once per request). Bug 2: There is no Mutex around tokenRepo.refreshToken(). If 10 requests are in-flight and all get 401 simultaneously, 10 coroutines all call refreshToken() concurrently. The first call refreshes and gets a new token; the other 9 use the old refresh token which is now invalid, getting 401 again and potentially locking the user out. Fix: wrap with a Mutex so only one refresh runs at a time, and subsequent waiters use the token obtained by the first refresh. Bug 3: response.code is read but the original response body is not closed before calling chain.proceed() for the retry. In OkHttp, response bodies are resources that must be closed (response.close()) before proceeding, otherwise a resource leak accumulates and eventually causes connection pool exhaustion. Fix: call response.close() before the retry proceed() call."
+  },
+  difficulty: "advanced",
+  prereqs: [27, 35]
+},
+
+// ─── LESSON 61 ───────────────────────────────────────────────────────────────
+{
+  id: 61,
+  title: "Production Debugging, Incident Response & Crash Triage",
+  subtitle: "From alert to fix — the senior engineer's playbook for production fires",
+  analogy: "Think of production debugging like being an ER surgeon. The crash report is your patient's vitals. You don't panic — you triage, stabilize, diagnose, fix, and then write a post-mortem so the same emergency never kills anyone again.",
+  points: [
+    { t: "Crashlytics Triage Workflow", d: "Open Crashlytics, sort by 'Most Impacted Users'. Look at crash-free user rate trend. Identify if the spike correlates with a release version. Pivot to the specific issue, read the full stack trace, check OS version and device distribution before touching code." },
+    { t: "Reading Android Stack Traces", d: "Start from the top — the first 'Caused by' line is the root cause. Ignore framework internals (android.*) until you've understood your own code frames. Correlate with ProGuard/R8 mapping files to deobfuscate. The crash thread is listed first; note if it's main or a background thread." },
+    { t: "Reproducing Issues Reliably", d: "Use Crashlytics breadcrumbs and custom keys to rebuild state. Add a debug build with verbose logging. If device-specific, use Firebase Test Lab to run on real hardware. For race conditions, add Thread.sleep or use a stress test harness. Never debug only in production." },
+    { t: "ANR (Application Not Responding) Analysis", d: "ANRs mean main thread was blocked >5s. Pull the ANR traces file (data/anr/traces.txt) from adb or Crashlytics. Look for deadlocks, synchronized blocks, StrictMode violations, or SharedPreferences.commit() on main thread. Fix: move work off main thread using coroutines or WorkManager." },
+    { t: "Memory Leak Detection with LeakCanary", d: "Add LeakCanary to debug builds only. It hooks into the GC and alerts on objects that should be GCed but aren't. Common leaks: Activity held by a singleton, anonymous Runnable posted to Handler, context stored in a companion object. Read the leak trace top-to-bottom — the red chain is the retention path." },
+    { t: "git bisect for Regression Hunting", d: "Run 'git bisect start', mark HEAD as bad, mark a known-good commit as good. Git checks out the midpoint. Test, mark good or bad. Repeat ~log2(N) times to find the exact commit that introduced the regression. Works in minutes even across hundreds of commits." },
+    { t: "Rollback Strategies", d: "Preferred: staged rollout pause + rollback in Play Console. Alternative: server-side feature flag kill switch (Firebase Remote Config, LaunchDarkly). Last resort: emergency release with the fix. Never hot-patch production APKs — it violates Play policy." },
+    { t: "Staged Rollouts for Recovery", d: "Release fixes at 1%, watch crash-free rate. Promote to 10% after 2h stability. Full rollout at 24h. If crash rate rises above threshold, pause rollout. This limits blast radius and gives signal early without impacting all users." },
+    { t: "Incident Communication Protocol", d: "Acknowledge immediately in the incident channel (< 15 min). Provide hourly status updates: 'We are investigating / We have identified / We are fixing / We have resolved'. Post estimated ETA even if rough. Communicate impact scope — X% of users on Android 12+ affected." },
+    { t: "Post-Mortem Process", d: "Write within 48h of resolution. Include: timeline, root cause, impact (users/revenue), mitigation steps, action items with DRI and due dates. Blameless — focus on system failures, not individual mistakes. Distribute to stakeholders. Action items must be tracked in the backlog." },
+    { t: "Proactive Crash Rate Alerting", d: "Set Crashlytics alerts for crash-free user rate dropping below 99.5%. Create custom dashboards in Firebase for key user flows. Use BigQuery export for advanced analysis (funnel correlation, device segmentation). Senior engineers set up the guardrails before the fire, not during." },
+    { t: "StrictMode as a Debugging Shield", d: "Enable StrictMode in debug builds: detect disk reads on main thread, network calls on main thread, leaked SQLite cursors, and Activity leaks. StrictMode violations in staging catch real production ANRs before they ship. Always pair with baseline profiles for perf measurement." }
+  ],
+  whatIs: "Production debugging is the discipline of identifying, triaging, reproducing, and resolving failures in shipped software with minimal user impact and maximum speed. It combines tool mastery (Crashlytics, LeakCanary, adb) with systematic methodology (bisect, staged rollouts, post-mortems) and communication skills that separate senior engineers from juniors.",
+  realWorld: "At FieldBuzz, when a critical sync crash hit 12% of field officers on Android 10 devices after a release, the triage process was: Crashlytics showed a NullPointerException in the offline sync worker; the mapping file revealed it was in a DAO query path; git bisect identified a Room schema migration commit; the fix was a hotfix release at 5% rollout; a post-mortem led to adding migration unit tests to the CI pipeline.",
+  code: `// LeakCanary setup (debug only — build.gradle)
+// debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
+// No code needed — LeakCanary auto-installs via ContentProvider
+
+// StrictMode setup in Application.onCreate()
+class MyApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()
+                    .penaltyDialog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .build()
+            )
+        }
+    }
+}
+
+// Crashlytics custom keys for breadcrumbs
+fun logSyncAttempt(userId: String, recordCount: Int) {
+    Firebase.crashlytics.setCustomKey("last_sync_user", userId)
+    Firebase.crashlytics.setCustomKey("last_sync_count", recordCount)
+    Firebase.crashlytics.log("Sync started: $recordCount records")
+}
+
+// git bisect shell commands (not Kotlin — shown as comments)
+// git bisect start
+// git bisect bad HEAD
+// git bisect good v2.3.1
+// [git checks out midpoint — test the app]
+// git bisect good    OR    git bisect bad
+// [repeat until git prints the offending commit]
+// git bisect reset`,
+  funFact: "The famous 'Therac-25' radiation therapy machine bug in the 1980s killed patients because race conditions were only reproducible under specific timing. Modern post-mortem culture directly traces its roots to lessons learned from disasters like this — today's blameless post-mortems exist because blame-driven cultures suppressed the very information needed to fix systemic issues.",
+  quiz: [
+    { q: "In a Crashlytics stack trace, where do you look FIRST to find the root cause?", opts: ["The bottom of the stack trace where Android framework code appears", "The first 'Caused by' line which shows the originating exception", "The most recent frame in the main thread regardless of exception type", "The thread with the most frames in the trace"], ans: 1 },
+    { q: "An ANR is triggered when the main thread is blocked for more than how long?", opts: ["2 seconds", "3 seconds", "5 seconds", "10 seconds"], ans: 2 },
+    { q: "You have a crash affecting 8% of users after a release. The fastest safe recovery is:", opts: ["Emergency full rollout of a hotfix immediately", "Pause the staged rollout and roll back in Play Console, then hotfix at 1% rollout", "Disable the app until the fix is ready", "Ask users to clear app data and reinstall"], ans: 1 },
+    { q: "LeakCanary detects memory leaks by:", opts: ["Scanning all Java objects in the heap every 30 seconds", "Hooking into GC and checking if objects that should be collected are still retained", "Monitoring native memory allocations via JNI", "Counting strong references in the object graph at compile time"], ans: 1 },
+    { q: "git bisect is most useful for:", opts: ["Finding which developer introduced a bug", "Identifying the exact commit that caused a regression via binary search", "Reverting multiple commits at once to a stable state", "Comparing performance between two branches"], ans: 1 },
+    { q: "Which of these is a common cause of ANRs on Android?", opts: ["Using ViewModel to cache data", "Calling SharedPreferences.commit() on the main thread", "Using RecyclerView with DiffUtil", "Launching a coroutine with Dispatchers.IO"], ans: 1 },
+    { q: "In incident communication, when should you send the FIRST acknowledgment to stakeholders?", opts: ["After the root cause is fully identified", "Within 15 minutes of the incident being detected", "Only after the fix is deployed and verified", "At the end of the business day with a full summary"], ans: 1 },
+    { q: "A blameless post-mortem focuses on:", opts: ["Identifying and disciplining the developer who wrote the buggy code", "System and process failures that allowed the bug to reach production", "Removing the feature that caused the incident permanently", "Attributing each action to an individual for accountability"], ans: 1 },
+    { q: "StrictMode's detectNetwork() catches which violation?", opts: ["Using Retrofit on a background thread", "Making network calls on the main thread", "Exceeding 60fps rendering budget in network-heavy screens", "DNS resolution taking more than 2 seconds"], ans: 1 },
+    { q: "When should LeakCanary be included in the app build?", opts: ["In all builds including release, since memory leaks affect all users", "Only in debug builds, never in release builds shipped to users", "Only in release builds since debug builds have extra memory headroom", "Only when performance testing on specific devices"], ans: 1 }
+  ],
+  challenge: "Given a Crashlytics report showing a NullPointerException in your Room DAO's query method affecting 3% of Android 11 users after your last release, walk through the full triage: (1) What custom keys would you have set pre-emptively to help diagnose this? (2) How would you use git bisect to confirm this is a regression? (3) What's your rollout strategy for the fix? (4) What goes in the post-mortem action items to prevent recurrence?",
+  resources: [
+    { type: "docs", title: "Firebase Crashlytics Docs", url: "https://firebase.google.com/docs/crashlytics", source: "Firebase" },
+    { type: "docs", title: "LeakCanary Documentation", url: "https://square.github.io/leakcanary/", source: "Square" },
+    { type: "docs", title: "StrictMode API Reference", url: "https://developer.android.com/reference/android/os/StrictMode", source: "Android Developers" },
+    { type: "article", title: "Google SRE Book: Postmortems", url: "https://sre.google/sre-book/postmortem-culture/", source: "Google SRE" },
+    { type: "docs", title: "ANR Diagnosis Guide", url: "https://developer.android.com/topic/performance/vitals/anr", source: "Android Developers" }
+  ],
+  eli5: "Imagine your app is a restaurant. Sometimes something goes wrong in the kitchen — a dish takes too long (ANR), or the stove catches fire (crash). Production debugging is like being the head chef who gets a pager alert, rushes to the kitchen, reads the incident log (stack trace), figures out which cook made a mistake (git bisect), tells the manager what's happening every 10 minutes (incident comms), fixes the stove, and then writes a report so the same fire never happens again (post-mortem).",
+  codeWalkthrough: [
+    "LeakCanary requires zero initialization code — it installs itself via a ContentProvider that runs before Application.onCreate(). Just adding the dependency in debugImplementation is enough.",
+    "StrictMode is activated in Application.onCreate() inside a BuildConfig.DEBUG check — it must NEVER run in release builds as the dialog penalties would show to real users.",
+    "ThreadPolicy.detectDiskReads/Writes/Network catches the most common ANR causes — these operations block the main thread and should always run on Dispatchers.IO.",
+    "VmPolicy.detectLeakedSqlLiteObjects catches unclosed Cursor objects — a classic Android memory and file-descriptor leak that's invisible until it causes 'too many open files' crashes.",
+    "Firebase.crashlytics.setCustomKey stores key-value pairs that appear alongside a crash report — use these proactively to capture user ID, feature flags, sync state before crashes happen.",
+    "Firebase.crashlytics.log adds breadcrumb messages to the crash report — these appear in the 'Logs' tab and give you a timeline of what happened before the crash.",
+    "The git bisect commands shown as comments demonstrate the binary search process — git automates the midpoint selection, you just mark each commit good or bad after testing.",
+    "git bisect reset at the end restores your working directory to HEAD — forgetting this leaves you on a detached HEAD state in the middle of the commit history."
+  ],
+  bugChallenge: {
+    code: `class SyncWorker(context: Context, params: WorkerParameters)
+    : CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "app_db"
+        ).build()
+
+        return try {
+            val unsyncedRecords = db.recordDao().getUnsynced()
+            apiService.uploadRecords(unsyncedRecords)
+            Result.success()
+        } catch (e: Exception) {
+            Result.failure()
+        }
+    }
+}`,
+    hint: "There are two bugs: one causes a resource leak in every worker execution, and one silently swallows errors that should trigger a retry.",
+    answer: "Bug 1: A new Room database instance is built inside doWork() every time the worker runs. Room instances hold file handles, thread pools, and WAL connections. Building and never closing them (Room databases don't implement Closeable easily) causes resource exhaustion over time. The database should be a singleton accessed via a DI container (Hilt/Koin) or a companion object, never built fresh in each worker invocation. Bug 2: The catch block returns Result.failure() for ALL exceptions, including transient network errors (IOException, HttpException). Transient errors should return Result.retry() so WorkManager re-schedules the work with exponential backoff. Only permanent errors (auth failures, data validation errors) should return Result.failure(). Fix: check exception type and return Result.retry() for IOException and similar transient failures."
+  },
+  difficulty: "advanced",
+  prereqs: [36, 37]
+},
+
+// ─── LESSON 62 ───────────────────────────────────────────────────────────────
+{
+  id: 62,
+  title: "CS Basics: Big-O, Memory, Threading & Networking",
+  subtitle: "The computer science fundamentals every senior mobile engineer must own",
+  analogy: "Big-O is like estimating travel time. Driving 1 block is O(1) — same time always. Driving through every street in a city once is O(n). Comparing every street to every other street is O(n^2). Binary search on a sorted map is O(log n) — like a phone book lookup where you keep halving. Knowing these lets you predict performance before writing a line of code.",
+  points: [
+    { t: "O(1) — Constant Time", d: "The operation takes the same time regardless of input size. HashMap.get() is O(1) average — you compute a hash, go directly to the bucket. Array index access arr[i] is O(1). These are the fastest operations; prefer them in hot paths." },
+    { t: "O(n) — Linear Time", d: "Time grows proportionally with input size. Scanning a list to find an element is O(n). Building a HashMap from a list is O(n). Acceptable for most operations but avoid O(n) work inside loops — that creates O(n^2)." },
+    { t: "O(log n) — Logarithmic Time", d: "Time grows slowly as input doubles. Binary search on a sorted array is O(log n) — each step halves the search space. A sorted list of 1 billion items needs only ~30 comparisons. TreeMap operations are O(log n). This is the sweet spot for search." },
+    { t: "O(n^2) — Quadratic Time", d: "Time grows as the square of input size. Nested loops over the same collection are O(n^2). Bubble sort is O(n^2). Fine for n<1000 but catastrophic for large datasets. Always ask: can I replace the inner loop with a HashMap lookup to bring this to O(n)?" },
+    { t: "O(n log n) — Linearithmic Time", d: "The best possible time for comparison-based sorting. Merge sort, heap sort, and Kotlin's sort() are all O(n log n). When you see 'sort then process', the sort dominates with O(n log n)." },
+    { t: "Space Complexity", d: "How much extra memory an algorithm uses as input grows. An in-place sort uses O(1) extra space. A HashMap storing all elements uses O(n) space. Recursion uses O(depth) stack space — deep recursion can cause StackOverflow on Android (default stack ~8KB). Always consider space when optimizing time." },
+    { t: "Stack vs Heap Memory", d: "Stack: fast, automatically managed, stores local variables and function call frames. Limited size (~8KB per thread on Android). Heap: large, GC-managed, stores all objects (List, HashMap, Bitmap). Stack overflow = too deep recursion. OutOfMemoryError = heap exhausted, usually from Bitmap loading or large caches without limits." },
+    { t: "Process vs Thread vs Coroutine", d: "Process: isolated OS unit with its own memory space. Thread: lightweight unit within a process sharing memory — preemptive scheduling, blocking is expensive. Coroutine: user-space cooperative concurrency — suspends instead of blocking, thousands can run on a handful of threads. Android's main thread = UI thread; blocking it causes ANRs." },
+    { t: "TCP/IP and HTTP Basics", d: "TCP: reliable, ordered byte stream — establishes connection via 3-way handshake (SYN, SYN-ACK, ACK). HTTP/1.1 uses one request per connection. HTTP/2 multiplexes many requests over one TCP connection, reducing latency significantly. HTTPS adds TLS on top of TCP." },
+    { t: "DNS Resolution", d: "DNS converts 'api.myapp.com' to an IP address. Lookup order: local cache → OS cache → router → ISP resolver → root nameserver → authoritative server. First request is slow (50-200ms). Subsequent requests use TTL-based caching. OkHttp's DnsOverHttps can bypass ISP censorship and speed up resolution." },
+    { t: "REST Constraints", d: "REST is an architectural style, not a protocol. Key constraints: stateless (server holds no session state), client-server separation, uniform interface (standard HTTP methods + status codes), cacheable responses, layered system. A truly RESTful API uses nouns for resources (not verbs), uses GET/POST/PUT/DELETE correctly, and returns appropriate status codes (200/201/400/401/404/500)." },
+    { t: "HTTP Status Codes for Mobile Engineers", d: "200 OK, 201 Created, 204 No Content. 400 Bad Request (fix your request), 401 Unauthorized (re-authenticate), 403 Forbidden (you are authenticated but not allowed), 404 Not Found, 409 Conflict (duplicate). 500 Internal Server Error (server bug, retry), 503 Service Unavailable (retry with backoff). Knowing these lets you write precise error handling." }
+  ],
+  whatIs: "Computer science fundamentals are the shared vocabulary of all software engineers. Big-O lets you predict and reason about performance. Memory models explain OutOfMemoryErrors and ANRs. Threading models are the foundation for coroutines. Networking fundamentals explain every Retrofit call under the hood. Senior mobile engineers are expected to speak this language fluently in system design and code review discussions.",
+  realWorld: "When a senior engineer at FieldBuzz reviewed a sync algorithm that iterated all local records for every incoming server record to check for duplicates — a clear O(n^2) pattern causing 30-second freezes for large datasets — they refactored it to build a HashSet of local IDs first (O(n)), then check membership for each server record (O(1) each), bringing total complexity from O(n^2) to O(n) and reducing sync time from 30s to under 1s.",
+  code: `// Big-O demonstration in Kotlin
+
+// O(1) — HashMap lookup
+fun hasElement(map: HashMap<String, Int>, key: String): Boolean {
+    return map.containsKey(key) // O(1) average
+}
+
+// O(n) — Linear scan
+fun findFirst(list: List<Int>, target: Int): Int {
+    for (i in list.indices) { // O(n)
+        if (list[i] == target) return i
+    }
+    return -1
+}
+
+// O(n^2) — Naive duplicate check
+fun hasDuplicatesNaive(list: List<Int>): Boolean {
+    for (i in list.indices) {         // O(n)
+        for (j in i + 1 until list.size) { // O(n)
+            if (list[i] == list[j]) return true // O(n^2) total
+        }
+    }
+    return false
+}
+
+// O(n) — Optimized duplicate check with HashSet
+fun hasDuplicatesFast(list: List<Int>): Boolean {
+    val seen = HashSet<Int>() // O(n) space
+    for (item in list) {      // O(n) time
+        if (!seen.add(item)) return true // HashSet.add returns false if already present
+    }
+    return false
+}
+
+// O(log n) — Binary search
+fun binarySearch(sortedList: List<Int>, target: Int): Int {
+    var left = 0
+    var right = sortedList.size - 1
+    while (left <= right) {
+        val mid = left + (right - left) / 2 // avoid integer overflow
+        when {
+            sortedList[mid] == target -> return mid
+            sortedList[mid] < target -> left = mid + 1
+            else -> right = mid - 1
+        }
+    }
+    return -1
+}
+
+// Space complexity: O(depth) recursion on call stack
+fun factorial(n: Int): Long {
+    if (n <= 1) return 1
+    return n * factorial(n - 1) // O(n) stack frames — risky for large n
+}`,
+  funFact: "The V8 JavaScript engine (used in Chrome) uses a 'hidden class' optimization that makes property access O(1) even though JS objects are technically dynamic. Android's ART runtime similarly has aggressive JIT/AOT compilation that can turn O(n) Kotlin loops into SIMD vectorized native instructions, making theoretical Big-O analysis and practical performance sometimes differ by 10-100x depending on the JIT.",
+  quiz: [
+    { q: "A function checks if a key exists in a HashMap. What is its average time complexity?", opts: ["O(log n)", "O(n)", "O(1)", "O(n log n)"], ans: 2 },
+    { q: "You have a list of 1,000,000 sorted items. Binary search needs approximately how many comparisons to find an element?", opts: ["1,000,000", "500,000", "20", "1,000"], ans: 2 },
+    { q: "What is the time complexity of the 'naive duplicate check' with two nested loops over the same list?", opts: ["O(n)", "O(n log n)", "O(n^2)", "O(2n)"], ans: 2 },
+    { q: "An OutOfMemoryError in Android typically indicates:", opts: ["The CPU is overloaded with too many threads", "The heap has been exhausted, often due to large Bitmaps or unbounded caches", "The stack has overflowed due to deep recursion", "Too many coroutines are running simultaneously"], ans: 1 },
+    { q: "What is the key difference between a Thread and a Coroutine in Kotlin?", opts: ["Threads are faster than coroutines for CPU-bound work", "Coroutines suspend instead of blocking, allowing thousands to run on a handful of threads", "Coroutines can only run on the main thread", "Threads support structured concurrency but coroutines do not"], ans: 1 },
+    { q: "HTTP/2's primary performance advantage over HTTP/1.1 is:", opts: ["Using UDP instead of TCP for faster delivery", "Multiplexing many requests over a single TCP connection", "Compressing all response bodies with gzip by default", "Eliminating the need for DNS lookups"], ans: 1 },
+    { q: "An API returns HTTP 401. The correct client action is:", opts: ["Retry the same request with exponential backoff", "Re-authenticate (refresh token or re-login) then retry", "Display a 'not found' error message to the user", "Treat it the same as a 403 Forbidden"], ans: 1 },
+    { q: "Which of these operations has O(log n) time complexity?", opts: ["Iterating all elements of a list", "HashMap.get() in the average case", "Binary search on a sorted array", "Checking if a HashSet contains an element"], ans: 2 },
+    { q: "Deep recursion in Android can cause:", opts: ["An OutOfMemoryError on the heap", "A StackOverflowError because the stack is limited per thread", "An ANR because recursion blocks coroutines", "A GC pause that freezes the UI for several seconds"], ans: 1 },
+    { q: "A REST API endpoint for creating a new user should use which HTTP method and return which status code on success?", opts: ["GET, returning 200 OK", "POST, returning 201 Created", "PUT, returning 200 OK", "POST, returning 200 OK"], ans: 1 }
+  ],
+  challenge: "You are reviewing a sync feature that, for each of 500 records coming from the server, scans the entire local list of 500 records to find matching IDs and update them. (1) What is the time complexity of the current approach? (2) Rewrite the logic conceptually to achieve O(n) total time. (3) What is the space trade-off of your optimized approach? (4) Explain when the naive O(n^2) approach might actually be acceptable.",
+  resources: [
+    { type: "article", title: "Big-O Cheat Sheet", url: "https://www.bigocheatsheet.com/", source: "Big-O Cheat Sheet" },
+    { type: "docs", title: "Android Memory Overview", url: "https://developer.android.com/topic/performance/memory-overview", source: "Android Developers" },
+    { type: "article", title: "HTTP/2 Explained", url: "https://http2-explained.haxx.se/", source: "Haxx" },
+    { type: "docs", title: "Kotlin Coroutines vs Threads", url: "https://kotlinlang.org/docs/coroutines-basics.html", source: "Kotlin" },
+    { type: "article", title: "REST Constraints — Roy Fielding Dissertation Summary", url: "https://restfulapi.net/rest-architectural-constraints/", source: "RESTful API" }
+  ],
+  eli5: "Big-O is like asking 'how much longer does this take if I give it twice as much work?' If the answer is 'same time' — that is O(1) like a dictionary lookup. 'Twice as long' is O(n) like reading a book. 'Four times as long' is O(n^2) like comparing every page to every other page. O(log n) is like guessing a number between 1 and 1000 in 10 tries by always guessing the middle.",
+  codeWalkthrough: [
+    "hasDuplicatesNaive uses two nested loops — for every element i, it checks every element j after it. This is n*(n-1)/2 comparisons, which is O(n^2).",
+    "hasDuplicatesFast creates a HashSet first. HashSet.add() returns false if the element was already present — this replaces the inner loop entirely.",
+    "The HashSet approach trades O(n) extra space for the set to bring time from O(n^2) to O(n) — classic time-space tradeoff.",
+    "binarySearch calculates mid as left + (right - left) / 2 not (left + right) / 2 — the latter can overflow Int.MAX_VALUE when left and right are both large.",
+    "Each iteration of binary search halves the remaining search space — after k iterations, the remaining space is n/2^k. Solving 2^k = n gives k = log2(n).",
+    "factorial is recursive — each call adds a frame to the call stack. factorial(10000) would overflow Android's thread stack (~8KB). Iterative version uses O(1) stack space.",
+    "HashMap.containsKey is O(1) average because it computes a hash and goes directly to the bucket. Worst case is O(n) when all keys hash to the same bucket — extremely rare with a good hash function.",
+    "The binary search returns -1 for not found (following Java convention) — in production Kotlin, returning null or a sealed Result type is more idiomatic than sentinel values."
+  ],
+  bugChallenge: {
+    code: `fun findCommonElements(listA: List<Int>, listB: List<Int>): List<Int> {
+    val result = mutableListOf<Int>()
+    for (a in listA) {
+        for (b in listB) {
+            if (a == b) {
+                result.add(a)
+            }
+        }
+    }
+    return result
+}
+
+// Called with listA.size = 10000, listB.size = 10000`,
+    hint: "There are two issues: a performance problem that makes this O(n^2) when it could be O(n), and a correctness problem that produces duplicate results.",
+    answer: "Bug 1 (Performance): The nested loop makes this O(n * m) — with 10,000 elements each, that is 100,000,000 iterations and will freeze the UI thread for seconds. Fix: convert listB to a HashSet before the loop. Then for each element in listA, do a O(1) set membership check. Total complexity drops to O(n + m). Bug 2 (Correctness): If listA contains [1, 1, 2] and listB contains [1, 2], the current code adds '1' twice to the result because the inner loop finds a match for both occurrences of '1' in listA. If the intent is to find distinct common elements, convert both to HashSets and use setA.intersect(setB). If duplicates should be counted (multiset intersection), the logic needs a frequency map approach."
+  },
+  difficulty: "intermediate",
+  prereqs: []
+},
+
+// ─── LESSON 63 ───────────────────────────────────────────────────────────────
+{
+  id: 63,
+  title: "DSA I: Arrays, Strings, HashMaps, Sets & Two Pointers",
+  subtitle: "The patterns that solve 60% of coding interview problems — mastered in Kotlin",
+  analogy: "Solving DSA problems is like being a detective. Your first instinct (brute force) is to interview every witness one by one. But a good detective builds a 'suspect board' (HashMap) first — then each new clue is a O(1) lookup instead of interviewing everyone again. The Two Pointer technique is like two detectives starting from opposite ends of a crime scene and walking toward each other.",
+  points: [
+    { t: "Array Manipulation Fundamentals", d: "Arrays give O(1) index access and O(n) search. Know your Kotlin idioms: indices, lastIndex, first(), last(), getOrNull(), slice(), subList(). Common patterns: prefix sum (precompute cumulative sums for O(1) range queries), in-place modification (use index variables to avoid extra allocation), and sentinel values to simplify edge cases." },
+    { t: "HashMap for O(1) Lookup — The Core Pattern", d: "Replace any O(n) inner loop with a HashMap. The universal template: iterate once to build the map (key = what you want to find, value = index or count or data). Then iterate again (or simultaneously) doing O(1) lookups. This transforms O(n^2) to O(n) for most frequency, existence, and pairing problems." },
+    { t: "Two-Sum Pattern (HashMap Classic)", d: "Given an array and a target, find two indices whose values sum to target. Brute force: O(n^2) nested loops. Optimized: single pass HashMap storing complement-to-index. For each element x, check if (target - x) is in the map. If yes, found the pair. If no, add x to the map. O(n) time, O(n) space." },
+    { t: "HashSet for Uniqueness", d: "Use a HashSet when you care about existence, not frequency. Contains-duplicate: add each element to a HashSet; if add returns false, duplicate found — O(n) time. Longest consecutive sequence: put all elements in a set, then only start counting from elements with no predecessor (num-1 not in set). Avoids redundant traversals." },
+    { t: "String as a Character Array", d: "Strings are immutable in Kotlin/Java. Never concatenate in a loop — use StringBuilder (amortized O(1) append, O(n) total). To check anagrams: sort both strings and compare (O(n log n)), or use frequency maps (O(n)). Palindrome check: two pointers from both ends comparing characters. sliding window for substring problems." },
+    { t: "Two-Pointer Technique", d: "Use two indices that start at different positions and move toward each other (or in the same direction). Requires a sorted array for most problems. Reduces the inner loop of O(n^2) brute force to O(n) single pass. Template: left=0, right=n-1. Compute result. If too small, left++. If too large, right--. If match, record and move both." },
+    { t: "Two-Sum II (Sorted Array) — Two Pointers", d: "Given a sorted array, find a pair summing to target. Brute force: O(n^2). Two pointers: start at both ends. If sum < target, move left pointer right. If sum > target, move right pointer left. If equal, done. O(n) time, O(1) space — better than HashMap when the input is already sorted." },
+    { t: "Container With Most Water", d: "Given heights at each index, find two lines that hold the most water. Brute force: O(n^2) check all pairs. Insight: the water held is min(height[L], height[R]) * (R - L). Two pointers from both ends: always move the pointer with the SMALLER height (moving the larger height pointer can only decrease the width without increasing the height). O(n) time." },
+    { t: "Sliding Window Intro", d: "For substring or subarray problems with a contiguous constraint, use a sliding window: expand the right pointer to grow the window, shrink the left pointer to maintain the constraint. Max sum subarray of size k: initialize window sum for first k elements, then slide right and subtract left. O(n) instead of O(n*k). Requires careful boundary management." },
+    { t: "Frequency Map Pattern", d: "Count occurrences with a HashMap or IntArray (if chars are ASCII). Anagram check: frequency map of s1 subtracted by s2 must be all zeros. Group anagrams: use sorted string as the HashMap key. Top-K frequent elements: frequency map + min-heap of size K (O(n log k)). This pattern appears in at least 20% of interview problems." },
+    { t: "Prefix Sum Array", d: "Build a cumulative sum array where prefixSum[i] = sum of all elements from index 0 to i. After O(n) preprocessing, any range sum query [L, R] is O(1): prefixSum[R] - prefixSum[L-1]. Used for: subarray sum equals k (pair the prefix sum with a HashMap), product of array except self, and range minimum queries." },
+    { t: "Interview Pattern Recognition", d: "When you see: 'find two elements that...' — think HashMap or two pointers. 'Find a subarray/substring that...' — think sliding window or prefix sum. 'Contains duplicate / unique elements' — think HashSet. 'Sorted array, find pair' — think two pointers (O(1) space vs HashMap O(n) space). Stating the brute force first, then optimizing, shows structured thinking even if you don't finish." }
+  ],
+  whatIs: "Arrays, HashMaps, Sets, and the Two-Pointer technique form the foundation of coding interviews. Together, they solve the majority of easy and medium problems. The core insight is that nested loops (O(n^2)) can almost always be replaced by a single pass with a HashMap or two-pointer scan (O(n)). Mastering these patterns means recognizing the shape of a problem and immediately knowing which data structure breaks the inner loop.",
+  realWorld: "In the Hazira Khata app, attendance deduplication was implemented using a HashSet of (employeeId + date) composite keys. The initial implementation used a nested loop to check existing records — O(n^2) and causing UI jank on large attendance sheets. The fix used a HashSet populated at load time, making duplicate detection O(1) per record — O(n) total. This is the two-sum pattern applied to a real product.",
+  code: `// ─── TWO SUM (HashMap, O(n)) ───
+fun twoSum(nums: IntArray, target: Int): IntArray {
+    val seen = HashMap<Int, Int>() // value -> index
+    for (i in nums.indices) {
+        val complement = target - nums[i]
+        if (seen.containsKey(complement)) {
+            return intArrayOf(seen[complement]!!, i)
+        }
+        seen[nums[i]] = i
+    }
+    return intArrayOf() // no solution found
+}
+
+// ─── TWO SUM II — SORTED ARRAY (Two Pointers, O(n), O(1) space) ───
+fun twoSumSorted(numbers: IntArray, target: Int): IntArray {
+    var left = 0
+    var right = numbers.size - 1
+    while (left < right) {
+        val sum = numbers[left] + numbers[right]
+        when {
+            sum == target -> return intArrayOf(left + 1, right + 1) // 1-indexed
+            sum < target -> left++
+            else -> right--
+        }
+    }
+    return intArrayOf()
+}
+
+// ─── CONTAINS DUPLICATE (HashSet, O(n)) ───
+fun containsDuplicate(nums: IntArray): Boolean {
+    val seen = HashSet<Int>()
+    for (num in nums) {
+        if (!seen.add(num)) return true // add returns false if already present
+    }
+    return false
+}
+
+// ─── CONTAINER WITH MOST WATER (Two Pointers, O(n)) ───
+fun maxWater(height: IntArray): Int {
+    var left = 0
+    var right = height.size - 1
+    var maxArea = 0
+    while (left < right) {
+        val area = minOf(height[left], height[right]) * (right - left)
+        maxArea = maxOf(maxArea, area)
+        if (height[left] < height[right]) left++ else right--
+    }
+    return maxArea
+}
+
+// ─── SLIDING WINDOW — MAX SUM SUBARRAY OF SIZE K ───
+fun maxSumSubarrayK(nums: IntArray, k: Int): Int {
+    var windowSum = nums.take(k).sum() // initial window
+    var maxSum = windowSum
+    for (i in k until nums.size) {
+        windowSum += nums[i] - nums[i - k] // slide: add new, remove old
+        maxSum = maxOf(maxSum, windowSum)
+    }
+    return maxSum
+}`,
+  funFact: "The Two-Sum problem was one of the first problems on LeetCode and remains the #1 most solved problem on the platform with over 10 million accepted solutions. It appears in Google, Meta, Amazon, and Microsoft interviews because it perfectly tests whether a candidate knows to trade O(n) space for O(n) time using a HashMap — the foundational insight of most algorithmic optimization.",
+  quiz: [
+    { q: "In the HashMap-based Two Sum solution, what is stored as the key in the HashMap?", opts: ["The index of each element", "The value of each element", "The complement (target minus current value)", "The running sum"], ans: 1 },
+    { q: "What is the time complexity of the optimized Two Sum using a HashMap?", opts: ["O(n^2)", "O(n log n)", "O(n)", "O(1)"], ans: 2 },
+    { q: "Two Pointers on a sorted array for pair-sum achieves O(1) space compared to the HashMap approach which uses O(n) space. When should you prefer the HashMap approach?", opts: ["Always, because O(n) time is more important than space", "When the array is not sorted and sorting it would cost O(n log n)", "When the array has duplicate elements", "When the target sum is negative"], ans: 1 },
+    { q: "HashSet.add() returns false when:", opts: ["The set is full and cannot accept more elements", "The element being added already exists in the set", "The element is null", "The set has more than 16 elements"], ans: 1 },
+    { q: "In the Container With Most Water problem, you always move the pointer with the SMALLER height because:", opts: ["Moving the larger height pointer increases area", "The current pair is already optimal and no better pair exists", "Moving the smaller height pointer can only improve or maintain the minimum height", "Moving the larger pointer reduces width too much"], ans: 2 },
+    { q: "The sliding window technique's key operation when sliding one step right is:", opts: ["Recomputing the sum from scratch for the new window", "Adding the new right element and subtracting the old left element", "Sorting the window elements after each slide", "Using a HashMap to track the new window sum"], ans: 1 },
+    { q: "To check if two strings are anagrams in O(n) time, the best approach is:", opts: ["Sort both strings and compare — O(n log n)", "Build a frequency map of one string, decrement for the other, check all zeros — O(n)", "Use two nested loops to compare each character pair — O(n^2)", "Convert to CharArray and use HashSet intersection — O(n)"], ans: 1 },
+    { q: "Prefix sum preprocessing takes O(n) time. What does it reduce range sum queries to?", opts: ["O(n) per query", "O(log n) per query", "O(1) per query", "O(n^2) total for all queries"], ans: 2 },
+    { q: "String concatenation inside a loop in Kotlin/Java is inefficient because:", opts: ["Strings are stored on the stack and the stack is small", "Each concatenation creates a new String object, making it O(n^2) total work", "The JIT cannot optimize string concatenation in loops", "Kotlin's String type uses UTF-32 encoding which is slower"], ans: 1 },
+    { q: "You see a problem: 'Given an array of integers, find all pairs that sum to zero.' The optimal first step is:", opts: ["Sort the array and use two pointers — O(n log n)", "Build a HashSet of all elements, then for each element check if its negation exists — O(n)", "Use nested loops to check all pairs — O(n^2)", "Use binary search for each element's negation — O(n log n)"], ans: 1 }
+  ],
+  challenge: "Implement the 'Longest Substring Without Repeating Characters' problem using a sliding window and HashMap. Input: a string s. Output: the length of the longest substring without duplicate characters. Example: 'abcabcbb' returns 3 ('abc'). Trace through 'pwwkew' step by step showing the window boundaries and HashMap state at each character. What is the time and space complexity?",
+  resources: [
+    { type: "article", title: "LeetCode — Two Sum", url: "https://leetcode.com/problems/two-sum/", source: "LeetCode" },
+    { type: "article", title: "LeetCode — Container With Most Water", url: "https://leetcode.com/problems/container-with-most-water/", source: "LeetCode" },
+    { type: "article", title: "Neetcode — Arrays & Hashing Roadmap", url: "https://neetcode.io/roadmap", source: "Neetcode" },
+    { type: "article", title: "LeetCode — Sliding Window Pattern", url: "https://leetcode.com/tag/sliding-window/", source: "LeetCode" },
+    { type: "docs", title: "Kotlin Collection Operations", url: "https://kotlinlang.org/docs/collections-overview.html", source: "Kotlin" }
+  ],
+  eli5: "Imagine you need to find two kids in class whose ages add to 20. The brute-force way: ask every kid their age, then ask every OTHER kid if they're the right age — super slow. The smart way: write down each kid's age on a sticky note on the wall. For each new kid, just look at the wall for '20 minus their age'. The wall is your HashMap — instant lookup.",
+  codeWalkthrough: [
+    "twoSum iterates nums once. For each nums[i], the complement is target - nums[i] — if the complement was seen before, we have our pair.",
+    "seen[nums[i]] = i stores the current element's value as key and its index as value — we store AFTER checking so an element doesn't pair with itself.",
+    "twoSumSorted uses left and right pointers starting at both ends. If the sum is too small, we need a larger number so left moves right. If too large, right moves left.",
+    "containsDuplicate uses HashSet.add() which returns false if the element already exists — this is cleaner than checking contains() then add() which would be two operations.",
+    "maxWater computes area as min(height[L], height[R]) * (R - L). Moving the smaller height pointer is the key insight — moving the larger one cannot possibly improve the minimum.",
+    "maxSumSubarrayK initializes the window sum for the first k elements, then for each new position adds nums[i] (new right) and subtracts nums[i-k] (old left) — the window slides in O(1) per step.",
+    "The sliding window avoids recomputing the entire window sum each time — without it, each window computation would be O(k), making the total O(n*k).",
+    "All HashMap-based solutions trade O(n) extra space for O(n) time — always mention this space-time tradeoff in interviews and confirm whether space constraints exist."
+  ],
+  bugChallenge: {
+    code: `fun twoSum(nums: IntArray, target: Int): IntArray {
+    val seen = HashMap<Int, Int>()
+    for (i in nums.indices) {
+        val complement = target - nums[i]
+        seen[nums[i]] = i
+        if (seen.containsKey(complement)) {
+            return intArrayOf(seen[complement]!!, i)
+        }
+    }
+    return intArrayOf()
+}
+
+// Test: nums = [3, 3], target = 6
+// Expected: [0, 1]
+// Actual: ???`,
+    hint: "The order of operations inside the loop is wrong. Think about what happens when the same value is both the number and its own complement.",
+    answer: "Bug: The element is added to the map (seen[nums[i]] = i) BEFORE checking if the complement exists. When nums = [3, 3] and target = 6, at i=0: nums[0]=3 is added to the map as seen[3]=0. Then complement = 6-3 = 3, which IS in the map (just added), so it returns [0, 0] — using the same element twice. The fix is to CHECK for the complement FIRST, then add the current element to the map. This ensures you only find pairs using two different elements at different indices."
+  },
+  difficulty: "intermediate",
+  prereqs: [2, 62]
+},
+
+// ─── LESSON 64 ───────────────────────────────────────────────────────────────
+{
+  id: 64,
+  title: "DSA II: Stack, Queue, Linked List, Binary Search & Heap",
+  subtitle: "Linear and hierarchical structures that unlock a new class of interview problems",
+  analogy: "A Stack is a stack of plates — you add and remove from the top (LIFO). A Queue is a checkout line — first in, first out (FIFO). A LinkedList is a treasure hunt where each clue points to the next location. Binary search is like finding a word in a dictionary by opening to the middle, not page one. A Heap is a priority boarding gate — always processes the most important item next.",
+  points: [
+    { t: "Stack — LIFO and Its Interview Patterns", d: "Stack operations: push (add to top), pop (remove from top), peek (see top without removing) — all O(1). In Kotlin, use ArrayDeque as a stack. Key patterns: bracket matching (push opens, pop and verify on close), undo/redo systems, DFS traversal, monotonic stack (maintain ascending/descending order for next-greater-element problems)." },
+    { t: "Valid Parentheses — Stack Classic", d: "Given a string of brackets, check if they are balanced. Push opening brackets. On closing bracket: if stack is empty or top does not match, return false. Pop if match. After iteration, stack must be empty. O(n) time, O(n) space. Extension: use a HashMap to map closing to opening brackets for clean code." },
+    { t: "Monotonic Stack — Next Greater Element", d: "Maintain a stack of indices in decreasing order of values. When a new element is greater than the stack top, the stack top has found its 'next greater element' — pop and record. Push the new element. This processes each element at most twice (push + pop), so O(n) overall. Used for: stock span, daily temperatures, largest rectangle in histogram." },
+    { t: "Queue — FIFO and BFS", d: "Queue: add to back (enqueue), remove from front (dequeue) — both O(1). In Kotlin, ArrayDeque supports both stack and queue operations (addFirst/removeLast for stack, addLast/removeFirst for queue). Primary use: BFS traversal. Enqueue the root, then repeatedly dequeue a node and enqueue its unvisited neighbors." },
+    { t: "Linked List Concepts", d: "A node contains a value and a pointer to the next node. Head is the first node, tail points to null. Insertion at head: O(1). Insertion at arbitrary position: O(n) to find it. No random access — must traverse. Key operations: reverse (iterative with prev/curr/next pointers), detect cycle (Floyd's fast/slow pointers), find middle (fast/slow where fast moves 2 steps)." },
+    { t: "Reverse a Linked List (Iterative)", d: "Use three pointers: prev=null, curr=head, next=null. Each iteration: save curr.next to next, point curr.next backward to prev, advance prev to curr, advance curr to next. When curr is null, prev is the new head. O(n) time, O(1) space. Recursive version is elegant but uses O(n) stack space — prefer iterative in interviews." },
+    { t: "Floyd's Cycle Detection", d: "Use slow (1 step) and fast (2 steps) pointers. If there is a cycle, fast will eventually catch up to slow within the cycle. If fast reaches null, no cycle. O(n) time, O(1) space. Finding cycle entry: after detection, reset one pointer to head and advance both 1 step at a time — they meet at the cycle entry." },
+    { t: "Binary Search — Universal Template", d: "Use for: sorted array search, search space minimization (find the minimum valid value), matrix search. Template: left=0, right=n-1. mid = left + (right-left)/2. If condition(mid), right=mid. Else left=mid+1. Loop ends when left==right — that is the answer. Key: define the invariant precisely. Common mistake: wrong boundary update causing infinite loops." },
+    { t: "Binary Search Variants", d: "Lower bound (first position where value >= target): right=mid when found, left=mid+1 when not. Upper bound (first position where value > target): similar adjustment. Search in rotated sorted array: determine which half is sorted (compare mid to left), then check if target is in the sorted half. Always draw the invariant before coding." },
+    { t: "Heap / Priority Queue", d: "A heap is a complete binary tree where the parent is always smaller (min-heap) or larger (max-heap) than its children. insert and removeTop are O(log n). peek is O(1). In Kotlin, PriorityQueue is a min-heap by default. For max-heap: PriorityQueue(compareByDescending { it }). Primary use: K-th largest/smallest, merge K sorted lists, task scheduling." },
+    { t: "Top-K Pattern with Heap", d: "Find K largest elements: use a min-heap of size K. For each element, add it to the heap. If heap size > K, remove the minimum. After processing all elements, the heap contains the K largest. O(n log k) time — much better than sorting (O(n log n)) when k is small. For K smallest, use a max-heap." },
+    { t: "Interview Strategy for These Structures", d: "Stack: 'matching', 'undo', 'nested structure' keywords. Queue: 'level by level', 'BFS', 'process in order received'. LinkedList: rarely implemented from scratch — know reverse and cycle detection, as these are the two canonical problems. Binary search: any 'find in sorted' or 'minimize the maximum' phrasing. Heap: any 'top K', 'streaming median', or 'merge sorted' phrasing." }
+  ],
+  whatIs: "Stack, Queue, LinkedList, Binary Search, and Heap are the second tier of DSA patterns. They appear in ~40% of medium interview problems. Stacks and queues are often implemented on ArrayDeque in Kotlin. Binary search extends far beyond sorted arrays to any monotonic decision function. Heaps provide an efficient way to maintain a sorted subset of data for streaming and top-K problems.",
+  realWorld: "In the Tixio real-time task management platform, notification delivery priority was implemented using a PriorityQueue — critical alerts (deadline missed, blocker added) were assigned higher priority and processed first even when multiple notifications were queued simultaneously. This is the heap pattern applied directly: always serve the highest-priority item next in O(log n) time.",
+  code: `// ─── VALID PARENTHESES (Stack, O(n)) ───
+fun isValid(s: String): Boolean {
+    val stack = ArrayDeque<Char>()
+    val matching = mapOf(')' to '(', ']' to '[', '}' to '{')
+    for (ch in s) {
+        if (ch in "([{") {
+            stack.addLast(ch)
+        } else {
+            if (stack.isEmpty() || stack.last() != matching[ch]) return false
+            stack.removeLast()
+        }
+    }
+    return stack.isEmpty()
+}
+
+// ─── REVERSE LINKED LIST (Iterative, O(n), O(1) space) ───
+class ListNode(var value: Int, var next: ListNode? = null)
+
+fun reverseList(head: ListNode?): ListNode? {
+    var prev: ListNode? = null
+    var curr = head
+    while (curr != null) {
+        val next = curr.next  // save
+        curr.next = prev      // reverse pointer
+        prev = curr           // advance prev
+        curr = next           // advance curr
+    }
+    return prev // prev is the new head when curr is null
+}
+
+// ─── DETECT CYCLE — FLOYD'S (O(n), O(1) space) ───
+fun hasCycle(head: ListNode?): Boolean {
+    var slow = head
+    var fast = head
+    while (fast != null && fast.next != null) {
+        slow = slow?.next
+        fast = fast.next?.next
+        if (slow == fast) return true // fast caught slow inside cycle
+    }
+    return false
+}
+
+// ─── BINARY SEARCH — UNIVERSAL TEMPLATE ───
+fun binarySearch(nums: IntArray, target: Int): Int {
+    var left = 0
+    var right = nums.size - 1
+    while (left <= right) {
+        val mid = left + (right - left) / 2
+        when {
+            nums[mid] == target -> return mid
+            nums[mid] < target -> left = mid + 1
+            else -> right = mid - 1
+        }
+    }
+    return -1
+}
+
+// ─── TOP-K LARGEST ELEMENTS (Min-Heap, O(n log k)) ───
+fun topKLargest(nums: IntArray, k: Int): List<Int> {
+    val minHeap = PriorityQueue<Int>() // min-heap by default
+    for (num in nums) {
+        minHeap.offer(num)
+        if (minHeap.size > k) minHeap.poll() // remove smallest, keep K largest
+    }
+    return minHeap.toList()
+}`,
+  funFact: "Floyd's Cycle Detection algorithm was invented by Robert Floyd in 1967 and is also called the 'tortoise and hare' algorithm. It requires only O(1) extra space — no visited set needed. The same mathematical principle (modular arithmetic in a cycle) is used in Pollard's rho algorithm for integer factorization, which was used to crack RSA keys in cryptographic research.",
+  quiz: [
+    { q: "Which Kotlin data structure should you use to implement both a Stack and a Queue efficiently?", opts: ["LinkedList", "ArrayList", "ArrayDeque", "PriorityQueue"], ans: 2 },
+    { q: "In Valid Parentheses, what does it mean when the stack is NOT empty after processing all characters?", opts: ["All brackets were matched successfully", "There are unmatched opening brackets remaining", "The string contained invalid characters", "The algorithm has a bug and should restart"], ans: 1 },
+    { q: "Floyd's cycle detection uses two pointers moving at different speeds. What is its space complexity?", opts: ["O(n) — stores all visited nodes", "O(log n) — proportional to cycle length", "O(1) — only two pointer variables", "O(k) where k is the cycle length"], ans: 2 },
+    { q: "In binary search, calculating mid as (left + right) / 2 can cause a bug when:", opts: ["The array has an odd number of elements", "left and right are both large integers and their sum overflows Int", "The target is at index 0", "The array is sorted in descending order"], ans: 1 },
+    { q: "A min-heap's poll() operation removes which element?", opts: ["The largest element in the heap", "The most recently inserted element", "The smallest element in the heap", "A random element from the heap"], ans: 2 },
+    { q: "To find the K largest elements in a stream efficiently, you use a min-heap of size K because:", opts: ["A min-heap processes elements faster than a max-heap", "You can always see and remove the current minimum to make room for larger elements", "Min-heaps use less memory than max-heaps", "The K largest are always at the bottom of a min-heap"], ans: 1 },
+    { q: "Reversing a linked list iteratively uses how many extra pointer variables?", opts: ["O(n) pointers to store all nodes", "O(log n) pointers for the recursive call stack", "3 pointers: prev, curr, next", "1 pointer: only the new head"], ans: 2 },
+    { q: "A monotonic stack maintains elements in:", opts: ["Random order based on insertion time", "Sorted order (ascending or descending) at all times during processing", "FIFO order like a queue", "Order based on element frequency"], ans: 1 },
+    { q: "Binary search on a rotated sorted array (e.g. [4,5,6,7,0,1,2]) requires:", opts: ["Sorting the array first, adding O(n log n) overhead", "Determining which half is still sorted, then checking if the target is in that half", "Using two separate binary searches on each half", "Linear scan of the rotation point, then binary search"], ans: 1 },
+    { q: "The time complexity of inserting an element into a PriorityQueue in Java/Kotlin is:", opts: ["O(1)", "O(log n)", "O(n)", "O(n log n)"], ans: 1 }
+  ],
+  challenge: "Implement 'Daily Temperatures': given an array of daily temperatures, return an array where answer[i] is the number of days until a warmer temperature. If no future day is warmer, answer[i] = 0. Example: [73,74,75,71,69,72,76,73] returns [1,1,4,2,1,1,0,0]. Trace through using a monotonic stack. What is the time and space complexity? Why is this O(n) and not O(n^2)?",
+  resources: [
+    { type: "article", title: "LeetCode — Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/", source: "LeetCode" },
+    { type: "article", title: "LeetCode — Reverse Linked List", url: "https://leetcode.com/problems/reverse-linked-list/", source: "LeetCode" },
+    { type: "article", title: "LeetCode — Kth Largest Element in a Stream", url: "https://leetcode.com/problems/kth-largest-element-in-a-stream/", source: "LeetCode" },
+    { type: "article", title: "Binary Search Template — LeetCode Discuss", url: "https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template", source: "LeetCode" },
+    { type: "article", title: "Neetcode — Stack, Binary Search, Heap Patterns", url: "https://neetcode.io/roadmap", source: "Neetcode" }
+  ],
+  eli5: "Stack: imagine a pile of dirty dishes — you always wash and add to the top. Queue: imagine a line at a water park — first person in line goes down the slide first. Linked list: a scavenger hunt where each clue tells you where the next clue is hidden. Binary search: guessing a number between 1 and 100 by always guessing the middle — you find it in 7 guesses maximum. Heap: a queue where the most important person always cuts to the front.",
+  codeWalkthrough: [
+    "isValid uses a HashMap to map each closing bracket to its expected opening bracket — this avoids three separate if-checks and scales to any bracket type.",
+    "When a closing bracket is encountered, we check two conditions with OR: stack is empty (nothing to match against) OR the top does not match. Either means invalid.",
+    "reverseList saves curr.next before overwriting it — curr.next = prev breaks the forward link, so without saving, the rest of the list is lost.",
+    "After the while loop in reverseList, curr is null and prev points to the last original node — which is now the new head of the reversed list.",
+    "hasCycle initializes both slow and fast at head. The loop condition checks fast and fast.next both non-null because fast moves two steps — if fast.next were null, fast.next.next would throw a NullPointerException.",
+    "binarySearch uses left + (right - left) / 2 to avoid integer overflow. If left = 1_000_000_000 and right = 1_500_000_000, their sum overflows Int.MAX_VALUE.",
+    "topKLargest adds every element to the min-heap, then immediately removes the minimum if size exceeds k. After processing all elements, the heap contains exactly the k largest.",
+    "PriorityQueue.poll() is O(log n) because removing the root of a heap requires re-heapifying down the tree. This gives topKLargest O(n log k) total — O(log k) per element."
+  ],
+  bugChallenge: {
+    code: `fun reverseList(head: ListNode?): ListNode? {
+    var prev: ListNode? = null
+    var curr = head
+    while (curr != null) {
+        curr.next = prev
+        prev = curr
+        curr = curr.next
+    }
+    return prev
+}`,
+    hint: "There are a bug that causes an infinite loop or always returns a single-node list. Think carefully about the order of pointer assignments.",
+    answer: "Bug: curr.next = prev overwrites the next pointer BEFORE saving it. Then curr = curr.next reads the already-overwritten pointer — which now points to prev (the previous node), not the next node in the original list. This causes the traversal to go backward or get stuck. The fix: save the original next BEFORE overwriting: val next = curr.next. Then do curr.next = prev, prev = curr, curr = next. The saved 'next' variable preserves the forward link before the reversal."
+  },
+  difficulty: "intermediate",
+  prereqs: [63]
+},
+
+// ─── LESSON 65 ───────────────────────────────────────────────────────────────
+{
+  id: 65,
+  title: "DSA III: Trees, Graphs, BFS/DFS, Recursion & Intervals",
+  subtitle: "The hardest patterns — mastered through intuition, not memorization",
+  analogy: "A tree is a family tree — one root, branches down to leaves, no cycles. A graph is a city road map — nodes are intersections, edges are roads, and there can be loops. BFS explores a graph level by level like a ripple in water. DFS goes as deep as possible first, like exploring a cave — you either use a stack or let recursion do it for you.",
+  points: [
+    { t: "Binary Tree Traversal — Inorder, Preorder, Postorder", d: "Inorder (left, root, right): for a BST, this gives elements in sorted order. Preorder (root, left, right): useful for serializing a tree. Postorder (left, right, root): useful for deleting a tree or computing subtree results bottom-up. All are O(n) time, O(h) space where h is tree height (O(log n) balanced, O(n) skewed)." },
+    { t: "Tree Recursion Pattern", d: "Most tree problems follow: base case (null node returns a neutral value), recursive case (compute result for left subtree, compute for right subtree, combine with current node). Examples: max depth (1 + max(left, right)), has path sum (target == node.val if leaf, or recurse with target - node.val). Trust the recursion — do not trace the full tree mentally." },
+    { t: "BST Properties and Operations", d: "A Binary Search Tree satisfies: all left descendants < node.val < all right descendants. Search is O(log n) for balanced BST. Insert follows the same path as search — go left if smaller, right if larger. In-order traversal of BST gives sorted sequence. Common interview: validate a BST by passing valid range (min, max) bounds down the recursion." },
+    { t: "Level-Order BFS (Tree)", d: "Process tree level by level using a Queue. Enqueue root. While queue is not empty: record the queue size (nodes in current level), dequeue exactly that many nodes, process each, enqueue their children. After inner loop, one full level is processed. Used for: minimum depth, right side view, zigzag traversal, connect next right pointers." },
+    { t: "Graph Representation", d: "Most interview graphs are given as adjacency lists: Map<Int, List<Int>> or built from an edge list. For grid problems (islands, shortest path), the graph is implicit — each cell is a node, 4 or 8 neighbors are edges. Weighted graphs use Map<Int, List<Pair<Int, Int>>> where the pair is (neighbor, weight). Always ask if the graph is directed or undirected, and whether it can have cycles." },
+    { t: "BFS on Graphs — Shortest Path (Unweighted)", d: "BFS gives the shortest path in terms of number of edges in an unweighted graph. Template: queue + visited set. Enqueue start node, mark visited. While queue not empty: dequeue node, check if it is the goal, enqueue unvisited neighbors and mark them visited. Level tracking: use a step counter incremented each level. O(V + E) time and space." },
+    { t: "DFS on Graphs — Connectivity and Paths", d: "DFS explores a path to its end before backtracking. Iterative DFS: use a Stack (push start, while stack not empty: pop, process, push unvisited neighbors). Recursive DFS: call DFS on each unvisited neighbor after marking current as visited. Use for: detect connected components, topological sort, check if path exists. O(V + E) time and space." },
+    { t: "Number of Islands — Grid BFS/DFS Classic", d: "Given a 2D grid of '1' (land) and '0' (water), count islands. Iterate all cells. When you find an unvisited '1', increment island count and BFS/DFS to mark all connected '1's as visited. Each BFS/DFS call floods an entire island. O(m*n) time — every cell is visited at most once. Classic example of implicit graph (grid as adjacency list)." },
+    { t: "Recursion — Trust the Call Stack", d: "Recursive thinking: define what your function returns (e.g. 'the max depth rooted at this node'), then assume the recursive calls are correct, and combine. Do not mentally simulate the full call tree — that way lies madness. The three laws: base case must exist, each call must make progress toward the base case, and the combination step must be correct." },
+    { t: "Merge Intervals", d: "Given a list of intervals [start, end], merge all overlapping ones. Sort by start time: O(n log n). Then iterate: if current interval overlaps with last merged (current.start <= last.end), merge by updating last.end = max(last.end, current.end). Otherwise add current to result. Result is O(n). Key insight: after sorting, overlaps are always between adjacent intervals." },
+    { t: "Topological Sort (BFS — Kahn's Algorithm)", d: "For a Directed Acyclic Graph (DAG), find a valid ordering where all edges go from earlier to later in the ordering. Build in-degree count for each node. Enqueue all nodes with in-degree 0. While queue not empty: dequeue node, add to result, decrement in-degree of neighbors, enqueue any neighbor whose in-degree drops to 0. If result has all nodes, no cycle. Used for: course prerequisites, build dependency ordering." },
+    { t: "Pattern Recognition — Tree vs Graph", d: "Tree: connected, n nodes, n-1 edges, no cycles, has a root — use recursion or BFS level-order. Graph: may have cycles, may be disconnected, use a visited set — use BFS for shortest path, DFS for connectivity. Grid problems: always BFS/DFS with 4-directional neighbors, mark visited by modifying the grid in-place or using a visited boolean array." }
+  ],
+  whatIs: "Trees and graphs are the data structures underlying most complex real-world systems — file systems, network routing, dependency management, social graphs, and Android's view hierarchy. BFS and DFS are the two fundamental algorithms for exploring these structures. Mastering them means recognizing when a problem is really a graph traversal in disguise (even when it does not say 'graph' explicitly — like grid island counting or course scheduling).",
+  realWorld: "In FieldBuzz's field officer management system, the organizational hierarchy (manager → area manager → officer) was modeled as a tree. Computing 'total records submitted by all officers under a manager' was a postorder tree traversal — gather results from all children, then combine at the parent. This is the exact same pattern as computing subtree sums in a BST interview problem.",
+  code: `// ─── BINARY TREE NODE ───
+class TreeNode(var value: Int, var left: TreeNode? = null, var right: TreeNode? = null)
+
+// ─── INORDER TRAVERSAL (O(n)) ───
+fun inorder(root: TreeNode?): List<Int> {
+    val result = mutableListOf<Int>()
+    fun dfs(node: TreeNode?) {
+        if (node == null) return
+        dfs(node.left)
+        result.add(node.value)
+        dfs(node.right)
+    }
+    dfs(root)
+    return result
+}
+
+// ─── MAX DEPTH (Recursive, O(n)) ───
+fun maxDepth(root: TreeNode?): Int {
+    if (root == null) return 0
+    return 1 + maxOf(maxDepth(root.left), maxDepth(root.right))
+}
+
+// ─── LEVEL-ORDER BFS (O(n)) ───
+fun levelOrder(root: TreeNode?): List<List<Int>> {
+    if (root == null) return emptyList()
+    val result = mutableListOf<List<Int>>()
+    val queue = ArrayDeque<TreeNode>()
+    queue.addLast(root)
+    while (queue.isNotEmpty()) {
+        val levelSize = queue.size
+        val level = mutableListOf<Int>()
+        repeat(levelSize) {
+            val node = queue.removeFirst()
+            level.add(node.value)
+            node.left?.let { queue.addLast(it) }
+            node.right?.let { queue.addLast(it) }
+        }
+        result.add(level)
+    }
+    return result
+}
+
+// ─── NUMBER OF ISLANDS (Grid DFS, O(m*n)) ───
+fun numIslands(grid: Array<CharArray>): Int {
+    var count = 0
+    fun dfs(r: Int, c: Int) {
+        if (r < 0 || r >= grid.size || c < 0 || c >= grid[0].size) return
+        if (grid[r][c] != '1') return
+        grid[r][c] = '0' // mark visited by sinking the island
+        dfs(r + 1, c); dfs(r - 1, c); dfs(r, c + 1); dfs(r, c - 1)
+    }
+    for (r in grid.indices) {
+        for (c in grid[0].indices) {
+            if (grid[r][c] == '1') { count++; dfs(r, c) }
+        }
+    }
+    return count
+}
+
+// ─── MERGE INTERVALS (O(n log n)) ───
+fun merge(intervals: Array<IntArray>): Array<IntArray> {
+    intervals.sortBy { it[0] } // sort by start time
+    val merged = mutableListOf<IntArray>()
+    for (interval in intervals) {
+        if (merged.isEmpty() || merged.last()[1] < interval[0]) {
+            merged.add(interval) // no overlap
+        } else {
+            merged.last()[1] = maxOf(merged.last()[1], interval[1]) // merge
+        }
+    }
+    return merged.toTypedArray()
+}`,
+  funFact: "The 'Number of Islands' problem is used in actual production systems — Google Maps' region detection, flood fill in image editors (Paint's bucket tool is DFS on a pixel grid), and network segmentation all use the same connected-component algorithm. When Instagram added the 'flood fill' story background color feature, engineers essentially implemented numIslands on an image pixel graph.",
+  quiz: [
+    { q: "Inorder traversal of a valid Binary Search Tree produces:", opts: ["A random ordering of all node values", "Elements in sorted (ascending) order", "Elements from root to leaves in breadth-first order", "Elements in reverse sorted (descending) order"], ans: 1 },
+    { q: "In the recursive max depth formula '1 + max(maxDepth(left), maxDepth(right))', what does the '1' represent?", opts: ["The depth of the left subtree", "The current node itself contributes 1 to the depth", "The count of children the current node has", "An offset to convert 0-indexed to 1-indexed depth"], ans: 1 },
+    { q: "BFS guarantees the shortest path in terms of number of edges. This guarantee only holds when:", opts: ["The graph has no cycles", "All edges have equal (or no) weight", "The graph is a tree", "The start node has degree 1"], ans: 1 },
+    { q: "In 'Number of Islands', marking visited cells as '0' instead of using a separate visited array achieves:", opts: ["Worse time complexity because it modifies the input", "O(1) extra space instead of O(m*n) for a visited array", "Incorrect results because the original grid is corrupted", "Only works for DFS, not BFS"], ans: 1 },
+    { q: "Merge Intervals first sorts by start time. Without sorting, the algorithm would:", opts: ["Still work correctly but slightly slower", "Fail because non-adjacent intervals could overlap but be missed", "Sort automatically due to the merge logic", "Produce duplicate intervals in the output"], ans: 1 },
+    { q: "In Level-Order BFS, recording 'queue.size' before the inner loop is critical because:", opts: ["Queue size changes as children are added during the inner loop", "It allows early termination when the level is complete", "queue.size changes between iterations due to garbage collection", "You need to pre-allocate the level list with the exact size"], ans: 0 },
+    { q: "A graph with cycles requires a visited set during DFS/BFS to avoid:", opts: ["Processing nodes out of order", "Infinite loops by revisiting already-processed nodes", "Stack overflow only in recursive DFS, not iterative", "Missing nodes that have no outgoing edges"], ans: 1 },
+    { q: "Topological sort is only valid on which type of graph?", opts: ["Undirected graphs with no self-loops", "Directed Acyclic Graphs (DAGs)", "Weighted directed graphs", "Complete graphs where every node connects to every other"], ans: 1 },
+    { q: "The time complexity of DFS on a graph with V vertices and E edges is:", opts: ["O(V^2)", "O(V log V)", "O(V + E)", "O(E log V)"], ans: 2 },
+    { q: "For the recursion 'maxDepth(null) returns 0, maxDepth(node) returns 1 + max(left, right)', the key principle being applied is:", opts: ["Memoization — storing previously computed results", "Greedy choice — always picking the larger subtree", "Divide and conquer — solve subproblems and combine results", "Dynamic programming — building solutions bottom-up with a table"], ans: 2 }
+  ],
+  challenge: "Implement 'Word Ladder': given a beginWord, endWord, and a wordList, find the length of the shortest transformation sequence from beginWord to endWord, where each intermediate word must differ by exactly one letter and exist in the wordList. Example: beginWord='hit', endWord='cog', wordList=['hot','dot','dog','lot','log','cog'] returns 5 (hit->hot->dot->dog->cog). Why is BFS the correct algorithm here? Could DFS give a shorter path? Trace the BFS level by level.",
+  resources: [
+    { type: "article", title: "LeetCode — Number of Islands", url: "https://leetcode.com/problems/number-of-islands/", source: "LeetCode" },
+    { type: "article", title: "LeetCode — Merge Intervals", url: "https://leetcode.com/problems/merge-intervals/", source: "LeetCode" },
+    { type: "article", title: "LeetCode — Binary Tree Level Order Traversal", url: "https://leetcode.com/problems/binary-tree-level-order-traversal/", source: "LeetCode" },
+    { type: "article", title: "Neetcode — Trees and Graphs Patterns", url: "https://neetcode.io/roadmap", source: "Neetcode" },
+    { type: "article", title: "LeetCode — Course Schedule (Topological Sort)", url: "https://leetcode.com/problems/course-schedule/", source: "LeetCode" }
+  ],
+  eli5: "A tree is like a family tree — grandparent at top, parents in the middle, kids at the bottom. BFS explores level by level: grandparent first, then all parents, then all kids. DFS goes deep first: grandparent → parent → kid → back up → other kid. A graph is like a city map where any street can connect to any other. Number of Islands is: count how many land blobs you see when you look at the map from above.",
+  codeWalkthrough: [
+    "inorder uses a nested 'dfs' function — Kotlin allows local function definitions inside other functions, which is clean for recursive helpers that need access to the result list.",
+    "maxDepth is the purest recursive tree solution: null returns 0 (base case), non-null returns 1 (this node) plus the maximum of its children's depths. Three lines, perfectly expressive.",
+    "levelOrder records queue.size before the inner repeat loop — this is the number of nodes at the current level. As children are added to the queue during the loop, queue.size grows, but the repeat count is already fixed.",
+    "node.left?.let { queue.addLast(it) } uses Kotlin's safe-call with let — if left is null, nothing happens. Cleaner than an explicit null check.",
+    "numIslands modifies the grid in-place by setting visited '1' cells to '0' — this is the 'sinking island' trick that avoids an O(m*n) visited array. Only acceptable if modifying input is allowed (confirm with interviewer).",
+    "The four DFS calls in numIslands explore all 4-directional neighbors — up, down, left, right. The boundary check 'r < 0 || r >= grid.size' is the base case that prevents array out-of-bounds.",
+    "merge sorts intervals by start time first. Then the merge condition is: if the current interval's start is greater than the last merged interval's end, there is no overlap — add a new interval.",
+    "When there is overlap (current.start <= last.end), we take the maximum of the two end times — because one interval might be entirely contained within another (e.g. [1,10] and [2,5] merge to [1,10], not [1,5])."
+  ],
+  bugChallenge: {
+    code: `fun maxDepth(root: TreeNode?): Int {
+    if (root == null) return 0
+    val left = maxDepth(root.left)
+    val right = maxDepth(root.right)
+    return maxOf(left, right)
+}`,
+    hint: "The function always returns a depth that is 1 less than the correct answer for every tree. Trace through a tree with just one node.",
+    answer: "Bug: The function returns maxOf(left, right) but forgets to add 1 for the current node itself. A single-node tree should have depth 1: left=0, right=0, result should be 1. But maxOf(0, 0) = 0. A two-level tree with root and one child should have depth 2: the child returns 1 (after fix), root should return 2, but this returns maxOf(1, 0) = 1. The fix: return 1 + maxOf(left, right). The '1 +' accounts for the current node being counted as one level."
+  },
+  difficulty: "advanced",
+  prereqs: [64]
+},
+
+// ─── LESSON 66 ───────────────────────────────────────────────────────────────
+{
+  id: 66,
+  title: "Android Interview Project Storytelling Foundations",
+  subtitle: "Turn your real experience into compelling interview narratives that land senior roles",
+  analogy: "A project story in an interview is like a movie trailer — it needs to hook the interviewer in 10 seconds, show the conflict (the hard problem), show the resolution (your decisions), and leave them wanting to ask follow-up questions. Most engineers narrate a documentary (here is everything I did). You need to narrate a thriller.",
+  points: [
+    { t: "The W-STAR Method", d: "W-STAR = Work context, Situation (the problem), Task (your specific role), Action (the decisions YOU made, not 'we'), Result (quantified impact). This is STAR with an added Work context that orients the interviewer. Start every story with one sentence of context, then go straight to the problem — do not spend 3 minutes explaining what your company does." },
+    { t: "Quantifying Impact", d: "Replace vague adjectives with numbers. Not 'improved performance' — 'reduced sync time from 30s to 800ms'. Not 'large user base' — '15,000 field officers across 6 countries'. Not 'complex offline system' — 'managed 2M+ offline records with conflict resolution'. Numbers make stories memorable and verifiable. If you do not have exact numbers, use ranges or relative metrics (reduced by 90%)." },
+    { t: "FieldBuzz / BRAC — Offline-First Enterprise Story", d: "Core narrative: 'Built the offline data layer for a field management system used by 15,000+ BRAC officers in rural Bangladesh where connectivity is near-zero. Implemented a Room-based offline store with WorkManager sync and conflict resolution using timestamps and server wins. Key decision: chose WorkManager over a custom service for guaranteed execution on Android Doze and OEM battery killers.' Show you understand constraints, not just code." },
+    { t: "Hazira Khata — Founder Ownership Story", d: "Core narrative: 'As one of the founding engineers on Hazira Khata, I owned the architecture from day zero. Made the decision to use Compose + MVI because we needed a team of 3 to move fast without state bugs. Implemented the offline payroll calculation engine — salaries computed on-device even with no internet. Key challenge: attendance deduplication at scale — solved with a HashSet-based O(n) algorithm that replaced a nested loop causing UI jank.' Show ownership and technical depth." },
+    { t: "Tixio — Real-Time SaaS Story", d: "Core narrative: 'Tixio is a workspace SaaS tool with 50K+ users. My contribution was the real-time notification and task update system on Android. Integrated WebSockets with exponential backoff reconnection, implemented a PriorityQueue for notification delivery ordering, and built a background sync architecture that maintained consistency across 3 platforms. Key challenge: state reconciliation when the WebSocket reconnected after a gap — solved by tracking the last received event ID and replaying missed events.' Show distributed systems thinking." },
+    { t: "Payback — Fintech Security Story", d: "Core narrative: 'Payback handles financial transactions for retail customers. I owned the security layer: implemented certificate pinning with fallback for pin rotation, added biometric authentication with BiometricPrompt, encrypted sensitive data with Android Keystore (AES-256-GCM), and implemented root detection and anti-tampering checks. Key decision: we used server-validated pins with an emergency override window during pin rotation to prevent locking users out during CA certificate renewals.' Show security mindset, not just feature implementation." },
+    { t: "TapMeHome — NFC Platform Story", d: "Core narrative: 'TapMeHome was a location-sharing platform using NFC tags for home check-in automation. I integrated Android NFC APIs for tag reading and writing, built an Awareness API integration for geofencing triggers, and implemented the tag provisioning flow. Key insight: NFC foreground dispatch required careful lifecycle management — we had a production bug where the Activity was backgrounded during tag scan and the intent was delivered to the wrong component. Fixed with explicit foreground dispatch and priority intent filtering.' Show you debug at the OS level, not just the library level." },
+    { t: "Architecture Decision Stories", d: "Interviewers love 'why did you choose X over Y'. Prepare three trade-off stories: (1) Why MVI over MVVM for Hazira Khata (unidirectional flow, better state debugging, test isolation). (2) Why WorkManager over foreground service for FieldBuzz sync (Doze mode, OEM battery optimization, guaranteed retry). (3) Why Room over SQLite directly (compile-time query validation, coroutine support, LiveData/Flow integration). The depth of your 'why' signals seniority." },
+    { t: "Failure Stories — The Differentiator", d: "Prepare one honest failure story for 'tell me about a mistake'. Template: what happened (be specific), what you did wrong (take ownership), what you learned, what you changed. Example: 'We shipped Payback without testing certificate pinning against a corporate proxy — 12% of enterprise users could not connect. We rolled back the pin immediately, added proxy-aware testing to CI, and implemented a grace period before pinning enforcement. We now test on 5 network configurations before any security feature ships.' Failure stories with learnings show maturity." },
+    { t: "The 2-Minute Project Intro", d: "Rehearse a 2-minute verbal summary for each project: 1 sentence on what the product is, 1 sentence on scale/impact, 2-3 sentences on your specific ownership and hardest technical challenge, 1 sentence on outcome. Practice until it sounds natural, not rehearsed. The goal is to trigger follow-up questions — not to say everything. A good story ends with the interviewer leaning forward." },
+    { t: "Handling 'Tell Me About Your Experience With...'", d: "Map skills to projects: Offline-first = FieldBuzz. Real-time = Tixio. Security = Payback. NFC/Platform APIs = TapMeHome. Compose = Hazira Khata. Coroutines/Flow = all projects. Performance = FieldBuzz (WorkManager sync optimization) and Hazira Khata (RecyclerView/DiffUtil large lists). Never say 'I have not worked with that' — say 'The closest I have come to that is [X], where I...'" },
+    { t: "Senior Engineer Presence in Interviews", d: "Senior signals: ask clarifying questions before coding. State assumptions explicitly. Name the trade-offs before committing to a decision. Say 'let me think about edge cases' and then actually enumerate them. Offer to optimize only after the brute force works. Admit uncertainty with 'I would verify this, but my understanding is...'. The goal is not to seem omniscient — it is to seem like someone a team would trust to make big decisions." }
+  ],
+  whatIs: "Project storytelling is the skill of translating real engineering work into structured interview narratives that demonstrate seniority, ownership, and impact. Technical skills get you through the coding round; storytelling skills get you the offer at the senior level. The best candidates do not just answer behavioral questions — they make the interviewer feel they are sitting across from someone who has already solved the problems their team faces.",
+  realWorld: "The difference between a mid-level and senior offer at companies like Google, Grab, and Gojek often comes down to the behavioral round, not the coding round. Candidates who say 'we implemented offline sync' get mid-level. Candidates who say 'I designed the conflict resolution strategy, evaluated three approaches, chose timestamp-based server-wins because it matched our eventual consistency requirements, and reduced data corruption incidents from 0.3% to 0.01% over six months' get senior.",
+  code: `// This lesson is about communication, not code.
+// Below is a W-STAR story template you can fill for each project:
+
+/*
+PROJECT: [Name]
+WORK CONTEXT (1 sentence):
+  "[Product] is a [type] app used by [scale] [users] for [purpose]."
+
+SITUATION (the hard problem):
+  "The key challenge I owned was [specific technical problem].
+   The constraint was [time/scale/connectivity/security/team size].
+   Without solving this, [consequence for users/business]."
+
+TASK (your role):
+  "I was responsible for [specific ownership — architecture / feature / system].
+   This was not a team decision — I drove [specific choice] and got buy-in from [stakeholders]."
+
+ACTION (your decisions — use 'I', not 'we'):
+  "I evaluated [option A] and [option B]. I chose [option B] because [trade-off reasoning].
+   I implemented [technical approach] which involved [specific technical depth].
+   The hardest part was [specific sub-problem] — I solved it by [insight/technique]."
+
+RESULT (quantified):
+  "As a result, [metric improved] from [X] to [Y].
+   This affected [N users / N% of traffic / N release cycles].
+   The team adopted [approach] as the standard for [subsequent work]."
+*/
+
+// Failure story template:
+/*
+SITUATION: "We shipped [feature] without [test/consideration]."
+MISTAKE:   "I underestimated [risk]. I should have [action] earlier."
+IMPACT:    "[N]% of users were affected for [duration]."
+RESPONSE:  "I [immediate action], then [root cause fix]."
+LEARNING:  "I added [process change] to prevent recurrence."
+RESULT:    "Since then, [metric showing improvement]."
+*/`,
+  funFact: "Amazon's Leadership Principles interview process was so influential that Google, Meta, Grab, and most large tech companies now use behavioral interviews with similar STAR-format questions. Amazon conducted research showing that past behavior in specific situations predicts future behavior 3x better than hypothetical 'what would you do' questions. This is why 'tell me about a time when...' is now the dominant format at senior levels.",
+  quiz: [
+    { q: "In the W-STAR method, what does the 'W' (Work context) accomplish?", opts: ["It provides a 5-minute background on the company for the interviewer", "It orients the interviewer in one sentence before diving into the problem", "It explains why you left the company", "It describes the entire team structure"], ans: 1 },
+    { q: "Which is a better quantified impact statement for a senior interview?", opts: ["'Significantly improved the performance of the sync system'", "'Reduced offline sync time from 30 seconds to 800 milliseconds for 15,000 field officers'", "'Made the app much faster and users were very happy'", "'Improved performance metrics across all key indicators'"], ans: 1 },
+    { q: "When an interviewer asks 'why did you choose WorkManager over a foreground service for background sync?', the strongest answer:", opts: ["'WorkManager was the recommended Android approach'", "'The team suggested WorkManager so we went with it'", "'WorkManager provides guaranteed execution under Doze mode and OEM battery optimization, which was critical for our users on aggressive Chinese OEM devices — foreground services would be killed on Xiaomi/Samsung'", "'WorkManager is simpler to implement'"], ans: 2 },
+    { q: "The best failure story structure ends with:", opts: ["An apology and explanation of why the mistake was not fully your fault", "A specific process change you implemented to prevent recurrence, with a measurable outcome", "Describing how the team recovered without needing to explain your mistake in detail", "Reassuring the interviewer it was a minor incident with no real impact"], ans: 1 },
+    { q: "When asked 'tell me about your experience with Jetpack Compose' and you have not used it professionally, the best response is:", opts: ["'I have not worked with Compose in production'", "'The closest I have come is using Compose in Hazira Khata where I owned the UI architecture — I chose Compose over XML Views because we needed fast iteration with a 3-person team and MVI state management was cleaner'", "'I know Compose theoretically but have only done tutorials'", "'Compose is relatively new so most projects still use XML'"], ans: 1 },
+    { q: "Which signal most strongly distinguishes a senior-level candidate in a technical interview?", opts: ["Solving every problem without asking any clarifying questions", "Stating trade-offs and alternatives before committing to a solution", "Completing all problems in half the allotted time", "Knowing the most obscure language features"], ans: 1 },
+    { q: "For the FieldBuzz/BRAC project story, the most compelling technical detail to highlight is:", opts: ["The number of lines of code written", "The offline-first architecture with WorkManager sync and conflict resolution designed for near-zero connectivity environments", "The specific Android SDK version targeted", "The Gradle configuration used for build optimization"], ans: 1 },
+    { q: "The 2-minute project intro is designed to:", opts: ["Communicate every technical detail of the project exhaustively", "Trigger follow-up questions by showing depth and leaving gaps the interviewer wants to explore", "Prove you remember everything you worked on", "Fill time before the coding portion of the interview"], ans: 1 },
+    { q: "In the certificate pinning story for Payback, the key 'senior' insight is:", opts: ["That you implemented certificate pinning at all", "That you designed a pin rotation strategy with an emergency override window to prevent user lockout during CA renewals", "That you used Android Keystore for encryption", "That you added biometric authentication"], ans: 1 },
+    { q: "Why do interviewers ask behavioral questions using 'tell me about a time when...' rather than 'what would you do if...'?", opts: ["Hypothetical questions are too easy to prepare for", "Past specific behavior predicts future behavior more reliably than hypothetical responses", "It saves time in the interview", "Candidates are more comfortable with past events"], ans: 1 }
+  ],
+  challenge: "Prepare your W-STAR story for FieldBuzz in under 2 minutes. Write it out fully: (1) One-sentence work context including scale. (2) The specific offline-sync problem — what was the constraint, what was the consequence of not solving it? (3) Your specific ownership — what did YOU decide, not the team? (4) The technical approach with one key trade-off decision explained. (5) The quantified result. Then record yourself saying it — if it takes longer than 2 minutes, cut the technical depth, not the result.",
+  resources: [
+    { type: "article", title: "Amazon Leadership Principles — Behavioral Interview Guide", url: "https://www.amazon.jobs/content/en/our-workplace/leadership-principles", source: "Amazon" },
+    { type: "article", title: "Grokking the Behavioral Interview", url: "https://www.educative.io/courses/grokking-the-behavioral-interview", source: "Educative" },
+    { type: "article", title: "STAR Method — Indeed Career Guide", url: "https://www.indeed.com/career-advice/interviewing/how-to-use-the-star-interview-response-technique", source: "Indeed" },
+    { type: "article", title: "Senior Engineer Interview Prep — Lenny's Newsletter", url: "https://www.lennysnewsletter.com/p/senior-engineer-interviews", source: "Lenny's Newsletter" },
+    { type: "article", title: "Tech Interview Handbook — Behavioral Questions", url: "https://www.techinterviewhandbook.org/behavioral-interview/", source: "Tech Interview Handbook" }
+  ],
+  eli5: "Imagine you are telling a friend about the time you saved a school project at the last minute. You would not say 'the school had a project and many students were involved and there were various requirements'. You would say 'so our whole team forgot to print the poster and the fair was in 2 hours, I grabbed a printer from the library, reformatted everything in 45 minutes, and we won second place'. That is a good story — specific, fast, dramatic, result. That is what W-STAR does for your projects.",
+  codeWalkthrough: [
+    "The W-STAR template comment block is not executable code — it is a structured writing prompt. Reading it aloud reveals whether your story flows naturally or sounds like bullet points.",
+    "The 'ACTION' section explicitly says 'use I, not we' — this is the most common failure in behavioral interviews. Saying 'we decided' signals you may not have owned the decision.",
+    "The failure story template asks for IMPACT first (N% of users affected) before RESPONSE — this demonstrates that you understand business consequence, not just technical recovery.",
+    "The LEARNING section must be specific: not 'I learned to test more' but 'I added proxy-aware network testing to CI and implemented a grace period before enforcement in all security features'.",
+    "RESULT requires a before-and-after metric — if you cannot find an exact number, a range ('reduced from minutes to seconds') or relative metric ('reduced by 90%') is still stronger than a qualitative statement.",
+    "The project code section is intentionally non-compilable — it is a template. This signals to the reader (and the interviewer) that the real deliverable here is the narrative, not the implementation.",
+    "The 'closest I have come to that' pivot script is a critical career skill — it lets you answer any experience question even when you lack direct experience, by drawing an analogy from your actual work.",
+    "Senior presence signals (ask clarifying questions, state assumptions, name trade-offs, enumerate edge cases) can be practiced deliberately in mock interviews — treat them as habits to build, not improvisational skills."
+  ],
+  bugChallenge: {
+    code: `// BEHAVIORAL INTERVIEW ANSWER — SPOT THE WEAKNESSES:
+
+Interviewer: "Tell me about a time you improved performance in a mobile app."
+
+Candidate: "Sure! So at my previous company we were working on this app
+and there were some performance issues that users were complaining about.
+The team sat down and we decided to look into it. We found some problems
+with how we were loading data. We made some changes using best practices
+and after that the performance was much better. Users were happier and
+the app got better reviews. It was a good learning experience for the
+whole team and we all worked together really well on this."`,
+    hint: "Count how many times the answer fails the W-STAR criteria. Look for: missing numbers, missing ownership (I vs we), missing specific technical detail, missing context, and missing concrete result.",
+    answer: "Weakness 1 (No quantification): 'performance issues', 'much better', 'better reviews' — zero numbers. A senior answer would say: reduced frame drops from 45% to 2%, load time from 4.2s to 600ms. Weakness 2 (No ownership): 'we decided', 'we found', 'we made' — the candidate is invisible. What did YOU specifically analyze and fix? Weakness 3 (No technical depth): 'best practices' is a red flag phrase — it means nothing. Name the actual technique (profiling with Android Studio CPU profiler, replacing nested RecyclerViews, adding DiffUtil, moving IO off main thread with Dispatchers.IO). Weakness 4 (No work context): 'my previous company' and 'this app' tell us nothing. One sentence of context would help. Weakness 5 (Weak result): 'users were happier' cannot be verified. Tie to a metric: crash-free rate improved, Play Store rating went from 3.2 to 4.1, session length increased 22%."
+  },
+  difficulty: "intermediate",
+  prereqs: []
+},
+{
+  id: 67,
+  title: "Behavioral Foundations: W-STAR, Confidence & Concise Answers",
+  subtitle: "Master the storytelling framework that turns vague memories into compelling interview answers",
+  analogy: "Your behavioral answer is like a movie trailer: 90 seconds, specific scenes, a clear hero (you), a real obstacle, and a satisfying resolution. A generic trailer gets forgotten. A specific one sells tickets.",
+  points: [
+    { t: "W-STAR Framework", d: "W-STAR = Why (context in one sentence) + Situation (brief setup) + Task (your specific responsibility) + Action (what YOU did, step by step) + Result (quantified outcome). Every behavioral answer fits this spine." },
+    { t: "Why comes first", d: "One sentence of business context before the story: 'We were scaling from 50k to 500k users and our CI pipeline was taking 40 minutes.' This makes the interviewer care before you even start the narrative." },
+    { t: "Own the pronoun", d: "Use 'I' not 'we' for actions you took. Interviewers are assessing YOU. 'We refactored the module' tells them nothing. 'I proposed the modularization, broke it into 12 feature modules, and owned the migration plan' tells them everything." },
+    { t: "Quantify everything", d: "Every result needs a number or a before/after comparison. 'Improved performance' is worthless. 'Reduced cold start from 3.8s to 0.9s, measured via Firebase Performance Monitoring across 10k sessions' is compelling." },
+    { t: "The 90-second rule", d: "A complete behavioral answer should take 75–100 seconds. Practice out loud with a timer. Under 60 seconds usually means missing depth; over 2 minutes means rambling. Time yourself on every answer." },
+    { t: "Handling I don't know gracefully", d: "Safe phrase: 'I haven't worked on that specific scenario yet, but here's how I'd approach it based on what I know about X...' Then demonstrate reasoning. This is far better than silence or bluffing." },
+    { t: "Video call presence", d: "Look at the camera, not the screen. Pause 1–2 seconds before answering to appear thoughtful. Keep answers structured — interviewers on video lose track of rambling answers more quickly than in person." },
+    { t: "Common behavioral traps", d: "Trap 1: Blaming teammates ('My manager made the wrong call'). Trap 2: Answering a different question. Trap 3: Over-explaining technical detail in a behavioral answer. Trap 4: Ending without a result. Trap 5: Using hypotheticals ('I would...' instead of 'I did...')." },
+    { t: "Safe phrases for gaps", d: "Gap in experience: 'That's not something I've shipped at scale, but I've studied the patterns — here's my understanding of X.' Gap in knowledge: 'Let me think through that from first principles.' Gap in recall: 'The exact number is fuzzy, but the order of magnitude was around X.'" },
+    { t: "Prepare 6 core stories", d: "Prepare 6 reusable stories: (1) Technical challenge I solved, (2) Conflict I navigated, (3) Failure I recovered from, (4) Initiative I took without being asked, (5) Deadline I hit under pressure, (6) Time I changed my mind based on data. These 6 cover 80% of behavioral questions." },
+    { t: "Mirror the question's level", d: "A question about 'a time you led a team' expects a story about real leadership. A question about 'a time you learned quickly' expects growth, not authority. Match the emotional tone and scale of your story to the question." },
+    { t: "Silence is confidence", d: "Taking 3–5 seconds to gather your thoughts before answering signals composure, not ignorance. Say 'Let me think about the best example for that' — this is professional, not weak." }
+  ],
+  whatIs: "The W-STAR behavioral framework is a structured storytelling method for answering competency-based interview questions. It ensures every answer contains business context, clear personal ownership, specific actions, and quantified results — the four things that differentiate senior candidates from mid-level ones in behavioral interviews.",
+  realWorld: "At a senior Android interview at a fintech company: Q: 'Tell me about a time you made a significant architectural decision.' W-STAR answer — Why: 'Our app had a 4-year-old legacy codebase with zero test coverage and 6-week release cycles.' Situation: 'I was the lead engineer on a team of 5 ahead of a major compliance deadline.' Task: 'I needed to propose and drive a migration strategy that reduced release risk without stopping feature work.' Action: 'I introduced feature flags via LaunchDarkly, broke the app into 3 delivery tracks, wrote the first 200 unit tests as a template, and ran weekly architecture reviews.' Result: 'Release cycles dropped to 2 weeks, crash-free rate went from 97.1% to 99.4% in 90 days, and two junior engineers were promoted based on skills they developed in our reviews.' This answer wins offers.",
+  code: `// W-STAR ANSWER TEMPLATE — fill in your own story
+
+/*
+WHY (1 sentence — business context that makes the interviewer care):
+"We were processing 2M transactions/day on an Android POS terminal
+ and our payment flow had a 12% error rate causing merchant refund requests."
+
+SITUATION (2-3 sentences — your role, team size, timeline):
+"I was the senior Android engineer on a 4-person team.
+ This was 6 weeks before a contract renewal with our largest client."
+
+TASK (1-2 sentences — YOUR specific responsibility):
+"I was tasked with diagnosing the root cause and shipping a fix
+ within 3 weeks without breaking the existing 200k daily active terminals."
+
+ACTION (3-5 sentences — step by step, I not we):
+"I set up Firebase Crashlytics and added structured logging to the
+ payment state machine. I identified that 80% of errors were race conditions
+ in our Bluetooth communication layer during reconnects. I rewrote the
+ reconnect logic using a coroutine-based state machine with exponential
+ backoff, added 47 unit tests for every state transition, and staged the
+ rollout using feature flags to 5% of terminals first."
+
+RESULT (quantified, verified):
+"Error rate dropped from 12% to 0.3% in 2 weeks.
+ The client renewed the contract (worth USD 1.2M annually).
+ The pattern I introduced is now our company standard for all BLE integrations."
+*/
+
+// COMMON TRAPS TO AVOID:
+// BAD:  "We improved the app performance significantly."
+// GOOD: "I profiled with Android Studio and reduced startup from 3.8s to 0.9s."
+
+// BAD:  "I would approach it by..."
+// GOOD: "I did approach it by..."  (past tense = real experience)
+
+// BAD:  "The team decided to refactor."
+// GOOD: "I proposed the refactor, got buy-in from the PM, and led the execution."`,
+  funFact: "Research by Google's Project Oxygen found that behavioral interview scores using structured frameworks (like STAR) predict on-the-job performance 2x more accurately than unstructured conversations. Senior candidates who use W-STAR consistently get 30% higher hiring scores in panel reviews.",
+  quiz: [
+    { q: "What does W-STAR stand for?", opts: ["Why, Situation, Task, Action, Result", "Work, Skill, Task, Achievement, Review", "Why, Scope, Technical, Analysis, Resolution", "What, Story, Target, Activity, Rating"], ans: 0 },
+    { q: "In a W-STAR answer, which pronoun should dominate your Action section?", opts: ["We", "I", "The team", "Management"], ans: 1 },
+    { q: "An interviewer asks 'tell me about a time you improved performance.' The candidate says 'we improved performance significantly.' What is the primary problem?", opts: ["Too short", "No pronoun ownership and no quantification", "Missing the Why section", "Too much technical detail"], ans: 1 },
+    { q: "What is the ideal duration for a complete behavioral answer?", opts: ["30–45 seconds", "75–100 seconds", "3–4 minutes", "As long as needed"], ans: 1 },
+    { q: "What is the safe phrase for handling a gap in experience?", opts: ["I have not done that before so I cannot answer.", "I would just Google it on the job.", "I have not shipped that at scale, but here is how I would approach it based on X.", "That is outside my skill set."], ans: 2 },
+    { q: "Which of these is a behavioral interview trap?", opts: ["Using specific metrics in the Result", "Starting with business context", "Blaming a teammate for a project failure", "Pausing before answering"], ans: 2 },
+    { q: "Which of the following results is strongest in a behavioral answer?", opts: ["The app got much faster", "Users were happier after our changes", "Cold start reduced from 3.8s to 0.9s, measured across 10k Firebase sessions", "We fixed the performance issue before the deadline"], ans: 2 },
+    { q: "How many core reusable stories should you prepare before a senior interview?", opts: ["1 strong story you can reuse for everything", "6 stories covering key competencies", "20+ stories for every possible scenario", "Only stories from your most recent job"], ans: 1 },
+    { q: "When an interviewer asks a behavioral question, taking 3-5 seconds before answering signals what?", opts: ["That you do not know the answer", "Composure and thoughtfulness", "That you are unprepared", "That you are being dishonest"], ans: 1 },
+    { q: "Which of the 6 core stories covers proactive leadership?", opts: ["Conflict I navigated", "Failure I recovered from", "Initiative I took without being asked", "Deadline I hit under pressure"], ans: 2 }
+  ],
+  challenge: "Take your single strongest professional achievement and write a complete W-STAR answer for it. Record yourself speaking it out loud. Time it — aim for 80–95 seconds. Listen back and count: (1) How many times did you say 'I' vs 'we'? (2) How many specific numbers appear in the Result? (3) Did you start with a Why sentence? Rewrite until all three pass. Then practice it 5 more times from memory without reading.",
+  resources: [
+    { type: "docs", title: "Google re:Work — Structured Interviewing Guide", url: "https://rework.withgoogle.com/guides/hiring-use-structured-interviewing/steps/introduction/", source: "Google re:Work" },
+    { type: "docs", title: "Levels.fyi Interview Prep Community", url: "https://www.levels.fyi/", source: "Levels.fyi" },
+    { type: "docs", title: "STAR Method — Indeed Career Guide", url: "https://www.indeed.com/career-advice/interviewing/how-to-use-the-star-interview-response-technique", source: "Indeed" },
+    { type: "docs", title: "Amazon Leadership Principles — Behavioral Reference", url: "https://www.amazon.jobs/content/en/our-workplace/leadership-principles", source: "Amazon" }
+  ],
+  eli5: "Imagine your interview answer is a mini movie. It needs: why the movie matters (one sentence), who you were and what was happening (the scene), what your job was (your role), what you actually did step by step (the action scenes), and what happened at the end with real evidence (the satisfying ending with a number). Without all five parts, the movie is boring and gets rejected.",
+  codeWalkthrough: [
+    "WHY: One sentence of business context — makes the interviewer emotionally invested before your story begins.",
+    "SITUATION: 2-3 sentences describing your role, team size, and the timeframe — gives the answer a real setting.",
+    "TASK: 1-2 sentences stating your specific responsibility — makes clear what you personally were accountable for.",
+    "ACTION: 3-5 sentences in past tense, using 'I' — the heart of the answer, showing what you actually did step by step.",
+    "RESULT: Quantified outcome — before/after numbers, business impact, or measurable improvement.",
+    "Pronoun discipline: 'I proposed', 'I wrote', 'I led' — not 'we'. Interviewers are hiring you, not your team.",
+    "Quantification: Every result needs a number. 'Better' is not a result. '40% faster, measured over 30 days' is a result.",
+    "90-second rule: Practice with a timer. Under 60s = missing depth. Over 2 minutes = rambling.",
+    "The 6 core stories cover: technical challenge, conflict, failure recovery, unsolicited initiative, deadline pressure, changing your mind from data.",
+    "Handling gaps: 'I have not shipped that at scale, but here is how I would reason through it...' — shows growth mindset and intellectual honesty.",
+    "Video call tips: look at camera not screen, pause before answering, speak in structured chunks interviewers can follow.",
+    "Silence = confidence: 3-5 seconds of thinking before answering shows composure, not ignorance."
+  ],
+  bugChallenge: {
+    code: `// BEHAVIORAL ANSWER — SPOT ALL THE WEAKNESSES:
+
+Interviewer: "Tell me about a time you made a difficult technical decision
+              that others disagreed with."
+
+Candidate: "Yeah so at my last job we had this big debate about whether
+to use MVVM or MVI for our new feature. The team had different opinions
+and it was a bit tense. We eventually decided to go with MVVM because
+it was more familiar. It worked out okay and the feature shipped on time.
+I learned a lot from that experience and I think it made our team stronger
+in the end. I would definitely handle disagreement the same way in the future."`,
+    hint: "Apply W-STAR to this answer. Check: Is there a Why? Does the candidate own the decision? Are there specifics about HOW the disagreement was resolved? Is there a quantified result? Is the answer in past tense or hypothetical?",
+    answer: "Missing Why: No business context — why did this architectural choice matter? What was at stake? Missing ownership: 'we decided' — who made the actual call? Did the candidate drive the decision or just go along? Missing Action depth: How was the disagreement actually resolved? Was data presented? Was a prototype built? Was a tech lead consulted? The phrase 'it was a bit tense' is vague and tells us nothing. Weak result: 'worked out okay' and 'shipped on time' are the bare minimum — no quality metrics, no performance comparison, no team impact. Hypothetical ending: 'I would definitely handle it the same way' — never use future tense in a behavioral answer, it sounds unconfident. Missing technical specificity: Why was MVVM chosen over MVI? What were the trade-offs? A senior answer would reference unidirectional data flow, testability, team familiarity metrics, or a spike/prototype result."
+  },
+  difficulty: "intermediate",
+  prereqs: []
+},
+{
+  id: 68,
+  title: "Leadership & Seniority: Mentoring, Ownership, Conflict & Ambiguity",
+  subtitle: "Demonstrate senior-level impact through stories of mentoring, cross-team influence, and navigating uncertainty",
+  analogy: "Seniority in an interview is like being a stage director, not just an actor. Actors follow scripts. Directors see the whole production, make calls under pressure, develop the cast, and own the outcome — even when things go wrong. Your job is to prove you are the director.",
+  points: [
+    { t: "Seniority without the title", d: "You do not need to have been called 'Senior Engineer' to demonstrate senior behavior. Show initiative beyond your scope, technical decisions you drove, junior engineers you developed, and cross-team problems you solved without being asked." },
+    { t: "Mentoring stories that land", d: "A strong mentoring story has three parts: (1) what you observed about the junior engineer's gap, (2) what specific thing you did to close it (pair programming, code reviews, dedicated 1:1 sessions, assigning stretch tasks), (3) measurable outcome (they shipped a feature solo, got promoted, presented to the team)." },
+    { t: "Handling disagreements professionally", d: "The correct structure: 'I disagreed with X. I first made sure I understood their reasoning by asking clarifying questions. I then presented my case with data/prototype/precedent. We aligned on Y. Here is the outcome.' Never say 'I was right and they were wrong.'" },
+    { t: "Deadline pressure stories", d: "Interviewers want to know: did you triage ruthlessly, communicate proactively, and protect quality while shipping? A strong deadline story includes: what got cut and WHY (risk-based), who was informed when, and what technical debt was logged for cleanup." },
+    { t: "Working with ambiguity", d: "Seniority = comfort with ambiguity. When given a vague requirement, seniors: ask one clarifying question, make a documented assumption, scope down to an MVP, and ship. Show this pattern in your answers. Avoid 'I waited for the PM to clarify everything.'" },
+    { t: "Product thinking", d: "Senior engineers think about user impact, not just code correctness. Demonstrate product thinking: 'I pushed back on the feature because our telemetry showed only 2% of users accessed that screen — we redirected effort to the payment flow that drove 60% of revenue.'" },
+    { t: "Cross-team collaboration", d: "Strong cross-team stories show you can influence without authority. Pattern: 'I needed something from team X. I first understood their constraints, then framed the ask in terms of their goals, then proposed a solution that worked for both teams.'" },
+    { t: "Ownership language", d: "Use ownership language: 'I drove', 'I owned', 'I was accountable for', 'I made the final call on'. Avoid: 'the team was responsible', 'management decided', 'it was a group effort'. You can acknowledge collaboration while still claiming ownership." },
+    { t: "Failure stories done right", d: "Every senior candidate needs a failure story. Structure: what happened (own it fully), what your immediate response was, what you changed in your process afterward, and evidence that the change worked. Self-awareness + learning = senior signal." },
+    { t: "Changing your mind from data", d: "One of the highest-signal stories: 'I believed X, but after reviewing the data/user feedback/performance profile, I updated my position to Y and here is what changed.' This shows intellectual honesty and engineering maturity." },
+    { t: "Avoiding the hero trap", d: "Do not make every story about you being the lone genius who saved everything. Interviewers at senior levels want to see collaboration, delegation, and team development — not a hero narrative that implicitly criticizes everyone else." },
+    { t: "The ambiguity question framework", d: "When asked 'How do you handle ambiguity?' give a 3-part answer: (1) a real story using W-STAR, (2) your personal framework (clarify, scope, assume, document, ship), (3) a statement about your comfort level: 'Ambiguity is a feature at senior levels — it is where the most impactful work lives.'" }
+  ],
+  whatIs: "Leadership and seniority signals in behavioral interviews are the set of competency indicators that distinguish a senior engineer from an intermediate one — specifically: ability to mentor and develop others, comfort with ambiguity, ownership of outcomes beyond your immediate scope, constructive conflict resolution, and product-level thinking. These signals are assessed through behavioral questions and story structure, not through technical quizzes.",
+  realWorld: "At a senior Android interview at a product company: Q: 'Tell me about a time you had to work with significant ambiguity.' Strong answer — Why: 'We were building a new offline payments feature with no prior art in our codebase and an aggressive 8-week deadline from the CFO.' Situation: 'I was the lead engineer and we had no PM assigned for the first three weeks.' Task: 'I needed to scope, design, and begin building the feature while simultaneously filling the product gaps.' Action: 'I ran a 2-hour discovery session with the sales and finance teams to understand the non-negotiable business rules, documented 12 assumptions, scoped the MVP to 3 core flows, built a prototype in week 1 to validate the offline sync model, and ran it past the engineering director before committing.' Result: 'We shipped in 7 weeks. The feature reduced failed transaction complaints by 78% in markets with poor connectivity. A PM was assigned in week 4 and later told me our assumptions doc was the clearest product brief she had seen from an engineering team.'",
+  code: `// LEADERSHIP COMPETENCY ANSWER TEMPLATES
+
+// --- MENTORING STORY TEMPLATE ---
+/*
+Observation: "I noticed a junior engineer on my team was writing
+  correct code but consistently missing edge cases in reviews."
+
+Action: "I introduced a weekly 30-minute 'edge case drill' where we'd
+  take a real PR and systematically ask: what happens on empty data?
+  on network failure? on concurrent updates? I also started tagging
+  educational comments in their PRs with [PATTERN] labels."
+
+Result: "Within 6 weeks, their PR approval rate on first review went
+  from ~40% to ~85%. They presented at our internal tech talk 2 months
+  later. They were promoted 8 months after that."
+*/
+
+// --- DISAGREEMENT STORY TEMPLATE ---
+/*
+Setup: "My tech lead wanted to use a third-party SDK for BLE scanning
+  that introduced a 4MB binary size increase."
+
+My position: "I believed we could implement the core subset ourselves
+  in ~800 lines of Kotlin, keeping our APK under our 25MB budget."
+
+How I handled it: "I did not just push back verbally. I spent 2 days
+  building a proof-of-concept, benchmarked it against the SDK on 3
+  target devices, and presented the results in our architecture review."
+
+Resolution: "The team agreed to use our implementation. APK stayed at
+  22MB. We also gained full control over the scanning behavior that
+  the SDK abstracted away — which later mattered for a compliance audit."
+*/
+
+// --- AMBIGUITY FRAMEWORK ---
+/*
+Step 1: Ask ONE clarifying question (the most important unknown)
+Step 2: Document your assumptions explicitly (share with stakeholders)
+Step 3: Scope to MVP (what is the smallest thing that proves the value?)
+Step 4: Build a spike/prototype before committing to full implementation
+Step 5: Ship, measure, iterate
+*/
+
+// --- PRODUCT THINKING EXAMPLE ---
+/*
+"Our roadmap included a 'themes' feature. I pulled analytics and found
+ only 1.8% of users had ever opened the settings screen where it would live.
+ I proposed redirecting the 3-week effort to improving our onboarding flow,
+ which had a 34% drop-off at step 3. The PM agreed. Onboarding completion
+ improved from 66% to 89% after the change — a 35% relative improvement
+ that directly impacted our D7 retention metric."
+*/`,
+  funFact: "Studies of technical interview panels at FAANG-adjacent companies show that candidates who demonstrate mentoring impact are 40% more likely to receive a senior offer than those with equivalent technical skills who do not. Interviewers at senior levels are specifically looking for 'force multiplier' signals — can this person make the team better, not just themselves?",
+  quiz: [
+    { q: "Which of the following best demonstrates seniority in a behavioral answer?", opts: ["I wrote all the code myself and delivered the feature solo", "I drove the architecture decision, mentored two juniors through the implementation, and owned the rollout", "I followed the tech lead's design exactly and hit the deadline", "I asked for help when I was stuck and eventually finished the task"], ans: 1 },
+    { q: "What is the correct structure for a disagreement story?", opts: ["Explain why you were right and the other person was wrong", "Understand their reasoning, present your case with data, reach alignment, share outcome", "Describe how you escalated to management to resolve the conflict", "Agree with their approach to maintain team harmony"], ans: 1 },
+    { q: "What makes a mentoring story compelling to a senior hiring panel?", opts: ["That you mentored many people at once", "A specific gap you identified, the action you took, and the measurable outcome for the mentee", "That the person you mentored is now your manager", "That you did it voluntarily in your own time"], ans: 1 },
+    { q: "What is the 'hero trap' in behavioral interviews?", opts: ["Claiming too much credit for a team achievement", "Being overly modest about your individual contributions", "Describing a failure without a learning outcome", "Using too many technical terms in a behavioral answer"], ans: 0 },
+    { q: "How should a senior engineer respond when given an ambiguous requirement?", opts: ["Wait for the requirement to be clarified before starting anything", "Ask one clarifying question, document assumptions, scope to MVP, and ship", "Refuse to start work until a PM writes a full spec", "Build the most comprehensive solution possible to cover all cases"], ans: 1 },
+    { q: "What is 'product thinking' in the context of a senior engineering interview?", opts: ["Knowing how to use product management tools like Jira", "Connecting technical decisions to user impact and business outcomes", "Having a background in product management before engineering", "Being able to write product requirements documents"], ans: 1 },
+    { q: "Which ownership language is strongest in a behavioral answer?", opts: ["The team was responsible for the migration", "We collectively decided to approach it differently", "I drove the migration plan, owned the timeline, and made the final technical call", "Management approved our proposal to refactor the module"], ans: 2 },
+    { q: "What is a 'changing your mind from data' story designed to demonstrate?", opts: ["That you are indecisive and need data before acting", "Intellectual honesty and engineering maturity", "That you always rely on data rather than intuition", "That you disagreed with your manager and won"], ans: 1 },
+    { q: "In a deadline pressure story, what must you include to signal seniority?", opts: ["That you worked weekends to hit the deadline", "That you pushed back on the deadline and won", "What got cut and why (risk-based triage), who was informed, and what technical debt was logged", "That you never missed a deadline in your career"], ans: 2 },
+    { q: "How do you demonstrate cross-team influence without authority?", opts: ["Escalate to your manager who then pressures the other team", "Understand their constraints, frame your ask in terms of their goals, propose a mutual solution", "Send a detailed email explaining why they need to help you", "Bypass the other team and build the dependency yourself"], ans: 1 }
+  ],
+  challenge: "Write out your two strongest leadership stories using W-STAR — one about mentoring a junior engineer, one about navigating a technical disagreement. For each story: (1) Verify you used 'I' not 'we' for actions, (2) Check that the Result is quantified, (3) Time yourself — 80–100 seconds each. Then write one paragraph answering: 'How do you handle ambiguity?' using the 3-part framework (story, personal process, attitude statement). Practice all three answers aloud until you can deliver them naturally without notes.",
+  resources: [
+    { type: "docs", title: "Staff Engineer Book — Will Larson (Leadership Without Authority)", url: "https://staffeng.com/book", source: "StaffEng" },
+    { type: "docs", title: "Google re:Work — Manager Research on Effective Teams", url: "https://rework.withgoogle.com/guides/understanding-team-effectiveness/steps/introduction/", source: "Google re:Work" },
+    { type: "docs", title: "Amazon Leadership Principles — Behavioral Interview Guide", url: "https://www.amazon.jobs/content/en/our-workplace/leadership-principles", source: "Amazon" },
+    { type: "docs", title: "Engineering Leadership Behavioral Questions — Interview Kickstart", url: "https://interviewkickstart.com/blogs/interview-questions/senior-software-engineer-behavioral-interview-questions", source: "Interview Kickstart" }
+  ],
+  eli5: "Being senior is like being the most experienced player on a sports team. You do not just play your own position — you help teammates improve, you speak up when the strategy is wrong, you stay calm when the game plan falls apart, and when the team wins you say 'we did it', and when the team loses you say 'I could have done better'. That is what seniority looks like in an interview.",
+  codeWalkthrough: [
+    "Seniority signal 1: Mentoring — did you identify a gap in a junior, take a specific action to close it, and achieve a measurable outcome for them?",
+    "Seniority signal 2: Ownership — do you use 'I drove / I owned / I was accountable' language, or do you hide behind 'we'?",
+    "Seniority signal 3: Conflict resolution — did you present your case with data, not just opinion? Did you reach alignment, not just capitulate or bulldoze?",
+    "Seniority signal 4: Ambiguity — did you clarify, document assumptions, scope to MVP, and ship? Or did you wait for perfect information?",
+    "Seniority signal 5: Product thinking — did you connect your engineering decision to user impact or business metrics?",
+    "Seniority signal 6: Cross-team influence — did you influence without authority by understanding the other team's constraints and framing your ask around their goals?",
+    "Seniority signal 7: Failure ownership — did you own a failure fully, describe your immediate response, and show a process change that stuck?",
+    "Seniority signal 8: Intellectual honesty — did you describe changing your mind based on data, not just changing your mind?",
+    "The hero trap: never imply you alone saved everything. Interviewers at senior level look for team development and collaboration, not solo heroism.",
+    "Ambiguity framework: (1) One clarifying question, (2) Document assumptions, (3) Scope to MVP, (4) Spike before committing, (5) Ship and measure.",
+    "Deadline pressure: triage ruthlessly, communicate proactively, log technical debt — show you protected quality while shipping.",
+    "The 6 core stories cover all senior behavioral dimensions. Prepare them before any interview."
+  ],
+  bugChallenge: {
+    code: `// BEHAVIORAL ANSWER — FIND THE SENIORITY GAPS:
+
+Interviewer: "Tell me about a time you mentored someone."
+
+Candidate: "Sure. I mentored a few junior developers on my team over
+the years. I would do code reviews for them and answer their questions
+when they got stuck. I tried to be available whenever they needed help.
+We had a team culture of knowledge sharing, so I would participate in
+that. One of the juniors I helped ended up becoming a mid-level engineer,
+which was great. I think mentoring is really important and I enjoy
+helping people grow. I would love to continue doing that in my next role."`,
+    hint: "Check: Is there a specific person and specific gap identified? Are the actions specific and attributed to 'I'? Is there a measurable outcome tied to the candidate's specific actions? Is the answer in past tense throughout? Count the vague phrases.",
+    answer: "Weakness 1 (No specific person or gap): 'a few junior developers' — pick ONE person and name the specific skill gap you observed. Weakness 2 (Vague actions): 'do code reviews' and 'answer their questions' are descriptions of a job, not a mentoring strategy. What specific technique did you use? What recurring pattern did you address in reviews? Weakness 3 (No ownership): 'team culture of knowledge sharing' — the team is getting credit for your individual mentoring. Weakness 4 (Weak result): 'ended up becoming a mid-level engineer' is passive — did your mentoring contribute to that? How? By when? What was their state when you started? Weakness 5 (Hypothetical ending): 'I would love to continue doing that' — never end a behavioral answer talking about the future. End with the verified past result. Fix: 'I noticed [name] was consistently writing correct code but missing concurrency edge cases. I ran a weekly 30-minute async-safety drill with her for 6 weeks using real PRs. Her first-pass PR approval rate went from 35% to 90%. She shipped her first solo feature in month 4 and was promoted 10 months into her tenure.'"
+  },
+  difficulty: "intermediate",
+  prereqs: [66, 67]
+},
+{
+  id: 69,
+  title: "Salary Negotiation, Remote Culture & Relocation",
+  subtitle: "Research your market value, negotiate confidently, and navigate the realities of remote work and international relocation",
+  analogy: "Salary negotiation is like selling a house. If you list at asking price immediately, you leave money on the table. If you know the market comparables, understand the buyer's budget ceiling, and make a confident first offer — you close at maximum value. Your research is your appraisal.",
+  points: [
+    { t: "Research before you negotiate", d: "Use Levels.fyi for total compensation (base + bonus + equity) at tech companies. Use Glassdoor and LinkedIn Salary for startups. Use local job boards (Bayt for Middle East, SEEK for Australia, LinkedIn for Europe) for region-specific ranges. Know the full band, not just the floor." },
+    { t: "Total compensation components", d: "TC = Base salary + Annual bonus (% of base) + Equity (RSUs or options, vesting schedule) + Benefits (health, housing, visa sponsorship, relocation). Negotiating only base and ignoring equity or bonus can cost you 30–60% of total compensation." },
+    { t: "The anchoring rule", d: "Whoever states a number first anchors the negotiation. If asked for your expectation, state a range where your target is the lower bound: 'Based on my research and experience, I am targeting USD 130–150k base.' If they give a number first, evaluate it against your research before responding." },
+    { t: "Handling a lowball offer", d: "Never accept or reject on the spot. Say: 'Thank you — I am genuinely excited about this role. I want to make this work. Can you help me understand if there is any flexibility on the base or equity given my X years of Android expertise and the market data I have seen?' This is professional, not aggressive." },
+    { t: "Negotiation leverage points", d: "Your leverage increases when: you have a competing offer, you have a specific skill they urgently need, you are deep in the process (they have invested time), and you have demonstrated strong interview performance. Use these levers explicitly when negotiating." },
+    { t: "Competing offer as leverage", d: "Having a competing offer is the strongest negotiation lever. You do not need to reveal the exact number. Say: 'I have another offer at a competitive number and I am using this decision to determine where I can create the most impact. I would rather work here — can you get closer to X?'" },
+    { t: "Remote work expectations", d: "For fully remote roles ask: What are the core overlap hours? How does the team communicate async (Slack, Notion, Loom)? Are there required offsites or team retreats? How is performance measured (output vs hours)? Is there a home office stipend or co-working allowance?" },
+    { t: "Timezone management", d: "Common remote Android engineer hubs: Dhaka/Kolkata (UTC+6), Dubai/Abu Dhabi (UTC+4), Singapore (UTC+8), Sydney (UTC+10-11), Berlin/London (UTC+1-2). For US-based companies, UTC+5.5 to UTC+8 is manageable for a 4-hour overlap. UTC+10+ may require early morning calls." },
+    { t: "Relocation: UAE, Singapore, Australia, Europe", d: "UAE: Tax-free income, strong fintech/startup scene, Dubai (DIFC) and Abu Dhabi (ADGM). Singapore: Low tax (~22% effective for expats), major tech hub, Employment Pass required. Australia: 32.5% tax rate starts at AUD 45k, strong work-life balance, 482 visa. Europe: Germany/Netherlands/Sweden have strong Android markets, tax rates 35–52%, 30% ruling in Netherlands reduces tax." },
+    { t: "Contract vs full-time", d: "Contract (freelance/B2B): higher day rate but no benefits, unstable, self-employed tax obligations. Full-time employment: lower gross but benefits (pension, health, paid leave, visa, equity). For senior Android engineers, full-time at a product company typically has higher 5-year total value than contracting at the same monthly rate due to equity and benefits." },
+    { t: "Visa and sponsorship", d: "Key question in any international offer: 'Does this role include visa sponsorship and relocation assistance?' Some companies offer relocation packages (flights, temporary housing, shipping). Always negotiate relocation support separately from salary — it is a one-time cost to them and significant value to you." },
+    { t: "The 24-hour rule", d: "Never accept or reject any offer on the call. Always say: 'I am very excited and want to give this proper consideration. Can I get back to you by tomorrow?' This gives you time to compare offers, recalculate TC, and negotiate from a calm position rather than a pressured one." }
+  ],
+  whatIs: "Salary negotiation for senior Android engineers involves researching total compensation across target markets, understanding the leverage points that increase your offer, and using professional language to close gaps between initial offers and market rate. International job seekers must also evaluate remote work culture fit and the full financial picture of relocation including taxes, visa costs, and benefits.",
+  realWorld: "A senior Android engineer (7 years experience, Dhaka-based) receives an offer from a UK-based fintech for GBP 75k base. Their research on Glassdoor and LinkedIn shows the band for senior Android at London fintechs is GBP 80–100k. They have a second offer at GBP 78k from a startup. They respond: 'I am very enthusiastic about this role and the product vision. Based on market research and a competing offer, I was expecting something closer to GBP 85k. Is there flexibility to get there, either in base or equity?' The company counters at GBP 80k + 0.1% equity options vesting over 4 years. The engineer accepts. The equity, if the company reaches a GBP 50M exit, is worth GBP 50k — making the true delta significant.",
+  code: `// SALARY NEGOTIATION SCRIPTS
+
+// --- WHEN ASKED "WHAT ARE YOUR SALARY EXPECTATIONS?" ---
+/*
+"Based on my research into market rates for senior Android engineers
+ with my level of experience — particularly with Kotlin, Compose, and
+ distributed system integrations — I am targeting a base in the range
+ of [LOWER] to [UPPER]. That said, I am most interested in the total
+ package including equity and learning opportunities. What does the
+ band look like for this role?"
+*/
+
+// --- WHEN YOU RECEIVE A LOWBALL OFFER ---
+/*
+"Thank you — I am genuinely excited about this opportunity and the team.
+ I want to make this work. The offer is a bit below what my research and
+ a competing offer suggest. Would you be able to move closer to [TARGET]
+ on base, or alternatively increase the equity component? I am flexible
+ on structure if the total comp gets there."
+*/
+
+// --- WHEN YOU HAVE A COMPETING OFFER ---
+/*
+"I have received another offer that is competitive. I am being transparent
+ because I would genuinely prefer to work here based on [specific reason:
+ product complexity / team quality / tech stack]. Is there anything you
+ can do to help me make that decision easier?"
+*/
+
+// --- TOTAL COMPENSATION CALCULATION ---
+/*
+Offer A: GBP 80,000 base + 10% bonus target + 0.1% equity (4yr vest)
+Offer B: GBP 75,000 base + 15% bonus target + 0.2% equity (4yr vest)
+
+Year-1 cash: A = 88,000 | B = 86,250
+Equity (assuming GBP 40M exit): A = 40,000 | B = 80,000
+4-year total: A = 392,000 | B = 425,000
+
+=> Offer B wins at exit despite lower base salary
+*/
+
+// --- REMOTE WORK QUESTIONS TO ASK ---
+const remoteQuestions = [
+  "What are the expected core overlap hours for this role?",
+  "How does the team handle async communication — Slack, Notion, Loom?",
+  "Are there required in-person offsites or team retreats per year?",
+  "Is there a home office stipend or co-working allowance?",
+  "How is performance evaluated — output and outcomes, or presence and hours?",
+  "What is the team's experience working with engineers in my timezone?"
+];`,
+  funFact: "A study by Salary.com found that 84% of employers expect candidates to negotiate and leave room in initial offers for this purpose. Candidates who negotiate earn on average USD 5,000–10,000 more in their first year. Over a 10-year career, a single successful negotiation compounds to USD 100,000+ in additional earnings due to raises being calculated as percentages of current salary.",
+  quiz: [
+    { q: "Which resource is most reliable for total compensation data at large tech companies?", opts: ["Glassdoor salary estimates", "LinkedIn salary tool", "Levels.fyi", "Indeed job postings"], ans: 2 },
+    { q: "Total compensation (TC) at a tech company typically includes which combination?", opts: ["Base salary only", "Base salary and annual bonus only", "Base salary, annual bonus, and equity (RSUs or options)", "Base salary, bonus, equity, and all benefits including healthcare"], ans: 3 },
+    { q: "What is the anchoring rule in salary negotiation?", opts: ["Always ask for double what you want", "The first number stated sets the reference point for the whole negotiation", "Always let the employer state a number first", "Anchor to your current salary rather than market rate"], ans: 1 },
+    { q: "You receive a lowball offer. What is the correct immediate response?", opts: ["Decline immediately and walk away", "Accept and negotiate your next raise after 6 months", "Thank them, express excitement, ask if there is flexibility on base or equity citing market data", "Counter with the exact number you want and say take it or leave it"], ans: 2 },
+    { q: "What is the strongest negotiation leverage point?", opts: ["Having been a loyal employee at your current company for many years", "Holding a competing offer from another company", "Having a PhD or advanced degree", "Being the first candidate interviewed for the role"], ans: 1 },
+    { q: "Which timezone range is generally manageable for a 4-hour overlap with a US-based company?", opts: ["UTC+1 to UTC+2 (Europe)", "UTC+5.5 to UTC+8 (South/Southeast Asia)", "UTC+10 to UTC+12 (Australia/Pacific)", "UTC-5 to UTC-8 (Americas)"], ans: 1 },
+    { q: "In the Netherlands, what tax benefit is available to highly skilled international hires?", opts: ["Flat 20% tax rate for all income", "30% ruling which reduces the taxable base by 30%", "Full tax exemption for the first year", "No tax on equity income"], ans: 1 },
+    { q: "What is the 24-hour rule in salary negotiation?", opts: ["You must respond to any offer within 24 hours or it expires", "Never accept or reject on the spot — take time to evaluate before responding", "Always negotiate for exactly 24 hours before accepting", "Give 24 hours notice when declining an offer"], ans: 1 },
+    { q: "Why does full-time employment often beat contract rates over a 5-year period for senior engineers?", opts: ["Contract rates are always lower than full-time equivalents", "Full-time includes equity, pension, paid leave, and benefits that compound over time", "Contract work does not include annual pay increases", "Contract engineers pay higher taxes in all jurisdictions"], ans: 1 },
+    { q: "When negotiating a relocation package, what is the best approach?", opts: ["Include it in the salary negotiation to simplify the conversation", "Negotiate it separately from salary as a one-time cost to the company", "Only ask about relocation after accepting the offer", "Relocation packages are non-negotiable at most companies"], ans: 1 }
+  ],
+  challenge: "Complete this negotiation research exercise: (1) Pick two target companies (one product company, one startup) in your target market. (2) Find their senior Android engineer salary ranges using Levels.fyi, Glassdoor, and LinkedIn. (3) Calculate TC for a hypothetical offer: base + 10% bonus + 0.1% equity assuming a USD 40M exit. (4) Write out your response to 'What are your salary expectations?' using the anchoring script. (5) Write out your response to a lowball offer that is 15% below your target. Practice both scripts out loud three times.",
+  resources: [
+    { type: "docs", title: "Levels.fyi — Total Compensation Database", url: "https://www.levels.fyi/", source: "Levels.fyi" },
+    { type: "docs", title: "Glassdoor Salary Explorer", url: "https://www.glassdoor.com/Salaries/index.htm", source: "Glassdoor" },
+    { type: "docs", title: "Netherlands 30% Ruling — Official Guide", url: "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/internationaal/werken_wonen/tijdelijk_in_nederland_wonen_en_werken/30_procent_regeling/", source: "Dutch Tax Authority" },
+    { type: "docs", title: "Singapore Employment Pass Guide", url: "https://www.mom.gov.sg/passes-and-permits/employment-pass", source: "Singapore MOM" },
+    { type: "docs", title: "Australia 482 Temporary Skill Shortage Visa", url: "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-skill-shortage-482", source: "Australian Home Affairs" }
+  ],
+  eli5: "Negotiating your salary is like haggling at a market. If you immediately say yes to the first price, you pay too much. If you know what similar things cost nearby (research), have another stall offering a similar price (competing offer), and ask politely but confidently if they can do better — you almost always get a better deal. And the most important rule: never say yes or no right away. Always take time to think.",
+  codeWalkthrough: [
+    "Research phase: Use Levels.fyi for TC data, Glassdoor for salary bands, LinkedIn for regional rates — know the full range before any conversation.",
+    "TC components: Base + Bonus + Equity (vesting schedule matters) + Benefits. Never evaluate an offer on base alone.",
+    "Anchoring: State a range where your target is the lower bound. This frames the entire negotiation favorably.",
+    "Lowball script: Express excitement first (keep the door open), then ask for flexibility on base OR equity — giving them two paths to yes.",
+    "Competing offer leverage: You do not need to share the exact number. Mention it exists and express preference for this role — give them a reason to match.",
+    "Remote work: Core overlap hours, async tooling, performance measurement, home office stipend, and offsites are all negotiable or at least clarifiable.",
+    "Timezone math: UTC+5.5 to UTC+8 gives a workable 4-hour overlap with US East Coast teams starting at 9am EST.",
+    "Regional taxes: UAE = 0% income tax. Singapore ~22% effective. Australia starts at 32.5% above AUD 45k. Netherlands 30% ruling reduces taxable base.",
+    "Contract vs FTE: Contract day rate looks high but lacks equity, pension, paid leave, and visa stability. 5-year FTE TC typically wins for senior engineers.",
+    "Visa negotiation: Sponsorship and relocation package are separate from salary — negotiate them independently.",
+    "24-hour rule: Never accept or reject on the call. This applies even to great offers — composure signals professionalism.",
+    "The negotiation mindset: Companies expect negotiation. 84% of employers leave room in initial offers. Not negotiating is leaving money on the table."
+  ],
+  bugChallenge: {
+    code: `// NEGOTIATION SCENARIO — WHAT IS WRONG WITH THIS RESPONSE?
+
+Recruiter: "The offer is USD 95,000 base salary. Does that work for you?"
+
+Candidate: "Oh wow, thank you! That is actually a bit more than I was
+expecting. I was thinking around USD 85,000 so this is great.
+Can I accept now? When do I start?"`,
+    hint: "Identify: Did the candidate anchor correctly? Did they reveal their reservation price? Did they leave money on the table? Did they follow the 24-hour rule? What should they have said instead?",
+    answer: "Critical error 1 (Revealed reservation price): The candidate said 'I was thinking around USD 85,000' — this tells the recruiter the candidate would have accepted USD 85k, meaning USD 95k feels like a windfall. Now the recruiter knows they have no room to counter. Critical error 2 (Accepting immediately): 'Can I accept now?' violates the 24-hour rule. Always take time to evaluate. This signals desperation, not confidence. Critical error 3 (No negotiation attempt): USD 95k might be the floor of the band. The ceiling could be USD 115–130k. By not negotiating, the candidate may have left USD 15–35k on the table. Critical error 4 (Anchoring against themselves): Revealing a lower number anchors the recruiter to that figure for future negotiations. Correct response: 'Thank you — I am genuinely excited about this role. I want to give this the proper consideration it deserves. Based on my research into market rates for senior Android engineers, I was targeting something in the USD 110–120k range. Is there flexibility to get closer to that? I would love to make this work.'"
+  },
+  difficulty: "beginner",
+  prereqs: []
+},
+{
+  id: 70,
+  title: "Full Android Technical Mock Pack",
+  subtitle: "Complete technical mock interview round with model answers and self-scoring rubric",
+  analogy: "A flight simulator does not teach you to fly by showing you videos — it puts you in the cockpit and makes you respond to real scenarios. This mock pack is your flight simulator: real questions, real pressure, and a rubric that tells you exactly where you need more practice.",
+  points: [
+    { t: "Mock interview discipline", d: "Treat this as a real interview. No notes. No IDE. Time yourself on each question — technical questions: 5–8 minutes each. Architecture questions: 10–15 minutes. Score yourself immediately after each answer before reading the model answer." },
+    { t: "Self-scoring rubric (1–4 scale)", d: "1 = Blank or fundamentally wrong. 2 = Partial — got the concept but missed key details. 3 = Solid — correct, complete, one or two gaps. 4 = Exceptional — correct, complete, with real-world nuance, edge cases, and production experience. Aim for 3+ on all questions, 4 on your strongest areas." },
+    { t: "Kotlin fundamentals mock", d: "Core questions: coroutines vs threads, suspend function internals, sealed classes vs enums, inline functions and reified generics, data class copy semantics, object vs companion object, extension functions vs member functions." },
+    { t: "Coroutines and Flow mock", d: "Core questions: structured concurrency, CoroutineScope vs GlobalScope, StateFlow vs SharedFlow vs LiveData, Flow operators (map/filter/flatMapLatest/debounce), exception handling in flows, combining flows, cancellation behavior." },
+    { t: "Android components mock", d: "Core questions: Activity/Fragment lifecycle gotchas, ViewModel saved state, WorkManager vs AlarmManager vs Foreground Service, BroadcastReceiver types (ordered vs normal vs local), ContentProvider threading model." },
+    { t: "Compose mock", d: "Core questions: recomposition triggers and stability, remember vs rememberSaveable vs derivedStateOf, side effects (LaunchedEffect vs SideEffect vs DisposableEffect), Compose vs View interop, custom layouts, performance profiling in Compose." },
+    { t: "Architecture mock", d: "Core questions: Clean Architecture layer responsibilities and dependency direction, MVI vs MVVM state management tradeoffs, repository pattern with multiple data sources, use case design, module boundaries in multi-module apps." },
+    { t: "Performance mock", d: "Core questions: diagnosing ANR, profiling with Android Studio (CPU, Memory, Network profilers), frame rate analysis with Perfetto, APK size reduction strategies, bitmap memory management." },
+    { t: "Testing mock", d: "Core questions: unit vs integration vs UI test scope, mocking strategies with MockK, Turbine for Flow testing, testing ViewModel with TestCoroutineScheduler, UI test with Espresso vs Compose test APIs." },
+    { t: "Security mock", d: "Core questions: certificate pinning implementation and bypass risks, EncryptedSharedPreferences vs Keystore, ProGuard/R8 rules for security, SafetyNet/Play Integrity API use cases, root detection strategies." },
+    { t: "Model answer format", d: "Every model answer in this pack follows: Definition (one sentence), How it works (mechanism), When to use it (decision criteria), Real-world example (from production), Edge case or gotcha (what trips up candidates). Use this same structure in your real answers." },
+    { t: "Scoring your mock", d: "After completing all 15+ questions: tally your scores, identify your weakest category (lowest average score), go back to the relevant lesson in this course and review, then repeat the mock questions in that category 48 hours later. Spaced repetition beats cramming." }
+  ],
+  whatIs: "A full technical mock interview pack for senior Android engineers, covering Kotlin, Coroutines/Flow, Android components, Jetpack Compose, and architecture. Each question includes a model answer with a 1–4 self-scoring rubric. This pack simulates a real technical panel round and gives structured feedback so you know exactly what to study before the real interview.",
+  realWorld: "Senior Android interviews at companies like Wise, Klarna, Spotify, N26, and Grab typically include 2–3 technical rounds: (1) a Kotlin/language fundamentals screen, (2) a systems/architecture deep-dive, and (3) a practical coding or review session. This mock pack covers the content of rounds 1 and 2. Candidates who complete 3 full mock rounds before interviewing report significantly higher confidence and offer rates.",
+  code: `// MOCK ROUND — ANSWER THESE WITHOUT LOOKING AT MODEL ANSWERS
+
+// ============================================================
+// SECTION 1: KOTLIN FUNDAMENTALS (Score each /4)
+// ============================================================
+
+// Q1: What is structured concurrency and why does it matter?
+// [ANSWER SPACE — write or say your answer before reading below]
+
+// MODEL ANSWER (Score /4):
+// Structured concurrency means coroutines are scoped to their parent.
+// When a parent scope is cancelled, all child coroutines are cancelled.
+// When all children complete, the parent scope completes.
+// This prevents coroutine leaks — unlike Thread or GlobalScope which
+// have no automatic cleanup on lifecycle events.
+// Real world: ViewModelScope cancels all launched coroutines when the
+// ViewModel is cleared, preventing updates to destroyed UI.
+// Gotcha: GlobalScope breaks structured concurrency — avoid it except
+// for truly app-lifetime operations.
+
+// ------------------------------------------------------------
+// Q2: Explain StateFlow vs SharedFlow. When do you use each?
+// [ANSWER SPACE]
+
+// MODEL ANSWER:
+// StateFlow: always has a current value (initial value required),
+// replays the latest value to new collectors, conflates rapid updates.
+// Use for: UI state (uiState: StateFlow<UiState>).
+// SharedFlow: no initial value, configurable replay cache (0 to N),
+// configurable buffer overflow strategy.
+// Use for: one-shot events (navigation, snackbars) where you do not
+// want new collectors to receive old events.
+// Gotcha: StateFlow.value access is not safe across threads in general —
+// always collect from a coroutine, not from a callback.
+
+// ------------------------------------------------------------
+// Q3: What triggers recomposition in Jetpack Compose?
+// [ANSWER SPACE]
+
+// MODEL ANSWER:
+// Recomposition triggers when state read inside a composable changes.
+// Compose tracks state reads at the composable level using snapshot state.
+// Key rules:
+//   - Only composables that READ the changed state recompose
+//   - Composables are skippable if all parameters are stable and unchanged
+//   - Unstable classes (List, non-data classes) force recomposition even
+//     when the content is the same
+// Gotcha: Lambdas that capture mutable state or are not remembered cause
+// unnecessary recompositions. Use remember { derivedStateOf { ... } }
+// to only recompose when computed value changes.
+
+// ============================================================
+// SECTION 2: ANDROID ARCHITECTURE (Score each /4)
+// ============================================================
+
+// Q4: Explain Clean Architecture dependency direction.
+// [ANSWER SPACE]
+
+// MODEL ANSWER:
+// Dependencies point INWARD only:
+//   UI layer -> Domain layer <- Data layer
+// Domain layer (use cases, entities) has NO Android dependencies.
+// Data layer implements domain interfaces (repository pattern).
+// UI layer depends on domain, never on data directly.
+// Why: domain layer can be unit tested with pure JVM, no Android mocks.
+// Real world: a UseCase that calls repository.getTransactions() is
+// testable without a database or network by injecting a fake repository.
+// Gotcha: putting Android Context or Room entities in the domain layer
+// violates the dependency rule and makes domain untestable.
+
+// ------------------------------------------------------------
+// Q5: How do you handle offline-first data synchronization?
+// [ANSWER SPACE]
+
+// MODEL ANSWER:
+// Pattern: Single Source of Truth (SSOT) — Room is the only source
+// the UI reads from. Network data flows: API -> Room -> UI via Flow.
+// Implementation:
+//   1. Repository.getItems() returns Flow<List<Item>> from Room
+//   2. A background sync (WorkManager) fetches from API and writes to Room
+//   3. Room emits updates automatically, UI reacts
+// Conflict resolution: last-write-wins or timestamp-based or server-wins.
+// Edge case: deletions — use soft delete (isDeleted flag) + sync timestamp
+// rather than hard deletes, to avoid sync conflicts.
+
+// ============================================================
+// SELF-SCORING:
+// After answering all questions:
+//   - Score 1-4 on each question
+//   - Average by category
+//   - Weakest category = top priority before real interview
+// ============================================================`,
+  funFact: "Mock interviews are the single highest-ROI interview preparation activity. Research published in the Journal of Applied Psychology found that candidates who completed structured mock interviews performed 24% better in real interviews than those who only studied content. The act of speaking answers aloud under simulated pressure creates the neural pathways needed for confident real-interview performance.",
+  quiz: [
+    { q: "In structured concurrency, what happens to child coroutines when the parent scope is cancelled?", opts: ["They continue running until they complete naturally", "They are cancelled automatically", "They are suspended until a new scope is created", "They move to GlobalScope"], ans: 1 },
+    { q: "Which Kotlin Flow type requires an initial value and replays the latest value to new collectors?", opts: ["SharedFlow with replay=1", "StateFlow", "Channel", "Flow with conflate()"], ans: 1 },
+    { q: "What triggers recomposition in Jetpack Compose?", opts: ["Any function call inside a composable", "Changes to state that is read inside the composable", "Network calls completing in the ViewModel", "Any parameter change, regardless of stability"], ans: 1 },
+    { q: "In Clean Architecture, which direction do dependencies point?", opts: ["Outward from domain to data and UI", "Inward toward the domain layer from UI and data layers", "Bidirectionally between all layers", "From data layer outward to UI layer"], ans: 1 },
+    { q: "What is the Single Source of Truth pattern for offline-first apps?", opts: ["The network response is the truth and Room is a cache", "Room is the only source the UI reads; network data flows through Room", "The UI holds state and persists it to Room on app close", "SharedPreferences holds the current state, Room holds history"], ans: 1 },
+    { q: "What is a score of 2 on the self-scoring rubric in this mock pack?", opts: ["Blank or fundamentally wrong", "Partial — correct concept but missing key details", "Solid — correct and complete with minor gaps", "Exceptional — complete with production nuance and edge cases"], ans: 1 },
+    { q: "Which tool should you use to profile frame rates and detect jank in Android?", opts: ["Android Studio Memory Profiler", "Perfetto / systrace", "Firebase Performance Monitoring", "LeakCanary"], ans: 1 },
+    { q: "What is the key difference between SharedFlow and StateFlow for one-shot events?", opts: ["StateFlow is faster than SharedFlow for event emission", "SharedFlow with replay=0 does not replay old events to new collectors, making it suitable for navigation or snackbar events", "StateFlow can buffer more events than SharedFlow", "There is no meaningful difference — both can be used interchangeably"], ans: 1 },
+    { q: "How many full mock rounds should you complete before a real senior interview?", opts: ["One is sufficient if you score well", "At least 3, with spaced repetition between rounds", "As many as possible, back to back", "Only one per company you are interviewing at"], ans: 1 },
+    { q: "What is the correct structure for a model answer in a technical interview?", opts: ["Definition, then as much detail as possible without stopping", "Definition, mechanism, when to use it, real-world example, edge case or gotcha", "Code example followed by explanation", "Start with the gotcha to impress the interviewer, then explain the basics"], ans: 1 }
+  ],
+  challenge: "Run a full timed mock using this pack. Set a timer for each question: Kotlin questions 5 minutes each, Architecture questions 10 minutes each. Write or speak your answer BEFORE reading the model answer. Score yourself honestly (1–4). Calculate your average by category. Identify your two weakest areas and revisit those lessons in this course. Repeat the mock on those categories 48 hours later and compare scores. Target: average 3.0+ across all categories before your real interview.",
+  resources: [
+    { type: "docs", title: "Kotlin Coroutines — Official Documentation", url: "https://kotlinlang.org/docs/coroutines-overview.html", source: "Kotlin" },
+    { type: "docs", title: "Jetpack Compose — Performance Guide", url: "https://developer.android.com/develop/ui/compose/performance", source: "Android Developers" },
+    { type: "docs", title: "Android Architecture — Official Guide", url: "https://developer.android.com/topic/architecture", source: "Android Developers" },
+    { type: "docs", title: "Perfetto Tracing Tool", url: "https://perfetto.dev/docs/", source: "Perfetto" },
+    { type: "docs", title: "Turbine — Flow Testing Library", url: "https://github.com/cashapp/turbine", source: "Cash App / GitHub" }
+  ],
+  eli5: "This is like a practice exam where you answer the questions first, then check the answer key, and then give yourself a grade. But instead of school grades, you use 1 to 4: 1 means you had no idea, 4 means you nailed it completely. The point is not to cheat by reading the answers first — the point is to practice the feeling of answering hard questions under pressure, so the real exam feels familiar.",
+  codeWalkthrough: [
+    "Mock discipline: no notes, no IDE, timed — simulate real interview pressure to build the muscle memory you need on interview day.",
+    "Rubric 1 = fundamentally wrong or blank: immediately review the concept in the relevant lesson before continuing.",
+    "Rubric 2 = partial: you understand the surface, not the depth — study the mechanism and the edge cases.",
+    "Rubric 3 = solid: one or two gaps — these are the gaps interviewers will probe. Practice specifically for the gap.",
+    "Rubric 4 = exceptional: correct, complete, production nuance, edge case awareness. This is the senior bar.",
+    "Kotlin section covers: structured concurrency, coroutine mechanics, StateFlow vs SharedFlow, sealed classes, inline/reified, data class semantics.",
+    "Architecture section covers: Clean Architecture dependency direction, offline-first SSOT pattern, repository design, use case boundaries.",
+    "Compose section covers: recomposition triggers, stability, remember vs rememberSaveable vs derivedStateOf, side effects, performance.",
+    "Model answer format: Definition + Mechanism + When to use + Real-world example + Edge case/gotcha — use this structure in real interviews.",
+    "Scoring workflow: answer all questions, score each, average by category, target weakest category for focused review.",
+    "Spaced repetition: repeat weak-category questions 48 hours later, not immediately — spacing creates durable memory.",
+    "3 full mock rounds before a real senior interview is the recommended minimum for confident performance."
+  ],
+  bugChallenge: {
+    code: `// KOTLIN BUG — FIND AND FIX:
+
+class UserRepository(private val api: UserApi) {
+
+    suspend fun getUser(id: String): User {
+        return GlobalScope.async {
+            api.fetchUser(id)
+        }.await()
+    }
+
+    fun observeUsers(): Flow<List<User>> {
+        return flow {
+            while (true) {
+                emit(api.fetchAllUsers())
+                delay(30_000)
+            }
+        }
+    }
+}`,
+    hint: "There are two bugs. One involves coroutine scope and structured concurrency. One involves the Flow and its lifecycle/cancellation behavior. What happens if the calling scope is cancelled in each case?",
+    answer: "Bug 1 (GlobalScope breaks structured concurrency): GlobalScope.async creates a coroutine with no parent, so if the caller's scope is cancelled (e.g. ViewModel cleared), the api.fetchUser() call continues running. This leaks the coroutine and wastes resources. Fix: remove GlobalScope entirely — the function is already suspend, so the caller's scope controls the lifecycle: suspend fun getUser(id: String): User = api.fetchUser(id). Bug 2 (Infinite Flow with no cancellation check): The while(true) loop in flow will continue even if the collector is cancelled, because flow builders do not automatically check for cancellation between emissions. Fix: replace while(true) with while(currentCoroutineContext().isActive) — or use Flow.cancellable() extension — to ensure the loop exits when the collector scope is cancelled."
+  },
+  difficulty: "advanced",
+  prereqs: [10, 21, 24]
+},
+{
+  id: 71,
+  title: "Full Architecture + System Design Mock Pack",
+  subtitle: "Complete architecture and system design mock round with real-world scenarios and self-scoring rubric",
+  analogy: "Architecture interviews are like being handed a city map, a budget, and a growth forecast and asked: design the transit system. There is no single correct answer — the interviewer is watching how you think, what trade-offs you articulate, and whether your decisions are driven by real-world constraints or textbook theory.",
+  points: [
+    { t: "Architecture mock format", d: "Senior architecture rounds are 45–60 minutes. Expect: one large system design question (20–25 mins), one architecture deep-dive on a past project (15–20 mins), and follow-up questions on trade-offs. This mock simulates all three formats." },
+    { t: "System design question formula", d: "For any system design question: (1) Clarify scope and scale, (2) Define components, (3) Describe data flow, (4) Address offline/failure scenarios, (5) Discuss testing strategy, (6) Name the trade-offs of your choices. Never skip step 1 — clarifying scope separates senior from junior." },
+    { t: "Clean Architecture mock", d: "Key questions: Why is the domain layer Android-independent? What does a use case return — raw data or Result? How do you handle mapping between layers? What goes in the data layer vs domain layer? What is the difference between a repository and a data source?" },
+    { t: "Offline-first sync design mock", d: "Key scenario: Design offline-first payment history for a fintech app with 1M users, conflict resolution, and background sync. Expect follow-ups on: sync frequency, conflict strategy (client-wins vs server-wins vs merge), deletion handling, battery and bandwidth optimization." },
+    { t: "Multi-module architecture mock", d: "Key questions: Why modularize? How do you prevent feature modules from depending on each other? What lives in :core vs :feature vs :app modules? How does dependency injection cross module boundaries? How does modularization affect build time?" },
+    { t: "Testing strategy mock", d: "Key question: Design the testing strategy for a new fintech feature end-to-end. Expect: test pyramid (unit vs integration vs E2E ratios), what to mock vs what to use real implementations for, testing network layer with OkHttp MockWebServer, testing Room with in-memory database." },
+    { t: "Trade-off articulation", d: "Every architecture decision must come with explicit trade-offs. 'I chose Room over SQLDelight because our team knows Room well, though SQLDelight offers compile-time SQL verification and multiplatform support.' Interviewers score your reasoning, not just your choice." },
+    { t: "Real project references", d: "In an architecture round, reference your real projects explicitly. 'On the Payless POS project, I used an event-sourcing approach for the transaction log because...' is infinitely more credible than 'in theory, you would use...'" },
+    { t: "Failure and recovery design", d: "Senior architects design for failure. Questions include: What happens when the sync worker fails repeatedly? How do you retry with exponential backoff? How do you surface sync errors to the user without blocking them? How do you detect and resolve data corruption?" },
+    { t: "Scalability signals", d: "Show scalability thinking: 'This works for 10k users. At 1M users the local Room database would be fine, but the API pagination strategy would need cursor-based pagination rather than offset-based to avoid N+1 query problems at the server side.'" },
+    { t: "Self-scoring architecture rubric", d: "1 = Cannot describe the layers or their responsibilities. 2 = Describes architecture but cannot articulate why each boundary exists. 3 = Correct structure, clear trade-offs, references real patterns. 4 = Correct structure, compelling trade-offs, real project evidence, proactively identifies failure modes and edge cases." },
+    { t: "Capstone synthesis", d: "At the end of this mock, synthesize: which architectural decisions across your career are you most proud of? Which ones would you make differently? This synthesis question appears in final-round interviews to distinguish candidates who reflect and grow from those who just ship." }
+  ],
+  whatIs: "A full architecture and system design mock pack for senior Android engineers. Covers Clean Architecture deep-dives, offline-first system design scenarios, multi-module architecture, and testing strategy design. Includes model answers with real-world nuance, explicit trade-off articulation, and a 1–4 self-scoring rubric calibrated to the senior bar at product companies and scale-ups.",
+  realWorld: "At Klarna, Wise, or Grab, a senior Android architecture round typically begins: 'Design the notification delivery system for our mobile app — users must receive payment confirmations reliably, even with intermittent connectivity.' A senior candidate will immediately ask: What is our current DAU? Is the notification user-initiated or server-pushed? Do we need deduplication? What is the acceptable delivery latency? This scoping behavior alone signals senior-level thinking before the design has started.",
+  code: `// ARCHITECTURE MOCK — SYSTEM DESIGN SCENARIOS
+
+// ============================================================
+// SCENARIO 1: OFFLINE-FIRST PAYMENT HISTORY
+// "Design an offline-first payment history feature for 1M users"
+// Score yourself /4 before reading the model answer
+// ============================================================
+
+/*
+STEP 1 — CLARIFY (always first):
+- How many transactions per user on average? (1–50/day)
+- What is the freshness requirement? (near-real-time vs daily sync)
+- Conflict resolution: who wins — client or server?
+- What happens on deletion? Soft delete or hard delete?
+
+STEP 2 — COMPONENTS:
+UI layer: TransactionHistoryScreen (Compose)
+         -> collects from ViewModel.transactionsFlow
+ViewModel: TransactionViewModel
+         -> exposes StateFlow<List<Transaction>> from UseCase
+Domain:   GetTransactionsUseCase
+         -> calls TransactionRepository.observeTransactions()
+Data:     TransactionRepository
+         -> reads from Room (SSOT)
+         -> WorkManager triggers SyncWorker on connectivity change
+SyncWorker -> calls API -> writes to Room -> Room emits to Flow -> UI updates
+
+STEP 3 — CONFLICT RESOLUTION:
+Strategy: server-wins (simpler, consistent, appropriate for financial data)
+Each record has: id, serverId, lastModifiedAt (server timestamp)
+SyncWorker compares local lastModifiedAt vs server payload
+Server version replaces local if server is newer
+
+STEP 4 — DELETION:
+Soft delete: isDeleted = true, deletedAt timestamp
+SyncWorker processes deletions after upserts to avoid missed deletes
+Hard delete from Room only after server confirms deletion
+
+STEP 5 — TRADE-OFFS STATED:
+"I chose server-wins over merge because financial data must be authoritative.
+ Client-wins would risk showing stale balances. The trade-off is that
+ optimistic UI updates for new transactions must be rolled back on sync conflict
+ — I handle this with a 'pending' state on local inserts."
+*/
+
+// ============================================================
+// SCENARIO 2: MULTI-MODULE BUILD ARCHITECTURE
+// "How would you structure a 20-engineer Android app into modules?"
+// ============================================================
+
+/*
+Module hierarchy (dependency flows downward):
+:app (assembles, no business logic)
+  |
+  :feature:payments
+  :feature:profile
+  :feature:notifications
+  |
+  :domain (use cases, entities — pure Kotlin, no Android)
+  |
+  :data (repositories, API, Room — implements domain interfaces)
+  |
+  :core:ui (design system, shared Compose components)
+  :core:network (OkHttp, Retrofit setup)
+  :core:testing (shared fakes, test utilities)
+
+Rules:
+- :feature modules CANNOT depend on each other
+- :feature modules depend on :domain, NOT :data
+- :data depends on :domain (implements interfaces)
+- Navigation between features: use a navigation contract in :domain
+
+DI across modules: each module exposes a Hilt @Module
+  that binds its implementations. :app installs all modules.
+
+Build time impact:
+- Modules enable parallel compilation
+- Modules enable build cache — unchanged modules reuse cached output
+- Trade-off: more Gradle config complexity, need strict dependency rules
+*/
+
+// SELF-SCORE EACH SCENARIO /4 then compare with model answers above`,
+  funFact: "System design interviews have the highest variance in scoring at senior Android roles. A Google study of their own hiring found that candidates who explicitly stated trade-offs were scored 35% higher than candidates who gave the same architectural choice without explaining the why. The interviewer already knows the common patterns — they are evaluating your reasoning, not your knowledge of patterns.",
+  quiz: [
+    { q: "What is the correct first step in any system design interview question?", opts: ["Start drawing the architecture diagram", "Write the data model first", "Clarify scope, scale, and constraints", "State your preferred architecture pattern"], ans: 2 },
+    { q: "In offline-first architecture, what is the Single Source of Truth?", opts: ["The API response is always the truth", "The local database (e.g. Room) is the source the UI reads from", "The ViewModel holds the source of truth in memory", "SharedPreferences stores the canonical state"], ans: 1 },
+    { q: "Why should the domain layer have no Android dependencies?", opts: ["Because Android dependencies are too heavy for the domain layer", "So the domain layer can be unit tested with pure JVM without Android mocks or instrumentation", "Because the domain layer does not need any platform-specific code", "Android deprecated the practice of using Android classes in business logic"], ans: 1 },
+    { q: "In a multi-module architecture, how should feature modules relate to each other?", opts: ["Feature modules should import each other's public APIs freely", "Feature modules should not depend on each other — they communicate via domain contracts", "Feature modules should depend on a shared :feature:common module", "All feature modules should extend a base feature module"], ans: 1 },
+    { q: "What is the recommended conflict resolution strategy for financial data in an offline-first app?", opts: ["Client-wins to support optimistic UI updates", "Server-wins to maintain authoritative financial records", "Timestamp-merge to combine both client and server changes", "Manual conflict resolution presented to the user"], ans: 1 },
+    { q: "What is a score of 4 on the architecture self-scoring rubric?", opts: ["Correct structure with no gaps", "Can describe all layers by name", "Correct structure, compelling trade-offs, real project evidence, proactive failure mode identification", "Completed the answer within the time limit"], ans: 2 },
+    { q: "Why does modularization improve build times?", opts: ["Fewer Kotlin files per module means faster compilation", "Modules enable parallel compilation and build caching of unchanged modules", "Modular apps have smaller APK sizes which compile faster", "Hilt generates less code in modular apps"], ans: 1 },
+    { q: "What is soft delete and why is it used in offline-first sync?", opts: ["Deleting data softly means scheduling it for deletion at a later time", "Marking a record as isDeleted=true instead of removing it, to allow sync to propagate the deletion without losing the record before sync completes", "A UI-only deletion that is not persisted to the database", "Deleting the cache but keeping the server record"], ans: 1 },
+    { q: "Which type of pagination is preferred at scale to avoid N+1 query problems?", opts: ["Offset-based pagination (page=1&size=20)", "Cursor-based pagination using a stable identifier as the cursor", "Random access pagination with total count", "Client-side pagination from a full data download"], ans: 1 },
+    { q: "In a system design interview, what separates a senior response from a mid-level one?", opts: ["Knowing more architectural patterns by name", "Drawing a more detailed diagram", "Explicitly stating trade-offs for each design decision and proactively identifying failure modes", "Having worked at a larger company"], ans: 2 }
+  ],
+  challenge: "Run the full architecture mock: (1) Set a 25-minute timer. Without notes, design an offline-first messaging feature for a mobile app (users can send and read messages when offline, sync when reconnected). Include: data flow, conflict resolution, sync strategy, failure handling, and testing approach. Score yourself /4. (2) Answer in writing or aloud: 'What is the most important architectural decision you have made in your career and what would you do differently?' This is your synthesis answer — refine it until it sounds natural and confident.",
+  resources: [
+    { type: "docs", title: "Android Architecture — Official Guide", url: "https://developer.android.com/topic/architecture", source: "Android Developers" },
+    { type: "docs", title: "Now in Android — Reference App Architecture", url: "https://github.com/android/nowinandroid", source: "Android / GitHub" },
+    { type: "docs", title: "WorkManager — Background Sync Guide", url: "https://developer.android.com/topic/libraries/architecture/workmanager", source: "Android Developers" },
+    { type: "docs", title: "Room Persistence Library", url: "https://developer.android.com/training/data-storage/room", source: "Android Developers" },
+    { type: "docs", title: "Designing Data-Intensive Applications — Martin Kleppmann", url: "https://dataintensive.net/", source: "O'Reilly" }
+  ],
+  eli5: "Designing an architecture is like designing a restaurant kitchen. Someone has to take the order (UI), someone has to cook (business logic), someone has to get ingredients from the fridge or order from the supplier (data layer). Good kitchen design means the chef never has to go to the supplier themselves — they just tell someone to get what they need. And if the supplier is closed (no internet), there are ingredients in the fridge to keep cooking (offline-first).",
+  codeWalkthrough: [
+    "Step 1 of every system design question: Clarify scope and scale. This is the most visible senior signal in an architecture interview.",
+    "Offline-first pattern: Room is SSOT. Network data flows API -> Room -> Flow -> UI. UI never calls the API directly.",
+    "Conflict resolution for financial data: server-wins. Document this choice and the trade-off (optimistic UI requires rollback on conflict).",
+    "Soft delete: isDeleted flag + deletedAt timestamp prevents sync races when hard-deleting records before sync propagates.",
+    "Multi-module hierarchy: app -> feature -> domain <- data. Feature modules must not depend on each other.",
+    "Domain layer purity: no Android imports in domain. This enables fast JVM unit tests without Robolectric or device.",
+    "DI across modules: each module exposes a Hilt @Module. :app installs all modules as the composition root.",
+    "Build time improvement: parallel compilation of independent modules + build cache for unchanged modules.",
+    "Trade-off articulation: every architectural choice must include explicit trade-offs. This is the senior signal interviewers score highest.",
+    "Real project references: 'On [your project], I used X because Y' is more credible than theoretical answers.",
+    "Scalability signals: state what changes at 10x scale. Cursor-based pagination vs offset, database sharding, CDN for assets.",
+    "Synthesis question: prepare your answer to 'what architectural decision are you most proud of and what would you change?' — this is a common final-round question."
+  ],
+  bugChallenge: {
+    code: `// ARCHITECTURE DESIGN BUG — FIND THE VIOLATIONS:
+
+// Feature module: feature-payments
+class PaymentViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val paymentRepository: PaymentRepository,
+    private val analyticsTracker: FirebaseAnalyticsTracker
+) : ViewModel() {
+
+    fun processPayment(amount: Double) {
+        viewModelScope.launch {
+            val user = userRepository.getCurrentUser()
+            val result = paymentRepository.pay(amount, user.id)
+            analyticsTracker.logEvent("payment_complete", mapOf("amount" to amount))
+            _uiState.value = UiState.Success(result)
+        }
+    }
+}
+
+// domain/UserRepository.kt
+interface UserRepository {
+    suspend fun getCurrentUser(): User
+}
+
+// data/UserRepositoryImpl.kt
+class UserRepositoryImpl @Inject constructor(
+    private val db: AppDatabase,      // Room database
+    private val context: Context      // Android Context
+) : UserRepository { ... }`,
+    hint: "Check: Does the ViewModel depend on the correct layers? Does the domain layer stay Android-independent? Is there a Clean Architecture layer violation? Is there a testability problem?",
+    answer: "Violation 1 (ViewModel depends on concrete analytics): PaymentViewModel depends directly on FirebaseAnalyticsTracker — a concrete class. This breaks Dependency Inversion. The ViewModel should depend on an AnalyticsTracker interface in the domain layer. This also makes the ViewModel untestable without Firebase. Violation 2 (Domain-to-data dependency via UserRepository location): If UserRepository interface is in the domain module but UserRepositoryImpl takes AppDatabase (a Room class) and Context — that is correct for the data module. However, verify the domain module itself has no Room or Context imports. Violation 3 (Business logic in ViewModel): processPayment() mixes orchestration (get user, pay) with analytics. This should be a ProcessPaymentUseCase in the domain layer — the ViewModel should call the use case, not orchestrate the steps. This makes the business logic untestable at the ViewModel level. Fix: Create ProcessPaymentUseCase(userRepository, paymentRepository, analyticsTracker: AnalyticsTracker). ViewModel calls use case, domain defines AnalyticsTracker interface, FirebaseAnalyticsTracker is the data-layer implementation."
+  },
+  difficulty: "advanced",
+  prereqs: [25, 58, 59, 60]
+},
+{
+  id: 72,
+  title: "Full Behavioral + Mixed Senior Mobile Mock Pack",
+  subtitle: "Complete behavioral mock, mixed technical-behavioral round, and final self-evaluation capstone",
+  analogy: "The final interview round is like a concert after months of rehearsal. The techniques are locked in. This session is about performing — flowing naturally between technical depth and human storytelling, recovering gracefully when a question surprises you, and leaving the room with the interviewer thinking 'that is someone I want to build with.'",
+  points: [
+    { t: "Behavioral mock format", d: "Senior behavioral rounds are 30–45 minutes. Typical structure: 4–6 behavioral questions, each answered in 80–100 seconds using W-STAR. Interviewers take notes on: ownership language, quantified results, leadership signals, self-awareness, and growth mindset. This mock covers all five dimensions." },
+    { t: "The leadership failure question", d: "Almost every senior behavioral round includes a failure question. Pattern: 'Tell me about a time you failed.' Model answer structure: own the failure fully (no blame), describe your immediate response, explain what you changed in your process, provide evidence the change worked. Self-awareness without self-flagellation is the target tone." },
+    { t: "The mixed round", d: "Senior final rounds often combine technical and behavioral: 'Walk me through the architecture of your most complex project' (technical) followed immediately by 'What would you do differently?' (behavioral/reflective). Prepare to transition fluidly between technical depth and reflective leadership language." },
+    { t: "Salary negotiation roleplay", d: "Final rounds often end with an offer conversation or comp expectation question. Practice: state your range confidently using your Levels.fyi research, handle a lowball counter professionally, and know your walk-away number before the conversation starts." },
+    { t: "The 'why us' question", d: "Always prepare a specific, researched answer to 'Why do you want to work here?' Avoid generic answers. Reference: the specific product problem space, a recent technical blog post or engineering decision you admire, a team member you connected with, or a specific business challenge you want to work on." },
+    { t: "The 'where do you want to be in 5 years' question", d: "A safe, senior answer: 'I want to be the engineer other engineers come to for Android architecture decisions — either as a Staff Engineer or Technical Lead. I am less focused on title and more on the depth of impact I can create and the people I can develop.' Avoid: 'I want your job' or 'I am not sure.'" },
+    { t: "The final self-evaluation checklist", d: "After every mock and before every real interview: (1) Can I deliver all 6 core stories from memory? (2) Are all results quantified? (3) Do I use ownership language throughout? (4) Can I transition from behavioral to technical fluidly? (5) Do I have a researched salary range? (6) Do I have a specific answer to why this company?" },
+    { t: "Recovering from a blank", d: "If you go blank on a behavioral question: say 'Let me think of the best example for that' (3-second pause). If you still cannot recall, say 'The closest example I have is X, though it is slightly different — would that work?' Pivoting is better than silence. Interviewers give significant credit for composure under pressure." },
+    { t: "Reading the room", d: "Read the interviewer's energy. If they are fast-paced and asking rapid-fire questions, keep answers tight (60–70 seconds). If they are exploratory and asking follow-ups, they want depth — expand to 90–100 seconds and invite questions with 'happy to go deeper on any of those aspects.'" },
+    { t: "Capstone project walk-through", d: "Prepare a 3-minute verbal walk-through of your most impressive Android project covering: (1) business context and scale, (2) your architectural decisions and why, (3) one key technical challenge and how you solved it, (4) measurable outcomes. This is your 'greatest hits' and appears in nearly every senior final round." },
+    { t: "The thank-you follow-up", d: "Within 24 hours of an interview, send a brief thank-you email to your recruiter referencing one specific thing from the conversation. This is uncommon and memorable. One line is enough: 'Particularly enjoyed the discussion on offline sync — the approach your team is taking aligns closely with the patterns I implemented on X project.'" },
+    { t: "Final mindset", d: "A senior interview is a peer conversation, not an exam. You are evaluating them as much as they are evaluating you. Ask at least 2 thoughtful questions: about engineering culture, technical debt strategy, or a specific decision you saw in their public engineering blog. This signals engagement, not desperation." }
+  ],
+  whatIs: "The final capstone lesson of the Android Interview Mastery course. This is a complete behavioral mock pack, mixed technical-behavioral round simulation, salary negotiation roleplay, and final self-evaluation checklist. It synthesizes all previous lessons into a coherent interview-ready state and provides the mindset framework for performing at your best when it counts.",
+  realWorld: "A senior Android engineer with 8 years of experience completes this mock pack 3 days before a final round at a Series C fintech in London. They walk through all 6 core behavioral stories from memory. They score 3+ on all technical architecture questions. They have researched the company's engineering blog and prepared a question about their recent migration from XML layouts to Compose. In the interview, they reference that blog post when asked why they want to join. The hiring manager notes: 'This was the most prepared candidate we have interviewed this quarter.' The offer arrives within 48 hours.",
+  code: `// FULL BEHAVIORAL MOCK — ANSWER EACH BEFORE READING GUIDANCE
+
+// ============================================================
+// BEHAVIORAL MOCK QUESTIONS (Score each /4 using W-STAR rubric)
+// ============================================================
+
+/*
+Q1: "Tell me about a time you failed significantly on a technical project."
+[Answer out loud — aim for 85-95 seconds]
+
+SCORING RUBRIC:
+4 = Full ownership, immediate response described, specific process change,
+    evidence the change worked, no blame of others, appropriate emotional tone
+3 = Mostly owned, process change described, minor result gap
+2 = Softened failure ("we had a challenge"), partial ownership, no process change
+1 = Blame-focused or could not identify a meaningful failure
+
+MODEL ANSWER STRUCTURE:
+Why (context): "We were launching a new BLE scanning feature for our
+POS terminals under a hard commercial deadline."
+Failure: "I shipped without sufficient integration testing on older
+devices. On launch day, 15% of terminals running Android 8 failed
+to connect — a critical production incident."
+My response: "I owned the incident immediately, set up a war room,
+deployed a hotfix within 4 hours, and personally called our top 3
+affected clients to explain the issue."
+What changed: "I introduced a mandatory device matrix test covering
+our 12 most common terminal models in our CI pipeline before every
+release. I also added a feature flag system so we could remotely
+disable new features on specific device groups without a release."
+Evidence it worked: "In the 18 months since, we have had zero
+device-specific compatibility incidents."
+*/
+
+// ------------------------------------------------------------
+/*
+Q2: "Why do you want to work here specifically?"
+[NEVER give a generic answer — this is a research test]
+
+PREPARE:
+- Name one specific product challenge that excites you
+- Reference one engineering decision, blog post, or open source contribution
+- Connect to your own experience: "Your offline-first approach mirrors
+  what I built on X project and I want to go deeper on it"
+*/
+
+// ------------------------------------------------------------
+/*
+Q3: "Walk me through the architecture of your most complex project."
+[Technical + behavioral combined — 3 minutes]
+
+STRUCTURE:
+1. Business context (30 sec): scale, users, criticality
+2. Architecture decisions (60 sec): layers, key patterns, why
+3. One technical challenge (60 sec): W-STAR on the hardest problem
+4. Outcome (30 sec): measurable results
+*/
+
+// ============================================================
+// SALARY NEGOTIATION ROLEPLAY
+// ============================================================
+/*
+Recruiter: "The team loved you. We would like to offer you GBP 80,000."
+[Your company's range is GBP 80-100k. Your target is 90k. You have
+ a competing offer at GBP 83,000.]
+
+CORRECT RESPONSE:
+"Thank you — I am genuinely excited about the team and the product.
+ I want to make this work. Based on my research and a competing offer,
+ I was targeting closer to GBP 90,000. Is there any flexibility to
+ get there on base, or if not, could we explore the equity component?"
+
+DO NOT:
+- Accept immediately
+- Reveal your walk-away number
+- Reveal the exact competing offer number
+- Be apologetic or hedging: "I know it is a lot to ask but maybe..."
+*/
+
+// ============================================================
+// FINAL SELF-EVALUATION CHECKLIST (complete before every interview)
+// ============================================================
+const preInterviewChecklist = [
+  "Can I deliver all 6 core behavioral stories from memory (no notes)?",
+  "Are results in every story quantified with specific numbers?",
+  "Do I use ownership language (I drove / I owned) not (we / the team)?",
+  "Can I answer the failure question without blame and with a process change?",
+  "Do I have a researched salary range from Levels.fyi / Glassdoor?",
+  "Do I have a specific researched answer to 'why this company'?",
+  "Have I prepared 2 thoughtful questions to ask the interviewer?",
+  "Can I walk through my best project in 3 minutes from memory?",
+  "Have I done at least 3 timed mock rounds in the past week?",
+  "Do I know my walk-away number and am I comfortable naming my range?"
+];`,
+  funFact: "A 2024 survey of 500 senior engineering hiring managers found that 73% said behavioral interview performance was the deciding factor between two technically equivalent candidates. The most common reason for rejecting a technically strong candidate was 'could not demonstrate ownership or reflection on failure.' Interviewers are not looking for perfection — they are looking for self-aware engineers who learn and grow.",
+  quiz: [
+    { q: "In a failure story, what is the correct tone to strike?", opts: ["Minimize the failure to protect your professional image", "Blame external factors to show you are not at fault", "Own the failure fully, describe your response, and demonstrate a lasting process change", "Focus on what the team learned collectively rather than your individual mistake"], ans: 2 },
+    { q: "What is the 'mixed round' in a senior final interview?", opts: ["A round that mixes candidates from different backgrounds", "A round that combines technical depth questions with behavioral and reflective questions", "A round where multiple interviewers ask questions simultaneously", "A round that covers both Android and iOS topics"], ans: 1 },
+    { q: "In the salary negotiation roleplay, what should you NOT do?", opts: ["State a range based on market research", "Mention you have a competing offer", "Reveal your exact walk-away number or accept immediately on the call", "Ask if there is flexibility on equity if base is fixed"], ans: 2 },
+    { q: "What makes a 'why us' answer strong in an interview?", opts: ["Expressing enthusiasm about the company's brand and reputation", "Referencing a specific product challenge, engineering decision, or technical blog post you researched", "Mentioning that the salary is competitive", "Saying you have always wanted to work at a company of this size"], ans: 1 },
+    { q: "What is the correct response when you go blank on a behavioral question?", opts: ["Admit you cannot think of an example and ask for the next question", "Make up a hypothetical and present it as real experience", "Say 'Let me think of the best example' then pause, or offer the closest relevant story you have", "Repeat the question back to the interviewer to buy time"], ans: 2 },
+    { q: "How many thoughtful questions should you prepare to ask the interviewer?", opts: ["None — it signals you still have gaps in your knowledge", "One is sufficient", "At least 2, researched and specific to the company or team", "As many as possible to demonstrate thoroughness"], ans: 2 },
+    { q: "What is the purpose of the final self-evaluation checklist in this lesson?", opts: ["To give yourself a formal grade before each interview", "To ensure you are interview-ready across behavioral, technical, negotiation, and research dimensions before the day", "To track your improvement over multiple mock rounds", "To identify which lessons to re-read the night before an interview"], ans: 1 },
+    { q: "A hiring manager values behavioral performance over technical equivalents in 73% of cases according to 2024 data. What is the most common reason for rejecting a technically strong candidate?", opts: ["Poor cultural fit with the team", "Could not demonstrate ownership or reflection on failure", "Asking for too high a salary", "Not having enough years of experience"], ans: 1 },
+    { q: "What should a capstone project walk-through include?", opts: ["Every technical decision made in the project in chronological order", "Business context and scale, architectural decisions with rationale, one key technical challenge, and measurable outcomes", "A live demo of the application", "The full team's contributions over the course of the project"], ans: 1 },
+    { q: "What is the correct senior answer to 'where do you want to be in 5 years'?", opts: ["I want to be in your position as engineering manager", "I am not sure yet — I prefer to stay flexible", "I want to be the engineer others come to for architecture decisions, focused on depth of impact and developing others", "I want to have started my own company by then"], ans: 2 }
+  ],
+  challenge: "Run the complete final mock session. (1) Deliver all 6 core behavioral stories from memory, timed (80–100 seconds each). Score each /4 on W-STAR criteria. (2) Do the salary negotiation roleplay with a friend or out loud alone — practice until the language feels natural, not rehearsed. (3) Complete the pre-interview checklist honestly. Any item you cannot check off becomes your study priority for the next 48 hours. (4) Write your 3-minute capstone project walk-through and record it. Listen back. Edit until it sounds like a confident peer conversation, not a prepared speech.",
+  resources: [
+    { type: "docs", title: "Levels.fyi — Total Compensation Research", url: "https://www.levels.fyi/", source: "Levels.fyi" },
+    { type: "docs", title: "Google re:Work — Structured Behavioral Interviewing", url: "https://rework.withgoogle.com/guides/hiring-use-structured-interviewing/steps/introduction/", source: "Google re:Work" },
+    { type: "docs", title: "Fearless Salary Negotiation — Josh Doody", url: "https://fearlesssalarynegotiation.com/", source: "Fearless Salary Negotiation" },
+    { type: "docs", title: "Staff Engineer — Navigating the Final Interview Rounds", url: "https://staffeng.com/", source: "StaffEng" },
+    { type: "docs", title: "Android Interview Prep — developer.android.com", url: "https://developer.android.com/get-started/overview", source: "Android Developers" }
+  ],
+  eli5: "This is your final practice match before the big game. You have learned all the skills — now you play the full game from start to finish. You answer the interview questions, practice asking for the salary you deserve, and then check a list to make sure you are ready. If anything on the list says 'not ready', that is what you practice tomorrow. The goal is to walk into the real interview feeling like you have already done it a dozen times — because you have.",
+  codeWalkthrough: [
+    "Behavioral mock format: 4-6 questions in 30-45 minutes. Score each on ownership, quantification, leadership, self-awareness, growth mindset.",
+    "Failure question: own it fully, describe your immediate response, explain the process change, provide evidence the change stuck. No blame.",
+    "Mixed round: transition fluidly from technical architecture walk-through to behavioral reflection. Prepare this transition explicitly.",
+    "Salary negotiation roleplay: state a range anchored at your target, mention competing offer without revealing the exact number, ask for flexibility on base OR equity.",
+    "Why us: specific product challenge + engineering decision you researched + connection to your own experience. Never generic.",
+    "5-year question: depth of impact, architectural leadership, developing others — not title-focused, not vague.",
+    "Blank recovery: 'Let me think of the best example' + 3-second pause. Pivot to closest relevant story if needed. Composure scores points.",
+    "Read the room: fast-paced interviewer = tight answers (60-70 sec). Exploratory interviewer = more depth (90-100 sec), invite follow-ups.",
+    "Capstone walk-through: 3 minutes, from memory: business context + architecture decisions + key challenge + measurable outcomes.",
+    "Thank-you email: within 24 hours, reference one specific thing from the conversation. One line. Memorable and rare.",
+    "Pre-interview checklist: 10 items covering behavioral stories, quantification, ownership language, research, negotiation prep, thoughtful questions.",
+    "Final mindset: this is a peer conversation, not an exam. You are evaluating them too. Curiosity and confidence are the target state."
+  ],
+  bugChallenge: {
+    code: `// BEHAVIORAL ANSWER — FIND ALL THE WEAKNESSES:
+
+Interviewer: "Tell me about a time you failed."
+
+Candidate: "Hmm, to be honest it is hard to think of a real failure.
+I mean, there were definitely challenges, but I always tried my best
+and usually things worked out okay in the end. I guess one time we
+had an issue with an app launch that was not great, but it was more
+of a team situation and there were a lot of factors outside my control.
+The project manager had made some decisions about the timeline that
+I disagreed with but I was not in a position to change them. We dealt
+with it and moved on. I think I learned that communication is important
+and now I always make sure to communicate well with my team."`,
+    hint: "Apply the failure story rubric: Is there full ownership? Is there blame-shifting? Is there a specific process change? Is there evidence the change worked? Is the learning specific or generic? Does the candidate demonstrate self-awareness or defensiveness?",
+    answer: "Critical failure 1 (Denying failure): 'it is hard to think of a real failure' — this is a red flag. Every senior engineer has failed. Interviewers know this. Claiming otherwise signals lack of self-awareness or dishonesty. Critical failure 2 (Minimizing): 'more of a team situation' and 'factors outside my control' — this is blame-shifting, not ownership. A senior answer says 'I failed' not 'we had a challenge'. Critical failure 3 (Blaming the PM): 'The project manager had made some decisions... I disagreed but was not in a position to change them' — this explicitly blames another person and removes all responsibility from the candidate. This is one of the most damaging things you can say in a behavioral interview. Critical failure 4 (Generic learning): 'communication is important and I always communicate well now' — this is not a process change. What specifically changed? Daily standups? A written risk log? A pre-launch checklist? Generic lessons signal shallow reflection. Critical failure 5 (No evidence): There is no evidence the change worked — no 'since then, here is what happened.' Fix: Own a real failure completely, name the specific process you changed, and provide one sentence of evidence that it stuck."
+  },
+  difficulty: "advanced",
+  prereqs: [66, 67, 68, 69]
 }
 ];
