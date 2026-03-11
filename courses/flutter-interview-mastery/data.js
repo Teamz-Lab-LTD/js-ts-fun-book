@@ -1,0 +1,6709 @@
+const LESSONS_DATA = [
+  {id:1,title:"Dart Types, Null Safety & Variables",subtitle:"The Foundation Every Interviewer Tests First",analogy:"Think of Dart types like labeled containers in a warehouse. A container labeled 'Fragile Glass' (String?) might be empty (null) or hold glass. Null safety is the warehouse rule that forces you to check if a container is empty before reaching in — preventing the classic 'I grabbed nothing and dropped it' crash.",points:[{t:"Dart's Type System",d:"Dart is statically typed with sound null safety. Every variable has a type known at compile time. The type checker prevents you from assigning a String to an int variable. In interviews, explain that Dart's type system catches bugs before runtime — unlike JavaScript where '5' + 3 = '53'."},{t:"Null Safety — The Billion Dollar Fix",d:"Before null safety, any variable could be null, causing crashes. Since Dart 2.12+, variables are non-nullable by default. String name = 'hello' can NEVER be null. String? name means it CAN be null. This eliminates entire categories of production crashes."},{t:"final vs const vs late",d:"final: assigned once at runtime, can't change. const: assigned at compile time, deeply immutable. late: promises to initialize before first use, useful for lazy init. Interview trap: const creates canonical instances (identical objects), final does not."},{t:"Type Inference with var and final",d:"Dart infers types: var name = 'Emon' is inferred as String. final count = 42 is inferred as int. You don't always need explicit types. But in function signatures and class fields, explicit types improve readability and are expected in production code."},{t:"The Null-Aware Operators",d:"?. (null-aware access), ?? (null coalesce), ??= (null-aware assign), ?.. (null-aware cascade). These are interview favorites. user?.name ?? 'Guest' means: if user is not null, get name; if name is null, use 'Guest'."},{t:"The ! Operator (Bang)",d:"The ! operator tells Dart 'I guarantee this is not null.' String value = nullableString!; If it IS null, you get a runtime crash. Interviewers test whether you know when ! is safe vs dangerous. Rule: avoid ! except when you have external proof of non-nullness."},{t:"Type Promotion and Smart Casts",d:"When you check if (value != null), Dart promotes the type from String? to String inside that block. This is flow-sensitive type promotion. It also works with 'is' checks: if (obj is String) { obj.length; } — no cast needed."},{t:"num, int, double Hierarchy",d:"num is the parent of both int and double. int has no decimal, double always has one. Division with / always returns double. Use ~/ for integer division. Interview question: 5 / 2 = 2.5 (double), 5 ~/ 2 = 2 (int)."},{t:"String Interpolation & Multi-line",d:"Use $variable or ${expression} inside strings. Multi-line strings use triple quotes. Raw strings (r'...') ignore escape characters. In production, prefer interpolation over concatenation for readability and performance."},{t:"dynamic vs Object vs Object?",d:"Object? is the top of the type hierarchy (everything, including null). Object is everything except null. dynamic disables type checking entirely — avoid it. Interview trap: dynamic allows any method call at compile time but crashes at runtime if the method doesn't exist."}],whatIs:"Dart's type system with null safety is the foundation of every Flutter app. Variables must have types (explicit or inferred), and null safety ensures you handle the absence of values explicitly with ? syntax rather than crashing at runtime. final/const/late control mutability and initialization timing.",realWorld:"In a real-time collaboration app, null safety prevents crashes when a user's profile hasn't loaded yet. Instead of crashing on user.name when user is null, the compiler forces you to handle it: user?.name ?? 'Loading...'. This pattern appears in every production Flutter app.",code:"// Dart Types & Null Safety — Interview Essentials\n\n// Non-nullable by default (Dart 2.12+)\nString name = 'Flutter Dev';     // CANNOT be null\n// name = null;                   // Compile error!\n\n// Nullable with ?\nString? nickname;                 // CAN be null\nnickname = null;                  // OK\nnickname = 'Coder';               // Also OK\n\n// final vs const vs late\nfinal DateTime now = DateTime.now();     // Runtime constant\nconst double pi = 3.14159;               // Compile-time constant\nlate final String config;                // Initialized before first use\n\n// late with lazy initialization\nlate final String heavyValue = _computeExpensiveValue();\n\n// Null-aware operators\nString display = nickname ?? 'Anonymous';        // ?? null coalesce\nint? length = nickname?.length;                  // ?. null-aware access\nnickname ??= 'DefaultNick';                      // ??= assign if null\n\n// Type promotion (flow analysis)\nvoid greet(String? input) {\n  if (input == null) return;\n  // Dart promotes input from String? to String here\n  print(input.toUpperCase());  // No ! needed\n}\n\n// The dangerous ! operator\nString forced = nickname!;  // Crashes if null!\n\n// num hierarchy\nnum value = 42;         // Can hold int or double\nint whole = 5 ~/ 2;     // 2 (integer division)\ndouble half = 5 / 2;    // 2.5 (always double)\n\n// String interpolation\nString greeting = 'Hello, $name! Length: ${name.length}';\nString multiLine = '''\n  This is a\n  multi-line string\n''';\n\n// dynamic vs Object?\ndynamic anything = 'hello';\nanything = 42;           // OK — no type safety\nanything.noSuchMethod(); // Compiles! Crashes at runtime.\n\nObject? safe = 'hello';\n// safe.length;          // Compile error — must check type first\nif (safe is String) {\n  print(safe.length);    // OK — type promoted to String\n}",funFact:"Tony Hoare, who invented null references in 1965, called it his 'billion dollar mistake' because of all the crashes it caused. Dart's null safety was specifically designed to fix this mistake — and it works. Apps with null safety have significantly fewer null-related crashes in production.",quiz:[{q:"What is the difference between String and String? in Dart?",opts:["No difference, they are the same","String cannot be null, String? can be null","String? is faster than String","String is nullable, String? is non-nullable"],ans:1},{q:"What does the ?? operator do?",opts:["Checks if two values are equal","Returns the left value if non-null, otherwise returns the right value","Throws an exception if null","Converts null to an empty string"],ans:1},{q:"What is the output of: print(5 / 2); in Dart?",opts:["2","2.5","2.0","Error"],ans:1},{q:"When should you use the ! (bang) operator?",opts:["Always, to make code shorter","Never, it is deprecated","Only when you have proof the value is not null","To convert any type to non-nullable"],ans:2},{q:"What is the key difference between final and const?",opts:["final is for strings, const is for numbers","final is assigned at runtime, const at compile time","const can be reassigned, final cannot","They are exactly the same"],ans:1}],challenge:"Create a User class with non-nullable name and email fields, a nullable phone field, and a method displayInfo() that uses null-aware operators to show 'No phone' when phone is null. Use final for immutable fields.",resources:[{type:"docs",title:"Dart Type System",url:"https://dart.dev/language/type-system",source:"Dart Official"},{type:"docs",title:"Understanding Null Safety",url:"https://dart.dev/null-safety/understanding-null-safety",source:"Dart Official"},{type:"article",title:"Null Safety in Dart Explained",url:"https://dart.dev/null-safety",source:"Dart Official"},{type:"docs",title:"Dart Language Tour — Variables",url:"https://dart.dev/language/variables",source:"Dart Official"}],eli5:"Imagine you have a lunchbox. Null safety is like a rule that says: before you eat from ANY lunchbox, you MUST check if there's food inside. Without this rule, you'd bite into an empty box and break your teeth. With it, you always check first: 'Is there food? Yes? Great, eat it. No? Get something else.'",codeWalkthrough:["Declaring a non-nullable String — this variable can NEVER hold null","Attempting to assign null would cause a compile error — this is null safety in action","Declaring a nullable String? — the question mark means null is allowed","Assigning null is perfectly fine for nullable types","Reassigning to a real value is also fine","final creates a runtime constant — DateTime.now() runs when the line executes","const creates a compile-time constant — the value must be known at compile time","late tells Dart this will be initialized before first use","late with an initializer — the function only runs when heavyValue is first accessed","The ?? operator provides a fallback value when the left side is null","The ?. operator safely accesses a property — returns null if the object is null","The ??= operator assigns only if the current value is null","Type promotion: after the null check, Dart knows input is non-null String","The ! operator forces a nullable to non-nullable — crashes if actually null"],bugChallenge:{code:"void processUser(String? name) {\n  print(name.toUpperCase());\n  \n  final List<int> numbers = const [1, 2, 3];\n  numbers.add(4);\n  \n  late String greeting;\n  print(greeting);\n}",hint:"Three bugs: null safety violation, const immutability, and late initialization...",answer:"Bug 1: name is String? but .toUpperCase() is called without null check — use name?.toUpperCase() or add a null guard. Bug 2: numbers is a const list, so .add(4) throws at runtime — remove const or use a mutable list. Bug 3: greeting is late but never assigned before print — assign it first or you get a LateInitializationError."},difficulty:"beginner",prereqs:[]},
+
+  {id:2,title:"Collections, Iterables & Equality",subtitle:"Data Structures That Show Up in Every Interview",analogy:"Collections are like different kinds of bags. A List is a numbered shopping bag where order matters. A Set is a bag of unique marbles — try to add a duplicate and it just bounces off. A Map is a filing cabinet where every drawer has a label (key) and holds one thing (value).",points:[{t:"List — Ordered, Indexed, Allows Duplicates",d:"List<T> is Dart's array. Zero-indexed, ordered, allows duplicates. Use [] literal or List.generate(). Growable by default. Fixed-length with List.filled(). Interview: Know the difference between growable and fixed-length lists."},{t:"Set — Unique Values Only",d:"Set<T> stores unique values with O(1) lookup. Adding a duplicate does nothing. Great for tracking unique IDs, removing duplicates from a list (.toSet().toList()), and membership testing (.contains()). Interview favorite for deduplication questions."},{t:"Map — Key-Value Pairs",d:"Map<K, V> stores key-value pairs. Keys must be unique. Access is O(1) average. Use map['key'] for lookup (returns null if missing), map.containsKey() for existence check. In production, used everywhere for JSON parsing and state modeling."},{t:"Iterable and Lazy Evaluation",d:"Iterable<T> is the parent of List and Set. Methods like .map(), .where(), .expand() return lazy Iterables — they don't compute until you iterate. Call .toList() to force evaluation. Interview trap: lazy operations chain but only execute once consumed."},{t:"map, where, reduce, fold",d:".map() transforms each element. .where() filters. .reduce() combines all into one value (needs non-empty list). .fold() is like reduce but takes an initial value (works on empty lists). These are functional programming essentials tested in interviews."},{t:"spread (...) and collection if/for",d:"Spread operator: [...list1, ...list2] merges lists. Collection if: [1, 2, if (showThree) 3]. Collection for: [for (var i in items) i.name]. These are Dart-specific syntactic sugar that interviewers love to test."},{t:"Equality: == vs identical()",d:"== checks value equality (can be overridden). identical() checks reference equality (same object in memory). For custom classes, override == and hashCode together. Interview: two objects can be == equal but not identical."},{t:"Equatable Pattern",d:"Override == and hashCode manually is error-prone. The equatable package auto-generates both from a list of props. Essential for BLoC states: if state objects aren't properly equatable, BLoC won't emit 'equal' states, causing UI bugs."},{t:"Unmodifiable and Const Collections",d:"List.unmodifiable() creates a runtime-immutable view. const [1,2,3] creates a compile-time constant. Both prevent modification. In Clean Architecture, returning unmodifiable collections from repositories prevents accidental mutation."},{t:"Common Collection Patterns",d:"Grouping: fold into Map<K, List<V>>. Chunking: partition list into sublists. Flattening: expand() nested lists. Zipping: combine two lists element-by-element. Know these patterns — they appear in coding challenges."}],whatIs:"Dart collections (List, Set, Map) are the core data structures you'll use in every Flutter app and every interview. Understanding their performance characteristics, equality behavior, and functional methods (map/where/reduce) is essential for writing efficient code and answering algorithm questions.",realWorld:"In a SaaS collaboration app, you use Map to store workspace data by ID, Set to track unique online users, and List for ordered chat messages. The .where() method filters messages by channel, .map() transforms API responses into UI models, and proper equality ensures BLoC state changes trigger rebuilds correctly.",code:"// Collections — Interview Essentials\n\n// List — ordered, indexed\nfinal List<String> fruits = ['apple', 'banana', 'cherry'];\nfruits.add('date');                    // [apple, banana, cherry, date]\nfruits.removeAt(1);                    // [apple, cherry, date]\nfinal sliced = fruits.sublist(0, 2);   // [apple, cherry]\n\n// Set — unique values, O(1) lookup\nfinal Set<int> ids = {1, 2, 3, 3, 3}; // {1, 2, 3} — duplicates ignored\nids.contains(2);                       // true — O(1)\nfinal unique = [1,1,2,2,3].toSet().toList(); // [1, 2, 3]\n\n// Map — key-value pairs\nfinal Map<String, int> scores = {'math': 95, 'science': 87};\nscores['english'] = 91;               // Add entry\nfinal math = scores['math'] ?? 0;     // Safe access with fallback\nscores.entries.forEach((e) => print('${e.key}: ${e.value}'));\n\n// Functional operations (lazy by default)\nfinal numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n\nfinal doubled = numbers.map((n) => n * 2);           // Lazy Iterable\nfinal evens = numbers.where((n) => n.isEven);         // Lazy Iterable\nfinal sum = numbers.reduce((a, b) => a + b);          // 55\nfinal product = numbers.fold<int>(1, (a, b) => a * b); // Works on empty too\n\n// Force evaluation\nfinal doubledList = doubled.toList(); // [2, 4, 6, 8, ...]\n\n// Spread and collection if/for\nfinal combined = [...fruits, ...['extra1', 'extra2']];\nfinal bool showAdmin = true;\nfinal menu = [\n  'Home',\n  'Profile',\n  if (showAdmin) 'Admin Panel',\n];\nfinal widgets = [for (var item in menu) 'MenuItem: $item'];\n\n// Equality\nclass User {\n  final String id;\n  final String name;\n  const User(this.id, this.name);\n\n  @override\n  bool operator ==(Object other) =>\n      identical(this, other) ||\n      other is User && other.id == id && other.name == name;\n\n  @override\n  int get hashCode => id.hashCode ^ name.hashCode;\n}\n\nfinal u1 = User('1', 'Alice');\nfinal u2 = User('1', 'Alice');\nprint(u1 == u2);           // true (value equality)\nprint(identical(u1, u2));  // false (different instances)",funFact:"Dart's collection-if and collection-for syntax is unique among mainstream languages. Most languages require separate logic to conditionally include items in a list. Dart lets you do it inline, which is especially powerful when building widget trees in Flutter.",quiz:[{q:"What happens when you add a duplicate value to a Set?",opts:["It throws an error","It adds the duplicate at the end","Nothing happens — duplicates are silently ignored","It replaces the existing value"],ans:2},{q:"What is the difference between .reduce() and .fold()?",opts:["They are identical","reduce needs a non-empty list; fold takes an initial value and works on empty lists","fold is faster than reduce","reduce returns a list, fold returns a single value"],ans:1},{q:"What does the spread operator (...) do?",opts:["Divides a list in half","Expands the elements of a collection inline into another collection","Removes duplicates","Sorts the collection"],ans:1},{q:"Why must you override both == and hashCode together?",opts:["It is just a convention with no real effect","Collections like Set and Map use hashCode for bucketing; inconsistent == and hashCode breaks lookups","The compiler requires it","hashCode is used for display purposes only"],ans:1},{q:"What is lazy evaluation in Dart Iterables?",opts:["Operations are computed immediately when called","Operations are deferred and only computed when the result is consumed (e.g., .toList())",".map() and .where() always return empty lists","Lazy means the operations run in a background isolate"],ans:1}],challenge:"Write a function that takes a List<Map<String, dynamic>> of user JSON objects and returns a List<String> of unique email addresses, sorted alphabetically. Use .map(), .toSet(), and .toList(). Handle null email fields gracefully.",resources:[{type:"docs",title:"Dart Collections",url:"https://dart.dev/language/collections",source:"Dart Official"},{type:"docs",title:"Iterable API Reference",url:"https://api.dart.dev/stable/dart-core/Iterable-class.html",source:"Dart Official"},{type:"article",title:"Dart Collection Methods",url:"https://dart.dev/guides/libraries/library-tour#collections",source:"Dart Official"},{type:"docs",title:"Equatable Package",url:"https://pub.dev/packages/equatable",source:"pub.dev"}],eli5:"Imagine you have three types of toy boxes. A List box has numbered slots — toy #1, toy #2, toy #3 — and you can have two identical toys. A Set box is magical — if you try to put in a toy you already have, it just bounces back out. A Map box has labeled drawers — the 'car' drawer, the 'doll' drawer — and each label opens to exactly one toy.",codeWalkthrough:["Creating an ordered List of strings with three items","Adding 'date' to the end of the list","Removing the item at index 1 (banana)","Getting a sublist from index 0 to 2 (exclusive)","Creating a Set — notice the duplicate 3s are automatically removed","Checking membership in O(1) time — much faster than List.contains()","Converting a list with duplicates to a Set and back to get unique values","Creating a Map with String keys and int values","Adding a new key-value pair using bracket notation","Safe access with ?? fallback — if key doesn't exist, returns 0","Iterating over map entries with forEach","Functional chain: .map() transforms lazily, .where() filters lazily",".reduce() combines all elements — throws on empty list","Using .fold() with initial value 1 — safe on empty lists"],bugChallenge:{code:"final list = const [3, 1, 4, 1, 5];\nlist.sort();\n\nfinal map = <String, int>{};\nmap['a'] = 1;\nfinal value = map['b'];\nprint(value.isEven);",hint:"A const list can't be modified, and a missing map key returns null...",answer:"Bug 1: list is const so .sort() throws at runtime — remove const to make it mutable. Bug 2: map['b'] returns null (key doesn't exist), so value is int? — calling .isEven on null crashes. Fix: print(value?.isEven ?? false) or check for null first."},difficulty:"beginner",prereqs:[1]},
+
+  {id:3,title:"Futures, async/await & the Event Loop",subtitle:"The #1 Most-Asked Dart Interview Topic",analogy:"Imagine ordering food at a restaurant. You place the order (create a Future), then chat with friends (event loop continues). When the food arrives (Future completes), you eat it (then/await). You don't stand at the kitchen door blocking everyone. That's async programming — do other work while waiting.",points:[{t:"What is a Future?",d:"A Future<T> represents a value that will be available later. It's a promise: 'I'll give you a String eventually.' A Future is either uncompleted, completed with a value, or completed with an error. Every HTTP call, file read, and DB query returns a Future."},{t:"async/await Syntax",d:"Mark a function async to use await inside it. await pauses that function (not the whole app) until the Future completes. The function returns a Future automatically. Interview: async functions always return Future<T> even if you return T directly."},{t:"The Event Loop — Single Threaded",d:"Dart is single-threaded with an event loop. Two queues: microtask queue (high priority) and event queue (normal). Microtasks run first. Future(() => ...) adds to event queue. Future.microtask() adds to microtask queue. This is the #1 async interview question."},{t:"Event Loop Execution Order",d:"Order: 1) Synchronous code runs first. 2) All microtasks drain. 3) One event processes. 4) Check microtasks again. Interview classic: print order of sync code, Future.microtask, Future, Future.delayed — know this cold."},{t:"Future.then() vs await",d:".then() chains callbacks. await is syntactic sugar that makes async code look synchronous. They do the same thing differently. await is cleaner for sequential operations. .then() is useful for fire-and-forget or parallel chains."},{t:"Error Handling in Async",d:"Use try/catch with await. Use .catchError() with .then(). Unhandled Future errors crash in debug, are swallowed in release (dangerous!). Always handle errors. Interview: What happens to an unhandled Future error?"},{t:"Future.wait and Future.any",d:"Future.wait([f1, f2, f3]) waits for ALL to complete (parallel execution). Future.any([f1, f2, f3]) returns as soon as ANY completes. Use wait for parallel API calls. Interview: How do you make multiple API calls simultaneously?"},{t:"Completer — Manual Future Control",d:"Completer<T> lets you create a Future and complete it manually later. Useful for wrapping callback-based APIs into Future-based APIs. You create a completer, return completer.future, and call completer.complete(value) when ready."},{t:"Common Async Pitfalls",d:"Forgetting await (fire-and-forget bug). Using await in a loop instead of Future.wait (sequential vs parallel). Not handling errors. Blocking the event loop with heavy sync work. These are interview trap questions."},{t:"FutureBuilder in Flutter",d:"FutureBuilder<T> widget listens to a Future and rebuilds the UI when it completes. Has connectionState: waiting, active, done. Interview: Why should you NOT create a Future inside the build method? Answer: it creates a new Future every rebuild."}],whatIs:"Futures and async/await are Dart's core async primitives. A Future represents a value that will arrive later. async/await makes async code readable. The event loop processes tasks in a single thread using microtask and event queues. Understanding this system is tested in 80%+ of Flutter interviews.",realWorld:"In a claims processing app, when a user submits a refund request, the app: 1) Shows a loading spinner (Future starts), 2) Sends the API request (await), 3) Updates the UI with the result (Future completes). Meanwhile, the user can still scroll and interact because the event loop keeps the UI responsive.",code:"// Futures & Event Loop — Interview Must-Know\n\n// Basic Future\nFuture<String> fetchUser() async {\n  // Simulates API call — pauses this function, not the app\n  await Future.delayed(Duration(seconds: 2));\n  return 'John Doe';\n}\n\n// Using async/await\nFuture<void> loadData() async {\n  try {\n    final user = await fetchUser();\n    print('Got: $user');\n  } catch (e) {\n    print('Error: $e');\n  }\n}\n\n// Using .then() chain\nfetchUser()\n    .then((user) => print('Got: $user'))\n    .catchError((e) => print('Error: $e'));\n\n// Parallel execution with Future.wait\nFuture<void> loadDashboard() async {\n  final results = await Future.wait([\n    fetchUser(),\n    fetchSettings(),\n    fetchNotifications(),\n  ]);\n  // All three complete in parallel, not sequentially!\n  final user = results[0];\n  final settings = results[1];\n  final notifications = results[2];\n}\n\n// EVENT LOOP ORDER — Interview Classic\nvoid main() {\n  print('1 - Sync');                              // Runs 1st\n\n  Future.microtask(() => print('2 - Microtask')); // Runs 3rd\n\n  Future(() => print('3 - Event queue'));          // Runs 4th\n\n  Future.delayed(\n    Duration.zero,\n    () => print('4 - Delayed zero'),              // Runs 5th\n  );\n\n  print('5 - Sync again');                         // Runs 2nd\n}\n// Output: 1, 5, 2, 3, 4\n\n// Completer — manual Future control\nimport 'dart:async';\n\nFuture<String> wrapCallback() {\n  final completer = Completer<String>();\n  someCallbackApi(\n    onSuccess: (data) => completer.complete(data),\n    onError: (e) => completer.completeError(e),\n  );\n  return completer.future;\n}\n\n// WRONG: await in a loop (sequential!)\nfor (var id in ids) {\n  await fetchItem(id); // Each waits for previous — slow!\n}\n\n// RIGHT: parallel execution\nfinal items = await Future.wait(ids.map(fetchItem));",funFact:"Dart's event loop is inspired by JavaScript's event loop, but Dart added a separate microtask queue that drains completely before the next event. This is why Future.microtask() always runs before Future() — a common interview trick question.",quiz:[{q:"What is the output order of: print('A'); Future(() => print('B')); Future.microtask(() => print('C')); print('D');?",opts:["A, B, C, D","A, C, B, D","A, D, C, B","A, D, B, C"],ans:2},{q:"What does Future.wait() do?",opts:["Waits for a single future with a timeout","Runs multiple futures in parallel and waits for ALL to complete","Cancels all pending futures","Runs futures one after another sequentially"],ans:1},{q:"Why should you NOT create a Future inside a build() method?",opts:["It causes a compile error","It creates a new Future on every rebuild, causing repeated API calls and flickering","Futures are not allowed in Flutter widgets","It makes the app slower"],ans:1},{q:"What happens to an unhandled Future error in release mode?",opts:["It crashes the app immediately","It is silently swallowed — the error is lost with no crash","It shows a dialog to the user","It is logged to the console automatically"],ans:1},{q:"What is a Completer used for?",opts:["Completing a widget's lifecycle","Wrapping callback-based APIs into Future-based APIs by manually completing a Future","Completing async tests","Replacing StreamControllers"],ans:1}],challenge:"Write a function fetchAllUsers() that takes a list of user IDs and fetches all user profiles in parallel using Future.wait. Include proper error handling with try/catch. If any single fetch fails, return the successfully fetched users and log the failures.",resources:[{type:"docs",title:"Asynchronous Programming: Futures",url:"https://dart.dev/codelabs/async-await",source:"Dart Official"},{type:"docs",title:"Dart Event Loop",url:"https://dart.dev/language/concurrency#the-event-loop",source:"Dart Official"},{type:"article",title:"Futures and Error Handling",url:"https://dart.dev/guides/libraries/futures-error-handling",source:"Dart Official"},{type:"docs",title:"Completer API",url:"https://api.dart.dev/stable/dart-async/Completer-class.html",source:"Dart Official"}],eli5:"Imagine you're at a pizza shop. You order a pizza (that's a Future — a promise of pizza). While it bakes, you go sit down and play on your phone (the event loop doing other work). When the pizza is ready, the counter calls your name (the Future completes). You go grab it (await gets the value). You didn't just stand at the counter staring — you did other stuff while waiting!",codeWalkthrough:["Declaring an async function that returns Future<String>","await pauses this function for 2 seconds, simulating an API call","Returns the string — automatically wrapped in a completed Future","The calling function is also async","try/catch handles both sync and async errors with await","awaiting the result — this line pauses until fetchUser completes","catch handles any error that fetchUser might throw","Alternative .then() syntax — same behavior, different style","catchError handles errors in the .then() chain","Future.wait takes a list of Futures and runs them ALL in parallel","All three API calls happen simultaneously, not one after another","Destructuring the results list","The classic event loop question — sync code runs first","Microtask queue drains before the event queue","Event queue processes after all microtasks"],bugChallenge:{code:"Future<void> loadData() async {\n  final data = fetchData();\n  print(data.length);\n}\n\nFuture<List<int>> fetchData() async {\n  await Future.delayed(Duration(seconds: 1));\n  return [1, 2, 3];\n}",hint:"What type does fetchData() return if you don't await it?",answer:"Missing await! 'final data = fetchData()' assigns a Future<List<int>>, not a List<int>. Calling .length on a Future is a compile error (or if dynamic, a runtime crash). Fix: 'final data = await fetchData();'"},difficulty:"intermediate",prereqs:[1]},
+
+  {id:4,title:"Streams, StreamController & Operators",subtitle:"Real-time Data Flows — From Chat to Sensors",analogy:"A Future is like ordering one pizza — you get one delivery. A Stream is like subscribing to a meal service — pizzas keep arriving over time until you cancel. You can filter (only pepperoni), transform (cut into slices with map), and stop anytime (cancel subscription).",points:[{t:"Stream vs Future",d:"Future<T> delivers ONE value later. Stream<T> delivers ZERO or MORE values over time. Use Future for single async operations (API call). Use Stream for ongoing data (WebSocket messages, sensor data, user input, BLoC state changes)."},{t:"Single-Subscription vs Broadcast",d:"Single-subscription: only ONE listener allowed (default). Broadcast: multiple listeners allowed. File reads are single-sub. UI events should be broadcast. Interview: What happens if you listen to a single-subscription stream twice? Answer: StateError."},{t:"StreamController",d:"StreamController<T> is how you CREATE streams. Add events with .sink.add(). Listen with .stream.listen(). Always close controllers to prevent memory leaks. In production, BLoC internally uses StreamControllers for event/state management."},{t:"async* and yield",d:"Generator functions use async* and yield to produce streams. yield emits one value. yield* delegates to another stream. This is cleaner than manually creating StreamControllers for simple stream sources."},{t:"Stream Operators",d:".map() transforms events. .where() filters events. .distinct() removes consecutive duplicates. .debounceTime() (rxdart) waits for a pause. .switchMap() (rxdart) cancels previous and starts new. These are real-time app essentials."},{t:"Stream Listening and Cancellation",d:".listen() returns a StreamSubscription. ALWAYS store it and call .cancel() in dispose(). Memory leak interview question: What happens if you don't cancel a stream subscription? Answer: the listener keeps running, wasting memory and potentially causing setState-after-dispose errors."},{t:"StreamBuilder in Flutter",d:"StreamBuilder<T> listens to a Stream and rebuilds the UI on each event. Like FutureBuilder but for ongoing data. Used with BLoC pattern: StreamBuilder listens to bloc.state stream. Has snapshot.connectionState and snapshot.data."},{t:"Error and Done Events",d:"Streams can emit data, error, or done events. .addError() sends an error. .close() sends done. StreamBuilder handles errors in snapshot.hasError. Always handle all three states in production code."},{t:"Stream Transformers",d:"StreamTransformer<S, T> converts one stream type to another. Used internally by operators like .map() and .where(). You can create custom transformers for complex operations like batching, throttling, or retry logic."},{t:"Practical Stream Patterns",d:"Polling: Stream.periodic(). Merge: StreamGroup.merge() from async package. Buffer: collect events into batches. Debounce: wait for user to stop typing before searching. These patterns appear in production apps constantly."}],whatIs:"Streams are Dart's mechanism for delivering multiple async values over time. StreamController creates streams, async*/yield generates them, and operators like .map/.where/.distinct transform them. They're the backbone of reactive programming in Flutter, especially with BLoC state management.",realWorld:"In a real-time collaboration app, WebSocket messages arrive as a Stream. Each new chat message is a stream event. The app uses .where() to filter messages for the current channel, .map() to convert JSON to Message objects, and StreamBuilder to rebuild the chat UI. Without streams, real-time features are impossible.",code:"// Streams — Real-time Data Flows\n\nimport 'dart:async';\n\n// Creating a stream with async* generator\nStream<int> countDown(int from) async* {\n  for (var i = from; i >= 0; i--) {\n    await Future.delayed(Duration(seconds: 1));\n    yield i;  // Emits one value at a time\n  }\n}\n\n// Listening to a stream\nvoid main() async {\n  final subscription = countDown(5).listen(\n    (value) => print('Count: $value'),\n    onError: (e) => print('Error: $e'),\n    onDone: () => print('Done!'),\n  );\n\n  // Cancel after 3 seconds (important for memory!)\n  await Future.delayed(Duration(seconds: 3));\n  await subscription.cancel();\n}\n\n// StreamController — manual stream creation\nclass ChatService {\n  final _controller = StreamController<String>.broadcast();\n\n  Stream<String> get messages => _controller.stream;\n\n  void sendMessage(String msg) {\n    _controller.sink.add(msg);\n  }\n\n  void sendError(String error) {\n    _controller.addError(Exception(error));\n  }\n\n  void dispose() {\n    _controller.close(); // ALWAYS close to prevent memory leaks\n  }\n}\n\n// Stream operators — transform the flow\nvoid processMessages(ChatService chat) {\n  chat.messages\n      .where((msg) => msg.isNotEmpty)           // Filter empty\n      .map((msg) => msg.trim().toUpperCase())    // Transform\n      .distinct()                                 // Skip consecutive dupes\n      .listen((msg) => print('Processed: $msg'));\n}\n\n// Stream.periodic — polling pattern\nStream<DateTime> clock = Stream.periodic(\n  Duration(seconds: 1),\n  (_) => DateTime.now(),\n);\n\n// await for — consuming a stream\nFuture<void> processStream(Stream<int> stream) async {\n  await for (final value in stream) {\n    print(value);\n    if (value == 0) break; // Exit early\n  }\n}\n\n// Single-subscription vs broadcast\nfinal singleSub = StreamController<int>();         // ONE listener only\nfinal broadcast = StreamController<int>.broadcast(); // MANY listeners OK\n\n// StreamBuilder in Flutter\n// StreamBuilder<String>(\n//   stream: chatService.messages,\n//   builder: (context, snapshot) {\n//     if (snapshot.hasError) return Text('Error!');\n//     if (!snapshot.hasData) return CircularProgressIndicator();\n//     return Text(snapshot.data!);\n//   },\n// )",funFact:"The reactive programming paradigm that Streams enable was formalized by Erik Meijer at Microsoft, who called it 'the dual of the Iterator pattern.' Instead of pulling values from a collection (Iterator), you push values to observers (Stream). This insight led to Rx (ReactiveX) which influenced Dart's Stream API.",quiz:[{q:"What is the key difference between a Future and a Stream?",opts:["Future is sync, Stream is async","Future delivers one value, Stream delivers zero or more values over time","Stream is faster than Future","Future is for errors, Stream is for data"],ans:1},{q:"What happens if you listen to a single-subscription stream twice?",opts:["Both listeners receive events","Only the second listener receives events","A StateError is thrown","The stream automatically becomes broadcast"],ans:2},{q:"Why must you always cancel stream subscriptions in dispose()?",opts:["To improve compile speed","To prevent memory leaks and setState-after-dispose errors","Dart requires it or the app won't compile","To make streams faster"],ans:1},{q:"What does the .distinct() operator do on a Stream?",opts:["Removes all duplicate values ever emitted","Removes consecutive duplicate values","Sorts the stream values","Counts distinct values"],ans:1},{q:"What does yield do in an async* function?",opts:["Pauses the function forever","Emits a single value to the stream and continues","Returns from the function","Creates a new stream"],ans:1}],challenge:"Build a SearchService class with a StreamController that debounces search queries (using a Timer to wait 300ms after the last keystroke) and emits only distinct, non-empty queries. Include proper disposal.",resources:[{type:"docs",title:"Asynchronous Programming: Streams",url:"https://dart.dev/tutorials/language/streams",source:"Dart Official"},{type:"docs",title:"StreamController API",url:"https://api.dart.dev/stable/dart-async/StreamController-class.html",source:"Dart Official"},{type:"docs",title:"Creating Streams in Dart",url:"https://dart.dev/articles/libraries/creating-streams",source:"Dart Official"},{type:"article",title:"RxDart Package",url:"https://pub.dev/packages/rxdart",source:"pub.dev"}],eli5:"A Future is like getting a letter in the mail — one letter, one delivery. A Stream is like subscribing to a magazine — a new issue shows up every month until you cancel. You can tell the mailman: only give me the science magazines (filter), and mark the important articles (transform). But remember to cancel when you move, or magazines pile up at your old address (memory leak)!",codeWalkthrough:["Defining an async* generator function that produces a Stream of ints","Loop from the starting number down to zero","Wait one second between emissions","yield sends a single value into the stream","Subscribing to the stream with .listen()","onError callback handles any errors in the stream","onDone callback fires when the stream closes","Cancelling the subscription — critical for preventing memory leaks","StreamController.broadcast() allows multiple listeners","Exposing the stream as a read-only getter","Adding a value to the stream through the sink","Always close the controller in dispose() to prevent leaks","Chaining operators: where filters, map transforms, distinct deduplicates","Stream.periodic creates a stream that emits on a timer interval"],bugChallenge:{code:"class DataService {\n  final _controller = StreamController<String>();\n\n  Stream<String> get data => _controller.stream;\n\n  void addData(String value) {\n    _controller.add(value);\n  }\n}\n\n// In a widget:\nfinal service = DataService();\nservice.data.listen((d) => print('Listener 1: $d'));\nservice.data.listen((d) => print('Listener 2: $d'));\nservice.addData('hello');",hint:"How many listeners can a default StreamController support?",answer:"Default StreamController is single-subscription — the second .listen() throws a StateError. Fix: Use StreamController<String>.broadcast() to allow multiple listeners. Also missing: dispose method to close the controller."},difficulty:"intermediate",prereqs:[3]},
+
+  {id:5,title:"Isolates, compute() & Concurrency",subtitle:"When Single-Threaded Isn't Enough",analogy:"Dart's single thread is like one chef in a kitchen. For most meals (UI tasks), one chef is fine. But for a huge banquet (heavy computation like image processing), you need to hire a temporary chef (Isolate) who works in their OWN kitchen with their OWN ingredients — they can't touch the main chef's stuff. When done, they send the result back via a window (SendPort).",points:[{t:"Why Isolates Exist",d:"Dart is single-threaded. Heavy computation (JSON parsing 10MB, image processing, encryption) blocks the event loop and causes UI jank — dropped frames, frozen scrolling. Isolates run code on a separate thread with their own memory, keeping the UI smooth."},{t:"Isolate vs Thread",d:"Isolates are NOT threads. Threads share memory (dangerous: race conditions). Isolates have completely separate memory (safe: no shared state). They communicate only through message passing (SendPort/ReceivePort). Interview: Why are Isolates safer than threads?"},{t:"compute() — Simple Isolate",d:"Flutter's compute(function, data) runs a top-level or static function in an Isolate and returns the result. Perfect for one-shot heavy work. Limitation: the function must be top-level or static (not a closure that captures state)."},{t:"Isolate.spawn — Full Control",d:"Isolate.spawn() creates an isolate with full control. You manage SendPort/ReceivePort for bidirectional communication. Use for long-running background work that needs ongoing communication, like a background sync service."},{t:"When NOT to Use Isolates",d:"Isolates have overhead: spawning time + serialization cost for messages. Don't use them for simple async work (API calls, file reads) — those are I/O bound, not CPU bound. The event loop handles I/O fine. Use isolates ONLY for CPU-heavy work."},{t:"Isolate.run() — Dart 2.19+",d:"Isolate.run() is the modern replacement for compute(). Simpler API, same concept. Runs a function in a new isolate and returns the result. Preferred in pure Dart code (compute() is Flutter-specific)."},{t:"Message Passing & Serialization",d:"Isolates communicate by sending messages through ports. Messages must be serializable (primitives, lists, maps, SendPort, TransferableTypedData). You can't send arbitrary objects with methods. This is a common gotcha."},{t:"Practical Use Cases",d:"JSON decoding large payloads, image compression/resizing, encryption/hashing, complex data transformations, search/filter on large datasets, PDF generation, database migrations. If it takes >16ms (one frame), consider an isolate."},{t:"Worker Isolate Pattern",d:"For repeated heavy tasks, create a long-running worker isolate that stays alive. Send it tasks via a SendPort, receive results back. This avoids repeated spawn overhead. Used in production for background sync engines."},{t:"IsolatePool and Packages",d:"For managing multiple isolates, consider packages like worker_manager or the upcoming Dart isolate groups. In production, you rarely need more than 1-2 worker isolates. Don't over-isolate — the overhead isn't free."}],whatIs:"Isolates are Dart's concurrency primitive — separate execution threads with their own memory that communicate via message passing. compute() and Isolate.run() provide simple APIs for offloading CPU-heavy work. They prevent UI jank by keeping heavy computation off the main thread, while the event loop handles I/O-bound async work.",realWorld:"In an offline-first field operations app processing thousands of survey records, syncing with a remote server while the user continues working requires an isolate. The main thread keeps the UI responsive while a worker isolate crunches the sync logic, resolves conflicts, and sends progress updates back via a SendPort.",code:"// Isolates & Concurrency — Interview Essentials\n\nimport 'dart:isolate';\nimport 'package:flutter/foundation.dart';\n\n// 1. compute() — simplest approach (Flutter)\nFuture<List<Map<String, dynamic>>> heavyJsonParse(\n  String rawJson,\n) async {\n  // Runs in a separate isolate, returns the result\n  return await compute(_parseJson, rawJson);\n}\n\n// Must be top-level or static — NOT a closure\nList<Map<String, dynamic>> _parseJson(String raw) {\n  // This runs in a separate isolate\n  // Heavy parsing happens here without blocking UI\n  return jsonDecode(raw) as List<Map<String, dynamic>>;\n}\n\n// 2. Isolate.run() — modern Dart 2.19+\nFuture<int> computeHash(String data) async {\n  return await Isolate.run(() {\n    // Heavy computation in separate isolate\n    var hash = 0;\n    for (var i = 0; i < data.length; i++) {\n      hash = (hash * 31 + data.codeUnitAt(i)) & 0xFFFFFFFF;\n    }\n    return hash;\n  });\n}\n\n// 3. Full Isolate with bidirectional communication\nFuture<void> workerIsolateExample() async {\n  final receivePort = ReceivePort();\n\n  // Spawn isolate with our receive port\n  await Isolate.spawn(\n    _workerEntryPoint,\n    receivePort.sendPort,\n  );\n\n  // Listen for messages from the worker\n  await for (final message in receivePort) {\n    if (message is SendPort) {\n      // Worker sent us its SendPort — now we can talk to it\n      message.send('Process this data');\n    } else if (message == 'done') {\n      receivePort.close();\n      break;\n    } else {\n      print('Worker result: $message');\n    }\n  }\n}\n\nvoid _workerEntryPoint(SendPort mainSendPort) {\n  final workerReceivePort = ReceivePort();\n  // Send our port so main can talk back\n  mainSendPort.send(workerReceivePort.sendPort);\n\n  workerReceivePort.listen((message) {\n    // Process the work\n    final result = 'Processed: $message';\n    mainSendPort.send(result);\n    mainSendPort.send('done');\n    workerReceivePort.close();\n  });\n}\n\n// WHEN TO USE vs NOT USE:\n// USE Isolates:        NOT Isolates:\n// - JSON parse 1MB+    - API calls (I/O bound)\n// - Image resize       - File reads (I/O bound)\n// - Encryption         - Simple state updates\n// - Complex sort/filter - Timer/periodic tasks\n// - PDF generation     - Database queries (I/O)",funFact:"The name 'Isolate' comes from the concept of isolation in concurrent programming. Unlike threads which share memory (and need locks, mutexes, and semaphores to avoid race conditions), Dart isolates are completely isolated from each other — making concurrent Dart code inherently safer than most other languages.",quiz:[{q:"What is the fundamental difference between an Isolate and a Thread?",opts:["Isolates are faster than threads","Isolates have separate memory and communicate via message passing; threads share memory","They are the same thing with different names","Isolates can only run on mobile, threads run on desktop"],ans:1},{q:"When should you use an Isolate?",opts:["For every async operation","Only for I/O operations like API calls","For CPU-heavy operations that take longer than a frame (16ms)","For all Future-based operations"],ans:2},{q:"Why must the function passed to compute() be top-level or static?",opts:["It is a Dart syntax rule with no technical reason","Because the function runs in a separate isolate with separate memory — closures can't capture state across isolate boundaries","Because static functions are faster","Because top-level functions are smaller in memory"],ans:1},{q:"What happens if you run a 500ms computation on the main isolate?",opts:["Nothing, Dart handles it automatically","The UI freezes/janks because the event loop is blocked for 500ms","The computation is automatically moved to an isolate","The app crashes"],ans:1},{q:"How do isolates communicate?",opts:["Shared memory and global variables","SendPort and ReceivePort message passing","HTTP requests between isolates","File system writes"],ans:1}],challenge:"Create a function that takes a large list of integers (100,000+) and finds all prime numbers using Isolate.run(). Compare the execution time with and without isolate usage. Observe UI jank in a Flutter app when running the same function on the main isolate.",resources:[{type:"docs",title:"Dart Concurrency",url:"https://dart.dev/language/concurrency",source:"Dart Official"},{type:"docs",title:"Isolate API Reference",url:"https://api.dart.dev/stable/dart-isolate/Isolate-class.html",source:"Dart Official"},{type:"docs",title:"Flutter compute()",url:"https://api.flutter.dev/flutter/foundation/compute-constant.html",source:"Flutter Official"},{type:"article",title:"Isolates and Event Loops",url:"https://dart.dev/language/concurrency#how-isolates-work",source:"Dart Official"}],eli5:"Imagine you're coloring a really big picture. If you try to color the whole thing yourself, you can't talk to your friends or play until it's done. But what if you tear off a section and give it to a friend? They color their part in their OWN room with their OWN crayons (isolate with separate memory). When they finish, they slide the colored section back under the door (message passing). Now you kept playing while they colored!",codeWalkthrough:["Using compute() to run heavy JSON parsing off the main thread","The function must be top-level — this is the isolate entry point","Inside the isolate: heavy work happens here without blocking UI","Isolate.run() — modern, cleaner API for one-shot isolate tasks","The closure runs in a completely separate memory space","Full isolate setup: create a ReceivePort to get messages","Spawn an isolate with an entry point function and our SendPort","Listen for messages from the worker isolate","The worker sends us its SendPort so communication is bidirectional","Worker entry point: receives the main thread's SendPort","Creates its own ReceivePort for incoming messages","Sends results back to the main isolate via message passing"],bugChallenge:{code:"// In a StatefulWidget\nvoid processData() async {\n  final result = await Isolate.run(() {\n    final data = widget.largeDataList; // Accessing widget state\n    return data.where((x) => x > 100).toList();\n  });\n  setState(() => processed = result);\n}",hint:"Can an isolate access the parent's memory and objects?",answer:"Isolates have separate memory — you cannot access 'widget.largeDataList' from inside an isolate closure. The data must be passed as a parameter. Fix: capture the data before the isolate call: 'final list = widget.largeDataList; final result = await Isolate.run(() => list.where((x) => x > 100).toList());' — Dart will serialize 'list' to the new isolate."},difficulty:"intermediate",prereqs:[3]},
+
+  {id:6,title:"Generics, Extensions, Mixins & Typedefs",subtitle:"Advanced Dart That Separates Mid from Senior",analogy:"Generics are like a universal adapter — one design works with any plug type. Extensions are like adding a custom button to your TV remote without buying a new one. Mixins are like collecting skill badges — your scout can earn swimming AND archery without being born a swimmer or archer.",points:[{t:"Generics — Type Parameters",d:"Generics let you write code that works with ANY type safely: class Box<T> { final T value; }. Box<int>(42) holds an int, Box<String>('hello') holds a String. Without generics, you'd use dynamic and lose type safety. Used everywhere: List<T>, Future<T>, Stream<T>."},{t:"Generic Constraints with extends",d:"Restrict what types are allowed: class Repo<T extends Entity>. Now T must be Entity or a subclass. This prevents misuse. In Clean Architecture, Repository<T extends Model> ensures only model types are stored."},{t:"Extension Methods",d:"Add methods to existing classes without modifying them: extension StringX on String { bool get isEmail => contains('@'); }. Now any String has .isEmail. Powerful for adding domain-specific helpers to SDK types. Interview: When would you use extensions vs utility functions?"},{t:"Extension Types (Dart 3.3+)",d:"extension type Meters(double value) implements double {}. Creates a zero-cost wrapper type at compile time. Unlike regular extensions, extension types create new types. Used for type-safe units, IDs, and API wrappers without runtime overhead."},{t:"Mixins — Reusable Behavior",d:"mixin Loggable { void log(String msg) => print(msg); }. Classes use 'with' to gain mixin behavior: class UserService with Loggable {}. Unlike inheritance (one parent), you can mix in multiple behaviors. Perfect for cross-cutting concerns."},{t:"Mixin Constraints",d:"mixin CacheableService on BaseService { ... } means this mixin can only be used on classes that extend BaseService. This ensures the mixin can call methods from BaseService. Interview: Explain 'on' keyword in mixins."},{t:"Typedefs — Type Aliases",d:"typedef JsonMap = Map<String, dynamic>; typedef Callback = void Function(String); Typedefs create readable aliases for complex types. Makes function signatures cleaner: void register(Callback onSuccess) instead of void register(void Function(String) onSuccess)."},{t:"Covariance and Generics",d:"Dart generics are covariant: List<Cat> is assignable to List<Animal>. This is convenient but can be unsafe. Interview: Explain covariance. Answer: If Cat extends Animal, then List<Cat> can be used where List<Animal> is expected, but adding a Dog to it would crash at runtime."},{t:"Generic Functions",d:"Functions can be generic too: T first<T>(List<T> items) => items[0]; The type is inferred from usage: first([1,2,3]) returns int, first(['a','b']) returns String. Useful for utility functions that work across types."},{t:"Practical Patterns",d:"Repository<T>: generic data access. Either<L, R>: error handling. BlocBase<State>: generic state. Mapper<From, To>: data transformation. These patterns form the backbone of Clean Architecture in Flutter."}],whatIs:"Generics provide type-safe code reuse. Extensions add methods to existing types. Mixins compose reusable behavior. Typedefs create readable type aliases. Together, these features enable the advanced patterns (Repository<T>, BlocBase<State>, Either<Failure, Success>) that define senior-level Flutter architecture.",realWorld:"In a Clean Architecture Flutter app, you define Repository<T extends Entity> as a generic base, use extensions for String and DateTime formatting helpers, add Loggable and Cacheable mixins to services, and typedef complex callback types. These aren't academic — they're in every production codebase.",code:"// Generics, Extensions, Mixins, Typedefs\n\n// --- GENERICS ---\n\n// Generic class — type-safe container\nclass Result<T> {\n  final T? data;\n  final String? error;\n  final bool isSuccess;\n\n  const Result.success(this.data) : error = null, isSuccess = true;\n  const Result.failure(this.error) : data = null, isSuccess = false;\n}\n\n// Generic with constraint\nabstract class Repository<T extends Entity> {\n  Future<Result<T>> getById(String id);\n  Future<Result<List<T>>> getAll();\n  Future<Result<void>> save(T entity);\n  Future<Result<void>> delete(String id);\n}\n\n// Generic function\nT? firstWhereOrNull<T>(List<T> items, bool Function(T) test) {\n  for (final item in items) {\n    if (test(item)) return item;\n  }\n  return null;\n}\n\n// --- EXTENSIONS ---\n\nextension StringValidation on String {\n  bool get isValidEmail => RegExp(r'^[\\w-.]+@[\\w-]+\\.[a-z]{2,}$').hasMatch(this);\n  bool get isStrongPassword => length >= 8 && contains(RegExp(r'[A-Z]')) && contains(RegExp(r'[0-9]'));\n  String get capitalized => isEmpty ? this : '${this[0].toUpperCase()}${substring(1)}';\n}\n\nextension DateTimeFormatting on DateTime {\n  String get timeAgo {\n    final diff = DateTime.now().difference(this);\n    if (diff.inDays > 0) return '${diff.inDays}d ago';\n    if (diff.inHours > 0) return '${diff.inHours}h ago';\n    if (diff.inMinutes > 0) return '${diff.inMinutes}m ago';\n    return 'Just now';\n  }\n}\n\n// --- MIXINS ---\n\nmixin Loggable {\n  void log(String message) {\n    print('[${runtimeType}] $message');\n  }\n}\n\nmixin Cacheable<T> {\n  final Map<String, T> _cache = {};\n\n  T? getFromCache(String key) => _cache[key];\n\n  void addToCache(String key, T value) {\n    _cache[key] = value;\n  }\n\n  void clearCache() => _cache.clear();\n}\n\n// Using multiple mixins\nclass UserRepository extends BaseRepository<User>\n    with Loggable, Cacheable<User> {\n\n  @override\n  Future<Result<User>> getById(String id) async {\n    // Check cache first\n    final cached = getFromCache(id);\n    if (cached != null) {\n      log('Cache hit for user $id');\n      return Result.success(cached);\n    }\n\n    log('Fetching user $id from API');\n    final user = await _api.fetchUser(id);\n    addToCache(id, user);\n    return Result.success(user);\n  }\n}\n\n// Mixin with constraint\nmixin NetworkAware on StatefulWidget {\n  // Can only be used with StatefulWidget\n}\n\n// --- TYPEDEFS ---\n\ntypedef JsonMap = Map<String, dynamic>;\ntypedef OnSuccess<T> = void Function(T data);\ntypedef OnError = void Function(String message);\ntypedef Predicate<T> = bool Function(T item);\n\n// Usage — clean function signatures\nvoid fetchData({\n  required OnSuccess<JsonMap> onSuccess,\n  required OnError onError,\n}) async {\n  try {\n    final data = await _api.get('/data');\n    onSuccess(data);\n  } catch (e) {\n    onError(e.toString());\n  }\n}",funFact:"Dart's extension methods were one of the most requested language features, added in Dart 2.7 (2019). The ability to add methods to types you don't own (like String or int) without inheritance revolutionized how Flutter developers write helper utilities — no more StringUtils.isEmail(str), now it's just str.isEmail.",quiz:[{q:"What problem do generics solve?",opts:["Making code run faster","Allowing type-safe code reuse without losing type information","Replacing inheritance entirely","Adding methods to existing classes"],ans:1},{q:"What does 'extends' mean in class Box<T extends Comparable>?",opts:["Box inherits from Comparable","T can be any type","T must be Comparable or a subclass of Comparable","It is the same as 'implements'"],ans:2},{q:"What is the difference between a mixin and an abstract class?",opts:["No difference","Mixins are applied with 'with' and allow multiple composition; abstract classes use single 'extends'","Mixins are faster than abstract classes","Abstract classes cannot have concrete methods"],ans:1},{q:"When should you use an extension method vs a utility function?",opts:["Always use extensions, utility functions are outdated","Use extensions when adding behavior to a type makes it feel natural (like str.isEmail); use utility functions for complex multi-type operations","Extensions are only for String types","Utility functions are always better for performance"],ans:1},{q:"What is a typedef used for in Dart?",opts:["Creating new data types from scratch","Creating a readable alias for a complex function or type signature","Defining abstract methods","Replacing generics"],ans:1}],challenge:"Create a generic Either<L, R> class with Left(L) and Right(R) subclasses. Add an extension on Either that provides fold(), map(), and getOrElse() methods. Then create a typedef for common patterns like ApiResult = Either<Failure, Success>.",resources:[{type:"docs",title:"Dart Generics",url:"https://dart.dev/language/generics",source:"Dart Official"},{type:"docs",title:"Extension Methods",url:"https://dart.dev/language/extension-methods",source:"Dart Official"},{type:"docs",title:"Mixins",url:"https://dart.dev/language/mixins",source:"Dart Official"},{type:"docs",title:"Typedefs",url:"https://dart.dev/language/typedefs",source:"Dart Official"}],eli5:"Generics are like a box factory where you tell it what to make boxes for — 'make me a toy box' or 'make me a shoe box' — same factory, different contents. Extensions are like giving your bike a new bell without going to the bike factory. Mixins are like wearing different hats — you can be a firefighter hat AND a chef hat at the same time!",codeWalkthrough:["Generic Result<T> class — works with any type","Success case stores data of type T","Failure case stores an error message","Generic Repository with constraint — T must extend Entity","Abstract methods return Result<T> — type-safe data access","Generic function — T is inferred from the argument","Extension on String — adds validation methods directly to all Strings","Email validation using regex directly on any String instance","Extension on DateTime — .timeAgo computed property","Mixin Loggable — any class can gain logging by adding 'with Loggable'","Mixin Cacheable<T> — generic caching behavior","UserRepository combines inheritance AND two mixins","Typedef for clean function signatures — OnSuccess<T> instead of void Function(T data)"],bugChallenge:{code:"mixin DatabaseMixin on Widget {\n  Future<void> saveData(String data) async {\n    // save to DB\n  }\n}\n\nclass MyService with DatabaseMixin {\n  void doWork() {\n    saveData('test');\n  }\n}",hint:"Check the mixin constraint — what does 'on Widget' mean?",answer:"The mixin has 'on Widget' constraint, meaning it can ONLY be used with classes that extend Widget. MyService doesn't extend Widget, so this is a compile error. Fix: either remove the 'on Widget' constraint, change it to 'on Object', or make MyService extend a Widget (if that's the intent)."},difficulty:"intermediate",prereqs:[1,2]},
+
+  {id:7,title:"Records, Patterns, Sealed Classes & Class Modifiers",subtitle:"Modern Dart 3.x — The Features Interviewers Love to Ask",analogy:"Records are like labeled envelopes — (String name, int age) is an envelope with two labeled slots. Patterns are like a mail sorter that opens envelopes and routes them automatically. Sealed classes are like an enum that can carry different data — a traffic light that's Red, Yellow, or Green, each with its own brightness level.",points:[{t:"Records — Lightweight Data Bundles",d:"Records bundle multiple values without creating a class: (String, int) record = ('Alice', 25); Named fields: ({String name, int age}) person = (name: 'Alice', age: 25); Records are value types — two records with the same values are ==. Perfect for returning multiple values from functions."},{t:"Pattern Matching with switch",d:"Dart 3 switch expressions match on type, value, and structure: switch (shape) { Circle(radius: var r) => pi * r * r, Square(side: var s) => s * s }. Exhaustive checking ensures you handle all cases. This replaces long if-else chains."},{t:"Destructuring with Patterns",d:"final (name, age) = getUserInfo(); instantly unpacks a record. var {'name': name, 'age': age} = json; destructures a map. if (value case int x when x > 0) { ... } combines type check + binding + guard. Extremely powerful for JSON parsing."},{t:"Sealed Classes",d:"sealed class Shape {} class Circle extends Shape { ... } class Square extends Shape { ... }. Sealed classes restrict which classes can extend them (same file only). The compiler knows ALL subtypes, enabling exhaustive switch. Like a type-safe union/enum with data."},{t:"Exhaustive Switch with Sealed",d:"When you switch on a sealed class, the compiler warns if you miss a case. No need for 'default'. This prevents bugs when adding new subtypes — the compiler forces you to handle them everywhere. This is the #1 reason to use sealed classes."},{t:"Class Modifiers: base, interface, final, mixin",d:"Dart 3 added: base (can extend, can't implement), interface (can implement, can't extend), final (can't extend or implement outside library), mixin class (can be used as both class and mixin). These control how your classes are used by other code."},{t:"When to Use Sealed vs Enum",d:"Enum: fixed set of values, all same type, no data variation. Sealed: fixed set of subtypes, each can carry different data. Use enum for Status.loading/success/error. Use sealed when each state needs different fields: LoadedState(data), ErrorState(message)."},{t:"Guard Clauses in Patterns",d:"Add 'when' guards: case int x when x > 0 => 'positive'. Guards add extra conditions to pattern matches. Useful for complex validation logic in switch expressions. Interview: How do you handle overlapping patterns?"},{t:"Practical Patterns for State",d:"BLoC states are perfect for sealed classes: sealed class AuthState {}. class Authenticated extends AuthState { final User user; }. class Unauthenticated extends AuthState {}. class AuthLoading extends AuthState {}. Exhaustive switch in UI ensures all states are rendered."},{t:"Object Patterns for JSON",d:"Parse JSON safely: if (json case {'name': String name, 'age': int age}) { ... }. This checks the structure AND extracts values in one step. Much safer than manual json['name'] as String which crashes on wrong types."}],whatIs:"Dart 3 introduced records (lightweight multi-value returns), patterns (destructuring and matching), sealed classes (closed type hierarchies with exhaustive checking), and class modifiers (base, interface, final, mixin). These features modernize Dart significantly and are increasingly tested in senior interviews.",realWorld:"In a fintech app handling refund claims, sealed classes model the claim lifecycle: sealed class ClaimState {}. class Draft extends ClaimState {}, class Submitted extends ClaimState { final DateTime at; }, class Approved extends ClaimState { final double amount; }, class Rejected extends ClaimState { final String reason; }. Exhaustive switch ensures every state renders correctly in the UI with no missing cases.",code:"// Records, Patterns, Sealed Classes — Dart 3.x\n\n// --- RECORDS ---\n\n// Positional record\n(String, int) getUser() => ('Alice', 25);\n\n// Named record fields\n({String name, int age, String email}) getUserInfo() =>\n    (name: 'Alice', age: 25, email: 'alice@mail.com');\n\n// Destructuring records\nvoid example() {\n  final (name, age) = getUser();\n  print('$name is $age'); // Alice is 25\n\n  final (:name, :age, :email) = getUserInfo(); // Named destructuring\n  print('$name ($email)');\n}\n\n// --- PATTERN MATCHING ---\n\n// Switch expression (Dart 3)\nString describe(Object value) => switch (value) {\n  int x when x > 0 => 'Positive int: $x',\n  int x when x < 0 => 'Negative int: $x',\n  0               => 'Zero',\n  String s        => 'String of length ${s.length}',\n  (int a, int b)  => 'Record: ($a, $b)',\n  _               => 'Unknown type',\n};\n\n// Object pattern for JSON parsing\nvoid parseJson(Map<String, dynamic> json) {\n  if (json case {'name': String name, 'age': int age, 'scores': List scores}) {\n    print('Name: $name, Age: $age, Scores: $scores');\n  } else {\n    print('Invalid JSON structure');\n  }\n}\n\n// --- SEALED CLASSES ---\n\nsealed class NetworkResult<T> {\n  const NetworkResult();\n}\n\nclass Success<T> extends NetworkResult<T> {\n  final T data;\n  const Success(this.data);\n}\n\nclass Failure<T> extends NetworkResult<T> {\n  final String message;\n  final int? statusCode;\n  const Failure(this.message, {this.statusCode});\n}\n\nclass Loading<T> extends NetworkResult<T> {\n  const Loading();\n}\n\n// Exhaustive switch — compiler warns if you miss a case!\nWidget buildUI(NetworkResult<User> result) => switch (result) {\n  Success(:final data) => UserCard(user: data),\n  Failure(:final message) => ErrorWidget(message: message),\n  Loading()              => const CircularProgressIndicator(),\n  // No default needed! Compiler knows all cases.\n};\n\n// --- SEALED FOR BLOC STATES ---\n\nsealed class AuthState {\n  const AuthState();\n}\n\nclass AuthInitial extends AuthState {\n  const AuthInitial();\n}\n\nclass AuthLoading extends AuthState {\n  const AuthLoading();\n}\n\nclass Authenticated extends AuthState {\n  final User user;\n  final String token;\n  const Authenticated({required this.user, required this.token});\n}\n\nclass Unauthenticated extends AuthState {\n  final String? reason;\n  const Unauthenticated({this.reason});\n}\n\n// --- CLASS MODIFIERS ---\n\nbase class Animal {}          // Can extend, can't implement\ninterface class Printable {}  // Can implement, can't extend\nfinal class Config {}         // Can't extend or implement outside file\nmixin class Validator {}      // Can be used as class or mixin",funFact:"Dart's sealed classes and pattern matching were heavily inspired by Kotlin's sealed classes and Swift's enums with associated values. The Dart team spent over 2 years designing these features, and they landed in Dart 3.0 (May 2023) as the biggest language update in Dart's history.",quiz:[{q:"What makes sealed classes different from abstract classes?",opts:["Sealed classes are faster","Sealed classes restrict subtypes to the same file, enabling exhaustive switch checking","Sealed classes can't have constructors","There is no difference"],ans:1},{q:"What does this return: (String, int) getInfo() => ('Alice', 25);?",opts:["A List with two elements","A Map with two entries","A Record with a String and an int","A Tuple object"],ans:2},{q:"What happens if you add a new subtype to a sealed class but forget to update a switch?",opts:["Nothing, the default case handles it","The compiler shows a warning/error about non-exhaustive switch","The app crashes at runtime","Dart auto-generates the missing case"],ans:1},{q:"What is the purpose of 'when' in a pattern: case int x when x > 0?",opts:["It defines a timeout","It adds a guard condition to the pattern match","It runs x asynchronously","It converts x to a positive number"],ans:1},{q:"Which class modifier prevents external code from both extending AND implementing a class?",opts:["base","interface","sealed","final"],ans:3}],challenge:"Model a payment system using sealed classes: sealed class PaymentState with subtypes Idle, Processing(amount), Completed(transactionId, amount), Failed(error, canRetry). Write a function that takes PaymentState and returns appropriate UI description strings using an exhaustive switch expression.",resources:[{type:"docs",title:"Records",url:"https://dart.dev/language/records",source:"Dart Official"},{type:"docs",title:"Patterns",url:"https://dart.dev/language/patterns",source:"Dart Official"},{type:"docs",title:"Sealed Classes",url:"https://dart.dev/language/class-modifiers#sealed",source:"Dart Official"},{type:"docs",title:"Class Modifiers",url:"https://dart.dev/language/class-modifiers",source:"Dart Official"}],eli5:"Records are like a lunchbox with labeled compartments — one for your sandwich (name) and one for your juice (age). Patterns are like a sorting hat that looks inside your lunchbox and says 'Ah, you have a sandwich AND juice, so you go to Table 3!' Sealed classes are like a box of crayons where the factory decides exactly which colors are inside — Red, Blue, Green, and NO other color can sneak in.",codeWalkthrough:["Positional record — returns two values without creating a class","Named record fields — more readable, accessed by name","Destructuring a positional record into separate variables","Named destructuring with :name syntax — extracts matching fields","Switch expression — pattern matches on type and value","Guard clause with 'when' — matches only when condition is true","Object pattern — checks JSON structure AND extracts values in one step","Sealed class definition — only subtypes in this file are allowed","Success subtype carries generic data","Failure subtype carries message and optional status code","Exhaustive switch — compiler ensures all subtypes are handled","Destructuring in switch case — ':final data' extracts the data field","Sealed class for BLoC state — each state carries different data","Class modifiers control how types can be used externally"],bugChallenge:{code:"sealed class AppState {}\nclass Loading extends AppState {}\nclass Loaded extends AppState { final List<String> items; Loaded(this.items); }\nclass Error extends AppState { final String message; Error(this.message); }\n\nString render(AppState state) => switch (state) {\n  Loading() => 'Loading...',\n  Loaded(:final items) => 'Got ${items.length} items',\n};",hint:"Is this switch exhaustive? Are all sealed subtypes handled?",answer:"The switch is not exhaustive — the Error case is missing. The compiler will flag this: 'The type AppState is not exhaustively matched by the switch cases since it doesn't match Error.' Fix: add 'Error(:final message) => \"Error: $message\"' to the switch."},difficulty:"intermediate",prereqs:[1,6]},
+
+  {id:8,title:"Error Handling, Result Types & Defensive Coding",subtitle:"Production Apps Crash Less When You Handle Errors Right",analogy:"Error handling is like driving with seatbelts and airbags. You hope you never need them, but when something goes wrong (a server is down, a user enters garbage data, the network drops), you need a plan. try/catch is the seatbelt, Result types are the airbag, and defensive coding is driving carefully in the first place.",points:[{t:"try/catch/finally Basics",d:"try wraps risky code. catch catches exceptions. finally always runs (cleanup). 'on' catches specific types: on FormatException catch (e). Catch the most specific exception first. Bare 'catch' catches everything — avoid it in production."},{t:"Exception vs Error in Dart",d:"Exception: recoverable problems (network timeout, invalid input). Error: programmer bugs (null dereference, stack overflow). NEVER catch Errors — they indicate code bugs that should be fixed. Interview: When should you catch an exception vs let it crash?"},{t:"Custom Exception Classes",d:"Create domain exceptions: class AuthException extends AppException {}. class NetworkException extends AppException { final int statusCode; }. This enables specific handling: on AuthException => redirect to login. on NetworkException => show retry."},{t:"Result/Either Pattern",d:"Instead of throwing, return a Result: Result<User, Failure>. Success path: Result.success(user). Error path: Result.failure(NetworkFailure()). Callers MUST handle both. No uncaught exceptions. This is the Clean Architecture standard."},{t:"Why Result > Exceptions",d:"Exceptions are invisible in function signatures — Future<User> might throw but the type doesn't show it. Result<User, Failure> makes failure VISIBLE in the type. The caller can't ignore it. This prevents the 'I forgot to try/catch' class of bugs."},{t:"Defensive Null Checks",d:"Even with null safety, external data (JSON, API responses) can have unexpected nulls. Validate at the boundary: json['name'] as String? ?? 'Unknown'. Never trust external data. Crash inside your code means YOU have a bug."},{t:"Fail Fast vs Fail Gracefully",d:"Fail fast in development: assert(user != null). Fail gracefully in production: show error UI, log to Crashlytics, offer retry. Never silently swallow errors — that makes debugging impossible."},{t:"Error Boundaries in Flutter",d:"ErrorWidget.builder customizes the red error screen. FlutterError.onError catches framework errors. PlatformDispatcher.instance.onError catches unhandled async errors. Zone.current.handleUncaughtError for zone-level handling."},{t:"Logging and Crash Reporting",d:"Log errors with context: logger.error('Failed to fetch user', error: e, stackTrace: st). Send to Crashlytics/Sentry in production. Include: what failed, what input caused it, and the stack trace. Good logging halves debugging time."},{t:"Retry and Fallback Patterns",d:"Retry with exponential backoff for transient network errors. Fallback to cache when API fails. Circuit breaker: stop retrying after N failures. These production patterns distinguish senior from mid-level code."}],whatIs:"Error handling in Dart uses try/catch/finally for exceptions and Result/Either patterns for typed error handling. Production Flutter apps combine both: try/catch at boundaries (API calls, platform channels), Result types in business logic, and Crashlytics for unhandled errors. Defensive coding validates external data at system boundaries.",realWorld:"In a claims processing app, network errors during refund submission must show clear user feedback (not crash). The repository returns Result<Claim, Failure>. The BLoC maps Success to a confirmation screen and Failure to an error state with a retry option. Crashlytics logs the raw error for debugging. The user never sees a red screen.",code:"// Error Handling & Result Types — Production Patterns\n\n// --- CUSTOM EXCEPTIONS ---\n\nabstract class AppException implements Exception {\n  final String message;\n  final String? code;\n  const AppException(this.message, {this.code});\n\n  @override\n  String toString() => '$runtimeType: $message';\n}\n\nclass NetworkException extends AppException {\n  final int? statusCode;\n  const NetworkException(super.message, {this.statusCode});\n}\n\nclass AuthException extends AppException {\n  const AuthException(super.message, {super.code});\n}\n\nclass CacheException extends AppException {\n  const CacheException(super.message);\n}\n\n// --- TRY/CATCH WITH SPECIFIC TYPES ---\n\nFuture<User> fetchUser(String id) async {\n  try {\n    final response = await dio.get('/users/$id');\n    return User.fromJson(response.data);\n  } on DioException catch (e) {\n    if (e.response?.statusCode == 401) {\n      throw const AuthException('Session expired', code: 'TOKEN_EXPIRED');\n    }\n    throw NetworkException(\n      'Failed to fetch user',\n      statusCode: e.response?.statusCode,\n    );\n  } on FormatException catch (e) {\n    throw AppException('Invalid response format: ${e.message}');\n  }\n  // Don't catch generic Exception — let bugs crash in dev\n}\n\n// --- RESULT TYPE (Either-style) ---\n\nsealed class Result<T> {\n  const Result();\n}\n\nclass Success<T> extends Result<T> {\n  final T data;\n  const Success(this.data);\n}\n\nclass Failure<T> extends Result<T> {\n  final AppException exception;\n  final StackTrace? stackTrace;\n  const Failure(this.exception, {this.stackTrace});\n}\n\n// Extension for convenience\nextension ResultX<T> on Result<T> {\n  T getOrElse(T fallback) => switch (this) {\n    Success(:final data) => data,\n    Failure() => fallback,\n  };\n\n  Result<R> map<R>(R Function(T) transform) => switch (this) {\n    Success(:final data) => Success(transform(data)),\n    Failure(:final exception, :final stackTrace) =>\n        Failure(exception, stackTrace: stackTrace),\n  };\n}\n\n// --- REPOSITORY USING RESULT ---\n\nclass UserRepository {\n  Future<Result<User>> getUser(String id) async {\n    try {\n      final user = await _remoteSource.fetchUser(id);\n      await _localSource.cacheUser(user); // Cache for offline\n      return Success(user);\n    } on NetworkException catch (e, st) {\n      // Fallback to cache\n      final cached = await _localSource.getCachedUser(id);\n      if (cached != null) return Success(cached);\n      return Failure(e, stackTrace: st);\n    } on AuthException catch (e, st) {\n      return Failure(e, stackTrace: st);\n    }\n  }\n}\n\n// --- BLOC HANDLING RESULT ---\n\nFuture<void> _onLoadUser(LoadUser event, Emitter<UserState> emit) async {\n  emit(const UserLoading());\n  final result = await _repository.getUser(event.userId);\n  switch (result) {\n    case Success(:final data):\n      emit(UserLoaded(data));\n    case Failure(:final exception):\n      emit(UserError(exception.message));\n  }\n}\n\n// --- GLOBAL ERROR HANDLING ---\n\nvoid main() {\n  FlutterError.onError = (details) {\n    FirebaseCrashlytics.instance.recordFlutterError(details);\n  };\n\n  PlatformDispatcher.instance.onError = (error, stack) {\n    FirebaseCrashlytics.instance.recordError(error, stack);\n    return true;\n  };\n\n  runApp(const MyApp());\n}",funFact:"Google's internal style guide recommends using Result types over exceptions for expected failures. They found that exception-based code has 3x more unhandled error bugs in production than Result-based code, because developers forget to add try/catch but can't forget to handle a Result type — the compiler forces it.",quiz:[{q:"What is the difference between Exception and Error in Dart?",opts:["They are identical","Exception is for recoverable situations; Error is for programmer bugs that should not be caught","Error is for network issues; Exception is for logic bugs","Exception crashes the app; Error shows a warning"],ans:1},{q:"Why is Result<T> considered better than throwing exceptions?",opts:["Result types are faster at runtime","Result types make failure visible in the function signature — callers must handle it","Exceptions don't work in async code","Result types use less memory"],ans:1},{q:"What does 'finally' do in try/catch/finally?",opts:["It runs only when there is no error","It runs only when there is an error","It ALWAYS runs, whether there was an error or not — used for cleanup","It retries the try block"],ans:2},{q:"What should you do when an API call fails in a production app?",opts:["Show the raw exception to the user","Silently ignore it","Try fallback to cache, show user-friendly error, log to Crashlytics, offer retry","Restart the app"],ans:2},{q:"When should you use 'on SpecificException catch (e)' instead of bare 'catch (e)'?",opts:["Never, bare catch is always better","Always — catch only the exceptions you expect and handle; let unexpected errors propagate","Only for network exceptions","Only in tests"],ans:1}],challenge:"Build an error handling layer for a weather app: create WeatherException hierarchy (NetworkException, LocationException, ParseException), a WeatherRepository that returns Result<WeatherData>, and a fallback strategy that tries: 1) API, 2) local cache, 3) last known location. Handle all error paths.",resources:[{type:"docs",title:"Error Handling in Dart",url:"https://dart.dev/language/error-handling",source:"Dart Official"},{type:"article",title:"Result Type Pattern in Dart",url:"https://dart.dev/language/branches#exhaustiveness-checking",source:"Dart Official"},{type:"docs",title:"Flutter Error Handling",url:"https://docs.flutter.dev/testing/errors",source:"Flutter Official"},{type:"docs",title:"Firebase Crashlytics",url:"https://firebase.google.com/docs/crashlytics/get-started?platform=flutter",source:"Firebase Official"}],eli5:"Imagine you're building a tower of blocks. Sometimes a block falls (an error). try/catch is like having a safety net that catches the block before it hits the floor. A Result type is like having two colored baskets: green for 'it worked!' and red for 'it broke.' When someone hands you a basket, you HAVE to check the color before you open it — you can never accidentally open a red basket thinking it's green.",codeWalkthrough:["Custom exception hierarchy — all app errors extend AppException","NetworkException adds statusCode for HTTP error context","try/catch with specific DioException handling","Checking the status code to differentiate auth errors from network errors","Throwing a domain-specific exception rather than leaking Dio details","Sealed Result type — forces callers to handle both success and failure","Success wraps the actual data","Failure wraps the exception and optional stack trace","Extension method for convenient fallback: getOrElse returns data or default","Repository returning Result instead of throwing","On network failure, falling back to cached data","If no cache either, returning Failure","BLoC handler — pattern matching on Result to emit correct state","Global error handler sending unhandled errors to Crashlytics"],bugChallenge:{code:"Future<String> loadConfig() async {\n  try {\n    final data = await fetchConfig();\n    return data;\n  } catch (e) {\n    return null;\n  }\n}",hint:"What is the return type of this function? What does it return in the catch?",answer:"Function returns Future<String> (non-nullable) but catch returns null. This is a type error. Fix either: change return type to Future<String?>, throw a custom exception instead of returning null, or return a default value like 'default_config'."},difficulty:"intermediate",prereqs:[1,3,7]},
+
+  {id:9,title:"OOP, SOLID Principles & Composition",subtitle:"Architecture Interview Questions Start Here",analogy:"SOLID principles are like rules for building with LEGO. Single Responsibility: each block does one thing. Open/Closed: you can add new blocks without breaking existing ones. Liskov: any blue block should work wherever a blue block is expected. Interface Segregation: don't force a car kit on someone building a house. Dependency Inversion: the instructions depend on the blocks, not the other way around.",points:[{t:"Classes and Constructors in Dart",d:"Dart classes have named constructors, factory constructors, const constructors, and initializer lists. Const constructors create compile-time constant instances. Factory constructors can return cached instances or subtypes. Interview: Explain const constructor benefits."},{t:"Single Responsibility Principle (SRP)",d:"A class should have ONE reason to change. UserRepository handles data access. UserValidator handles validation. UserNotifier handles notifications. NOT: UserManager that does all three. Interview: Break a god class into focused classes."},{t:"Open/Closed Principle (OCP)",d:"Classes should be open for extension, closed for modification. Add new behavior by creating new classes (strategy pattern, new subclasses), not by modifying existing code. In Flutter: add new BLoC events without changing existing event handlers."},{t:"Liskov Substitution Principle (LSP)",d:"Subtypes must be substitutable for their parent types. If fetchData(Repository repo) works with BaseRepository, it must work with any Repository subclass. Breaking LSP: a ReadOnlyRepo that throws on write() — it violates the contract of its parent."},{t:"Interface Segregation Principle (ISP)",d:"Don't force clients to depend on methods they don't use. Split fat interfaces: instead of CrudRepository with read/write/delete, have ReadRepository and WriteRepository. Classes implement only what they need."},{t:"Dependency Inversion Principle (DIP)",d:"High-level modules should NOT depend on low-level modules. Both should depend on abstractions. UserBloc depends on abstract UserRepository, not on concrete ApiUserRepository. This enables testing (inject mock) and flexibility (swap implementations)."},{t:"Composition Over Inheritance",d:"Prefer composing behavior from smaller pieces rather than deep inheritance chains. Use mixins, DI, and delegation instead of class A extends B extends C extends D. Deep inheritance is fragile — changing a parent breaks all children."},{t:"Abstract Classes vs Interfaces",d:"In Dart, every class is implicitly an interface. Abstract classes provide partial implementation. Use abstract class for shared behavior + contract. Use 'implements' for pure contract. Interview: When would you use extends vs implements?"},{t:"Factory Pattern",d:"Factory constructors decide which concrete type to create: factory Logger(String type) { if (type == 'file') return FileLogger(); return ConsoleLogger(); }. Used for DI containers, service locators, and creating instances from JSON."},{t:"SOLID in Flutter Practice",d:"BLoC follows SRP (one feature per BLoC). Repository pattern follows DIP (BLoC depends on abstract repo). GetIt follows DIP (register abstractions, resolve concretions). Sealed states follow OCP (add states without changing BLoC logic)."}],whatIs:"OOP in Dart combines classes, mixins, abstract classes, and interfaces. SOLID principles guide how to structure code: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion. Composition over inheritance means building behavior from smaller pieces rather than deep class hierarchies. These concepts are tested in every architecture interview.",realWorld:"In a SaaS collaboration app, Clean Architecture embodies all SOLID principles: BLoCs have single responsibilities (ChatBloc, AuthBloc). Repositories implement abstract interfaces (DIP). New features extend the system without modifying existing code (OCP). Sealed states model each feature exhaustively. GetIt injects dependencies as abstractions.",code:"// OOP & SOLID in Dart/Flutter\n\n// --- SINGLE RESPONSIBILITY ---\n\n// BAD: God class doing everything\n// class UserManager {\n//   Future<User> fetchUser() { ... }\n//   bool validateEmail(String email) { ... }\n//   Future<void> sendNotification() { ... }\n//   Future<void> cacheUser() { ... }\n// }\n\n// GOOD: Focused classes\nabstract class UserRepository {\n  Future<User> getById(String id);\n  Future<void> save(User user);\n}\n\nclass UserValidator {\n  bool isValidEmail(String email) => email.contains('@') && email.contains('.');\n  bool isValidName(String name) => name.length >= 2;\n}\n\nclass UserNotificationService {\n  Future<void> sendWelcome(User user) async { /* ... */ }\n}\n\n// --- DEPENDENCY INVERSION ---\n\n// High-level (BLoC) depends on abstraction, not concrete class\nclass UserBloc extends Bloc<UserEvent, UserState> {\n  final UserRepository _repository; // Abstract! Not ApiUserRepository\n\n  UserBloc({required UserRepository repository})\n      : _repository = repository,\n        super(const UserInitial()) {\n    on<LoadUser>(_onLoadUser);\n  }\n\n  Future<void> _onLoadUser(LoadUser event, Emitter<UserState> emit) async {\n    emit(const UserLoading());\n    try {\n      final user = await _repository.getById(event.id);\n      emit(UserLoaded(user));\n    } catch (e) {\n      emit(UserError(e.toString()));\n    }\n  }\n}\n\n// Concrete implementations — swappable\nclass ApiUserRepository implements UserRepository {\n  final Dio _dio;\n  ApiUserRepository(this._dio);\n\n  @override\n  Future<User> getById(String id) async {\n    final response = await _dio.get('/users/$id');\n    return User.fromJson(response.data);\n  }\n\n  @override\n  Future<void> save(User user) async {\n    await _dio.post('/users', data: user.toJson());\n  }\n}\n\nclass MockUserRepository implements UserRepository {\n  @override\n  Future<User> getById(String id) async => User(id: id, name: 'Test User');\n\n  @override\n  Future<void> save(User user) async {}\n}\n\n// --- COMPOSITION OVER INHERITANCE ---\n\n// BAD: Deep inheritance\n// class Animal { void eat() {} }\n// class Bird extends Animal { void fly() {} }\n// class Penguin extends Bird {} // Penguin can fly?! Broken.\n\n// GOOD: Composition with mixins\nmixin CanSwim {\n  void swim() => print('Swimming!');\n}\n\nmixin CanFly {\n  void fly() => print('Flying!');\n}\n\nclass Duck with CanSwim, CanFly {}\nclass Penguin with CanSwim {} // No flying!\n\n// --- FACTORY CONSTRUCTORS ---\n\nabstract class Logger {\n  void log(String message);\n\n  factory Logger(String env) {\n    return switch (env) {\n      'production' => CrashlyticsLogger(),\n      'debug'      => ConsoleLogger(),\n      _            => ConsoleLogger(),\n    };\n  }\n}\n\nclass ConsoleLogger implements Logger {\n  @override\n  void log(String message) => print('[LOG] $message');\n}\n\nclass CrashlyticsLogger implements Logger {\n  @override\n  void log(String message) {\n    // Send to Crashlytics in production\n  }\n}\n\n// --- CONST CONSTRUCTORS ---\n\nclass AppColors {\n  final Color primary;\n  final Color secondary;\n\n  const AppColors({required this.primary, required this.secondary});\n\n  static const light = AppColors(\n    primary: Color(0xFF2196F3),\n    secondary: Color(0xFF4CAF50),\n  );\n}\n// const creates compile-time constants — reused, not recreated",funFact:"The SOLID principles were introduced by Robert C. Martin (Uncle Bob) in the early 2000s. The acronym SOLID was actually coined by Michael Feathers. Uncle Bob says the most important principle is Dependency Inversion because it enables all the others — and it's exactly what makes Flutter's testable architecture possible.",quiz:[{q:"What does the Single Responsibility Principle mean?",opts:["A class should only have one method","A class should have only one reason to change — one focused responsibility","A file should contain only one class","A function should only be called once"],ans:1},{q:"What is Dependency Inversion in practice?",opts:["Inverting the order of function calls","High-level modules depend on abstractions, not concrete implementations","Making all dependencies global","Removing all imports"],ans:1},{q:"Why is composition preferred over deep inheritance?",opts:["Composition is always faster","Deep inheritance is fragile — changing a parent breaks all children; composition is more flexible","Dart doesn't support inheritance","Composition uses less memory"],ans:1},{q:"What is a factory constructor used for?",opts:["Creating factories in real life","Returning different subtypes or cached instances based on logic","Making constructors private","Factory is just a naming convention"],ans:1},{q:"How does SOLID relate to Flutter's BLoC pattern?",opts:["They are unrelated","BLoC embodies SRP (one feature per BLoC), DIP (depends on abstract repositories), and OCP (sealed states extend without modification)","SOLID only applies to backend code","BLoC replaces SOLID principles"],ans:1}],challenge:"Refactor a monolithic UserService class (that handles auth, profile CRUD, avatar upload, and notifications) into SOLID-compliant classes. Show the abstract interfaces, concrete implementations, and how they'd be wired together with dependency injection.",resources:[{type:"docs",title:"Dart Classes",url:"https://dart.dev/language/classes",source:"Dart Official"},{type:"article",title:"SOLID Principles in Dart",url:"https://dart.dev/language/constructors",source:"Dart Official"},{type:"docs",title:"Mixins in Dart",url:"https://dart.dev/language/mixins",source:"Dart Official"},{type:"docs",title:"Abstract Classes",url:"https://dart.dev/language/class-modifiers#abstract",source:"Dart Official"}],eli5:"Imagine you're building a robot. SRP says each part does one job — the arm grabs, the legs walk, the eyes see. Composition is like snapping parts together — you can give your robot wings OR wheels, mix and match. Inheritance is like saying 'my robot must be exactly like Dad-robot plus one extra thing' — but what if Dad-robot has a broken part? Now your robot is broken too!",codeWalkthrough:["Abstract UserRepository — the contract that BLoC depends on","UserValidator — separate class, single responsibility: validation","UserBloc depends on abstract UserRepository, not a concrete class","Constructor takes the abstraction — enables injection of any implementation","On event, delegates to repository — BLoC doesn't know or care about HTTP/DB details","ApiUserRepository — concrete implementation of the abstract contract","MockUserRepository — another implementation for testing","Composition with mixins — Duck can swim AND fly","Penguin only mixes in CanSwim — no broken fly() method","Factory constructor — returns different implementations based on input","Const constructor — enables compile-time constant instances"],bugChallenge:{code:"class OrderService {\n  final ApiClient _api;\n  OrderService(this._api);\n\n  Future<Order> createOrder(Cart cart) async {\n    final isValid = _validateCart(cart);\n    if (!isValid) throw Exception('Invalid cart');\n    final order = await _api.post('/orders', cart.toJson());\n    await _sendConfirmationEmail(order);\n    await _updateInventory(order);\n    await _notifyWarehouse(order);\n    return Order.fromJson(order);\n  }\n}",hint:"How many responsibilities does this class have? What happens when email logic changes?",answer:"OrderService violates SRP — it validates, creates orders, sends emails, updates inventory, AND notifies warehouse. Any change to email/inventory/notification logic requires modifying this class. Fix: Extract into OrderValidator, OrderRepository, EmailService, InventoryService, WarehouseNotifier. OrderService should coordinate, not implement."},difficulty:"intermediate",prereqs:[1,6]},
+
+  {id:10,title:"Widget Tree, Element Tree & Render Tree",subtitle:"The Three Trees That Power Every Flutter Frame",analogy:"Think of building a house. The Widget tree is the blueprint (what you want). The Element tree is the construction crew that reads the blueprint and manages the actual building process. The Render tree is the actual house — the physical walls, windows, and paint that appear on screen. When you change the blueprint, the crew figures out the minimal changes needed.",points:[{t:"Widget Tree — The Configuration",d:"Widgets are immutable configuration objects. They describe WHAT the UI should look like, not the actual pixels. When you write Text('Hello'), you create a lightweight description. Widgets are cheap to create and recreate. The framework diffing the widget tree to find changes is Flutter's core performance model."},{t:"Element Tree — The Manager",d:"Each Widget creates an Element that manages its position in the tree. Elements are persistent — they survive rebuilds. Elements hold a reference to the current Widget AND the RenderObject. When a widget rebuilds, the element compares old vs new and decides what to update."},{t:"Render Tree — The Painter",d:"RenderObjects do the actual layout and painting. They calculate sizes, positions, and paint pixels. RenderObjects are expensive — Flutter tries to reuse them. Only RenderObjectWidgets (like Padding, Container, SizedBox) create RenderObjects. Most widgets (StatelessWidget, StatefulWidget) don't."},{t:"The Build Process",d:"When setState() is called: 1) Widget is marked dirty. 2) On next frame, build() runs and returns new widget tree. 3) Element tree diffs old vs new widgets. 4) Changed RenderObjects update layout/paint. 5) Pixels hit the screen. This happens in ~16ms for 60fps."},{t:"Widget Identity and Diffing",d:"Flutter compares widgets by runtimeType and key. If the type matches, the element is reused and updated. If the type changes, the old element is destroyed and a new one created. This is why Keys exist — to help Flutter identify widgets when their position changes."},{t:"Why Widgets Are Immutable",d:"Widgets are immutable because they're compared to detect changes. If widgets mutated, Flutter couldn't diff old vs new. Instead, you create a new widget tree (cheap) and the framework figures out the minimal changes. Interview: Why is widget immutability important for performance?"},{t:"BuildContext Is the Element",d:"BuildContext is actually the Element! When you use context.findAncestorWidgetOfExactType<T>() or Theme.of(context), you're walking UP the element tree. Interview: What is BuildContext really? Answer: It's the element's handle in the tree."},{t:"Stateful Element Lifecycle",d:"StatefulElement creates State, calls initState(), then build(). On rebuild: didUpdateWidget(). On removal: deactivate() then dispose(). State persists across rebuilds — that's why StatefulWidget exists. The Element owns the State, not the Widget."},{t:"RenderObject Layout Protocol",d:"Parent passes Constraints down. Child returns Size up. Parent positions child using Offset. This constraints-down-sizes-up protocol is how Flutter's layout system works. Every RenderObject follows this: receive constraints, determine size, report to parent."},{t:"const Widgets and Performance",d:"const widgets create compile-time constants. Flutter skips rebuilding const subtrees entirely — they can't change. const Text('Hello') is free on rebuilds. This is the easiest performance optimization in Flutter. Always use const where possible."}],whatIs:"Flutter uses three trees: Widget tree (immutable UI descriptions), Element tree (persistent managers that diff widgets), and Render tree (layout and painting). Widgets are cheap to recreate. Elements diff old vs new widgets. RenderObjects do expensive layout/paint work. This architecture enables Flutter's fast 60fps rendering.",realWorld:"In a real-time chat app, when a new message arrives, only the message list rebuilds. Flutter's element tree diffs the old and new widget trees, realizes only one new item was added, creates one new Element/RenderObject, and reuses everything else. Without this diffing, the entire screen would repaint — causing visible jank.",code:"// Widget Tree, Element Tree, Render Tree\n\nimport 'package:flutter/material.dart';\n\n// --- WIDGET: Immutable configuration ---\n// Widgets describe WHAT the UI should look like\n\nclass ProfileCard extends StatelessWidget {\n  final String name;\n  final String email;\n\n  // const constructor — enables compile-time constant instances\n  const ProfileCard({\n    super.key,\n    required this.name,\n    required this.email,\n  });\n\n  @override\n  Widget build(BuildContext context) {\n    // build() returns a NEW widget tree (cheap!)\n    // The framework diffs this against the previous tree\n    return Card(\n      child: Padding(\n        padding: const EdgeInsets.all(16), // const = free on rebuild\n        child: Column(\n          crossAxisAlignment: CrossAxisAlignment.start,\n          children: [\n            Text(\n              name,\n              style: Theme.of(context).textTheme.headlineSmall,\n            ),\n            const SizedBox(height: 8), // const = never rebuilt\n            Text(email),\n          ],\n        ),\n      ),\n    );\n  }\n}\n\n// --- STATEFUL: Element owns the State ---\n\nclass MessageList extends StatefulWidget {\n  const MessageList({super.key});\n\n  @override\n  State<MessageList> createState() => _MessageListState();\n}\n\nclass _MessageListState extends State<MessageList> {\n  final List<String> _messages = [];\n\n  // LIFECYCLE:\n  // 1. createState() — Element creates State\n  // 2. initState() — first-time setup\n  // 3. build() — returns widget tree\n  // 4. setState() → build() — rebuild with new data\n  // 5. didUpdateWidget() — parent rebuilt with new config\n  // 6. deactivate() — removed from tree\n  // 7. dispose() — permanent cleanup\n\n  @override\n  void initState() {\n    super.initState();\n    _loadMessages();\n  }\n\n  @override\n  void dispose() {\n    // Clean up controllers, subscriptions, etc.\n    super.dispose();\n  }\n\n  void _loadMessages() {\n    setState(() {\n      _messages.addAll(['Hello', 'World', 'Flutter']);\n    });\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return ListView.builder(\n      itemCount: _messages.length,\n      itemBuilder: (context, index) {\n        // Each item gets an Element in the tree\n        // Flutter reuses Elements when types match\n        return ListTile(\n          key: ValueKey(_messages[index]), // Key helps diffing\n          title: Text(_messages[index]),\n        );\n      },\n    );\n  }\n}\n\n// --- HOW DIFFING WORKS ---\n\n// Frame 1: Widget tree has [Text('A'), Text('B'), Text('C')]\n// Frame 2: Widget tree has [Text('A'), Text('B'), Text('C'), Text('D')]\n//\n// Element tree compares:\n// Index 0: Text('A') → same type → update element (no change needed)\n// Index 1: Text('B') → same type → update element (no change needed)\n// Index 2: Text('C') → same type → update element (no change needed)\n// Index 3: Text('D') → new! → create new Element + RenderObject\n//\n// Result: only 1 new element created, 3 reused. Fast!\n\n// --- RENDER OBJECT: Layout protocol ---\n\n// Constraints go DOWN, Sizes go UP\n// Parent: \"You can be 0-300px wide and 0-600px tall\" (BoxConstraints)\n// Child: \"OK, I'll be 200x50\" (Size)\n// Parent: \"I'll place you at offset (50, 100)\" (Offset)\n\n// --- CONST OPTIMIZATION ---\n\n// Without const: new instance every build() call\n// final widget = SizedBox(height: 8);\n\n// With const: same instance reused, build() skips it\n// final widget = const SizedBox(height: 8);\n\n// Impact: in a list of 100 items, const saves 100 object allocations per frame",funFact:"Flutter's three-tree architecture was inspired by React's Virtual DOM, but Flutter went further. React diffs a virtual DOM against the real DOM (slow browser API). Flutter owns the entire rendering pipeline — widget tree AND render tree — so it can be much faster. This is why Flutter achieves consistent 60fps even on low-end devices.",quiz:[{q:"What are the three trees in Flutter?",opts:["HTML tree, CSS tree, DOM tree","Widget tree (configuration), Element tree (manager), Render tree (layout/paint)","State tree, Props tree, Build tree","Source tree, Compile tree, Runtime tree"],ans:1},{q:"Why are widgets immutable?",opts:["To save memory","So the framework can diff old vs new widgets to find minimal changes","Because Dart doesn't support mutable classes","Immutable widgets are faster to create"],ans:1},{q:"What is BuildContext really?",opts:["A special Dart type for context","The Element — it provides access to the element's position in the tree","A copy of the widget","The render object"],ans:1},{q:"What happens when Flutter compares widgets during rebuild?",opts:["It compares by runtimeType and key — same type means reuse element, different type means recreate","It always recreates everything","It compares the entire widget subtree deeply","It only checks the widget's hashCode"],ans:0},{q:"Why should you use const constructors for widgets?",opts:["They compile faster","Flutter completely skips rebuilding const widget subtrees — they're guaranteed unchanged","Const widgets use less RAM","Const is required by the framework"],ans:1}],challenge:"Create a demo that visually proves Element reuse: build a Column with 3 Text widgets, add a button that reverses the list. Without keys, observe that Elements stay in place and update. Add ValueKeys, observe that Elements follow their widgets. Explain the behavior difference.",resources:[{type:"docs",title:"Flutter Rendering Pipeline",url:"https://docs.flutter.dev/resources/architectural-overview#rendering-and-layout",source:"Flutter Official"},{type:"article",title:"Flutter Internals",url:"https://docs.flutter.dev/resources/inside-flutter",source:"Flutter Official"},{type:"docs",title:"Widget, Element, RenderObject",url:"https://api.flutter.dev/flutter/widgets/Widget-class.html",source:"Flutter API"},{type:"video",title:"How Flutter Renders Widgets",url:"https://www.youtube.com/watch?v=996ZgFRENMs",source:"Flutter"}],eli5:"Imagine you're playing with LEGO. The instruction booklet (widget tree) tells you what to build. Your hands (element tree) read the instructions and figure out which pieces to add, move, or remove. The actual LEGO tower (render tree) is what you see and touch. When you get a new page of instructions, your hands compare it to the last page and only change the pieces that are different — you don't rebuild the whole tower every time!",codeWalkthrough:["ProfileCard is a StatelessWidget — an immutable description of UI","const constructor enables compile-time constant creation","build() returns a new widget tree every time it's called","const EdgeInsets is reused across all rebuilds — zero cost","Theme.of(context) walks UP the element tree to find the Theme","const SizedBox is a compile-time constant — Flutter skips it entirely","MessageList is StatefulWidget — Element owns the State object","The State persists across widget rebuilds","initState runs once when the Element first creates the State","dispose runs when the Element is permanently removed","setState triggers a rebuild — marks this Element as dirty","ListView.builder creates child Elements lazily — only visible items","ValueKey helps the Element tree track items when the list changes","The diffing process: same type → reuse element, different type → recreate"],bugChallenge:{code:"class CounterWidget extends StatefulWidget {\n  const CounterWidget({super.key});\n  int count = 0;\n  @override\n  State<CounterWidget> createState() => _CounterWidgetState();\n}\n\nclass _CounterWidgetState extends State<CounterWidget> {\n  @override\n  Widget build(BuildContext context) {\n    return ElevatedButton(\n      onPressed: () => setState(() => widget.count++),\n      child: Text('Count: ${widget.count}'),\n    );\n  }\n}",hint:"Where should mutable state live — in the Widget or the State?",answer:"Widgets are IMMUTABLE — 'int count = 0' in StatefulWidget is wrong and 'widget.count++' is mutating an immutable object. Mutable state belongs in the State class. Fix: move 'int count = 0' to _CounterWidgetState and use 'count++' instead of 'widget.count++'."},difficulty:"intermediate",prereqs:[1]}
+
+,
+  {id:11,title:"Stateless vs Stateful Widget & Lifecycle",subtitle:"The Question Every Flutter Interview Starts With",analogy:"A StatelessWidget is like a printed photograph — it shows exactly what it was told to show, and never changes. A StatefulWidget is like a digital photo frame — it can update its display when new data arrives. The lifecycle methods are the frame's built-in events: power on (initState), display update (build), photo changed (didUpdateWidget), unplugged (dispose).",points:[{t:"StatelessWidget — Pure Function of Props",d:"StatelessWidget.build() is a pure function: given the same props (constructor parameters), it always returns the same widget tree. No internal state. No side effects. Interview answer: Use StatelessWidget when your UI depends only on its constructor parameters and parent rebuilds."},{t:"StatefulWidget — Widget + Mutable State",d:"StatefulWidget is split into two classes: the Widget (immutable config) and the State (mutable data). The Element owns the State object and keeps it alive across widget rebuilds. When setState() is called, build() runs again with the new state."},{t:"initState() — The Constructor of State",d:"Called ONCE when the State is first inserted into the tree. Use it to: initialize controllers (TextEditingController, AnimationController), subscribe to streams, start timers, call APIs. NEVER call setState() synchronously in initState — it's already about to build."},{t:"didChangeDependencies() — InheritedWidget Changed",d:"Called after initState() AND whenever an InheritedWidget that this widget depends on changes. Example: if your widget uses Theme.of(context) or MediaQuery.of(context), and the theme changes, didChangeDependencies fires. Safe to call context.read<T>() here."},{t:"build() — Called Every Rebuild",d:"Called after initState, didChangeDependencies, setState, and didUpdateWidget. Must be fast and pure — no side effects, no async calls, no heavy computation. Build can be called 60 times per second. Interview trap: putting an API call inside build() causes infinite loops."},{t:"didUpdateWidget() — Parent Rebuilt With New Config",d:"Called when the parent rebuilds and passes new properties to your widget. The old widget is passed as parameter. Example: parent changes the userId prop — didUpdateWidget lets you react: cancel old subscription, start new one. Compare widget.userId vs oldWidget.userId."},{t:"deactivate() — Temporarily Removed",d:"Called when State is removed from the tree temporarily — e.g., navigating to a new route. The State might be re-inserted (didChangeDependencies fires again). Rarely overridden. Don't cancel subscriptions here — wait for dispose()."},{t:"dispose() — Permanent Cleanup",d:"Called when State is permanently removed. THIS is where you clean up: controller.dispose(), subscription.cancel(), timer.cancel(), focusNode.dispose(). Forgetting dispose() causes memory leaks. Interview: What resources must be disposed in Flutter?"},{t:"setState() Pitfalls",d:"Common mistakes: (1) calling setState() after dispose() — causes 'setState called after dispose' error. (2) calling setState() in build(). (3) mutating state without setState() — UI won't update. (4) expensive work inside setState() callback. Fix (1): check 'if (mounted) setState(() { ... })'."},{t:"When to Choose Which",d:"StatelessWidget: display-only UI, computed from props. StatefulWidget: user interactions (text fields, toggles), animations, local UI state (expanded/collapsed). For business logic state, use BLoC/Riverpod and keep widgets as dumb as possible. Interview: widgets should rarely hold business state."}],whatIs:"StatelessWidget is an immutable widget whose UI depends solely on its constructor parameters. StatefulWidget pairs an immutable widget with a mutable State object that persists across rebuilds. The lifecycle — initState, didChangeDependencies, build, didUpdateWidget, deactivate, dispose — gives developers hooks at every stage of a widget's life.",realWorld:"In a SaaS collaboration app, a TaskCard showing a task title is a StatelessWidget. A TaskDetailPage with an edit form, character counter, and auto-save timer is a StatefulWidget. The TextEditingController and Timer are created in initState() and disposed in dispose(). The auto-save triggers via setState() only when the text changes.",code:`// StatelessWidget vs StatefulWidget & Full Lifecycle
+
+import 'dart:async';
+import 'package:flutter/material.dart';
+
+// --- STATELESS: Pure function of props ---
+class UserAvatar extends StatelessWidget {
+  final String name;
+  final String? imageUrl;
+  final double size;
+
+  const UserAvatar({
+    super.key,
+    required this.name,
+    this.imageUrl,
+    this.size = 40,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Given same name + imageUrl + size → always same output
+    // Safe to call 1000 times per second
+    if (imageUrl != null) {
+      return CircleAvatar(
+        radius: size / 2,
+        backgroundImage: NetworkImage(imageUrl!),
+      );
+    }
+    return CircleAvatar(
+      radius: size / 2,
+      child: Text(name[0].toUpperCase()),
+    );
+  }
+}
+
+// --- STATEFUL: Full lifecycle demo ---
+class TaskNoteEditor extends StatefulWidget {
+  final String taskId;
+  final String initialNote;
+  final void Function(String) onSave;
+
+  const TaskNoteEditor({
+    super.key,
+    required this.taskId,
+    required this.initialNote,
+    required this.onSave,
+  });
+
+  @override
+  State<TaskNoteEditor> createState() => _TaskNoteEditorState();
+}
+
+class _TaskNoteEditorState extends State<TaskNoteEditor> {
+  late TextEditingController _controller;
+  late FocusNode _focusNode;
+  Timer? _autoSaveTimer;
+  bool _isDirty = false;
+  int _charCount = 0;
+
+  // 1. initState — called ONCE when first inserted
+  @override
+  void initState() {
+    super.initState(); // ALWAYS call super first
+    _controller = TextEditingController(text: widget.initialNote);
+    _focusNode = FocusNode();
+    _charCount = widget.initialNote.length;
+
+    _controller.addListener(_onTextChanged);
+
+    // Start auto-save every 30 seconds
+    _autoSaveTimer = Timer.periodic(
+      const Duration(seconds: 30),
+      (_) => _autoSave(),
+    );
+  }
+
+  // 2. didChangeDependencies — after initState + when InheritedWidget changes
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Safe to use context here — Theme.of(context), MediaQuery.of(context)
+    // Called when e.g. theme or locale changes
+    final theme = Theme.of(context); // OK here
+    debugPrint('Theme brightness: \${theme.brightness}');
+  }
+
+  // 3. didUpdateWidget — parent rebuilt with new props
+  @override
+  void didUpdateWidget(TaskNoteEditor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Check if parent passed a different taskId
+    if (widget.taskId != oldWidget.taskId) {
+      // Reset editor for the new task
+      _controller.text = widget.initialNote;
+      _charCount = widget.initialNote.length;
+      _isDirty = false;
+    }
+  }
+
+  // 4. build — called after every setState / rebuild
+  @override
+  Widget build(BuildContext context) {
+    // Keep build() FAST and PURE — no API calls, no heavy logic
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: _controller,
+          focusNode: _focusNode,
+          maxLines: null,
+          decoration: InputDecoration(
+            hintText: 'Add a note...',
+            suffixIcon: _isDirty
+                ? const Icon(Icons.edit, size: 16)
+                : const Icon(Icons.check, size: 16),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('\$_charCount characters',
+                style: Theme.of(context).textTheme.bodySmall),
+            TextButton(
+              onPressed: _isDirty ? _save : null,
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _onTextChanged() {
+    // setState ONLY updates _isDirty and _charCount — minimal rebuild
+    if (mounted) {
+      setState(() {
+        _isDirty = _controller.text != widget.initialNote;
+        _charCount = _controller.text.length;
+      });
+    }
+  }
+
+  void _autoSave() {
+    if (_isDirty && mounted) _save();
+  }
+
+  void _save() {
+    widget.onSave(_controller.text);
+    if (mounted) setState(() => _isDirty = false);
+  }
+
+  // 5. deactivate — temporarily removed (rarely overridden)
+  @override
+  void deactivate() {
+    super.deactivate();
+    // Widget removed from tree but might come back
+  }
+
+  // 6. dispose — PERMANENT removal — clean up everything
+  @override
+  void dispose() {
+    _controller.removeListener(_onTextChanged);
+    _controller.dispose(); // Prevents memory leak
+    _focusNode.dispose();  // Prevents memory leak
+    _autoSaveTimer?.cancel(); // Prevents timer firing after widget gone
+    super.dispose(); // ALWAYS call super last
+  }
+}`,funFact:"The 'mounted' check before setState() is one of the most common Flutter interview questions. If you navigate away while an async operation is in progress (like an API call), the State gets disposed. When the future completes and calls setState(), it crashes. The fix: 'if (mounted) setState(() { ... })'. Flutter 3.x improved this with better async patterns, but mounted remains essential.",quiz:[{q:"In what order does a StatefulWidget's lifecycle fire on first creation?",opts:["build → initState → didChangeDependencies","createState → initState → didChangeDependencies → build","initState → createState → build → didChangeDependencies","createState → build → initState → didChangeDependencies"],ans:1},{q:"What is the correct place to dispose a TextEditingController?",opts:["In build()", "In initState()", "In dispose()", "In deactivate()"],ans:2},{q:"When does didUpdateWidget() fire?",opts:["When setState() is called","When the parent rebuilds and passes new constructor arguments to this widget","When an InheritedWidget changes","When the widget is first created"],ans:1},{q:"What does 'if (mounted)' guard against?",opts:["Null pointer exceptions","Calling setState() after the State has been disposed, which would crash the app","Concurrent build calls","Rebuilding too frequently"],ans:1},{q:"Which widget type should handle business logic state like authenticated user data?",opts:["StatelessWidget","StatefulWidget","Neither — use a state management solution like BLoC or Riverpod and keep widgets dumb","Only the root App widget"],ans:2}],challenge:"Build a CountdownTimer widget: takes a duration in seconds, counts down, shows MM:SS, fires an onComplete callback when done. Use initState to start a Timer.periodic, dispose to cancel it, and setState to update the display. Handle the case where the widget is disposed before the timer completes.",resources:[{type:"docs",title:"StatefulWidget Lifecycle",url:"https://api.flutter.dev/flutter/widgets/State-class.html",source:"Flutter API"},{type:"docs",title:"StatelessWidget",url:"https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html",source:"Flutter API"},{type:"article",title:"Flutter Widget Lifecycle",url:"https://docs.flutter.dev/development/ui/widgets-intro",source:"Flutter Official"},{type:"video",title:"Flutter Stateful Widget Lifecycle",url:"https://www.youtube.com/watch?v=AqCMFcnXTSg",source:"Flutter"}],eli5:"A StatelessWidget is like a name tag — it shows what you told it and never changes. A StatefulWidget is like a scoreboard — it can change when someone scores. The lifecycle is like the scoreboard's day: it turns on (initState), shows the score (build), updates when someone scores (setState), and turns off at end of day (dispose). You have to turn it off properly or the lights stay on all night (memory leak)!",codeWalkthrough:["UserAvatar is StatelessWidget — same props always produces same UI","const constructor — all instances with same args are identical","build returns different UI based on imageUrl — pure function","TaskNoteEditor StatefulWidget holds immutable config: taskId, initialNote, onSave","createState() returns the mutable State object","initState: create controller with initial text, create FocusNode, attach listener, start timer","super.initState() must be called first — framework setup","didChangeDependencies: safe to access context — Theme, MediaQuery, Provider","didUpdateWidget: parent gave us a new taskId — reset the editor state","build is pure: reads from _isDirty and _charCount, no side effects","_onTextChanged: mounted check prevents setState after dispose","dispose: remove listener first, then dispose controller and FocusNode, cancel timer","super.dispose() called LAST — opposite of initState where super is called FIRST"],bugChallenge:{code:`class TimerWidget extends StatefulWidget {
+  const TimerWidget({super.key});
+  @override
+  State<TimerWidget> createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget> {
+  int _seconds = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      setState(() => _seconds++);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Elapsed: \$_seconds seconds');
+  }
+}`,hint:"What happens when you navigate away from this screen?",answer:"dispose() is never overridden. The Timer keeps firing after the widget is gone, calling setState on a disposed State — causing a 'setState called after dispose' exception and a memory leak. Fix: override dispose() and call _timer?.cancel() before super.dispose()."},difficulty:"beginner",prereqs:[10]},
+
+  {id:12,title:"BuildContext, InheritedWidget, Keys & Rebuild Boundaries",subtitle:"The Internal Plumbing Every Senior Must Explain",analogy:"BuildContext is like your GPS coordinates in a city — it tells you exactly where you are in the widget tree. InheritedWidget is like a city-wide Wi-Fi network — any widget in range can connect without asking every building in between. Keys are like citizens' ID numbers — even if someone moves house, you can still find them by their ID, not their address.",points:[{t:"BuildContext IS the Element",d:"BuildContext is not a mysterious object — it IS the Element. Every widget's build method receives its element as 'context'. When you call Theme.of(context), you're asking the element to walk up its ancestor chain looking for a Theme InheritedWidget. Interview: 'What is BuildContext?' Answer: 'It's the handle to the widget's Element in the Element tree.'"},{t:"InheritedWidget — Efficient Data Propagation",d:"InheritedWidget lets data flow DOWN the tree efficiently. When the InheritedWidget rebuilds, only widgets that called dependOnInheritedWidgetOfExactType() are rebuilt — not every widget in the subtree. This is how Theme, MediaQuery, and Provider work internally."},{t:"How Theme.of(context) Works",d:"Theme.of(context) calls context.dependOnInheritedWidgetOfExactType<Theme>(). This (1) walks up the element tree to find the nearest Theme, (2) registers the current element as a dependent, (3) returns the ThemeData. When the Theme changes, all registered dependents rebuild automatically."},{t:"The of(context) vs read(context) Pattern",d:"of(context): subscribe to changes — widget rebuilds when the value changes. Used in build(). read(context): one-time access — does NOT subscribe. Used in event handlers. Interview: Why should you use read() in onPressed instead of watch()? To avoid unnecessary rebuilds."},{t:"GlobalKey — Identity Across the Tree",d:"GlobalKey gives a widget a unique global identity. Accessing GlobalKey.currentState gives you the State from anywhere. Used for: Form validation (GlobalKey<FormState>), Scaffold.of() alternatives, Navigator. Warning: GlobalKeys are expensive — use sparingly. They prevent tree reconciliation optimizations."},{t:"LocalKey Subtypes: ValueKey, ObjectKey, UniqueKey",d:"ValueKey: equality based on a value (ValueKey('task-42')). ObjectKey: equality based on object identity (ObjectKey(taskObject)). UniqueKey: never equal to any other key — forces recreation every rebuild. Interview: When would you use UniqueKey? Answer: To force a widget to fully reset (e.g., reset a form)."},{t:"Why Keys Matter in Lists",d:"Without keys in a list, Flutter matches by position. If you move item[0] to item[2], Flutter updates values but keeps the old State in position 0. With ValueKey, Flutter follows the item by identity — the State moves with the correct item. Classic bug: dismissible list items deleting the wrong item."},{t:"Rebuild Boundaries with const",d:"const widgets are never rebuilt — Flutter skips their subtree entirely. InheritedWidget only rebuilds registered dependents. RepaintBoundary isolates the render tree. These three tools define 'rebuild boundaries' — the walls that stop unnecessary work from spreading."},{t:"context.findAncestorWidgetOfExactType vs dependOnInherited",d:"findAncestorWidgetOfExactType<T>(): walk up and find, NO dependency registered. dependOnInheritedWidgetOfExactType<T>(): find AND register for updates. Using find-ancestor in build() means you won't get updates when the ancestor changes. A subtle, common bug."},{t:"ScaffoldMessenger and Navigator — Why They Need context",d:"Scaffold.of(context) and Navigator.of(context) walk the element tree to find the nearest Scaffold/Navigator. If you call these with a context that's ABOVE the Scaffold, you get 'Scaffold not found' error. Fix: use Builder widget to get a context that's below the Scaffold."}],whatIs:"BuildContext is the Element — a handle to a widget's position in the Element tree. InheritedWidget propagates data down the tree efficiently, rebuilding only registered dependents. Keys (GlobalKey, ValueKey, ObjectKey, UniqueKey) give widgets persistent identity for correct state association. Together they form Flutter's reactive data and identity systems.",realWorld:"In a fintech app, ThemeData (dark/light), UserSession, and FeatureFlags are provided via InheritedWidgets at the root. A TransactionCard deep in the tree calls Theme.of(context) to style itself. A transaction list uses ValueKey(transaction.id) so swiping to dismiss the right item works correctly even when the list is sorted.",code:`// BuildContext, InheritedWidget, Keys
+
+import 'package:flutter/material.dart';
+
+// --- CUSTOM InheritedWidget ---
+
+class UserSession extends InheritedWidget {
+  final String userId;
+  final String role;
+  final bool isPremium;
+
+  const UserSession({
+    super.key,
+    required this.userId,
+    required this.role,
+    required this.isPremium,
+    required super.child,
+  });
+
+  // The static .of() pattern — standard in Flutter
+  static UserSession of(BuildContext context) {
+    // dependOnInheritedWidgetOfExactType:
+    // 1. Walks up element tree to find UserSession
+    // 2. Registers this element as a dependent
+    // 3. Returns the UserSession
+    final session = context.dependOnInheritedWidgetOfExactType<UserSession>();
+    assert(session != null, 'UserSession not found in widget tree');
+    return session!;
+  }
+
+  // One-time read — no subscription
+  static UserSession read(BuildContext context) {
+    final session = context.findAncestorWidgetOfExactType<UserSession>();
+    assert(session != null, 'UserSession not found in widget tree');
+    return session!;
+  }
+
+  // updateShouldNotify: return true to rebuild dependents
+  @override
+  bool updateShouldNotify(UserSession oldWidget) {
+    return userId != oldWidget.userId ||
+        role != oldWidget.role ||
+        isPremium != oldWidget.isPremium;
+  }
+}
+
+// --- CONSUMING InheritedWidget ---
+
+class PremiumBadge extends StatelessWidget {
+  const PremiumBadge({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Subscribes — rebuilds when UserSession.isPremium changes
+    final session = UserSession.of(context);
+
+    if (!session.isPremium) return const SizedBox.shrink();
+    return const Chip(label: Text('PRO'));
+  }
+}
+
+class ShareButton extends StatelessWidget {
+  const ShareButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // Use read() in handlers — no subscription needed
+        final session = UserSession.read(context);
+        debugPrint('Sharing as user: \${session.userId}');
+      },
+      child: const Text('Share'),
+    );
+  }
+}
+
+// --- KEYS in lists ---
+
+class Transaction {
+  final String id;
+  final String title;
+  final double amount;
+  Transaction({required this.id, required this.title, required this.amount});
+}
+
+class TransactionList extends StatefulWidget {
+  const TransactionList({super.key});
+
+  @override
+  State<TransactionList> createState() => _TransactionListState();
+}
+
+class _TransactionListState extends State<TransactionList> {
+  List<Transaction> _transactions = [
+    Transaction(id: 'tx1', title: 'Coffee', amount: 4.50),
+    Transaction(id: 'tx2', title: 'Lunch', amount: 12.00),
+    Transaction(id: 'tx3', title: 'Taxi', amount: 8.75),
+  ];
+
+  void _sortByAmount() {
+    setState(() {
+      _transactions = [..._transactions]
+        ..sort((a, b) => a.amount.compareTo(b.amount));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ElevatedButton(onPressed: _sortByAmount, child: const Text('Sort')),
+        ...(_transactions.map((tx) => TransactionTile(
+              key: ValueKey(tx.id), // KEY: State follows tx.id, not position
+              transaction: tx,
+            ))),
+      ],
+    );
+  }
+}
+
+class TransactionTile extends StatefulWidget {
+  final Transaction transaction;
+  const TransactionTile({super.key, required this.transaction});
+
+  @override
+  State<TransactionTile> createState() => _TransactionTileState();
+}
+
+class _TransactionTileState extends State<TransactionTile> {
+  bool _expanded = false; // Local UI state — must follow the right transaction
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(widget.transaction.title),
+      subtitle: _expanded ? Text('\$\${widget.transaction.amount}') : null,
+      onTap: () => setState(() => _expanded = !_expanded),
+    );
+  }
+}
+
+// --- GlobalKey for Form ---
+
+class LoginForm extends StatelessWidget {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  LoginForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey, // GlobalKey gives access to FormState from anywhere
+      child: Column(
+        children: [
+          TextFormField(
+            validator: (v) => v!.isEmpty ? 'Required' : null,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Access FormState from anywhere via GlobalKey
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+              }
+            },
+            child: const Text('Login'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// --- Builder: get context BELOW an ancestor ---
+
+class ScaffoldDemo extends StatelessWidget {
+  const ScaffoldDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Builder( // Builder gives a new context that IS below Scaffold
+        builder: (innerContext) {
+          return ElevatedButton(
+            onPressed: () {
+              // innerContext is below Scaffold — this works
+              ScaffoldMessenger.of(innerContext).showSnackBar(
+                const SnackBar(content: Text('Hello!')),
+              );
+            },
+            child: const Text('Show Snackbar'),
+          );
+        },
+      ),
+    );
+  }
+}`,funFact:"InheritedWidget was Flutter's original state management primitive — before Provider, Riverpod, or BLoC existed. Provider is literally a wrapper around InheritedWidget that makes it easier to use. So when you use Provider.of<T>(context), you're using an InheritedWidget under the hood. Understanding InheritedWidget explains exactly WHY Provider rebuilds widgets when values change.",quiz:[{q:"What is BuildContext in Flutter's implementation?",opts:["A special container class","The Element — the widget's node in the Element tree","A reference to the widget itself","A BuildContext is the RenderObject"],ans:1},{q:"What is the difference between dependOnInheritedWidgetOfExactType and findAncestorWidgetOfExactType?",opts:["They are identical","dependOn registers the widget as a dependent (subscribes to changes); findAncestor just finds without subscribing","findAncestor is faster","dependOn only works for Theme"],ans:1},{q:"When would you use UniqueKey?",opts:["For all widgets in a list","To force a widget to fully recreate its State — e.g., reset a form","To identify widgets by their model ID","For GlobalKey replacement"],ans:1},{q:"Why does 'Scaffold not found in context' error occur?",opts:["The Scaffold widget has a bug","You're calling Scaffold.of(context) with a context that is ABOVE the Scaffold — use Builder to get a lower context","Scaffold requires a GlobalKey","The widget tree is corrupted"],ans:1},{q:"How does Theme.of(context) know to rebuild a widget when the theme changes?",opts:["It polls for changes every frame","dependOnInheritedWidgetOfExactType registers the element as a dependent — InheritedWidget notifies all dependents when updateShouldNotify returns true","Theme stores a list of callbacks","Theme rebuilds the entire tree"],ans:1}],challenge:"Build a custom InheritedWidget called AppConfig that holds a 'featureFlags' map (Map<String, bool>). Provide it at the root, read it in a deep child to conditionally show a 'Beta' badge. Write updateShouldNotify correctly so widgets only rebuild when flags actually change.",resources:[{type:"docs",title:"InheritedWidget",url:"https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html",source:"Flutter API"},{type:"docs",title:"Keys in Flutter",url:"https://api.flutter.dev/flutter/foundation/Key-class.html",source:"Flutter API"},{type:"article",title:"Using Keys in Flutter",url:"https://docs.flutter.dev/development/ui/widgets-intro#keys",source:"Flutter Official"},{type:"video",title:"Keys! What are they good for?",url:"https://www.youtube.com/watch?v=kn0EOS-ZiIc",source:"Flutter YouTube"}],eli5:"BuildContext is like your house address — it tells Flutter where you live in the widget tree. InheritedWidget is like a school announcement over the PA system — the principal (top of tree) says something and every student who's 'tuned in' (registered as dependent) hears it, without passing notes through every classroom. Keys are like your student ID — even if you change seats (position in list), the teacher can still find you by your ID number.",codeWalkthrough:["UserSession extends InheritedWidget — data flows down the tree","static of() calls dependOnInheritedWidgetOfExactType — subscribes for updates","static read() calls findAncestorWidgetOfExactType — one-time read, no subscription","updateShouldNotify: compare old and new values — only rebuild if something changed","PremiumBadge uses of() in build() — correctly subscribes and rebuilds on change","ShareButton uses read() in onPressed — no subscription needed in event handlers","ValueKey(tx.id) — State follows the transaction ID, not the list position","Without keys, sort would move State to wrong positions (expanded state bug)","GlobalKey<FormState> — access FormState.validate() from outside the Form","Builder widget — creates a new context that IS below Scaffold"],bugChallenge:{code:`class RoleLabel extends StatelessWidget {
+  const RoleLabel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final session = context.findAncestorWidgetOfExactType<UserSession>();
+    return Text('Role: \${session?.role ?? 'none'}');
+  }
+}`,hint:"This widget displays the role correctly at first. But if UserSession changes the role, does RoleLabel update?",answer:"findAncestorWidgetOfExactType does NOT register a dependency — it's a one-time lookup. When UserSession rebuilds with a new role, RoleLabel is never notified and stays stale. Fix: use context.dependOnInheritedWidgetOfExactType<UserSession>() or the static UserSession.of(context) which calls it internally."},difficulty:"intermediate",prereqs:[10,11]},
+
+  {id:13,title:"Layout System, Constraints & Flex",subtitle:"Constraints Go Down, Sizes Go Up — Master This or Fight Flutter Forever",analogy:"Flutter's layout is like a parent giving a child a box to play in: 'You can be anywhere from 0 to 300 pixels wide.' The child decides its size: 'I'll be 200px wide.' Then the parent places it where it wants. The child doesn't decide where it goes — only how big it is within the allowed range. Flex is like sharing a pizza: Expanded eats as much as it can, Flexible takes what it needs.",points:[{t:"The Golden Rule: Constraints Down, Sizes Up, Parent Positions",d:"Every layout in Flutter follows this: (1) Parent passes BoxConstraints to child. (2) Child determines its own size within those constraints. (3) Parent decides where to place the child. This is NOT like CSS where children can affect parent size arbitrarily. Understanding this one rule prevents 99% of layout bugs."},{t:"BoxConstraints — The Four Values",d:"BoxConstraints has minWidth, maxWidth, minHeight, maxHeight. 'Tight constraint': min == max (child MUST be exactly this size). 'Loose constraint': min is 0 (child can be smaller). 'Unbounded constraint': max is double.infinity (child picks its own size). Unbounded height in a Column causes 'RenderFlex overflowed' errors."},{t:"Expanded vs Flexible",d:"Expanded: takes ALL remaining space in the main axis (flex: 1 by default). Equivalent to Flexible(fit: FlexFit.tight). Flexible: takes UP TO its allotted space but can be smaller (fit: FlexFit.loose). Interview: What's the difference between Expanded and Flexible? Expanded forces max size, Flexible allows smaller."},{t:"flex Parameter",d:"In a Row or Column, Expanded(flex: 2) gets twice the space of Expanded(flex: 1). Remaining space after non-flex children are laid out is divided proportionally by flex values. Interview: You have a Row with three children. Two are flex:1 and one is flex:2. How is space distributed? 25%, 25%, 50%."},{t:"Unbounded Constraints — The Common Crash",d:"ListView inside a Column without a height — Column gives ListView infinite height AND ListView gives its children infinite height → 'Vertical viewport was given unbounded height'. Fix: wrap ListView in Expanded (inside Column) or give it a fixed height with SizedBox. Never put ListView directly in Column without a bounded parent."},{t:"LayoutBuilder — Constraints-Aware Widgets",d:"LayoutBuilder exposes the parent's BoxConstraints to the builder function. Use it for responsive layouts: if constraints.maxWidth > 600 show desktop layout, else mobile. Interview: How do you make a widget responsive? Use LayoutBuilder and branch on constraints."},{t:"Intrinsic Sizing — Use Sparingly",d:"IntrinsicHeight and IntrinsicWidth force a double layout pass — expensive. They measure children at their natural size first, then constrain all children to the largest. Use only when needed. For most cases, CrossAxisAlignment.stretch is faster and achieves similar results."},{t:"RenderFlex Overflowed — Diagnosis",d:"'A RenderFlex overflowed by X pixels' means a Row/Column child is wider/taller than the available space. Diagnosis: (1) Wrap the overflowing child in Expanded/Flexible. (2) Wrap in SingleChildScrollView. (3) Use Overflow.clip or FittedBox. Interview: How do you debug layout overflow in Flutter?"},{t:"CustomMultiChildLayout — Precise Control",d:"For pixel-perfect custom layouts, CustomMultiChildLayout and MultiChildLayoutDelegate give you full control over each child's constraints and position. Used in complex dashboards, custom card layouts, and game UIs. Each child is identified by a layoutId."},{t:"SizedBox, ConstrainedBox, FractionallySizedBox",d:"SizedBox(width: 200): tight constraint to 200px. ConstrainedBox(constraints: BoxConstraints(maxWidth: 300)): adds constraints on top of parent's. FractionallySizedBox(widthFactor: 0.5): 50% of parent width. These are the layout primitives for controlling child sizes."}],whatIs:"Flutter's layout system sends BoxConstraints down the tree and receives Sizes back up. Parents then position children with Offsets. Row and Column use a flex algorithm to distribute space. Understanding tight vs loose vs unbounded constraints explains every layout bug you'll encounter. LayoutBuilder enables constraint-aware responsive layouts.",realWorld:"In an offline-first field app, a job details screen uses a Column with the job header (fixed height), an Expanded ListView of task items (fills remaining space), and a fixed bottom action bar. LayoutBuilder on the action bar adapts between a single-column button layout (phone) and a row of buttons (tablet). This avoids RenderFlex overflow on small screens.",code:`// Flutter Layout System, Constraints & Flex
+
+import 'package:flutter/material.dart';
+
+// --- 1. CONSTRAINTS DOWN, SIZES UP demo ---
+
+class ConstraintDemo extends StatelessWidget {
+  const ConstraintDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder( // Exposes parent's constraints
+      builder: (context, constraints) {
+        debugPrint('Available: \${constraints.maxWidth}x\${constraints.maxHeight}');
+        // Branch on available width — responsive layout
+        if (constraints.maxWidth > 600) {
+          return const _DesktopLayout();
+        }
+        return const _MobileLayout();
+      },
+    );
+  }
+}
+
+// --- 2. Expanded vs Flexible ---
+
+class FlexDemo extends StatelessWidget {
+  const FlexDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // ROW: non-flex child first, then flex children share remaining space
+        Row(
+          children: [
+            // Non-flex: takes its natural size (64px icon)
+            const Icon(Icons.account_circle, size: 64),
+            // Expanded: takes ALL remaining space after the icon
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text('John Doe', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Senior Engineer'),
+                ],
+              ),
+            ),
+            // Expanded(flex:1): gets half as much as flex:2
+            Expanded(
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Edit'),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 16),
+
+        // Flexible vs Expanded difference
+        Row(
+          children: [
+            // Expanded: MUST fill its share (200px if total is 400px)
+            Expanded(
+              child: Container(color: Colors.blue, height: 50),
+            ),
+            // Flexible: CAN be smaller than its share
+            Flexible(
+              child: Container(
+                color: Colors.green,
+                height: 50,
+                width: 80, // Takes only 80px even if more is available
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// --- 3. FIX: ListView inside Column (common crash) ---
+
+class JobDetailScreen extends StatelessWidget {
+  const JobDetailScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          // Fixed header
+          const _JobHeader(),
+
+          // BAD: ListView in Column → "Vertical viewport unbounded height"
+          // ListView(children: [...]),
+
+          // GOOD: Wrap in Expanded — Column gives ListView its remaining space
+          Expanded(
+            child: ListView.builder(
+              itemCount: 20,
+              itemBuilder: (context, index) => ListTile(
+                title: Text('Task #\$index'),
+              ),
+            ),
+          ),
+
+          // Fixed bottom bar
+          const _ActionBar(),
+        ],
+      ),
+    );
+  }
+}
+
+// --- 4. ConstrainedBox, SizedBox, FractionallySizedBox ---
+
+class SizingDemo extends StatelessWidget {
+  const SizingDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Tight: exactly 200x50
+        SizedBox(
+          width: 200,
+          height: 50,
+          child: ElevatedButton(onPressed: () {}, child: const Text('Login')),
+        ),
+
+        // At most 300px wide
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 300),
+          child: const TextField(),
+        ),
+
+        // 80% of parent width
+        FractionallySizedBox(
+          widthFactor: 0.8,
+          child: ElevatedButton(onPressed: () {}, child: const Text('Full Action')),
+        ),
+      ],
+    );
+  }
+}
+
+// --- 5. CustomMultiChildLayout ---
+
+class BadgeOverlay extends StatelessWidget {
+  final Widget child;
+  final Widget badge;
+
+  const BadgeOverlay({super.key, required this.child, required this.badge});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomMultiChildLayout(
+      delegate: _BadgeDelegate(),
+      children: [
+        LayoutId(id: 'child', child: child),
+        LayoutId(id: 'badge', child: badge),
+      ],
+    );
+  }
+}
+
+class _BadgeDelegate extends MultiChildLayoutDelegate {
+  @override
+  void performLayout(Size size) {
+    final childSize = layoutChild('child', BoxConstraints.loose(size));
+    positionChild('child', Offset.zero);
+
+    final badgeSize = layoutChild(
+        'badge', BoxConstraints.loose(Size(size.width / 3, size.height / 3)));
+    positionChild(
+        'badge',
+        Offset(childSize.width - badgeSize.width,
+            childSize.height - badgeSize.height));
+  }
+
+  @override
+  bool shouldRelayout(_BadgeDelegate oldDelegate) => false;
+}
+
+class _JobHeader extends StatelessWidget {
+  const _JobHeader();
+  @override
+  Widget build(BuildContext context) =>
+      Container(height: 120, color: Colors.blueGrey, child: const Center(child: Text('Job Header')));
+}
+
+class _ActionBar extends StatelessWidget {
+  const _ActionBar();
+  @override
+  Widget build(BuildContext context) =>
+      Container(height: 64, color: Colors.blue, child: const Center(child: Text('Actions')));
+}
+
+class _DesktopLayout extends StatelessWidget {
+  const _DesktopLayout();
+  @override
+  Widget build(BuildContext context) => const Row(children: [Text('Desktop')]);
+}
+
+class _MobileLayout extends StatelessWidget {
+  const _MobileLayout();
+  @override
+  Widget build(BuildContext context) => const Column(children: [Text('Mobile')]);
+}`,funFact:"Flutter's constraint-based layout was designed specifically to avoid the 'layout thrashing' problem in web browsers. In CSS, a child can expand and force the parent to resize, which can force siblings to resize, which can cascade into hundreds of layout passes per frame. Flutter's rule — parent constrains child, child never changes parent's size — guarantees a single linear layout pass. This is a major reason Flutter achieves consistent 60fps.",quiz:[{q:"What does Flutter's layout golden rule state?",opts:["Children define their parent's size","Constraints go down, sizes go up, parents position children","Sizes go down, constraints go up","Parents and children negotiate size together"],ans:1},{q:"What causes the 'Vertical viewport was given unbounded height' error?",opts:["Using too many widgets","Placing a ListView directly inside a Column — Column gives ListView infinite height, which ListView propagates to its children","Using Expanded incorrectly","Having too many items in a list"],ans:1},{q:"What is the difference between Expanded and Flexible?",opts:["They are identical","Expanded forces the child to fill all its allocated space; Flexible allows the child to be smaller than its allocation","Flexible takes more space","Expanded is for Row only"],ans:1},{q:"When should you use LayoutBuilder?",opts:["For all widgets","When you need to branch layout logic based on the parent's available constraints — e.g., responsive tablet/phone layouts","Only for images","For animation layouts only"],ans:1},{q:"Why is IntrinsicHeight expensive?",opts:["It is not expensive","It forces a double layout pass — children are measured at their natural size first, then re-constrained to the tallest child","It rebuilds the widget tree","Intrinsic is deprecated"],ans:1}],challenge:"Build a ResponsiveGrid widget using LayoutBuilder that shows 1 column below 400px, 2 columns below 700px, and 3 columns at 700px+. Each cell should use Expanded to fill its row. Test with different screen sizes using Flutter DevTools.",resources:[{type:"docs",title:"Flutter Layout",url:"https://docs.flutter.dev/development/ui/layout",source:"Flutter Official"},{type:"article",title:"Understanding Constraints",url:"https://docs.flutter.dev/development/ui/layout/constraints",source:"Flutter Official"},{type:"docs",title:"BoxConstraints",url:"https://api.flutter.dev/flutter/rendering/BoxConstraints-class.html",source:"Flutter API"},{type:"video",title:"Decoding Flutter: Unbounded Height",url:"https://www.youtube.com/watch?v=jckqXR5CrPI",source:"Flutter YouTube"}],eli5:"Imagine you're in a sandbox. Your parent says: 'You can use any area between 0 and 5 feet wide.' You decide: 'I'll make my sandcastle 3 feet wide.' Then your parent decides where to put you in the yard. You can't make yourself bigger than the sandbox, and you don't get to pick YOUR spot — only your size. Flex (Row/Column) is like dividing pizza: Expanded kids eat everything, Flexible kids stop when they're full.",codeWalkthrough:["LayoutBuilder exposes parent BoxConstraints — used for responsive branching","constraints.maxWidth > 600 → desktop layout, else mobile","Row with Icon (natural size) + Expanded(flex:2) + Expanded(flex:1) — 0%, 67%, 33% of remaining space","flex:2 child gets twice the space of flex:1 child","Flexible with explicit width — takes only 80px even if more is available","Column + Expanded wrapping ListView — Column's remaining space given to ListView","SizedBox creates tight constraints — child MUST be exactly that size","ConstrainedBox adds maxWidth — child can be smaller but not larger","FractionallySizedBox uses parent's width as reference — 80% of parent","CustomMultiChildLayout: layoutChild gives constraints, positionChild places result"],bugChallenge:{code:`Widget build(BuildContext context) {
+  return Row(
+    children: [
+      Column(
+        children: [
+          Text('Name'),
+          Text('email@example.com'),
+        ],
+      ),
+      ElevatedButton(onPressed: () {}, child: Text('Edit')),
+    ],
+  );
+}`,hint:"What happens when the email text is very long? What constraint does Column receive from Row?",answer:"Row gives Column a loose (0 to maxWidth) constraint. Column is as wide as its widest child. If 'email@example.com' is very long, Column tries to be wider than available Row space → RenderFlex overflow. Fix: wrap Column in Expanded so it has a bounded width, and Text will wrap within that bound. Also add overflow: TextOverflow.ellipsis if wrapping is undesirable."},difficulty:"intermediate",prereqs:[10,11]},
+
+  {id:14,title:"Navigation: Navigator vs GoRouter, Deep Links & Route Guards",subtitle:"Every Senior Flutter Dev Gets Asked This — Answer With Confidence",analogy:"Navigator 1.0 is like a stack of plates — you push new plates on top and pop them off. Navigator 2.0 with GoRouter is like a GPS system — you tell it your destination URL and it figures out the whole route, handles detours (redirects), and even knows how to get there from outside the app (deep links).",points:[{t:"Navigator 1.0 — Imperative Stack",d:"Navigator.push() and Navigator.pop() manage a stack of routes. Simple and intuitive. Works well for linear flows. Limitations: no URL support, deep linking is manual, web navigation history doesn't work correctly. For simple apps or internal flows, Navigator 1.0 remains appropriate."},{t:"Navigator 2.0 — Declarative Pages API",d:"Navigator 2.0 (Router widget) is declarative: you declare which pages should be on the stack, and Flutter manages transitions. More complex but enables: URL-based navigation, proper back-button handling on web/Android, deep links. GoRouter is the most popular abstraction over Navigator 2.0."},{t:"GoRouter — The Standard Solution",d:"GoRouter maps URL paths to screens. Define routes with GoRoute('/path', builder:). Navigate with context.go('/path') or context.push('/path'). go() replaces the current page, push() adds to stack. GoRouter handles URL parsing, named routes, path parameters (:id), query parameters, and redirects."},{t:"Deep Linking — iOS and Android Setup",d:"Deep links let external URLs open specific screens in your app. iOS: configure Info.plist URL schemes (custom scheme) or Universal Links (https). Android: configure AndroidManifest.xml intent-filters with scheme, host, pathPrefix. Test with: adb shell am start -a android.intent.action.VIEW -d 'myapp://tasks/42'. GoRouter auto-handles deep link parsing."},{t:"Route Guards with redirect",d:"GoRouter's redirect callback runs before navigation. Check auth state, return null to proceed, return a new path to redirect. Example: if user not logged in and going to '/dashboard', redirect to '/login'. Combine with async auth stream using refreshListenable so guards update when auth state changes."},{t:"Nested Navigation",d:"Nested navigation = separate NavigatorStacks inside a parent route. Used for: bottom nav tabs (each tab has its own stack), embedded flows (checkout within a product page). GoRouter supports ShellRoute for shared layout with nested routing. Each tab maintains its own back stack."},{t:"Named Routes vs Path Routes vs Typed Routes",d:"Named routes: goNamed('task-detail', params: {'id': '42'}). Path routes: context.go('/tasks/42'). Typed routes (go_router_builder): TaskDetailRoute(id: '42').go(context) — compile-safe, no string typos. Typed routes are recommended for large apps. Interview: How do you prevent navigation string typos?"},{t:"Passing Data Between Routes",d:"Simple data: encode in path params ('/tasks/:id') or query params. Complex data: use extra parameter in GoRouter (not URL-safe, lost on deep link). Best practice: pass only IDs in URLs, load full data from state/repository in the destination screen. Deep links can only carry what's in the URL."},{t:"NavigationObserver — Analytics & Logging",d:"NavigationObserver tracks route changes. Override didPush, didPop, didReplace. Register with navigatorObservers in MaterialApp or GoRouter. Use for: Firebase Analytics screen tracking, debugging navigation flow, analytics events. Interview: How do you track screen views in Flutter?"},{t:"Common Navigation Interview Scenarios",d:"'Back button closes app instead of going back' — check your Navigator stack, ensure routes are pushed not replaced. 'Deep link opens wrong screen' — verify GoRouter route hierarchy. 'Auth guard causes infinite redirect' — ensure redirecting to '/login' doesn't redirect again when already on '/login'."}],whatIs:"Flutter has two navigation APIs: Navigator 1.0 (imperative push/pop stack) and Navigator 2.0 (declarative pages/Router). GoRouter is the standard library that abstracts Navigator 2.0 into a URL-based routing system with deep link support, route guards via redirect, nested navigation via ShellRoute, and typed routes.",realWorld:"In a SaaS collaboration app, GoRouter manages: /login (guard: redirect authenticated users to /dashboard), /dashboard (shell with bottom nav), /dashboard/tasks/:id (task detail), /dashboard/tasks/:id/edit (nested edit flow). Deep links from email notifications open /tasks/42 directly. The auth guard uses a Riverpod provider as refreshListenable to react to login/logout.",code:`// GoRouter — Navigation, Deep Links, Route Guards
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+// --- AUTH NOTIFIER (for route guard) ---
+
+class AuthNotifier extends ChangeNotifier {
+  bool _isAuthenticated = false;
+
+  bool get isAuthenticated => _isAuthenticated;
+
+  void login() {
+    _isAuthenticated = true;
+    notifyListeners(); // Triggers GoRouter to re-evaluate redirects
+  }
+
+  void logout() {
+    _isAuthenticated = false;
+    notifyListeners();
+  }
+}
+
+// --- ROUTER CONFIGURATION ---
+
+GoRouter createRouter(AuthNotifier authNotifier) {
+  return GoRouter(
+    initialLocation: '/dashboard',
+
+    // refreshListenable: re-run redirects when auth state changes
+    refreshListenable: authNotifier,
+
+    // --- ROUTE GUARD ---
+    redirect: (context, state) {
+      final isLoggedIn = authNotifier.isAuthenticated;
+      final isOnLogin = state.matchedLocation == '/login';
+
+      if (!isLoggedIn && !isOnLogin) {
+        // Not logged in and not on login → redirect to login
+        return '/login?from=\${state.matchedLocation}';
+      }
+
+      if (isLoggedIn && isOnLogin) {
+        // Logged in and on login → redirect to dashboard
+        return '/dashboard';
+      }
+
+      return null; // null = proceed normally
+    },
+
+    routes: [
+      // --- SIMPLE ROUTES ---
+      GoRoute(
+        path: '/login',
+        builder: (context, state) {
+          final from = state.uri.queryParameters['from'];
+          return LoginScreen(redirectAfterLogin: from);
+        },
+      ),
+
+      // --- SHELL ROUTE: Shared layout with nested navigation ---
+      ShellRoute(
+        builder: (context, state, child) {
+          return AppShell(child: child); // AppShell has bottom nav
+        },
+        routes: [
+          GoRoute(
+            path: '/dashboard',
+            builder: (context, state) => const DashboardScreen(),
+          ),
+
+          // --- NESTED ROUTE with PATH PARAMETER ---
+          GoRoute(
+            path: '/tasks',
+            builder: (context, state) => const TaskListScreen(),
+            routes: [
+              GoRoute(
+                path: ':id', // Matches /tasks/42
+                builder: (context, state) {
+                  final taskId = state.pathParameters['id']!;
+                  return TaskDetailScreen(taskId: taskId);
+                },
+                routes: [
+                  GoRoute(
+                    path: 'edit', // Matches /tasks/42/edit
+                    builder: (context, state) {
+                      final taskId = state.pathParameters['id']!;
+                      return TaskEditScreen(taskId: taskId);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
+// --- NAVIGATION CALLS ---
+
+class NavigationExamples extends StatelessWidget {
+  const NavigationExamples({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // go() — replace current route (no back button to previous)
+        ElevatedButton(
+          onPressed: () => context.go('/dashboard'),
+          child: const Text('Go to Dashboard'),
+        ),
+
+        // push() — add to stack (back button returns to here)
+        ElevatedButton(
+          onPressed: () => context.push('/tasks/42'),
+          child: const Text('Open Task 42'),
+        ),
+
+        // goNamed() — use named routes to avoid string typos
+        ElevatedButton(
+          onPressed: () => context.goNamed(
+            'task-detail',
+            pathParameters: {'id': '42'},
+            queryParameters: {'highlight': 'true'},
+          ),
+          child: const Text('Named Route'),
+        ),
+
+        // Pass complex data via extra (not URL-safe, lost on deep link)
+        ElevatedButton(
+          onPressed: () => context.push(
+            '/tasks/42',
+            extra: {'prefetchedTask': 'someData'}, // Use carefully
+          ),
+          child: const Text('With Extra Data'),
+        ),
+
+        // Pop with result
+        ElevatedButton(
+          onPressed: () => context.pop({'saved': true}),
+          child: const Text('Save and Pop'),
+        ),
+      ],
+    );
+  }
+}
+
+// --- NAVIGATION OBSERVER: Screen analytics ---
+
+class AnalyticsObserver extends NavigatorObserver {
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    super.didPush(route, previousRoute);
+    final name = route.settings.name;
+    if (name != null) {
+      // FirebaseAnalytics.instance.logScreenView(screenName: name);
+      debugPrint('Screen: \$name');
+    }
+  }
+}
+
+// --- PLACEHOLDER SCREENS ---
+class LoginScreen extends StatelessWidget {
+  final String? redirectAfterLogin;
+  const LoginScreen({super.key, this.redirectAfterLogin});
+  @override
+  Widget build(BuildContext context) => const Scaffold(body: Center(child: Text('Login')));
+}
+
+class AppShell extends StatelessWidget {
+  final Widget child;
+  const AppShell({super.key, required this.child});
+  @override
+  Widget build(BuildContext context) => Scaffold(body: child);
+}
+
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+  @override
+  Widget build(BuildContext context) => const Center(child: Text('Dashboard'));
+}
+
+class TaskListScreen extends StatelessWidget {
+  const TaskListScreen({super.key});
+  @override
+  Widget build(BuildContext context) => const Center(child: Text('Tasks'));
+}
+
+class TaskDetailScreen extends StatelessWidget {
+  final String taskId;
+  const TaskDetailScreen({super.key, required this.taskId});
+  @override
+  Widget build(BuildContext context) => Center(child: Text('Task \$taskId'));
+}
+
+class TaskEditScreen extends StatelessWidget {
+  final String taskId;
+  const TaskEditScreen({super.key, required this.taskId});
+  @override
+  Widget build(BuildContext context) => Center(child: Text('Edit Task \$taskId'));
+}`,funFact:"Navigator 2.0's declarative API was so complex that the Flutter team and community quickly built GoRouter to make it usable. The original Navigator 2.0 API required implementing RouterDelegate, RouteInformationParser, and RouteInformationProvider separately — each with multiple override methods. GoRouter reduces this to a list of GoRoute objects. In 2023, GoRouter was officially moved into the flutter/packages repo, becoming the de facto standard.",quiz:[{q:"What is the difference between context.go() and context.push() in GoRouter?",opts:["They are identical","go() replaces the current route (no back navigation to it), push() adds to the navigation stack","go() is for deep links only","push() is for nested navigation only"],ans:1},{q:"Where does GoRouter's route guard logic go?",opts:["In each screen's initState","In the redirect callback — return null to proceed or return a new path to redirect","In a NavigationObserver","In the route's builder function"],ans:1},{q:"Why should you prefer passing IDs in URLs rather than full objects?",opts:["Objects are too large","IDs work with deep links; full objects are lost when the app is opened via a URL","Objects can't be serialized","This is not a best practice"],ans:1},{q:"What does refreshListenable do in GoRouter?",opts:["Refreshes the page","Re-runs the redirect function when the Listenable notifies — used to update guards when auth state changes","Refreshes the route cache","Reloads the current route"],ans:1},{q:"How do you implement per-tab navigation history in a bottom navigation app?",opts:["Use separate GoRouter instances","Use ShellRoute — each tab shares the shell layout but maintains its own NavigatorKey and route stack","Use multiple Scaffold widgets","Store route history in SharedPreferences"],ans:1}],challenge:"Build a GoRouter setup with: /login (public), /app/home (guarded), /app/profile/:userId (guarded). Add a redirect that checks a simulated auth state. Test that navigating to /app/home when unauthenticated redirects to /login?from=/app/home, and that after 'logging in', the app redirects back to /app/home.",resources:[{type:"docs",title:"GoRouter Documentation",url:"https://pub.dev/documentation/go_router/latest/",source:"pub.dev"},{type:"docs",title:"Flutter Navigation",url:"https://docs.flutter.dev/ui/navigation",source:"Flutter Official"},{type:"article",title:"Deep Links in Flutter",url:"https://docs.flutter.dev/ui/navigation/deep-linking",source:"Flutter Official"},{type:"docs",title:"GoRouter Examples",url:"https://github.com/flutter/packages/tree/main/packages/go_router/example",source:"GitHub"}],eli5:"Navigator 1.0 is like a stack of books — put a book on top, take it off when done. GoRouter is like a map app for your app — you say 'I want to go to /tasks/42' and it figures out the whole journey, can redirect you if you're not allowed somewhere (route guard), and can start at the right page if someone shares a link with you (deep link). ShellRoute is like having the same navigation bar at the bottom while different pages appear in the middle.",codeWalkthrough:["AuthNotifier extends ChangeNotifier — notifyListeners triggers GoRouter redirect re-evaluation","refreshListenable: authNotifier — GoRouter watches this for changes","redirect: runs before every navigation — null means proceed, string means redirect","Guard: not logged in + not on login → redirect to login with 'from' param","Guard: logged in + on login → redirect to dashboard (prevent login loop)","ShellRoute: shared AppShell layout wrapping nested routes","GoRoute with :id path parameter — parsed as pathParameters['id']","Nested routes: /tasks/:id/edit is a child of /tasks/:id","context.go() replaces stack — no back button to previous","context.push() adds to stack — back button returns to caller","goNamed() uses route name instead of path string — prevents typos","extra: passes non-URL data — NOT safe for deep links"],bugChallenge:{code:`final router = GoRouter(
+  redirect: (context, state) {
+    if (!isLoggedIn) return '/login';
+    return null;
+  },
+  routes: [
+    GoRoute(path: '/login', builder: (c, s) => LoginScreen()),
+    GoRoute(path: '/home', builder: (c, s) => HomeScreen()),
+  ],
+);`,hint:"What happens when the user is not logged in and navigates to /login?",answer:"Infinite redirect loop: user not logged in → redirect to '/login' → redirect runs again → user still not logged in → redirect to '/login' → infinite loop. Fix: add a condition — if (!isLoggedIn && state.matchedLocation != '/login') return '/login'; return null; — only redirect if NOT already on the login page."},difficulty:"intermediate",prereqs:[10,11,12]},
+
+  {id:15,title:"Forms, Validation, Focus & Controllers",subtitle:"Input Flows That Don't Frustrate Users — Senior-Level UX Patterns",analogy:"A Form is like a job application. Each FormField is a question on the form. The GlobalKey<FormState> is the form's ID number — it lets the hiring manager (submit button) say 'review all answers now' (validate). FocusNode is like eye contact — it controls which field the user is currently 'talking to'. TextEditingController is like a notepad — it holds everything the user typed.",points:[{t:"TextEditingController — The Full Picture",d:"TextEditingController holds the text AND selection. Access text via .text, set it via .text = 'value'. Listen to changes via addListener(). MUST be disposed. Common mistake: creating a new controller in build() — creates a new controller every rebuild, losing the text. Create controllers in initState()."},{t:"Form and GlobalKey<FormState>",d:"Wrap fields in Form with a GlobalKey<FormState>. Call _formKey.currentState!.validate() to trigger all validators. Call .save() to trigger all onSaved callbacks. Call .reset() to clear all fields. The Form widget itself has no visual appearance — it's a logical container for coordinated validation."},{t:"FormField and TextFormField",d:"TextFormField = TextField wrapped in FormField. FormField has: initialValue, validator, onSaved, autovalidateMode. validator returns null for valid input, or an error String. Don't use both controller and initialValue — they conflict. Use controller for programmatic control, initialValue for static defaults."},{t:"AutovalidateMode",d:"AutovalidateMode.disabled: validate only when form.validate() is called. AutovalidateMode.onUserInteraction: validate as user types after first interaction. AutovalidateMode.always: validate on every rebuild. Interview: What mode prevents showing errors before the user has typed anything? onUserInteraction."},{t:"FocusNode — Keyboard and Focus Control",d:"FocusNode tracks whether a field has keyboard focus. Use FocusScope.of(context).requestFocus(nextFocusNode) to move focus programmatically. textInputAction: TextInputAction.next on TextField + focusNode management creates a smooth 'tab' UX. MUST dispose FocusNodes."},{t:"Input Formatters — Restrict Input",d:"TextInputFormatter restricts what can be typed. FilteringTextInputFormatter.digitsOnly — numbers only. FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')) — letters only. LengthLimitingTextInputFormatter(10) — max 10 chars. Combine multiple formatters in a list. Applies on every keystroke — instant validation."},{t:"Reactive Validation Patterns",d:"For cross-field validation (e.g., confirm password must match password), use the Form widget's validate() combined with closure capturing other controllers. Or use a FormBloc/Riverpod provider that exposes per-field validation states. Interview: How do you validate that two password fields match?"},{t:"Obscure Text and Password Toggle",d:"obscureText: true hides input. Toggle with setState on an _isObscure bool. For production: never log password field values, use secure text entry, disable autocorrect and enableSuggestions for password fields."},{t:"Keyboard Type and Input Action",d:"keyboardType: TextInputType.emailAddress shows '@' key. TextInputType.number shows numeric keyboard. TextInputType.multiline allows newlines. textInputAction: TextInputAction.done closes keyboard. TextInputAction.next moves to next field. TextInputAction.search triggers search. Match keyboard to expected input type."},{t:"Form UX Best Practices",d:"Show errors only after user interaction (onUserInteraction). Scroll to first error on submit. Auto-move focus to next field on completion. Debounce async validators (username availability). Disable submit button while validating or loading. Show loading spinner in submit button, not a separate overlay."}],whatIs:"Flutter forms use TextEditingController for text access, FocusNode for keyboard control, Form + GlobalKey<FormState> for coordinated validation, and TextFormField for fields with built-in validation. Input formatters constrain input on keystrokes. AutovalidateMode controls when errors appear. Together they create UX-safe, production-quality input flows.",realWorld:"In a school management platform, a student enrollment form has: name field (letters only, required), email field (format validation, async duplicate check), phone (digits only, length 10-15), date of birth (date picker). On submit, form.validate() triggers all validators, scroll animates to first error, and a loading spinner appears in the Save button while the API call completes.",code:`// Forms, Validation, Focus & Controllers
+
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class EnrollmentForm extends StatefulWidget {
+  const EnrollmentForm({super.key});
+
+  @override
+  State<EnrollmentForm> createState() => _EnrollmentFormState();
+}
+
+class _EnrollmentFormState extends State<EnrollmentForm> {
+  // GlobalKey: lets us call validate(), save(), reset() from outside Form
+  final _formKey = GlobalKey<FormState>();
+
+  // Controllers: created in initState, disposed in dispose
+  late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+  late final TextEditingController _phoneController;
+
+  // FocusNodes: for keyboard navigation
+  late final FocusNode _emailFocus;
+  late final FocusNode _passwordFocus;
+  late final FocusNode _confirmFocus;
+  late final FocusNode _phoneFocus;
+
+  bool _isLoading = false;
+  bool _isPasswordVisible = false;
+  Timer? _emailDebounce;
+  String? _emailAsyncError;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+    _phoneController = TextEditingController();
+
+    _emailFocus = FocusNode();
+    _passwordFocus = FocusNode();
+    _confirmFocus = FocusNode();
+    _phoneFocus = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    // Dispose ALL controllers and FocusNodes
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _phoneController.dispose();
+
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    _confirmFocus.dispose();
+    _phoneFocus.dispose();
+
+    _emailDebounce?.cancel();
+    super.dispose();
+  }
+
+  // Async validation with debounce — check email availability
+  void _onEmailChanged(String email) {
+    _emailDebounce?.cancel();
+    _emailDebounce = Timer(const Duration(milliseconds: 500), () async {
+      // Simulate API call
+      final isTaken = await _checkEmailTaken(email);
+      if (mounted) {
+        setState(() {
+          _emailAsyncError = isTaken ? 'Email already registered' : null;
+        });
+      }
+    });
+  }
+
+  Future<bool> _checkEmailTaken(String email) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return email == 'taken@example.com'; // Simulate
+  }
+
+  // Cross-field validation: confirm password must match
+  String? _validateConfirmPassword(String? value) {
+    if (value == null || value.isEmpty) return 'Please confirm your password';
+    if (value != _passwordController.text) return 'Passwords do not match';
+    return null; // Valid
+  }
+
+  Future<void> _handleSubmit() async {
+    // Dismiss keyboard
+    FocusScope.of(context).unfocus();
+
+    // Validate all fields synchronously
+    if (!_formKey.currentState!.validate()) {
+      // TODO: Scroll to first error
+      return;
+    }
+
+    // Save all fields (triggers onSaved callbacks)
+    _formKey.currentState!.save();
+
+    setState(() => _isLoading = true);
+
+    try {
+      // Simulate API call
+      await Future.delayed(const Duration(seconds: 2));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Enrolled successfully!')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      // Validate after user's first interaction — no errors on fresh form
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          // --- NAME FIELD: letters only ---
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(labelText: 'Full Name'),
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next, // Shows 'next' on keyboard
+            inputFormatters: [
+              // Only allow letters and spaces
+              FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z ]')),
+            ],
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) return 'Name is required';
+              if (value.trim().length < 2) return 'Name too short';
+              return null;
+            },
+            onFieldSubmitted: (_) {
+              // Move focus to email on keyboard 'next' tap
+              FocusScope.of(context).requestFocus(_emailFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- EMAIL FIELD: async validation ---
+          TextFormField(
+            controller: _emailController,
+            focusNode: _emailFocus,
+            decoration: InputDecoration(
+              labelText: 'Email',
+              // Show async error below standard validator error
+              errorText: _emailAsyncError,
+            ),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            autocorrect: false,
+            onChanged: _onEmailChanged,
+            validator: (value) {
+              if (value == null || value.isEmpty) return 'Email is required';
+              if (!RegExp(r'^[\\w.-]+@[\\w-]+\\.[\\w.]+\$').hasMatch(value)) {
+                return 'Invalid email format';
+              }
+              return null;
+            },
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_passwordFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- PASSWORD FIELD: obscure with toggle ---
+          TextFormField(
+            controller: _passwordController,
+            focusNode: _passwordFocus,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              suffixIcon: IconButton(
+                icon: Icon(_isPasswordVisible
+                    ? Icons.visibility_off
+                    : Icons.visibility),
+                onPressed: () {
+                  setState(() => _isPasswordVisible = !_isPasswordVisible);
+                },
+              ),
+            ),
+            obscureText: !_isPasswordVisible,
+            textInputAction: TextInputAction.next,
+            enableSuggestions: false,
+            autocorrect: false,
+            validator: (value) {
+              if (value == null || value.isEmpty) return 'Password is required';
+              if (value.length < 8) return 'At least 8 characters';
+              if (!RegExp(r'[A-Z]').hasMatch(value)) return 'Include uppercase letter';
+              if (!RegExp(r'[0-9]').hasMatch(value)) return 'Include a number';
+              return null;
+            },
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_confirmFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- CONFIRM PASSWORD: cross-field validation ---
+          TextFormField(
+            controller: _confirmPasswordController,
+            focusNode: _confirmFocus,
+            decoration: const InputDecoration(labelText: 'Confirm Password'),
+            obscureText: true,
+            textInputAction: TextInputAction.next,
+            enableSuggestions: false,
+            validator: _validateConfirmPassword, // Captures passwordController
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_phoneFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- PHONE FIELD: digits only, length constraint ---
+          TextFormField(
+            controller: _phoneController,
+            focusNode: _phoneFocus,
+            decoration: const InputDecoration(labelText: 'Phone'),
+            keyboardType: TextInputType.phone,
+            textInputAction: TextInputAction.done,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(15),
+            ],
+            validator: (value) {
+              if (value == null || value.isEmpty) return 'Phone is required';
+              if (value.length < 10) return 'Enter at least 10 digits';
+              return null;
+            },
+            onFieldSubmitted: (_) => _handleSubmit(),
+          ),
+
+          const SizedBox(height: 24),
+
+          // --- SUBMIT BUTTON: disabled while loading ---
+          ElevatedButton(
+            onPressed: _isLoading ? null : _handleSubmit,
+            child: _isLoading
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Text('Enroll'),
+          ),
+        ],
+      ),
+    );
+  }
+}`,funFact:"The most common Flutter form bug in production apps is forgetting to check 'mounted' before calling setState after an async validator completes. If the user submits and navigates away before the async validation finishes, the Future resolves and tries to setState on a disposed widget. The fix is always the same: check 'if (mounted)' before any setState inside an async callback.",quiz:[{q:"Why should you never create a TextEditingController inside build()?",opts:["build() is too slow for it","A new controller is created every rebuild, resetting the text field and leaking the old controller's memory","Controllers require a StatefulWidget","build() doesn't have access to the widget lifecycle"],ans:1},{q:"What does GlobalKey<FormState>.validate() do?",opts:["Validates only the focused field","Triggers the validator function on every FormField in the Form and returns true if all pass","Saves all form field values","Resets all fields to their initial values"],ans:1},{q:"Which AutovalidateMode shows errors only after the user has interacted with a field?",opts:["AutovalidateMode.disabled","AutovalidateMode.always","AutovalidateMode.onUserInteraction","AutovalidateMode.onChange"],ans:2},{q:"How do you implement 'move to next field on keyboard Enter'?",opts:["It happens automatically","Set textInputAction: TextInputAction.next on the TextField and call FocusScope.of(context).requestFocus(nextFocusNode) in onFieldSubmitted","Use Tab key","Override the keyboard handler"],ans:1},{q:"What is the correct way to validate that two password fields match?",opts:["Use a custom Form validator","In the confirm field's validator, capture the password controller via closure and compare values — return error string if they don't match","Use a GlobalKey to access the password field","Password matching is handled by Flutter automatically"],ans:1}],challenge:"Build a multi-step form (2 steps) for a fintech app: Step 1 collects name + email (validated), Step 2 collects password + confirm password (cross-validated). Each step has its own Form with GlobalKey. 'Next' validates step 1 before advancing. 'Submit' validates step 2 and shows a summary.",resources:[{type:"docs",title:"Forms in Flutter",url:"https://docs.flutter.dev/cookbook/forms/validation",source:"Flutter Official"},{type:"docs",title:"TextEditingController",url:"https://api.flutter.dev/flutter/widgets/TextEditingController-class.html",source:"Flutter API"},{type:"docs",title:"FocusNode",url:"https://api.flutter.dev/flutter/widgets/FocusNode-class.html",source:"Flutter API"},{type:"docs",title:"TextFormField",url:"https://api.flutter.dev/flutter/material/TextFormField-class.html",source:"Flutter API"}],eli5:"A Form is like a paper application form. GlobalKey<FormState> is the form's serial number — you need it to tell all the questions 'check your answers now.' TextEditingController is like a pencil that writes AND remembers everything you wrote. FocusNode is like a spotlight — it shines on the question you're currently answering. Input formatters are like rules: 'only write numbers here, no letters allowed'.",codeWalkthrough:["GlobalKey<FormState>: allows validate(), save(), reset() calls from submit button","Controllers and FocusNodes created in initState — NOT in build()","All controllers and FocusNodes disposed in dispose() — prevents memory leaks","_emailDebounce: waits 500ms after typing stops before making async API call","_validateConfirmPassword: closure captures _passwordController — cross-field validation","autovalidateMode: onUserInteraction — shows errors only after user types","FilteringTextInputFormatter.allow(RegExp): letters and spaces only on name field","focusNode on email field + onFieldSubmitted moves focus to password field","obscureText toggled by _isPasswordVisible state + visibility toggle button","enableSuggestions: false on password — prevents autocomplete on sensitive fields","LengthLimitingTextInputFormatter(15) + digitsOnly on phone","Submit button: null onPressed when loading disables it; shows spinner inside button"],bugChallenge:{code:`class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
+  @override
+  State<SignupForm> createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignupForm> {
+  @override
+  Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    return TextField(controller: controller);
+  }
+}`,hint:"Where is the controller created and what happens on every rebuild?",answer:"The TextEditingController is created inside build() — a new controller is created on EVERY rebuild. This means any text the user types is lost on each setState, and the old controllers are never disposed (memory leak). Fix: declare 'late final TextEditingController controller;' as a field, initialize in initState(), and call controller.dispose() in dispose()."},difficulty:"beginner",prereqs:[11,12]}
+
+
+,
+  {id:16,title:"State Management Landscape",subtitle:"How to Answer 'How Do You Choose State Management?' in an Interview",analogy:"State management solutions are like different ways to organize a team. setState is like a solo freelancer — fast and simple for one person. ValueNotifier is like a group chat — anyone subscribed gets the update. Provider is like a department head distributing info. Riverpod is a better-organized company. BLoC is like a corporate bureaucracy — more process, but scales to thousands of employees without chaos.",points:[{t:"What Is State in Flutter?",d:"State is any data that can change and that the UI should reflect. Three types: (1) Local UI state — expanded/collapsed, selected tab, form text. (2) Shared app state — authenticated user, cart, theme preference. (3) Server state — data fetched from an API, sync status. Different state types need different solutions."},{t:"setState — Simple, Synchronous, Local",d:"Best for: local UI state in a single widget (toggle, counter, tab selection). Problems: doesn't scale across widgets, causes full subtree rebuilds, can't be accessed from other widgets. When interviewers ask 'when would you use setState?', answer: only for isolated local UI state that doesn't need sharing."},{t:"ValueNotifier and ValueListenableBuilder",d:"ValueNotifier<T> is a ChangeNotifier that holds a single value. When value changes, listeners are notified. ValueListenableBuilder rebuilds only when the value changes. Lightweight, no dependencies. Good for: simple shared values, theme toggles, small counters. Not for complex multi-field state."},{t:"Provider — ChangeNotifier Wrapper",d:"Provider wraps InheritedWidget with a ChangeNotifier. ChangeNotifier has notifyListeners(). Consumer<T> or context.watch<T>() subscribes and rebuilds on change. context.read<T>() one-time access. Simple, Flutter team endorsed. Limitation: can have Provider hell with many providers, ChangeNotifier is mutable and hard to test."},{t:"Riverpod — Provider Done Right",d:"Riverpod fixes Provider's problems: compile-time safe (no ProviderNotFoundError at runtime), testable (override providers in tests), providers defined globally (not in widget tree), supports async providers (FutureProvider, StreamProvider), StateNotifier for immutable state. Interview: Why Riverpod over Provider? Compile safety + testability."},{t:"BLoC — Business Logic Component",d:"BLoC separates business logic from UI completely. Events go IN, States come OUT, UI reacts to States. Strict unidirectional data flow. Excellent for: complex features, team environments, testability. Overhead for simple features. The explicit event → state model makes code reviewable and predictable at scale."},{t:"When to Choose Each Solution",d:"setState: isolated widget UI state. ValueNotifier: simple shared value, one type. Provider/Riverpod: app-wide shared state, dependency injection. Cubit: simple feature logic. BLoC: complex feature with multiple events, side effects, team collaboration. Interview tip: demonstrate you understand tradeoffs, not that one tool is always best."},{t:"Comparison: Mutability and Testability",d:"setState and ChangeNotifier are MUTABLE — harder to test, harder to track changes. BLoC/Riverpod StateNotifier use IMMUTABLE states — each state transition produces a new object, making testing trivial (given event, assert final state). Immutable state + sealed classes = exhaustive UI rendering."},{t:"The Anti-Pattern: Business Logic in Widgets",d:"Putting API calls, validation logic, or business rules inside StatefulWidget is an anti-pattern. It makes code untestable (can't test without pumping a widget), unreadable (UI and logic mixed), and unmaintainable. Widgets should only: render UI, dispatch events, and react to state changes."},{t:"Interview Question: How Do You Choose?",d:"Answer template: 'I start with the simplest solution that fits the problem. For local widget state, setState or ValueNotifier. For shared app state or features with async logic, I default to Riverpod or BLoC depending on team preference and feature complexity. BLoC for complex features where explicit event modeling helps the team, Riverpod for everything else.'"}],whatIs:"Flutter's state management landscape spans: setState (local, simple), ValueNotifier (simple shared value), Provider (ChangeNotifier wrapper), Riverpod (compile-safe, testable), and BLoC (event-driven, unidirectional). Each has tradeoffs. Senior engineers choose based on complexity, testability requirements, and team size — not hype.",realWorld:"In a fintech app: authentication state → Riverpod (global, async, needs loading/error states). Transaction list → BLoC (complex filtering, sorting, pagination events). Toast notifications → ValueNotifier (simple show/hide). Theme toggle → Provider or simple ValueNotifier. User form → local setState or Formz with Riverpod.",code:`// State Management Landscape — Comparison
+
+import 'package:flutter/material.dart';
+
+// ============================================================
+// 1. setState — LOCAL only
+// ============================================================
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool _isFavorite = false; // Local UI state — perfect for setState
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
+      onPressed: () => setState(() => _isFavorite = !_isFavorite),
+    );
+  }
+}
+
+// ============================================================
+// 2. ValueNotifier — SIMPLE shared value
+// ============================================================
+
+final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.system);
+
+class ThemeToggle extends StatelessWidget {
+  const ThemeToggle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Rebuilds ONLY when themeNotifier.value changes
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, mode, _) {
+        return Switch(
+          value: mode == ThemeMode.dark,
+          onChanged: (isDark) {
+            themeNotifier.value =
+                isDark ? ThemeMode.dark : ThemeMode.light;
+          },
+        );
+      },
+    );
+  }
+}
+
+// ============================================================
+// 3. ChangeNotifier (Provider pattern)
+// ============================================================
+
+class CartNotifier extends ChangeNotifier {
+  final List<String> _items = [];
+  List<String> get items => List.unmodifiable(_items);
+  int get count => _items.length;
+
+  void add(String item) {
+    _items.add(item);
+    notifyListeners(); // All listeners rebuild
+  }
+
+  void remove(String item) {
+    _items.remove(item);
+    notifyListeners();
+  }
+}
+
+// Consumer<CartNotifier>: rebuilds when notifyListeners() is called
+// context.read<CartNotifier>(): one-time access, no rebuild
+
+// ============================================================
+// 4. Comparison matrix
+// ============================================================
+
+// | Solution      | Scope         | Mutable | Testable | Complexity |
+// |---------------|---------------|---------|----------|------------|
+// | setState      | Widget-local  | Yes     | Hard     | Minimal    |
+// | ValueNotifier | Widget-shared | Yes     | OK       | Low        |
+// | Provider      | App-wide      | Yes     | Medium   | Medium     |
+// | Riverpod      | App-wide      | No*     | Excellent| Medium     |
+// | BLoC          | Feature-wide  | No      | Excellent| High       |
+// *StateNotifier in Riverpod uses immutable state
+
+// ============================================================
+// 5. The right pattern for each state type
+// ============================================================
+
+// LOCAL UI state (expanded, selected, typing)
+// → setState or ValueNotifier
+
+// SHARED UI state (theme, locale)
+// → ValueNotifier or Provider
+
+// SERVER state (API data, loading, errors)
+// → Riverpod FutureProvider / StreamProvider, or BLoC
+
+// COMPLEX feature logic (auth, cart, search with filters)
+// → BLoC (explicit events make reviews easy) or Riverpod StateNotifier
+
+// ============================================================
+// 6. Why immutable state wins
+// ============================================================
+
+// MUTABLE (ChangeNotifier):
+// class UserState extends ChangeNotifier {
+//   String name = '';  // Mutated in place
+//   void setName(String n) { name = n; notifyListeners(); }
+// }
+// Problem: hard to know WHAT changed, hard to test past states
+
+// IMMUTABLE (BLoC / Riverpod StateNotifier):
+sealed class UserState {}
+class UserInitial extends UserState {}
+class UserLoading extends UserState {}
+class UserLoaded extends UserState {
+  final String name;
+  const UserLoaded(this.name);
+}
+class UserError extends UserState {
+  final String message;
+  const UserError(this.message);
+}
+// Each state is a distinct object — test by asserting emitted states
+// Sealed: exhaustive handling in switch — compiler warns on missing cases
+
+// ============================================================
+// 7. Interview answer template
+// ============================================================
+
+// "For purely local widget state — an expanded card or a selected tab —
+// I use setState. For simple shared values like theme, ValueNotifier is
+// lightweight and dependency-free. For app-wide state with dependency
+// injection, I reach for Riverpod — it's compile-safe and trivially
+// testable by overriding providers. For complex features where I want
+// explicit, reviewable event modeling, I use BLoC. The team, feature
+// complexity, and testability requirements guide the choice."`,funFact:"The 2023 Flutter State of Flutter survey found BLoC (used by ~54% of respondents) and Riverpod (~52%) are the two most popular state management solutions, with Provider still at ~48%. setState is used by nearly everyone but mostly for local UI state. GetX, while popular, is generally discouraged by the Flutter team due to architectural concerns.",quiz:[{q:"When is setState the most appropriate state management solution?",opts:["Always — it is the simplest","For local, isolated UI state within a single widget that doesn't need sharing","For authentication state","For any state that changes more than once"],ans:1},{q:"What is the key advantage of Riverpod over Provider?",opts:["Riverpod is older and more tested","Riverpod is compile-time safe (no ProviderNotFoundError at runtime) and providers can be easily overridden in tests","Riverpod has better animations","Riverpod uses less memory"],ans:1},{q:"What distinguishes BLoC from simpler state management solutions?",opts:["BLoC is faster","BLoC enforces strict unidirectional data flow with explicit Events in and States out — making business logic completely testable and separated from UI","BLoC requires no boilerplate","BLoC uses less code"],ans:1},{q:"Why is immutable state preferred in production Flutter apps?",opts:["It is required by Flutter","Immutable states make transitions trackable and tests trivial — each state change is a new object you can assert on","Immutable state uses less memory","Dart does not support mutable classes"],ans:1},{q:"A junior dev puts an API call directly in a StatefulWidget. What is the main problem?",opts:["API calls must be in a separate file","The widget becomes untestable (requires pumping a widget to test the logic), mixes UI with business logic, and violates Single Responsibility","StatefulWidget cannot make API calls","There is no problem with this pattern"],ans:1}],challenge:"Build the same feature — a list of tasks that can be toggled complete — using three approaches: (1) setState in one StatefulWidget, (2) ValueNotifier with ValueListenableBuilder, (3) a ChangeNotifier class with Consumer. Write a paragraph comparing the testability, readability, and scalability of each approach.",resources:[{type:"docs",title:"State Management in Flutter",url:"https://docs.flutter.dev/data-and-backend/state-mgmt/intro",source:"Flutter Official"},{type:"docs",title:"Riverpod Documentation",url:"https://riverpod.dev/docs/introduction/why_riverpod",source:"riverpod.dev"},{type:"docs",title:"BLoC Library",url:"https://bloclibrary.dev/",source:"bloclibrary.dev"},{type:"article",title:"Provider Package",url:"https://pub.dev/packages/provider",source:"pub.dev"}],eli5:"State management is about how your app remembers things and tells the screen to update. setState is like a sticky note on your own desk — only YOU can see it. ValueNotifier is like a group chat — everyone watching gets the message. Provider is like a bulletin board in the office. Riverpod is a fancier bulletin board that won't let you post the wrong thing. BLoC is like a formal company process: fill out a form (Event), submit to the department (BLoC), get an official response (State).",codeWalkthrough:["FavoriteButton: setState for isolated local toggle — textbook use case","ValueNotifier<ThemeMode> declared globally — any widget can access it","ValueListenableBuilder: rebuilds ONLY when themeNotifier.value is reassigned","CartNotifier extends ChangeNotifier — notifyListeners() triggers all consumers","Comparison matrix: scope, mutability, testability, complexity","Sealed class UserState — compiler ensures all cases are handled in switch","Each subclass (Loading, Loaded, Error) is a distinct object — testable","Interview template: demonstrates decision-making process, not dogma"],bugChallenge:{code:`class CounterProvider extends ChangeNotifier {
+  int count = 0;
+
+  void increment() {
+    count++;
+    // Forgot something here
+  }
+}
+
+class CounterDisplay extends StatelessWidget {
+  final CounterProvider provider;
+  const CounterDisplay({super.key, required this.provider});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Count: \${provider.count}');
+  }
+}`,hint:"CounterDisplay never updates when increment() is called. What is missing?",answer:"notifyListeners() is missing from increment(). Without it, listeners (CounterDisplay) are never told the value changed, so the UI stays stale. Fix: add notifyListeners() after 'count++'. Also, CounterDisplay should use Consumer<CounterProvider> or context.watch<CounterProvider>() — listening to a ChangeNotifier passed as a constructor param bypasses Provider's rebuild mechanism."},difficulty:"intermediate",prereqs:[11,12]},
+
+  {id:17,title:"Cubit Fundamentals",subtitle:"The Simplest Step Up From setState — Master This Pattern First",analogy:"A Cubit is like a vending machine. You press a button (call a method), the machine processes your request, and dispenses a product (emits a new state). You don't need to know how the vending machine works internally — you just know the inputs (methods) and outputs (states). And crucially, the machine always tells you exactly what's inside it right now (current state).",points:[{t:"What Is a Cubit?",d:"Cubit is a simplified BLoC without the Event class. Instead of defining events, you call methods directly on the Cubit. Methods call emit() to produce new states. The UI listens via BlocBuilder or BlocListener. Cubit is perfect for features with simple, direct operations where explicit event modeling adds unnecessary boilerplate."},{t:"Cubit vs BLoC: When to Choose",d:"Cubit: simpler features, direct method calls, less boilerplate, easier to read for small features. BLoC: complex features where you want explicit event modeling for auditability (every action is traceable in BlocObserver), event transformation (debouncing, throttling), or complex side effects. A BLoC can be converted to Cubit and back easily."},{t:"emit() — The Core Operation",d:"emit(newState) pushes a new state to all listeners. States are compared with == before emitting — if the new state equals the current state, emit is a no-op (no rebuild). This is why Equatable matters: without it, two identical state objects won't be equal (object identity), causing unnecessary rebuilds."},{t:"Equatable for State Comparison",d:"Equatable overrides == and hashCode based on props. class UserLoaded extends Equatable { final User user; const UserLoaded(this.user); @override List<Object> get props => [user]; }. Now UserLoaded(user1) == UserLoaded(user1) returns true — Cubit won't re-emit and won't rebuild the UI."},{t:"Immutable States Pattern",d:"Every state class should be immutable: final fields, const constructor where possible. Never mutate state directly — always emit a new state object. For states with many fields, use copyWith(). This enables time-travel debugging, state history, and trivial test assertions."},{t:"State Design — Sealed Classes",d:"Use sealed classes for exhaustive state handling. sealed class UserState {} + subclasses (Initial, Loading, Loaded, Error). In the UI, switch (state) { case UserInitial() => ..., case UserLoading() => ..., } gives compile-time exhaustiveness — compiler warns if you miss a state."},{t:"BlocProvider and BlocBuilder",d:"BlocProvider creates and provides the Cubit. BlocBuilder<CubitType, StateType> rebuilds when state changes. BlocBuilder has buildWhen: if you return false, the widget skips this rebuild. Use buildWhen to prevent rebuilds for state changes your widget doesn't care about."},{t:"Cubit Lifecycle: onCreate and onClose",d:"override onCreate() to run logic when Cubit is first created (load initial data). override onClose() to clean up resources (cancel subscriptions). BlocObserver.onCreate/onClose give global visibility into all Cubit/BLoC lifecycles — useful for debugging and analytics."},{t:"Testing Cubits — Pure and Simple",d:"Cubit testing: instantiate directly (no widget needed), call methods, check state list with blocTest or manual assertion. blocTest<MyCubit, MyState>('description', build: () => MyCubit(), act: (c) => c.someMethod(), expect: () => [StateA(), StateB()]). No widget pumping, no async complications."},{t:"Common Cubit Patterns",d:"Counter cubit: increment/decrement methods. Auth cubit: login/logout/checkSession methods. Form cubit: updateField, submit, reset methods. Theme cubit: toggle method. Pagination cubit: loadNext, refresh methods. For each: start simple with Cubit, upgrade to BLoC only when you need event transformation or explicit event logging."}],whatIs:"Cubit is a lightweight state management class from the BLoC library. It simplifies BLoC by replacing Events with direct method calls. Methods call emit() to produce new immutable states. The UI subscribes via BlocBuilder. Equatable ensures state comparison works correctly, preventing unnecessary rebuilds.",realWorld:"In a school management platform, the attendance marking feature uses an AttendanceCubit with methods: loadStudents(), markPresent(studentId), markAbsent(studentId), submitAttendance(). States: AttendanceInitial, AttendanceLoading, AttendanceLoaded(students), AttendanceSubmitting, AttendanceSubmitted. Simple enough for Cubit — no complex event transformations needed.",code:`// Cubit Fundamentals
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+// ============================================================
+// 1. STATE DESIGN — Sealed + Equatable
+// ============================================================
+
+sealed class AttendanceState extends Equatable {
+  const AttendanceState();
+
+  @override
+  List<Object?> get props => []; // Default: no props to compare
+}
+
+class AttendanceInitial extends AttendanceState {
+  const AttendanceInitial();
+}
+
+class AttendanceLoading extends AttendanceState {
+  const AttendanceLoading();
+}
+
+class AttendanceLoaded extends AttendanceState {
+  final List<Student> students;
+  final Map<String, bool> attendance; // studentId → isPresent
+
+  const AttendanceLoaded({
+    required this.students,
+    required this.attendance,
+  });
+
+  @override
+  List<Object> get props => [students, attendance];
+
+  // copyWith: create new state with modified fields
+  AttendanceLoaded copyWith({
+    List<Student>? students,
+    Map<String, bool>? attendance,
+  }) {
+    return AttendanceLoaded(
+      students: students ?? this.students,
+      attendance: attendance ?? this.attendance,
+    );
+  }
+}
+
+class AttendanceSubmitting extends AttendanceState {
+  const AttendanceSubmitting();
+}
+
+class AttendanceSubmitted extends AttendanceState {
+  final int presentCount;
+  const AttendanceSubmitted(this.presentCount);
+
+  @override
+  List<Object> get props => [presentCount];
+}
+
+class AttendanceError extends AttendanceState {
+  final String message;
+  const AttendanceError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+// ============================================================
+// 2. THE CUBIT
+// ============================================================
+
+class AttendanceCubit extends Cubit<AttendanceState> {
+  final AttendanceRepository _repository;
+
+  // Initial state passed to super constructor
+  AttendanceCubit({required AttendanceRepository repository})
+      : _repository = repository,
+        super(const AttendanceInitial());
+
+  // Called when Cubit is created — load initial data
+  @override
+  Future<void> onCreate(BlocBase bloc) async {
+    super.onCreate(bloc);
+    await loadStudents();
+  }
+
+  // Direct method — no Event class needed
+  Future<void> loadStudents() async {
+    emit(const AttendanceLoading()); // Immediate feedback
+
+    try {
+      final students = await _repository.getStudents();
+      final initialAttendance = {
+        for (final s in students) s.id: false
+      };
+      emit(AttendanceLoaded(
+        students: students,
+        attendance: initialAttendance,
+      ));
+    } catch (e) {
+      emit(AttendanceError('Failed to load students: $e'));
+    }
+  }
+
+  // Update one student's attendance — immutable state update
+  void markAttendance(String studentId, bool isPresent) {
+    final current = state;
+    if (current is! AttendanceLoaded) return;
+
+    // Create new map — don't mutate the existing one
+    final newAttendance = Map<String, bool>.from(current.attendance)
+      ..[studentId] = isPresent;
+
+    // emit only if changed — Equatable handles the comparison
+    emit(current.copyWith(attendance: newAttendance));
+  }
+
+  Future<void> submitAttendance() async {
+    final current = state;
+    if (current is! AttendanceLoaded) return;
+
+    emit(const AttendanceSubmitting());
+
+    try {
+      await _repository.submitAttendance(current.attendance);
+      final presentCount =
+          current.attendance.values.where((v) => v).length;
+      emit(AttendanceSubmitted(presentCount));
+    } catch (e) {
+      // On error, restore the loaded state so user can retry
+      emit(AttendanceError('Submission failed: $e'));
+    }
+  }
+
+  // Resources cleanup
+  @override
+  Future<void> close() async {
+    // Cancel any subscriptions, timers here
+    return super.close();
+  }
+}
+
+// ============================================================
+// 3. UI — BlocBuilder
+// ============================================================
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AttendanceScreen extends StatelessWidget {
+  const AttendanceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AttendanceCubit(
+        repository: context.read<AttendanceRepository>(),
+      ),
+      child: const _AttendanceView(),
+    );
+  }
+}
+
+class _AttendanceView extends StatelessWidget {
+  const _AttendanceView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Attendance')),
+      body: BlocBuilder<AttendanceCubit, AttendanceState>(
+        // buildWhen: skip rebuild if we don't need it
+        // buildWhen: (prev, curr) => curr is! AttendanceSubmitting,
+        builder: (context, state) {
+          return switch (state) {
+            AttendanceInitial() => const Center(child: Text('Loading...')),
+            AttendanceLoading() => const Center(child: CircularProgressIndicator()),
+            AttendanceLoaded(:final students, :final attendance) =>
+              _StudentList(students: students, attendance: attendance),
+            AttendanceSubmitting() => const Center(child: CircularProgressIndicator()),
+            AttendanceSubmitted(:final presentCount) =>
+              Center(child: Text('Submitted! $presentCount present')),
+            AttendanceError(:final message) =>
+              Center(child: Text('Error: $message')),
+          };
+        },
+      ),
+      floatingActionButton: BlocBuilder<AttendanceCubit, AttendanceState>(
+        buildWhen: (prev, curr) =>
+            prev is AttendanceLoaded || curr is AttendanceLoaded,
+        builder: (context, state) {
+          if (state is! AttendanceLoaded) return const SizedBox.shrink();
+          return FloatingActionButton.extended(
+            onPressed: () =>
+                context.read<AttendanceCubit>().submitAttendance(),
+            label: const Text('Submit'),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _StudentList extends StatelessWidget {
+  final List<Student> students;
+  final Map<String, bool> attendance;
+
+  const _StudentList({required this.students, required this.attendance});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: students.length,
+      itemBuilder: (context, index) {
+        final student = students[index];
+        final isPresent = attendance[student.id] ?? false;
+
+        return CheckboxListTile(
+          title: Text(student.name),
+          value: isPresent,
+          onChanged: (val) {
+            context.read<AttendanceCubit>().markAttendance(
+              student.id,
+              val ?? false,
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+// Placeholder types
+class Student {
+  final String id;
+  final String name;
+  Student({required this.id, required this.name});
+}
+
+abstract class AttendanceRepository {
+  Future<List<Student>> getStudents();
+  Future<void> submitAttendance(Map<String, bool> attendance);
+}`,funFact:"The name 'Cubit' is a portmanteau of 'Cube' and 'Bit' — a nod to quantum computing concepts (qubits). Felix Angelov, the creator of the BLoC library, introduced Cubit in 2020 as a lighter alternative to BLoC for simpler use cases. Despite the quantum naming inspiration, Cubit is decidedly classical in its behavior.",quiz:[{q:"What is the core difference between Cubit and BLoC?",opts:["Cubit is faster","Cubit uses direct method calls instead of Events — simpler for straightforward features","BLoC is deprecated","Cubit cannot handle async operations"],ans:1},{q:"Why is Equatable important for Cubit states?",opts:["Equatable makes states faster","Without Equatable, two identical state objects are not equal by default (object identity), causing unnecessary rebuilds. Equatable compares by props instead.","Equatable is required by the BLoC library","Equatable prevents memory leaks"],ans:1},{q:"What does emit() do when the new state equals the current state?",opts:["It crashes with an error","It is a no-op — no rebuild occurs, because state comparison (using Equatable) determines they are identical","It always rebuilds regardless","It queues the state for later"],ans:1},{q:"What is the recommended pattern for updating one field in a loaded state?",opts:["Mutate the existing state object","Use copyWith() to create a new state object with the changed field — never mutate state directly","Re-fetch all data from the server","Use setState() inside the Cubit"],ans:1},{q:"How do you test a Cubit without a widget?",opts:["Cubits cannot be unit tested","Instantiate the Cubit directly, call methods, assert on emitted states using blocTest or manual state list comparison — no widget pumping required","Wrap the Cubit in a test widget","Use a mock widget tree"],ans:1}],challenge:"Build a SearchCubit for a student search feature: state has a query string and a filtered list of students. searchStudents(query) method filters a hardcoded list. Write the states, Cubit, and a test using blocTest that verifies: initial state is empty, after searching 'Ali' the state contains matching students.",resources:[{type:"docs",title:"Cubit Documentation",url:"https://bloclibrary.dev/bloc-concepts/#cubit",source:"bloclibrary.dev"},{type:"docs",title:"BLoC Library",url:"https://bloclibrary.dev/",source:"bloclibrary.dev"},{type:"docs",title:"Equatable Package",url:"https://pub.dev/packages/equatable",source:"pub.dev"},{type:"docs",title:"flutter_bloc Package",url:"https://pub.dev/packages/flutter_bloc",source:"pub.dev"}],eli5:"A Cubit is like a scoreboard. You call methods on it — 'add 1 point to the red team' — and it updates its score (emits a new state). Everyone watching the scoreboard (BlocBuilder) gets the update automatically. Equatable makes sure the scoreboard only flashes 'updated!' when the score actually changes — not just because a new scoreboard object was created with the same numbers.",codeWalkthrough:["Sealed class AttendanceState — compiler ensures exhaustive switch handling","Each state extends Equatable and defines props — equality based on data, not object identity","AttendanceLoaded.copyWith() — creates new state with modified fields without mutating","AttendanceCubit extends Cubit<AttendanceState> with super(initialState)","loadStudents() emits Loading, then Loaded or Error — standard async pattern","markAttendance() guards with 'is!' check — safe state narrowing","New Map from existing — immutable update pattern, never mutate the map in-place","emit() skips if new state equals current (via Equatable) — prevents useless rebuilds","BlocProvider creates Cubit scoped to the screen","BlocBuilder switch exhaustively handles all states — sealed class enforces this","buildWhen on FAB BlocBuilder — only rebuilds when AttendanceLoaded changes"],bugChallenge:{code:`class ThemeCubit extends Cubit<ThemeState> {
+  ThemeCubit() : super(ThemeState(isDark: false));
+
+  void toggleTheme() {
+    state.isDark = !state.isDark;
+    emit(state);
+  }
+}
+
+class ThemeState {
+  bool isDark;
+  ThemeState({required this.isDark});
+}`,hint:"ThemeState is mutable. What happens when you toggle the theme?",answer:"Two bugs: (1) state.isDark is mutated directly — this mutates the current state object BEFORE emitting. (2) emit(state) emits the SAME object reference — Cubit compares old and new state by reference/equality, finds them identical, and skips the rebuild. Fix: make ThemeState immutable (final isDark), extend Equatable, and emit a new instance: emit(ThemeState(isDark: !state.isDark))."},difficulty:"intermediate",prereqs:[16]},
+
+  {id:18,title:"BLoC Fundamentals",subtitle:"Events In, States Out — The Pattern That Scales to Any Team",analogy:"BLoC is like a company's formal request system. An employee submits a Request Form (Event) to the department. The department (BLoC) processes it, updates the company database (state), and posts the result on the notice board (Stream<State>). Everyone looking at the notice board (BlocBuilder) sees the latest update. The department keeps a log of every request and result (BlocObserver) — perfect for audits.",points:[{t:"BLoC vs Cubit — The Distinction",d:"BLoC adds a formal Event class on top of Cubit. Events are dispatched with bloc.add(SomeEvent()). Each event type is handled by on<EventType>((event, emit) => ...). The explicit event model makes it easier to: add event-specific logging, transform events (debounce, throttle), and review every action the user took in BlocObserver."},{t:"Event Classes — The Inputs",d:"Events describe what happened: LoadTransactions, FilterByDate, SubmitPayment, RefreshData. They are immutable value objects. Extend Equatable if you want to deduplicate identical events. Use sealed classes for exhaustive handling: sealed class TransactionEvent {} with subclasses. Each event carries its own data as fields."},{t:"on<Event> Handler — The Modern API",d:"Since BLoC 7.2+, use on<EventType>((event, emit) → ...) in the constructor. This replaces the old mapEventToState generator. Advantages: type-safe (the handler only sees events of that type), supports async via async/await, each event type has its own handler method for clarity."},{t:"The Emitter — Thread-Safe emit()",d:"The Emitter passed to on<Event> handlers is not the same as Cubit's emit(). It's thread-safe: multiple concurrent events won't produce race conditions in the state. emit.forEach() processes a stream and emits states for each element. emit.onEach() listens without transforming."},{t:"Side Effects — BlocListener",d:"BlocListener reacts to state changes for SIDE EFFECTS: show dialogs, navigate, display snackbars. Never put side effects in BlocBuilder. BlocListener: fires once per state change. BlocConsumer = BlocBuilder + BlocListener in one widget. BlocSelector: rebuilds only when a specific field in the state changes."},{t:"BlocObserver — Global Visibility",d:"Override BlocObserver and register with Bloc.observer = MyObserver() in main(). Override: onCreate, onEvent, onTransition, onError, onClose. Every BLoC/Cubit in the app routes through here. Use for: Firebase Analytics events, Sentry error reporting, debug logging. Interview: How do you track every user action in Flutter? BlocObserver."},{t:"Transition — The Audit Trail",d:"A Transition contains: currentState, event, nextState. In BlocObserver.onTransition, log these to analytics or debug output. This is unachievable with simple setState or ChangeNotifier — they don't record what triggered the change. This traceability is why senior devs choose BLoC for complex features."},{t:"Error Handling in BLoC",d:"In on<Event> handlers, wrap with try/catch. emit the error state. In BlocObserver.onError, log to Crashlytics. The BLoC pattern keeps error handling centralized and visible. Never swallow errors silently — always emit an error state so the UI can show appropriate feedback."},{t:"EventTransformer — Debounce, Throttle, Sequential",d:"on<Event>(handler, transformer: eventTransformer) controls how events are processed. droppable(): ignore new events while one is processing (prevent duplicate submissions). restartable(): cancel previous and start new (search as you type). sequential(): queue events. debounce/throttle from bloc_concurrency package."},{t:"Full BLoC Implementation Pattern",d:"Standard structure: (1) sealed event classes with data, (2) sealed state classes with Equatable, (3) BLoC with on<> handlers for each event, (4) repository injected via constructor, (5) BlocProvider scoped to feature, (6) BlocBuilder + BlocListener in UI, (7) blocTest for each event handler."}],whatIs:"BLoC (Business Logic Component) is a pattern and library that separates business logic from UI via unidirectional data flow: Events are dispatched to the BLoC, processed by on<Event> handlers, and new States are emitted to the UI. BlocObserver provides global visibility into every transition. This auditability and testability make BLoC the standard for complex Flutter features.",realWorld:"In a fintech app, the payment feature uses PaymentBloc with events: InitiatePayment, ConfirmPayment, CancelPayment. States: PaymentIdle, PaymentLoading, PaymentConfirmationRequired(details), PaymentSuccess(receipt), PaymentFailed(reason). BlocObserver logs every transition to analytics. BlocListener navigates to a receipt screen on PaymentSuccess. This explicit audit trail satisfies financial compliance requirements.",code:`// BLoC Fundamentals — Full Implementation
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+
+// ============================================================
+// 1. EVENTS — What the user / system does
+// ============================================================
+
+sealed class PaymentEvent extends Equatable {
+  const PaymentEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class InitiatePayment extends PaymentEvent {
+  final String recipientId;
+  final double amount;
+  final String note;
+
+  const InitiatePayment({
+    required this.recipientId,
+    required this.amount,
+    required this.note,
+  });
+
+  @override
+  List<Object> get props => [recipientId, amount, note];
+}
+
+class ConfirmPayment extends PaymentEvent {
+  const ConfirmPayment();
+}
+
+class CancelPayment extends PaymentEvent {
+  const CancelPayment();
+}
+
+// ============================================================
+// 2. STATES — What the UI should render
+// ============================================================
+
+sealed class PaymentState extends Equatable {
+  const PaymentState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class PaymentIdle extends PaymentState {
+  const PaymentIdle();
+}
+
+class PaymentLoading extends PaymentState {
+  const PaymentLoading();
+}
+
+class PaymentConfirmationRequired extends PaymentState {
+  final String recipientName;
+  final double amount;
+  final double fee;
+
+  const PaymentConfirmationRequired({
+    required this.recipientName,
+    required this.amount,
+    required this.fee,
+  });
+
+  @override
+  List<Object> get props => [recipientName, amount, fee];
+
+  double get total => amount + fee;
+}
+
+class PaymentProcessing extends PaymentState {
+  const PaymentProcessing();
+}
+
+class PaymentSuccess extends PaymentState {
+  final String transactionId;
+  final DateTime timestamp;
+
+  const PaymentSuccess({
+    required this.transactionId,
+    required this.timestamp,
+  });
+
+  @override
+  List<Object> get props => [transactionId, timestamp];
+}
+
+class PaymentFailed extends PaymentState {
+  final String reason;
+  final bool isRetryable;
+
+  const PaymentFailed({required this.reason, required this.isRetryable});
+
+  @override
+  List<Object> get props => [reason, isRetryable];
+}
+
+// ============================================================
+// 3. THE BLoC
+// ============================================================
+
+class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
+  final PaymentRepository _repository;
+
+  PaymentBloc({required PaymentRepository repository})
+      : _repository = repository,
+        super(const PaymentIdle()) {
+
+    // Register handlers for each event type
+    // droppable(): ignore new events while processing (prevent double-submit)
+    on<InitiatePayment>(
+      _onInitiatePayment,
+      transformer: droppable(),
+    );
+
+    on<ConfirmPayment>(
+      _onConfirmPayment,
+      transformer: droppable(), // Prevent double-tap confirm
+    );
+
+    on<CancelPayment>(_onCancelPayment);
+  }
+
+  Future<void> _onInitiatePayment(
+    InitiatePayment event,
+    Emitter<PaymentState> emit,
+  ) async {
+    emit(const PaymentLoading());
+
+    try {
+      final details = await _repository.fetchPaymentDetails(
+        recipientId: event.recipientId,
+        amount: event.amount,
+      );
+
+      emit(PaymentConfirmationRequired(
+        recipientName: details.recipientName,
+        amount: event.amount,
+        fee: details.calculatedFee,
+      ));
+    } on InsufficientFundsException {
+      emit(const PaymentFailed(
+        reason: 'Insufficient funds',
+        isRetryable: false,
+      ));
+    } catch (e) {
+      emit(PaymentFailed(
+        reason: 'Unable to prepare payment: $e',
+        isRetryable: true,
+      ));
+    }
+  }
+
+  Future<void> _onConfirmPayment(
+    ConfirmPayment event,
+    Emitter<PaymentState> emit,
+  ) async {
+    final current = state;
+    if (current is! PaymentConfirmationRequired) return;
+
+    emit(const PaymentProcessing());
+
+    try {
+      final result = await _repository.executePayment(
+        amount: current.amount,
+        fee: current.fee,
+      );
+
+      emit(PaymentSuccess(
+        transactionId: result.transactionId,
+        timestamp: result.timestamp,
+      ));
+    } catch (e) {
+      emit(PaymentFailed(
+        reason: 'Payment failed: $e',
+        isRetryable: true,
+      ));
+    }
+  }
+
+  void _onCancelPayment(
+    CancelPayment event,
+    Emitter<PaymentState> emit,
+  ) {
+    emit(const PaymentIdle());
+  }
+}
+
+// ============================================================
+// 4. BlocObserver — Global audit trail
+// ============================================================
+
+class AppBlocObserver extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    debugPrint('[BLoC] \${bloc.runtimeType} received \$event');
+    // FirebaseAnalytics.logEvent(name: 'bloc_event', parameters: {
+    //   'bloc': bloc.runtimeType.toString(),
+    //   'event': event.runtimeType.toString(),
+    // });
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    debugPrint('[BLoC] Transition: \${transition.currentState} → \${transition.nextState}');
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    // Crashlytics.recordError(error, stackTrace);
+    debugPrint('[BLoC] Error in \${bloc.runtimeType}: \$error');
+  }
+}
+
+// Register in main():
+// void main() {
+//   Bloc.observer = AppBlocObserver();
+//   runApp(const MyApp());
+// }
+
+// ============================================================
+// 5. UI — BlocBuilder + BlocListener (via BlocConsumer)
+// ============================================================
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class PaymentScreen extends StatelessWidget {
+  const PaymentScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => PaymentBloc(
+        repository: context.read<PaymentRepository>(),
+      ),
+      child: const _PaymentView(),
+    );
+  }
+}
+
+class _PaymentView extends StatelessWidget {
+  const _PaymentView();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<PaymentBloc, PaymentState>(
+      // listener: side effects — navigate, show snackbar, dialog
+      listener: (context, state) {
+        switch (state) {
+          case PaymentSuccess(:final transactionId):
+            // Navigate to receipt screen
+            Navigator.of(context).pushReplacementNamed(
+              '/receipt',
+              arguments: transactionId,
+            );
+          case PaymentFailed(:final reason, :final isRetryable):
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(reason)),
+            );
+          default:
+            break;
+        }
+      },
+      // builder: UI rendering based on state
+      builder: (context, state) {
+        return switch (state) {
+          PaymentIdle() => _PaymentForm(),
+          PaymentLoading() || PaymentProcessing() =>
+              const Center(child: CircularProgressIndicator()),
+          PaymentConfirmationRequired(:final recipientName, :final total) =>
+              _ConfirmationCard(
+                recipientName: recipientName,
+                total: total,
+                onConfirm: () =>
+                    context.read<PaymentBloc>().add(const ConfirmPayment()),
+                onCancel: () =>
+                    context.read<PaymentBloc>().add(const CancelPayment()),
+              ),
+          PaymentSuccess() || PaymentFailed() =>
+              const SizedBox.shrink(), // Handled by listener
+        };
+      },
+    );
+  }
+}
+
+// Placeholder types
+abstract class PaymentRepository {
+  Future<PaymentDetails> fetchPaymentDetails({required String recipientId, required double amount});
+  Future<PaymentResult> executePayment({required double amount, required double fee});
+}
+class PaymentDetails { final String recipientName; final double calculatedFee; PaymentDetails({required this.recipientName, required this.calculatedFee}); }
+class PaymentResult { final String transactionId; final DateTime timestamp; PaymentResult({required this.transactionId, required this.timestamp}); }
+class InsufficientFundsException implements Exception {}
+class _PaymentForm extends StatelessWidget { @override Widget build(BuildContext context) => const Text('Form'); }
+class _ConfirmationCard extends StatelessWidget {
+  final String recipientName; final double total;
+  final VoidCallback onConfirm; final VoidCallback onCancel;
+  const _ConfirmationCard({required this.recipientName, required this.total, required this.onConfirm, required this.onCancel});
+  @override Widget build(BuildContext context) => const Text('Confirmation');
+}`,funFact:"The BLoC pattern was introduced by Felix Angelov at Google I/O 2018 as a way to use reactive streams (RxDart) to separate business logic from UI. The original implementation used Streams and Sinks directly. The modern BLoC library (now in the flutter/packages organization) replaced Streams with a much simpler API while keeping the same architectural principles. Over 50,000 apps on the Play Store use BLoC.",quiz:[{q:"What is the main architectural advantage of BLoC over Cubit?",opts:["BLoC is faster","BLoC's explicit Event model makes every user action traceable via BlocObserver — enabling analytics, debugging, and auditability that method calls can't provide","BLoC uses less memory","BLoC is simpler to implement"],ans:1},{q:"What is the purpose of BlocObserver?",opts:["To observe the widget tree","To intercept all events, transitions, and errors across ALL BLoCs and Cubits in the app — used for logging, analytics, and crash reporting","To observe user gestures","To manage BLoC lifecycle"],ans:1},{q:"What does the 'droppable' event transformer do?",opts:["Drops all events","Ignores new events of the same type while a previous one is still being processed — prevents duplicate API calls from double taps","Queues events for later","Cancels all pending events"],ans:1},{q:"What is the difference between BlocBuilder and BlocListener?",opts:["They are the same","BlocBuilder rebuilds UI based on state; BlocListener runs side effects (navigation, dialogs) once per state change — never put side effects in builder","BlocListener is for async operations","BlocBuilder is deprecated"],ans:1},{q:"What does a Transition in BLoC contain?",opts:["Only the new state","The currentState, the Event that caused the transition, and the nextState — a complete audit record of what happened and why","Only the event","The current and next state without the event"],ans:1}],challenge:"Implement a SearchBloc for a fintech transaction search: events SearchQueryChanged(query), ClearSearch. States: SearchIdle, SearchLoading, SearchResults(transactions), SearchError. Use the restartable() transformer on SearchQueryChanged so each new keystroke cancels the previous search. Write blocTest for: empty query returns idle, valid query returns results, failed API returns error.",resources:[{type:"docs",title:"BLoC Core Concepts",url:"https://bloclibrary.dev/bloc-concepts/",source:"bloclibrary.dev"},{type:"docs",title:"bloc_concurrency Package",url:"https://pub.dev/packages/bloc_concurrency",source:"pub.dev"},{type:"docs",title:"flutter_bloc Widgets",url:"https://bloclibrary.dev/flutter-bloc-concepts/",source:"bloclibrary.dev"},{type:"docs",title:"BLoC Testing",url:"https://bloclibrary.dev/testing/",source:"bloclibrary.dev"}],eli5:"BLoC is like a company suggestion box system. You write your request on a form (Event) and drop it in the box. The department (BLoC) reads it, does the work, and posts the result on the wall (State). Everyone reading the wall (BlocBuilder) sees the latest status. The manager (BlocObserver) secretly reads every form AND every posted result — keeping a full log. BlocListener is the department secretary who takes special actions (makes phone calls, sends emails) when certain results are posted.",codeWalkthrough:["Sealed PaymentEvent — all events are documented in one place","InitiatePayment carries its data as final fields — immutable event","Sealed PaymentState with Equatable — exhaustive, comparable states","PaymentBloc constructor: register handlers with on<EventType>","droppable() transformer on InitiatePayment — no double submissions","_onInitiatePayment: emit Loading, fetch details, emit Confirmation or Error","Specific catch for InsufficientFundsException — typed error handling","_onConfirmPayment: guard with 'is!' check before proceeding","AppBlocObserver.onTransition: logs currentState → event → nextState audit trail","BlocConsumer combines listener (side effects) and builder (UI) in one widget","Listener handles navigation and snackbars — NOT in builder","Builder switch handles every state — sealed ensures compiler checks exhaustiveness"],bugChallenge:{code:`class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  LoginBloc() : super(LoginInitial()) {
+    on<LoginSubmitted>((event, emit) async {
+      emit(LoginLoading());
+      final user = await authService.login(event.email, event.password);
+      emit(LoginSuccess(user));
+    });
+  }
+}`,hint:"What happens if the login API throws an exception?",answer:"The exception is unhandled — it will propagate and crash, or be silently caught by BLoC's error handler without emitting an error state. The UI stays in LoginLoading forever. Fix: wrap in try/catch, emit LoginFailure(message) in the catch block so the UI can show an error and the user can retry. Also register error via BlocObserver for Crashlytics logging."},difficulty:"intermediate",prereqs:[16,17]},
+
+  {id:19,title:"Advanced BLoC Patterns",subtitle:"Patterns That Separate Junior From Senior BLoC Usage",analogy:"Basic BLoC is like knowing how to drive a car. Advanced BLoC patterns are knowing when to take the highway vs back roads (event transformers), how to carry multiple passengers (MultiBlocProvider), how to give only the driver vs passenger different information from the dashboard (BlocSelector), and how to coordinate multiple cars in a convoy (BLoC-to-BLoC communication).",points:[{t:"BlocSelector — Precision Rebuilds",d:"BlocSelector<BlocType, StateType, SelectedType> extracts a specific field from the state and only rebuilds when THAT field changes. Example: a UserNameLabel that only shows the user's name — use BlocSelector to extract just the name string. The widget won't rebuild when the user's avatar or email changes. Critical for performance in large state objects."},{t:"buildWhen — Rebuild Control in BlocBuilder",d:"BlocBuilder's buildWhen: (previous, current) => bool controls when the builder runs. Return false to skip. Use case: a header widget that only needs to rebuild when 'isLoading' changes, not every field of the state. Similar to React's shouldComponentUpdate. BlocSelector is cleaner for single-field extraction; buildWhen is for custom logic."},{t:"MultiBlocProvider — Clean Provision",d:"MultiBlocProvider reduces BlocProvider nesting. Instead of BlocProvider(create: ..., child: BlocProvider(create: ..., child: ...)), use MultiBlocProvider(providers: [...], child: ...). Flat and readable. Best practice: create a FeatureProviders widget that wraps the feature screen in all its needed providers."},{t:"BlocListener for Side Effects — The Contract",d:"Rule: NEVER put side effects in BlocBuilder's builder. Side effects (navigation, dialogs, snackbars, haptics) go in BlocListener. BlocListener fires once per state change. BlocConsumer combines both. Multiple BlocListeners: MultiListener. The distinction prevents: duplicate navigations, dialog spam, and rebuild-triggered side effects."},{t:"Feature-Scoped BLoCs",d:"Scope each BLoC to its feature's widget subtree with BlocProvider. Don't put all BLoCs at the app root — they waste memory for features not currently open. Pattern: every feature screen's route wraps itself in its BlocProvider(s). Close them automatically when the route is popped. Interview: Where should you place BlocProvider?"},{t:"BLoC-to-BLoC Communication",d:"BLoCs should NOT depend directly on each other. Preferred: (1) Repository/service as shared data layer — both BLoCs use the same repo. (2) A Stream from one BLoC that another listens to via emit.onEach() or StreamSubscription. (3) A parent orchestrator BLoC that coordinates children. Never inject BLoC into BLoC directly."},{t:"Concurrent Event Handling with Transformers",d:"Default: events are processed sequentially. bloc_concurrency package provides: sequential() (default), concurrent() (all run in parallel), droppable() (drop new while running), restartable() (cancel previous, restart with new). Per-event granularity: SearchChanged gets restartable, SubmitForm gets droppable."},{t:"Testing: blocTest Deep Patterns",d:"blocTest: setUp for dependencies, seed for initial state, act for events, expect for states, verify for side effects. Test each event handler independently. Test error paths. Test buildWhen logic manually. Mock the repository. Test that droppable prevents duplicate emissions. Coverage target: every state should be reachable by a test."},{t:"BlocObserver in Production",d:"Register BlocObserver in main() before runApp(). In onEvent: log to analytics (event type + BLoC type). In onTransition: track state machine transitions. In onError: report to Crashlytics with full stackTrace. Add a timing measurement in onCreate/onClose to track BLoC lifetime. This turns your app into a self-documenting state machine."},{t:"Hydrated BLoC — Persistence",d:"HydratedBloc extends Bloc and automatically persists and restores state. Override fromJson(json) and toJson(state) to serialize state. On app restart, the last state is restored before the first build. Used for: user preferences, last viewed content, offline draft. HydratedStorage uses the path_provider directory by default."}],whatIs:"Advanced BLoC patterns address real production concerns: BlocSelector for precision rebuilds, buildWhen for rebuild control, MultiBlocProvider for clean provision, feature scoping for memory efficiency, BLoC-to-BLoC communication without coupling, event transformers for concurrency control, and HydratedBloc for state persistence.",realWorld:"In an NFC asset recovery app, AssetScanBloc (restartable for rapid NFC scans) coordinates with AssetRepositoryBloc via a shared repository, not direct injection. BlocSelector extracts only the scan status for the status indicator widget — avoiding rebuilds when asset details change. HydratedBloc persists the last known asset state for offline-first operation. MultiBlocProvider scopes all three BLoCs to the scan screen's route.",code:`// Advanced BLoC Patterns
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+
+// ============================================================
+// 1. BlocSelector — Precision rebuilds
+// ============================================================
+
+class AssetScanState extends Equatable {
+  final ScanStatus status;
+  final String? assetId;
+  final AssetDetails? details;
+  final String? errorMessage;
+
+  const AssetScanState({
+    required this.status,
+    this.assetId,
+    this.details,
+    this.errorMessage,
+  });
+
+  @override
+  List<Object?> get props => [status, assetId, details, errorMessage];
+}
+
+enum ScanStatus { idle, scanning, found, error }
+
+// This widget ONLY cares about status — rebuilds only when status changes
+class ScanStatusIndicator extends StatelessWidget {
+  const ScanStatusIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<AssetScanBloc, AssetScanState, ScanStatus>(
+      selector: (state) => state.status, // Extract only what we need
+      builder: (context, status) {
+        return switch (status) {
+          ScanStatus.idle    => const Text('Ready to scan'),
+          ScanStatus.scanning=> const CircularProgressIndicator(),
+          ScanStatus.found   => const Icon(Icons.check, color: Colors.green),
+          ScanStatus.error   => const Icon(Icons.error, color: Colors.red),
+        };
+      },
+    );
+  }
+}
+
+// ============================================================
+// 2. buildWhen — custom rebuild logic
+// ============================================================
+
+class AssetDetailsPanel extends StatelessWidget {
+  const AssetDetailsPanel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AssetScanBloc, AssetScanState>(
+      // Only rebuild when the details object changes
+      // Rebuilds are skipped for status-only changes (e.g., re-scanning)
+      buildWhen: (previous, current) =>
+          previous.details != current.details,
+      builder: (context, state) {
+        final details = state.details;
+        if (details == null) return const SizedBox.shrink();
+        return Card(child: Text(details.name));
+      },
+    );
+  }
+}
+
+// ============================================================
+// 3. MultiBlocProvider — clean, flat provision
+// ============================================================
+
+class AssetScanScreen extends StatelessWidget {
+  const AssetScanScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AssetScanBloc(
+            repository: context.read<AssetRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => AssetHistoryBloc(
+            repository: context.read<AssetRepository>(),
+          )..add(const LoadHistory()), // Immediately load history
+        ),
+      ],
+      child: const _AssetScanView(),
+    );
+  }
+}
+
+// ============================================================
+// 4. MultiListener — multiple side effects
+// ============================================================
+
+class _AssetScanView extends StatelessWidget {
+  const _AssetScanView();
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AssetScanBloc, AssetScanState>(
+          listenWhen: (prev, curr) =>
+              prev.status != curr.status && curr.status == ScanStatus.found,
+          listener: (context, state) {
+            // Navigate to asset details on successful scan
+            Navigator.of(context).pushNamed('/asset', arguments: state.assetId);
+          },
+        ),
+        BlocListener<AssetScanBloc, AssetScanState>(
+          listenWhen: (prev, curr) =>
+              prev.status != curr.status && curr.status == ScanStatus.error,
+          listener: (context, state) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorMessage ?? 'Scan failed')),
+            );
+          },
+        ),
+      ],
+      child: Column(
+        children: [
+          const ScanStatusIndicator(),
+          const AssetDetailsPanel(),
+          ElevatedButton(
+            onPressed: () =>
+                context.read<AssetScanBloc>().add(const StartScan()),
+            child: const Text('Scan NFC'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// 5. Event Transformers — per-event concurrency
+// ============================================================
+
+class AssetSearchBloc extends Bloc<AssetSearchEvent, AssetSearchState> {
+  final AssetRepository _repository;
+
+  AssetSearchBloc({required AssetRepository repository})
+      : _repository = repository,
+        super(const AssetSearchIdle()) {
+
+    // restartable: each new query cancels the previous search
+    on<SearchQueryChanged>(
+      _onSearchQueryChanged,
+      transformer: restartable(),
+    );
+
+    // droppable: ignore new submits while one is running
+    on<SubmitSearch>(
+      _onSubmitSearch,
+      transformer: droppable(),
+    );
+  }
+
+  Future<void> _onSearchQueryChanged(
+    SearchQueryChanged event,
+    Emitter<AssetSearchState> emit,
+  ) async {
+    if (event.query.isEmpty) {
+      emit(const AssetSearchIdle());
+      return;
+    }
+
+    emit(const AssetSearchLoading());
+
+    // Debounce: wait before hitting API
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    // If this was cancelled by restartable, the await exits here
+    if (emit.isDone) return;
+
+    try {
+      final results = await _repository.searchAssets(event.query);
+      emit(AssetSearchResults(results));
+    } catch (e) {
+      emit(AssetSearchError(e.toString()));
+    }
+  }
+
+  Future<void> _onSubmitSearch(
+    SubmitSearch event,
+    Emitter<AssetSearchState> emit,
+  ) async {
+    // Full search with sorting, filtering — can't be interrupted
+    // droppable prevents the user from submitting twice
+  }
+}
+
+// ============================================================
+// 6. HydratedBloc — Persist state across app restarts
+// ============================================================
+
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
+  ThemeBloc() : super(const ThemeState(isDark: false)) {
+    on<ToggleTheme>((event, emit) {
+      emit(ThemeState(isDark: !state.isDark));
+    });
+  }
+
+  // Deserialize from local storage
+  @override
+  ThemeState fromJson(Map<String, dynamic> json) {
+    return ThemeState(isDark: json['isDark'] as bool? ?? false);
+  }
+
+  // Serialize to local storage
+  @override
+  Map<String, dynamic>? toJson(ThemeState state) {
+    return {'isDark': state.isDark};
+  }
+}
+
+// In main():
+// WidgetsFlutterBinding.ensureInitialized();
+// HydratedBloc.storage = await HydratedStorage.build(
+//   storageDirectory: await getApplicationDocumentsDirectory(),
+// );
+
+// Placeholder types
+abstract class AssetRepository {
+  Future<List<String>> searchAssets(String query);
+}
+class AssetDetails { final String name; AssetDetails({required this.name}); }
+class AssetScanBloc extends Bloc<dynamic, AssetScanState> {
+  AssetScanBloc({required AssetRepository repository}) : super(const AssetScanState(status: ScanStatus.idle));
+}
+class AssetHistoryBloc extends Bloc<dynamic, dynamic> {
+  AssetHistoryBloc({required AssetRepository repository}) : super(null);
+}
+class LoadHistory extends AssetSearchEvent { const LoadHistory(); }
+sealed class AssetSearchEvent extends Equatable { const AssetSearchEvent(); @override List<Object?> get props => []; }
+class SearchQueryChanged extends AssetSearchEvent { final String query; const SearchQueryChanged(this.query); @override List<Object> get props => [query]; }
+class SubmitSearch extends AssetSearchEvent { const SubmitSearch(); }
+class StartScan extends AssetSearchEvent { const StartScan(); }
+sealed class AssetSearchState extends Equatable { const AssetSearchState(); @override List<Object?> get props => []; }
+class AssetSearchIdle extends AssetSearchState { const AssetSearchIdle(); }
+class AssetSearchLoading extends AssetSearchState { const AssetSearchLoading(); }
+class AssetSearchResults extends AssetSearchState { final List<String> results; const AssetSearchResults(this.results); @override List<Object> get props => [results]; }
+class AssetSearchError extends AssetSearchState { final String message; const AssetSearchError(this.message); @override List<Object> get props => [message]; }
+class ThemeEvent extends Equatable { @override List<Object?> get props => []; }
+class ToggleTheme extends ThemeEvent {}
+class ThemeState extends Equatable { final bool isDark; const ThemeState({required this.isDark}); @override List<Object> get props => [isDark]; }`,funFact:"The restartable() transformer from bloc_concurrency is what enables search-as-you-type without debounce timers — each new character cancels the previous Dart Future before it completes. Under the hood, it uses Dart's Stream.switchMap. The bloc_concurrency package was created by Felix Angelov specifically to replace complex custom EventTransformer implementations that teams were copy-pasting across projects.",quiz:[{q:"What does BlocSelector do and when should you use it?",opts:["It selects which BLoC to use","It extracts a specific field from the state and only rebuilds the widget when that field changes — use when a widget cares about only one part of a large state object","It selects events to process","It selects which state to emit"],ans:1},{q:"What is the 'contract' rule for BlocListener?",opts:["BlocListener must always navigate","BlocListener is for side effects ONLY (navigation, dialogs, snackbars) — never for rendering UI widgets","BlocListener replaces BlocBuilder","BlocListener fires on every rebuild"],ans:1},{q:"How should two BLoCs communicate if they need shared data?",opts:["Inject one BLoC into the other","Use a shared repository or service as the common data layer — both BLoCs read/write through it without depending on each other","Combine them into one BLoC","Use a global variable"],ans:1},{q:"What does the restartable() transformer do in AssetSearchBloc?",opts:["Restarts the app","Cancels the previous event handler when a new event of the same type arrives — enables search-as-you-type where each keystroke cancels the previous API call","Restarts the BLoC","Restarts the widget tree"],ans:1},{q:"What do you need to implement to use HydratedBloc?",opts:["Only toJson","fromJson(Map) to restore state and toJson(State) to persist it — HydratedBloc calls these automatically on state changes and app restarts","Only a database adapter","HydratedBloc handles serialization automatically"],ans:1}],challenge:"Build a TransactionFilterBloc with: FilterChanged(query, dateRange, minAmount, maxAmount) event, TransactionFilterState(filteredList, query, dateRange). Use BlocSelector in a separate TransactionCountBadge widget to show only the count. Use buildWhen in TransactionList to skip rebuilds when only the UI metadata (not the filtered list) changes.",resources:[{type:"docs",title:"BlocSelector",url:"https://bloclibrary.dev/flutter-bloc-concepts/#blocselect",source:"bloclibrary.dev"},{type:"docs",title:"bloc_concurrency",url:"https://pub.dev/packages/bloc_concurrency",source:"pub.dev"},{type:"docs",title:"hydrated_bloc",url:"https://pub.dev/packages/hydrated_bloc",source:"pub.dev"},{type:"docs",title:"Testing BLoC",url:"https://bloclibrary.dev/testing/",source:"bloclibrary.dev"}],eli5:"BlocSelector is like a sports score app where you only want the basketball score — you don't need to refresh your screen when the football score changes. buildWhen is like a filter that says 'only interrupt me for important messages, not every notification.' MultiBlocProvider is like assigning multiple managers to a project team without creating a tangled org chart. restartable() is like canceling your old pizza order the moment you change your mind about the topping.",codeWalkthrough:["BlocSelector extracts only 'status' — widget never rebuilds for details/error changes","buildWhen in AssetDetailsPanel: skip rebuild if only status changed","MultiBlocProvider: flat list of providers vs deeply nested BlocProvider chains","..add(const LoadHistory()) chained on BlocProvider.create — immediate event dispatch","MultiBlocListener: separate listener for navigation vs separate listener for snackbars","listenWhen: only fire when transitioning TO the specific status","restartable() on SearchQueryChanged: every new char cancels the previous Future","emit.isDone check after delay: detects if this emission was cancelled by restartable","HydratedBloc: fromJson restores last persisted state on app start","toJson: return a serializable map of the state — persisted automatically on emit"],bugChallenge:{code:`class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        if (state is ProfileLoaded && state.isNewUser) {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+          );
+        }
+        return ProfileView(state: state);
+      },
+    );
+  }
+}`,hint:"What is wrong with navigating inside BlocBuilder's builder?",answer:"Side effects like navigation MUST NOT be in builder(). builder() can be called multiple times per frame — this would trigger multiple navigation pushes, stacking OnboardingScreen repeatedly. Fix: move navigation to BlocListener. listenWhen: (prev, curr) => curr is ProfileLoaded && curr.isNewUser && prev is! ProfileLoaded prevents re-triggering on subsequent rebuilds."},difficulty:"advanced",prereqs:[17,18]},
+
+  {id:20,title:"Clean Architecture Fundamentals for Flutter",subtitle:"The Answer That Gets You Hired at Senior Level",analogy:"Clean Architecture is like a well-run hospital. The doctors (domain layer) have no idea if they're using paper charts or an iPad — they just follow medical protocols (business rules). The nurses (use cases) coordinate the doctors' work. The receptionists (data layer) handle intake from outside — phone calls (APIs) or physical walk-ins (local database). The patients (UI) interact with the front desk, never directly with the doctors' medical equipment.",points:[{t:"The Dependency Rule — The Core Principle",d:"The most important rule: dependencies point INWARD. Outer layers can depend on inner layers, but inner layers CANNOT depend on outer layers. Domain (innermost) knows nothing about Flutter, Dart IO, HTTP, or databases. Data layer implements interfaces defined by Domain. Presentation depends on Domain use cases, not data sources."},{t:"Three Layers: Presentation, Domain, Data",d:"Presentation: Flutter widgets, BLoC/Cubit, ViewModels. Only knows Domain use cases and entities. Domain: entities (pure Dart business objects), use cases (single-purpose business actions), repository interfaces (abstract contracts). Data: repository implementations, API clients, local database, data models with fromJson/toJson."},{t:"Domain Layer — Pure Dart, Zero Flutter",d:"The domain layer has NO Flutter imports, NO http imports, NO sqflite imports. It can be compiled as a pure Dart library. This is the test: if you can write domain tests with just 'dart test' and no Flutter SDK, your domain layer is clean. Entities model the business, use cases execute business rules."},{t:"Entities vs Data Models",d:"Entity: domain object with business identity. class User { final String id; final String name; }. No fromJson, no toJson — that's data layer concern. Data model: class UserModel extends User { factory UserModel.fromJson(Map json); Map toJson(); }. The model converts between JSON and entities. Interviewers love this distinction."},{t:"Use Cases — Single Responsibility Business Actions",d:"Each use case does ONE business operation: GetUserById, SubmitPayment, MarkAttendance, LogoutUser. It takes parameters (call with params object), calls the repository, returns an Entity or Result type. Use cases are the application's API — BLoC calls use cases, never repositories directly. This isolation makes business logic trivially testable."},{t:"Repository Pattern — The Boundary",d:"The repository interface lives in the DOMAIN layer (abstract class UserRepository). The implementation lives in the DATA layer (class ApiUserRepository implements UserRepository). Domain defines WHAT data it needs. Data layer decides HOW to get it (API? Cache? SQLite?). This inversion of control enables swapping implementations without touching business logic."},{t:"Dependency Injection — Wiring the Layers",d:"Use GetIt (service locator) or Riverpod to wire layers. Register: ApiUserRepository as UserRepository (interface). Inject into use cases. Inject use cases into BLoC. In tests, register MockUserRepository. The DI container is the only place that knows about concrete implementations. Everything else depends on abstractions."},{t:"Folder Structure — Feature-First vs Layer-First",d:"Layer-first: lib/data/, lib/domain/, lib/presentation/. All features in each layer. Feature-first: lib/features/auth/, lib/features/payment/, each with data/domain/presentation subdirectories. For teams: feature-first scales better (each team owns a feature folder). For small apps: layer-first is simpler. Interview: explain the tradeoffs."},{t:"Result Type — Handling Errors Cleanly",d:"Use cases return Either<Failure, T> (dartz package) or a custom Result<T> sealed class. Failures are domain concepts: NetworkFailure, AuthFailure, ValidationFailure. The BLoC pattern-matches on the result: if Success → emit Loaded state, if Failure → emit Error state. This avoids exception-based flow control across layer boundaries."},{t:"Interview-Safe Explanation Template",d:"'I structure Flutter apps in three layers: presentation (widgets + BLoC), domain (use cases + entities + repository interfaces), and data (implementations + models). Dependencies point inward — domain has no Flutter or HTTP imports. BLoC calls use cases, use cases call repository interfaces, implementations in the data layer satisfy those interfaces. This makes every layer independently testable and swappable.'"}],whatIs:"Clean Architecture organizes Flutter apps into three layers: Presentation (UI + BLoC), Domain (entities + use cases + repository interfaces), and Data (implementations + models). The dependency rule — inner layers know nothing about outer layers — decouples business logic from UI and infrastructure. This enables independent testing, maintainability, and the ability to swap implementations.",realWorld:"In an offline-first field app, the SyncUseCase in the domain layer calls abstract SyncRepository.push() and pull(). The data layer implements this with SQLite for local storage and HTTP for remote sync — the domain never knows which is used. The BLoC calls SyncUseCase, which the team tests with a mock repository in 100ms flat. Swapping the local database from SQLite to Hive requires only changing the data layer.",code:`// Clean Architecture in Flutter
+
+// ============================================================
+// DOMAIN LAYER — lib/features/auth/domain/
+// Pure Dart — NO Flutter, NO http, NO sqflite imports
+// ============================================================
+
+// --- Entity: Business object ---
+class User {
+  final String id;
+  final String email;
+  final String name;
+  final UserRole role;
+
+  const User({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.role,
+  });
+}
+
+enum UserRole { admin, teacher, student }
+
+// --- Failure: Domain-level error types ---
+sealed class Failure {
+  final String message;
+  const Failure(this.message);
+}
+
+class NetworkFailure extends Failure {
+  const NetworkFailure([super.message = 'Network error occurred']);
+}
+
+class AuthFailure extends Failure {
+  const AuthFailure([super.message = 'Authentication failed']);
+}
+
+class ValidationFailure extends Failure {
+  const ValidationFailure(super.message);
+}
+
+// --- Repository Interface: Defined in Domain, Implemented in Data ---
+abstract class AuthRepository {
+  // Returns Right(User) on success, Left(Failure) on error
+  Future<Either<Failure, User>> login(String email, String password);
+  Future<Either<Failure, User>> getCurrentUser();
+  Future<Either<Failure, void>> logout();
+}
+
+// --- Use Case: Single business operation ---
+class LoginUseCase {
+  final AuthRepository _repository;
+
+  const LoginUseCase(this._repository);
+
+  // Params object: type-safe, extensible
+  Future<Either<Failure, User>> call(LoginParams params) async {
+    // Validate inputs in the domain layer
+    if (params.email.isEmpty) {
+      return const Left(ValidationFailure('Email is required'));
+    }
+    if (params.password.length < 8) {
+      return const Left(ValidationFailure('Password too short'));
+    }
+
+    // Delegate to repository
+    return _repository.login(params.email, params.password);
+  }
+}
+
+class LoginParams {
+  final String email;
+  final String password;
+  const LoginParams({required this.email, required this.password});
+}
+
+// Simple Either implementation (or use dartz package)
+sealed class Either<L, R> {
+  const Either();
+}
+class Left<L, R> extends Either<L, R> {
+  final L value;
+  const Left(this.value);
+}
+class Right<L, R> extends Either<L, R> {
+  final R value;
+  const Right(this.value);
+}
+
+// ============================================================
+// DATA LAYER — lib/features/auth/data/
+// Knows about HTTP, SQLite, local storage
+// ============================================================
+
+// --- Data Model: Entity + serialization ---
+class UserModel extends User {
+  const UserModel({
+    required super.id,
+    required super.email,
+    required super.name,
+    required super.role,
+  });
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'] as String,
+      email: json['email'] as String,
+      name: json['name'] as String,
+      role: UserRole.values.byName(json['role'] as String),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'email': email,
+    'name': name,
+    'role': role.name,
+  };
+
+  // Convert to Domain entity (often the model IS the entity via inheritance)
+  User toEntity() => User(id: id, email: email, name: name, role: role);
+}
+
+// --- Repository Implementation: Satisfies the domain contract ---
+class ApiAuthRepository implements AuthRepository {
+  final AuthApiClient _apiClient;
+  final AuthLocalCache _localCache;
+
+  const ApiAuthRepository({
+    required AuthApiClient apiClient,
+    required AuthLocalCache localCache,
+  });
+
+  @override
+  Future<Either<Failure, User>> login(String email, String password) async {
+    try {
+      final response = await _apiClient.login(email, password);
+      final user = UserModel.fromJson(response);
+      await _localCache.saveUser(user); // Cache for offline use
+      return Right(user.toEntity());
+    } on UnauthorizedException {
+      return const Left(AuthFailure('Invalid credentials'));
+    } on SocketException {
+      return const Left(NetworkFailure());
+    } catch (e) {
+      return Left(NetworkFailure('Unexpected error: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> getCurrentUser() async {
+    try {
+      final cached = await _localCache.getUser();
+      if (cached != null) return Right(cached.toEntity());
+      return const Left(AuthFailure('No session found'));
+    } catch (e) {
+      return Left(NetworkFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      await _apiClient.logout();
+      await _localCache.clearUser();
+      return const Right(null);
+    } catch (e) {
+      return Left(NetworkFailure(e.toString()));
+    }
+  }
+}
+
+// ============================================================
+// PRESENTATION LAYER — lib/features/auth/presentation/
+// Knows about Flutter, BLoC, Widgets
+// ============================================================
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final LoginUseCase _loginUseCase; // Depends on USE CASE, not repository
+  final GetCurrentUserUseCase _getCurrentUser;
+
+  AuthBloc({
+    required LoginUseCase loginUseCase,
+    required GetCurrentUserUseCase getCurrentUser,
+  })  : _loginUseCase = loginUseCase,
+        _getCurrentUser = getCurrentUser,
+        super(const AuthInitial()) {
+    on<LoginRequested>(_onLoginRequested);
+    on<CheckAuthStatus>(_onCheckAuthStatus);
+  }
+
+  Future<void> _onLoginRequested(
+    LoginRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthLoading());
+
+    final result = await _loginUseCase(
+      LoginParams(email: event.email, password: event.password),
+    );
+
+    switch (result) {
+      case Right(:final value):
+        emit(AuthAuthenticated(user: value));
+      case Left(:final value):
+        emit(AuthError(message: value.message));
+    }
+  }
+
+  Future<void> _onCheckAuthStatus(
+    CheckAuthStatus event,
+    Emitter<AuthState> emit,
+  ) async {
+    final result = await _getCurrentUser();
+    switch (result) {
+      case Right(:final value): emit(AuthAuthenticated(user: value));
+      case Left(): emit(const AuthUnauthenticated());
+    }
+  }
+}
+
+// ============================================================
+// DEPENDENCY INJECTION — lib/injection.dart
+// The only place that knows about concrete implementations
+// ============================================================
+
+import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.instance;
+
+Future<void> configureDependencies() async {
+  // Data layer
+  getIt.registerLazySingleton<AuthApiClient>(() => AuthApiClientImpl());
+  getIt.registerLazySingleton<AuthLocalCache>(() => HiveAuthLocalCache());
+
+  // Repositories: register interface → implementation
+  getIt.registerLazySingleton<AuthRepository>(
+    () => ApiAuthRepository(
+      apiClient: getIt(),
+      localCache: getIt(),
+    ),
+  );
+
+  // Use cases
+  getIt.registerFactory(() => LoginUseCase(getIt()));
+  getIt.registerFactory(() => GetCurrentUserUseCase(getIt()));
+
+  // BLoC — registered as factory (new instance per screen)
+  getIt.registerFactory(
+    () => AuthBloc(
+      loginUseCase: getIt(),
+      getCurrentUser: getIt(),
+    ),
+  );
+}
+
+// Placeholder types to allow compilation
+class UnauthorizedException implements Exception {}
+class SocketException implements Exception {}
+abstract class AuthApiClient { Future<Map<String,dynamic>> login(String e, String p); Future<void> logout(); }
+abstract class AuthLocalCache { Future<void> saveUser(UserModel u); Future<UserModel?> getUser(); Future<void> clearUser(); }
+class AuthApiClientImpl implements AuthApiClient { @override Future<Map<String,dynamic>> login(String e, String p) async => {}; @override Future<void> logout() async {} }
+class HiveAuthLocalCache implements AuthLocalCache { @override Future<void> saveUser(UserModel u) async {} @override Future<UserModel?> getUser() async => null; @override Future<void> clearUser() async {} }
+class GetCurrentUserUseCase { final AuthRepository r; const GetCurrentUserUseCase(this.r); Future<Either<Failure, User>> call() => r.getCurrentUser(); }
+sealed class AuthEvent extends Equatable { const AuthEvent(); @override List<Object?> get props => []; }
+class LoginRequested extends AuthEvent { final String email; final String password; const LoginRequested({required this.email, required this.password}); @override List<Object> get props => [email, password]; }
+class CheckAuthStatus extends AuthEvent { const CheckAuthStatus(); }
+sealed class AuthState extends Equatable { const AuthState(); @override List<Object?> get props => []; }
+class AuthInitial extends AuthState { const AuthInitial(); }
+class AuthLoading extends AuthState { const AuthLoading(); }
+class AuthAuthenticated extends AuthState { final User user; const AuthAuthenticated({required this.user}); @override List<Object> get props => [user]; }
+class AuthUnauthenticated extends AuthState { const AuthUnauthenticated(); }
+class AuthError extends AuthState { final String message; const AuthError({required this.message}); @override List<Object> get props => [message]; }`,funFact:"Clean Architecture was created by Robert C. Martin in 2012, adapting earlier architectures (Hexagonal/Ports & Adapters by Alistair Cockburn, Onion Architecture by Jeffrey Palermo). In Flutter, it was popularized by Reso Coder's tutorial series. The key insight that makes it work in Flutter is: 'If you can delete your lib/features/x/data/ folder and replace it with a completely different implementation in an afternoon, your architecture is clean.'",quiz:[{q:"What is the Dependency Rule in Clean Architecture?",opts:["All layers depend on the data layer","Inner layers (domain) know nothing about outer layers — dependencies point inward only","Outer layers know nothing about inner layers","Dependencies are bidirectional"],ans:1},{q:"What is the key difference between an Entity and a Data Model?",opts:["They are identical","Entity is a pure domain object with business rules; Data Model is an Entity plus serialization methods (fromJson/toJson) — belongs in the data layer","Entities are used in tests only","Data Models are always immutable"],ans:1},{q:"Where should the repository interface be defined?",opts:["In the data layer with the implementation","In the domain layer — domain defines WHAT data it needs; data layer decides HOW to get it","In the presentation layer","In a shared utilities package"],ans:1},{q:"What does a Use Case class do?",opts:["Handles UI logic","Executes a single business operation — validates inputs, calls the repository interface, returns an entity or failure","Manages state","Wraps multiple repository calls into a transaction"],ans:1},{q:"In Clean Architecture, what does AuthBloc depend on?",opts:["ApiAuthRepository directly","LoginUseCase (domain layer) — never the repository or API client directly; this keeps BLoC testable with mock use cases","The database","AuthApiClient"],ans:1}],challenge:"Implement a GetTransactionHistoryUseCase that fetches transactions, filters out pending ones (business rule), and sorts by date descending. The domain entity Transaction has id, amount, status, date. Write the use case, the repository interface, and a unit test that mocks the repository and verifies the filtering logic.",resources:[{type:"docs",title:"Clean Architecture with Flutter",url:"https://resocoder.com/2019/08/27/flutter-tdd-clean-architecture-course-1-explanation-project-structure/",source:"Reso Coder"},{type:"docs",title:"Flutter Architecture Samples",url:"https://github.com/brianegan/flutter_architecture_samples",source:"GitHub"},{type:"docs",title:"GetIt Package",url:"https://pub.dev/packages/get_it",source:"pub.dev"},{type:"docs",title:"dartz (Either type)",url:"https://pub.dev/packages/dartz",source:"pub.dev"}],eli5:"Clean Architecture is like a burger restaurant. The menu (domain layer) says 'we sell cheeseburgers' — it doesn't say if we grill on gas or charcoal. The kitchen (data layer) decides HOW to make the burger — grill, fryer, whatever. The waiter (presentation/BLoC) takes the customer's order and tells the kitchen. If you switch from gas to charcoal grills (swap SQLite for Hive), the menu doesn't change. The customer doesn't care. Only the kitchen changes.",codeWalkthrough:["User entity: pure Dart, no imports beyond core Dart — zero Flutter dependencies","Sealed Failure classes: typed domain errors, not generic exceptions","AuthRepository interface lives in DOMAIN — abstract contract, no implementation","LoginUseCase: validates inputs (domain logic), calls repository interface","LoginParams: typed parameter object — extensible, avoids primitive obsession","Either<Failure, User>: explicit success/failure return — no exception propagation across layers","UserModel extends User: adds fromJson/toJson — data layer concern only","ApiAuthRepository implements AuthRepository — satisfies the domain contract","Catches specific exceptions and maps them to domain Failure types","AuthBloc depends on LoginUseCase — never on ApiAuthRepository or ApiClient","getIt.registerLazySingleton<AuthRepository>(() => ApiAuthRepository(...)): registers interface → implementation","configureDependencies() is the only place in the app that knows about concrete classes"],bugChallenge:{code:`// In the domain layer:
+import 'package:dio/dio.dart';
+
+class GetUserUseCase {
+  final Dio _dio;
+  GetUserUseCase(this._dio);
+
+  Future<User> call(String userId) async {
+    final response = await _dio.get('/users/$userId');
+    return User.fromJson(response.data);
+  }
+}`,hint:"What architecture rule is violated? What is the impact?",answer:"The domain layer imports 'package:dio/dio.dart' — a data layer concern. This violates the Dependency Rule: inner layers must not depend on outer layers. Impact: (1) the domain layer is coupled to Dio's API (can't swap HTTP client without changing domain), (2) unit testing requires a real or mocked Dio instance, (3) the domain can't be used as a standalone Dart package. Fix: define abstract AuthRepository in domain, implement with Dio in data layer, inject the interface into GetUserUseCase."},difficulty:"advanced",prereqs:[9,16,17,18]},
+
+  {id:21,title:"Repository Pattern, Use Cases, DI & Boundaries",subtitle:"The Architecture Layer Every Senior Flutter Dev Must Master",analogy:"Think of the Repository as a smart librarian. You (the Use Case) say 'give me Book #42'. The librarian decides whether to grab it from the shelf (local DB), order it (API), or find a cached photocopy. You never care how — you just get the book. Dependency Injection is like the library's hiring system: you specify you need 'a librarian', and HR (GetIt) assigns one. You never build the librarian yourself.",points:[{t:"Repository Pattern — Abstraction Over Data Sources",d:"A Repository is an interface defined in the domain layer that abstracts all data access. It hides whether data comes from a REST API, SQLite, Hive, or in-memory cache. The ViewModel/Use Case only knows the interface, never the implementation. This is the single most important testability pattern in Flutter architecture."},{t:"Data Flow Direction",d:"Data flows inward: UI → ViewModel → Use Case → Repository Interface. Implementations flow outward: RepositoryImpl (data layer) → API/DB. Dependency arrows always point inward toward the domain. This is the Dependency Rule — violating it is the #1 architecture mistake seen in Flutter interviews."},{t:"Use Case (Interactor) Pattern",d:"A Use Case encapsulates a single business operation: GetUserProfileUseCase, SendMessageUseCase, ProcessRefundUseCase. It has one public method (call() or execute()), receives repository interfaces via constructor, and contains no Flutter or platform code. One class, one responsibility."},{t:"Dependency Inversion Principle (DIP)",d:"High-level modules (Use Cases) should not depend on low-level modules (Dio, SQLite). Both should depend on abstractions (Repository interfaces). This is the 'D' in SOLID. Without DIP, changing your HTTP client requires touching business logic — a maintainability disaster at scale."},{t:"GetIt for Service Location",d:"GetIt is a service locator (not true DI). You register singletons, factories, or lazy singletons: GetIt.I.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(dio)). Then retrieve: GetIt.I<AuthRepository>(). It's simple but requires manual registration — the injectable package generates this code automatically."},{t:"injectable Code Generation",d:"@injectable, @lazySingleton, @singleton annotations on implementations plus @module for third-party registrations. Run build_runner and injectable generates configureDependencies(). This eliminates hand-written registration boilerplate and is the production standard in 2024+ Flutter projects."},{t:"Layer Boundary Enforcement",d:"Domain layer: pure Dart, no Flutter imports, no package:dio, no package:hive. Data layer: RepositoryImpl, DTOs, mappers, API clients. Presentation layer: Widgets, ViewModels, BLoC/Cubit. If you see package:dio in a Use Case, fail the code review. This boundary is what makes the codebase testable and maintainable."},{t:"DTOs and Domain Models",d:"DTOs (Data Transfer Objects) are data-layer classes that mirror API JSON structure. Domain Models are clean Dart classes with business logic. Mappers (toEntity/fromEntity) convert between them. Never expose DTOs to the domain or UI layer — they're an implementation detail."},{t:"Multiple Data Sources",d:"A RepositoryImpl often coordinates two sources: remote (API) and local (cache). Pattern: try local cache → if stale, fetch remote → save to cache → return. This is where offline-first logic lives. The Use Case never sees this complexity — it just calls repository.getUser(id)."},{t:"Testing With Fakes",d:"With proper repository abstraction, tests are trivial: class FakeUserRepository implements UserRepository { ... }. No Dio, no HTTP, no SQLite in unit tests. The Use Case is tested with a FakeRepository that returns controlled data. This is the payoff of Clean Architecture — tests run in milliseconds."},{t:"Common Interview Questions",d:"'How would you add offline support?' — RepositoryImpl coordinates API and local DB. 'How would you swap your HTTP client?' — Only the data layer changes, domain/presentation untouched. 'How do you test business logic without hitting the network?' — Use Case takes repository interface, test passes a fake."},{t:"Anti-Pattern: Fat ViewModel",d:"A common mistake is putting API calls directly in the ViewModel: _dio.get('/users'). This couples presentation to infrastructure, makes testing require mocking Dio, and duplicates business logic across ViewModels. Fat ViewModels are a red flag in senior-level code reviews."}],whatIs:"The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business operation and depends on repository interfaces. GetIt/injectable wires everything together via Dependency Inversion. Together they form the infrastructure of Clean Architecture in Flutter.",realWorld:"In a fintech claims app, ProcessRefundUseCase depends on ClaimsRepository (interface). ClaimsRepositoryImpl calls Dio for the remote API and Floor for local audit logging. When testing ProcessRefundUseCase, a FakeClaimsRepository returns mock data instantly. When the API changes from REST to GraphQL, only ClaimsRepositoryImpl changes — UseCase and UI are untouched.",code:`// === DOMAIN LAYER (pure Dart, no Flutter imports) ===
+
+// 1. Domain Entity
+class UserProfile {
+  final String id;
+  final String name;
+  final String email;
+  final bool isPremium;
+  const UserProfile({required this.id, required this.name, required this.email, required this.isPremium});
+}
+
+// 2. Repository Interface — defined in domain, implemented in data
+abstract class UserRepository {
+  Future<UserProfile> getUserProfile(String userId);
+  Future<void> updateProfile({required String userId, required String name});
+}
+
+// 3. Use Case — one responsibility, depends on interface
+class GetUserProfileUseCase {
+  final UserRepository _repository;
+  const GetUserProfileUseCase(this._repository);
+
+  Future<UserProfile> call(String userId) async {
+    if (userId.isEmpty) throw ArgumentError('userId cannot be empty');
+    return _repository.getUserProfile(userId);
+  }
+}
+
+// === DATA LAYER ===
+
+// 4. DTO — mirrors API JSON
+class UserProfileDto {
+  final String id;
+  final String name;
+  final String email;
+  final bool isPremium;
+  UserProfileDto({required this.id, required this.name, required this.email, required this.isPremium});
+
+  factory UserProfileDto.fromJson(Map<String, dynamic> json) => UserProfileDto(
+    id: json['id'] as String,
+    name: json['name'] as String,
+    email: json['email'] as String,
+    isPremium: json['is_premium'] as bool? ?? false,
+  );
+
+  // Mapper: DTO → Domain Entity
+  UserProfile toEntity() => UserProfile(
+    id: id, name: name, email: email, isPremium: isPremium,
+  );
+}
+
+// 5. Repository Implementation — knows about Dio and local DB
+class UserRepositoryImpl implements UserRepository {
+  final Dio _dio;
+  final UserLocalDataSource _localCache;
+
+  const UserRepositoryImpl(this._dio, this._localCache);
+
+  @override
+  Future<UserProfile> getUserProfile(String userId) async {
+    // Try cache first
+    final cached = await _localCache.getUser(userId);
+    if (cached != null && !cached.isStale) return cached.toEntity();
+
+    // Fetch remote
+    try {
+      final response = await _dio.get('/users/$userId');
+      final dto = UserProfileDto.fromJson(response.data as Map<String, dynamic>);
+      await _localCache.saveUser(dto); // Update cache
+      return dto.toEntity();
+    } on DioException catch (e) {
+      if (cached != null) return cached.toEntity(); // Stale fallback
+      throw _mapDioError(e);
+    }
+  }
+
+  @override
+  Future<void> updateProfile({required String userId, required String name}) async {
+    await _dio.patch('/users/$userId', data: {'name': name});
+    await _localCache.invalidate(userId);
+  }
+
+  Exception _mapDioError(DioException e) {
+    if (e.response?.statusCode == 404) return NotFoundException('User not found');
+    if (e.response?.statusCode == 401) return UnauthorizedException();
+    return NetworkException(e.message ?? 'Unknown error');
+  }
+}
+
+// === DI WITH GetIt + injectable ===
+
+// 6. Registration (generated by injectable's build_runner)
+@module
+abstract class NetworkModule {
+  @lazySingleton
+  Dio get dio => Dio(BaseOptions(baseUrl: 'https://api.example.com'));
+}
+
+@LazySingleton(as: UserRepository)
+class UserRepositoryImplAnnotated extends UserRepositoryImpl {
+  UserRepositoryImplAnnotated(Dio dio, UserLocalDataSource local) : super(dio, local);
+}
+
+@injectable
+class GetUserProfileUseCaseAnnotated extends GetUserProfileUseCase {
+  GetUserProfileUseCaseAnnotated(UserRepository repo) : super(repo);
+}
+
+// 7. In main.dart
+// await configureDependencies(); // Generated by injectable
+// final useCase = GetIt.I<GetUserProfileUseCase>();`,funFact:"The Repository pattern was first described by Eric Evans in 'Domain-Driven Design' (2003). It was designed for enterprise Java, but it maps perfectly to Flutter's layered architecture. Every major Flutter architecture guide (Very Good Ventures, Reso Coder, Felix Angelov) converges on this pattern because it makes testing trivial.",quiz:[{q:"Why is the Repository interface defined in the domain layer, not the data layer?",opts:["It is a naming convention with no practical effect","So the domain layer depends on abstractions it defines, not on data layer implementations — preserving the Dependency Rule","Because Dart interfaces must be in the innermost layer","To make the code compile faster"],ans:1},{q:"What is the purpose of a DTO (Data Transfer Object) vs a Domain Entity?",opts:["They are the same thing, just different names","DTOs mirror external data structures (API JSON); Domain Entities represent business concepts. DTOs are an implementation detail that should not leak into the domain or UI","DTOs are used only for local database storage","Domain Entities are DTOs that have been validated"],ans:1},{q:"A junior dev puts Dio calls directly in the ViewModel. What are the consequences?",opts:["No consequences — this is a valid pattern","Testing requires mocking Dio (not just business logic), business logic is duplicated across ViewModels, and swapping the HTTP client requires modifying the presentation layer","The app runs slower","It violates Dart null safety"],ans:1},{q:"What is the difference between GetIt.registerSingleton and GetIt.registerLazySingleton?",opts:["No difference — both create one instance","registerSingleton creates the instance immediately at registration; registerLazySingleton creates it only on first access","registerLazySingleton creates a new instance on every access","registerSingleton cannot be used with abstract classes"],ans:1},{q:"In a RepositoryImpl that coordinates API and local cache, what is the correct data flow?",opts:["Always hit the API first, then optionally save to cache","Always read from cache — never call the API","Read from cache if fresh; on miss or stale, fetch from API, save to cache, return domain entity","Read from API and cache simultaneously, use whichever responds first"],ans:0},{q:"When would you choose a Use Case class over putting logic directly in the ViewModel?",opts:["Never — ViewModels should contain all business logic","When the same business operation is needed from multiple ViewModels, when the logic needs unit testing without UI dependencies, or when the operation has complex business rules","Only for operations that hit the network","Use Cases are only needed in apps with more than 10 screens"],ans:1},{q:"What does the injectable package's @LazySingleton(as: UserRepository) annotation do?",opts:["It creates a new UserRepositoryImpl on every injection","It registers the implementation as a lazy singleton bound to the UserRepository interface — GetIt.I<UserRepository>() returns this implementation","It makes UserRepository available globally without registration","It generates a UserRepository abstract class automatically"],ans:1}],challenge:"Design the domain and data layers for a 'ProcessRefund' feature in a fintech app. Create: (1) a RefundRequest domain entity, (2) a RefundsRepository interface with processRefund() and getRefundStatus() methods, (3) a ProcessRefundUseCase that validates the amount > 0 before calling the repository, (4) a stub RefundsRepositoryImpl that simulates an API call. Wire it with GetIt.",resources:[{type:"docs",title:"Very Good Ventures Flutter Architecture",url:"https://verygood.ventures/blog/very-good-flutter-architecture",source:"Very Good Ventures"},{type:"docs",title:"GetIt Package",url:"https://pub.dev/packages/get_it",source:"pub.dev"},{type:"docs",title:"injectable Package",url:"https://pub.dev/packages/injectable",source:"pub.dev"},{type:"article",title:"Reso Coder Clean Architecture",url:"https://resocoder.com/2019/08/27/flutter-tdd-clean-architecture-course-1-explanation-project-structure/",source:"Reso Coder"},{type:"docs",title:"Dependency Inversion Principle",url:"https://dart.dev/effective-dart/design",source:"Dart Official"}],eli5:"Imagine you want a pizza. You tell the waiter (Use Case) 'I want pepperoni pizza'. The waiter goes to the kitchen (Repository). The kitchen decides: is there leftover pizza in the fridge (cache)? No? OK, they bake it fresh (API call). You never know how the pizza was made. And if the kitchen switches from a wood-fired oven to electric, you still get the same pizza. That's the Repository pattern.",codeWalkthrough:["UserProfile is a pure Dart domain entity — no Flutter, no Dio, no JSON dependencies","UserRepository is an abstract interface defined in the domain layer","GetUserProfileUseCase depends only on the UserRepository interface — not any implementation","Input validation in the Use Case — business rules live here, not in the UI","UserProfileDto mirrors the API JSON structure exactly — this is the data layer's concern","fromJson factory parses raw JSON into the DTO","toEntity() maps the DTO to the domain entity — the boundary between data and domain","UserRepositoryImpl coordinates the API and cache — domain layer never sees this complexity","Try cache first — if fresh, return immediately without hitting the network","On cache miss, call the API and parse the response into a DTO","Save to cache and return the domain entity","Map DioException to domain exceptions — UI sees DomainException, never DioException"],bugChallenge:{code:`// Domain Use Case
+import 'package:dio/dio.dart';
+
+class GetOrdersUseCase {
+  final Dio _dio;
+  GetOrdersUseCase(this._dio);
+
+  Future<List<Order>> call(String userId) async {
+    final response = await _dio.get('/orders?userId=$userId');
+    return (response.data as List)
+        .map((json) => Order.fromJson(json))
+        .toList();
+  }
+}`,hint:"Which layer does Dio belong to? What rule does this violate? What are the downstream consequences?",answer:"The domain Use Case imports and directly uses Dio (a data layer dependency). This violates the Dependency Rule: inner layers must not depend on outer layers. Consequences: (1) unit tests must mock Dio instead of a simple repository interface, (2) swapping HTTP clients requires changing domain code, (3) the domain cannot be a standalone Dart package, (4) Order.fromJson in the domain suggests mixing DTO parsing with business logic. Fix: define abstract OrdersRepository in domain with getOrders(userId), implement with Dio in data layer, inject the interface into GetOrdersUseCase."},difficulty:"advanced",prereqs:[20]},
+
+  {id:22,title:"MVVM vs MVI vs Clean vs MVC — Tradeoffs",subtitle:"How to Answer 'Why Did You Choose This Architecture?' Without Being Dogmatic",analogy:"Architecture patterns are like kitchen layouts. MVC is the classic home kitchen — quick to set up, fine for cooking for 4. MVVM is a restaurant kitchen — clear stations, works well at scale. MVI is a commercial bakery — strict process flow, every output predictable, great for complex orders. Clean Architecture is a multi-restaurant food hall — maximum separation, each section can operate independently. Choosing the wrong kitchen for your restaurant size is an expensive mistake.",points:[{t:"MVC — Model View Controller",d:"Controller handles input, updates Model, View observes Model. Simple, fast to write, works for small apps. Problem: the Controller becomes a 'Massive View Controller' — logic, networking, and UI code all merge into one class. In Flutter, StatefulWidget with setState() is effectively MVC. Fine for prototypes and forms with simple state."},{t:"MVVM — Model View ViewModel",d:"ViewModel holds UI state and business logic, exposes observables (streams, ValueNotifier, ChangeNotifier). View binds to ViewModel and renders state. No direct View→Model dependency. Flutter's ChangeNotifier + Provider and Riverpod's StateNotifier are MVVM. Good balance of testability and simplicity. The dominant pattern in mid-size apps."},{t:"MVI — Model View Intent",d:"Unidirectional data flow: View emits Intents (user actions) → ViewModel processes → emits a new immutable State → View renders state. BLoC is Flutter's MVI implementation (Events → BLoC → States). Predictable, debuggable, great for complex state. Overhead is justified in large teams or feature-heavy screens. Every state transition is explicit and auditable."},{t:"Clean Architecture",d:"Separates code into layers: Presentation (UI/ViewModel), Domain (Use Cases, Entities, Repository interfaces), Data (Repository implementations, DTOs, API). Each layer has one direction of dependencies — inward. Maximum testability. Maximum flexibility. Maximum initial overhead. Best for apps with 5+ developers, long maintenance lifetimes, or enterprise requirements."},{t:"When to Choose MVVM",d:"Use MVVM when: the app is mid-size (5-20 screens), the team is 1-3 developers, you need testability without full Clean Architecture overhead, state is per-screen rather than cross-cutting. Provider + ChangeNotifier or Riverpod StateNotifier are excellent MVVM implementations. Don't add layers you don't need."},{t:"When to Choose BLoC/MVI",d:"Use BLoC when: multiple events can trigger the same state transition, you need state history (for undo), complex async sequences (login → fetch profile → check permissions), large teams where explicit event types serve as documentation, or you need flutter_bloc's built-in RxDart-style stream operators."},{t:"When to Choose Clean Architecture",d:"Use Clean Architecture when: the app will live for 3+ years, domain logic is complex and shared across multiple entry points (mobile + web + desktop), the team is 5+, you need to swap data sources (change from REST to GraphQL, add offline support), or business rules must be tested without any infrastructure."},{t:"The 'Right' Architecture Doesn't Exist",d:"The interview trap is being dogmatic. A senior engineer says: 'It depends on team size, project lifetime, complexity, and testability requirements.' A junior says 'BLoC is always best' or 'Clean Architecture is the only correct way.' Pragmatism beats purity. Over-engineering a simple app is as bad as under-engineering a complex one."},{t:"Migration Reality",d:"Most production apps start simple and grow. A pragmatic approach: start with MVVM (Provider or Riverpod), extract Use Cases when business logic becomes complex, add Repository abstraction when you need multiple data sources. Don't add Clean Architecture layers until the pain justifies the overhead."},{t:"Shared Patterns Across All Architectures",d:"Regardless of architecture: keep UI logic out of business logic, keep network code out of widgets, use dependency injection, write business logic tests without Flutter. These four rules improve any codebase. The 'architecture' label is secondary to applying these fundamentals consistently."},{t:"Interview Answer Framework",d:"Answer 'Why this architecture?' with: (1) What was the team/project context? (2) What were the key requirements (testability, team size, long-term maintenance)? (3) What were the tradeoffs you accepted? (4) What would you change with hindsight? This structured answer demonstrates senior-level thinking, not pattern evangelism."}],whatIs:"MVVM, MVI, Clean Architecture, and MVC are organizational patterns for Flutter codebases. Each makes different tradeoffs between simplicity, testability, scalability, and overhead. A senior engineer can articulate when each is appropriate and why — not which one is 'correct'.",realWorld:"In a SaaS collaboration app: the onboarding flow uses simple StatefulWidget (MVC-style) for quick iteration. The workspace dashboard uses Riverpod StateNotifier (MVVM) for reactive state. The real-time chat uses BLoC (MVI) for auditable message state transitions. The payment processing module uses Clean Architecture with Use Cases for isolated business logic testing. One app, multiple patterns applied pragmatically.",code:`// === MVVM with Riverpod StateNotifier ===
+
+// State
+class WorkspaceState {
+  final List<Workspace> workspaces;
+  final bool isLoading;
+  final String? error;
+  const WorkspaceState({this.workspaces = const [], this.isLoading = false, this.error});
+  WorkspaceState copyWith({List<Workspace>? workspaces, bool? isLoading, String? error}) =>
+      WorkspaceState(workspaces: workspaces ?? this.workspaces, isLoading: isLoading ?? this.isLoading, error: error);
+}
+
+// ViewModel (StateNotifier)
+class WorkspaceViewModel extends StateNotifier<WorkspaceState> {
+  final WorkspaceRepository _repository;
+  WorkspaceViewModel(this._repository) : super(const WorkspaceState());
+
+  Future<void> loadWorkspaces() async {
+    state = state.copyWith(isLoading: true);
+    try {
+      final workspaces = await _repository.getAll();
+      state = state.copyWith(workspaces: workspaces, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(error: e.toString(), isLoading: false);
+    }
+  }
+}
+
+// === MVI with BLoC ===
+
+// Intent (Event)
+abstract class ChatEvent {}
+class SendMessage extends ChatEvent { final String content; SendMessage(this.content); }
+class LoadHistory extends ChatEvent { final String channelId; LoadHistory(this.channelId); }
+
+// State
+abstract class ChatState {}
+class ChatInitial extends ChatState {}
+class ChatLoading extends ChatState {}
+class ChatLoaded extends ChatState { final List<Message> messages; ChatLoaded(this.messages); }
+class ChatError extends ChatState { final String message; ChatError(this.message); }
+
+// BLoC (processes intents → emits states)
+class ChatBloc extends Bloc<ChatEvent, ChatState> {
+  final ChatRepository _repository;
+  ChatBloc(this._repository) : super(ChatInitial()) {
+    on<LoadHistory>(_onLoadHistory);
+    on<SendMessage>(_onSendMessage);
+  }
+
+  Future<void> _onLoadHistory(LoadHistory event, Emitter<ChatState> emit) async {
+    emit(ChatLoading());
+    try {
+      final messages = await _repository.getMessages(event.channelId);
+      emit(ChatLoaded(messages));
+    } catch (e) {
+      emit(ChatError(e.toString()));
+    }
+  }
+
+  Future<void> _onSendMessage(SendMessage event, Emitter<ChatState> emit) async {
+    // Optimistic update — add to list immediately, confirm later
+    if (state is ChatLoaded) {
+      final current = (state as ChatLoaded).messages;
+      final optimistic = Message(content: event.content, isPending: true);
+      emit(ChatLoaded([...current, optimistic]));
+    }
+    await _repository.sendMessage(event.content);
+  }
+}
+
+// === Clean Architecture — all three layers visible ===
+
+// Domain
+abstract class PaymentRepository { Future<Receipt> processPayment(PaymentRequest request); }
+class ProcessPaymentUseCase {
+  final PaymentRepository _repo;
+  ProcessPaymentUseCase(this._repo);
+  Future<Receipt> call(PaymentRequest request) async {
+    if (request.amount <= 0) throw ValidationException('Amount must be positive');
+    if (!request.currency.isSupported) throw ValidationException('Unsupported currency');
+    return _repo.processPayment(request);
+  }
+}
+
+// Data
+class PaymentRepositoryImpl implements PaymentRepository {
+  final Dio _dio;
+  PaymentRepositoryImpl(this._dio);
+  @override
+  Future<Receipt> processPayment(PaymentRequest request) async {
+    final response = await _dio.post('/payments', data: request.toJson());
+    return Receipt.fromJson(response.data);
+  }
+}`,funFact:"The MVC pattern was invented by Trygve Reenskaug in 1978 for Smalltalk-80. It predates the web, mobile apps, and even personal computers as we know them. The fact that we're still debating it in 2024 Flutter apps shows how fundamental the separation of concerns principle is — the specific pattern matters less than the principle it enforces.",quiz:[{q:"What is the fundamental problem with MVC that leads to 'Massive View Controllers'?",opts:["MVC is not supported in Flutter","The Controller naturally accumulates all logic that doesn't fit clearly in the Model or View, growing unbounded","MVC requires too much boilerplate code","Controllers cannot access the network in MVC"],ans:1},{q:"What is the key architectural difference between MVVM and MVI?",opts:["MVVM is for mobile apps, MVI is for web apps","MVVM allows bidirectional data flow; MVI enforces strictly unidirectional flow where the View emits Intents and only renders immutable States","MVVM uses streams, MVI uses callbacks","MVVM has no ViewModel equivalent in Flutter"],ans:1},{q:"A startup is building a 10-screen app with 2 Flutter developers. Which architecture is most pragmatic?",opts:["Full Clean Architecture with Use Cases and DTOs from day 1","MVI with BLoC for every screen","MVVM with Riverpod or Provider — sufficient testability without the overhead of full Clean Architecture","MVC with setState() everywhere because the team is small"],ans:2},{q:"When does the overhead of Clean Architecture become clearly justified?",opts:["For any app with more than 5 screens","When the app has 5+ developers, complex domain logic, long maintenance lifetime, or needs multiple data source swaps","Clean Architecture is never justified in Flutter — use BLoC instead","Only when the client specifically requests it"],ans:1},{q:"In a BLoC (MVI) architecture, what is an 'optimistic update' and what is its risk?",opts:["An optimistic update waits for server confirmation before updating the UI — it is always safe","An optimistic update immediately reflects the user action in the UI before server confirmation. The risk is that if the server rejects the action, you must revert the UI state, which requires careful error handling","An optimistic update is a BLoC-specific term for state initialization","Optimistic updates only work with WebSockets"],ans:1},{q:"How should you answer 'Why did you choose Clean Architecture?' in an interview?",opts:["Say Clean Architecture is always the correct choice for production Flutter apps","Describe the project context (team size, lifetime, complexity), the specific requirements it met (testability, data source flexibility), and the tradeoffs you accepted (higher initial overhead, more files)","Say it was a team decision and you followed the lead","Say you chose it because Reso Coder recommended it"],ans:1},{q:"What shared principle improves code quality regardless of which architecture pattern you choose?",opts:["Always using BLoC for state management","Always using GetIt for dependency injection","Keeping UI logic, business logic, and network code in separate concerns — and making business logic testable without Flutter","Always following the exact folder structure from the architecture guide"],ans:2}],challenge:"You're interviewing at a company. They ask: 'Our app is a 15-screen fintech app with a team of 4 Flutter devs, expected to live for 3+ years, with complex payment and claims processing logic. What architecture would you recommend and why?' Write a structured answer covering: pattern choice, justification, tradeoffs you're accepting, and folder structure.",resources:[{type:"article",title:"Flutter Architecture — Official Docs",url:"https://docs.flutter.dev/app-architecture",source:"Flutter Official"},{type:"article",title:"Very Good Ventures Architecture Guide",url:"https://verygood.ventures/blog/very-good-flutter-architecture",source:"Very Good Ventures"},{type:"docs",title:"BLoC Architecture",url:"https://bloclibrary.dev/architecture/",source:"BLoC Library"},{type:"article",title:"Riverpod Architecture",url:"https://riverpod.dev/docs/concepts/about_code_generation",source:"Riverpod"},{type:"article",title:"Flutter MVVM Tutorial",url:"https://docs.flutter.dev/app-architecture/design-patterns/mvvm",source:"Flutter Official"}],eli5:"Imagine you're organizing a toy room. A small room for one kid? Just toss everything in bins by color (MVC). A shared room for a few kids? Label bins by type: cars in one, dolls in another (MVVM). A big playroom for a class? Have separate sections with strict rules about what goes where (Clean Architecture). There's no 'best' layout — it depends on how many kids and how messy things get.",codeWalkthrough:["WorkspaceState is immutable — copyWith creates new instances instead of mutating","WorkspaceViewModel extends StateNotifier — all state changes go through 'state =' assignments","loadWorkspaces updates state to loading, then to loaded or error — no intermediate null states","In MVI/BLoC: events (Intents) are sealed class hierarchies — exhaustive pattern matching in the BLoC","ChatBloc.on<Event>(handler) registers event handlers — each event type has one handler","Optimistic update: emit the new message immediately before awaiting server confirmation","ProcessPaymentUseCase validates business rules before touching the repository","PaymentRepositoryImpl handles only HTTP concerns — no business logic lives here"],bugChallenge:{code:`class UserBloc extends Bloc<UserEvent, UserState> {
+  final UserRepository repository;
+
+  UserBloc(this.repository) : super(UserInitial()) {
+    on<LoadUser>((event, emit) async {
+      final user = await repository.getUser(event.id);
+      emit(UserLoaded(user));
+    });
+  }
+}`,hint:"Two issues: error handling and a DI best practice violation.",answer:"Bug 1: No try-catch around repository.getUser() — any network error will crash the BLoC stream and leave the UI in a broken state. Wrap in try-catch and emit UserError(e.toString()) on failure. Bug 2: 'repository' is public — in a BLoC, dependencies should be private (final UserRepository _repository) to enforce encapsulation. External code should not access BLoC internals through its dependencies."},difficulty:"advanced",prereqs:[20,21]},
+
+  {id:23,title:"REST APIs with Dio, Interceptors, Token Refresh & Retries",subtitle:"Production HTTP Client Patterns Every Senior Flutter Dev Uses Daily",analogy:"Dio is your app's postal service. Interceptors are like post office sorting rules: 'every outgoing package gets a tracking sticker (auth header)'. Token refresh is like auto-renewing your PO Box lease before it expires. Retry logic is like the postman trying three times before leaving a 'sorry we missed you' card. QueuedInterceptor is the line at the post office — everyone waits their turn, preventing chaos.",points:[{t:"Dio Over http Package",d:"Dio provides: interceptors, request/response transformation, timeout configuration, multipart uploads, download progress, cancellation tokens, and auto-parsing of JSON. The http package is simpler but lacks interceptors — essential for auth token injection and retry logic. In production, Dio is the de facto standard."},{t:"BaseOptions Configuration",d:"Set baseUrl, connectTimeout, receiveTimeout, headers globally. connectTimeout: how long to wait for a TCP connection. receiveTimeout: how long to wait for the server to start responding. In a fintech app, set tight timeouts (5-10s) to fail fast rather than leaving users waiting at payment screens."},{t:"Interceptors — The Power Feature",d:"Interceptors are middleware for HTTP requests. onRequest: add headers (auth token, device ID, locale). onResponse: transform data, log successes. onError: handle errors, trigger token refresh, retry. Stack multiple interceptors with dio.interceptors.addAll([logInterceptor, authInterceptor, retryInterceptor])."},{t:"Auth Token Injection",d:"In onRequest, read the access token from secure storage and add it to every request: options.headers['Authorization'] = 'Bearer $token'. This eliminates per-request token passing. The interceptor is the single place to update when auth header format changes."},{t:"Token Refresh with QueuedInterceptor",d:"When a 401 response arrives, you need to: (1) refresh the access token, (2) retry the failed request with the new token. If multiple requests hit 401 simultaneously, only ONE refresh should happen — others must queue. QueuedInterceptor serializes concurrent requests during refresh, preventing N parallel refresh calls."},{t:"Retry Logic",d:"Transient network failures (5xx, timeout) should be retried automatically. Use the dio_smart_retry or dio_retry package, or implement manually with a RequestOptions clone. Retry with exponential backoff: wait 1s, 2s, 4s. Idempotent requests (GET, PUT) are safe to retry. Non-idempotent (POST payments) need careful retry logic with server-side idempotency keys."},{t:"Error Mapping",d:"Never expose DioException to the domain or UI layer. In the data layer, catch DioException and throw domain exceptions: NotFoundException, UnauthorizedException, NetworkException, ServerException. The UI handles domain exceptions, not HTTP status codes. This is the Repository layer's responsibility."},{t:"Pagination Patterns",d:"Cursor-based pagination: server returns a nextCursor token — use it in the next request. More scalable, consistent during live data updates. Offset-based: use page number and page size. Simpler but inconsistent if items are added during pagination. In a real-time chat app, use cursor pagination to avoid missing messages."},{t:"Cancellation Tokens",d:"Use CancelToken to cancel in-flight requests when the user navigates away. Pass the token to Dio: dio.get(url, cancelToken: _cancelToken). In your widget/ViewModel dispose(), call _cancelToken.cancel(). This prevents setState() on disposed widgets and memory leaks."},{t:"Logging in Development",d:"Add LogInterceptor in debug mode only: if (kDebugMode) dio.interceptors.add(LogInterceptor(responseBody: true)). Never log tokens or PII in production. Pretty-print JSON with JsonEncoder.withIndent(). In a CI pipeline, use separate environment-aware DI configuration to exclude the logger."},{t:"Response Caching",d:"dio_cache_interceptor provides HTTP-level caching with ETag/Last-Modified support. For fintech data, cache conservatively with short TTLs. For reference data (countries, currencies), cache aggressively. The cache layer lives in the data layer — the domain never knows data is cached."}],whatIs:"Dio is Flutter's production HTTP client. Interceptors provide middleware for auth token injection, logging, and error handling. QueuedInterceptor handles token refresh correctly under concurrent requests. Proper error mapping, retry logic, and cancellation complete a production-grade HTTP layer.",realWorld:"In a SaaS collaboration app with real-time features: every API request automatically gets the JWT from FlutterSecureStorage via the auth interceptor. When the JWT expires mid-session, QueuedInterceptor refreshes it exactly once while queuing all concurrent requests. Failed requests due to network blips retry with exponential backoff. When the user leaves a screen, CancelToken stops in-flight requests. All DioExceptions are mapped to domain exceptions before reaching the UI.",code:`import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/foundation.dart';
+
+// === 1. Dio Configuration ===
+Dio createDio({required String baseUrl}) {
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: baseUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 15),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-App-Version': '2.1.0',
+      },
+    ),
+  );
+
+  if (kDebugMode) {
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      logPrint: (o) => debugPrint(o.toString()),
+    ));
+  }
+
+  dio.interceptors.add(AuthInterceptor(
+    storage: const FlutterSecureStorage(),
+    onRefresh: () => _refreshToken(dio),
+  ));
+
+  return dio;
+}
+
+// === 2. Auth Interceptor with QueuedInterceptorWrapper ===
+class AuthInterceptor extends QueuedInterceptor {
+  final FlutterSecureStorage _storage;
+  final Future<String?> Function() _onRefresh;
+
+  AuthInterceptor({required FlutterSecureStorage storage, required Future<String?> Function() onRefresh})
+      : _storage = storage, _onRefresh = onRefresh;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    final token = await _storage.read(key: 'access_token');
+    if (token != null) {
+      options.headers['Authorization'] = 'Bearer $token';
+    }
+    handler.next(options);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 401) {
+      // Token expired — attempt refresh
+      try {
+        final newToken = await _onRefresh();
+        if (newToken != null) {
+          await _storage.write(key: 'access_token', value: newToken);
+          // Retry original request with new token
+          final opts = err.requestOptions;
+          opts.headers['Authorization'] = 'Bearer $newToken';
+          final response = await Dio().fetch(opts);
+          return handler.resolve(response);
+        }
+      } catch (e) {
+        // Refresh failed — force logout
+        await _storage.deleteAll();
+        handler.reject(err);
+        return;
+      }
+    }
+    handler.next(err);
+  }
+}
+
+// === 3. Error Mapping in Repository ===
+class ApiClient {
+  final Dio _dio;
+  ApiClient(this._dio);
+
+  Future<T> get<T>(String path, {required T Function(dynamic) fromJson, CancelToken? cancelToken}) async {
+    try {
+      final response = await _dio.get(path, cancelToken: cancelToken);
+      return fromJson(response.data);
+    } on DioException catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  Exception _mapError(DioException e) {
+    if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+      return const TimeoutException('Connection timed out');
+    }
+    switch (e.response?.statusCode) {
+      case 400: return ValidationException(e.response?.data['message'] ?? 'Bad request');
+      case 401: return const UnauthorizedException();
+      case 403: return const ForbiddenException();
+      case 404: return const NotFoundException();
+      case 422: return UnprocessableException(e.response?.data);
+      case 500: return const ServerException();
+      default: return NetworkException(e.message ?? 'Unknown error');
+    }
+  }
+}
+
+// === 4. Cursor Pagination Pattern ===
+class PaginatedResponse<T> {
+  final List<T> items;
+  final String? nextCursor;
+  final bool hasMore;
+  const PaginatedResponse({required this.items, this.nextCursor, required this.hasMore});
+
+  factory PaginatedResponse.fromJson(Map<String, dynamic> json, T Function(dynamic) fromItem) =>
+      PaginatedResponse(
+        items: (json['data'] as List).map(fromItem).toList(),
+        nextCursor: json['meta']['next_cursor'] as String?,
+        hasMore: json['meta']['has_more'] as bool,
+      );
+}
+
+// Paginated repository method
+Future<PaginatedResponse<Message>> getMessages({String? cursor, int limit = 30}) async {
+  final response = await _dio.get(
+    '/messages',
+    queryParameters: {'cursor': cursor, 'limit': limit},
+  );
+  return PaginatedResponse.fromJson(response.data, Message.fromJson);
+}
+
+// === 5. Cancellation ===
+class MessageViewModel {
+  final Dio _dio;
+  CancelToken? _cancelToken;
+
+  MessageViewModel(this._dio);
+
+  Future<void> loadMessages(String channelId) async {
+    _cancelToken?.cancel();
+    _cancelToken = CancelToken();
+    try {
+      await _dio.get('/channels/$channelId/messages', cancelToken: _cancelToken);
+    } on DioException catch (e) {
+      if (CancelToken.isCancel(e)) return; // Normal — user navigated away
+      rethrow;
+    }
+  }
+
+  void dispose() => _cancelToken?.cancel();
+}`,funFact:"The QueuedInterceptor pattern for token refresh is one of the most googled Flutter problems. Naive implementations cause a 'refresh storm': 5 concurrent 401s trigger 5 parallel refresh calls, all succeed with different tokens, and 4 of them invalidate the session. QueuedInterceptor serializes this at the Dart level — it's the correct solution and a signal of real production experience.",quiz:[{q:"Why must you use QueuedInterceptor instead of a regular Interceptor for token refresh?",opts:["QueuedInterceptor is faster for network requests","A regular interceptor allows multiple concurrent 401 responses to each trigger their own refresh — causing a 'refresh storm' that invalidates sessions. QueuedInterceptor serializes concurrent errors so only one refresh runs","QueuedInterceptor provides automatic retry functionality","Regular interceptors cannot access secure storage"],ans:1},{q:"What is the difference between connectTimeout and receiveTimeout in Dio?",opts:["They are the same — use either one","connectTimeout is how long to wait to establish the TCP connection; receiveTimeout is how long to wait for the server to start sending response data after connection","connectTimeout is for WebSockets, receiveTimeout is for HTTP","connectTimeout applies only to iOS, receiveTimeout only to Android"],ans:1},{q:"When is it safe to retry a failed HTTP request automatically?",opts:["Always retry any failed request up to 3 times","Only retry idempotent requests (GET, PUT, DELETE) for transient failures (5xx, timeout). Never auto-retry POST payment requests without server-side idempotency keys","Retry only GET requests, never anything else","Never retry — always show an error to the user"],ans:1},{q:"What is the purpose of a CancelToken in Dio?",opts:["It cancels the user's authentication session","It allows cancelling an in-flight request when no longer needed — critical for avoiding setState() on disposed widgets when the user navigates away","It cancels all pending retries","It is used to revoke JWT tokens server-side"],ans:1},{q:"Why should DioException never be thrown from a Repository to the domain/UI layer?",opts:["DioException is too large to serialize","The domain layer would become coupled to Dio as an infrastructure dependency. Domain exceptions (NotFoundException, NetworkException) are technology-agnostic and allow swapping HTTP clients without touching domain or UI code","DioException cannot be caught in async code","It is a Dart compiler requirement"],ans:1},{q:"Cursor-based pagination is preferred over offset-based pagination in a real-time chat app. Why?",opts:["Cursor pagination is simpler to implement","Offset pagination becomes inconsistent when new messages arrive during pagination — page 2 may repeat or skip items. Cursor-based pagination uses a stable position marker unaffected by new inserts","Cursor pagination uses less server memory","Offset pagination is deprecated in REST APIs"],ans:1},{q:"You need to add a device fingerprint header to every request. Where is the correct place to do this?",opts:["In every individual API call in the repository methods","In a request Interceptor's onRequest method — centralizing cross-cutting headers in one place so no call site is missed and the header format is changed in one location","In the BaseOptions headers at Dio initialization","In each ViewModel before calling the repository"],ans:0}],challenge:"Build a production Dio setup for a fintech app: (1) BaseOptions with 10s timeouts and Content-Type header, (2) an AuthInterceptor that injects a Bearer token from FlutterSecureStorage, (3) a 401 handler that calls a refreshToken() function and retries the original request, (4) error mapping for 400, 401, 404, 500 status codes to domain exceptions, (5) debug-only LogInterceptor.",resources:[{type:"docs",title:"Dio Package",url:"https://pub.dev/packages/dio",source:"pub.dev"},{type:"docs",title:"Dio Interceptors",url:"https://github.com/cfug/dio/blob/main/dio/README.md#interceptors",source:"Dio GitHub"},{type:"docs",title:"flutter_secure_storage",url:"https://pub.dev/packages/flutter_secure_storage",source:"pub.dev"},{type:"docs",title:"dio_smart_retry",url:"https://pub.dev/packages/dio_smart_retry",source:"pub.dev"},{type:"article",title:"Dio Token Refresh Pattern",url:"https://medium.com/flutter-community/handling-token-refresh-in-flutter-with-dio-interceptors-75d7a4d5ba7b",source:"Flutter Community"}],eli5:"Imagine every letter your app sends needs a stamp (auth token). Instead of you licking a stamp for each letter, the post office (Dio interceptor) stamps them all automatically. If a letter comes back 'address changed' (401), the post office calls the postal service to get your new address (refresh token), then resends ALL the waiting letters with the new address — but only makes ONE phone call, not one per letter. That's the queued interceptor.",codeWalkthrough:["Dio BaseOptions sets baseUrl and timeouts globally — all requests inherit these settings","connectTimeout: fail fast if the server doesn't respond in 10 seconds","receiveTimeout: fail fast if the server starts but takes too long to send data","LogInterceptor only runs in debug mode — never logs tokens in production","AuthInterceptor extends QueuedInterceptor — critical for serializing concurrent token refreshes","onRequest reads the access token from secure storage and injects it as a Bearer header","onError intercepts 401 responses before they reach the repository","On 401: call the refresh function, write the new token to secure storage","Clone the original request options with the new token and fetch it","On refresh failure: clear all tokens and reject — forces re-login","_mapError translates DioException to domain exceptions — no DioException leaks past the data layer","CancelToken: cancel previous request when a new load starts — prevents race conditions","CancelToken.isCancel(e) distinguishes intentional cancellations from real errors"],bugChallenge:{code:`class AuthInterceptor extends Interceptor {
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 401) {
+      final newToken = await refreshToken();
+      final opts = err.requestOptions;
+      opts.headers['Authorization'] = 'Bearer \$newToken';
+      final response = await Dio().fetch(opts);
+      handler.resolve(response);
+    }
+    handler.next(err);
+  }
+}`,hint:"Two bugs: one around concurrent refresh calls, one around control flow.",answer:"Bug 1: extends Interceptor instead of QueuedInterceptor — if 5 requests simultaneously get 401, all 5 call refreshToken() in parallel, causing a 'refresh storm' where multiple tokens are issued and old ones are invalidated. Fix: extend QueuedInterceptor to serialize concurrent error handling. Bug 2: handler.resolve(response) and handler.next(err) are both called on the 401 path — after resolving, the code falls through to handler.next(err) which throws an exception. Add 'return' after handler.resolve(response) to prevent the fall-through."},difficulty:"advanced",prereqs:[3,8,21]},
+
+  {id:24,title:"WebSockets, Socket.IO & Real-time Sync",subtitle:"Building Live Collaboration Features That Actually Work at Scale",analogy:"HTTP is like sending letters — you write, send, wait for a reply, done. WebSockets are like a phone call — once connected, both sides can talk freely at any time without hanging up and calling back. Socket.IO is a phone system with auto-reconnect: if the call drops, it silently calls back, replaying any missed messages. In a collaboration app, you need the phone call — polling with HTTP is like texting your team every 2 seconds asking 'anything new?'",points:[{t:"WebSocket vs HTTP Polling",d:"HTTP polling: client requests every N seconds. Long polling: client waits until server has data. WebSocket: persistent bidirectional connection, server pushes instantly. In a real-time chat app, WebSocket latency is ~10ms vs polling latency of up to N seconds. The bandwidth difference is dramatic: one WS frame vs full HTTP request/response overhead."},{t:"WebSocket in Flutter — dart:io",d:"Flutter provides WebSocket via dart:io: WebSocket.connect(uri). Listen to the stream for incoming messages, use socket.add() to send. Handle errors with stream.handleError(). The connection is a Stream — you can use StreamBuilder to reactively update the UI. Remember to close the socket in dispose()."},{t:"Socket.IO Client in Flutter",d:"socket_io_client package wraps the Socket.IO protocol: auto-reconnect, namespace support, event-based API (socket.on('message', handler)), and fallback to HTTP long-polling when WebSockets are blocked. Preferred over raw WebSockets when the backend uses Socket.IO (common with Node.js backends)."},{t:"Connection Lifecycle Management",d:"Manage connection state explicitly: disconnected → connecting → connected → reconnecting → failed. Expose this as a stream so the UI can show a 'Reconnecting...' banner. On app background (AppLifecycleState.paused), consider disconnecting and reconnecting on foreground to save battery and avoid stale connections."},{t:"Reconnection Strategies",d:"Socket.IO has built-in reconnect with configurable delay and max attempts. For raw WebSockets, implement exponential backoff manually: 1s, 2s, 4s, 8s... up to a max (60s). On each reconnect, re-subscribe to channels and request missed messages since the last received message ID (sequence gap detection)."},{t:"Real-time Message Sync Architecture",d:"Messages arrive out of order — use sequence numbers or timestamps to sort. Track the lastReceivedMessageId. On reconnect, send GET /messages?after={lastId} to backfill missed messages, then merge with live WebSocket stream. This ensures no messages are lost during brief disconnections."},{t:"Optimistic Updates",d:"When a user sends a message, add it to the UI immediately with a 'pending' indicator before server acknowledgment. On server ack, update the message status to 'sent'. On failure, mark as 'failed' with a retry option. Users expect WhatsApp/Slack-level responsiveness — waiting for server round-trip before showing the message feels broken."},{t:"Rooms and Channels",d:"In a multi-workspace collaboration app, each workspace and channel is a Socket.IO room. On workspace switch, leave old rooms and join new ones: socket.emit('join', {'room': channelId}). The backend broadcasts to room members only. Each reconnect must rejoin all active rooms."},{t:"Presence and Typing Indicators",d:"'User X is typing' — debounce keystrokes (300ms), emit a 'typing' event, server broadcasts to channel members. Stop after 3 seconds of inactivity. Online/offline presence: emit 'user_online' on connect, server broadcasts to workspace members, emit 'user_offline' on disconnect (use server-side disconnect event)."},{t:"Stream Architecture in Flutter",d:"Keep WebSocket events in a StreamController<SocketEvent> in a singleton service. Multiple BLoCs/ViewModels subscribe to this stream. Avoid exposing the raw socket to the UI. The SocketService is registered as a singleton in GetIt — one connection, multiple consumers."},{t:"Testing Real-time Features",d:"Use a FakeSocketService that implements the same interface. In tests, manually emit events via the fake's stream to simulate incoming messages. No real network in tests. In integration tests, use a local Socket.IO server or mockserver."}],whatIs:"WebSockets provide a persistent bidirectional channel between Flutter and a server, enabling real-time features: chat, presence, live editing, and push notifications. Socket.IO adds auto-reconnect and event semantics on top. The challenge in production is handling connection lifecycle, missed messages during disconnections, and optimistic UI updates correctly.",realWorld:"In a SaaS collaboration app: the SocketService singleton maintains one WebSocket connection per session. When a user opens a channel, the ChatBloc subscribes to the SocketService stream filtered for that channel's events. Incoming messages are shown instantly. Outgoing messages are shown immediately as 'pending' (optimistic) and confirmed when the server acks. On network loss, a 'Reconnecting...' banner appears, and when reconnected, the app backfills missed messages from the REST API.",code:`import 'dart:async';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+// === 1. Socket Service — Singleton, manages lifecycle ===
+enum SocketStatus { disconnected, connecting, connected, reconnecting }
+
+class SocketService {
+  static final SocketService _instance = SocketService._internal();
+  factory SocketService() => _instance;
+  SocketService._internal();
+
+  IO.Socket? _socket;
+  final _eventController = StreamController<SocketEvent>.broadcast();
+  final _statusController = StreamController<SocketStatus>.broadcast();
+
+  Stream<SocketEvent> get events => _eventController.stream;
+  Stream<SocketStatus> get status => _statusController.stream;
+
+  void connect({required String url, required String token}) {
+    _statusController.add(SocketStatus.connecting);
+
+    _socket = IO.io(url, IO.OptionBuilder()
+      .setTransports(['websocket'])
+      .setAuth({'token': token})
+      .enableAutoConnect()
+      .enableReconnection()
+      .setReconnectionDelay(1000)
+      .setReconnectionDelayMax(30000)
+      .setReconnectionAttempts(double.infinity.toInt())
+      .build());
+
+    _socket!.onConnect((_) {
+      _statusController.add(SocketStatus.connected);
+      // Re-join all active rooms after reconnect
+      for (final room in _activeRooms) {
+        _socket!.emit('join', {'room': room});
+      }
+    });
+
+    _socket!.onDisconnect((_) => _statusController.add(SocketStatus.disconnected));
+    _socket!.onReconnecting((_) => _statusController.add(SocketStatus.reconnecting));
+
+    // Register event listeners
+    _socket!.on('new_message', (data) =>
+        _eventController.add(NewMessageEvent.fromJson(data as Map<String, dynamic>)));
+    _socket!.on('user_typing', (data) =>
+        _eventController.add(UserTypingEvent.fromJson(data as Map<String, dynamic>)));
+    _socket!.on('message_read', (data) =>
+        _eventController.add(MessageReadEvent.fromJson(data as Map<String, dynamic>)));
+  }
+
+  final _activeRooms = <String>{};
+
+  void joinChannel(String channelId) {
+    _activeRooms.add(channelId);
+    _socket?.emit('join', {'room': channelId});
+  }
+
+  void leaveChannel(String channelId) {
+    _activeRooms.remove(channelId);
+    _socket?.emit('leave', {'room': channelId});
+  }
+
+  void sendMessage({required String channelId, required String content, required String tempId}) {
+    _socket?.emit('send_message', {
+      'channel_id': channelId,
+      'content': content,
+      'temp_id': tempId,  // For optimistic update matching
+    });
+  }
+
+  void emitTyping(String channelId) => _socket?.emit('typing', {'channel': channelId});
+
+  void disconnect() {
+    _socket?.disconnect();
+    _activeRooms.clear();
+  }
+
+  void dispose() {
+    _socket?.dispose();
+    _eventController.close();
+    _statusController.close();
+  }
+}
+
+// === 2. Optimistic Message Handling in BLoC ===
+class ChatBloc extends Bloc<ChatEvent, ChatState> {
+  final SocketService _socketService;
+  final ChatRepository _repository;
+  StreamSubscription<SocketEvent>? _socketSub;
+  String? _lastMessageId;
+
+  ChatBloc(this._socketService, this._repository) : super(const ChatState()) {
+    on<JoinChannel>(_onJoinChannel);
+    on<SendMessage>(_onSendMessage);
+    on<_SocketEventReceived>(_onSocketEvent);
+  }
+
+  Future<void> _onJoinChannel(JoinChannel event, Emitter<ChatState> emit) async {
+    _socketService.joinChannel(event.channelId);
+
+    // Load history and track last message for gap detection
+    final history = await _repository.getMessages(channelId: event.channelId);
+    _lastMessageId = history.lastOrNull?.id;
+    emit(state.copyWith(messages: history, channelId: event.channelId));
+
+    // Subscribe to socket events for this channel
+    _socketSub = _socketService.events
+        .whereType<NewMessageEvent>()
+        .where((e) => e.channelId == event.channelId)
+        .listen((e) => add(_SocketEventReceived(e)));
+  }
+
+  Future<void> _onSendMessage(SendMessage event, Emitter<ChatState> emit) async {
+    // Optimistic update — show immediately
+    final tempMessage = Message.pending(
+      id: event.tempId,
+      content: event.content,
+      senderId: event.senderId,
+    );
+    emit(state.copyWith(messages: [...state.messages, tempMessage]));
+
+    // Send via socket — confirmation will arrive as a NewMessageEvent
+    _socketService.sendMessage(
+      channelId: state.channelId!,
+      content: event.content,
+      tempId: event.tempId,
+    );
+  }
+
+  void _onSocketEvent(_SocketEventReceived event, Emitter<ChatState> emit) {
+    final incoming = event.socketEvent as NewMessageEvent;
+    // Replace pending optimistic message or add new message
+    final updated = state.messages.map((m) =>
+        m.id == incoming.tempId ? incoming.toMessage() : m
+    ).toList();
+    if (!updated.any((m) => m.id == incoming.message.id)) {
+      updated.add(incoming.message);
+    }
+    emit(state.copyWith(messages: updated));
+  }
+
+  @override
+  Future<void> close() {
+    _socketSub?.cancel();
+    _socketService.leaveChannel(state.channelId ?? '');
+    return super.close();
+  }
+}`,funFact:"The WebSocket protocol (RFC 6455) starts as an HTTP request — the browser or app sends an HTTP Upgrade header, the server responds with 101 Switching Protocols, and from that point the TCP connection is repurposed as a WebSocket. This is why WebSockets work on port 80/443 and pass through most firewalls and corporate proxies that block other protocols.",quiz:[{q:"What is the key advantage of WebSockets over HTTP long-polling in a real-time chat app?",opts:["WebSockets are easier to implement","WebSockets maintain a persistent connection with minimal overhead — the server can push messages instantly with no polling latency and no HTTP request/response overhead per message","WebSockets support more data types than HTTP","Long-polling is not supported in Flutter"],ans:1},{q:"Why is exponential backoff important in WebSocket reconnection logic?",opts:["It makes the reconnection faster","Immediate reconnection retries under poor network conditions flood the server with connection attempts. Exponential backoff (1s, 2s, 4s...) reduces server load and gives the network time to recover","Exponential backoff is only needed for HTTP retries","The socket_io_client package does not support exponential backoff"],ans:1},{q:"What is an optimistic update and why must you handle the failure case?",opts:["An optimistic update shows a loading spinner while waiting for the server","An optimistic update shows the result immediately in the UI before server confirmation. The failure case must revert or mark the item as failed — otherwise the UI shows data that doesn't exist on the server, confusing the user","An optimistic update pre-fetches data before the user requests it","Optimistic updates are only valid for read operations"],ans:1},{q:"After a WebSocket reconnection, why must you backfill messages from the REST API?",opts:["Socket.IO automatically delivers all missed messages on reconnect","Messages sent while disconnected are not buffered by the WebSocket server indefinitely. Backfilling via REST API (GET /messages?after=lastId) ensures no messages are lost during the disconnection window","WebSockets deliver messages in order, so no backfill is needed","Backfilling is only needed for presence events, not messages"],ans:1},{q:"Why should the SocketService be a singleton in GetIt?",opts:["Singletons are faster in Dart","One WebSocket connection should serve all features — multiple singletons would open multiple connections to the same server, multiplying bandwidth and server load","GetIt requires all services to be singletons","A singleton prevents the socket from being garbage collected"],ans:1},{q:"How should you handle the AppLifecycleState.paused event in relation to a WebSocket connection?",opts:["Keep the WebSocket open indefinitely — disconnecting and reconnecting wastes time","Consider disconnecting on pause and reconnecting on resume. This saves battery, frees server resources for inactive users, and avoids stale connections. On reconnect, backfill missed data","Pause all Socket.IO event listeners but keep the connection open","Terminate the app process — Flutter does this automatically"],ans:1},{q:"A user is typing in a channel. How do you implement 'is typing' without flooding the server?",opts:["Emit a 'typing' event on every keypress","Debounce the emit: send 'typing' only after 300ms of no new keystrokes, then automatically clear it after 3-5 seconds of inactivity on the server side — reducing events from hundreds to one per typing burst","Use a timer that emits every 1 second while the text field has focus","Typing indicators require a separate WebSocket connection"],ans:1}],challenge:"Design the reconnection flow for a real-time collaboration app: (1) show a 'Reconnecting...' banner when SocketStatus is reconnecting, (2) on successful reconnect, re-join all active channels, (3) backfill missed messages via REST API using the lastReceivedMessageId, (4) merge backfilled messages with the live stream without duplicates.",resources:[{type:"docs",title:"socket_io_client Package",url:"https://pub.dev/packages/socket_io_client",source:"pub.dev"},{type:"docs",title:"Dart WebSocket API",url:"https://api.dart.dev/stable/dart-io/WebSocket-class.html",source:"Dart Official"},{type:"article",title:"WebSocket Protocol RFC 6455",url:"https://datatracker.ietf.org/doc/html/rfc6455",source:"IETF"},{type:"docs",title:"AppLifecycleState Flutter",url:"https://api.flutter.dev/flutter/dart-ui/AppLifecycleState.html",source:"Flutter Official"},{type:"article",title:"Building Real-time Apps with Flutter and Socket.IO",url:"https://medium.com/flutter-community/building-real-time-apps-with-flutter-and-socket-io-9b4f0f6a7b2a",source:"Flutter Community"}],eli5:"Imagine you and your friend have walkie-talkies (WebSocket). Either of you can talk any time — it's instant. Now imagine your walkie-talkie signal drops (network interruption). A smart walkie-talkie (Socket.IO) tries to reconnect automatically, and when it does, it asks 'what did I miss?' and replays those messages. Typing indicators are like pressing the talk button for half a second — everyone hears the click and knows you're about to speak.",codeWalkthrough:["SocketService is a singleton — one instance, one WebSocket connection for the whole app","StreamController.broadcast() allows multiple subscribers — many BLoCs can listen to the same socket","OptionBuilder configures Socket.IO: WebSocket transport, auth token, auto-reconnect with exponential backoff","onConnect re-joins all active rooms — critical after reconnection, otherwise messages for those channels are missed","_activeRooms tracks which channels are joined so re-subscription survives reconnects","joinChannel adds to the tracked set AND emits the join event to the server","sendMessage includes a tempId — this matches the optimistic message to the server confirmation","ChatBloc subscribes to socket events filtered by channel — no irrelevant events reach this BLoC","JoinChannel loads history and tracks the last message ID for gap detection on reconnect","Optimistic update: pending message is added to state immediately before server confirmation","Socket confirmation arrives as NewMessageEvent — replace the pending message by tempId","In close(), cancel the stream subscription and leave the channel — clean resource management"],bugChallenge:{code:`class SocketService {
+  late IO.Socket _socket;
+
+  void connect(String url, String token) {
+    _socket = IO.io(url, {'auth': {'token': token}});
+    _socket.on('message', (data) => print(data));
+  }
+
+  void joinChannel(String id) {
+    _socket.emit('join', id);
+  }
+}
+
+// Usage in Widget
+class ChatScreen extends StatefulWidget { ... }
+class _ChatScreenState extends State<ChatScreen> {
+  final socket = SocketService();
+
+  @override
+  void initState() {
+    super.initState();
+    socket.connect('wss://api.example.com', token);
+  }
+}`,hint:"Three issues: singleton misuse, connection lifecycle, and reconnect room re-subscription.",answer:"Bug 1: SocketService is not a singleton — each ChatScreen creates a new SocketService and a new WebSocket connection. Fix: use a GetIt singleton. Bug 2: No dispose() or disconnect() in _ChatScreenState — the socket connection is never closed when the screen is removed, causing memory leaks and stale connections. Fix: override dispose() and call socket.disconnect(). Bug 3: joinChannel only emits the join event once — on reconnect, the channel is not rejoined because there is no _activeRooms tracking. Fix: track joined channels and re-emit joins in onConnect handler."},difficulty:"advanced",prereqs:[4,23]},
+
+  {id:25,title:"Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor",subtitle:"Choosing the Right Storage for the Right Job",analogy:"Local storage options are like different filing systems. SharedPreferences is a sticky-note pad — great for 'dark mode on', terrible for thousands of records. Hive is a fast filing cabinet with typed drawers — structured but not relational. SQLite is a filing room with cross-reference cards between folders — slow to set up, powerful for complex queries. Floor is SQLite with a librarian who organizes everything for you via code generation.",points:[{t:"SharedPreferences — Simple Key-Value",d:"SharedPreferences stores primitive values (String, int, double, bool, List<String>) as key-value pairs using platform-native storage (NSUserDefaults on iOS, SharedPreferences on Android). Synchronous-feeling async API. Best for: user settings, theme, language, onboarding flags, last-used values. Terrible for: collections, structured data, anything with queries."},{t:"Hive — Fast NoSQL",d:"Hive stores Dart objects in binary format. Extremely fast (O(1) reads). Supports custom objects via TypeAdapters (code-generated). No SQL, no relations — it's a key-value store for complex objects. Great for: offline caching, user data, feature flags, settings more complex than SharedPreferences. Hive boxes are lazy-loaded — open only what you need."},{t:"SQLite — Full Relational DB",d:"SQLite is a full relational database embedded in every mobile device. Supports SQL queries, JOINs, transactions, complex filtering, indexing. The sqflite package provides raw SQL access. Best for: complex relational data, reporting, filtering, sorting at the database level. Drawbacks: verbose SQL strings, no type safety, manual migration management."},{t:"Floor — Type-Safe SQLite ORM",d:"Floor (inspired by Android Room) generates SQLite code from Dart annotations. Define entities (@Entity), DAOs (@Dao), and the database (@Database). Build runner generates the implementation. Best for: relational data that needs type safety and tested query infrastructure. Preferred over raw sqflite in production for complex schemas."},{t:"Isar — The Modern Alternative",d:"Isar is a newer NoSQL database (successor to Hive): faster than Hive, supports indexes and filtering, works with Isar Inspector (visual DB browser during development). Async by default with full ACID transactions. Growing adoption as a sqflite replacement for structured data without the relational complexity."},{t:"Performance Characteristics",d:"SharedPreferences: slowest for bulk data (writes XML/plist files). Hive: fastest for key-value reads (memory-mapped binary). SQLite: fast for indexed queries, slow for full table scans on large tables. The benchmark matters for offline-first apps loading large datasets on startup — choose Hive or Isar for read-heavy caching, SQLite/Floor for relational data."},{t:"Migration Strategies",d:"SharedPreferences: version keys (settings_v2). Hive: TypeAdapter versioning with @HiveField(index) — add fields at the end, never reorder. SQLite/Floor: database version number with migration callbacks. Floor: @migration class with SQL ALTER TABLE. Missing migrations are the #1 cause of production crashes on app updates."},{t:"Encrypted Storage",d:"For sensitive data (tokens, PII, medical records): flutter_secure_storage (iOS Keychain, Android Keystore) for small secrets. encrypted_shared_preferences for encrypted key-value. SQLCipher for encrypted SQLite databases. Hive supports encryption with HiveCipher — AES-CBC with a password. Never store tokens in plain SharedPreferences or Hive without encryption."},{t:"Local Database as Single Source of Truth",d:"In offline-first architecture, the local database IS the source of truth. The UI reads from DB, not from API responses directly. The sync layer writes API responses to DB, and the DB layer notifies the UI via streams. This pattern (popularized by SQLDelight on Android) is what makes apps feel snappy and work offline."},{t:"When to Use Multiple Storage Solutions",d:"Production apps commonly use multiple storage layers: flutter_secure_storage for tokens, SharedPreferences for simple settings, Hive for API response cache, SQLite/Floor for complex offline data. Each tool for its strength. The Repository pattern abstracts this so the domain layer never knows which storage is used."},{t:"Testing Local Storage",d:"Use in-memory implementations for unit tests: Hive with Hive.init(tempDir) in setUp(). Floor with an in-memory database (openDatabase(':memory:')). SharedPreferences with SharedPreferences.setMockInitialValues({}). Never test business logic against real platform storage in unit tests."}],whatIs:"Flutter provides multiple local persistence options: SharedPreferences (simple key-value), Hive (fast NoSQL), SQLite via sqflite/Floor (relational with SQL), and flutter_secure_storage (encrypted secrets). Choosing the right tool depends on data structure complexity, query requirements, performance needs, and sensitivity.",realWorld:"In an offline-first field survey app: flutter_secure_storage stores the user's auth token. SharedPreferences stores the user's app settings (locale, last sync time). Hive caches the list of survey templates downloaded from the server. Floor stores the actual survey responses with complex relational structure (survey → questions → answers) that needs SQL querying for reporting.",code:`// === SharedPreferences — Simple Settings ===
+import 'package:shared_preferences/shared_preferences.dart';
+
+class AppSettings {
+  static const _themeKey = 'theme_dark';
+  static const _localeKey = 'locale';
+  static const _onboardedKey = 'onboarding_v2_complete'; // Version your keys!
+
+  final SharedPreferences _prefs;
+  const AppSettings(this._prefs);
+
+  bool get isDarkMode => _prefs.getBool(_themeKey) ?? true;
+  Future<void> setDarkMode(bool value) => _prefs.setBool(_themeKey, value);
+
+  String get locale => _prefs.getString(_localeKey) ?? 'en';
+  Future<void> setLocale(String locale) => _prefs.setString(_localeKey, locale);
+
+  bool get isOnboarded => _prefs.getBool(_onboardedKey) ?? false;
+  Future<void> markOnboarded() => _prefs.setBool(_onboardedKey, true);
+}
+
+// === Hive — Fast NoSQL for Cached Objects ===
+import 'package:hive_flutter/hive_flutter.dart';
+
+// 1. Define a type-safe adapter
+@HiveType(typeId: 1)
+class CachedSurveyTemplate extends HiveObject {
+  @HiveField(0) late String id;
+  @HiveField(1) late String title;
+  @HiveField(2) late List<String> questionIds;
+  @HiveField(3) late DateTime cachedAt;
+  // RULE: add new fields at the END, never reorder existing ones!
+  @HiveField(4) String? version; // Added in v2 — safe to add
+}
+
+// 2. Setup in main()
+Future<void> setupHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(CachedSurveyTemplateAdapter());
+}
+
+// 3. Repository using Hive
+class SurveyTemplateCache {
+  static const _boxName = 'survey_templates';
+  late Box<CachedSurveyTemplate> _box;
+
+  Future<void> init() async => _box = await Hive.openBox(_boxName);
+
+  Future<void> saveTemplates(List<CachedSurveyTemplate> templates) async {
+    await _box.putAll({for (var t in templates) t.id: t});
+  }
+
+  List<CachedSurveyTemplate> getAll() => _box.values.toList();
+
+  CachedSurveyTemplate? getById(String id) => _box.get(id);
+
+  bool isStale(String id, Duration maxAge) {
+    final cached = _box.get(id);
+    if (cached == null) return true;
+    return DateTime.now().difference(cached.cachedAt) > maxAge;
+  }
+}
+
+// === Floor — Type-Safe SQLite ORM ===
+import 'package:floor/floor.dart';
+
+// 1. Entity
+@Entity(tableName: 'survey_responses')
+class SurveyResponseEntity {
+  @PrimaryKey(autoGenerate: false)
+  final String id;
+  final String surveyId;
+  final String questionId;
+  final String answer;
+  final int createdAtMs;
+  final bool isSynced;
+
+  const SurveyResponseEntity({
+    required this.id,
+    required this.surveyId,
+    required this.questionId,
+    required this.answer,
+    required this.createdAtMs,
+    this.isSynced = false,
+  });
+}
+
+// 2. DAO
+@dao
+abstract class SurveyResponseDao {
+  @Query('SELECT * FROM survey_responses WHERE survey_id = :surveyId ORDER BY created_at_ms ASC')
+  Future<List<SurveyResponseEntity>> getResponsesForSurvey(String surveyId);
+
+  @Query('SELECT * FROM survey_responses WHERE is_synced = 0')
+  Future<List<SurveyResponseEntity>> getUnsyncedResponses();
+
+  @Insert(onConflict: OnConflictStrategy.replace)
+  Future<void> insertResponse(SurveyResponseEntity response);
+
+  @Query('UPDATE survey_responses SET is_synced = 1 WHERE id = :id')
+  Future<void> markSynced(String id);
+
+  @transaction
+  Future<void> saveResponsesBatch(List<SurveyResponseEntity> responses) async {
+    for (final r in responses) await insertResponse(r);
+  }
+}
+
+// 3. Database with Migration
+@Database(version: 2, entities: [SurveyResponseEntity])
+abstract class AppDatabase extends FloorDatabase {
+  SurveyResponseDao get surveyResponseDao;
+
+  static final migration1to2 = Migration(1, 2, (database) async {
+    await database.execute('ALTER TABLE survey_responses ADD COLUMN is_synced INTEGER NOT NULL DEFAULT 0');
+  });
+}
+
+// 4. Initialize with migration
+Future<AppDatabase> buildDatabase() async {
+  return await $FloorAppDatabase
+      .databaseBuilder('app_database.db')
+      .addMigrations([AppDatabase.migration1to2])
+      .build();
+}
+
+// === flutter_secure_storage — Encrypted Secrets ===
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+class SecureTokenStorage {
+  final FlutterSecureStorage _storage;
+  static const _accessTokenKey = 'access_token';
+  static const _refreshTokenKey = 'refresh_token';
+
+  const SecureTokenStorage(this._storage);
+
+  Future<void> saveTokens({required String access, required String refresh}) async {
+    await Future.wait([
+      _storage.write(key: _accessTokenKey, value: access),
+      _storage.write(key: _refreshTokenKey, value: refresh),
+    ]);
+  }
+
+  Future<String?> getAccessToken() => _storage.read(key: _accessTokenKey);
+  Future<String?> getRefreshToken() => _storage.read(key: _refreshTokenKey);
+  Future<void> clearTokens() => _storage.deleteAll();
+}`,funFact:"SQLite is the most widely deployed database engine in the world — more deployments than all other databases combined. It's used in every iOS and Android device, every Chrome browser, every Firefox installation, and most aircraft. The Flutter app you ship stores data in the same database engine used by the space station.",quiz:[{q:"When should you choose SharedPreferences over Hive for local storage?",opts:["Always — SharedPreferences is the default Flutter storage","For simple, primitive settings (booleans, strings, ints) like dark mode and locale. Hive is overkill for scalar values but necessary for storing structured objects or collections","SharedPreferences is deprecated — always use Hive","Only on Android — SharedPreferences doesn't work on iOS"],ans:1},{q:"Why must you never reorder HiveField indices when updating a Hive TypeAdapter?",opts:["Hive requires alphabetical field ordering","Hive uses the @HiveField index to map binary data to fields. Reordering indices causes existing stored data to be read into wrong fields, corrupting all cached data for existing users who update the app","Reordering only affects debug builds","The Hive code generator enforces ordering automatically"],ans:1},{q:"What is the main advantage of Floor over raw sqflite?",opts:["Floor is faster than sqflite","Floor generates type-safe DAO implementations from annotations — eliminating raw SQL strings, providing compile-time query checking, and generating boilerplate. sqflite requires manual SQL with no type safety","Floor supports more SQL features than sqflite","sqflite is deprecated in favor of Floor"],ans:1},{q:"Where should auth tokens be stored in a production Flutter app?",opts:["SharedPreferences — it is the simplest option","Hive with HiveCipher encryption","flutter_secure_storage — it uses iOS Keychain and Android Keystore, which are hardware-backed encrypted stores designed for secrets","In memory only — never persist tokens to disk"],ans:2},{q:"What is a database migration and why is it critical for production apps?",opts:["A migration moves the database from one device to another","A migration updates the database schema when the app version changes. Without migrations, an app update that adds a new column will crash on existing user devices because the old schema doesn't match the new code","Migrations are only needed for server-side databases","Floor handles migrations automatically without any code"],ans:1},{q:"In an offline-first architecture, what should be the single source of truth for the UI?",opts:["The API response — always fetch fresh data before rendering","The in-memory state in the ViewModel","The local database — the UI reads from the DB, the sync layer writes API responses to the DB, and DB streams notify the UI","A combination of API and local data merged at render time"],ans:2},{q:"A production app update adds a new 'priority' column to a Hive TypeAdapter. What is the safe migration approach?",opts:["Delete and recreate the Hive box on update","Add @HiveField(N) where N is the next unused index, with a nullable or default value. Existing stored objects will have null for the new field, which must be handled gracefully in code","Increment the typeId of the HiveType annotation","Hive does not support schema evolution — switch to SQLite"],ans:1}],challenge:"Design the storage strategy for an offline-first field survey app with 3 user roles, survey templates, and survey responses. Specify: (1) what goes in flutter_secure_storage, (2) what goes in SharedPreferences, (3) what goes in Hive, (4) what goes in Floor, and (5) the migration strategy for adding a 'gps_coordinates' field to survey responses in v2.",resources:[{type:"docs",title:"SharedPreferences Package",url:"https://pub.dev/packages/shared_preferences",source:"pub.dev"},{type:"docs",title:"Hive Documentation",url:"https://docs.hivedb.dev/",source:"Hive Docs"},{type:"docs",title:"Floor Package",url:"https://pub.dev/packages/floor",source:"pub.dev"},{type:"docs",title:"flutter_secure_storage",url:"https://pub.dev/packages/flutter_secure_storage",source:"pub.dev"},{type:"docs",title:"Isar Database",url:"https://isar.dev/",source:"Isar Docs"}],eli5:"Storing data locally is like choosing where to keep notes at school. Sticky notes on your desk (SharedPreferences) — great for 'homework due Friday', terrible for a whole textbook. A fast binder with tabs (Hive) — good for structured notes, but you can't easily cross-reference between sections. A library with an index system (SQLite) — slow to set up, but you can find any book by author, topic, or year. Floor is SQLite but the librarian builds the index for you automatically.",codeWalkthrough:["AppSettings wraps SharedPreferences with typed getters/setters — no raw key strings in calling code","Version your SharedPreferences keys (_onboardedKey = 'onboarding_v2_complete') to allow resets on schema changes","@HiveType(typeId: 1) registers this class with Hive's type system — typeId must be globally unique","@HiveField indices map binary positions to Dart fields — never reorder, always add at the end","The Hive Box is typed — getById() returns CachedSurveyTemplate?, not dynamic","isStale() encapsulates cache freshness logic in the repository layer, not the ViewModel","@Entity maps the Dart class to a SQLite table — Floor generates the CREATE TABLE SQL","getUnsyncedResponses() is the key query for the sync engine — finds all responses pending upload","@transaction ensures batch inserts are atomic — either all succeed or all roll back","Migration from v1 to v2 adds a column with a default value — safe for existing users","saveTokens() uses Future.wait for parallel writes — both tokens written simultaneously","clearTokens() deletes ALL secure storage — used on logout to leave no credentials on device"],bugChallenge:{code:`@HiveType(typeId: 0)
+class UserSettings extends HiveObject {
+  @HiveField(2) late String theme;
+  @HiveField(0) late String locale;
+  @HiveField(1) late bool notificationsEnabled;
+}
+
+// v2 — adding a new field
+@HiveType(typeId: 0)
+class UserSettings extends HiveObject {
+  @HiveField(0) late String locale;
+  @HiveField(1) late bool notificationsEnabled;
+  @HiveField(2) late String theme;
+  @HiveField(3) late String? displayName; // new field
+}`,hint:"The indices changed between v1 and v2. What happens to existing stored data?",answer:"In v1, @HiveField(2) is 'theme'. In v2, @HiveField(2) is still 'theme' — OK. But the index ORDER in the source code changed (0,1,2 vs 2,0,1 in v1). Hive uses the numeric index value, not the declaration order, so this is actually safe IF the numeric values map to the same fields. However, this is a code readability and maintenance trap — always declare fields in index order to avoid confusion. The real risk: if a developer swapped indices (e.g., changed @HiveField(0) from 'locale' to 'theme'), existing stored data would silently assign the old 'locale' bytes to the 'theme' field, corrupting all user settings. Always add new fields at the next available index, never change existing field-to-index mappings."},difficulty:"intermediate",prereqs:[1,2]}
+,
+
+  {id:26,title:"Offline-First Architecture & Sync",subtitle:"The Most Differentiating Skill for Senior Flutter Engineers",analogy:"Offline-first is like designing a doctor who can treat patients without internet access. The doctor writes everything in a physical chart (local DB). When internet returns, the clinic syncs all charts to the central hospital system. If two doctors updated the same patient record offline, the hospital needs a rule for merging: last update wins, or a nurse manually reconciles — that's conflict resolution. Most apps assume broadband — offline-first apps assume the connection is always about to drop.",points:[{t:"Why Offline-First Is a Differentiator",d:"Most Flutter devs write apps that assume connectivity. Senior engineers in field apps (surveys, asset management, healthcare) know: the app must be fully functional with zero connectivity. Users in rural areas, basements, or aircraft expect the app to work. Offline-first is not a feature — it's a foundational architecture decision made on day 1."},{t:"The Offline-First Pattern",d:"Core pattern: UI reads exclusively from local DB. When online, sync layer fetches remote changes and writes to local DB and UI updates reactively via DB stream. Outgoing changes are queued locally and synced when connectivity returns. The UI never calls the network directly. Network is just a synchronization mechanism, not the data source."},{t:"Sync Queue (Outbox Pattern)",d:"All mutations (create/update/delete) are first written to a local sync queue (a DB table with status: pending/syncing/synced/failed). A background sync worker processes the queue when online: dequeues the next pending operation, calls the API, marks it synced on success, or marks it failed with retry count on error. This is the Outbox pattern from distributed systems."},{t:"Conflict Resolution Strategies",d:"When the same entity is modified offline by two different users or the same user on two devices, a conflict occurs. Strategies: (1) Last-Write-Wins (LWW): the most recent timestamp wins — simple, loses data. (2) Server-Wins: the server version always overwrites local — user loses offline work. (3) Client-Wins: local always wins — risk of overwriting others work. (4) Manual merge: show the user both versions and ask — correct for critical data. (5) CRDTs: mathematically merge without conflicts — complex but powerful."},{t:"CRDTs — Conflict-Free Replicated Data Types",d:"CRDTs are data structures that guarantee automatic merging without conflicts. A G-Counter CRDT for message read count always produces the correct total by merging two partial counts. A LWW-Register CRDT uses timestamps to resolve writes. CRDTs are used by Figma, Notion, and are the future of offline-first sync. Not trivial to implement, but understanding them signals senior-level systems thinking."},{t:"Connectivity Monitoring",d:"Use the connectivity_plus package to monitor network changes. But connectivity_plus only tells you if a network interface is available, not if the internet is reachable (airplane mode with WiFi connected is a false positive). Add an actual reachability check by pinging a lightweight endpoint like /health. Debounce connectivity events before triggering sync."},{t:"Optimistic UI with Rollback",d:"Show local changes immediately in the UI (optimistic). If the server rejects the change due to conflict or validation error, display an error and revert or offer resolution options. In a survey app, the user should never lose an answer they typed — even if sync fails, the answer stays in local storage and retries indefinitely until synced."},{t:"Delta Sync vs Full Sync",d:"Full sync downloads all server data from scratch. Simple, but expensive at scale. Delta sync tracks a last-synced-at timestamp per entity type. On sync, request only changes since that timestamp: GET /surveys?updated_after=2024-01-15T10:00:00Z. Far more efficient. For deletions, the server must maintain a soft delete with a deletedAt timestamp — hard deletes are invisible to delta sync."},{t:"Sync Engine Design",d:"A production sync engine has: (1) A SyncRepository that tracks last sync timestamps per entity, (2) A SyncWorker that runs periodically, (3) Per-entity sync strategies (full vs delta), (4) Conflict detection via version numbers or ETags, (5) Idempotent API calls (the same sync call can be made multiple times safely), (6) Sync status stream so the UI shows Syncing or Last synced 2 min ago."},{t:"NFC Asset Recovery Scenario",d:"In an NFC asset recovery app, field engineers scan NFC tags on equipment to log status in a basement with zero connectivity. Each scan creates a local asset inspection record. When they return to WiFi range, the sync queue uploads all inspections. If two engineers scanned the same asset in the same hour, the server uses last-write-wins with the server timestamp, and both clients reconcile to the server version on next sync."},{t:"Testing Offline Scenarios",d:"Mock connectivity status in tests using a FakeConnectivityChecker. Test that operations complete without network, sync queue accumulates pending operations, sync triggers on connectivity restore, conflicts are handled by the configured strategy, and the UI shows correct sync status. Never test offline behavior manually — it is too easy to miss edge cases."}],whatIs:"Offline-first architecture treats local storage as the primary data source. Network is used exclusively for synchronization, not for serving UI. A sync queue (Outbox pattern) stores outgoing changes and processes them when connectivity is restored. Conflict resolution strategies handle cases where the same data is modified in multiple places while offline.",realWorld:"An offline-first field survey app for rural healthcare workers: nurses complete patient surveys in remote villages with no connectivity. Each survey answer is written to Floor immediately. A SyncWorker monitors connectivity and when online, processes the sync queue by uploading completed surveys to the server. If two nurses updated the same patient record, the server detects the conflict via version numbers and the app surfaces a merge UI — the nurse's offline work is never silently lost.",code:`// === Outbox Pattern with Floor ===
+
+@Entity(tableName: 'sync_queue')
+class SyncOperation {
+  @PrimaryKey(autoGenerate: false)
+  final String id;           // UUID — idempotency key
+  final String entityType;   // 'survey_response', 'asset_inspection'
+  final String entityId;
+  final String operation;    // 'CREATE', 'UPDATE', 'DELETE'
+  final String payload;      // JSON-encoded entity
+  final String status;       // 'PENDING', 'SYNCING', 'SYNCED', 'FAILED'
+  final int retryCount;
+  final int createdAtMs;
+  const SyncOperation({
+    required this.id, required this.entityType, required this.entityId,
+    required this.operation, required this.payload,
+    this.status = 'PENDING', this.retryCount = 0, required this.createdAtMs,
+  });
+}
+
+// Repository: write locally first, enqueue for sync
+class SurveyResponseRepository {
+  final SurveyResponseDao _dao;
+  final SyncQueueDao _syncQueue;
+  final SurveyApi _api;
+
+  SurveyResponseRepository(this._dao, this._syncQueue, this._api);
+
+  Future<void> saveSurveyResponse(SurveyResponse response) async {
+    await _dao.insert(response.toEntity());
+    await _syncQueue.enqueue(SyncOperation(
+      id: response.id,
+      entityType: 'survey_response',
+      entityId: response.id,
+      operation: 'CREATE',
+      payload: jsonEncode(response.toJson()),
+      createdAtMs: DateTime.now().millisecondsSinceEpoch,
+    ));
+  }
+
+  // UI always reads from DB — never directly from API
+  Stream<List<SurveyResponse>> watchResponses(String surveyId) =>
+      _dao.watchBySurveyId(surveyId).map(
+        (entities) => entities.map((e) => e.toDomain()).toList());
+
+  Future<void> syncPendingResponses() async {
+    final pending = await _syncQueue.getPending('survey_response');
+    for (final op in pending) {
+      try {
+        await _syncQueue.markSyncing(op.id);
+        final response = SurveyResponse.fromJson(
+            jsonDecode(op.payload) as Map<String, dynamic>);
+        await _api.uploadResponse(response); // Server uses op.id as idempotency key
+        await _syncQueue.markSynced(op.id);
+      } on ConflictException catch (e) {
+        // Server wins strategy — update local with server version
+        await _dao.insert(e.serverVersion.toEntity());
+        await _syncQueue.markSynced(op.id);
+      } catch (e) {
+        final newCount = op.retryCount + 1;
+        if (newCount >= 5) {
+          await _syncQueue.markFailed(op.id, e.toString());
+        } else {
+          await _syncQueue.markPendingWithRetry(op.id, newCount);
+        }
+      }
+    }
+  }
+}
+
+// SyncWorker: trigger on connectivity restore
+class SyncWorker {
+  final SurveyResponseRepository _repository;
+  final Connectivity _connectivity;
+  StreamSubscription<ConnectivityResult>? _sub;
+
+  SyncWorker(this._repository, this._connectivity);
+
+  void start() {
+    _sub = _connectivity.onConnectivityChanged.listen((result) async {
+      if (result != ConnectivityResult.none) {
+        final reachable = await _checkReachability();
+        if (reachable) await _repository.syncPendingResponses();
+      }
+    });
+  }
+
+  Future<bool> _checkReachability() async {
+    try {
+      final result = await Dio().get('https://api.example.com/health',
+          options: Options(receiveTimeout: const Duration(seconds: 3)));
+      return result.statusCode == 200;
+    } catch (_) { return false; }
+  }
+
+  void dispose() => _sub?.cancel();
+}
+
+// Delta sync: fetch only changes
+Future<void> pullRemoteChanges(Dio dio, SurveyResponseDao dao, DateTime? lastSync) async {
+  final response = await dio.get('/survey-responses/delta', queryParameters: {
+    'updated_after': lastSync?.toIso8601String(),
+    'include_deleted': true,
+  });
+  final data = response.data as Map<String, dynamic>;
+  final updated = (data['updated'] as List).map((j) => SurveyResponseEntity.fromJson(j)).toList();
+  final deletedIds = (data['deleted'] as List).cast<String>();
+  await dao.upsertAll(updated);
+  await dao.deleteByIds(deletedIds);
+}`,funFact:"The most famous offline-first success story is Google Docs. When you lose internet mid-edit, your typing continues uninterrupted. Docs uses Operational Transformation (OT) — a form of CRDT — to merge everyone's offline edits without conflicts. The same core technique powers Figma's real-time collaboration. Understanding this pattern puts you in the same engineering conversation as Google and Figma architects.",quiz:[{q:"What is the Outbox pattern in offline-first sync architecture?",opts:["A pattern where the UI reads from an outgoing API buffer","A pattern where all local mutations are written to a pending operations queue first, then processed by a sync worker when connectivity is available — ensuring no data loss even if the app closes between write and sync","A pattern for sending push notifications when the app is offline","An outbox is the server-side message queue for delivering updates to clients"],ans:1},{q:"What is the critical problem with using connectivity_plus alone to detect online status?",opts:["connectivity_plus only works on Android","connectivity_plus tells you if a network interface is connected, not if the internet is reachable. A phone connected to a WiFi router with no internet reports connected — you need an actual reachability check against your API or a health endpoint","connectivity_plus is deprecated","connectivity_plus requires GPS permission"],ans:1},{q:"Why is a UUID used as the idempotency key for sync operations?",opts:["UUIDs are required by the REST standard","If the API call succeeds but the success response is lost due to network timeout after server processing, the client retries. The server uses the UUID to detect the duplicate and return success without re-processing — preventing double submissions for critical operations like payment or survey uploads","UUIDs make the sync queue queries faster","The server generates the UUID — the client sends a placeholder"],ans:1},{q:"What is Last-Write-Wins (LWW) conflict resolution and what data does it risk losing?",opts:["LWW is a form of CRDT that guarantees no data loss","LWW keeps the version with the most recent timestamp. It risks losing the other version entirely — if two field workers update the same patient record offline, one person's changes are silently discarded","LWW requires manual user intervention to resolve conflicts","LWW is only applicable to text documents"],ans:1},{q:"What is delta sync and why is it preferred over full sync at scale?",opts:["Delta sync downloads the entire dataset on every sync cycle","Delta sync fetches only records modified since the last sync timestamp. At scale, this reduces data transfer from megabytes to kilobytes per sync cycle and makes sync fast enough to run frequently","Delta sync is faster because it uses WebSockets","Delta sync is only possible with GraphQL subscriptions"],ans:1},{q:"How must soft deletes be implemented on the server for delta sync to handle deletions correctly?",opts:["Hard deletes are fine — clients detect missing records automatically","Records must be soft-deleted with a deleted_at timestamp set and the record retained in DB. Hard deletes are invisible to delta sync — the client never learns the record was deleted and the stale data persists locally indefinitely","Deletions must be sent as WebSocket events","The client should do a full sync whenever any deletion occurs"],ans:1},{q:"In a field survey app, a nurse completes a survey offline then a connectivity-triggered sync fails with a 409 Conflict. What should happen?",opts:["Silently discard the nurse's offline work and apply the server version","The app should crash and prompt the nurse to re-enter the survey","The nurse's local data must never be silently discarded. Show a conflict resolution UI or apply the configured strategy, but always preserve the offline work in local storage for retry or manual resolution","Automatically retry indefinitely without user notification"],ans:2}],challenge:"Design the full sync architecture for an NFC asset recovery app where field engineers may work offline for hours: (1) sketch the SyncQueue DB table schema, (2) describe the SyncWorker trigger conditions, (3) explain your conflict resolution strategy for two engineers who scanned the same asset offline, (4) describe how delta sync works when the engineer comes back online, (5) explain how you'd surface sync errors to the user without disrupting their workflow.",resources:[{type:"article",title:"Offline First App Architecture",url:"https://offlinefirst.org/",source:"Offline First Community"},{type:"docs",title:"connectivity_plus Package",url:"https://pub.dev/packages/connectivity_plus",source:"pub.dev"},{type:"article",title:"CRDTs: The Hard Parts — Martin Kleppmann",url:"https://martin.kleppmann.com/2020/07/06/crdt-hard-parts-hydra.html",source:"Martin Kleppmann"},{type:"article",title:"The Outbox Pattern",url:"https://microservices.io/patterns/data/transactional-outbox.html",source:"microservices.io"},{type:"docs",title:"WorkManager Flutter Plugin",url:"https://pub.dev/packages/workmanager",source:"pub.dev"}],eli5:"Imagine you are a doctor visiting patients in a village with no phone signal. You write everything in your notepad (local DB). When you drive back to town and get signal, your assistant (sync worker) calls the hospital and reads out all your notes (sync queue). If another doctor visited the same patient and wrote different notes, someone has to decide whose notes to keep — that is conflict resolution. Offline-first means you never stop writing just because you lost signal.",codeWalkthrough:["SyncOperation is a Floor entity — a DB table acts as the sync queue, surviving app restarts","UUID as operation id ensures the server can detect and ignore duplicate sync requests for idempotency","saveSurveyResponse writes to local DB AND enqueues for sync — never lose data","UI reads from the local DB stream — never directly from API — guaranteed offline consistency","syncPendingResponses processes the queue sequentially — idempotent API calls make retries safe","ConflictException triggers server-wins strategy — server version overwrites local for audit compliance","Retry cap of 5 prevents infinite loops on permanent server-side failures","SyncWorker listens to connectivity changes — sync triggers immediately on reconnect","_checkReachability does a real HTTP ping — not just interface detection from connectivity_plus","Delta sync sends lastSyncTime as query param — server returns only changes since that time"],bugChallenge:{code:`class SurveyRepository {
+  final Dio _dio;
+  final SurveyDao _dao;
+
+  SurveyRepository(this._dio, this._dao);
+
+  Future<List<Survey>> getSurveys() async {
+    try {
+      final response = await _dio.get('/surveys');
+      final surveys = (response.data as List)
+          .map((j) => Survey.fromJson(j))
+          .toList();
+      await _dao.insertAll(surveys.map((s) => s.toEntity()).toList());
+      return surveys;
+    } catch (e) {
+      return await _dao.getAll().then((entities) =>
+          entities.map((e) => e.toDomain()).toList());
+    }
+  }
+}`,hint:"This looks like offline support but has a fundamental offline-first architecture flaw.",answer:"The UI calls getSurveys() which tries the network first — this is network-first, not offline-first. Problems: (1) Cold start always waits for network, making the app feel slow even when cached data is available. (2) If the network succeeds, the UI only sees the returned list, not a live DB stream — subsequent offline reads and writes are not reflected reactively. (3) There is no sync queue — any local mutations are not tracked for upload. Fix: Return a DB stream via watchAll() so the UI always renders from local data. Have a separate sync layer that fetches from API and writes to DB. Add a sync queue for outgoing mutations. The UI should never wait for the network to render."},difficulty:"advanced",prereqs:[25,23,21]},
+
+  {id:27,title:"Firebase Essentials: Auth, FCM, Crashlytics, Firestore",subtitle:"Production Firebase Integration Every Flutter Dev Must Know",analogy:"Firebase is like hiring a team of specialists for your app: a security guard (Auth) who checks IDs at the door, a mail carrier (FCM) who delivers push notifications even when the app is closed, a black-box recorder (Crashlytics) that captures everything right before a crash, and a live spreadsheet (Firestore) that updates everyone's screen the moment a value changes.",points:[{t:"Firebase Auth — Multiple Flows",d:"Firebase Auth handles email/password, Google Sign-In, Apple Sign-In, phone OTP, and anonymous auth. Key concepts: User object persists across app restarts via FirebaseAuth.instance.currentUser. authStateChanges() stream rebuilds UI on sign-in/sign-out. idToken() provides a JWT for authenticating backend API calls. Refresh tokens automatically — the SDK handles expiry."},{t:"Auth State as the Router Guard",d:"Wrap your app router with an authStateChanges() StreamBuilder. If user is null, show onboarding/login. If user is non-null, show the authenticated app. With GoRouter: use redirect and refreshListenable (a ChangeNotifier wrapping the auth stream) to automatically redirect on auth state changes. This is the production pattern for auth-gated routing."},{t:"ID Token for Backend Authentication",d:"When your app uses a custom backend not just Firestore, pass Firebase's ID token to your API: final token = await user.getIdToken(). The backend verifies this token using the Firebase Admin SDK — no custom JWT infrastructure needed. The token auto-refreshes every hour — getIdToken() returns a cached token and refreshes it transparently."},{t:"FCM Push Notifications",d:"Firebase Cloud Messaging delivers push notifications in foreground, background, and terminated state. Three notification types: display notification (system handles UI), data message (app handles in background handler), notification plus data (both). Handle all three states: FirebaseMessaging.onMessage for foreground, FirebaseMessaging.onMessageOpenedApp for background tap, FirebaseMessaging.instance.getInitialMessage for terminated tap."},{t:"FCM Token Management",d:"Each device has an FCM token — a unique address for push delivery. Register the token to your backend on login. Refresh the token when FirebaseMessaging.instance.onTokenRefresh fires (tokens change when app is reinstalled or user clears data). Delete the token on logout. Without token refresh handling, users stop receiving notifications after reinstalling."},{t:"Crashlytics Integration",d:"Firebase Crashlytics captures fatal crashes automatically. For Flutter errors: FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError. For Dart async errors: PlatformDispatcher.instance.onError. Set user identifiers: crashlytics.setUserIdentifier(userId). Add custom keys: crashlytics.setCustomKey('workspace_id', workspaceId). Log breadcrumbs: crashlytics.log('User opened payment screen')."},{t:"Firestore Queries and Indexes",d:"Firestore is a NoSQL document database with real-time listeners. Key query patterns: collection().where().orderBy().limit() requires a composite index for where plus orderBy. Subcollection pattern for scalable data modeling. snapshots() returns a Stream — use StreamBuilder for real-time UI. Firestore charges per read — design your data model to minimize reads per screen load."},{t:"Firestore Security Rules",d:"Security rules run server-side and are the only real authorization layer for Firestore. Never trust client-side auth alone. Rules: allow read if request.auth.uid == resource.data.userId. For complex apps, Firestore rules become complex — test them with the Firebase emulator and the Rules Playground. Missing rules are the number one security vulnerability in Firebase-backed apps."},{t:"Remote Config for Feature Flags",d:"Firebase Remote Config delivers key-value parameters to the app without a store update. Use for: feature flags like enable_new_checkout, experiment parameters, emergency kill switches like maintenance_mode. Fetch with setConfigSettings(minimumFetchInterval) — in production, use a 1-hour interval. Apply with activate(). Check with getBool('enable_new_checkout')."},{t:"Firestore Offline Persistence",d:"Firestore has built-in offline persistence enabled by default on mobile. Reads return cached data when offline. Writes are queued and synced when online automatically. This gives basic offline support for free, but it is not the full offline-first architecture from Lesson 26 — there is no sync queue, no conflict resolution, and no control over sync behavior."},{t:"Firebase Emulator for Local Dev",d:"The Firebase Local Emulator Suite runs Auth, Firestore, FCM, and more locally. No billing, no production data risk. In Flutter: use dart-define to switch Firebase config between emulator and production. CI pipelines should run against the emulator. This is the production development workflow — never test FCM or Firestore against production during development."}],whatIs:"Firebase provides a suite of production services for Flutter apps: Firebase Auth for identity, FCM for push notifications, Crashlytics for crash reporting, Firestore for real-time cloud database, and Remote Config for feature flags. Understanding the correct integration patterns and security model is essential for production apps.",realWorld:"In a school management platform: Firebase Auth handles teacher/admin login with Google Sign-In and custom backend JWT via ID tokens. Crashlytics captures production crashes with userId and screenName breadcrumbs. FCM sends instant notifications when a student submits an assignment. Firestore powers the real-time attendance board with live document listeners. Remote Config enables/disables the beta AI feedback feature per school without an app store update.",code:`import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Crashlytics — catch all Flutter and Dart errors
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  // FCM background handler must be top-level
+  FirebaseMessaging.onBackgroundMessage(_fcmBackgroundHandler);
+  runApp(const App());
+}
+
+@pragma('vm:entry-point')
+Future<void> _fcmBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  await _processNotificationData(message.data);
+}
+
+// Auth with GoRouter
+class AuthNotifier extends ChangeNotifier {
+  final FirebaseAuth _auth;
+  User? _currentUser;
+  StreamSubscription<User?>? _sub;
+
+  AuthNotifier(this._auth) {
+    _sub = _auth.authStateChanges().listen((user) {
+      _currentUser = user;
+      notifyListeners();
+    });
+  }
+
+  bool get isAuthenticated => _currentUser != null;
+  Future<String?> getIdToken() => _currentUser?.getIdToken();
+  Future<void> signOut() => _auth.signOut();
+
+  @override
+  void dispose() { _sub?.cancel(); super.dispose(); }
+}
+
+// FCM Token Management
+class NotificationService {
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  final UserApi _api;
+  NotificationService(this._api);
+
+  Future<void> initialize() async {
+    final settings = await _messaging.requestPermission(alert: true, badge: true, sound: true);
+    if (settings.authorizationStatus != AuthorizationStatus.authorized) return;
+
+    final token = await _messaging.getToken();
+    if (token != null) await _api.registerFcmToken(token);
+
+    _messaging.onTokenRefresh.listen((newToken) => _api.registerFcmToken(newToken));
+    FirebaseMessaging.onMessage.listen(_handleForeground);
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+    final initial = await _messaging.getInitialMessage();
+    if (initial != null) _handleTap(initial);
+  }
+
+  void _handleForeground(RemoteMessage message) =>
+      debugPrint('Foreground: \${message.notification?.title}');
+
+  void _handleTap(RemoteMessage message) {
+    final screen = message.data['screen'] as String?;
+    if (screen != null) router.push(screen);
+  }
+}
+
+// Firestore Real-Time Query
+class AttendanceRepository {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Stream<List<AttendanceRecord>> watchAttendance({
+    required String classId, required DateTime date,
+  }) {
+    return _db.collection('classes').doc(classId)
+        .collection('attendance')
+        .where('date', isEqualTo: Timestamp.fromDate(date))
+        .orderBy('studentName')
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => AttendanceRecord.fromDoc(d)).toList());
+  }
+
+  Future<void> markAttendance({
+    required String classId, required String studentId, required bool present,
+  }) async {
+    await _db.collection('classes').doc(classId)
+        .collection('attendance').doc(studentId)
+        .set({
+          'studentId': studentId, 'present': present,
+          'markedAt': FieldValue.serverTimestamp(),
+          'markedBy': FirebaseAuth.instance.currentUser?.uid,
+        }, SetOptions(merge: true));
+  }
+}
+
+// Remote Config Feature Flags
+class FeatureFlagService {
+  final FirebaseRemoteConfig _rc = FirebaseRemoteConfig.instance;
+
+  Future<void> initialize() async {
+    await _rc.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(hours: 1),
+    ));
+    await _rc.setDefaults({'enable_ai_feedback': false, 'max_class_size': 40});
+    await _rc.fetchAndActivate();
+  }
+
+  bool get isAiFeedbackEnabled => _rc.getBool('enable_ai_feedback');
+}`,funFact:"FCM delivers over 400 billion messages per day across Android, iOS, and web. It is the backbone of push notifications for most of the world's apps. When you send a push notification from your app, it travels through Google's infrastructure, which maintains persistent connections to every Android device on Earth — this is why push notifications arrive even when the app is completely closed.",quiz:[{q:"What is the purpose of FirebaseAuth.instance.authStateChanges() and how should it drive routing?",opts:["It is called once on app launch to check if the user is logged in","It is a persistent stream that emits User? whenever auth state changes. Use it with a GoRouter refreshListenable (ChangeNotifier wrapping the stream) to automatically redirect between login and home routes on sign-in and sign-out","It replaces the need for a router entirely","It only fires on login, not on token expiry or logout"],ans:1},{q:"What happens if you do not handle FirebaseMessaging.instance.onTokenRefresh?",opts:["Nothing — FCM tokens never change","After a user reinstalls the app or clears app data, a new FCM token is issued. Without refreshing it on your backend, that user's device can no longer receive push notifications until they re-log in and re-register","The old token continues working indefinitely","The app crashes when the token changes"],ans:1},{q:"Why must the FCM background message handler be a top-level function marked @pragma('vm:entry-point')?",opts:["It is just a convention — any function works","FCM background handling runs in a separate Dart isolate. Top-level functions can be invoked from a new isolate. Instance methods or closures are not accessible across isolate boundaries. The pragma prevents tree-shaking from removing this function","It makes the handler run faster","Background handlers are not supported in Flutter"],ans:1},{q:"What is the most critical security mistake in a Firestore-backed Flutter app?",opts:["Using real-time listeners instead of one-time reads","Forgetting to index compound queries","Leaving Firestore security rules open (allow read, write: if true) or relying solely on client-side auth checks instead of server-side security rules. Any user can access the Firebase console or use the REST API to read/write all data if rules are not enforced","Fetching too much data per query"],ans:2},{q:"What is Firebase Remote Config used for and why is it preferable to hardcoding feature flags?",opts:["Remote Config replaces the app's backend API","Remote Config delivers dynamic configuration values (feature flags, experiment parameters) without requiring an app store update. This allows enabling/disabling features for specific users, running A/B tests, and emergency kill switches — all without redeploying the app","Remote Config is a caching layer for Firestore","Remote Config only works when the app is in the foreground"],ans:1},{q:"When calling FirebaseAuth.instance.currentUser?.getIdToken(), when does a network call actually happen?",opts:["On every call — getIdToken() always fetches a fresh token","Only when the cached token is expired (tokens expire after 1 hour). The SDK caches the token and returns it immediately if still valid. Pass force: true to always refresh","getIdToken() is synchronous and never makes a network call","The token is fetched only once per session"],ans:1},{q:"What Crashlytics setup is needed to catch async Dart errors not just Flutter framework errors?",opts:["FlutterError.onError alone catches all Dart errors","PlatformDispatcher.instance.onError must be set in addition to FlutterError.onError. FlutterError catches Flutter framework errors; PlatformDispatcher.onError catches errors in async zones and non-framework Dart code. Both are required for complete coverage","Crashlytics catches all errors automatically without any setup","runZonedGuarded is the only way to catch async errors in Flutter"],ans:1}],challenge:"Set up complete Firebase integration for a school management app: (1) initialize Firebase with Crashlytics error handling in main(), (2) create an AuthNotifier ChangeNotifier that exposes the auth state stream, (3) set user context in Crashlytics on login, (4) register and refresh the FCM token, (5) create a Firestore stream query for real-time class announcements, (6) add a Remote Config feature flag for a new parent portal feature.",resources:[{type:"docs",title:"FlutterFire Documentation",url:"https://firebase.flutter.dev/",source:"FlutterFire"},{type:"docs",title:"Firebase Crashlytics Flutter",url:"https://firebase.flutter.dev/docs/crashlytics/overview",source:"FlutterFire"},{type:"docs",title:"FCM Flutter Setup",url:"https://firebase.flutter.dev/docs/messaging/overview",source:"FlutterFire"},{type:"docs",title:"Firestore Security Rules",url:"https://firebase.google.com/docs/firestore/security/get-started",source:"Firebase Official"},{type:"docs",title:"Firebase Remote Config Flutter",url:"https://firebase.flutter.dev/docs/remote-config/overview",source:"FlutterFire"}],eli5:"Firebase is like a set of superpowers for your app. Auth is a bouncer who remembers faces — once someone logs in, they stay logged in. Crashlytics is a spy camera that takes a photo right before the app crashes. FCM is a postal system that delivers a letter to someone's phone even when they are not home. Firestore is a whiteboard that everyone in the room can see update in real time.",codeWalkthrough:["Firebase.initializeApp must complete before any Firebase service is used","FlutterError.onError catches Flutter widget tree errors and framework exceptions","PlatformDispatcher.instance.onError catches errors in async code outside the Flutter framework","FCM background handler must be top-level — it runs in a separate isolate with no access to class state","AuthNotifier wraps authStateChanges() in a ChangeNotifier — GoRouter uses this for reactive routing","getIdToken() returns a cached JWT, refreshing automatically when expired","requestPermission on iOS shows the system dialog — check the result before registering the token","onTokenRefresh fires when FCM assigns a new token — always update your backend","where plus orderBy requires a composite Firestore index — create it in the Firebase Console","FieldValue.serverTimestamp() uses the Firestore server time — avoids clock skew issues","minimumFetchInterval of 1 hour prevents excessive Remote Config fetches"],bugChallenge:{code:`Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const App());
+}
+
+class NotificationSetup extends StatefulWidget { }
+class _State extends State<NotificationSetup> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onBackgroundMessage((message) async {
+      print('Background: \${message.notification?.title}');
+    });
+  }
+}`,hint:"Two issues: missing crash handler setup and an invalid background message handler location.",answer:"Bug 1: No Crashlytics setup — FlutterError.onError and PlatformDispatcher.instance.onError are not set, meaning crash reports are lost. Add both in main() before runApp(). Bug 2: FirebaseMessaging.onBackgroundMessage() must be called with a top-level function (not a lambda or method), and it must be set before runApp() — not inside a StatefulWidget's initState(). The background handler runs in a separate isolate where class instances are not accessible. Move to main() with a top-level @pragma('vm:entry-point') function."},difficulty:"intermediate",prereqs:[23]},
+
+  {id:28,title:"Caching, Pagination, Lazy Loading & List Performance",subtitle:"Building Lists That Scale to Tens of Thousands of Items",analogy:"Caching is like a chef's mise en place — prep ingredients before service starts so orders are instant. Pagination is like a library's online catalog that shows 20 books per page instead of all 100,000 at once. Lazy loading is like a conveyor sushi belt — new plates only appear as the current ones are taken. ListView.builder is a clever waiter who only sets the table for seats that are currently visible — not all 10,000 seats in the stadium.",points:[{t:"Caching Strategies — Three Levels",d:"Memory cache: Map or LRU cache in the repository (fastest, lost on app kill). Disk cache: Hive, SQLite, or HTTP cache (persists across sessions). HTTP cache: ETag/Last-Modified headers with dio_cache_interceptor (server validates freshness). Stack them: memory first, then disk, then network. Return memory-cached data immediately while revalidating from network in background — stale-while-revalidate."},{t:"Stale-While-Revalidate",d:"Show stale cached data immediately, then silently fetch fresh data and update the UI. This gives instant perceived performance. Implementation: emit cached data first, then await network response, then emit fresh data. Riverpod's FutureProvider with keepAlive implements this naturally. Users see content instantly instead of a spinner."},{t:"ListView.builder vs ListView",d:"ListView renders all children at once — OK for fewer than 20 items. ListView.builder creates children lazily on demand — only visible items exist in memory. For 100+ items, ListView is a performance disaster. Always use ListView.builder with itemCount and itemBuilder. The builder is called only for items in or near the viewport."},{t:"Infinite Scroll Implementation",d:"Track: current cursor, isLoading, hasMore. In the ScrollController listener: if scroll position is greater than 80% of max extent and not loading and hasMore, load next page. Append new items to the list. Show a loading indicator at the bottom while fetching. Debounce the scroll listener to avoid double-fetches."},{t:"Cursor vs Offset Pagination",d:"Offset: GET /items?page=2&limit=20. Simple but unstable — if items are added or deleted during pagination, items are skipped or duplicated. Cursor: GET /items?after=cursor123&limit=20. Server returns next cursor. Stable during live data changes. Use cursor for real-time feeds (chat, activity), offset for static or slowly-changing data."},{t:"Image Caching with cached_network_image",d:"cached_network_image downloads images once and caches them to disk. Use CachedNetworkImage with placeholder and errorWidget. For lists with many images: set memCacheWidth and memCacheHeight to decode at display size, not full resolution. A 4K image decoded at 4K resolution for a 100x100 avatar wastes 48MB of memory."},{t:"Image Memory Management",d:"Each decoded image in Flutter occupies GPU memory proportional to its dimensions (width x height x 4 bytes). A full-screen 3000x4000 image uses 45.7MB. In a list of 50 such images, that is 2.3GB — a crash. Solutions: CachedNetworkImage memCacheWidth/memCacheHeight, ResizeImage for in-memory downsampling, evictFromCache() for manual cache management."},{t:"RepaintBoundary for List Items",d:"Wrap complex list items in RepaintBoundary. This creates a separate rendering layer — when one item animates or changes, only that item's layer is repainted, not the entire list. In a chat app with animated delivered indicators, RepaintBoundary prevents the entire message list from repainting on each animation frame."},{t:"const Constructors in Lists",d:"List items that do not change should use const constructors. Flutter's element diffing skips rebuilding const widgets. In a long list with a mix of static content like profile picture and username, and dynamic content like timestamp, const constructors on the static parts reduce rebuild cost significantly."},{t:"SliverList and CustomScrollView",d:"For complex scrollable layouts (collapsible app bar plus tabs plus list), use CustomScrollView with Slivers. SliverList provides equivalent lazy loading to ListView.builder, along with SliverGrid and SliverAppBar. Slivers coordinate scrolling across multiple scrollable regions without nested scroll conflicts."},{t:"Keyed Widgets for Efficient Diffing",d:"In animated lists or lists where items reorder, provide a ValueKey(item.id) to each list item. Flutter's diffing algorithm uses keys to match old and new widget trees — without keys, it diffs by position and may animate incorrectly or rebuild more widgets than needed."}],whatIs:"Production list performance requires: ListView.builder for lazy rendering, cursor-based pagination for stable infinite scroll, multi-level caching (memory to disk to network), correct image memory management, and strategic use of RepaintBoundary and const constructors. These details separate a smooth 60fps list from one that janks on every scroll.",realWorld:"In a SaaS collaboration app's activity feed with thousands of messages: ListView.builder lazily renders only visible messages. cached_network_image with memCacheWidth caches avatars at display resolution. Cursor pagination loads 30 messages per page, stable even as new messages arrive. RepaintBoundary wraps each message bubble so typing animations do not repaint the whole list. The result: consistent 60fps scroll on a 5-year-old mid-range phone.",code:`// Multi-Level Cache — Stale-While-Revalidate
+class UserRepository {
+  final Map<String, UserProfile> _memCache = {};
+  final UserLocalCache _diskCache;
+  final UserApi _api;
+
+  UserRepository(this._diskCache, this._api);
+
+  Stream<UserProfile?> watchUser(String userId) async* {
+    if (_memCache.containsKey(userId)) yield _memCache[userId];
+    final diskCached = await _diskCache.get(userId);
+    if (diskCached != null) {
+      _memCache[userId] = diskCached;
+      yield diskCached;
+    }
+    try {
+      final fresh = await _api.getUser(userId);
+      _memCache[userId] = fresh;
+      await _diskCache.save(userId, fresh);
+      yield fresh;
+    } catch (e) {
+      if (diskCached == null && !_memCache.containsKey(userId)) yield null;
+    }
+  }
+}
+
+// Infinite Scroll ViewModel with cursor pagination
+class MessageListViewModel extends StateNotifier<MessageListState> {
+  final MessageRepository _repo;
+  bool _isFetching = false;
+
+  MessageListViewModel(this._repo) : super(const MessageListState());
+
+  Future<void> loadInitial(String channelId) async {
+    state = state.copyWith(isLoading: true);
+    final page = await _repo.getMessages(channelId: channelId, limit: 30);
+    state = state.copyWith(messages: page.items, nextCursor: page.nextCursor,
+        hasMore: page.hasMore, isLoading: false);
+  }
+
+  Future<void> loadMore() async {
+    if (_isFetching || !state.hasMore || state.nextCursor == null) return;
+    _isFetching = true;
+    state = state.copyWith(isLoadingMore: true);
+    try {
+      final page = await _repo.getMessages(channelId: state.channelId!,
+          cursor: state.nextCursor, limit: 30);
+      state = state.copyWith(
+        messages: [...state.messages, ...page.items],
+        nextCursor: page.nextCursor, hasMore: page.hasMore, isLoadingMore: false);
+    } finally { _isFetching = false; }
+  }
+}
+
+// Infinite Scroll UI
+class MessageListView extends ConsumerStatefulWidget {
+  final String channelId;
+  const MessageListView({required this.channelId, super.key});
+  @override ConsumerState<MessageListView> createState() => _State();
+}
+class _State extends ConsumerState<MessageListView> {
+  late final ScrollController _scroll;
+  @override
+  void initState() {
+    super.initState();
+    _scroll = ScrollController()..addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ref.read(messageListProvider.notifier).loadInitial(widget.channelId));
+  }
+  void _onScroll() {
+    final pos = _scroll.position;
+    if (pos.pixels >= pos.maxScrollExtent * 0.8)
+      ref.read(messageListProvider.notifier).loadMore();
+  }
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(messageListProvider);
+    return ListView.builder(
+      controller: _scroll,
+      itemCount: state.messages.length + (state.isLoadingMore ? 1 : 0),
+      itemBuilder: (ctx, i) {
+        if (i == state.messages.length)
+          return const Center(child: CircularProgressIndicator());
+        return RepaintBoundary(
+          key: ValueKey(state.messages[i].id),
+          child: MessageTile(message: state.messages[i]),
+        );
+      },
+    );
+  }
+  @override void dispose() { _scroll.dispose(); super.dispose(); }
+}
+
+// Optimized image loading
+class UserAvatar extends StatelessWidget {
+  final String imageUrl;
+  final double size;
+  const UserAvatar({required this.imageUrl, this.size = 40, super.key});
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+    return CachedNetworkImage(
+      imageUrl: imageUrl, width: size, height: size,
+      memCacheWidth: (size * dpr).round(),
+      memCacheHeight: (size * dpr).round(),
+      imageBuilder: (ctx, ip) => CircleAvatar(backgroundImage: ip, radius: size/2),
+      placeholder: (ctx, url) => CircleAvatar(radius: size/2,
+          backgroundColor: Colors.grey[300],
+          child: const CircularProgressIndicator(strokeWidth: 2)),
+      errorWidget: (ctx, url, e) => CircleAvatar(radius: size/2,
+          child: const Icon(Icons.person)),
+    );
+  }
+}`,funFact:"Flutter's ListView.builder is so efficient that it renders a list of 1,000,000 items with the same memory footprint as 20 items — only the roughly 10 visible items exist in memory at any time. This is the same principle behind virtual DOM in React and RecyclerView in Android. You do not need all items in memory, only the ones the user can currently see.",quiz:[{q:"Why should you use ListView.builder instead of ListView for a list with 200 items?",opts:["ListView.builder is easier to code","ListView renders all 200 children into memory at once. ListView.builder lazily builds only visible items (typically 10-15), keeping memory usage constant regardless of total list size","ListView.builder supports more item types","ListView does not support ScrollController"],ans:1},{q:"What is the stale-while-revalidate caching strategy?",opts:["Always fetch fresh data and discard the cache","Show cached data immediately for instant perceived performance, then fetch fresh data in the background and update the UI when it arrives — combining fast startup with data freshness","Never show cached data — it may be outdated","Only use the cache when the network is unavailable"],ans:1},{q:"What problem does setting memCacheWidth and memCacheHeight on CachedNetworkImage solve?",opts:["It speeds up the network download","Images are decoded in memory at their full pixel dimensions by default. A 4K image decoded at full resolution for a 40x40 avatar wastes 48MB. memCacheWidth and memCacheHeight tell the decoder to downsample to display dimensions, reducing memory usage by orders of magnitude","It prevents placeholder flickering","It enables progressive image loading"],ans:1},{q:"Why is cursor-based pagination preferable to offset-based for a real-time activity feed?",opts:["Cursor pagination is supported by more APIs","With offset pagination, inserting or deleting items during scrolling shifts all positions — page 2 may repeat or skip items. Cursor pagination uses a stable position marker unaffected by concurrent inserts/deletes","Cursor pagination loads more items per request","Offset pagination requires client-side sorting"],ans:1},{q:"What does wrapping a list item in RepaintBoundary do?",opts:["It prevents the item from being garbage collected","It creates a separate render layer. When the item changes (e.g. an animation), only its layer is repainted — the rest of the list is not touched. Without it, animating a delivered indicator on one message would repaint the entire message list","It caches the widget snapshot to disk","It prevents the widget from being rebuilt during parent rebuilds"],ans:1},{q:"You have a list where items can reorder. What must you add to ensure correct animations?",opts:["A ScrollController","ValueKey(item.id) on each list item. Without keys, Flutter's diffing algorithm matches widgets by position — reordering causes wrong animations and potentially rebuilds more widgets than needed. Keys allow Flutter to track widgets by identity across reorders","A RepaintBoundary on the entire list","setState() must be called manually after reordering"],ans:1},{q:"What is the guard condition that prevents double-fetching in an infinite scroll implementation?",opts:["A lock file in local storage","A boolean flag (isLoadingMore or _isFetching) that is checked before initiating a new page fetch. Without it, rapid scrolling can trigger multiple concurrent fetch calls for the same page, causing duplicate items to appear in the list","A debounce timer on the scroll listener","The hasMore flag alone prevents double-fetching"],ans:1}],challenge:"Build a production-grade infinite scroll list for a real-time message feed: (1) implement cursor pagination with a 30-item page size, (2) trigger next page load at 80% scroll depth with a double-fetch guard, (3) show a bottom loading indicator while fetching, (4) use RepaintBoundary and ValueKey on each item, (5) implement memory plus disk caching for user avatars with memCacheWidth optimization.",resources:[{type:"docs",title:"ListView.builder Flutter Docs",url:"https://api.flutter.dev/flutter/widgets/ListView/ListView.builder.html",source:"Flutter Official"},{type:"docs",title:"cached_network_image Package",url:"https://pub.dev/packages/cached_network_image",source:"pub.dev"},{type:"docs",title:"CustomScrollView and Slivers",url:"https://docs.flutter.dev/ui/layout/scrolling/slivers",source:"Flutter Official"},{type:"docs",title:"Flutter Performance Best Practices",url:"https://docs.flutter.dev/perf/best-practices",source:"Flutter Official"},{type:"article",title:"RepaintBoundary Flutter Docs",url:"https://api.flutter.dev/flutter/widgets/RepaintBoundary-class.html",source:"Flutter Official"}],eli5:"Imagine a very long conveyor belt of sushi (your list). A lazy chef (ListView.builder) only makes the sushi plates that are currently in front of customers — not all 500 plates for the day. When a customer finishes and moves on, the chef immediately recycles that plate for the next order. Caching is like keeping popular sushi in the fridge so you do not have to cook it from scratch every time. That is why your list is fast.",codeWalkthrough:["watchUser emits memory cache, then disk cache, then fresh network data — three emissions for instant + fresh UX","Stale-while-revalidate: the UI receives up to three values — each one fresher than the last","loadMore guard: check _isFetching, hasMore, AND nextCursor before fetching — all three required","State uses cursor not page number — stable pagination even as new messages arrive","Scroll 80% threshold triggers next page — users get a seamless experience without reaching the end","RepaintBoundary with ValueKey: identity-tracked separate layer per message","memCacheWidth uses devicePixelRatio to decode at physical pixels — correct for high-DPI screens","_isFetching is reset in finally — always released even if the fetch throws"],bugChallenge:{code:`ListView.builder(
+  itemCount: messages.length,
+  itemBuilder: (context, index) {
+    final message = messages[index];
+    return Column(
+      children: [
+        Text(message.content),
+        CachedNetworkImage(
+          imageUrl: message.senderAvatarUrl,
+          width: 40, height: 40,
+        ),
+      ],
+    );
+  },
+)`,hint:"Two performance issues: one with image memory and one with layout.",answer:"Bug 1: CachedNetworkImage has no memCacheWidth or memCacheHeight set. If senderAvatarUrl points to a high-resolution image (e.g. 500x500), it will be decoded at full resolution for a 40x40 display — wasting 75x more memory than needed. In a list of 50 messages, this can cause memory pressure and crashes on low-RAM devices. Fix: add memCacheWidth and memCacheHeight proportional to display size and devicePixelRatio. Bug 2: No RepaintBoundary or ValueKey on list items — any state change that causes a list item to rebuild will not be properly isolated in the layer tree, potentially triggering repaints of adjacent items during animations. Add RepaintBoundary(key: ValueKey(message.id), child: ...)."},difficulty:"intermediate",prereqs:[23,25]},
+
+  {id:29,title:"Flutter Performance Profiling & DevTools",subtitle:"Finding and Fixing Performance Problems Systematically",analogy:"DevTools is like a flight data recorder for your Flutter app. The Performance overlay is the cockpit warning light — it tells you something is wrong. The Timeline is the full black-box recording — every frame, every function call, every GPU command. Finding a jank source without DevTools is like diagnosing a car problem by listening to the engine noise. DevTools lets you pop the hood, see every moving part, and find the exact cylinder that is misfiring.",points:[{t:"The 16ms Frame Budget",d:"At 60fps, you have exactly 16.67ms per frame (8.33ms at 120fps). Split between two threads: the UI thread (Dart code, widget rebuilds, layout) and the Raster thread (GPU rendering). If either thread exceeds the budget, a frame is dropped — users see jank. The Performance overlay shows both thread timings with red/green bars."},{t:"Performance Overlay",d:"Enable with MaterialApp(showPerformanceOverlay: true). The top graph shows GPU/raster thread time. The bottom shows UI thread time. Red bars mean the frame took too long. Green bars are within budget. Use this as a quick first check during development — it gives immediate visual feedback without opening DevTools."},{t:"Flutter DevTools Timeline",d:"DevTools Timeline (Performance tab) shows a flame graph of every frame. Zoom into a janky frame to see which functions took the most time. Look for: long widget build() calls, heavy layout computation, synchronous I/O on the UI thread, or large image decoding. The Timeline is the most valuable profiling tool Flutter provides."},{t:"Widget Rebuild Tracking",d:"In DevTools: Highlight Repaints shows yellow flickering on widgets that repaint, and Track Widget Rebuilds counts rebuilds in Flutter Inspector. Also use debugProfileBuildsEnabled and debugProfilePaintsEnabled flags. The goal: identify widgets rebuilding more often than necessary. A well-optimized app rebuilds only what changed."},{t:"Identifying Jank Sources",d:"Common jank causes: (1) Rebuilding a large widget tree on every state change — fix with granular state management. (2) Synchronous work on the UI thread such as JSON parsing of large responses — move to a compute() isolate. (3) Shader compilation jank (first-time frame drops) — fix with Impeller. (4) Large image decoding on UI thread — use ResizeImage."},{t:"compute() and Isolates for Heavy Work",d:"Any operation taking more than 16ms on the UI thread causes a dropped frame. Use compute(function, data) to run heavy work in a background isolate: final parsed = await compute(parseJsonList, rawJsonString). Dart isolates have no shared memory — data is serialized/deserialized on transfer (use simple data structures for lowest overhead)."},{t:"Frame Analysis Methodology",d:"Systematic approach: (1) Enable Performance overlay, scroll and interact to find red frames. (2) Open DevTools Timeline, record 5 seconds of the janky interaction. (3) Find the worst frame, zoom in on the flame graph. (4) Identify the longest running function — is it in build(), layout(), or rasterization? (5) Apply the targeted fix, re-profile to confirm improvement."},{t:"Memory Profiling",d:"DevTools Memory tab shows heap size over time. Look for: linear growth (memory leak), large peaks (huge allocations), objects not being garbage collected. Use the Allocation Tracker to find which types are accumulating. Common leaks: StreamSubscription not cancelled, Timer not cancelled, ScrollController not disposed."},{t:"CPU Profiling",d:"DevTools CPU Profiler records function call stacks. Run in profile mode (flutter run --profile) — debug mode is too slow for accurate profiling. The flame chart shows which Dart functions consume the most CPU. Look for unexpected hot paths — a supposedly O(n) operation that is actually O(n squared)."},{t:"Flutter Inspector — Widget Tree",d:"DevTools Inspector shows the live widget tree. Use it to: verify widget depth (deep trees are slower to build), find unexpected widget instances, check box constraints to debug layout issues, and inspect padding and margin. A 30-level deep widget tree for a simple card is a red flag."},{t:"Performance Testing in CI",d:"flutter drive with integration tests can catch performance regressions. Use FrameTimingSummarizer to assert that 99th percentile frame times stay below a threshold. This prevents regressions from landing silently. Combine with screenshot testing for comprehensive quality gates."}],whatIs:"Flutter DevTools provides systematic tools for diagnosing performance problems: the Performance overlay for quick visual feedback, the Timeline for frame-by-frame analysis, Rebuild Tracker for identifying unnecessary rebuilds, and Memory/CPU profilers for deep investigation. Profile mode eliminates debug overhead for accurate measurements.",realWorld:"In a school management platform with 500-student class lists, the initial implementation had jank on scroll. DevTools Timeline showed 35ms frames caused by two issues: (1) each list item decoded a 500x500 student photo at full resolution — fixed with memCacheWidth, (2) the ViewModel was rebuilding the entire 500-item list on any single student's data change — fixed by selecting per-student state with Riverpod. Post-fix: consistent 8ms frames.",code:`import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer;
+
+// Performance Overlay — only in profile builds
+class App extends StatelessWidget {
+  const App({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      showPerformanceOverlay: kProfileMode,
+      home: const HomeScreen(),
+    );
+  }
+}
+
+// compute() for heavy JSON parsing
+List<User> _parseUsers(String jsonString) {
+  final List<dynamic> jsonList = jsonDecode(jsonString) as List;
+  return jsonList.map((j) => User.fromJson(j as Map<String, dynamic>)).toList();
+}
+
+class UserRepository {
+  final Dio _dio;
+  UserRepository(this._dio);
+
+  Future<List<User>> getUsers() async {
+    final response = await _dio.get('/users');
+    final rawJson = response.data.toString();
+    // Move JSON parsing off the UI thread
+    return compute(_parseUsers, rawJson);
+  }
+}
+
+// Granular state selection to minimize rebuilds
+// BAD: rebuilds every time ANY field in WorkspaceState changes
+class BadHeader extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(workspaceProvider);
+    return Text(state.name);
+  }
+}
+
+// GOOD: only rebuilds when name specifically changes
+class GoodHeader extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final name = ref.watch(workspaceProvider.select((s) => s.name));
+    return Text(name);
+  }
+}
+
+// Custom Timeline markers for DevTools
+Future<void> loadDashboard() async {
+  developer.Timeline.startSync('LoadDashboard');
+  try {
+    developer.Timeline.startSync('FetchUsers');
+    final users = await userRepository.getUsers();
+    developer.Timeline.finishSync();
+
+    developer.Timeline.startSync('BuildState');
+    final dashboardState = DashboardState(users: users);
+    developer.Timeline.finishSync();
+
+    state = dashboardState;
+  } finally {
+    developer.Timeline.finishSync();
+  }
+}
+
+// RepaintBoundary for isolated list item repaints
+class StudentListItem extends StatelessWidget {
+  final Student student;
+  const StudentListItem({required this.student, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      child: ListTile(
+        leading: CachedNetworkImage(
+          imageUrl: student.avatarUrl,
+          memCacheWidth: 80, memCacheHeight: 80,
+        ),
+        title: Text(student.name),
+        subtitle: Text(student.grade),
+        trailing: AttendanceIndicator(studentId: student.id),
+      ),
+    );
+  }
+}`,funFact:"The Flutter team tracks jank rate — the percentage of frames that miss the 16ms target. In production Flutter apps at Google such as Google Pay, the engineering bar is less than 0.1% jank rate. That means in 1,000 frames of scrolling, at most 1 frame can be slow. Achieving this requires systematic profiling, not guesswork.",quiz:[{q:"Why must performance profiling always be done in profile mode (flutter run --profile) rather than debug mode?",opts:["Profile mode is the same as debug mode — there is no difference","Debug mode includes assertions, hot reload overhead, and disables compiler optimizations, making the app 2-5x slower than production. Profile mode uses AOT compilation and removes debug overhead, giving accurate performance measurements that represent real user experience","Profile mode only works on physical devices, not simulators","Profile mode disables Crashlytics and analytics"],ans:1},{q:"The UI thread is consistently hitting 22ms per frame. Where do you look first?",opts:["The GPU/raster thread — UI thread issues are always caused by GPU","Open DevTools Timeline, record a janky interaction, find the longest build() or layout() call in the flame graph. Common causes: rebuilding a large widget tree unnecessarily, synchronous heavy computation, or deeply nested widget trees","Increase the target frame rate to reduce the budget pressure","Disable RepaintBoundary — it may be causing the overhead"],ans:1},{q:"What is the limitation of using compute() for parallelism in Dart?",opts:["compute() only works on Android, not iOS","compute() runs on a separate isolate with no shared memory. Data must be serialized to transfer between isolates — complex object graphs with non-primitive types can have significant serialization overhead, negating the benefit for small workloads","compute() is deprecated in Flutter 3.x","compute() blocks the UI thread while the background work runs"],ans:1},{q:"ref.watch(provider.select((s) => s.name)) vs ref.watch(provider) — what is the rebuild difference?",opts:["No difference — Riverpod rebuilds on every provider emission regardless","select() creates a derived value — the widget only rebuilds when the selected value changes. ref.watch(provider) rebuilds on any state change. For a ViewModel with 10 fields, select() can reduce rebuilds by 90% for a widget that only cares about one field","select() is only available in ConsumerStatefulWidget, not ConsumerWidget","ref.watch(provider) is more performant because it skips the select() computation overhead"],ans:1},{q:"What does the Highlight Repaints feature in Flutter DevTools show?",opts:["It shows which widgets are being rebuilt by Dart code","It shows which render objects are being repainted on the GPU layer — a yellow flash means that widget's layer was repainted this frame. Frequent flashing on widgets that do not appear to change indicates missing RepaintBoundary or unnecessary invalidation","It shows memory allocations in real time","It highlights widgets with layout constraint errors"],ans:1},{q:"A scrolling list of 500 items has 25ms frames. DevTools shows the raster thread is fast but the UI thread is slow. What is the most likely cause?",opts:["Image decoding on the GPU","The itemBuilder is doing heavy work per item — possibly complex Dart computations, synchronous database reads, or building deeply nested widget trees for each visible item. The UI thread handles Dart execution and widget building","The ScrollController has a memory leak","The list needs more RepaintBoundary widgets"],ans:1},{q:"When using custom Timeline.startSync/finishSync markers, what do you gain in DevTools?",opts:["It makes the code run faster by optimizing the timeline","Named sections appear in the DevTools Timeline flame graph, allowing you to immediately identify which logical phase (fetch, parse, build state) is consuming the most time — without manually cross-referencing function names to business logic","Timeline markers only work in debug mode","Timeline.startSync requires the dart:io library"],ans:1}],challenge:"Conduct a performance investigation on a ListView.builder with 300 items where scroll jank is reported: (1) describe the step-by-step profiling process using DevTools, (2) identify three likely causes of jank given the context (list items with avatars, real-time unread badges), (3) apply the fixes (compute, RepaintBoundary, select, memCacheWidth), (4) write a performance assertion test.",resources:[{type:"docs",title:"Flutter Performance Profiling",url:"https://docs.flutter.dev/perf/ui-performance",source:"Flutter Official"},{type:"docs",title:"Flutter DevTools",url:"https://docs.flutter.dev/tools/devtools/overview",source:"Flutter Official"},{type:"docs",title:"Flutter Performance Best Practices",url:"https://docs.flutter.dev/perf/best-practices",source:"Flutter Official"},{type:"docs",title:"compute() Function",url:"https://api.flutter.dev/flutter/foundation/compute.html",source:"Flutter Official"},{type:"article",title:"Widget Rebuild Optimization",url:"https://docs.flutter.dev/perf/rendering/best-practices",source:"Flutter Official"}],eli5:"Imagine your app is a restaurant kitchen and each frame is one dinner order. You have 16 seconds to plate each order. DevTools is a video camera watching every cook. The Performance overlay is the head chef shouting too slow when an order takes too long. The Timeline shows you exactly which cook is the bottleneck. Once you know Bob always takes 8 extra seconds, you can fix Bob specifically instead of retraining the whole kitchen.",codeWalkthrough:["kProfileMode ensures the overlay only appears in profile builds — never in production","compute() sends rawJson to a background isolate — the UI thread is free to render while parsing happens","_parseUsers must be a top-level function — closures capture context that cannot cross isolate boundaries","BAD pattern: ref.watch(workspaceProvider) subscribes to the entire state — rebuilds on any field change","GOOD pattern: .select() creates a derived stream — only rebuilds when the selected field value changes","Timeline.startSync creates a named event in DevTools — visible as a labeled block in the flame graph","Nested Timeline events show a hierarchy of work: LoadDashboard contains FetchUsers and BuildState","RepaintBoundary on each list item isolates repaints — AttendanceIndicator animating does not repaint siblings","memCacheWidth: 80 = 40 logical pixels times 2.0 DPR — decodes at physical resolution, not full source resolution"],bugChallenge:{code:`class HeavyViewModel extends ChangeNotifier {
+  List<Report> _reports = [];
+
+  Future<void> loadReports() async {
+    final response = await _dio.get('/reports');
+    final jsonString = response.data.toString();
+    _reports = (jsonDecode(jsonString) as List)
+        .map((j) => Report.fromJson(j as Map<String, dynamic>))
+        .toList();
+    notifyListeners();
+  }
+}`,hint:"Where is the heavy work running, and what is the performance consequence?",answer:"The JSON parsing of large records runs synchronously on the UI thread inside loadReports(). jsonDecode and the .map() transformation for thousands of complex objects can easily take 50-200ms, causing dropped frames and visible jank while the UI freezes. Fix: extract the parsing into a top-level function and wrap it with compute(): _reports = await compute(_parseReports, jsonString). This moves the heavy work to a background isolate, keeping the UI thread free to render at 60fps during the parse."},difficulty:"advanced",prereqs:[10,11,12]},
+
+  {id:30,title:"Rendering, Jank, Impeller & Memory Optimization",subtitle:"Understanding Flutter's Rendering Pipeline at the Depth Interviewers Expect",analogy:"Flutter's rendering pipeline is like a film studio. Dart (the scriptwriter) writes what should appear. The widget tree is the script. The element tree is the cast. The render tree is the actual filming. Skia or Impeller (the cinematographer) renders the final frames. Shader compilation jank is like the cinematographer encountering a new special effect they have never done before — they have to stop and prepare, causing a 2-second freeze mid-scene. Impeller pre-compiles all effects before filming begins.",points:[{t:"Flutter's Three Trees",d:"Flutter maintains three parallel trees: Widget tree (immutable, rebuilt on every rebuild — cheap Dart objects), Element tree (mutable, long-lived, tracks widget lifecycle — rarely rebuilt), Render Object tree (handles layout, painting, compositing — expensive). Widget rebuilds are cheap because they just create new Dart objects. The expensive render object tree only updates when the element reconciler determines something actually changed."},{t:"The Rendering Pipeline",d:"Each frame: (1) Animation updates, (2) Build phase (widget tree diff to element tree update), (3) Layout phase (render objects calculate sizes/positions), (4) Paint phase (render objects paint to layers), (5) Compositing (layers assembled), (6) Rasterization (GPU renders composited layers). Jank can occur in any phase — Timeline shows which."},{t:"Shader Compilation Jank",d:"Skia (Flutter's previous renderer) compiles GPU shaders the first time a new visual effect is encountered. Compilation takes 100-500ms — a multi-frame freeze. This is noticeable on first launch, first animation, first shadow, first gradient. Users experience first-frame jank that disappears on subsequent runs because shaders are cached. This was Flutter's biggest rendering problem before Impeller."},{t:"Impeller — Flutter's New Renderer",d:"Impeller pre-compiles all shaders at app build time — eliminating first-frame shader compilation jank entirely. Default on iOS since Flutter 3.10, default on Android since Flutter 3.22. Impeller uses Metal on iOS and Vulkan on Android. If you still see shader jank on iOS in 2024, check if Impeller is disabled in your pubspec or Info.plist."},{t:"const Optimization at Scale",d:"Every const widget is a compile-time constant — Flutter skips calling build() for it entirely if its parent rebuilds. In a complex UI with 50 widgets per screen, even 20% being const reduces build phase work by 20%. More importantly: const widgets participate in the bailout optimization — Flutter's element reconciler can skip entire subtrees proven not to have changed."},{t:"Startup Time Optimization",d:"Cold start time covers: (1) Engine initialization (Dart VM, Skia/Impeller), (2) main() execution, (3) First frame render. Reduce: defer heavy initialization with lazy singletons, avoid synchronous I/O in main(), show a native splash screen while Flutter initializes with flutter_native_splash, use isolates for startup computation. Target: under 1 second to interactive on mid-range devices."},{t:"Memory Leak Detection",d:"Common Flutter memory leaks: (1) StreamSubscription not cancelled in dispose(), (2) AnimationController not disposed, (3) Timer not cancelled, (4) ChangeNotifier listeners not removed, (5) ScrollController not disposed. Use DevTools Memory tab: take heap snapshot, filter by type, look for unexpected instance counts of your custom classes."},{t:"Image Memory Management",d:"Decoded images are the number one source of memory pressure. One 3000x4000 JPEG decoded takes 45.7MB in GPU memory (width x height x 4 bytes). The image cache has a default max size of 100MB. In a photo gallery app, this is instantly exhausted. Configure: PaintingBinding.instance.imageCache.maximumSize = 50 and maximumSizeBytes = 50 * 1024 * 1024."},{t:"Tree Shaking and App Size",d:"Dart's tree shaker removes unused code at compile time. Dead code — functions, classes, even entire packages that are imported but unused — is eliminated from the release build. Tree shaking is always on for release builds. Check app size with: flutter build apk --analyze-size. Split debug info for smaller APKs: --split-debug-info."},{t:"RepaintBoundary and Layer Compositing",d:"RepaintBoundary promotes a widget to its own compositing layer. The GPU can cache and reuse that layer if it does not change. In a list where only the bottom item is animating, RepaintBoundary on each item means the GPU reuses the cached layers for all unchanged items and only redraws the animating one. Without it, the entire visible list area is repainted every animation frame."},{t:"Platform Views and Performance",d:"PlatformViews embed native UI components (WebView, MapView) in Flutter. They are expensive: each PlatformView is a separate native view with a separate rendering pipeline. Avoid using multiple PlatformViews on the same screen. Hybrid Composition and Virtual Display modes have different performance characteristics — test both on your target devices."}],whatIs:"Flutter renders through three trees (Widget, Element, Render Object) and two threads (UI and Raster). Impeller eliminates shader compilation jank by pre-compiling shaders at build time. Memory optimization requires managing image cache size, disposing controllers, and cancelling subscriptions. const constructors, RepaintBoundary, and tree shaking improve performance at scale.",realWorld:"In a production Flutter app for NFC asset recovery with a photo attachment feature: enabling Impeller eliminated the freeze when first rendering the photo gallery's gradient overlays. Image cache was configured to 50MB after DevTools showed the default 100MB was causing OOM crashes on 2GB RAM devices. StreamSubscription leaks in the NFC scanning service were found via DevTools heap snapshots — each scan was creating a new unreleased listener, accumulating 100+ subscriptions over time.",code:`// const at Scale — Bailout Optimization
+// BAD: new instances every build
+Widget badItem(String title) => ListTile(
+  leading: Icon(Icons.person, color: Colors.blue), // New instance every build
+  title: Text(title),
+  trailing: Padding(padding: EdgeInsets.all(8), child: Icon(Icons.chevron_right)),
+);
+
+// GOOD: const subtrees are identity-compared and skipped on parent rebuild
+Widget goodItem(String title) => ListTile(
+  leading: const Icon(Icons.person, color: Colors.blue), // Skipped on rebuild
+  title: Text(title),
+  trailing: const Padding(
+    padding: EdgeInsets.all(8),
+    child: Icon(Icons.chevron_right), // Entire subtree skipped
+  ),
+);
+
+// Image Cache Configuration
+void configureImageCache() {
+  PaintingBinding.instance.imageCache.maximumSize = 100;
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 50 * 1024 * 1024; // 50MB
+}
+
+// Startup Optimization
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  configureImageCache();
+
+  // Defer non-critical init until after first frame
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    GetIt.I<AnalyticsService>().initialize();
+    GetIt.I<RemoteConfigService>().fetchAndActivate();
+  });
+
+  runApp(const App());
+}
+
+// Memory Leak Prevention — every resource must be disposed
+class SafeState extends State<SafeWidget> with SingleTickerProviderStateMixin {
+  late AnimationController _anim;
+  late StreamSubscription<Event> _sub;
+  late ScrollController _scroll;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    _sub = EventBus.instance.stream.listen(_onEvent);
+    _scroll = ScrollController();
+  }
+
+  void _onEvent(Event e) {
+    if (!mounted) return; // Guard against post-dispose setState
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _anim.dispose();   // AnimationController holds vsync resources
+    _sub.cancel();     // StreamSubscription keeps listener alive
+    _scroll.dispose(); // ScrollController holds ChangeNotifier resources
+    _timer?.cancel();  // Timer fires indefinitely if not cancelled
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => const SizedBox.shrink();
+}
+
+// Debugging Repaints — in debug builds only
+void debugRenderingIssues() {
+  debugPaintSizeEnabled = true;     // Cyan borders on all boxes
+  debugPaintLayerBordersEnabled = true; // Orange borders on layer boundaries
+  debugRepaintRainbowEnabled = true;    // Color-cycles on every repaint
+  // NEVER ship these enabled
+}
+
+// Instance count tracking for leak detection
+class DisposableService {
+  static int _count = 0;
+  DisposableService() {
+    _count++;
+    if (kDebugMode) debugPrint('Created instance #$_count');
+  }
+  void dispose() {
+    _count--;
+    if (kDebugMode) debugPrint('Disposed. Remaining: $_count');
+  }
+}`,funFact:"Flutter's three-tree architecture is the reason Flutter can rebuild widgets 60 times per second without performance problems. The widget tree (rebuilt often) is just immutable Dart objects — allocating and garbage-collecting them is cheap. The expensive render object tree (which actually does layout and painting) is only updated when the element reconciler determines something actually changed. The separation is the genius of Flutter's design.",quiz:[{q:"What is shader compilation jank and why does Impeller solve it permanently rather than just caching?",opts:["Shader compilation jank is caused by network latency in the rendering pipeline","Skia compiles GPU shaders at runtime on first encounter, causing 100-500ms freezes. Caching helps subsequent runs but the first user experience is always janky. Impeller solves it by compiling all shaders at app build time — they are bundled into the binary, so there are no runtime compilations to cause jank","Impeller eliminates jank by using fewer GPU shaders overall","Shader compilation jank only affects the first app launch"],ans:1},{q:"Why are widget rebuilds cheap in Flutter's three-tree architecture?",opts:["Flutter uses a virtual DOM that batches widget rebuilds","Widgets are immutable Dart objects — creating and discarding them is handled by the Dart garbage collector at near-zero cost. The expensive render objects only update when the element reconciler determines that layout, paint, or compositing has actually changed","Flutter caches widget build results in a global dictionary","Widget rebuilds run on the raster thread, not the UI thread"],ans:1},{q:"What is the memory footprint formula for a decoded image, and why does it matter for a photo gallery?",opts:["Memory = file size in bytes — JPEG compression is preserved in memory","Memory = width x height x 4 bytes (RGBA). A 3000x4000 image uses 45.7MB regardless of the JPEG file size. A gallery showing 10 such images simultaneously would require 457MB of GPU memory — exceeding the RAM of most mid-range Android devices","Memory = width x height x 1 byte — Flutter uses grayscale internally","Decoded image memory is shared between widgets showing the same URL"],ans:1},{q:"What common Flutter resource, if not disposed, causes a StreamSubscription memory leak over time?",opts:["A Dio instance that is not garbage collected","A StreamSubscription that is not cancelled in dispose(). Each subscription keeps a reference to its listener closure, preventing garbage collection. In a NFC scanning app that creates a new listener per scan without cancelling old ones, hundreds of orphaned subscriptions accumulate","A SharedPreferences instance","A const widget that references a large string"],ans:1},{q:"What is the purpose of addPostFrameCallback() for startup optimization?",opts:["It ensures the first frame is rendered before non-critical initialization code runs, allowing services like analytics to initialize without blocking the user from seeing the app","It delays the first frame render until all services are ready","It runs initialization code in a background isolate","addPostFrameCallback is used for animations, not startup optimization"],ans:0},{q:"When should you configure PaintingBinding.instance.imageCache.maximumSizeBytes?",opts:["Never — the default 100MB is always appropriate","When your app displays many large images (photo gallery, high-res product images) and you see OOM crashes on low-RAM devices. Reducing the cache to 30-50MB prevents the cache from consuming too much RAM, at the cost of more cache misses and re-downloads","Only when the total number of images exceeds 100","imageCache.maximumSizeBytes affects disk cache, not memory"],ans:1},{q:"What does debugRepaintRainbowEnabled = true reveal that the Performance overlay does not?",opts:["It reveals which widgets are computing too much in their build() methods","It color-cycles every widget's background on each repaint, making it visually obvious which parts of the screen are being repainted and how frequently — showing you exactly which widgets are NOT properly isolated by RepaintBoundary","It shows the raster thread timeline in the app","It reveals widgets that are missing const constructors"],ans:1}],challenge:"A photo attachment feature in a Flutter app causes OOM crashes on 3GB RAM Android devices when viewing 20+ photos. Diagnose and fix: (1) use DevTools to confirm image memory is the cause, (2) configure the image cache to 50MB, (3) implement ResizeImage to decode photos at display resolution, (4) add a dispose() that evicts specific images from cache when the screen is closed, (5) verify Impeller is enabled for smooth photo transition animations.",resources:[{type:"docs",title:"Flutter Rendering Pipeline",url:"https://docs.flutter.dev/resources/architectural-overview",source:"Flutter Official"},{type:"docs",title:"Impeller Rendering Engine",url:"https://docs.flutter.dev/perf/impeller",source:"Flutter Official"},{type:"docs",title:"Flutter Memory Management",url:"https://docs.flutter.dev/tools/devtools/memory",source:"Flutter Official"},{type:"docs",title:"Image Cache Flutter",url:"https://api.flutter.dev/flutter/painting/ImageCache-class.html",source:"Flutter Official"},{type:"article",title:"Flutter Performance — const and keys",url:"https://docs.flutter.dev/perf/best-practices#use-const-widgets-where-possible",source:"Flutter Official"}],eli5:"Flutter draws your app like a movie. It has three teams: the Script team (widgets) writes what should happen — they rewrite the script every scene, very quickly. The Casting team (elements) tracks which actors are in which roles — they only change actors when the script really demands it. The Camera crew (render objects) actually films everything — they only move the camera when the script or casting really requires it. Impeller means the camera crew already knows every special effect before filming starts — no delays mid-scene.",codeWalkthrough:["const Icon — Flutter's reconciler identity-compares this and skips calling its build() method if the parent rebuilds","const subtree — the entire Padding plus Icon subtree is skipped on parent rebuild — this is the const bailout","imageCache.maximumSizeBytes caps total memory — prevents OOM on low-RAM devices","addPostFrameCallback defers non-critical init to after the first frame — users see UI instantly","AnimationController requires dispose() — it holds vsync resources that are never GC'd without explicit disposal","StreamSubscription.cancel() in dispose() — missing this is the most common Flutter memory leak","if (!mounted) return — prevents setState() after widget is disposed, which causes a framework exception","_timer?.cancel() — Timer continues firing after dispose if not cancelled, causing leaks","debugRepaintRainbowEnabled — every repaint gets a new hue, immediately showing over-repainting"],bugChallenge:{code:`class PhotoGalleryState extends State<PhotoGallery> {
+  late AnimationController _controller;
+  StreamSubscription? _uploadSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 500));
+    _uploadSub = UploadService.instance.stream.listen((event) {
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+      itemBuilder: (ctx, i) => Image.network(photos[i].url),
+    );
+  }
+}`,hint:"Three bugs: two memory leaks and one image performance issue.",answer:"Bug 1: No dispose() method — _controller (AnimationController) is never disposed, holding vsync resources indefinitely. Add dispose() containing _controller.dispose(), _uploadSub?.cancel(), and super.dispose(). Bug 2: _uploadSub is never cancelled — if PhotoGallery is removed from the tree, the subscription keeps firing, calling setState() on a disposed widget and causing a framework exception. Bug 3: Image.network has no memCacheWidth or memCacheHeight set — photos are decoded at full resolution for thumbnail-sized grid cells. Use CachedNetworkImage with memCacheWidth proportional to the grid cell size (screen width divided by 3 times devicePixelRatio) to reduce memory usage by up to 10x."},difficulty:"advanced",prereqs:[10,29]},
+
+{id:31,title:"Testing Strategy: Unit vs Widget vs Integration",subtitle:"Building a testing philosophy from scratch — cost, coverage, and confidence",analogy:"Think of tests like security checks at an airport. Unit tests are the X-ray scanner — fast, catches most issues. Widget tests are the body scanner — slower but catches more. Integration tests are the full manual pat-down — thorough but you can't do it for every passenger. Smart airports use all three at the right gates.",points:[{t:"Why test at all?",d:"Tests are executable documentation that prevent regressions. On a real-time SaaS chat app, a refactoring of the message model broke 6 screens silently — tests would have caught it in seconds, not days."},{t:"The testing pyramid",d:"Unit tests form the wide base (fast, cheap, many), widget tests form the middle (moderate speed/cost), integration tests sit at the top (slow, expensive, few). Invert this pyramid and your CI takes 45 minutes instead of 4."},{t:"Unit tests: pure logic",d:"Test Dart classes, use cases, repositories, and state machines in isolation. No Flutter framework, no device, runs on the host machine in milliseconds. Best ROI for business logic."},{t:"Widget tests: UI behaviour",d:"Test individual widgets and small subtrees with WidgetTester. Runs in a simulated Flutter environment — no real device needed. Catches layout errors, missing providers, and navigation mistakes."},{t:"Integration tests: full flows",d:"Run on a real device or emulator. Test complete user journeys — login → dashboard → submit claim → logout. Slowest, most brittle, but the only way to catch platform-specific bugs."},{t:"What to test FIRST",d:"Start with the code that changes most and costs most when broken: use cases, repositories, BLoC/Cubit state transitions. These give 80% of the value at 20% of the effort."},{t:"Test cost vs confidence",d:"Unit: 1x cost, catches logic bugs. Widget: 3x cost, catches UI wiring bugs. Integration: 10x cost, catches flow and platform bugs. Always ask: what is the cheapest test that gives me enough confidence?"},{t:"Testing in production apps",d:"On an offline-first survey app, unit tests on the sync engine caught a data-loss bug before release. The test took 2 hours to write and saved a day of production debugging and a potential client complaint."},{t:"Regression safety net",d:"Every bug you fix should get a test. This is the minimum viable testing practice. It costs 15 minutes and prevents the same bug from returning in every future sprint."},{t:"Coverage is a vanity metric alone",d:"100% line coverage does not mean 100% correctness. A test that calls every line but asserts nothing is worthless. Coverage is useful as a lower bound — below 60% on business logic is a red flag in interviews."}],whatIs:"A testing strategy defines which types of tests to write, how many of each, and in what order. The pyramid model (many unit, some widget, few integration) optimises for fast feedback and low maintenance cost while still catching the bugs that matter.",realWorld:"On a fintech claims app handling BankID JWT auth and refund processing, the team wrote unit tests for every use case, widget tests for the claim submission form, and one integration test for the full login-to-submit flow. This caught a JWT expiry edge case in CI before it reached the QA environment.",code:`// pubspec.yaml dev_dependencies
+// test: ^1.24.0
+// flutter_test: sdk: flutter
+// bloc_test: ^9.1.0
+// mocktail: ^1.0.0
+
+// Unit test — pure Dart, no Flutter
+import 'package:test/test.dart';
+import 'package:my_app/domain/use_cases/calculate_refund.dart';
+
+void main() {
+  group('CalculateRefundUseCase', () {
+    late CalculateRefundUseCase useCase;
+
+    setUp(() {
+      useCase = CalculateRefundUseCase();
+    });
+
+    test('returns full refund when claim is within 24h', () {
+      final result = useCase.execute(
+        claimAmount: 100.0,
+        hoursSincePurchase: 12,
+      );
+      expect(result, equals(100.0));
+    });
+
+    test('returns 50% refund when claim is 24–72h', () {
+      final result = useCase.execute(
+        claimAmount: 100.0,
+        hoursSincePurchase: 48,
+      );
+      expect(result, equals(50.0));
+    });
+
+    test('returns zero refund after 72h', () {
+      final result = useCase.execute(
+        claimAmount: 100.0,
+        hoursSincePurchase: 96,
+      );
+      expect(result, equals(0.0));
+    });
+  });
+}`,funFact:"Google's internal research found that code with tests is 50% less likely to have production incidents. The Flutter framework itself has over 30,000 tests — roughly 1 test per 2 lines of production code.",quiz:[{q:"According to the testing pyramid, which type of test should you have the MOST of?",opts:["Integration tests","Widget tests","Unit tests","End-to-end tests"],ans:2},{q:"You just joined a team with zero tests on a production SaaS chat app. What do you test FIRST?",opts:["UI widgets for all screens","Full login-to-chat integration flow","Core business logic: message parsing, use cases, repositories","Firebase Analytics events"],ans:2},{q:"What is the main ADVANTAGE of unit tests over widget tests?",opts:["They test more code paths","They run faster and require no Flutter framework","They catch more types of bugs","They are easier to write"],ans:1},{q:"A widget test passes in CI but the real device shows a layout overflow. What is the most likely reason?",opts:["The emulator has a bug","Widget tests use a simulated environment and may not reflect real device pixel density or font scaling","The test assertion was wrong","The CI runner uses an outdated Flutter version"],ans:1},{q:"What does 100% line coverage GUARANTEE?",opts:["The app has no bugs","Every code path has been exercised at least once","Every assertion is meaningful","The app works correctly in production"],ans:1},{q:"On a fintech app, a developer refactors the JWT parsing logic. Which test type gives the FASTEST feedback if they introduced a bug?",opts:["Integration test on device","Widget test for the login screen","Unit test on the JWT parsing class","Manual QA on staging"],ans:2},{q:"When is an integration test REQUIRED over a widget test?",opts:["When testing a single widget's UI","When testing pure Dart logic","When testing platform-specific behaviour or full multi-screen user flows on a real device","When testing BLoC state sequences"],ans:2},{q:"What is the BIGGEST risk of inverting the testing pyramid (few unit tests, many integration tests)?",opts:["Lower code coverage percentage","CI pipelines become extremely slow and brittle, reducing the feedback loop from minutes to hours","Integration tests are harder to write","Unit tests cover more scenarios"],ans:1}],challenge:"Audit a feature you have built: identify one piece of business logic, one UI component, and one user flow. Write down which test type applies to each and justify the cost vs confidence tradeoff.",resources:[{type:"docs",title:"Flutter Testing Overview",url:"https://docs.flutter.dev/testing/overview",source:"Flutter Docs"},{type:"docs",title:"test package — Dart",url:"https://pub.dev/packages/test",source:"pub.dev"},{type:"docs",title:"flutter_test library",url:"https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html",source:"Flutter API"},{type:"article",title:"The Practical Test Pyramid",url:"https://martinfowler.com/articles/practical-test-pyramid.html",source:"Martin Fowler"}],eli5:"Tests are like a checklist before a flight. Unit tests check each individual part — engine, wheels, wings — one at a time, very fast. Widget tests check that the dashboard lights up correctly. Integration tests do a full taxi run. You do lots of part checks, some dashboard checks, and only a few full taxi runs — otherwise you would never take off.",codeWalkthrough:["group('CalculateRefundUseCase') — organises related tests under a named suite, shown in test output","setUp(() { useCase = CalculateRefundUseCase(); }) — creates a fresh instance before each test, preventing state leakage between tests","test('returns full refund when claim is within 24h') — names the exact scenario; a good test name IS the documentation","useCase.execute(claimAmount: 100.0, hoursSincePurchase: 12) — calls the real production code with controlled inputs","expect(result, equals(100.0)) — asserts the exact expected output; if this fails, CI blocks the merge","Three separate test cases cover three branches of the refund logic — this is boundary value testing, a key interview concept","No Flutter imports needed — this runs on the Dart VM in milliseconds, with no simulator overhead"],bugChallenge:{code:`void main() {
+  group('RefundTests', () {
+    test('full refund test', () {
+      final uc = CalculateRefundUseCase();
+      final result = uc.execute(claimAmount: 200.0, hoursSincePurchase: 6);
+      expect(result, equals(100.0));
+    });
+  });
+}`,hint:"The test will fail — but not because the production code is wrong. Look at the assertion value.",answer:"Bug: The test asserts equals(100.0) but the input claimAmount is 200.0 and hoursSincePurchase is 6 (within 24h), so the correct full refund should be 200.0. The assertion is wrong — this is a false-failing test, which is as dangerous as no test because it erodes trust in the test suite. Fix: expect(result, equals(200.0))."},difficulty:"intermediate",prereqs:[9,20]},
+
+{id:32,title:"Unit Testing Dart: Classes, Use Cases & Repositories",subtitle:"Writing meaningful unit tests with mocks — testing what matters without hitting the network",analogy:"Unit testing a repository is like testing a restaurant order system with a fake kitchen. You do not cook real food — you use a mock kitchen that returns whatever you tell it to. This lets you test that the order system handles errors, retries, and happy paths without actually firing up the stove.",points:[{t:"test package fundamentals",d:"group() organises tests, test() defines a case, expect() asserts. setUp() runs before each test, tearDown() after. These four constructs cover 90% of unit testing needs."},{t:"Arrange-Act-Assert pattern",d:"Every test has three parts: Arrange (set up inputs and mocks), Act (call the code under test), Assert (verify the output). This structure makes tests readable and maintainable."},{t:"Testing pure Dart classes",d:"Any class with no Flutter or platform dependencies can be tested with the plain test package — use cases, validators, parsers, state machines, formatters. These are the fastest and most valuable tests."},{t:"mocktail for mocking",d:"mocktail generates mock objects from abstract classes and interfaces. Use when(mock.method()).thenReturn(value) to stub responses and verify(mock.method()).called(1) to assert interactions."},{t:"Testing repositories",d:"Repositories depend on remote data sources (Dio, http). Mock the data source, not the real network. Test that your repository correctly maps API responses to domain models and handles errors."},{t:"Testing use cases",d:"Use cases depend on repositories. Mock the repository, inject it, and test that the use case applies business rules correctly. This is the most valuable test you can write for interview demos."},{t:"Throwing errors in mocks",d:"Use when(mock.method()).thenThrow(Exception('network error')) to simulate failures. Test that your repository wraps exceptions in domain failures and your use case handles them gracefully."},{t:"setUp and tearDown",d:"setUp creates fresh instances before each test — critical for isolation. tearDown cleans up resources (close streams, reset singletons). Missing setUp is a common source of flaky tests."},{t:"Avoid testing implementation details",d:"Test behaviour, not how it is implemented internally. If you test which private methods are called, refactoring breaks tests even when behaviour is correct. Test inputs and outputs only."},{t:"Mocking Dio with mocktail",d:"Create a MockDio extending Mock implements Dio. Stub the get() method to return a fake Response. This lets you test repository parsing logic without any real HTTP calls — tests run in sub-milliseconds."}],whatIs:"Unit testing in Dart means testing individual classes and functions in complete isolation. Dependencies are replaced with mocks or fakes so each test exercises exactly one unit of logic with full control over inputs and simulated responses.",realWorld:"On an NFC asset recovery app, the AssetRepository fetched data from a REST API. Unit tests with a mock Dio client caught a bug where the repository was swallowing 404 errors silently instead of returning a ResourceNotFound failure — found in CI, not production.",code:`// domain/repositories/user_repository.dart
+abstract class UserRepository {
+  Future<User> getUserById(String id);
+}
+
+// data/repositories/user_repository_impl.dart
+class UserRepositoryImpl implements UserRepository {
+  final Dio _dio;
+  UserRepositoryImpl(this._dio);
+
+  @override
+  Future<User> getUserById(String id) async {
+    try {
+      final response = await _dio.get('/users/\$id');
+      return User.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        throw UserNotFoundException(id);
+      }
+      throw NetworkException(e.message ?? 'Unknown error');
+    }
+  }
+}
+
+// test/data/repositories/user_repository_impl_test.dart
+import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+class MockDio extends Mock implements Dio {}
+
+void main() {
+  late MockDio mockDio;
+  late UserRepositoryImpl repository;
+
+  setUp(() {
+    mockDio = MockDio();
+    repository = UserRepositoryImpl(mockDio);
+  });
+
+  group('UserRepositoryImpl', () {
+    test('returns User on successful 200 response', () async {
+      when(() => mockDio.get('/users/123')).thenAnswer(
+        (_) async => Response(
+          data: {'id': '123', 'name': 'Alice'},
+          statusCode: 200,
+          requestOptions: RequestOptions(path: '/users/123'),
+        ),
+      );
+
+      final user = await repository.getUserById('123');
+
+      expect(user.id, equals('123'));
+      expect(user.name, equals('Alice'));
+    });
+
+    test('throws UserNotFoundException on 404', () async {
+      when(() => mockDio.get('/users/999')).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: '/users/999'),
+          response: Response(
+            statusCode: 404,
+            requestOptions: RequestOptions(path: '/users/999'),
+          ),
+          type: DioExceptionType.badResponse,
+        ),
+      );
+
+      expect(
+        () => repository.getUserById('999'),
+        throwsA(isA<UserNotFoundException>()),
+      );
+    });
+  });
+}`,funFact:"mocktail was created as a null-safe alternative to mockito that requires no code generation. The name is a pun on 'mock' and 'mocktail' (a non-alcoholic cocktail) — mocking without the ceremony.",quiz:[{q:"What is the correct order of the Arrange-Act-Assert pattern?",opts:["Assert, Act, Arrange","Act, Arrange, Assert","Arrange, Act, Assert","Arrange, Assert, Act"],ans:2},{q:"In mocktail, how do you make a mock method throw an exception?",opts:["when(mock.method()).thenReturn(Exception())","when(mock.method()).thenThrow(Exception())","mock.method().throws(Exception())","expect(mock.method(), throwsException)"],ans:1},{q:"Why should you mock Dio in repository tests instead of using a real HTTP client?",opts:["Real HTTP is too slow and makes tests dependent on network availability and server state","Dio does not work in test environments","Mocks are always more accurate than real implementations","Flutter test runner blocks network access"],ans:0},{q:"What does setUp() do in a test file?",opts:["Runs once before all tests in the file","Runs before each individual test, creating fresh instances","Sets up the Flutter widget tree","Initialises Firebase for testing"],ans:1},{q:"You are testing a use case that calls a repository. The correct approach is to:",opts:["Use the real repository implementation with a real database","Mock the repository and inject the mock into the use case","Test the use case and repository together as one unit","Skip use case tests and only test the repository"],ans:1},{q:"A repository method returns null instead of throwing when the API returns 404. Which test catches this?",opts:["Widget test","Integration test on device","Unit test that asserts throwsA(isA<UserNotFoundException>())","Manual testing on staging"],ans:2},{q:"What is the MAIN risk of testing implementation details (private methods, internal state)?",opts:["Tests run slower","Refactoring production code breaks tests even when external behaviour is unchanged","Code coverage drops","The mock becomes inaccurate"],ans:1},{q:"When should you use verify() in mocktail?",opts:["Always — to confirm every mock interaction","When you need to assert that a method was called a specific number of times, not just that it returned the right value","Instead of expect() for all assertions","Only for void methods"],ans:1}],challenge:"Take a repository class from a project you have built or can imagine (e.g. AuthRepository). Write unit tests covering: happy path, 404 error, and network timeout. Use mocktail to mock the HTTP client.",resources:[{type:"docs",title:"test package documentation",url:"https://pub.dev/packages/test",source:"pub.dev"},{type:"docs",title:"mocktail package",url:"https://pub.dev/packages/mocktail",source:"pub.dev"},{type:"docs",title:"Flutter Unit Testing Guide",url:"https://docs.flutter.dev/cookbook/testing/unit/introduction",source:"Flutter Docs"},{type:"docs",title:"Dart Testing — Language Tour",url:"https://dart.dev/guides/testing",source:"Dart Docs"}],eli5:"Imagine you want to test that a vending machine gives you a Coke when you press the Coke button. But instead of connecting it to a real warehouse, you plug in a fake warehouse that you control — you tell it 'when asked for Coke, give back a pretend Coke'. Now you can test the vending machine's logic without a real warehouse, and you can even test what happens if the warehouse is empty.",codeWalkthrough:["abstract class UserRepository — defines the contract (interface) that the real and mock implementations must fulfil","class MockDio extends Mock implements Dio — mocktail generates a mock at runtime; no code generation step needed","setUp(() { mockDio = MockDio(); repository = UserRepositoryImpl(mockDio); }) — fresh instances before every test prevents state leaking","when(() => mockDio.get('/users/123')).thenAnswer(...) — stubs the specific call; only this exact path triggers this response","Response(data: {'id':'123','name':'Alice'}, statusCode: 200) — the fake response your repository will parse","expect(user.id, equals('123')) — asserts the repository correctly mapped the JSON to a domain model","when(...).thenThrow(DioException(..., statusCode: 404)) — simulates a 404 from the server","throwsA(isA<UserNotFoundException>()) — asserts the repository translated the HTTP error into a domain-specific exception"],bugChallenge:{code:`class MockDio extends Mock implements Dio {}
+
+void main() {
+  late MockDio mockDio;
+  late UserRepositoryImpl repo;
+
+  test('returns user on success', () async {
+    mockDio = MockDio();
+    repo = UserRepositoryImpl(mockDio);
+
+    when(() => mockDio.get('/users/1')).thenAnswer(
+      (_) async => Response(
+        data: {'id': '1', 'name': 'Bob'},
+        statusCode: 200,
+        requestOptions: RequestOptions(path: '/users/1'),
+      ),
+    );
+
+    final user = await repo.getUserById('1');
+    expect(user.name, equals('Alice'));
+  });
+}`,hint:"The test will fail. Look at the assertion compared to the mock data.",answer:"Bug: The mock returns name: 'Bob' but the assertion expects equals('Alice'). This is a copy-paste error in the test — the mock data and assertion are mismatched. Fix: change the assertion to expect(user.name, equals('Bob')) or change the mock data name to 'Alice'. This type of error is surprisingly common and is why test names should describe the exact scenario being tested."},difficulty:"intermediate",prereqs:[31,21]},
+
+{id:33,title:"Testing BLoC/Cubit: Async State Sequences",subtitle:"Verifying state transitions, error paths, and event-to-state mapping with bloc_test",analogy:"Testing a BLoC is like testing a traffic light controller. You send it a signal (event) and verify it goes through exactly the right colour sequence in the right order. If the light goes green-red-yellow instead of green-yellow-red, the test fails — even if all three colours appeared.",points:[{t:"bloc_test package",d:"Provides the blocTest() function, which is the standard way to test BLoC and Cubit classes. It handles async state sequences, setup, and teardown in a clean declarative API."},{t:"blocTest structure",d:"blocTest takes: build (creates the bloc), setUp (optional async setup), act (sends events or calls methods), expect (list of expected states in order), verify (optional mock verification), errors (expected thrown errors)."},{t:"Testing state sequences",d:"The expect parameter is a list of states in the exact order they should be emitted. [LoadingState(), LoadedState(data)] means loading must come before loaded — order matters."},{t:"Testing Cubit methods",d:"For Cubits, act calls the method directly: act: (cubit) => cubit.loadUser('123'). For BLoCs, act adds events: act: (bloc) => bloc.add(LoadUserEvent('123'))."},{t:"setUp with mock repositories",d:"Use setUp in blocTest to inject mock repositories. This ensures the BLoC gets fresh mocks for every test case, preventing state pollution between tests."},{t:"Testing error paths",d:"Stub your mock to throw, then expect the error state. This is critical for interview demos — showing you test failure paths proves production maturity."},{t:"Testing loading state",d:"Most async operations should emit a loading state first. Always test that LoadingState (or equivalent) is the first emitted state before the success or error state."},{t:"seed parameter",d:"Use seed to put the BLoC in a specific initial state before running the test. Useful for testing transitions from non-initial states — e.g., testing reload from an already-loaded state."},{t:"verify parameter",d:"After the state sequence is verified, use verify to assert that repository methods were called the expected number of times. Combines state and interaction verification."},{t:"Testing BLoC vs Cubit",d:"Cubit tests are simpler — call a method, expect states. BLoC tests add event dispatch. For interviews, knowing both shows understanding of the tradeoff between simplicity (Cubit) and explicitness (BLoC)."}],whatIs:"bloc_test provides a declarative way to assert that a BLoC or Cubit emits a specific sequence of states in response to events or method calls. It handles async timing, subscription management, and cleanup automatically.",realWorld:"On a real-time SaaS collaboration app with workspace switching, bloc_test caught a bug where WorkspaceCubit emitted LoadedState before LoadingState was emitted, causing the UI to flash the old workspace data briefly before showing the spinner.",code:`// test/presentation/blocs/user_bloc_test.dart
+import 'package:bloc_test/bloc_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+class MockUserRepository extends Mock implements UserRepository {}
+
+void main() {
+  late MockUserRepository mockRepo;
+
+  setUp(() {
+    mockRepo = MockUserRepository();
+  });
+
+  group('UserBloc', () {
+    blocTest<UserBloc, UserState>(
+      'emits [LoadingState, LoadedState] when LoadUserEvent succeeds',
+      build: () => UserBloc(userRepository: mockRepo),
+      setUp: () {
+        when(() => mockRepo.getUserById('123')).thenAnswer(
+          (_) async => User(id: '123', name: 'Alice'),
+        );
+      },
+      act: (bloc) => bloc.add(LoadUserEvent(userId: '123')),
+      expect: () => [
+        const LoadingState(),
+        LoadedState(user: User(id: '123', name: 'Alice')),
+      ],
+      verify: (_) {
+        verify(() => mockRepo.getUserById('123')).called(1);
+      },
+    );
+
+    blocTest<UserBloc, UserState>(
+      'emits [LoadingState, ErrorState] when repository throws',
+      build: () => UserBloc(userRepository: mockRepo),
+      setUp: () {
+        when(() => mockRepo.getUserById('999')).thenThrow(
+          NetworkException('Connection refused'),
+        );
+      },
+      act: (bloc) => bloc.add(LoadUserEvent(userId: '999')),
+      expect: () => [
+        const LoadingState(),
+        const ErrorState(message: 'Connection refused'),
+      ],
+    );
+
+    blocTest<UserBloc, UserState>(
+      'emits [LoadingState, LoadedState] from already-loaded state (reload)',
+      build: () => UserBloc(userRepository: mockRepo),
+      seed: () => LoadedState(user: User(id: '123', name: 'Alice (stale)')),
+      setUp: () {
+        when(() => mockRepo.getUserById('123')).thenAnswer(
+          (_) async => User(id: '123', name: 'Alice (fresh)'),
+        );
+      },
+      act: (bloc) => bloc.add(LoadUserEvent(userId: '123')),
+      expect: () => [
+        const LoadingState(),
+        LoadedState(user: User(id: '123', name: 'Alice (fresh)')),
+      ],
+    );
+  });
+}`,funFact:"The bloc_test package uses Stream subscription under the hood — it subscribes to the BLoC's state stream, collects all emitted states, and then compares the list to your expected list after the act function completes.",quiz:[{q:"In blocTest, what does the 'expect' parameter verify?",opts:["That the bloc was created successfully","The exact sequence and order of states emitted during the act phase","That repository methods were called","The final state only, regardless of intermediate states"],ans:1},{q:"What does the 'seed' parameter in blocTest do?",opts:["Sets the initial state of the BLoC before the test runs","Populates the mock repository with test data","Generates random test inputs","Seeds the random number generator for shuffle tests"],ans:0},{q:"You want to verify that getUserById was called exactly once after an event. Which blocTest parameter do you use?",opts:["expect","act","verify","seed"],ans:2},{q:"A BLoC emits [LoadedState, LoadingState] instead of [LoadingState, LoadedState]. The blocTest will:",opts:["Pass — all states are present","Fail — the order does not match the expected sequence","Pass — blocTest only checks presence, not order","Throw a runtime exception"],ans:1},{q:"What is the MAIN difference between testing a Cubit and testing a BLoC with blocTest?",opts:["Cubit tests use a different package","For Cubit you call methods directly in act; for BLoC you dispatch events via bloc.add()","BLoC tests cannot use mock repositories","Cubit tests do not support the expect parameter"],ans:1},{q:"On a workspace-switching feature, the BLoC should emit loading before loaded. You find the test was only checking the final state. What is the RISK?",opts:["No risk — final state is all that matters","The UI might flash old data before showing a spinner, which only a sequence test would catch","Unit tests cannot test UI timing","The test would take longer to run"],ans:1},{q:"When should you use the 'errors' parameter in blocTest instead of 'expect'?",opts:["When you expect the BLoC to throw an unhandled exception instead of emitting an error state","When you want to test error states","When the repository throws","When the act function is async"],ans:0},{q:"A bloc_test fails intermittently in CI. What is the MOST likely cause?",opts:["The Flutter version in CI is wrong","A missing await or async timing issue in act or setUp causing the state to emit after the assertion window","The mock is wrong","bloc_test does not work in CI"],ans:1}],challenge:"Write bloc_test cases for a LoginCubit with three scenarios: successful login emits [LoadingState, AuthenticatedState], wrong password emits [LoadingState, ErrorState('Invalid credentials')], and network error emits [LoadingState, ErrorState('Network error')].",resources:[{type:"docs",title:"bloc_test package",url:"https://pub.dev/packages/bloc_test",source:"pub.dev"},{type:"docs",title:"Testing BLoCs — official BLoC docs",url:"https://bloclibrary.dev/testing/",source:"bloclibrary.dev"},{type:"docs",title:"mocktail package",url:"https://pub.dev/packages/mocktail",source:"pub.dev"},{type:"article",title:"Effective BLoC Testing patterns",url:"https://verygood.ventures/blog/flutter-bloc-testing",source:"Very Good Ventures"}],eli5:"Imagine you have a toy robot that you press buttons on and watch the lights change. bloc_test lets you say: 'I press the GO button and I expect the light to go yellow THEN green, in that order.' If the light goes green first, the test fails — even though green eventually appeared. It is checking the exact movie, not just the last frame.",codeWalkthrough:["blocTest<UserBloc, UserState>('...') — type parameters ensure compile-time safety; the compiler catches if your expected states are the wrong type","build: () => UserBloc(userRepository: mockRepo) — creates a fresh BLoC for this test; called after setUp","setUp: () { when(...).thenAnswer(...) } — stubs the mock inside blocTest's own setUp, scoped to this single test case","act: (bloc) => bloc.add(LoadUserEvent(userId: '123')) — dispatches the event that triggers state changes","expect: () => [const LoadingState(), LoadedState(user: User(...))] — the BLoC must emit exactly these two states in this order","verify: (_) { verify(() => mockRepo.getUserById('123')).called(1) } — confirms the repository was called exactly once","seed: () => LoadedState(...) — for the reload test, starts the BLoC in a pre-loaded state to test the transition path","NetworkException is thrown in setUp for the error test — blocTest expects [LoadingState, ErrorState] confirming error handling works"],bugChallenge:{code:`blocTest<UserBloc, UserState>(
+  'emits loaded state on success',
+  build: () => UserBloc(userRepository: mockRepo),
+  act: (bloc) => bloc.add(LoadUserEvent(userId: '123')),
+  expect: () => [
+    LoadedState(user: User(id: '123', name: 'Alice')),
+  ],
+);`,hint:"This test is missing a state. Think about what should happen between the event being added and the loaded state appearing.",answer:"Bug: The test is missing LoadingState() as the first expected state. The BLoC almost certainly emits LoadingState before it makes the async call and emits LoadedState. The correct expect is [const LoadingState(), LoadedState(user: User(...))]. This test would pass accidentally if LoadingState is somehow not emitted, masking a real UI bug where the loading spinner never appears."},difficulty:"advanced",prereqs:[18,19,32]},
+
+{id:34,title:"Widget Testing: UI Flows, Navigation & Forms",subtitle:"Testing Flutter UI in a simulated environment — finders, pumps, and interaction simulation",analogy:"Widget testing is like a robot QA tester that reads your UI, taps buttons, types text, and checks what appeared on screen — all without a real phone. It is faster than manual testing and more realistic than unit tests, sitting squarely in the middle of the testing pyramid.",points:[{t:"WidgetTester fundamentals",d:"The flutter_test library provides WidgetTester, which renders widgets in a test environment. You pump widgets into the test harness, interact with them, and assert on what is visible."},{t:"pump() vs pumpAndSettle()",d:"pump() advances the frame clock by one tick. pumpAndSettle() keeps pumping until all animations and async operations complete. Use pumpAndSettle() after navigation or animations; use pump(Duration) for precise timing control."},{t:"Finders: locating widgets",d:"find.text('Login'), find.byType(ElevatedButton), find.byKey(const Key('submit-btn')), find.byIcon(Icons.search). Keys are the most reliable finder — use ValueKey or Key constants in production code to enable testing."},{t:"Interacting: tap, enterText, drag",d:"await tester.tap(find.byKey(const Key('submit'))); await tester.enterText(find.byType(TextField), 'user@example.com'); await tester.drag(finder, Offset(0, -200)). Always pump after interactions."},{t:"Wrapping with MaterialApp and providers",d:"Widgets under test need their dependencies. Wrap with MaterialApp for theme/navigation, wrap with BlocProvider or ChangeNotifierProvider for state. Missing providers cause red screen errors in tests."},{t:"Testing navigation",d:"Use NavigatorObserver or check that a specific route widget appears after a tap. For GoRouter, wrap with a router-aware MaterialApp. Navigation testing is where many teams have gaps."},{t:"Testing form validation",d:"Submit an empty form and expect find.text('Email is required') to appear. This tests that validators run and error messages render correctly — critical for fintech and claims apps."},{t:"Testing loading and error states",d:"Mock the BLoC or provider to emit specific states, then assert that LoadingSpinner appears during loading and ErrorWidget appears on error. Test all three states: loading, success, error."},{t:"testWidgets function",d:"Each widget test is wrapped in testWidgets('description', (WidgetTester tester) async { ... }). The tester parameter is your interface to the simulated Flutter environment."},{t:"Key-based finding is production practice",d:"Adding semantic keys to important widgets (forms, buttons, navigation elements) is not just for testing — it also enables accessibility tooling and deep linking. It is a production quality signal."}],whatIs:"Widget testing renders Flutter widgets in a headless test environment, allowing you to simulate user interactions (tap, type, scroll) and assert on the resulting UI state — without a real device. It sits between unit tests and integration tests in cost and coverage.",realWorld:"On a school management platform, widget tests for the student registration form caught that the 'Submit' button was not disabled during loading — a mock BLoC was injected emitting LoadingState, and the test found the button was still tappable, which would have caused duplicate submissions.",code:`// test/presentation/widgets/login_form_test.dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockAuthBloc extends MockBloc<AuthEvent, AuthState> implements AuthBloc {}
+
+void main() {
+  late MockAuthBloc mockAuthBloc;
+
+  setUp(() {
+    mockAuthBloc = MockAuthBloc();
+  });
+
+  testWidgets('shows validation error when email is empty on submit',
+      (WidgetTester tester) async {
+    when(() => mockAuthBloc.state).thenReturn(const AuthInitialState());
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthBloc>.value(
+          value: mockAuthBloc,
+          child: const LoginScreen(),
+        ),
+      ),
+    );
+
+    // Submit without entering any text
+    await tester.tap(find.byKey(const Key('login-submit-btn')));
+    await tester.pump();
+
+    expect(find.text('Email is required'), findsOneWidget);
+    expect(find.text('Password is required'), findsOneWidget);
+  });
+
+  testWidgets('shows loading indicator when AuthBloc emits LoadingState',
+      (WidgetTester tester) async {
+    when(() => mockAuthBloc.state).thenReturn(const AuthLoadingState());
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthBloc>.value(
+          value: mockAuthBloc,
+          child: const LoginScreen(),
+        ),
+      ),
+    );
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byKey(const Key('login-submit-btn')), findsNothing);
+  });
+
+  testWidgets('navigates to HomeScreen on AuthenticatedState',
+      (WidgetTester tester) async {
+    // Start with initial state
+    whenListen(
+      mockAuthBloc,
+      Stream.fromIterable([
+        const AuthLoadingState(),
+        const AuthenticatedState(),
+      ]),
+      initialState: const AuthInitialState(),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        routes: {
+          '/home': (_) => const HomeScreen(),
+        },
+        home: BlocProvider<AuthBloc>.value(
+          value: mockAuthBloc,
+          child: const LoginScreen(),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.byType(LoginScreen), findsNothing);
+  });
+}`,funFact:"Flutter's widget test environment runs at 10x faster than real device speed because it skips GPU rendering entirely. The test harness uses a software rasteriser, which means 1000 widget tests typically run in under 60 seconds.",quiz:[{q:"What is the difference between pump() and pumpAndSettle() in widget tests?",opts:["pump() is faster, pumpAndSettle() is more accurate","pump() advances one frame; pumpAndSettle() pumps repeatedly until all animations and microtasks complete","pump() is for widgets, pumpAndSettle() is for navigation","They are identical — pumpAndSettle() is just an alias"],ans:1},{q:"Why should you use find.byKey() over find.text() for critical UI elements?",opts:["byKey is faster","Text labels can change (localisation, copy changes) but Key constants are stable, making tests less brittle","byKey works offline, find.text does not","find.text only works for visible text"],ans:1},{q:"A widget test fails with 'Could not find a BlocProvider above this LoginScreen widget'. What is the fix?",opts:["Add BlocProvider to main.dart","Wrap the widget under test with BlocProvider<AuthBloc>.value(value: mockBloc) in the test setup","Remove all BLoC usage from LoginScreen","Use a StatefulWidget instead"],ans:1},{q:"You want to test that the submit button is DISABLED during a loading state. Which approach is correct?",opts:["Tap the button and check if an event was added to the BLoC","Stub the BLoC to emit LoadingState, pump, then check that find.byKey('submit-btn') findsNothing OR verify the button's onPressed is null","Use an integration test instead","Widget tests cannot check disabled state"],ans:1},{q:"After tapping a button that triggers navigation, which pump call do you need?",opts:["pump()","pump(const Duration(milliseconds: 16))","pumpAndSettle() — to wait for the navigation animation to complete","No pump needed — navigation is synchronous"],ans:2},{q:"Why might a widget test pass but the real device UI behave differently?",opts:["Widget tests always reflect real device behaviour","Widget tests use a simulated environment — real devices have different pixel densities, font scaling, platform-specific rendering, and actual network calls","The Flutter version is different","Widget tests are less accurate than unit tests"],ans:1},{q:"What is the correct way to test that a TextField accepts input in a widget test?",opts:["tester.type(find.byType(TextField), 'text')","await tester.enterText(find.byType(TextField), 'text'); await tester.pump();","tester.sendKeys(find.byType(TextField), 'text')","find.byType(TextField).text = 'text'"],ans:1},{q:"On a claims form with 5 fields, what is the MOST important widget test to write first?",opts:["Test that all 5 fields render correctly","Test that submitting with invalid data shows validation errors and blocks submission","Test the visual layout matches the design","Test that the form scrolls correctly"],ans:1}],challenge:"Write a widget test for a form that has an email field, a password field, and a submit button. Test three scenarios: (1) empty submit shows validation errors, (2) valid input with loading state shows spinner and hides button, (3) successful auth navigates to HomeScreen.",resources:[{type:"docs",title:"Widget Testing — Flutter Cookbook",url:"https://docs.flutter.dev/cookbook/testing/widget/introduction",source:"Flutter Docs"},{type:"docs",title:"flutter_test library API",url:"https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html",source:"Flutter API"},{type:"docs",title:"WidgetTester class",url:"https://api.flutter.dev/flutter/flutter_test/WidgetTester-class.html",source:"Flutter API"},{type:"docs",title:"MockBloc — bloc_test docs",url:"https://pub.dev/packages/bloc_test",source:"pub.dev"}],eli5:"Imagine you have a little robot that can look at your app's screen, press buttons, and type words — but it does not need a real phone. You tell it: 'Press the Login button without typing anything and tell me if you see an error message.' The robot checks and reports back in a fraction of a second. That is widget testing.",codeWalkthrough:["testWidgets('...', (WidgetTester tester) async {}) — the test runner injects WidgetTester as tester","when(() => mockAuthBloc.state).thenReturn(const AuthInitialState()) — stubs the BLoC's current state before the widget renders","tester.pumpWidget(MaterialApp(home: BlocProvider.value(...))) — renders the full widget tree with its required providers","tester.tap(find.byKey(const Key('login-submit-btn'))) — simulates a user tap; must await","tester.pump() — advances one frame so validators run and error widgets rebuild","expect(find.text('Email is required'), findsOneWidget) — asserts the error message appeared","whenListen(mockAuthBloc, Stream.fromIterable([...])) — simulates a stream of states for navigation test","tester.pumpAndSettle() — waits for the navigation animation to fully complete before asserting"],bugChallenge:{code:`testWidgets('shows error on empty submit', (tester) async {
+  when(() => mockAuthBloc.state).thenReturn(const AuthInitialState());
+
+  await tester.pumpWidget(
+    MaterialApp(
+      home: LoginScreen(),
+    ),
+  );
+
+  await tester.tap(find.byKey(const Key('submit-btn')));
+  await tester.pump();
+
+  expect(find.text('Email is required'), findsOneWidget);
+});`,hint:"The test will throw a red screen error before even reaching the tap. Look at how LoginScreen gets its BLoC.",answer:"Bug: LoginScreen uses BlocProvider to get AuthBloc but the test wraps it in a plain MaterialApp without providing the BLoC. Fix: wrap the widget with BlocProvider<AuthBloc>.value(value: mockAuthBloc, child: const LoginScreen()). This is one of the most common widget test setup errors."},difficulty:"advanced",prereqs:[31,15]},
+
+{id:35,title:"Integration Testing & E2E Flows",subtitle:"Testing complete user journeys on real devices — the final layer of confidence",analogy:"Integration tests are the dress rehearsal before opening night. Unit tests checked each actor knows their lines. Widget tests verified the scenes work. Integration tests run the full show — costume, props, stage, real audience reactions — on the actual theatre.",points:[{t:"integration_test package",d:"The official Flutter package for running tests on real devices or emulators. Tests look like widget tests but run against the full app with real plugins, real navigation, and real platform APIs."},{t:"How integration tests differ",d:"They import your real main.dart, run the full app, and interact with it like a user would. Network calls are real (or you use a mock server). Platform channels run for real. This is the highest-fidelity test type."},{t:"Setting up integration_test",d:"Add integration_test to dev_dependencies. Create integration_test/ directory at project root. Tests call IntegrationTestWidgetsFlutterBinding.ensureInitialized() before main(). Run with flutter test integration_test/."},{t:"Testing full user flows",d:"A good integration test covers: app launch → login → perform key action → verify result → logout. On a fintech app this is: launch → BankID login → submit claim → verify confirmation screen → logout."},{t:"Handling async and real time",d:"Use pumpAndSettle() generously but be careful — if animations run forever (TickerMode) or streams never close, pumpAndSettle() will timeout. Use pump(Duration) for known-duration operations."},{t:"patrol package",d:"Patrol extends integration_test with native UI interaction — tapping system dialogs (permissions, notifications), interacting with the notification bar, and using a more ergonomic API via $. It is the production standard for E2E testing."},{t:"Screenshot testing in CI",d:"Use takeScreenshot() (patrol) or tester.takeScreenshot() to capture UI at key points. Store screenshots as artifacts in CI. Useful for visual regression detection across releases."},{t:"CI integration for integration tests",d:"Run on physical device farms (Firebase Test Lab, BrowserStack) or emulators in CI. Typically run less frequently than unit/widget tests — nightly or on release branches — because they are slow (5–15 minutes per run)."},{t:"Mocking vs real backend in E2E",d:"Prefer a real staging backend for integration tests. If not available, use a mock HTTP server (mockoon, json-server) pointed to by a test flavor's base URL. Never run E2E tests against production."},{t:"What integration tests CANNOT replace",d:"Integration tests are slow and brittle — small UI changes break locators. They are NOT a substitute for unit tests. Their value is in catching integration bugs: plugin incompatibilities, navigation race conditions, platform-specific rendering."}],whatIs:"Integration tests (via the integration_test package) run the full Flutter application on a real device or emulator, simulating complete user journeys end-to-end. They provide the highest confidence that the app works as a whole but are the slowest and most expensive tests to maintain.",realWorld:"On an offline-first field survey app, an integration test for the sync flow (complete survey offline → go online → verify data synced to server) caught that the Hive database was not flushed before the sync was triggered, causing data loss on low-end Android devices.",code:`// integration_test/app_test.dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:my_app/main.dart' as app;
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  group('Login to Dashboard E2E Flow', () {
+    testWidgets('user can log in and reach dashboard', (tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Verify we are on the login screen
+      expect(find.byKey(const Key('login-screen')), findsOneWidget);
+
+      // Enter credentials
+      await tester.enterText(
+        find.byKey(const Key('email-field')),
+        'test@example.com',
+      );
+      await tester.enterText(
+        find.byKey(const Key('password-field')),
+        'TestPass123!',
+      );
+      await tester.pump();
+
+      // Tap login
+      await tester.tap(find.byKey(const Key('login-submit-btn')));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
+
+      // Verify navigation to dashboard
+      expect(find.byKey(const Key('dashboard-screen')), findsOneWidget);
+      expect(find.text('Welcome, Test User'), findsOneWidget);
+    });
+
+    testWidgets('user sees error on invalid credentials', (tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.byKey(const Key('email-field')),
+        'wrong@example.com',
+      );
+      await tester.enterText(
+        find.byKey(const Key('password-field')),
+        'wrongpassword',
+      );
+      await tester.tap(find.byKey(const Key('login-submit-btn')));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
+
+      expect(find.text('Invalid credentials'), findsOneWidget);
+      expect(find.byKey(const Key('login-screen')), findsOneWidget);
+    });
+  });
+}
+
+// Run with:
+// flutter test integration_test/app_test.dart -d <device-id>
+// or on Firebase Test Lab:
+// gcloud firebase test android run --type instrumentation --app build/app/outputs/apk/debug/app-debug.apk --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk`,funFact:"Firebase Test Lab runs your integration tests on physical devices — not emulators — across dozens of real Android and iOS device models simultaneously. Google uses the same infrastructure to test their own apps.",quiz:[{q:"What is the KEY difference between a widget test and an integration test?",opts:["Integration tests use different assertions","Integration tests run the full app on a real device/emulator with real plugins and platform calls; widget tests use a simulated headless environment","Integration tests are faster","Widget tests require a device"],ans:1},{q:"Why should integration tests be run LESS frequently than unit tests in CI?",opts:["Integration tests are less important","Integration tests are slow (minutes per run), brittle, and expensive — running them on every commit would make CI unbearably slow","Integration tests cannot run in CI","Unit tests cover more scenarios"],ans:1},{q:"What does IntegrationTestWidgetsFlutterBinding.ensureInitialized() do?",opts:["Initialises Firebase for testing","Connects the flutter_test framework to the integration test runner on the device, enabling test communication","Sets up mock HTTP responses","Disables animations for faster tests"],ans:1},{q:"On an offline-first app, which test type would BEST catch a bug where data is not synced correctly after reconnecting?",opts:["Unit test on the sync use case","Widget test on the sync UI","Integration test that simulates going offline, performing actions, then reconnecting — with real platform network APIs","None — this requires manual testing"],ans:2},{q:"What is the patrol package used for?",opts:["Automated screenshot comparison","Native UI interaction in integration tests — tapping system dialogs, permission prompts, and notification bar — which standard integration_test cannot reach","Running tests on Firebase Test Lab","Generating test coverage reports"],ans:1},{q:"You use pumpAndSettle() in an integration test and the test hangs indefinitely. What is the MOST likely cause?",opts:["The device is too slow","An animation runs infinitely or a stream never closes — pumpAndSettle() waits until all microtasks and animations finish","The test timeout is too short","A real network call is taking too long"],ans:1},{q:"What is the RECOMMENDED strategy for backend data in integration tests?",opts:["Use production backend data","Use a dedicated staging environment or mock HTTP server; never test against production","Mock all network calls inside the app","Skip backend-dependent flows in integration tests"],ans:1},{q:"Which of the following is the MOST important integration test for a fintech claims app to have?",opts:["Test that all fonts render correctly","Test the full claim submission flow: login → fill claim form → submit → verify confirmation — on a real device","Test that the splash screen animates correctly","Test that all 40 screens render without overflow errors"],ans:1}],challenge:"Design (do not necessarily implement) an integration test plan for a feature you have built: identify the 3 most critical user flows, specify what device(s) you would run on, and describe what you would do if pumpAndSettle() timed out.",resources:[{type:"docs",title:"integration_test package",url:"https://pub.dev/packages/integration_test",source:"pub.dev"},{type:"docs",title:"Flutter Integration Testing Guide",url:"https://docs.flutter.dev/testing/integration-tests",source:"Flutter Docs"},{type:"docs",title:"patrol package — native UI testing",url:"https://pub.dev/packages/patrol",source:"pub.dev"},{type:"article",title:"Firebase Test Lab for Flutter",url:"https://firebase.google.com/docs/test-lab/flutter/integration-testing-with-flutter",source:"Firebase Docs"}],eli5:"Imagine testing a vending machine. Unit tests check each circuit board works in isolation. Widget tests check the button panel lights up correctly. Integration tests put money in, press a button, and check a real Coke falls out — on the actual machine, with real power, real money, real Coke. It takes longer but it is the most realistic.",codeWalkthrough:["IntegrationTestWidgetsFlutterBinding.ensureInitialized() — connects the test runner to the device's test harness; must be the first call","app.main() — launches your REAL app, not a test stub; all real plugins, navigation, and state management initialise","tester.pumpAndSettle() — waits for the splash screen and initial navigation animations to complete","find.byKey(const Key('login-screen')) — Key-based finders are essential in integration tests; text-based finders break on localisation changes","tester.enterText(...) and tester.tap(...) — simulate real user input; same API as widget tests but running against a real app","pumpAndSettle(const Duration(seconds: 5)) — allows up to 5 seconds for a real network call to complete and the navigation animation to settle","expect(find.byKey(const Key('dashboard-screen')), findsOneWidget) — confirms navigation succeeded","flutter test integration_test/ -d <device-id> — runs against a specific connected device or emulator"],bugChallenge:{code:`void main() {
+  testWidgets('login flow works', (tester) async {
+    app.main();
+    await tester.pump();
+
+    await tester.enterText(find.byType(TextField), 'user@test.com');
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pump();
+
+    expect(find.byType(DashboardScreen), findsOneWidget);
+  });
+}`,hint:"Three issues: missing binding initialisation, timing problem after launch, and timing problem after login.",answer:"Bug 1: Missing IntegrationTestWidgetsFlutterBinding.ensureInitialized() before main() — the test runner cannot communicate with the app without this. Bug 2: tester.pump() after app.main() is insufficient — the app needs pumpAndSettle() to complete its startup animations and initial navigation. Bug 3: tester.pump() after tapping login does not wait for the real network call — use pumpAndSettle(const Duration(seconds: 10)) to wait for the auth response and navigation animation."},difficulty:"advanced",prereqs:[31,34]},
+
+{id:36,title:"Testability Patterns: Mocks, Fakes, Golden Tests & Coverage",subtitle:"Writing code that is easy to test — the design and tooling decisions that separate senior engineers",analogy:"A Mock is a strict actor who only does what the script says and shouts if you deviate. A Fake is an understudy who knows the whole role and performs naturally. A Stub is a cardboard cutout that just stands there holding a prop. Knowing which one to put on stage is the art of testability.",points:[{t:"Mock vs Fake vs Stub",d:"Mock: a generated object that records interactions and fails if unexpected methods are called. Fake: a lightweight real implementation (e.g., in-memory database). Stub: hardcoded return values, no verification. Each has the right use case."},{t:"When to use a Mock",d:"Use mocks when you need to VERIFY interactions — confirm a method was called with specific arguments a specific number of times. Use for collaborators where calling them has side effects (sending emails, writing to DB)."},{t:"When to use a Fake",d:"Use fakes when the real implementation is too heavy (database, file system) but you want realistic behaviour. A FakeUserRepository with an in-memory Map is faster and more realistic than a mock for testing complex workflows."},{t:"When to use a Stub",d:"Use stubs for simple read-only dependencies where you only care about the return value, not whether the method was called. They are the simplest option — prefer them when verification is not needed."},{t:"Golden file testing",d:"Golden tests render a widget and save a PNG screenshot. On subsequent runs, the widget is re-rendered and compared pixel-by-pixel to the golden file. Any UI change fails the test until you approve and update the golden file."},{t:"Running golden tests",d:"Run flutter test --update-goldens to generate or update golden files. Run flutter test normally to compare. Golden files should be committed to git and reviewed in PRs — they are the visual specification."},{t:"What good coverage means",d:"Coverage measures which lines of code were executed by tests. 80%+ on business logic (use cases, repositories, BLoCs) is a practical target. 100% is often counterproductive — trivial getters and generated code inflate the number."},{t:"Making code testable by design",d:"Testability is not added after — it is designed in. Inject dependencies through constructors, depend on abstractions (abstract classes/interfaces), keep functions pure (no hidden state), avoid singletons without interfaces."},{t:"Dependency injection and testability",d:"A class that creates its own Dio instance cannot be unit tested. A class that receives Dio through its constructor can be tested with a MockDio. Constructor injection is the #1 testability pattern in Flutter."},{t:"Golden tests for design systems",d:"On a SaaS app with a shared component library, golden tests for every reusable widget (buttons, cards, badges) prevent accidental visual regressions when updating shared dependencies or theming."}],whatIs:"Testability patterns are design and tooling choices that make code easy to test in isolation. They include choosing the right test double (mock, fake, stub), using golden file tests for visual regression, understanding coverage metrics, and architecting code with dependency injection and abstractions.",realWorld:"On a multi-workspace collaboration app, golden tests for the WorkspaceCard component caught that a dependency update to the design system package changed the accent colour from #2196F3 to #1976D2 — invisible in code review but immediately obvious in a golden test diff.",code:`// === FAKE: in-memory implementation for complex workflow tests ===
+class FakeUserRepository implements UserRepository {
+  final Map<String, User> _store = {};
+
+  @override
+  Future<User> getUserById(String id) async {
+    final user = _store[id];
+    if (user == null) throw UserNotFoundException(id);
+    return user;
+  }
+
+  @override
+  Future<void> saveUser(User user) async {
+    _store[user.id] = user;
+  }
+
+  // Test helper — not part of the interface
+  void seed(User user) => _store[user.id] = user;
+}
+
+// === GOLDEN TEST: visual regression for a UI component ===
+import 'package:flutter_test/flutter_test.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
+
+void main() {
+  testGoldens('WorkspaceCard renders correctly for active workspace', (tester) async {
+    await loadAppFonts(); // golden_toolkit helper to load real fonts
+
+    await tester.pumpWidgetBuilder(
+      WorkspaceCard(
+        workspace: Workspace(
+          id: 'ws-1',
+          name: 'Acme Corp',
+          memberCount: 12,
+          isActive: true,
+        ),
+      ),
+      surfaceSize: const Size(375, 120),
+    );
+
+    await screenMatchesGolden(tester, 'workspace_card_active');
+  });
+}
+
+// === COVERAGE: run in terminal ===
+// flutter test --coverage
+// genhtml coverage/lcov.info -o coverage/html
+// open coverage/html/index.html
+
+// === TESTABLE DESIGN: constructor injection ===
+// UNTESTABLE — creates its own dependency
+class BadRepository {
+  final _dio = Dio(); // Cannot be mocked
+  Future<User> getUser(String id) => _dio.get('/users/\$id').then(...);
+}
+
+// TESTABLE — dependency injected
+class GoodRepository {
+  final Dio _dio; // Can be replaced with MockDio in tests
+  GoodRepository(this._dio);
+  Future<User> getUser(String id) => _dio.get('/users/\$id').then(...);
+}`,funFact:"The term 'golden test' comes from the concept of a 'golden master' — in manufacturing, the first approved perfect sample that all subsequent samples are compared against. If they match the golden master, they pass quality control.",quiz:[{q:"You need to verify that an analytics service was called EXACTLY ONCE when a user logs in. Which test double should you use?",opts:["Fake — for realistic behaviour","Stub — for simple return values","Mock — to record and verify the interaction","Golden test — for visual verification"],ans:2},{q:"You are testing a complex checkout workflow that involves multiple steps across a UserRepository. Which test double gives the MOST realistic behaviour while staying fast?",opts:["Mock UserRepository","Fake UserRepository with an in-memory Map","Stub that returns hardcoded users","Real UserRepository with a test database"],ans:1},{q:"A golden test fails in CI but the developer did not change any UI code. What is the MOST likely cause?",opts:["The test assertion is wrong","A dependency update changed a font, colour, or layout — golden tests catch accidental visual changes from indirect dependencies","Golden tests are unreliable and should be ignored","The CI runner uses a different Flutter version"],ans:1},{q:"What command regenerates golden files after an intentional UI change?",opts:["flutter test --golden-update","flutter test --update-goldens","flutter golden --regenerate","dart run golden_toolkit:update"],ans:1},{q:"Your business logic has 95% line coverage but the app has a production bug in an edge case. What does this reveal?",opts:["Coverage was calculated incorrectly","High line coverage does not guarantee correctness — lines can be executed without meaningful assertions testing edge cases","The tests are wrong","95% is not high enough"],ans:1},{q:"A class uses a Singleton accessed via a static getInstance() call internally. Why is this hard to test?",opts:["Singletons are slow","You cannot inject a mock in place of the singleton — the code is tightly coupled to the concrete implementation, making isolation impossible","Static methods cannot be tested","Singletons cause memory leaks in tests"],ans:1},{q:"When should you use a Stub instead of a Mock?",opts:["When you need to verify how many times a method was called","When you only care about the return value and do not need to verify interactions","When you need realistic in-memory behaviour","When testing UI components"],ans:1},{q:"What is the PRIMARY value of committing golden files to git?",opts:["Reduces repository size","Golden files in git become the visual specification — PRs that change them require explicit review and approval, making UI regressions visible in code review","Golden files help CI run faster","They replace unit tests for UI components"],ans:1}],challenge:"Identify one class in a project that is difficult to test because it creates its own dependencies internally. Refactor it to use constructor injection and write one unit test using a Mock and one using a Fake for the same scenario. Compare which is easier to maintain.",resources:[{type:"docs",title:"golden_toolkit package",url:"https://pub.dev/packages/golden_toolkit",source:"pub.dev"},{type:"docs",title:"Flutter Test Doubles — mocktail",url:"https://pub.dev/packages/mocktail",source:"pub.dev"},{type:"docs",title:"flutter test --coverage",url:"https://docs.flutter.dev/testing/overview#coverage",source:"Flutter Docs"},{type:"article",title:"Mocks Aren't Stubs — Martin Fowler",url:"https://martinfowler.com/articles/mocksArentStubs.html",source:"Martin Fowler"}],eli5:"Imagine testing a pizza delivery app. A Mock delivery driver checks their script every step and reports 'wrong!' if you deviate. A Fake delivery driver is a junior colleague who actually drives around but uses a small test city. A Stub is a Post-It note that just says 'pizza delivered' whenever you check. Each has the right job — the art is choosing which one.",codeWalkthrough:["class FakeUserRepository implements UserRepository — implements the REAL interface so it can substitute the real implementation in any test","Map<String, User> _store — in-memory storage; behaves like a real repository but without I/O","void seed(User user) — a test-only helper not in the interface; adds setup data without going through the normal save flow","testGoldens('WorkspaceCard...') — golden_toolkit wrapper that handles font loading and device pixel ratio","await loadAppFonts() — critical: without this, text renders in the fallback font and your golden test catches font mismatches","screenMatchesGolden(tester, 'workspace_card_active') — renders the widget and saves/compares against workspace_card_active.png","BadRepository creates its own Dio — impossible to inject a mock, so it cannot be unit tested without a real network","GoodRepository receives Dio via constructor — swap in MockDio in tests; swap in real Dio in production via dependency injection"],bugChallenge:{code:`class FakeAuthRepository implements AuthRepository {
+  bool _isLoggedIn = false;
+
+  @override
+  Future<bool> login(String email, String password) async {
+    if (email == 'test@test.com') {
+      _isLoggedIn = true;
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  Future<void> logout() async {
+    _isLoggedIn = false;
+  }
+}
+
+// Test
+void main() {
+  test('login returns true for valid credentials', () async {
+    final repo = FakeAuthRepository();
+    final result = await repo.login('test@test.com', 'anypassword');
+    expect(result, isTrue);
+  });
+
+  test('isLoggedIn is true after login', () async {
+    final repo = FakeAuthRepository();
+    expect(repo._isLoggedIn, isTrue);
+  });
+}`,hint:"Look at the second test carefully — it does not call login() first.",answer:"Bug: The second test checks repo._isLoggedIn without first calling repo.login(). _isLoggedIn starts as false, so the test will always fail. Additionally, accessing _isLoggedIn (a private field) from outside the class is an anti-pattern — the test is testing internal state rather than behaviour. Fix: call await repo.login('test@test.com', 'pass') before the assertion, and expose isLoggedIn as a public getter if the interface requires it."},difficulty:"advanced",prereqs:[32,33,34]},
+
+{id:37,title:"CI/CD Basics: Build Pipelines, Artifacts & Secrets",subtitle:"Automating builds, tests, and deployments — from push to production without manual steps",analogy:"CI/CD is like a factory assembly line for your app. Every time you add a new part (commit), the conveyor belt automatically runs quality checks (lint, test), assembles the product (build), and ships it to the store (deploy). Without it, every developer manually assembles and ships — slowly and inconsistently.",points:[{t:"What CI is",d:"Continuous Integration: every code push triggers an automated pipeline that runs lint, tests, and builds. The goal is to detect integration problems immediately, not days later during a manual release."},{t:"What CD is",d:"Continuous Delivery/Deployment: the pipeline automatically delivers build artifacts (APK, IPA) to distribution channels (Play Store internal track, TestFlight, Firebase App Distribution) after CI passes."},{t:"CI/CD platforms for Flutter",d:"GitHub Actions (free tier, YAML, tightly integrated with GitHub), Codemagic (Flutter-specific, easy setup, free tier), Bitrise (mobile-focused, visual pipeline editor). Most teams use GitHub Actions or Codemagic."},{t:"Pipeline stages",d:"Typical Flutter pipeline: checkout → install Flutter → get packages → lint/analyze → unit tests → widget tests → build APK/IPA → upload artifact → (optional) deploy to distribution. Each stage gates the next."},{t:"Environment variables and secrets",d:"API keys, signing credentials, Firebase configs must NEVER be committed to git. Store them as CI secrets (GitHub Secrets, Codemagic environment groups). Access them in YAML as \${{ secrets.MY_SECRET }}."},{t:"Artifacts",d:"The output files from a CI build — APKs, IPAs, test coverage reports, screenshots. Artifacts are stored in CI for download or passed to deployment stages. Without artifacts, you cannot distribute a CI-built app."},{t:"GitHub Actions for Flutter",d:"Create .github/workflows/ci.yml. Key actions: actions/checkout@v4, subosito/flutter-action@v2. Triggers: on push to main and on pull_request. Jobs define the steps that run on ubuntu-latest or macos-latest runners."},{t:"Matrix builds",d:"Test across multiple Flutter versions or OS combinations using a matrix strategy. Ensures your app works on stable and beta channels and on both Android and iOS."},{t:"Fail fast",d:"Lint and analyze should run before tests. Tests before builds. If lint fails, do not waste 10 minutes building. The goal is the fastest possible signal that something is wrong."},{t:"Branch protection rules",d:"Configure GitHub to require CI to pass before merging a PR. This enforces that no broken code enters main. Combined with required reviewers, this is the minimum viable quality gate for a production team."}],whatIs:"CI/CD (Continuous Integration / Continuous Delivery) automates the process of validating, building, and distributing your Flutter app every time code is pushed. It replaces manual build and test steps with a reliable, repeatable pipeline that runs in the cloud.",realWorld:"On a SaaS collaboration app, adding a GitHub Actions pipeline caught that a developer had accidentally committed a hardcoded API key in a config file. The secret scanning step flagged it before the PR was merged, preventing a potential security breach.",code:`# .github/workflows/flutter_ci.yml
+name: Flutter CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Lint, Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run lint / analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Run unit and widget tests
+        run: flutter test --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: \${{ secrets.CODECOV_TOKEN }}
+          file: coverage/lcov.info
+
+      - name: Build Android APK (debug)
+        run: flutter build apk --debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+  build-release:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+    needs: test  # Only runs if 'test' job passes
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+
+      - name: Decode keystore
+        run: |
+          echo "\${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      - name: Create key.properties
+        run: |
+          cat > android/key.properties <<EOF
+          storePassword=\${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword=\${{ secrets.KEY_PASSWORD }}
+          keyAlias=\${{ secrets.KEY_ALIAS }}
+          storeFile=keystore.jks
+          EOF
+
+      - name: Build release APK
+        run: flutter build apk --release`,funFact:"GitHub Actions has over 15,000 community-built actions in the marketplace. The subosito/flutter-action alone has been used in over 50,000 repositories and handles Flutter SDK caching, significantly reducing pipeline run time from 3 minutes to under 30 seconds.",quiz:[{q:"What is the PRIMARY purpose of Continuous Integration?",opts:["To automatically deploy the app to production","To detect integration problems immediately when code is pushed, through automated lint, tests, and builds","To manage app store submissions","To generate release notes automatically"],ans:1},{q:"Where should signing credentials (keystore password, key alias) be stored in a CI pipeline?",opts:["In a .env file committed to git","As CI platform secrets (GitHub Secrets, Codemagic environment groups) — never in the repository","In a config.dart file that is gitignored","Hardcoded in the build script"],ans:1},{q:"In a GitHub Actions workflow, what does 'needs: test' do in a downstream job?",opts:["Requires the 'test' job to be manually approved","Ensures the downstream job only runs if the 'test' job succeeded","Shares environment variables from the test job","Caches the Flutter SDK from the test job"],ans:1},{q:"What is the MAIN risk of NOT having a CI pipeline on a production Flutter app?",opts:["Builds take longer","Broken code can be merged to main without anyone noticing, causing regressions that are discovered by users instead of automated checks","Code coverage cannot be measured","The app cannot be submitted to the app store"],ans:1},{q:"Why should lint/analyze run BEFORE tests in the pipeline?",opts:["Lint is faster and catches obvious errors early — if lint fails, running a 5-minute test suite wastes time","Lint must run first for legal compliance reasons","Tests depend on lint output","Lint is more important than tests"],ans:0},{q:"A developer pushes a commit that breaks the login flow. CI passes because the login test was deleted. What does this reveal about the CI setup?",opts:["CI is working correctly","CI is only as good as the tests it runs — a passing pipeline with deleted tests provides false confidence","The CI platform is unreliable","Branch protection rules need updating"],ans:1},{q:"What is a CI artifact in the context of a Flutter pipeline?",opts:["A test coverage percentage","The output files from a build (APK, IPA) stored by CI for download or deployment","A cached Flutter SDK version","An error log from a failed build"],ans:1},{q:"Which CI platform is MOST commonly recommended for Flutter-specific projects due to native Flutter support?",opts:["Jenkins","Travis CI","Codemagic or GitHub Actions with subosito/flutter-action","CircleCI"],ans:2}],challenge:"Write a GitHub Actions YAML workflow (or describe it in detail) that: (1) runs on PRs to main, (2) runs flutter analyze and flutter test, (3) blocks merge if either fails, (4) stores the test coverage report as an artifact.",resources:[{type:"docs",title:"GitHub Actions for Flutter",url:"https://docs.flutter.dev/deployment/cd",source:"Flutter Docs"},{type:"docs",title:"subosito/flutter-action",url:"https://github.com/subosito/flutter-action",source:"GitHub"},{type:"docs",title:"Codemagic for Flutter",url:"https://docs.codemagic.io/flutter/flutter-projects/",source:"Codemagic Docs"},{type:"docs",title:"GitHub Encrypted Secrets",url:"https://docs.github.com/en/actions/security-guides/encrypted-secrets",source:"GitHub Docs"}],eli5:"Imagine every time you add a brick to a Lego building, a robot automatically checks: is the brick the right colour? Does it fit? Does the whole building still stand? If yes, the robot adds it to the official building. If no, the robot says 'stop, fix this first.' CI/CD is that robot for your app code.",codeWalkthrough:["on: push: branches: [main, develop] — triggers the pipeline on every push to these branches","on: pull_request: branches: [main] — also triggers on PRs targeting main, enabling PR status checks","uses: subosito/flutter-action@v2 with cache: true — downloads and caches the Flutter SDK, reducing run time from ~3 min to ~20 sec","flutter analyze --fatal-infos — fails the pipeline on any analysis warning, not just errors; enforces code quality","flutter test --coverage — runs all tests and generates coverage/lcov.info","needs: test — the release build job only starts after the test job passes; enforces quality gates","echo \${{ secrets.KEYSTORE_BASE64 }} | base64 --decode > keystore.jks — decodes a base64-encoded keystore stored as a CI secret into a file","cat > android/key.properties — writes signing config from secrets into a file that Gradle reads; the file never exists in the repo"],bugChallenge:{code:`# .github/workflows/ci.yml
+name: Flutter CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - run: flutter test`,hint:"There are two ordering problems and one security problem.",answer:"Bug 1: flutter build apk --release runs BEFORE flutter test — the pipeline builds a release APK even when tests would fail. Tests should always run before builds. Bug 2: flutter analyze is missing entirely — lint/analyze should run between pub get and test. Bug 3: Building a release APK on CI without signing credentials will fail or produce an unsigned APK. Either use --debug for CI validation builds or add keystore secrets. Correct order: checkout → flutter-action → pub get → analyze → test → build."},difficulty:"intermediate",prereqs:[31]},
+
+{id:38,title:"Flavors, Signing, Release Builds & Store Workflows",subtitle:"Managing dev/staging/prod environments, Android signing, and app store submission pipelines",analogy:"Build flavors are like a restaurant having separate menus for staff meals, soft openings, and the public — same kitchen, different ingredients and branding. Signing is the restaurant's health certificate — the store will not let you serve food without it.",points:[{t:"What build flavors are",d:"Flavors let you build multiple app variants from the same codebase with different bundle IDs, API endpoints, app names, icons, and Firebase projects. Common flavors: development, staging, production."},{t:"Android flavor setup",d:"Define productFlavors in android/app/build.gradle. Each flavor can override applicationId, versionName, and resValues. Flutter accesses the current flavor via --flavor flag at build time."},{t:"iOS flavor setup",d:"iOS uses Schemes and Targets instead of flavors. Create a scheme per environment in Xcode. The --flavor flag maps to a scheme name. More complex than Android — a common source of iOS CI failures."},{t:"Dart-side environment config",d:"Use a FlavorConfig class or dart-define to inject environment values (API URLs, feature flags) at compile time. Avoid reading from .env files at runtime in production — values should be baked in at build time."},{t:"Android signing — keystore",d:"Generate a keystore with keytool. Store signing config in android/key.properties (gitignored). Reference key.properties in build.gradle using signingConfigs. Never commit the keystore or key.properties to git."},{t:"Release build commands",d:"flutter build apk --release --flavor production builds a signed split APK. flutter build appbundle --release --flavor production builds an AAB for Play Store. AAB is required for new Play Store submissions."},{t:"Play Store submission workflow",d:"Upload AAB to Internal Testing track → promote to Closed Testing (beta) → promote to Production. Each promotion can be gated on crashlytics thresholds and review. Use fastlane or Codemagic for automation."},{t:"iOS provisioning and signing",d:"Requires Apple Developer account, provisioning profiles (App Store distribution), and distribution certificate. match (fastlane) manages these in a git repo. Manual management is error-prone and does not scale."},{t:"Versioning strategy",d:"pubspec.yaml version: 1.2.3+45 — the 1.2.3 is the display version (major.minor.patch), 45 is the build number (versionCode on Android, CFBundleVersion on iOS). Build number must increment with every store submission."},{t:"Over-the-air updates",d:"Shorebird provides Dart-level code push — deploy bug fixes without going through app store review. Awareness of this in an interview signals production maturity. Not a replacement for proper releases but valuable for critical bug fixes."}],whatIs:"Build flavors enable managing multiple app environments (dev/staging/prod) from one codebase. Android signing with keystores and iOS provisioning profiles are mandatory for release builds. Understanding the full store submission pipeline is a key senior Flutter engineer competency.",realWorld:"On a fintech claims app, the team ran BankID auth testing against the production BankID endpoint from the dev flavor because the API_BASE_URL was hardcoded. After setting up flavors with dart-define, dev flavor pointed to the sandbox, preventing real BankID calls in development.",code:`// === android/app/build.gradle — flavor configuration ===
+android {
+    flavorDimensions "environment"
+
+    productFlavors {
+        development {
+            dimension "environment"
+            applicationId "com.example.app.dev"
+            resValue "string", "app_name", "MyApp Dev"
+            versionNameSuffix "-dev"
+        }
+        staging {
+            dimension "environment"
+            applicationId "com.example.app.staging"
+            resValue "string", "app_name", "MyApp Staging"
+        }
+        production {
+            dimension "environment"
+            applicationId "com.example.app"
+            resValue "string", "app_name", "MyApp"
+        }
+    }
+
+    signingConfigs {
+        release {
+            def keystoreProperties = new Properties()
+            def keystorePropertiesFile = rootProject.file('app/key.properties')
+            if (keystorePropertiesFile.exists()) {
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+            }
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+        }
+    }
+}
+
+// === lib/config/flavor_config.dart ===
+enum Flavor { development, staging, production }
+
+class FlavorConfig {
+  final Flavor flavor;
+  final String apiBaseUrl;
+  final bool enableCrashlytics;
+
+  static late FlavorConfig _instance;
+  static FlavorConfig get instance => _instance;
+
+  FlavorConfig._({
+    required this.flavor,
+    required this.apiBaseUrl,
+    required this.enableCrashlytics,
+  });
+
+  static void initialize({
+    required Flavor flavor,
+    required String apiBaseUrl,
+    required bool enableCrashlytics,
+  }) {
+    _instance = FlavorConfig._(
+      flavor: flavor,
+      apiBaseUrl: apiBaseUrl,
+      enableCrashlytics: enableCrashlytics,
+    );
+  }
+}
+
+// === main_production.dart ===
+void main() {
+  FlavorConfig.initialize(
+    flavor: Flavor.production,
+    apiBaseUrl: 'https://api.example.com',
+    enableCrashlytics: true,
+  );
+  runApp(const MyApp());
+}
+
+// === Build commands ===
+// flutter run --flavor development -t lib/main_development.dart
+// flutter build appbundle --release --flavor production -t lib/main_production.dart`,funFact:"The Android App Bundle (AAB) format, required for Play Store since August 2021, allows Google Play to generate optimised APKs per device configuration. This typically reduces app download size by 15-20% compared to a universal APK.",quiz:[{q:"What is the PRIMARY purpose of build flavors in Flutter?",opts:["To reduce app size","To run multiple environment configurations (dev/staging/prod) from the same codebase with different bundle IDs, endpoints, and branding","To enable A/B testing of features","To support multiple languages"],ans:1},{q:"Where should the Android keystore password be stored in a production project?",opts:["In android/key.properties committed to git","As a CI/CD secret, injected into key.properties at build time; key.properties must be gitignored","In lib/config/secrets.dart","In pubspec.yaml as an environment variable"],ans:1},{q:"What format does the Play Store REQUIRE for new app submissions?",opts:["Universal APK (.apk)","Split APK","Android App Bundle (.aab)","ZIP archive of APKs"],ans:2},{q:"What does the build number (the +45 part of version: 1.2.3+45) map to on Android?",opts:["versionName","versionCode — must be incremented with every store upload","buildNumber — optional","packageVersion"],ans:1},{q:"A developer runs the app in development flavor but it calls the production API. What is the most likely cause?",opts:["Flavors do not affect API URLs","The API base URL is hardcoded in the repository layer instead of being injected via FlavorConfig or dart-define","The flavor was not set in pubspec.yaml","Android flavors only affect app icons"],ans:1},{q:"What is Shorebird and when is it valuable?",opts:["A Flutter state management solution","A code push service that allows deploying Dart code changes without app store review — valuable for critical bug fixes that cannot wait days for review","A CI/CD platform for Flutter","An alternative to flavors for environment management"],ans:1},{q:"What is the MAIN advantage of using fastlane match for iOS signing?",opts:["It is faster than manual signing","It stores provisioning profiles and certificates in a git repo, making them sharable across the team and reproducible in CI — eliminating 'works on my machine' signing failures","It is free","It eliminates the need for an Apple Developer account"],ans:1},{q:"Why should minifyEnabled and shrinkResources both be true in the release build type?",opts:["They improve runtime performance","minifyEnabled obfuscates and shrinks code (removing unused code), shrinkResources removes unused assets — together they reduce APK/AAB size significantly","They are required by the Play Store","They enable ProGuard rules"],ans:1}],challenge:"Describe (in interview-ready language) how you would set up three flavors for a fintech app: dev (sandbox API, debug signing), staging (staging API, debug signing), production (production API, release signing). Include how you would prevent the keystore from being committed to git.",resources:[{type:"docs",title:"Flutter Build Flavors",url:"https://docs.flutter.dev/deployment/flavors",source:"Flutter Docs"},{type:"docs",title:"Android App Signing",url:"https://developer.android.com/studio/publish/app-signing",source:"Android Docs"},{type:"docs",title:"Flutter Android Release Build",url:"https://docs.flutter.dev/deployment/android",source:"Flutter Docs"},{type:"docs",title:"Shorebird Code Push",url:"https://shorebird.dev/",source:"Shorebird"}],eli5:"Imagine your app is a pizza. Flavors let you make a 'development pizza' (cheap ingredients, messy, for the chefs to taste), a 'staging pizza' (almost the real thing, for trusted friends to review), and a 'production pizza' (perfect, for paying customers). Signing is the health certificate that says the pizza was made in a licensed kitchen — the app store refuses unsigned pizzas.",codeWalkthrough:["productFlavors { development { applicationId 'com.example.app.dev' } } — different bundle ID per flavor lets dev and prod be installed side by side on the same device","resValue 'string', 'app_name', 'MyApp Dev' — overrides the app name shown on the home screen per flavor","signingConfigs.release reads from key.properties — the file is gitignored; CI injects it from secrets at build time","minifyEnabled true — enables R8 code shrinking and obfuscation in release builds","class FlavorConfig — singleton pattern with static late _instance; initialised in main_production.dart before runApp","main_production.dart sets apiBaseUrl to the real API — each flavor has its own main file as the entry point","flutter build appbundle --release --flavor production -t lib/main_production.dart — specifies both the flavor and entry point"],bugChallenge:{code:`// android/app/build.gradle
+signingConfigs {
+  release {
+    keyAlias 'my-key'
+    keyPassword 'supersecret123'
+    storeFile file('keystore.jks')
+    storePassword 'keystorepass456'
+  }
+}`,hint:"This will build successfully but creates a serious security problem.",answer:"Bug: The signing credentials (keyAlias, keyPassword, storeFile, storePassword) are hardcoded directly in build.gradle. If this file is committed to git (which it usually is), the keystore password is exposed to everyone with repo access — and permanently in git history even if later removed. Fix: move credentials to android/key.properties (add to .gitignore), load them with Properties() at build time, and store the actual values as CI secrets injected at build time."},difficulty:"intermediate",prereqs:[37]},
+
+{id:39,title:"Platform Channels: Method Channels, Event Channels & Pigeon",subtitle:"Bridging Flutter and native Android/iOS — calling platform APIs and streaming native data",analogy:"Platform channels are a bilingual interpreter between Flutter and native code. Flutter speaks Dart, Android speaks Kotlin/Java, iOS speaks Swift/ObjC. The interpreter (channel) stands in the middle, translates the message, waits for the response, and translates it back. Without this interpreter, they cannot communicate at all.",points:[{t:"Why platform channels exist",d:"Flutter cannot access all device APIs directly — Bluetooth details, NFC, custom sensors, native audio engines, platform-specific security APIs. Channels bridge Dart and native code when the Dart/plugin ecosystem has no solution."},{t:"MethodChannel — one-shot calls",d:"MethodChannel is for request-response interactions: call a native method, get a result back. Think: get battery level, check biometric availability, trigger a native share sheet. The Dart side awaits the result."},{t:"EventChannel — native streams",d:"EventChannel is for continuous native-to-Dart data streams: accelerometer updates, NFC tag scans, Bluetooth device discoveries, network reachability changes. The Dart side receives a Stream<dynamic>."},{t:"BasicMessageChannel",d:"For raw message passing without the method call structure. Used for custom binary protocols or when you control both sides and want a simple ping-pong mechanism. Less common in production apps."},{t:"Channel naming conventions",d:"Use reverse-DNS format: 'com.example.myapp/battery'. The same string must match exactly on both Dart and native sides. A mismatch results in MissingPluginException — a common gotcha in interviews."},{t:"Data type serialisation",d:"Channels use StandardMessageCodec by default, which handles: null, bool, int, double, String, Uint8List, List, Map. Custom objects must be serialised to Map<String, dynamic> before sending. Sending an unsupported type causes a codec exception."},{t:"Pigeon — type-safe code generation",d:"Pigeon generates type-safe Dart, Kotlin, and Swift code from a Dart interface definition. Eliminates manual serialisation, string-based method names, and runtime type errors. The production standard for new platform channel code."},{t:"Error handling in channels",d:"Wrap native calls in try/catch PlatformException on the Dart side. On the native side, call result.error() with a code, message, and details. Always handle MissingPluginException for features not available on all platforms."},{t:"Asynchronous execution on native",d:"Never block the platform channel thread on Android (main thread). Dispatch heavy work to a background thread and call result.success() from the correct thread. Blocking the main thread causes ANR (Application Not Responding)."},{t:"When to use a plugin vs writing channels yourself",d:"Always check pub.dev first — over 90% of common platform integrations have a maintained plugin. Write your own channel only when: no plugin exists, the existing plugin does not support your specific use case, or you need tight control for performance-critical native code."}],whatIs:"Platform channels are a typed message-passing mechanism that allows Flutter (Dart) code to call native Android (Kotlin/Java) and iOS (Swift/ObjC) code — and receive responses or continuous streams back. They are the foundation of all Flutter plugins.",realWorld:"On an NFC asset recovery app, an EventChannel streamed NFC tag scan events from the Android NFC hardware to Flutter in real time. A MethodChannel handled the one-shot 'write data to tag' operation. Pigeon was used to generate type-safe bindings so the Dart team and Android team could work without runtime codec errors.",code:`// === Dart side: MethodChannel (one-shot) ===
+class BatteryService {
+  static const _channel = MethodChannel('com.example.myapp/battery');
+
+  Future<int> getBatteryLevel() async {
+    try {
+      final level = await _channel.invokeMethod<int>('getBatteryLevel');
+      return level ?? -1;
+    } on PlatformException catch (e) {
+      throw BatteryException('Failed to get battery: \${e.message}');
+    } on MissingPluginException {
+      throw BatteryException('Battery API not available on this platform');
+    }
+  }
+}
+
+// === Android side (Kotlin): MethodChannel ===
+// MainActivity.kt
+class MainActivity : FlutterActivity() {
+  private val CHANNEL = "com.example.myapp/battery"
+
+  override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+    super.configureFlutterEngine(flutterEngine)
+
+    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
+      .setMethodCallHandler { call, result ->
+        if (call.method == "getBatteryLevel") {
+          val batteryLevel = getBatteryLevel()
+          if (batteryLevel != -1) {
+            result.success(batteryLevel)
+          } else {
+            result.error("UNAVAILABLE", "Battery level not available", null)
+          }
+        } else {
+          result.notImplemented()
+        }
+      }
+  }
+
+  private fun getBatteryLevel(): Int {
+    val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+    return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+  }
+}
+
+// === Dart side: EventChannel (stream) ===
+class NfcScanService {
+  static const _channel = EventChannel('com.example.myapp/nfc_scan');
+
+  Stream<NfcTag> get tagScans {
+    return _channel.receiveBroadcastStream().map((dynamic event) {
+      final data = Map<String, dynamic>.from(event as Map);
+      return NfcTag.fromMap(data);
+    });
+  }
+}
+
+// Usage in a BLoC or widget:
+// nfcScanService.tagScans.listen((tag) {
+//   bloc.add(NfcTagScannedEvent(tag));
+// });
+
+// === Pigeon definition (pigeons/messages.dart) ===
+// Run: dart run pigeon --input pigeons/messages.dart
+import 'package:pigeon/pigeon.dart';
+
+@HostApi()
+abstract class DeviceInfoApi {
+  DeviceInfoResult getDeviceInfo();
+}
+
+class DeviceInfoResult {
+  final String model;
+  final int sdkVersion;
+  const DeviceInfoResult({required this.model, required this.sdkVersion});
+}`,funFact:"The Flutter plugin ecosystem on pub.dev has over 4,000 plugins that use platform channels under the hood. When you add camera, bluetooth, or local_auth to pubspec.yaml, you are using platform channels that other developers wrote — each one is a Dart-to-native bridge.",quiz:[{q:"What is the CORRECT use case for an EventChannel vs a MethodChannel?",opts:["EventChannel for async operations, MethodChannel for synchronous ones","EventChannel for continuous native-to-Dart streams (sensor data, NFC scans); MethodChannel for one-shot request-response calls (get battery level, check biometrics)","EventChannel for Android, MethodChannel for iOS","They are interchangeable — choose based on preference"],ans:1},{q:"A Flutter app throws MissingPluginException when calling a MethodChannel method. What is the MOST likely cause?",opts:["The method name is spelled differently on the Dart side vs the native side, OR the channel was not registered in the native FlutterEngine setup","The device does not support the feature","The Dart code has a bug","The channel name has uppercase letters"],ans:0},{q:"Why must the channel name string EXACTLY match between Dart and native code?",opts:["For security — matching names prevent unauthorised calls","Channel routing is string-based — a single character difference means the Dart call never reaches the native handler, resulting in MissingPluginException","Flutter requires reverse-DNS format","For analytics tracking"],ans:1},{q:"You want to call a native method that takes a custom Dart object as a parameter. What must you do first?",opts:["Pass the object directly — channels handle serialisation automatically","Serialise the object to a Map<String, dynamic> before passing — channels only support primitive types and collections via StandardMessageCodec","Convert to JSON string","Use Pigeon which handles object serialisation natively"],ans:0},{q:"What is the MAIN advantage of Pigeon over manually written platform channels?",opts:["Pigeon is faster at runtime","Pigeon generates type-safe Dart, Kotlin, and Swift code from a single interface definition — eliminating string-based method names, manual serialisation, and runtime type errors","Pigeon supports more data types","Pigeon requires no native code"],ans:1},{q:"On Android, why should you NEVER block the platform channel thread in native code?",opts:["It consumes more battery","The platform channel callback runs on the Android main (UI) thread — blocking it causes ANR (Application Not Responding) and a system dialog asking the user to kill the app","It causes a memory leak","It prevents other channels from working"],ans:1},{q:"When should you write a custom platform channel instead of using a pub.dev plugin?",opts:["Always — plugins are unreliable","When no maintained plugin exists for your specific use case, or when you need tight control over the native implementation for performance or platform-specific features","When the app is large","When using Pigeon"],ans:1},{q:"On an NFC app, you want real-time tag scan events delivered to Flutter as a Stream. Which channel type is CORRECT?",opts:["MethodChannel with polling every 100ms","EventChannel — it delivers a continuous native-to-Dart stream without polling","BasicMessageChannel","Pigeon HostApi with a Stream return type"],ans:1}],challenge:"Design a platform channel integration for reading a device's ambient light sensor. Specify: (1) channel type and name, (2) data format sent from native to Dart, (3) error handling strategy, (4) whether you would use Pigeon and why.",resources:[{type:"docs",title:"Platform Channels — Flutter Docs",url:"https://docs.flutter.dev/platform-integration/platform-channels",source:"Flutter Docs"},{type:"docs",title:"Pigeon package",url:"https://pub.dev/packages/pigeon",source:"pub.dev"},{type:"docs",title:"Writing custom platform-specific code",url:"https://docs.flutter.dev/platform-integration/platform-channels",source:"Flutter Docs"},{type:"docs",title:"EventChannel API",url:"https://api.flutter.dev/flutter/services/EventChannel-class.html",source:"Flutter API"}],eli5:"Imagine Flutter is an English speaker and Android is a Korean speaker. They cannot talk directly. Platform channels are a translator who stands between them. For a one-time question ('what time is it?') you use a MethodChannel. For a live radio broadcast ('tell me every time a car passes') you use an EventChannel. Pigeon writes the translator's phrasebook automatically so nobody makes mistakes.",codeWalkthrough:["static const _channel = MethodChannel('com.example.myapp/battery') — the channel name is the address; must match exactly in native code","_channel.invokeMethod<int>('getBatteryLevel') — typed generic ensures the return value is cast to int; crashes at runtime if native sends wrong type","on PlatformException catch (e) — catches errors sent by result.error() on the native side","on MissingPluginException — catches the case where native never registered this channel (important for platform-conditional features)","MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler — registers the native handler; must run inside configureFlutterEngine","result.notImplemented() — sent back to Dart when the method name is not recognised; triggers MissingPluginException on the Dart side","EventChannel('com.example.myapp/nfc_scan').receiveBroadcastStream() — returns a Dart Stream backed by the native EventChannel","Map<String, dynamic>.from(event as Map) — deserialises the Map sent from native into a typed Dart object"],bugChallenge:{code:`// Dart side
+const _channel = MethodChannel('com.example.app/sensors');
+
+Future<double> getTemperature() async {
+  final temp = await _channel.invokeMethod('getTemperature');
+  return temp;
+}
+
+// Kotlin side
+MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.example.app/sensor")
+  .setMethodCallHandler { call, result ->
+    if (call.method == "getTemperature") {
+      result.success(23.5)
+    }
+  }`,hint:"The method will always throw MissingPluginException even though both sides look correct. Compare the channel names character by character.",answer:"Bug: The Dart side uses channel name 'com.example.app/sensors' (plural) but the Kotlin side registers 'com.example.app/sensor' (singular). This one character difference means the Dart call never reaches the Kotlin handler. The fix is to make both strings identical. This is one of the most common platform channel bugs and is why defining channel names as shared constants (or using Pigeon) is best practice."},difficulty:"advanced",prereqs:[4,5]},
+
+{id:40,title:"FFI & Native Library Binding",subtitle:"Calling C/C++ libraries directly from Dart — maximum performance when platform channels are not enough",analogy:"Platform channels are like making a phone call to get information from a native department — you explain what you need, they look it up, and they call back. FFI is like being given a direct pass-key to the file room and retrieving the document yourself. It is faster and more direct, but you need to know exactly where things are and clean up after yourself.",points:[{t:"What dart:ffi is",d:"dart:ffi (Foreign Function Interface) allows Dart code to call C and C++ functions directly, passing native types without the overhead of channel message serialisation. It is the lowest-level native integration available in Flutter."},{t:"When FFI is needed over platform channels",d:"FFI is for: calling existing C/C++ libraries (image processing, cryptography, audio codecs, ML model inference), achieving sub-millisecond latency where channel overhead matters, and cross-platform native code reused on both Android and iOS."},{t:"FFI performance characteristics",d:"FFI eliminates the channel serialisation overhead (~1-5ms per call). For single calls, the difference is negligible. For tight loops calling native code thousands of times per second (audio processing, video frames), FFI is the correct choice."},{t:"Native types in FFI",d:"dart:ffi provides C-equivalent types: Int32, Int64, Float, Double, Pointer<T>, Struct. Dart types (int, double, String) must be converted to these native types before passing to C functions."},{t:"DynamicLibrary loading",d:"Load a shared library with DynamicLibrary.open('libname.so') on Android or DynamicLibrary.process() for statically linked libraries. On iOS, most native code is statically linked — use process()."},{t:"Struct binding",d:"Use Struct subclasses to represent C structs in Dart. Fields must be annotated with @Int32(), @Float() etc. Allows passing complex data to native functions without manual serialisation."},{t:"package:ffigen for auto-generation",d:"ffigen parses C header files (.h) and generates Dart FFI bindings automatically. This is the production approach for large libraries — manually writing bindings for a 500-function library is impractical and error-prone."},{t:"Memory management in FFI",d:"C does not have garbage collection. Memory allocated with malloc() must be freed with free(). Use calloc from package:ffi for automatic zeroing. Use Arena (package:ffi) for scoped allocation that frees on exit."},{t:"Isolate considerations",d:"FFI calls on the main Dart isolate block the event loop if the C function is slow. For long-running C operations, use compute() or Isolate.run() to offload to a background isolate, then call FFI from there."},{t:"When to mention FFI in interviews",d:"FFI is an advanced topic. Mentioning it signals you understand the full Flutter-to-native stack. Practical examples: integrating a PDF rendering library, using a C-based crypto library for FIPS compliance, integrating a C++ ML inference engine."}],whatIs:"dart:ffi (Foreign Function Interface) provides a direct bridge between Dart and C/C++ code, bypassing the platform channel mechanism entirely. It is used for performance-critical native integrations and reusing existing C/C++ libraries on both Android and iOS from a single Dart binding.",realWorld:"On a field survey app that processed offline map tiles, the team integrated a C-based image compression library via FFI instead of a platform channel. The channel-based approach took 8ms per tile (unacceptable for real-time map rendering). FFI reduced it to 0.3ms — a 26x improvement.",code:`// === Simple FFI example: calling C sqrt function ===
+import 'dart:ffi';
+import 'dart:io' show Platform;
+
+// 1. Define the C function signature in Dart FFI types
+typedef SqrtC = Double Function(Double);          // C type
+typedef SqrtDart = double Function(double);       // Dart type
+
+// 2. Load the library
+final DynamicLibrary stdlib = Platform.isAndroid
+    ? DynamicLibrary.open('libm.so')              // Android: libm.so
+    : DynamicLibrary.process();                   // iOS: statically linked
+
+// 3. Look up the function and get a Dart callable
+final SqrtDart nativeSqrt = stdlib
+    .lookup<NativeFunction<SqrtC>>('sqrt')
+    .asFunction<SqrtDart>();
+
+void main() {
+  print(nativeSqrt(9.0));  // 3.0 — called directly, no channel overhead
+}
+
+// === Real-world FFI: custom C library for NFC data parsing ===
+// native/nfc_parser.h:
+// struct NfcPayload { int32_t length; uint8_t* data; };
+// int32_t parse_nfc_ndef(uint8_t* raw, int32_t len, NfcPayload* out);
+
+// Dart binding generated by ffigen or written manually:
+final class NfcPayload extends Struct {
+  @Int32()
+  external int length;
+
+  external Pointer<Uint8> data;
+}
+
+typedef ParseNdefC = Int32 Function(
+  Pointer<Uint8> raw,
+  Int32 len,
+  Pointer<NfcPayload> out,
+);
+typedef ParseNdefDart = int Function(
+  Pointer<Uint8> raw,
+  int len,
+  Pointer<NfcPayload> out,
+);
+
+class NfcParser {
+  static final _lib = DynamicLibrary.open('libnfc_parser.so');
+  static final _parseNdef = _lib
+      .lookup<NativeFunction<ParseNdefC>>('parse_nfc_ndef')
+      .asFunction<ParseNdefDart>();
+
+  static Uint8List parseNdef(Uint8List rawBytes) {
+    // Allocate native memory
+    final arena = Arena();
+    try {
+      final rawPtr = arena<Uint8>(rawBytes.length);
+      rawPtr.asTypedList(rawBytes.length).setAll(0, rawBytes);
+
+      final outPtr = arena<NfcPayload>();
+      final result = _parseNdef(rawPtr, rawBytes.length, outPtr);
+
+      if (result < 0) throw NfcParseException('Parse failed: \$result');
+
+      return outPtr.ref.data.asTypedList(outPtr.ref.length);
+    } finally {
+      arena.releaseAll(); // Frees all arena-allocated memory
+    }
+  }
+}
+
+// === pubspec.yaml for ffigen ===
+// dev_dependencies:
+//   ffigen: ^9.0.0
+//
+// ffigen:
+//   output: 'lib/src/native/bindings.dart'
+//   headers:
+//     entry-points:
+//       - 'native/nfc_parser.h'`,funFact:"Dart's FFI was inspired by Python's ctypes and Go's cgo. It became stable in Dart 2.12 (Flutter 2.0). Before FFI, every native integration required both Dart and Kotlin/Swift code — FFI enables pure Dart-and-C libraries that work on Android, iOS, Windows, macOS, and Linux from a single codebase.",quiz:[{q:"What is the PRIMARY reason to use FFI instead of a MethodChannel for a performance-critical native operation?",opts:["FFI is easier to write","FFI eliminates the channel serialisation and thread-switching overhead — critical when calling native code in tight loops (thousands of calls per second)","FFI works on more platforms","MethodChannel does not support returning numbers"],ans:1},{q:"When loading a native library on iOS with FFI, why do you typically use DynamicLibrary.process() instead of DynamicLibrary.open()?",opts:["iOS does not support dynamic libraries","DynamicLibrary.open() is Android-only","Most iOS native code is statically linked into the app binary — there is no separate .so file to open","DynamicLibrary.process() is faster on iOS"],ans:2},{q:"What is the role of package:ffigen?",opts:["It manages native library versions","It parses C header files and auto-generates Dart FFI bindings — eliminating manual binding for large C APIs","It optimises FFI call performance","It provides a mock native library for testing"],ans:1},{q:"You are calling a slow C function (500ms) via FFI on the main Dart isolate. What is the PROBLEM?",opts:["FFI does not support slow functions","The function will time out","The slow FFI call blocks the Dart event loop — causing UI freezes (jank). Fix: run FFI from a background isolate using Isolate.run() or compute()","FFI calls must complete within 16ms"],ans:2},{q:"What does Arena from package:ffi provide?",opts:["A memory pool for reusing allocations","Scoped memory management — all memory allocated with an Arena is freed when arena.releaseAll() is called, preventing manual memory leaks in FFI code","A Dart equivalent of C's malloc","A way to convert Dart objects to C structs"],ans:1},{q:"When would you choose FFI over writing a platform channel plugin?",opts:["Always — FFI is always better","When you have an existing C/C++ library to integrate, need sub-millisecond call latency, or want the same native code to run on both Android and iOS from one Dart binding","Only for mathematical operations","When the platform plugin ecosystem is missing for your feature"],ans:1},{q:"What happens if you allocate memory with malloc() in C called via FFI but never call free()?",opts:["Dart's garbage collector will free it","The Dart VM will throw an OutOfMemoryException","The memory is leaked — it is never reclaimed as long as the process runs, gradually consuming available RAM until the app is killed","The FFI runtime automatically frees C allocations"],ans:2},{q:"In a Flutter interview, what does mentioning FFI signal to the interviewer?",opts:["That you prefer low-level programming over Flutter","That you understand the full native integration stack beyond standard plugins — you know when platform channels are insufficient and how to bridge Dart to C/C++ directly","That you have a C/C++ background","That you have performance problems in your apps"],ans:1}],challenge:"Describe in interview-ready language: (1) one real scenario where you would choose FFI over a MethodChannel, (2) how you would handle memory management for a C struct returned from an FFI call, (3) what risk you would warn about when running FFI on the main isolate.",resources:[{type:"docs",title:"dart:ffi — Dart FFI overview",url:"https://dart.dev/guides/libraries/c-interop",source:"Dart Docs"},{type:"docs",title:"ffigen package",url:"https://pub.dev/packages/ffigen",source:"pub.dev"},{type:"docs",title:"package:ffi — Arena and helpers",url:"https://pub.dev/packages/ffi",source:"pub.dev"},{type:"docs",title:"Flutter — Dart and C interop",url:"https://docs.flutter.dev/platform-integration/android/c-interop",source:"Flutter Docs"}],eli5:"Normally Flutter asks Android 'can you do this thing for me?' through a polite messenger (platform channel). FFI is different — Dart goes into the C library's house directly, picks up the tool it needs, uses it, and puts it back. It is faster because there is no messenger, but you have to clean up after yourself — or the house gets messy (memory leak).",codeWalkthrough:["typedef SqrtC = Double Function(Double) — the C function signature in FFI native types","typedef SqrtDart = double Function(double) — the equivalent Dart callable type","DynamicLibrary.open('libm.so') on Android — loads the C math library from the Android system","stdlib.lookup<NativeFunction<SqrtC>>('sqrt').asFunction<SqrtDart>() — finds the 'sqrt' symbol and wraps it as a Dart-callable function","nativeSqrt(9.0) — calls C sqrt directly; no channel overhead, no serialisation","final class NfcPayload extends Struct — maps a C struct to Dart; @Int32() annotation tells FFI the field size","Arena arena — scoped allocator; all allocations freed in the finally block via arena.releaseAll()","rawPtr.asTypedList(rawBytes.length).setAll(0, rawBytes) — copies Dart Uint8List bytes into native memory for the C function to read"],bugChallenge:{code:`import 'dart:ffi';
+
+typedef AddC = Int32 Function(Int32, Int32);
+typedef AddDart = int Function(int, int);
+
+final lib = DynamicLibrary.open('libmath.so');
+final add = lib.lookup<NativeFunction<AddC>>('add')
+    .asFunction<AddDart>();
+
+void processItems(List<int> items) {
+  for (final item in items) {
+    final result = add(item, 10);
+    print(result);
+  }
+}`,hint:"This code is technically correct but has a performance/architecture problem for large lists. Think about where this is likely running.",answer:"Bug: If processItems() is called with thousands of items on the main Dart isolate, the FFI calls (even though fast individually) collectively block the event loop. For large lists with heavy native processing, this should be offloaded to a background isolate using Isolate.run() or compute(). Additionally, DynamicLibrary.open() should be called once and cached as a top-level or static variable — calling it inside processItems() on every call would be extremely expensive (though in this code it is already at the top level, which is correct). The fix for the isolate issue: wrap processItems() in Isolate.run(() => processItems(items)) from the caller."},difficulty:"advanced",prereqs:[39]},
+
+{id:41,title:"Push Notifications, Background Work & Deep Links",subtitle:"FCM, local notifications, WorkManager, deep links, and app lifecycle",analogy:"Think of push notifications as a doorbell system for your app. FCM is the postal service that delivers the ring signal, local notifications are your doorbell hardware, WorkManager is a reliable butler who handles tasks even when you're asleep, and deep links are the house address that routes visitors straight to the right room — not just the front door.",points:[{t:"FCM Setup",d:"Firebase Cloud Messaging requires google-services.json (Android) and GoogleService-Info.plist (iOS). Initialize with Firebase.initializeApp() and request notification permissions via firebase_messaging before accessing tokens."},{t:"FCM Token",d:"FirebaseMessaging.instance.getToken() returns a device-unique registration token. Store this on your server to target specific devices. Tokens can rotate — listen to onTokenRefresh to update your server."},{t:"Message Handlers",d:"FCM provides three entry points: onMessage (foreground), onMessageOpenedApp (background tap), and getInitialMessage (terminated state tap). Each requires different handling logic."},{t:"Background Message Handler",d:"FirebaseMessaging.onBackgroundMessage(handler) runs in a separate Dart isolate on Android. The handler must be a top-level function (not a class method) and cannot access UI or most Flutter state."},{t:"Local Notifications",d:"flutter_local_notifications displays scheduled or immediate notifications without FCM. Useful for alarms, reminders, and offline notifications. Requires channel setup on Android 8+ (Oreo+)."},{t:"WorkManager",d:"workmanager package wraps Android WorkManager and iOS BGTaskScheduler. Use for deferred background tasks (sync, cleanup). Tasks run even after app is killed, constrained by battery and network conditions."},{t:"Deep Links",d:"app_links package (successor to uni_links) handles both App Links (Android) and Universal Links (iOS). Requires intent-filter in AndroidManifest.xml and associated domains in Apple entitlements."},{t:"AppLifecycleState",d:"WidgetsBindingObserver.didChangeAppLifecycleState fires: resumed (foreground), inactive (transition), paused (background), detached (terminated). Use to pause/resume resources like timers or camera streams."},{t:"Foreground Notification Display",d:"On iOS, FCM foreground messages are silent by default. Use FirebaseMessaging.instance.setForegroundNotificationPresentationOptions to show banners/badges/sounds while app is open."},{t:"Notification Channels",d:"Android 8+ requires notification channels with importance levels. Create channels at app startup. Users can disable individual channels in system settings — your app must handle missing permission gracefully."},{t:"Testing Push",d:"Use Firebase Console, FCM REST API, or the FlutterFire CLI to send test messages. Always test all three app states (foreground, background, terminated) as behavior differs significantly."}],whatIs:"Push notifications let servers proactively alert users. Background work lets apps run tasks without being in the foreground. Deep links route users from external sources (email, web, other apps) directly into specific app screens. Together these form the backbone of engagement and reliability for production Flutter apps.",realWorld:"In a SaaS collaboration app: FCM delivers 'New message in #general' notifications. Background message handler silently updates the local SQLite chat cache so the inbox is fresh when the user opens the app. WorkManager runs a nightly sync job. Deep links from email notifications open directly to the relevant workspace and channel.",code:`// --- FCM SETUP (main.dart) ---
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  // Top-level function — runs in separate isolate
+  await _updateLocalCache(message.data);
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  runApp(const MyApp());
+}
+
+// --- PERMISSION & TOKEN ---
+class NotificationService {
+  static Future<String?> init() async {
+    final messaging = FirebaseMessaging.instance;
+    final settings = await messaging.requestPermission(
+      alert: true, badge: true, sound: true,
+    );
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      await messaging.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true,
+      );
+    }
+    return messaging.getToken();
+  }
+
+  static void listen(BuildContext context) {
+    // Foreground messages
+    FirebaseMessaging.onMessage.listen((msg) {
+      _showLocalNotification(msg);
+    });
+    // Background tap
+    FirebaseMessaging.onMessageOpenedApp.listen((msg) {
+      _navigate(context, msg.data);
+    });
+  }
+}
+
+// --- DEEP LINKS (app_links) ---
+class DeepLinkService {
+  final _appLinks = AppLinks();
+
+  void init(BuildContext context) {
+    // App was terminated — get initial link
+    _appLinks.getInitialLink().then((uri) {
+      if (uri != null) _handleUri(context, uri);
+    });
+    // App running — stream incoming links
+    _appLinks.uriLinkStream.listen((uri) => _handleUri(context, uri));
+  }
+
+  void _handleUri(BuildContext context, Uri uri) {
+    // e.g. myapp://workspace/123/channel/456
+    if (uri.pathSegments.length >= 2 && uri.pathSegments[0] == 'workspace') {
+      Navigator.pushNamed(context, '/workspace',
+          arguments: {'id': uri.pathSegments[1]});
+    }
+  }
+}
+
+// --- WORKMANAGER BACKGROUND TASK ---
+void callbackDispatcher() {
+  Workmanager().executeTask((taskName, inputData) async {
+    switch (taskName) {
+      case 'syncTask':
+        await SyncService.runSync();
+        return Future.value(true);
+      default:
+        return Future.value(false);
+    }
+  });
+}
+
+// Register periodic task
+await Workmanager().initialize(callbackDispatcher);
+await Workmanager().registerPeriodicTask(
+  'syncTask', 'syncTask',
+  frequency: const Duration(hours: 1),
+  constraints: Constraints(networkType: NetworkType.connected),
+);
+
+// --- APP LIFECYCLE ---
+class _MyWidgetState extends State<MyWidget> with WidgetsBindingObserver {
+  @override void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+  @override void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+  @override void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) _pauseVideoStream();
+    if (state == AppLifecycleState.resumed) _resumeVideoStream();
+  }
+}`,funFact:"Android's WorkManager was built to replace four separate background task APIs (AsyncTask, IntentService, JobScheduler, Firebase JobDispatcher) that developers were confused about. Flutter's workmanager package wraps WorkManager on Android and BGTaskScheduler on iOS — two completely different systems — behind one Dart API.",quiz:[{q:"Why must the FCM background message handler be a top-level function in Dart?",opts:["Because it is a Firebase requirement for security","Because it runs in a separate Dart isolate that does not share memory with the main isolate — class methods capture 'this' which cannot be serialised across isolate boundaries","Because top-level functions execute faster","Because background handlers cannot use async/await"],ans:1},{q:"What is the difference between FirebaseMessaging.onMessage and FirebaseMessaging.onMessageOpenedApp?",opts:["onMessage is for Android, onMessageOpenedApp is for iOS","onMessage fires when the app is in the foreground and a message arrives; onMessageOpenedApp fires when the user taps a notification while the app was in the background","onMessageOpenedApp fires for all messages, onMessage only for data messages","There is no difference — both fire when a message is received"],ans:1},{q:"What AppLifecycleState value does a Flutter app enter when the user presses the Home button on Android?",opts:["detached","inactive then paused","stopped","suspended"],ans:1},{q:"In a fintech claims app you want to sync pending claim submissions hourly even when the app is closed. Which approach is correct?",opts:["Use a Dart Timer — it persists after app close","Use WorkManager periodic task with NetworkType.connected constraint — it is the only solution that survives process death","Use FCM data messages to trigger sync","Use a foreground service that runs indefinitely"],ans:1},{q:"A deep link myapp://invoice/789 arrives while the app is terminated. How do you handle it?",opts:["It is impossible to handle deep links for terminated apps","Listen to FirebaseMessaging.instance.getInitialMessage() for FCM links, and appLinks.getInitialLink() for deep links — both provide the link that launched the app from a terminated state","Register a BroadcastReceiver in Kotlin","Only URL scheme links (myapp://) work for terminated state; HTTPS universal links do not"],ans:1},{q:"What is a notification channel on Android and why does it matter?",opts:["A Firebase topic for grouping devices","A required Android 8+ (API 26+) construct that groups notifications by category — users can disable channels independently in system settings, so your app must create channels before posting notifications","A Dart Stream of incoming notifications","A way to send notifications to multiple devices simultaneously"],ans:1},{q:"Your SaaS app receives an FCM message in the background. The background handler calls setState(). What happens?",opts:["setState works normally in background handlers","The UI updates correctly but with a slight delay","setState throws an error or is silently ignored — the background handler runs in a separate isolate with no access to the widget tree or UI state","Background handlers have full UI access on iOS but not Android"],ans:2},{q:"When would you use local notifications (flutter_local_notifications) instead of FCM?",opts:["Local notifications are always preferable — they are faster","When you need scheduled/recurring notifications (alarms, reminders) that trigger based on local time/conditions without requiring a server round-trip, or when the app must work fully offline","Local notifications only work on iOS","When the FCM quota is exceeded"],ans:1}],challenge:"Design the notification architecture for a fintech claims app: (1) FCM message arrives with claim status update — describe the full handling path for all three app states. (2) How do you ensure the user lands on the correct claim detail screen when tapping the notification? (3) What WorkManager task would you schedule and what constraints would you apply?",resources:[{type:"docs",title:"FlutterFire — Cloud Messaging",url:"https://firebase.flutter.dev/docs/messaging/overview",source:"FlutterFire Docs"},{type:"docs",title:"workmanager package",url:"https://pub.dev/packages/workmanager",source:"pub.dev"},{type:"docs",title:"app_links package",url:"https://pub.dev/packages/app_links",source:"pub.dev"},{type:"docs",title:"flutter_local_notifications",url:"https://pub.dev/packages/flutter_local_notifications",source:"pub.dev"},{type:"docs",title:"AppLifecycleState API",url:"https://api.flutter.dev/flutter/dart-ui/AppLifecycleState.html",source:"Flutter Docs"}],eli5:"Imagine your app is a person who sometimes sleeps (background) or is completely gone (terminated). Push notifications are like alarm clocks that can wake them up with a message. Deep links are like a GPS address that takes you straight to a specific room in a building instead of just the front door. WorkManager is a reliable assistant that does chores for you even while you sleep — and won't forget even if you restart the house.",codeWalkthrough:["_firebaseMessagingBackgroundHandler is top-level — required because it runs in a new Dart isolate","Firebase.initializeApp() must be called again inside the background handler — the isolate starts fresh","setForegroundNotificationPresentationOptions ensures FCM messages show banners while the app is open on iOS","FirebaseMessaging.onMessage handles foreground messages — typically shown via flutter_local_notifications","FirebaseMessaging.onMessageOpenedApp handles the background-tap case — navigate to the relevant screen","appLinks.getInitialLink() retrieves a deep link that launched the app from terminated state — checked once at startup","appLinks.uriLinkStream handles links arriving while app is running — continuous stream","Workmanager constraints: NetworkType.connected ensures sync only runs with internet — prevents failed attempts"],bugChallenge:{code:`// Background message handler
+class NotificationHandler {
+  final DatabaseService _db;
+  NotificationHandler(this._db);
+
+  Future<void> handleBackground(RemoteMessage message) async {
+    await _db.updateCache(message.data);
+  }
+}
+
+// In main.dart
+final handler = NotificationHandler(DatabaseService());
+FirebaseMessaging.onBackgroundMessage(handler.handleBackground);`,hint:"This will crash at runtime. Look at the type of function onBackgroundMessage expects.",answer:"Bug: onBackgroundMessage requires a top-level function, not an instance method. handler.handleBackground captures 'this' (the NotificationHandler instance), making it a closure that cannot be passed across isolate boundaries. Fix: Make the handler a top-level function. If you need database access, initialize DatabaseService inside the handler itself: Future<void> _bgHandler(RemoteMessage msg) async { await Firebase.initializeApp(); final db = DatabaseService(); await db.updateCache(msg.data); }"},difficulty:"advanced",prereqs:[27,39]},
+
+{id:42,title:"Android Fundamentals for Flutter Engineers",subtitle:"Activity lifecycle, Intents, Services, BroadcastReceivers — why Flutter devs must know this",analogy:"Flutter is like a high-end appliance with a smart control panel (Dart). Android is the electrical infrastructure of the building it runs in — circuits (ActivityManager), fuse boxes (Manifest), wiring (Intents). You can use the appliance without knowing the wiring, but when something trips a breaker or you need to add a new socket (platform channel), you need to understand the infrastructure.",points:[{t:"Activity Lifecycle",d:"onCreate → onStart → onResume (visible+interactive) → onPause → onStop → onDestroy. Flutter's FlutterActivity maps to a single Activity. Understanding this explains why AppLifecycleState.paused maps to onPause/onStop in Android terms."},{t:"Intents",d:"Intents are Android's messaging objects for starting Activities (explicit: specific class) or Services/broadcasts (implicit: action string). Flutter uses MethodChannel to invoke Intent-based Android APIs (share sheet, camera, file picker)."},{t:"Foreground Services",d:"A Service with a persistent notification that Android will not kill under memory pressure. Required for ongoing work like music playback, GPS tracking, or BankID sessions. Must declare FOREGROUND_SERVICE permission."},{t:"Background Services",d:"Regular Services run at low priority and can be killed by Android. Since Android 8 (Oreo), background execution is severely restricted — use WorkManager instead for deferred background work."},{t:"Bound Services",d:"Services that offer an IPC interface (AIDL or Messenger). Client components bind and call methods. Used for long-running operations clients want to interact with (e.g., media players, NFC readers)."},{t:"BroadcastReceiver",d:"Components that receive system or app-wide events: battery low, network change, boot complete, custom events. Registered in Manifest (static) or at runtime (dynamic). Flutter plugins use receivers to detect system events."},{t:"Content Providers",d:"Structured data sharing between apps via URIs (content://authority/path). Android's gallery, contacts, and FileProvider use this pattern. Flutter's image_picker and file_picker work through Content Provider URIs."},{t:"AndroidManifest.xml",d:"Declares: package name, permissions (uses-permission), activities, services, receivers, providers, intent-filters. Flutter adds entries here for FCM, deep links, permissions, and custom services via the plugin system."},{t:"Why Flutter Engineers Need This",d:"Debugging MethodChannel errors requires understanding Android threading (main thread vs background). Diagnosing crash logs (ANR — Application Not Responding) requires Activity lifecycle knowledge. Writing plugins or fixing native issues demands Manifest and Intent knowledge."},{t:"ANR — Application Not Responding",d:"Android kills apps that block the main thread for 5+ seconds. Flutter runs on its own thread but Kotlin code in platform channels runs on the main thread by default — long operations there cause ANRs. Always use coroutines for async platform channel work."}],whatIs:"Android is the operating system layer beneath every Flutter Android app. Flutter engineers who understand Android fundamentals can write platform channels correctly, diagnose production crashes, interpret logcat output, and collaborate with Android-native teammates — all critical for senior hybrid roles.",realWorld:"In an NGO offline-first field survey app: a foreground service keeps GPS tracking active during a field visit. A BroadcastReceiver detects network reconnection and sends a broadcast that triggers the sync WorkManager task. The AndroidManifest declares the FOREGROUND_SERVICE and ACCESS_FINE_LOCATION permissions, plus intent-filter for the deep link scheme. The Flutter team needs to know this to debug why the sync does not start after network reconnects.",code:`// --- ANDROID MANIFEST ENTRIES (android/app/src/main/AndroidManifest.xml) ---
+/*
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Permissions -->
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+  <application ...>
+    <activity android:name=".MainActivity" android:exported="true">
+      <!-- Deep link intent filter -->
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="app.myservice.com"/>
+      </intent-filter>
+    </activity>
+
+    <!-- Foreground service for GPS tracking -->
+    <service android:name=".LocationForegroundService"
+             android:foregroundServiceType="location"
+             android:exported="false"/>
+
+    <!-- BroadcastReceiver for network changes -->
+    <receiver android:name=".NetworkChangeReceiver"
+              android:exported="false">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+    </receiver>
+  </application>
+</manifest>
+*/
+
+// --- PLATFORM CHANNEL — Calling Android Intent from Flutter ---
+// Dart side
+class ShareService {
+  static const _channel = MethodChannel('com.myapp/share');
+  static Future<void> shareText(String text) =>
+      _channel.invokeMethod('shareText', {'text': text});
+}
+
+// Kotlin side (MainActivity.kt)
+/*
+class MainActivity : FlutterActivity() {
+  override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+    super.configureFlutterEngine(flutterEngine)
+    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.myapp/share")
+      .setMethodCallHandler { call, result ->
+        if (call.method == "shareText") {
+          val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, call.argument<String>("text"))
+          }
+          startActivity(Intent.createChooser(intent, "Share via"))
+          result.success(null)
+        }
+      }
+  }
+}
+*/
+
+// --- FOREGROUND SERVICE (Kotlin) ---
+/*
+class LocationForegroundService : Service() {
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    val notification = buildNotification("Tracking location...")
+    startForeground(NOTIF_ID, notification)  // Required — shows persistent notification
+    startLocationUpdates()
+    return START_STICKY  // Restart if killed
+  }
+  override fun onBind(intent: Intent?): IBinder? = null
+}
+*/`,funFact:"The Android Activity was conceived in 2007 when multitasking on phones was a novel idea. The lifecycle was designed to handle phone calls interrupting apps — a problem nobody thinks about anymore. Yet every Flutter app on Android still goes through the exact same onCreate/onPause/onDestroy dance from that original design.",quiz:[{q:"A Flutter app's Kotlin MethodChannel handler performs a 3-second network request synchronously. What Android problem does this cause?",opts:["The Flutter UI will show a loading spinner automatically","This causes an ANR (Application Not Responding) — the Android main thread is blocked for 3 seconds, exceeding Android's 5-second threshold, risking a system-level app kill dialog","The request will be cancelled by Android after 2 seconds","Flutter's event loop handles this transparently"],ans:1},{q:"What Android component would you use to keep a GPS tracking session alive in a fintech field app even when the user switches to another app?",opts:["A Background Service","A BroadcastReceiver with CONNECTIVITY_CHANGE","A Foreground Service with a persistent notification — it has protected priority and Android will not kill it under memory pressure","A WorkManager periodic task"],ans:2},{q:"Why can't a Flutter engineer rely on Background Services (not foreground) for reliable background work on Android 8+?",opts:["Background services were removed in Android 8","Android 8 (Oreo) introduced background execution limits — background services are killed minutes after the app leaves the foreground. WorkManager is the recommended replacement","Background services only work with root permissions","Background services require a paid Play Console account"],ans:1},{q:"What is an Intent in Android and how does Flutter interact with it?",opts:["An Intent is an Android permission request","An Intent is a messaging object for inter-component communication (starting Activities/Services, broadcasting events). Flutter interacts with Intents via MethodChannels — e.g., invoking Intent.ACTION_SEND for the share sheet","An Intent is a Kotlin coroutine for async operations","An Intent is equivalent to a Dart Future"],ans:1},{q:"In the AndroidManifest.xml, what does android:exported='true' on an Activity mean and why does it matter for deep links?",opts:["The Activity can export data to external storage","The Activity can be started by components outside the app — required for deep links (Android 12+ enforces explicit exported declaration for all intent-filter activities)","The Activity is public in the Java sense","exported=true disables all security checks"],ans:1},{q:"What is a BroadcastReceiver and give one Flutter plugin that uses this mechanism?",opts:["A Dart Stream that broadcasts to multiple listeners","An Android component that receives system or app-wide broadcast events. connectivity_plus uses a BroadcastReceiver to detect network state changes and surface them to the Dart side via a MethodChannel EventChannel","A receiver for FCM messages only","BroadcastReceivers are deprecated — no modern plugins use them"],ans:1},{q:"What does START_STICKY return value mean in a Service's onStartCommand()?",opts:["The service consumes more memory to stay alive","Android will recreate the service after it is killed, calling onStartCommand with a null Intent — appropriate for services that should always be running, like a location tracker","The service cannot be stopped by the user","START_STICKY means the service sticks to the foreground"],ans:1},{q:"A senior Flutter engineer says 'I understand the Android threading model.' What does this mean for MethodChannel usage?",opts:["They can write Kotlin on any thread because Dart handles synchronisation","MethodChannel callbacks on the Kotlin side execute on the Android main thread (UI thread) by default — long operations must be offloaded to a coroutine/background thread using Dispatchers.IO, otherwise they block the main thread and risk ANR","Flutter automatically routes heavy MethodChannel work to background threads","The Android main thread is the same as Dart's main isolate"],ans:1}],challenge:"You are debugging a production crash in an NGO field app. The crash log shows an ANR in the MethodChannel handler. Walk through: (1) why the ANR is happening, (2) how to fix it using Kotlin coroutines, (3) what Manifest permission you need to add for the foreground service that was added to prevent task loss.",resources:[{type:"docs",title:"Android Activity Lifecycle",url:"https://developer.android.com/guide/components/activities/activity-lifecycle",source:"Android Docs"},{type:"docs",title:"Background Execution Limits (Android 8+)",url:"https://developer.android.com/about/versions/oreo/background",source:"Android Docs"},{type:"docs",title:"Services Overview",url:"https://developer.android.com/guide/components/services",source:"Android Docs"},{type:"docs",title:"Flutter Platform Channels",url:"https://docs.flutter.dev/platform-integration/platform-channels",source:"Flutter Docs"},{type:"docs",title:"AndroidManifest.xml reference",url:"https://developer.android.com/guide/topics/manifest/manifest-intro",source:"Android Docs"}],eli5:"Android is like a city. Your Flutter app is a building in that city. The city has rules: buildings must register with the city hall (Manifest), they can send messages to other buildings (Intents), some buildings have security guards who keep working all night (Foreground Services), and there are town criers who shout news to everyone (BroadcastReceivers). Even if you live in the Flutter building, you still follow the city's rules.",codeWalkthrough:["uses-permission entries declare what system resources the app needs — missing permissions cause SecurityException at runtime","intent-filter with autoVerify='true' enables App Links — Android verifies your domain ownership before allowing deep links","android:foregroundServiceType='location' is required since Android 10 for location foreground services","START_STICKY in onStartCommand tells Android to recreate the service after killing it — critical for always-on trackers","MethodChannel name must match exactly on Dart and Kotlin sides — mismatch causes MissingPluginException","Intent.ACTION_SEND with createChooser shows the system share sheet — no need to handle individual app integrations","startForeground(id, notification) must be called within 5 seconds of service start or Android throws a ForegroundServiceStartNotAllowedException","result.success(null) must always be called — failing to call result leaks the channel reply handle"],bugChallenge:{code:`// Kotlin MethodChannel handler
+MethodChannel(messenger, "com.myapp/data")
+  .setMethodCallHandler { call, result ->
+    if (call.method == "fetchUserData") {
+      val data = networkService.fetchUserBlocking()  // Synchronous, ~2 seconds
+      result.success(data)
+    }
+  }`,hint:"This code works in testing but causes production ANRs under load. What is wrong and how do you fix it?",answer:"Bug: networkService.fetchUserBlocking() runs synchronously on the Android main thread (MethodChannel handlers execute on the main thread). A 2-second blocking call risks ANR (Android kills apps blocking main thread for 5+ seconds). Under load or slow networks it will exceed this. Fix: use Kotlin coroutines — launch(Dispatchers.IO) { val data = networkService.fetchUser(); withContext(Dispatchers.Main) { result.success(data) } }. The IO dispatcher runs on a background thread pool; withContext(Main) switches back to post the result safely."},difficulty:"intermediate",prereqs:[39]},
+
+{id:43,title:"Kotlin Coroutines & Flow vs Dart Streams",subtitle:"Structured concurrency, suspend functions, Flow, StateFlow — and how they map to Dart",analogy:"Think of Dart and Kotlin as two different kitchens. Both can cook async meals (coroutines/Futures), serve live menus that update (Flow/Streams), and keep a chalkboard of today's specials (StateFlow/StreamController.broadcast). The recipes differ but the cooking concepts are the same — once you know one kitchen, you can learn the other by mapping what you already know.",points:[{t:"Suspend Functions",d:"Kotlin's suspend fun pauses execution without blocking a thread — identical concept to Dart's async/await. A suspend function can only be called from a coroutine or another suspend function, just as await requires an async context."},{t:"Coroutine Builders",d:"launch {} fires-and-forgets a coroutine (like unawaited Future in Dart). async {} returns a Deferred<T> (like Dart's Future<T>). runBlocking {} blocks the calling thread — used in tests, not production."},{t:"Dispatchers",d:"Dispatchers.Main runs on Android UI thread (≈ Dart main isolate). Dispatchers.IO optimised for I/O (≈ Dart Isolate.spawn with I/O work). Dispatchers.Default for CPU-intensive work (≈ compute() in Flutter)."},{t:"Structured Concurrency",d:"Coroutines launched in a CoroutineScope are cancelled when the scope is cancelled. Android ViewModelScope and lifecycleScope auto-cancel coroutines when ViewModel is cleared or lifecycle ends. Dart lacks built-in structured concurrency — you manage cancellation manually."},{t:"Cold Flows",d:"Kotlin Flow is cold — code inside flow {} runs only when collected, one collector gets one independent execution. Identical to Dart's single-subscription Stream. Neither produces values until someone listens."},{t:"Hot Flows — StateFlow",d:"StateFlow holds a current value and replays it to new collectors. Equivalent to Dart's BehaviorSubject (rxdart) or a StreamController with a seeded value. Used for UI state: val uiState: StateFlow<UiState>."},{t:"Hot Flows — SharedFlow",d:"SharedFlow has configurable replay cache and multiple collectors. Closer to Dart's StreamController.broadcast(). Used for one-time events (navigation, snackbars) that should not be replayed to late subscribers."},{t:"LiveData vs Flow",d:"LiveData is lifecycle-aware (auto-stops emission when UI is in background). Flow requires collectAsStateWithLifecycle() in Compose or launchIn(lifecycleScope) to achieve lifecycle safety. Modern Android prefers Flow; LiveData is legacy."},{t:"Dart Streams vs Kotlin Flow",d:"Dart Stream ≈ Kotlin Flow (cold, single subscriber). Dart StreamController.broadcast() ≈ Kotlin SharedFlow. Dart BehaviorSubject (rxdart) ≈ Kotlin StateFlow. Dart Isolate ≈ Kotlin coroutine on Dispatchers.Default/IO."},{t:"withContext vs Isolate",d:"Kotlin's withContext(Dispatchers.IO) switches the current coroutine to a background thread — lightweight, shared thread pool. Dart's Isolate.run() spawns a completely separate memory-isolated process — heavier, but true parallelism for CPU tasks."}],whatIs:"Kotlin Coroutines and Flow are Android's async and reactive programming primitives. Understanding them alongside Dart's Futures, Streams, and Isolates positions you to work confidently in hybrid Flutter+Android codebases, write better platform channels, and discuss tradeoffs fluently in senior interviews.",realWorld:"In a fintech BankID integration: Kotlin coroutines handle the BankID polling loop (withContext(Dispatchers.IO)), StateFlow<BankIdState> drives the Compose UI, and SharedFlow delivers one-time navigation events. The Flutter layer communicates via MethodChannel where the Kotlin coroutine posts results back on Dispatchers.Main. A Flutter engineer who understands this can debug the entire stack.",code:`// === KOTLIN SIDE ===
+
+// Suspend function — equivalent to Dart async/await
+suspend fun fetchClaims(): List<Claim> = withContext(Dispatchers.IO) {
+    api.getClaims()  // Runs on background thread pool
+}
+
+// ViewModel with StateFlow
+class ClaimsViewModel : ViewModel() {
+    // StateFlow — holds current state, replays to new collectors
+    private val _uiState = MutableStateFlow<ClaimsState>(ClaimsState.Loading)
+    val uiState: StateFlow<ClaimsState> = _uiState.asStateFlow()
+
+    // SharedFlow — one-time events (no replay)
+    private val _events = MutableSharedFlow<ClaimsEvent>()
+    val events: SharedFlow<ClaimsEvent> = _events.asSharedFlow()
+
+    init {
+        viewModelScope.launch {  // Auto-cancelled when ViewModel is cleared
+            try {
+                val claims = fetchClaims()
+                _uiState.value = ClaimsState.Success(claims)
+            } catch (e: Exception) {
+                _uiState.value = ClaimsState.Error(e.message)
+                _events.emit(ClaimsEvent.ShowSnackbar("Failed to load"))
+            }
+        }
+    }
+}
+
+// Cold Flow — like Dart single-subscription Stream
+fun pollBankId(token: String): Flow<BankIdStatus> = flow {
+    repeat(30) {
+        val status = bankIdApi.check(token)
+        emit(status)
+        if (status is BankIdStatus.Complete) return@flow
+        delay(2000)
+    }
+}
+
+// Collecting Flow with lifecycle safety (Compose)
+@Composable
+fun ClaimsScreen(vm: ClaimsViewModel = viewModel()) {
+    val state by vm.uiState.collectAsStateWithLifecycle()
+    // ...
+}
+
+// === DART EQUIVALENT ===
+
+// Future = suspend fun + async builder
+Future<List<Claim>> fetchClaims() async {
+  return await api.getClaims();
+}
+
+// StreamController.broadcast = SharedFlow
+final _events = StreamController<ClaimsEvent>.broadcast();
+Stream<ClaimsEvent> get events => _events.stream;
+
+// BehaviorSubject (rxdart) = StateFlow
+final _uiState = BehaviorSubject<ClaimsState>.seeded(ClaimsState.loading());
+Stream<ClaimsState> get uiState => _uiState.stream;
+
+// Cold Stream = cold Flow
+Stream<BankIdStatus> pollBankId(String token) async* {
+  for (int i = 0; i < 30; i++) {
+    final status = await bankIdApi.check(token);
+    yield status;
+    if (status is BankIdStatusComplete) return;
+    await Future.delayed(const Duration(seconds: 2));
+  }
+}`,funFact:"Kotlin coroutines were inspired partly by research into communicating sequential processes (CSP) from 1978. Dart's async/await was added in Dart 1.9 (2015) following the same cooperative multitasking model as JavaScript's Promises/async-await. Despite being created independently, both settled on nearly identical syntax — a testament to how well the async/await abstraction maps to human intuition.",quiz:[{q:"What is the Dart equivalent of Kotlin's StateFlow?",opts:["A regular Dart Stream","A Future<T>","A BehaviorSubject from rxdart (or a StreamController with a current value) — both hold the latest value and replay it to new subscribers","A StreamController.broadcast() with no buffer"],ans:2},{q:"Why does Kotlin's structured concurrency (ViewModelScope/lifecycleScope) matter and what is the equivalent concern in Dart/Flutter?",opts:["It is a performance optimisation — coroutines run faster in a scope","Structured concurrency auto-cancels coroutines when the scope ends (e.g., ViewModel cleared), preventing memory leaks and work on destroyed UI. In Flutter, developers must manually cancel StreamSubscriptions and close StreamControllers in dispose() to achieve the same effect","Kotlin scopes encrypt coroutine data for security","Dart has identical structured concurrency built into the framework"],ans:1},{q:"What is the key difference between Kotlin's cold Flow and hot SharedFlow?",opts:["Cold Flow is faster than SharedFlow","Cold Flow executes its producer block per collector independently (like Dart single-subscription Stream). SharedFlow shares one execution among all collectors and can buffer events — like Dart's broadcast StreamController","SharedFlow is only for Android Compose","Hot flows are deprecated in favour of LiveData"],ans:1},{q:"A Flutter engineer needs to add a Kotlin MethodChannel handler that calls a suspend function. What threading consideration is critical?",opts:["Kotlin suspend functions run on the main thread automatically","MethodChannel handlers execute on the Android main thread. The suspend function must be launched in a coroutine scope using Dispatchers.IO for I/O work, then the result posted back with withContext(Dispatchers.Main) before calling result.success()","suspend functions can be called directly from any Java/Kotlin thread","Flutter handles the threading automatically via the MethodChannel protocol"],ans:1},{q:"What does withContext(Dispatchers.IO) do in Kotlin and what is the closest Dart equivalent?",opts:["It saves data to disk using Android's IO manager","It switches the coroutine to a thread pool optimised for blocking I/O operations, without blocking the calling thread. The closest Dart equivalent is running work inside Isolate.run() for CPU tasks or using async I/O (which Dart handles via the event loop for network/file I/O)","It sets the coroutine priority to low","withContext is equivalent to Dart's Future.delayed"],ans:1},{q:"Why would you choose Kotlin Flow over LiveData in a modern Android app?",opts:["Flow is always faster than LiveData","LiveData is Android-only and lifecycle-aware but limited in operators. Flow is Kotlin-first, works outside Android (in shared KMM modules), has rich operators (map, filter, combine, flatMapLatest), and with collectAsStateWithLifecycle() achieves the same lifecycle safety — making it more versatile and testable","Flow requires more memory than LiveData","LiveData was deprecated and removed in API 31"],ans:1},{q:"In Dart, an Isolate is spawned for CPU-intensive work. What is the Kotlin equivalent and the key architectural difference?",opts:["Kotlin Thread class — identical to Dart Isolate","Kotlin coroutines on Dispatchers.Default (or a dedicated thread via newSingleThreadContext). Key difference: Dart Isolates have completely separate heaps — no shared memory, communication via SendPort/ReceivePort message passing. Kotlin coroutines share the JVM heap — data is shared by reference, but requires careful synchronisation","Kotlin has no equivalent — coroutines are single-threaded","Dart Isolates are always more efficient than Kotlin coroutines"],ans:1},{q:"A BankID polling loop uses Kotlin Flow with a delay(2000) inside. A new collector subscribes mid-poll. What does the collector receive?",opts:["All previously emitted values from the start","Only the current value (like StateFlow)","Nothing — Flow is cold, so the new collector starts a completely new independent execution of the flow block from the beginning","An exception because only one collector is allowed"],ans:2}],challenge:"Draw the mapping table for a senior interview: Dart Future ↔ Kotlin ?, Dart Stream (single) ↔ Kotlin ?, Dart broadcast Stream ↔ Kotlin ?, Dart BehaviorSubject ↔ Kotlin ?, Dart Isolate ↔ Kotlin ?. Then explain in two sentences why Kotlin's structured concurrency solves a problem that Flutter developers must solve manually.",resources:[{type:"docs",title:"Kotlin Coroutines — official guide",url:"https://kotlinlang.org/docs/coroutines-guide.html",source:"Kotlin Docs"},{type:"docs",title:"Kotlin Flow",url:"https://kotlinlang.org/docs/flow.html",source:"Kotlin Docs"},{type:"docs",title:"StateFlow and SharedFlow",url:"https://developer.android.com/kotlin/flow/stateflow-and-sharedflow",source:"Android Docs"},{type:"docs",title:"Dart Streams",url:"https://dart.dev/tutorials/language/streams",source:"Dart Docs"},{type:"docs",title:"rxdart package",url:"https://pub.dev/packages/rxdart",source:"pub.dev"}],eli5:"Imagine two chefs (Kotlin and Dart) making the same dish — async soup. They both know how to wait for ingredients without standing still (coroutines/futures). Kotlin has a special soup tureen that always has the last batch warm and ready (StateFlow) while Dart uses a similar pot from a recipe package (BehaviorSubject). The kitchen layout is different but the meal is the same.",codeWalkthrough:["MutableStateFlow(Loading) — creates a hot flow with initial value, type-safe UI state container","viewModelScope.launch — coroutine tied to ViewModel lifecycle; auto-cancelled on ViewModel.onCleared()","withContext(Dispatchers.IO) — switches to background thread for network/disk work, returns to original dispatcher after block","_uiState.value = Success(claims) — thread-safe state update; all collectors receive the new value immediately","MutableSharedFlow() with no replay — emits one-time events; late subscribers miss them (correct for snackbars/navigation)","flow {} builder — cold; the repeat block runs fresh for each collector independently","collectAsStateWithLifecycle() — Compose extension that collects Flow only when UI is at least STARTED — equivalent to LiveData's lifecycle awareness","BehaviorSubject.seeded() — Dart rxdart equivalent of StateFlow; holds latest value and emits it to new subscribers immediately"],bugChallenge:{code:`class SyncViewModel : ViewModel() {
+  fun startSync() {
+    GlobalScope.launch {
+      val result = repository.syncData()
+      _uiState.value = UiState.Success(result)
+    }
+  }
+}`,hint:"GlobalScope is considered harmful in Android. Why, and what should replace it?",answer:"Bug: GlobalScope.launch creates a coroutine that lives for the entire application lifetime — it is not cancelled when the ViewModel is cleared or when the user navigates away. This causes memory leaks (the ViewModel is retained by the coroutine) and potential crashes if _uiState is updated after the UI is destroyed. Fix: replace GlobalScope.launch with viewModelScope.launch — it is automatically cancelled when ViewModel.onCleared() is called, providing proper structured concurrency."},difficulty:"advanced",prereqs:[3,4,5,42]},
+
+{id:44,title:"Jetpack Compose vs Flutter — Tradeoffs & Interview Answers",subtitle:"Declarative UI comparison, state management, navigation, and when to choose each",analogy:"Compose and Flutter are like two modern architecture firms — both use the same blueprint philosophy (declarative UI) but different materials. Compose uses Android's steel (Kotlin, JVM, full OS access). Flutter uses its own pre-fabricated panels (Dart, Skia/Impeller). The Compose building integrates perfectly with the local city. The Flutter building looks identical on every street in every city.",points:[{t:"Declarative UI — Same Philosophy",d:"Both Compose and Flutter describe UI as a function of state. In Compose: @Composable fun Counter(count: Int). In Flutter: Widget build(BuildContext context). When state changes, both frameworks re-run the relevant function and reconcile the output — no imperative view manipulation."},{t:"State Management",d:"Compose uses remember { mutableStateOf() } for local state and ViewModel + StateFlow for shared state. Flutter uses setState for local, with BLoC/Riverpod/Provider for shared state. Both support unidirectional data flow."},{t:"Recomposition vs Rebuild",d:"Compose recomposes only the composables that read changed state (fine-grained). Flutter rebuilds the widget subtree from the changed widget down. Both have optimisation mechanisms (const, shouldRebuild) but Compose's granularity is generally finer by default."},{t:"Navigation",d:"Compose Navigation uses NavController + NavHost with type-safe routes (Navigation Compose). Flutter uses Navigator 2.0 (Router/RouteInformationParser) or go_router. Both support deep links and bottom tab navigation."},{t:"Theming",d:"Compose uses MaterialTheme { colorScheme, typography, shapes } — reads from CompositionLocal. Flutter uses ThemeData passed down the widget tree via Theme.of(context). Both support dark mode."},{t:"Performance",d:"Compose renders on the main thread with hardware acceleration, using Skia/HWUI. Flutter renders on a dedicated raster thread via Impeller (iOS default) or Skia, completely bypassing the Android View system. Flutter's rendering is more consistent cross-platform."},{t:"Ecosystem Maturity",d:"Compose is Google-first with deep Android integration — CameraX, Maps, ML Kit all have native Compose APIs. Flutter has pub.dev plugins that wrap native SDKs via MethodChannel. Complex native integrations (e.g., Maps customisation, ARCore) are often smoother in Compose."},{t:"When to Choose Flutter",d:"Cross-platform (iOS + Android + Web + Desktop) from one codebase. Pixel-perfect custom UI that must look identical on both platforms. Team has Dart/Flutter expertise. Timeline does not allow separate iOS development."},{t:"When to Choose Compose",d:"Android-only product. Deep integration with Android system features (Widgets, large screens, Wear OS, Auto). Team has strong Android/Kotlin background. Leveraging cutting-edge Android APIs immediately on release."},{t:"Interview Answer Strategy",d:"When asked 'Why Flutter over Compose?' or vice versa, frame your answer around the project context: team skills, platform targets, timeline, native integration needs, and long-term maintenance. Never say one is objectively better — both are excellent for their use case."}],whatIs:"Jetpack Compose is Android's modern declarative UI toolkit, analogous to Flutter in philosophy but native to the Android platform. Understanding the comparison is essential for senior hybrid Flutter+Android roles where you may need to justify technology choices, work with Compose screens embedded in Flutter, or advise on greenfield app architecture.",realWorld:"A SaaS collaboration platform deciding between Flutter and Compose for their Android/iOS apps: Flutter wins if they need iOS parity fast with one team. Compose wins if they are Android-only and need deep Android integration (Google account sign-in, Android widgets, Nearby API). A senior engineer can articulate both arguments with concrete tradeoffs.",code:`// === COMPOSE STATE MANAGEMENT ===
+@Composable
+fun ClaimsScreen(viewModel: ClaimsViewModel = viewModel()) {
+    // Collect StateFlow as Compose State — lifecycle-safe
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // Local state with remember
+    var showFilter by remember { mutableStateOf(false) }
+
+    Scaffold(topBar = { ClaimsTopBar() }) { padding ->
+        when (uiState) {
+            is ClaimsState.Loading -> CircularProgressIndicator()
+            is ClaimsState.Success -> ClaimsList(
+                claims = (uiState as ClaimsState.Success).claims,
+                onClaimClick = viewModel::onClaimSelected
+            )
+            is ClaimsState.Error -> ErrorView(message = uiState.message)
+        }
+    }
+}
+
+// === FLUTTER EQUIVALENT ===
+class ClaimsScreen extends StatelessWidget {
+  const ClaimsScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClaimsBloc, ClaimsState>(
+      builder: (context, state) => Scaffold(
+        appBar: const ClaimsTopBar(),
+        body: switch (state) {
+          ClaimsLoading() => const CircularProgressIndicator(),
+          ClaimsSuccess(:final claims) => ClaimsList(claims: claims),
+          ClaimsError(:final message) => ErrorView(message: message),
+        },
+      ),
+    );
+  }
+}
+
+// === COMPOSE NAVIGATION ===
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = "claims") {
+        composable("claims") { ClaimsScreen(navController) }
+        composable("detail/{id}") { backStack ->
+            val id = backStack.arguments?.getString("id")
+            ClaimDetailScreen(id = id, navController = navController)
+        }
+    }
+}
+
+// === FLUTTER go_router EQUIVALENT ===
+final router = GoRouter(routes: [
+  GoRoute(path: '/claims', builder: (_, __) => const ClaimsScreen()),
+  GoRoute(
+    path: '/claims/:id',
+    builder: (_, state) => ClaimDetailScreen(id: state.pathParameters['id']!),
+  ),
+]);
+
+// === THEMING COMPARISON ===
+// Compose
+MaterialTheme(
+  colorScheme = darkColorScheme(primary = Color(0xFFD9FE06)),
+  typography = Typography(bodyLarge = TextStyle(fontFamily = FontFamily.Default)),
+) { /* content */ }
+
+// Flutter
+MaterialApp(
+  theme: ThemeData(
+    colorSchemeSeed: const Color(0xFFD9FE06),
+    useMaterial3: true,
+    brightness: Brightness.dark,
+  ),
+)`,funFact:"Google uses both Flutter and Compose internally. Google Pay uses Flutter. Google Meet uses Kotlin/Compose. The YouTube Music Android app was one of Compose's early large-scale real-world tests. Google intentionally maintains both toolkits — Flutter for cross-platform reach, Compose for deep Android integration.",quiz:[{q:"A startup wants iOS + Android + Web from a single team of 3 engineers with Dart experience and a 6-month deadline. Which framework is the stronger choice and why?",opts:["Jetpack Compose — it is newer and more performant","Flutter — one codebase targets all three platforms, leveraging the team's existing Dart skills and meeting the cross-platform requirement that Compose cannot fulfill (Compose is Android-only)","They should use React Native for web support","Both are equally suitable for this scenario"],ans:1},{q:"What is the key architectural difference between Compose recomposition and Flutter widget rebuild?",opts:["Compose is always faster because it uses Kotlin","Compose recomposes at the granularity of individual composable functions that read changed state. Flutter rebuilds the widget subtree from the changed widget downward. Compose's approach can be more granular by default, though Flutter's const widgets and shouldRebuild provide equivalent optimisation when used correctly","Flutter uses a virtual DOM like React; Compose does not","There is no meaningful difference — both fully re-render the screen on every state change"],ans:1},{q:"What does remember { mutableStateOf() } in Compose correspond to in Flutter?",opts:["InheritedWidget","StatefulWidget with a State class holding a variable and calling setState() — both manage local component state that triggers UI update on change","Provider package","const constructor"],ans:1},{q:"An Android-only enterprise app requires deep integration with Android App Widgets (home screen widgets), Nearby API, and Wear OS. Which framework is the better choice?",opts:["Flutter — because it has the largest plugin ecosystem","Jetpack Compose — Android-native framework has direct, first-party APIs for all three features. Flutter requires custom platform channel plugins for each, with varying community maturity","Both frameworks handle this equally well","Neither — only native View-based Android supports these features"],ans:1},{q:"How does Flutter's rendering pipeline differ from Compose's and why does it matter for cross-platform consistency?",opts:["There is no difference — both use Android's HWUI","Flutter renders through its own engine (Impeller/Skia) on a dedicated raster thread, completely bypassing Android's View system. This means Flutter UI looks pixel-identical on Android and iOS. Compose uses Android's rendering stack (HWUI), so it looks native on Android but requires separate Compose Multiplatform work for iOS","Flutter renders on the main thread; Compose renders on a background thread","Compose renders via WebView; Flutter uses native views"],ans:1},{q:"In a Flutter+Android hybrid app, a Compose screen is embedded inside a Flutter app using AndroidView. What performance concern does this introduce?",opts:["Kotlin cannot communicate with Dart in a hybrid setup","Hybrid composition (AndroidView/PlatformView) has known performance costs — Flutter must composite the native Android view into its rendering pipeline, which can cause jank and reduced frame rates compared to pure Flutter widgets. Use platform views sparingly and benchmark carefully","There are no performance concerns — hybrid composition is fully optimised","AndroidView only works with old View-based Android, not Compose"],ans:1},{q:"When an interviewer asks 'Why did you choose Flutter over Compose for this project?' what is the ideal answer structure?",opts:["Say Flutter is always better than Compose","State your project requirements first (cross-platform, team skills, timeline), then explain how Flutter's characteristics (single codebase, Dart team expertise, iOS requirement) matched those requirements, and acknowledge the tradeoff (deeper Android integration would have been easier in Compose)","Criticise Compose's learning curve","Focus only on Flutter's performance advantages"],ans:1},{q:"What is collectAsStateWithLifecycle() in Compose and what Flutter pattern serves the same purpose?",opts:["It converts StateFlow to a list — equivalent to Flutter's FutureBuilder","It collects a StateFlow as Compose State, stopping collection when the UI is below STARTED lifecycle state to prevent background work and unnecessary updates. The Flutter equivalent is StreamBuilder with a stream from a Bloc/Riverpod provider, which similarly only processes events when the widget is in the tree","It is a Compose-only concept with no Flutter equivalent","It is equivalent to Flutter's AnimatedBuilder"],ans:1}],challenge:"You are advising a fintech company choosing between Flutter and Compose for a new app that targets Android (primary) and iOS (future, 18 months out), requires BankID integration (Android SDK available), and has a team of 2 Android developers and 1 Flutter developer. Write your recommendation with three specific tradeoffs.",resources:[{type:"docs",title:"Jetpack Compose — official docs",url:"https://developer.android.com/compose",source:"Android Docs"},{type:"docs",title:"Compose vs Flutter — Flutter FAQ",url:"https://docs.flutter.dev/resources/faq",source:"Flutter Docs"},{type:"docs",title:"Compose state management",url:"https://developer.android.com/develop/ui/compose/state",source:"Android Docs"},{type:"docs",title:"go_router package",url:"https://pub.dev/packages/go_router",source:"pub.dev"},{type:"docs",title:"Compose Navigation",url:"https://developer.android.com/guide/navigation/design/compose-interop",source:"Android Docs"}],eli5:"Imagine two art studios. Compose is the studio inside Google's Android building — it has all the special Android tools right there on the shelves. Flutter is a travelling studio that brings its own identical tools and canvas to any building (Android, iPhone, web). If you only paint for the Android building, the built-in studio is convenient. If you paint for many buildings, bring your own studio.",codeWalkthrough:["collectAsStateWithLifecycle() converts StateFlow to Compose State — collection pauses when lifecycle drops below STARTED","remember { mutableStateOf(false) } — local state survives recomposition but is reset on configuration change (use rememberSaveable for persistence)","when(uiState) sealed class pattern — exhaustive state matching, identical philosophy to Flutter's switch on sealed classes (Dart 3+)","BlocBuilder in Flutter reads stream state and rebuilds only when state changes — analogous to Compose reading StateFlow","NavHost + composable routes — Compose's type-safe navigation graph, similar to go_router's GoRoute definitions","GoRoute with path parameters (:id) — Flutter's equivalent of Compose Navigation backstack arguments","MaterialTheme wrapping — Compose's theme propagation via CompositionLocal, equivalent to Flutter's ThemeData in MaterialApp","colorSchemeSeed in Flutter auto-generates Material 3 colour scheme from a seed colour — same concept as Compose's darkColorScheme"],bugChallenge:{code:`@Composable
+fun UserProfile(userId: String) {
+    var userData by remember { mutableStateOf<User?>(null) }
+
+    LaunchedEffect(Unit) {
+        userData = repository.getUser(userId)
+    }
+
+    userData?.let { UserCard(it) }
+}`,hint:"This works initially but has a subtle bug when the userId changes. What is it?",answer:"Bug: LaunchedEffect(Unit) runs only once — when the composable first enters the composition. If userId changes (e.g., user navigates to a different profile), the LaunchedEffect does NOT re-run because the key is Unit (constant). Fix: use LaunchedEffect(userId) — the effect re-runs whenever userId changes, fetching the correct user data. This is a common Compose bug that mirrors Flutter's didUpdateWidget pattern where you must handle parameter changes explicitly."},difficulty:"intermediate",prereqs:[42,43]},
+
+{id:45,title:"Mobile Security: JWT, Secure Storage, Biometrics & Encryption",subtitle:"JWT flow, flutter_secure_storage, biometric auth, certificate pinning, OWASP mobile top 10",analogy:"Think of mobile app security as a bank vault. JWT tokens are the time-limited access badges (they expire). Secure storage is the vault itself (not under the mattress). Biometrics are the fingerprint scanner at the door. Certificate pinning is checking that the bank building is actually the real bank and not a replica. OWASP mobile top 10 is the checklist the security auditors use when they inspect the vault.",points:[{t:"JWT Structure",d:"JWT = base64(header).base64(payload).signature. Header: algorithm (RS256/HS256). Payload: claims (sub, exp, iat, custom). Signature: HMAC or RSA. Mobile apps should never validate JWT signatures client-side — the server validates. Client only reads the payload to check expiry."},{t:"Token Refresh Flow",d:"Access token (short-lived, 15 min–1 hr) + Refresh token (long-lived, days–weeks). When access token expires (401), use refresh token to get a new access token silently. Dio interceptors are the standard Flutter pattern for auto-refresh."},{t:"flutter_secure_storage",d:"Stores key-value pairs in Android Keystore (hardware-backed on modern devices) and iOS Keychain. Never use SharedPreferences or Hive for tokens. flutter_secure_storage encrypts data at rest and ties it to the device."},{t:"local_auth (Biometrics)",d:"local_auth package provides fingerprint/Face ID authentication. It gates access to already-authenticated sessions — it does NOT replace server authentication. On Android it uses BiometricPrompt API. Always provide a fallback PIN."},{t:"Certificate Pinning",d:"Embed the server's public key hash in the app. Reject TLS connections whose certificate chain does not match. Prevents man-in-the-middle attacks even if a rogue CA is trusted by the device. Implemented via http_certificate_pinning or custom HttpClient with SecurityContext."},{t:"HTTPS/TLS",d:"All network calls must use HTTPS. Android blocks plain HTTP by default (usesCleartextTraffic=false since Android 9). Use HSTS headers server-side. Never disable SSL verification (badCertificateCallback: (_,_,_) => true) in production — a critical vulnerability."},{t:"Secrets Management",d:"API keys must NEVER be hardcoded in Dart code or committed to git. Use --dart-define for build-time injection, or server-proxied endpoints. Obfuscation (ProGuard/R8) makes key extraction harder but does not make it impossible — the key can still be extracted from a decompiled APK."},{t:"ProGuard/R8 Obfuscation",d:"Android's R8 compiler shrinks, optimises, and obfuscates Kotlin/Java bytecode. Enable in build.gradle: minifyEnabled true, proguardFiles. Flutter's Dart code is obfuscated separately via --obfuscate --split-debug-info flags. Essential for production releases."},{t:"OWASP Mobile Top 10",d:"M1: Improper Credential Usage. M2: Inadequate Supply Chain Security. M3: Insecure Authentication/Authorisation. M4: Insufficient Input/Output Validation. M5: Insecure Communication. M6: Inadequate Privacy Controls. M7: Insufficient Binary Protections. M8: Security Misconfiguration. M9: Insecure Data Storage. M10: Insufficient Cryptography."},{t:"Insecure Data Storage (M9)",d:"Common Flutter mistakes: storing tokens in SharedPreferences, writing sensitive data to the device filesystem without encryption, logging sensitive data with print() in production builds, caching PII in image caches without expiry."}],whatIs:"Mobile security protects user data, session integrity, and app authenticity. For fintech, healthcare, and any app handling personal data, security vulnerabilities can result in regulatory fines, data breaches, and loss of user trust. Senior Flutter engineers must be able to implement and articulate the full security stack.",realWorld:"In a fintech claims/refunds app: JWT access tokens stored in flutter_secure_storage (never SharedPreferences). Dio interceptor auto-refreshes tokens on 401. Biometric gate prevents shoulder-surfing on the claims list. Certificate pinning protects BankID communication. R8 obfuscation and --obfuscate in release builds. Security audit uses OWASP Mobile Top 10 as the checklist.",code:`// === JWT TOKEN REFRESH WITH DIO INTERCEPTOR ===
+class AuthInterceptor extends Interceptor {
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  bool _isRefreshing = false;
+  final _pendingRequests = <ErrorInterceptorHandler>[];
+
+  @override
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 401 && !_isRefreshing) {
+      _isRefreshing = true;
+      try {
+        final refreshToken = await _storage.read(key: 'refresh_token');
+        if (refreshToken == null) { _logout(); return; }
+
+        final response = await _dio.post('/auth/refresh',
+            data: {'refresh_token': refreshToken});
+
+        final newAccessToken = response.data['access_token'];
+        await _storage.write(key: 'access_token', value: newAccessToken);
+
+        // Retry failed request with new token
+        err.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
+        final retried = await _dio.fetch(err.requestOptions);
+        handler.resolve(retried);
+      } catch (e) {
+        _logout();
+        handler.reject(err);
+      } finally {
+        _isRefreshing = false;
+      }
+    } else {
+      handler.next(err);
+    }
+  }
+}
+
+// === SECURE TOKEN STORAGE ===
+class TokenRepository {
+  static const _storage = FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+  );
+
+  Future<void> saveTokens({
+    required String access, required String refresh,
+  }) async {
+    await Future.wait([
+      _storage.write(key: 'access_token', value: access),
+      _storage.write(key: 'refresh_token', value: refresh),
+    ]);
+  }
+
+  Future<bool> isTokenExpired() async {
+    final token = await _storage.read(key: 'access_token');
+    if (token == null) return true;
+    // Decode JWT payload (base64url) — no signature validation client-side
+    final parts = token.split('.');
+    final payload = json.decode(
+      utf8.decode(base64Url.decode(base64Url.normalize(parts[1])))
+    );
+    final exp = payload['exp'] as int;
+    return DateTime.now().millisecondsSinceEpoch / 1000 > exp;
+  }
+}
+
+// === BIOMETRIC AUTHENTICATION ===
+class BiometricService {
+  final _localAuth = LocalAuthentication();
+
+  Future<bool> authenticate() async {
+    final canAuth = await _localAuth.canCheckBiometrics;
+    if (!canAuth) return false;
+    return _localAuth.authenticate(
+      localizedReason: 'Verify your identity to view claims',
+      options: const AuthenticationOptions(
+        biometricOnly: false,  // Allow PIN fallback
+        stickyAuth: true,      // Don't cancel on background
+      ),
+    );
+  }
+}
+
+// === CERTIFICATE PINNING WITH CUSTOM HTTP CLIENT ===
+HttpClient buildPinnedClient() {
+  final context = SecurityContext(withTrustedRoots: false);
+  // Only trust our server's certificate
+  context.setTrustedCertificatesBytes(
+    (await rootBundle.load('assets/certs/server.pem')).buffer.asUint8List(),
+  );
+  return HttpClient(context: context);
+}
+
+// === BUILD-TIME SECRET INJECTION ===
+// flutter build apk --dart-define=API_KEY=prod_secret_here
+const apiKey = String.fromEnvironment('API_KEY', defaultValue: '');`,funFact:"The OWASP Mobile Top 10 was first published in 2016. M9 (Insecure Data Storage) has been in the top 3 every year since. In 2022, a security researcher found that a major banking app was storing JWT access tokens in SharedPreferences — readable by any app with root access or USB debugging enabled. flutter_secure_storage exists specifically to prevent this.",quiz:[{q:"Why is storing a JWT access token in SharedPreferences a critical security vulnerability on Android?",opts:["SharedPreferences is too slow for tokens","SharedPreferences data is stored as plain XML on the filesystem, readable by other apps on rooted devices, accessible via ADB backup, and not encrypted. flutter_secure_storage uses Android Keystore hardware encryption — store all tokens there","JWT tokens are too large for SharedPreferences","SharedPreferences does not support string values"],ans:1},{q:"What does a Dio interceptor for JWT refresh do and why is it the correct architectural pattern?",opts:["It decodes the JWT payload for display in the UI","It intercepts 401 responses, uses the stored refresh token to obtain a new access token, updates storage, and retries the original failed request transparently — the calling code never needs to handle token expiry manually","It validates the JWT signature client-side before sending requests","It compresses JWT tokens to reduce network payload size"],ans:1},{q:"A Flutter app uses biometric authentication (local_auth) as its only authentication mechanism — no username/password/server auth. What is the critical security flaw?",opts:["Biometric authentication is not supported on Android","local_auth only verifies that the device's registered biometric matches — it authenticates to the DEVICE, not the SERVER. If there is no server-side session validation, an attacker with physical device access (or a rooted device that can mock biometrics) bypasses all authentication. Biometrics should gate access to an existing server-validated session","The app will not work on iOS","Biometric authentication is too slow for production use"],ans:1},{q:"What is certificate pinning and what attack does it prevent?",opts:["It pins the app's version to a specific certificate to prevent updates","Certificate pinning embeds a trusted certificate hash in the app and rejects TLS connections that do not match — preventing man-in-the-middle attacks where an attacker presents a valid certificate from a rogue Certificate Authority trusted by the device","It prevents expired certificates from causing app crashes","It pins the app to a specific CDN server for performance"],ans:1},{q:"Which OWASP Mobile Top 10 item does printing JWT tokens in debug logs violate?",opts:["M5: Insecure Communication","M9: Insecure Data Storage — logging sensitive data creates an unintended data store (device logs) readable by other apps or anyone with USB debugging access, violating the principle that credentials must not be exposed outside secure storage","M1: Improper Credential Usage","M7: Insufficient Binary Protections"],ans:1},{q:"What is the difference between --obfuscate in Flutter and ProGuard/R8 in Android?",opts:["They are the same tool with different names","Flutter's --obfuscate renames Dart class/function names in the compiled Dart snapshot, making crash stack traces require --split-debug-info to read. ProGuard/R8 shrinks, optimises, and obfuscates the Kotlin/Java bytecode in the Android wrapper. Both are needed for a fully obfuscated release","ProGuard is deprecated — only Flutter --obfuscate is needed","R8 also obfuscates Dart code automatically"],ans:1},{q:"A developer uses --dart-define=API_KEY=secret to inject an API key at build time. Is this fully secure?",opts:["Yes — dart-define values are encrypted in the binary","No — dart-define values are embedded in the compiled binary and can be extracted by decompiling/disassembling the APK with tools like apktool or jadx. For high-security keys, the correct approach is to never put the key in the mobile app at all — use a server-side proxy that holds the key and the mobile app authenticates to the proxy","Yes — the Dart compiler encrypts all compile-time constants","dart-define is only for debug builds"],ans:1},{q:"What is the correct way to decode a JWT payload in a Flutter app to check expiry?",opts:["Send the token to the server and ask it to decode it","Base64url-decode the middle segment (payload) of the JWT string and parse it as JSON to read the 'exp' claim. Never validate the signature client-side — only the server has the secret/public key needed for signature verification","Use a JWT validation library that checks the signature with the server's public key embedded in the app","JWT tokens cannot be decoded on mobile devices"],ans:1}],challenge:"Design the complete authentication security stack for a fintech BankID claims app: (1) describe the full JWT flow from login to auto-refresh to logout, (2) where each token is stored and why, (3) how biometrics fit in without replacing server auth, (4) one OWASP item that is most likely to be violated in a rushed implementation.",resources:[{type:"docs",title:"flutter_secure_storage",url:"https://pub.dev/packages/flutter_secure_storage",source:"pub.dev"},{type:"docs",title:"local_auth package",url:"https://pub.dev/packages/local_auth",source:"pub.dev"},{type:"docs",title:"OWASP Mobile Top 10 (2024)",url:"https://owasp.org/www-project-mobile-top-10/",source:"OWASP"},{type:"docs",title:"Android Keystore System",url:"https://developer.android.com/training/articles/keystore",source:"Android Docs"},{type:"docs",title:"Flutter security best practices",url:"https://docs.flutter.dev/security",source:"Flutter Docs"}],eli5:"Imagine your app is a secret club. JWT tokens are VIP wristbands that expire at midnight. Secure storage is a real safe, not a drawer (SharedPreferences is a drawer anyone can open). Biometrics is the face scanner at the door — but the wristband still came from the club, the scanner just checks you're the right person. Certificate pinning is checking the club's official stamp before you hand over your wristband — to make sure you're at the real club.",codeWalkthrough:["AuthInterceptor.onError fires on every Dio error — checks for 401 before doing anything else","_isRefreshing flag prevents concurrent refresh calls when multiple requests fail simultaneously","storage.read('refresh_token') fetches from Android Keystore / iOS Keychain — hardware-backed encrypted storage","err.requestOptions.headers['Authorization'] = newToken — mutates the original request before retrying","FlutterSecureStorage AndroidOptions(encryptedSharedPreferences: true) uses EncryptedSharedPreferences — AES-256 backed by Keystore","parts[1] is the JWT payload segment — base64url decode it to read expiry without needing the signing key","local_auth biometricOnly: false allows PIN fallback — critical for accessibility and when biometrics fail","SecurityContext(withTrustedRoots: false) rejects ALL system CAs — only our pinned certificate is trusted"],bugChallenge:{code:`// Token storage in onboarding flow
+class OnboardingService {
+  Future<void> saveUserSession(String token, String userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('access_token', token);
+    await prefs.setString('user_id', userId);
+    print('Session saved for user: $userId token: $token');
+  }
+}`,hint:"This code has two OWASP violations. Identify both.",answer:"Bug 1 (M9 - Insecure Data Storage): SharedPreferences stores data as unencrypted XML on the filesystem. On rooted devices or via ADB backup, any app can read this file. The access token must be stored in flutter_secure_storage which uses Android Keystore / iOS Keychain. Bug 2 (M1 - Improper Credential Usage / M6 - Inadequate Privacy Controls): print() writes the token and userId to the system log (logcat/Console). Device logs are accessible to other apps with READ_LOGS permission and anyone with USB debugging access. Never log tokens, passwords, or PII. Fix: replace SharedPreferences with FlutterSecureStorage and remove the print statement."},difficulty:"advanced",prereqs:[23,27]},
+
+{id:46,title:"Accessibility: Semantics, Screen Readers & Focus",subtitle:"Semantics widget, TalkBack/VoiceOver testing, focus order, WCAG compliance in Flutter",analogy:"Accessibility is like building a physical space: the widgets you see are the visual architecture, but Semantics is the tactile map you hand to someone navigating with a cane (screen reader). Without it, they experience your beautiful building as a featureless wall. A 48x48 tap target is like a door handle that's reachable — too small and nobody can open the door.",points:[{t:"The Semantics Widget",d:"Semantics() wraps any widget to provide accessibility metadata: label, hint, value, button, header, enabled, onTap, onLongPress. The screen reader reads these instead of (or in addition to) the visual content."},{t:"Automatic Semantics",d:"Most Flutter material widgets automatically provide semantics: Text provides its content, ElevatedButton says 'button', Checkbox says checked/unchecked state. Custom widgets built from Container/GestureDetector have NO automatic semantics — you must add them manually."},{t:"MergeSemantics",d:"MergeSemantics combines its children's semantic nodes into a single node. Use it when multiple widgets together form one logical accessible element (e.g., an icon + label row that should be announced as one item)."},{t:"ExcludeSemantics",d:"ExcludeSemantics hides a subtree from the accessibility tree entirely. Use for purely decorative elements (background images, dividers, loading spinners that accompany text descriptions)."},{t:"Semantic Actions",d:"Semantics can declare custom actions: onTap, onLongPress, onScrollUp, onScrollDown, onIncrease, onDecrease. Sliders and custom scrollable widgets need these to be usable without touch."},{t:"Focus Management",d:"FocusNode and FocusScope control keyboard/directional navigation focus. FocusOrder (NumericFocusOrder, LexicalFocusOrder) controls tab order. For screen readers, the visual order typically matches the semantic tree order — verify with TalkBack."},{t:"Tap Target Size",d:"WCAG 2.5.5 requires a minimum 44x44 CSS px tap target. Android Material guidelines recommend 48x48 dp. Use GestureDetector or InkWell with a minimum size constraint, or the SizedBox wrapper pattern. Small icons must be wrapped."},{t:"TalkBack & VoiceOver Testing",d:"Test on real devices: enable TalkBack (Android) via Settings > Accessibility. Enable VoiceOver (iOS) via Settings > Accessibility. Use the Flutter accessibility inspector in DevTools. Never ship a release without TalkBack testing of critical user flows."},{t:"WCAG Compliance Basics",d:"WCAG 2.1 Level AA is the standard for most apps: Perceivable (text alternatives for non-text content), Operable (keyboard accessible, no seizure-inducing content), Understandable (readable, predictable), Robust (compatible with assistive tech)."},{t:"Colour Contrast",d:"WCAG AA requires 4.5:1 contrast ratio for normal text, 3:1 for large text and UI components. Use the Flutter DevTools accessibility checker or browser-based contrast checkers. The default accent colour must be checked against backgrounds."}],whatIs:"Accessibility ensures your app is usable by people with disabilities — visual impairments, motor limitations, cognitive differences. It is also legally required in many jurisdictions (ADA in the US, EAA in the EU) for apps in public-facing sectors. Senior Flutter engineers are expected to design for and test accessibility from the start.",realWorld:"The NGO survey app for field workers: survey questions must be completable via TalkBack for workers with low vision. Each question's Semantics label includes the question number and type. Radio buttons use MergeSemantics to combine the question text with the answer. Decorative country flag images use ExcludeSemantics. Form submit button has a minimum 48x48 tap target enforced by SizedBox.",code:`// === CUSTOM ACCESSIBLE CARD ===
+class ClaimCard extends StatelessWidget {
+  final Claim claim;
+  final VoidCallback onTap;
+  const ClaimCard({required this.claim, required this.onTap, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: 'Claim \${claim.id}',
+      hint: 'Double tap to view claim details',
+      button: true,
+      enabled: true,
+      child: GestureDetector(
+        onTap: onTap,
+        child: MergeSemantics(
+          // Merges icon + status text into one announcement
+          child: Row(children: [
+            ExcludeSemantics(
+              child: Icon(Icons.receipt, color: Theme.of(context).colorScheme.primary),
+            ),
+            const SizedBox(width: 12),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('Claim #\${claim.id}',
+                  style: Theme.of(context).textTheme.titleMedium),
+              Text(claim.status,
+                  style: Theme.of(context).textTheme.bodySmall),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+// === TAP TARGET SIZE ENFORCEMENT ===
+class AccessibleIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  final String semanticLabel;
+
+  const AccessibleIconButton({
+    required this.icon, required this.onPressed,
+    required this.semanticLabel, super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(24),
+        child: const SizedBox(
+          width: 48, height: 48,  // WCAG minimum tap target
+          child: Center(child: Icon(icon)),
+        ),
+      ),
+    );
+  }
+}
+
+// === FOCUS ORDER CONTROL ===
+class SurveyForm extends StatefulWidget {
+  @override
+  State<SurveyForm> createState() => _SurveyFormState();
+}
+
+class _SurveyFormState extends State<SurveyForm> {
+  final _nameFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _submitFocus = FocusNode();
+
+  @override
+  void dispose() {
+    _nameFocus.dispose(); _emailFocus.dispose(); _submitFocus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      TextFormField(
+        focusNode: _nameFocus,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) => _emailFocus.requestFocus(),
+        decoration: const InputDecoration(labelText: 'Full name'),
+      ),
+      TextFormField(
+        focusNode: _emailFocus,
+        textInputAction: TextInputAction.done,
+        onFieldSubmitted: (_) => _submitFocus.requestFocus(),
+        decoration: const InputDecoration(labelText: 'Email address'),
+      ),
+      Semantics(
+        focusable: true,
+        child: Focus(
+          focusNode: _submitFocus,
+          child: ElevatedButton(
+            onPressed: _submit,
+            child: const Text('Submit survey'),
+          ),
+        ),
+      ),
+    ]);
+  }
+}
+
+// === FLUTTER TEST — ACCESSIBILITY ===
+testWidgets('ClaimCard announces correct semantics', (tester) async {
+  await tester.pumpWidget(MaterialApp(
+    home: ClaimCard(claim: mockClaim, onTap: () {}),
+  ));
+
+  expect(
+    tester.getSemantics(find.byType(ClaimCard)),
+    matchesSemantics(label: 'Claim 123', isButton: true, hasTapAction: true),
+  );
+});`,funFact:"Apple added VoiceOver to iPhone in 2009 — two years after the original iPhone launched with no accessibility features at all. It was announced in the same keynote as iPhone 3GS. Stevie Wonder called in to the WWDC keynote personally to thank Apple. Today iOS has the highest screen reader usage on mobile worldwide, with over 20% of iPhone users having at least one accessibility feature enabled.",quiz:[{q:"You build a custom card widget using Container, Row, and GestureDetector. What accessibility problem does it have by default?",opts:["The widget cannot be tapped by accessibility tools","Custom widgets built from low-level primitives have NO automatic semantics — a screen reader announces nothing meaningful. You must wrap with Semantics() providing label, hint, and role (button: true) for the widget to be usable with TalkBack or VoiceOver","GestureDetector automatically adds 'button' semantics","Row widgets inherit semantics from their children"],ans:1},{q:"When would you use MergeSemantics instead of Semantics?",opts:["When you want to hide a widget from the accessibility tree","When multiple child widgets together form one logical accessible unit (e.g., an icon + label + status badge that should be read as a single announcement by the screen reader)","When a widget has multiple onTap handlers","MergeSemantics is only for web accessibility"],ans:1},{q:"A close button uses a 24x24 Icon widget with an onTap GestureDetector. What WCAG issue does this have?",opts:["The icon colour may not have sufficient contrast","The 24x24 tap target is too small — WCAG 2.5.5 and Material guidelines require a minimum 48x48 dp tap target. Wrapping in a SizedBox(width: 48, height: 48) or using IconButton (which enforces 48dp by default) resolves this","Close buttons are exempt from tap target requirements","GestureDetector automatically expands the tap area to 48dp"],ans:1},{q:"What does ExcludeSemantics do and when should you use it?",opts:["It excludes a widget from the visual tree","ExcludeSemantics hides the subtree from the accessibility tree. Use it for purely decorative elements (background images, decorative icons, animated loading indicators that accompany a text label) that add visual richness but convey no additional meaning to screen reader users","It prevents keyboard focus from reaching a widget","ExcludeSemantics is only for images"],ans:1},{q:"How do you verify your Flutter app's accessibility during development without a physical device?",opts:["Accessibility can only be tested on physical devices","Use Flutter DevTools' Accessibility inspector to visualise the semantic tree, check tap target sizes, and identify contrast issues. For screen reader behaviour, also test on a physical Android device with TalkBack and iOS device with VoiceOver","Use the Flutter accessibility package from pub.dev","Run flutter test --accessibility flag"],ans:1},{q:"A survey form has three text fields. The default focus order navigates them in the wrong sequence. How do you fix this?",opts:["Reorder the widgets in the code","Use FocusTraversalGroup with OrderedTraversalPolicy and NumericFocusOrder, or manually chain focus using FocusNode.requestFocus() in each field's onFieldSubmitted callback to explicitly define the focus sequence","Focus order cannot be customised in Flutter","Use AutofillGroup to control focus order"],ans:1},{q:"What WCAG contrast ratio is required for normal body text to meet Level AA compliance?",opts:["3:1","7:1 (AAA level)","4.5:1 — this is the WCAG 2.1 Level AA requirement for normal text (below 18pt or 14pt bold). Large text and UI components require 3:1","2:1"],ans:2},{q:"In a Flutter widget test, how do you assert that a widget announces itself as a button with the correct label to screen readers?",opts:["Use expect(widget.accessibilityLabel, equals('Submit'))","Use tester.getSemantics() with matchesSemantics(label: 'Submit', isButton: true, hasTapAction: true) — this inspects the semantic tree node rather than the visual widget, accurately testing what screen readers will announce","Accessibility cannot be tested with widget tests — only integration tests","Use find.bySemanticsLabel() and verify it is non-null"],ans:1}],challenge:"Audit the ClaimCard widget in the code sample for all accessibility issues. List: (1) what the screen reader announces without the Semantics wrapper, (2) why the receipt icon uses ExcludeSemantics, (3) what MergeSemantics changes about the announcement, (4) how you would test this on a physical device.",resources:[{type:"docs",title:"Flutter accessibility docs",url:"https://docs.flutter.dev/ui/accessibility-and-internationalization/accessibility",source:"Flutter Docs"},{type:"docs",title:"Semantics class API",url:"https://api.flutter.dev/flutter/widgets/Semantics-class.html",source:"Flutter Docs"},{type:"docs",title:"WCAG 2.1 guidelines",url:"https://www.w3.org/TR/WCAG21/",source:"W3C"},{type:"docs",title:"Android Accessibility — TalkBack",url:"https://support.google.com/accessibility/android/answer/6283677",source:"Google Support"},{type:"docs",title:"Testing Flutter accessibility",url:"https://docs.flutter.dev/testing/accessibility",source:"Flutter Docs"}],eli5:"Imagine someone is using your app but they can't see the screen — they hear a voice reading it to them. If you built a beautiful custom button from scratch but never added a label, the voice just says 'blank' — useless. Semantics is like putting a little sticky note on everything: 'this is a button called Submit.' MergeSemantics groups sticky notes together so the voice reads it as one thing instead of three confusing pieces.",codeWalkthrough:["Semantics(label: 'Claim 123', hint: 'Double tap to view', button: true) — provides all three key screen reader properties: what it is, what it does, and its role","ExcludeSemantics on the receipt icon — prevents the screen reader from announcing 'image' before the meaningful text content","MergeSemantics — makes the entire Row (icon + title + status) announce as one node instead of three separate announcements","SizedBox(width: 48, height: 48) — enforces minimum tap target size around small icons","FocusNode + textInputAction.next — chains keyboard focus between form fields in the correct logical order","onFieldSubmitted: (_) => _emailFocus.requestFocus() — programmatically moves focus when user presses the keyboard's next action","matchesSemantics matcher in widget test — verifies the semantic tree node, not the visual widget","tester.getSemantics(find.byType(ClaimCard)) — retrieves the SemanticsNode for the widget under test"],bugChallenge:{code:`class StatusBadge extends StatelessWidget {
+  final String status;
+  const StatusBadge({required this.status, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: status == 'approved' ? Colors.green : Colors.red,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(status, style: const TextStyle(color: Colors.white)),
+    );
+  }
+}`,hint:"This widget has two accessibility issues — one about screen reader semantics and one about WCAG compliance. Find both.",answer:"Bug 1 (Semantics): The Container + Text combination has basic text semantics but no role or context. A screen reader will announce the text 'approved' without context about what it means. Wrap with Semantics(label: 'Status: approved') to provide meaningful context. Bug 2 (Colour contrast): The widget communicates status ONLY through colour (green vs red). Users with colour blindness (affects ~8% of males) cannot distinguish these. WCAG 1.4.1 (Use of Color) requires that colour is not the only visual means of conveying information. Add an icon or text prefix: 'Approved' / 'Rejected' so the meaning is not colour-dependent. Additionally, white text on Colors.green (hex #4CAF50) may fail the 4.5:1 contrast ratio check."},difficulty:"intermediate",prereqs:[10,13]},
+
+{id:47,title:"Internationalization & Localization",subtitle:"flutter_localizations, ARB files, intl package, RTL, plurals, dynamic locale switching",analogy:"Internationalization (i18n) is building a restaurant kitchen that can cook any cuisine. Localization (l10n) is actually cooking French food for French customers — writing the specific menus, using local ingredients (date formats, currencies), and respecting table customs (RTL for Arabic). The kitchen infrastructure is i18n; each specific cuisine is l10n.",points:[{t:"i18n vs l10n",d:"Internationalization (i18n) is engineering the app to support multiple locales — dates, currencies, text direction, string externalisation. Localization (l10n) is the process of providing actual translations and locale-specific values for each target locale."},{t:"flutter_localizations Setup",d:"Add flutter_localizations to pubspec.yaml. Set supportedLocales in MaterialApp. Add generate: true and l10n.yaml config. Run flutter gen-l10n to generate the AppLocalizations class from ARB files."},{t:"ARB Files",d:"Application Resource Bundle (.arb) files are JSON-like files containing string keys with translations: { 'greetUser': 'Hello, {name}!', '@greetUser': { 'description': 'Greeting', 'placeholders': { 'name': { 'type': 'String' } } } }. One ARB per locale (app_en.arb, app_ar.arb, app_fr.arb)."},{t:"intl Package",d:"Provides DateFormat, NumberFormat, Intl.plural(), Intl.gender(), Intl.select() for locale-aware formatting. Always format dates and numbers through intl — never concatenate locale-sensitive values as strings."},{t:"Date & Number Formatting",d:"DateFormat('d MMMM y', locale).format(date) respects locale date order. NumberFormat.currency(locale: locale, symbol: '€').format(amount) formats for locale. Critical for fintech apps showing claim amounts and transaction dates."},{t:"Plural Rules",d:"Different languages have different plural forms. English: one/other. Arabic: zero/one/two/few/many/other. Use Intl.plural() or ARB plural syntax: { 'itemCount': '{count, plural, =0{No items} =1{1 item} other{{count} items}}' }. Never hardcode 'items' after a number."},{t:"RTL Support",d:"Arabic, Hebrew, Urdu require right-to-left layout. Set locale to 'ar' and Flutter automatically flips Row direction, padding direction, and text alignment. Use Directionality.of(context) to detect RTL. Test with Arabic locale on a real device."},{t:"Dynamic Locale Switching",d:"Allow users to change language in-app without restarting. Store chosen locale in SharedPreferences. Pass a locale override to MaterialApp via a ValueNotifier<Locale> or a Riverpod/BLoC state. Rebuild MaterialApp when locale changes."},{t:"Translation Workflow",d:"Export ARB files to translators. Use Lokalise, Phrase, or POEditor for professional translation management. Re-import translated ARBs. Run flutter gen-l10n. Review plurals and gendered strings — machine translation often gets these wrong."},{t:"Fallback Locale",d:"MaterialApp.localeResolutionCallback handles cases where the user's device locale has no matching translation. Default: fall back to the first entry in supportedLocales. Implement custom resolution for region fallbacks (e.g., 'pt_BR' falls back to 'pt')."}],whatIs:"Internationalization and localization make your app usable by people in different countries and languages. For global products — SaaS tools, NGO field apps, fintech platforms — this is a day-one architectural decision. Retrofitting i18n into an established codebase is expensive; doing it from the start is cheap.",realWorld:"The NGO survey app deploys in 12 countries. Each field worker sees their device's language automatically. Arabic workers see RTL layout. Survey question counts use proper plural rules ('1 question remaining' vs '3 questions remaining'). Sync timestamps are formatted in local date order. The translation team updates ARB files via Lokalise; CI runs flutter gen-l10n and fails if any keys are missing.",code:`// === l10n.yaml ===
+/*
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+*/
+
+// === app_en.arb ===
+/*
+{
+  "appTitle": "Survey App",
+  "@appTitle": { "description": "Application title" },
+
+  "greetUser": "Hello, {name}!",
+  "@greetUser": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+
+  "pendingCount": "{count, plural, =0{No pending surveys} =1{1 pending survey} other{{count} pending surveys}}",
+  "@pendingCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "claimAmount": "Amount: {amount}",
+  "@claimAmount": {
+    "placeholders": { "amount": { "type": "String" } }
+  }
+}
+*/
+
+// === app_ar.arb ===
+/*
+{
+  "appTitle": "تطبيق الاستبيان",
+  "greetUser": "مرحباً، {name}!",
+  "pendingCount": "{count, plural, =0{لا توجد استبيانات} =1{استبيان واحد} =2{استبيانان} few{{count} استبيانات} many{{count} استبياناً} other{{count} استبيان}}",
+  "claimAmount": "المبلغ: {amount}"
+}
+*/
+
+// === MaterialApp setup ===
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  void _setLocale(Locale locale) {
+    setState(() => _locale = locale);
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setString('locale', locale.languageCode),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      locale: _locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        // Custom fallback: pt_BR -> pt -> en
+        if (deviceLocale == null) return supportedLocales.first;
+        for (final locale in supportedLocales) {
+          if (locale.languageCode == deviceLocale.languageCode) return locale;
+        }
+        return supportedLocales.first; // Default: English
+      },
+      home: HomeScreen(onLocaleChange: _setLocale),
+    );
+  }
+}
+
+// === USING LOCALIZATIONS ===
+class HomeScreen extends StatelessWidget {
+  final void Function(Locale) onLocaleChange;
+  const HomeScreen({required this.onLocaleChange, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.appTitle)),
+      body: Column(children: [
+        Text(l10n.greetUser(name: 'Ahmad')),
+        Text(l10n.pendingCount(count: 3)),
+
+        // Locale-aware number formatting
+        Text(NumberFormat.currency(
+          locale: locale.toLanguageTag(), symbol: '\$',
+        ).format(1234567.89)),  // -> $1,234,567.89 or locale equivalent
+
+        // Locale-aware date formatting
+        Text(DateFormat.yMMMMd(locale.toLanguageTag())
+            .format(DateTime.now())),
+
+        // Language switcher
+        DropdownButton<Locale>(
+          value: locale,
+          items: AppLocalizations.supportedLocales.map((l) =>
+            DropdownMenuItem(value: l, child: Text(l.languageCode))
+          ).toList(),
+          onChanged: (l) { if (l != null) onLocaleChange(l); },
+        ),
+      ]),
+    );
+  }
+}`,funFact:"The word 'internationalization' has 18 characters between the first 'i' and the last 'n' — which is why developers abbreviated it 'i18n'. Similarly, 'localization' has 10 characters between 'l' and 'n' — 'l10n'. These numeronyms were popularised at Digital Equipment Corporation in the 1970s and are now universal in the software industry.",quiz:[{q:"What is the difference between internationalization (i18n) and localization (l10n)?",opts:["They are the same thing with different names","i18n is the engineering work of making an app capable of supporting multiple locales (architecture, string externalisation, date/number handling). l10n is the actual translation and locale-specific adaptation work. i18n is done once; l10n is done per language","i18n handles right-to-left languages; l10n handles left-to-right","l10n is a subset of i18n that only covers text translation"],ans:1},{q:"What does flutter gen-l10n do?",opts:["It automatically translates your app into all languages","It generates a type-safe AppLocalizations Dart class from your ARB files, providing compile-time checked access to all localised strings via AppLocalizations.of(context).myString","It validates your ARB files for missing translations","It creates a new ARB file for each supported locale"],ans:1},{q:"Why should you use Intl.plural() instead of writing 'if (count == 1) ... else ...' for pluralised strings?",opts:["Intl.plural is faster at runtime","Different languages have different plural forms — Arabic has six forms (zero/one/two/few/many/other), Russian has different rules for 11 vs 1. Hardcoded if/else only works for English-style one/many. Intl.plural() applies the correct CLDR plural rules for each locale","if/else cannot be used with localisation","Intl.plural() handles translation for you"],ans:1},{q:"When Flutter renders an app in Arabic locale, what layout change happens automatically?",opts:["Text becomes bold","Row direction flips to right-to-left, padding start/end are mirrored, and text alignment defaults to right. This is controlled by the Directionality widget that Flutter inserts based on the locale's text direction property","Only text is displayed right-to-left; layout remains left-to-right","Arabic support requires a separate RTL build of the app"],ans:1},{q:"A fintech app displays a claim amount as 'Total: ' + amount.toString(). What is wrong with this?",opts:["String concatenation is too slow","amount.toString() uses the Dart default number representation (no locale-aware formatting). Different locales use different decimal separators (1,234.56 in English vs 1.234,56 in German) and currency formatting. Use NumberFormat.currency(locale: locale.toLanguageTag()) to format amounts correctly","Numbers are the same in all locales","This is correct — numbers do not need localization"],ans:1},{q:"How do you persist a user's language selection so it survives app restarts?",opts:["Language is always read from the device locale — it cannot be persisted separately","Save the selected Locale's languageCode to SharedPreferences. On app startup, read the stored code and initialise MaterialApp's locale parameter. Use a state management approach (setState, Riverpod, BLoC) to rebuild MaterialApp when the user changes language in-app","Store it in flutter_secure_storage for security","Language preferences cannot be changed in-app — users must change their device language"],ans:1},{q:"What is the role of localeResolutionCallback in MaterialApp?",opts:["It translates strings automatically when a locale has no ARB file","It is called when the device locale does not exactly match a supported locale — you can implement custom fallback logic (e.g., 'pt_BR' falls back to 'pt', then to 'en') instead of the default behaviour which uses the first supported locale","It validates that all strings are translated in every ARB file","It handles RTL/LTR switching when the locale changes"],ans:1},{q:"A developer adds a new string key to app_en.arb but forgets to add it to app_ar.arb. What happens when an Arabic user triggers that string?",opts:["The app crashes with a MissingLocalizationException","By default, Flutter falls back to the template locale (English) for missing keys. However, this is silent — no warning at runtime. The correct fix is to add the key to all ARB files and use CI/CD to run flutter gen-l10n and fail the build if any locale is missing keys","The widget shows an empty string","Flutter shows ??? as a placeholder for missing translations"],ans:1}],challenge:"Design the i18n architecture for the NGO survey app supporting English, Arabic (RTL), French, and Spanish: (1) ARB file structure for a plural string 'You have N unanswered questions', (2) how dynamic locale switching works without app restart, (3) what you would check in CI to prevent shipping with missing translations.",resources:[{type:"docs",title:"Flutter internationalization guide",url:"https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization",source:"Flutter Docs"},{type:"docs",title:"intl package",url:"https://pub.dev/packages/intl",source:"pub.dev"},{type:"docs",title:"ARB file format",url:"https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification",source:"GitHub"},{type:"docs",title:"CLDR plural rules",url:"https://cldr.unicode.org/index/cldr-spec/plural-rules",source:"Unicode CLDR"},{type:"docs",title:"flutter_localizations API",url:"https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html",source:"Flutter Docs"}],eli5:"Imagine your app as a multilingual waiter at a restaurant. i18n is training the waiter to be able to speak multiple languages — learning grammar, number rules, how to read a menu backwards (RTL). l10n is actually writing the French menu, the Arabic menu, the Spanish menu. The waiter (app) is infrastructure; the menus (ARB files) are the content.",codeWalkthrough:["l10n.yaml tells flutter gen-l10n where ARB files live and what output file to generate — must be at project root","@greetUser object in ARB provides metadata (description, placeholder types) that gen-l10n uses to generate type-safe method signatures","Plural ARB syntax {count, plural, =0{...} =1{...} other{...}} — ICU message format that intl applies correct CLDR plural rules per locale","AppLocalizations.of(context)! — retrieves the localizations instance; throws if localizationsDelegates not configured in MaterialApp","Localizations.localeOf(context) — reads the current active locale for use in intl formatting calls","NumberFormat.currency(locale: locale.toLanguageTag()) — formats according to local numeric conventions (decimal/thousands separators)","DateFormat.yMMMMd(locale.toLanguageTag()) — formats date in locale order (e.g., January 15, 2025 in en; 15 janvier 2025 in fr)","localeResolutionCallback implements custom fallback logic — critical for regional variants like pt_BR not having a separate ARB"],bugChallenge:{code:`// In HomeScreen
+Widget build(BuildContext context) {
+  final count = pendingSurveys.length;
+  return Text(
+    count == 1
+        ? '1 pending survey'
+        : '\$count pending surveys',
+  );
+}`,hint:"This works in English but will break in other languages. What are the two issues?",answer:"Bug 1 (Hardcoded strings): The text is hardcoded English — it will not translate to any other language. All user-visible strings must be in ARB files and accessed via AppLocalizations.of(context). Bug 2 (Incorrect plural logic): The if count == 1 / else pattern only handles English two-form plurals. Languages like Arabic have six plural forms; Russian has different rules for 11. Use the ARB plural syntax and Intl.plural() which applies CLDR plural rules per locale. Fix: Define 'pendingCount' in all ARB files using ICU plural syntax and use l10n.pendingCount(count: count) in the widget."},difficulty:"intermediate",prereqs:[13]},
+
+{id:48,title:"Adaptive UI: Phone, Tablet, Foldables & Desktop",subtitle:"LayoutBuilder, MediaQuery, adaptive breakpoints, master-detail, WindowSizeClass, foldables",analogy:"Designing adaptive UI is like being an architect who designs one building plan that automatically adapts: a studio apartment on small plots (phone), a two-bedroom on medium plots (tablet), and a full house on large plots (desktop). The same blueprint but the rooms expand, multiply, or rearrange based on the available space — the architect never designs three separate buildings.",points:[{t:"MediaQuery",d:"MediaQuery.of(context).size gives screen dimensions. MediaQuery.of(context).devicePixelRatio gives density. Use for global layout decisions (screen width breakpoints). Caveat: MediaQuery rebuilds the entire widget when size changes — prefer LayoutBuilder for local adaptations."},{t:"LayoutBuilder",d:"LayoutBuilder gives the constraints available to a specific widget — not the screen size. Use for widget-level adaptations (e.g., a sidebar that only appears when its parent allocates 600+ dp). More precise than MediaQuery for responsive components."},{t:"Breakpoint Strategy",d:"Material 3 WindowSizeClass: compact (<600dp), medium (600–840dp), expanded (840dp+). Compact: single-column stack navigation. Medium: optional two-pane (NavigationRail). Expanded: full master-detail side-by-side. Match the platform's UX conventions."},{t:"Master-Detail Pattern",d:"On phones: navigate list → detail as separate screens. On tablets: show list and detail side-by-side. Implement by wrapping in LayoutBuilder and conditionally rendering Row([ListPane, DetailPane]) vs Navigator-based navigation."},{t:"NavigationRail vs BottomNavigationBar",d:"Use BottomNavigationBar on compact screens (thumbs reach bottom). Use NavigationRail on medium/expanded (side rail with labels). Adaptive navigation is a Material 3 recommendation — switch based on WindowSizeClass."},{t:"Foldable Device Support",d:"Foldable phones have two states: folded (compact) and unfolded (medium/table-top). The display_features API and flutter_adaptive_scaffold package handle fold hinge position and fold angle. Avoid placing interactive content over the hinge crease."},{t:"flutter_adaptive_scaffold",d:"Google's official package for adaptive layouts. AdaptiveScaffold automatically provides NavigationRail, NavigationDrawer, or BottomNavigationBar based on screen width, and supports two-pane layouts with the slot system (body, secondaryBody)."},{t:"Platform-Specific Widgets",d:"Use Platform.isIOS or Theme.of(context).platform to conditionally render CupertinoNavigationBar on iOS vs AppBar on Android. package:flutter/cupertino.dart provides full Cupertino widget set. Consider adaptive_theme for per-platform theming."},{t:"Desktop Considerations",d:"Desktop (Windows/macOS/Linux) has mouse/keyboard input. PointerEvent includes hover states. Use Focus and keyboard shortcuts (Shortcuts/Actions widgets). Minimum touch target rules are relaxed but clickable areas must still be clear."},{t:"Pixel Density Awareness",d:"1dp = 1 logical pixel on mdpi. Flutter's layout system works in dp — you never need to manually multiply by devicePixelRatio for sizing. However, image assets should provide @1x, @2x, @3x variants for resolution-appropriate rendering."}],whatIs:"Adaptive UI ensures your app looks and functions correctly across the full device spectrum — from a 360dp phone to a 1280dp desktop. As foldables gain market share and Flutter expands to desktop, senior engineers must design layouts that are not just 'responsive' (scaling) but 'adaptive' (behaviorally different for different form factors).",realWorld:"The school management app runs on phones (teachers marking attendance in class), tablets (admin reviewing dashboards), and a foldable used by the principal (unfolded for two-pane class + student view). flutter_adaptive_scaffold handles navigation adaptation. A LayoutBuilder switches the attendance screen between a scrollable list (compact) and a grid with detail panel (expanded). The hinge crease detection prevents the action buttons from landing on the fold.",code:`// === ADAPTIVE NAVIGATION ===
+class AdaptiveHome extends StatefulWidget {
+  @override
+  State<AdaptiveHome> createState() => _AdaptiveHomeState();
+}
+
+class _AdaptiveHomeState extends State<AdaptiveHome> {
+  int _selectedIndex = 0;
+  Widget? _selectedDetail;
+
+  @override
+  Widget build(BuildContext context) {
+    // LayoutBuilder for widget-level constraints
+    return LayoutBuilder(builder: (context, constraints) {
+      final isExpanded = constraints.maxWidth >= 840;
+      final isMedium = constraints.maxWidth >= 600;
+
+      return Scaffold(
+        // Adaptive navigation
+        bottomNavigationBar: isMedium ? null : NavigationBar(
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (i) => setState(() => _selectedIndex = i),
+          destinations: const [
+            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+            NavigationDestination(icon: Icon(Icons.class_), label: 'Classes'),
+            NavigationDestination(icon: Icon(Icons.person), label: 'Students'),
+          ],
+        ),
+        body: Row(children: [
+          if (isMedium) NavigationRail(
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: (i) => setState(() => _selectedIndex = i),
+            labelType: isExpanded
+                ? NavigationRailLabelType.selected
+                : NavigationRailLabelType.none,
+            destinations: const [
+              NavigationRailDestination(icon: Icon(Icons.home), label: Text('Home')),
+              NavigationRailDestination(icon: Icon(Icons.class_), label: Text('Classes')),
+              NavigationRailDestination(icon: Icon(Icons.person), label: Text('Students')),
+            ],
+          ),
+          Expanded(
+            child: isExpanded
+                ? _buildMasterDetail()
+                : _buildCurrentPage(),
+          ),
+        ]),
+      );
+    });
+  }
+
+  Widget _buildMasterDetail() {
+    return Row(children: [
+      SizedBox(
+        width: 360,
+        child: ClassListPane(
+          onClassSelected: (classItem) =>
+            setState(() => _selectedDetail = ClassDetailPane(classItem: classItem)),
+        ),
+      ),
+      const VerticalDivider(width: 1),
+      Expanded(
+        child: _selectedDetail ??
+            const Center(child: Text('Select a class to view details')),
+      ),
+    ]);
+  }
+
+  Widget _buildCurrentPage() {
+    return switch (_selectedIndex) {
+      0 => const HomePane(),
+      1 => ClassListPane(
+          onClassSelected: (c) => Navigator.push(context,
+              MaterialPageRoute(builder: (_) => ClassDetailPane(classItem: c))),
+        ),
+      2 => const StudentsPane(),
+      _ => const SizedBox.shrink(),
+    };
+  }
+}
+
+// === FOLDABLE HINGE AVOIDANCE ===
+class FoldAwareLayout extends StatelessWidget {
+  final Widget child;
+  const FoldAwareLayout({required this.child, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    // displayFeatures contains fold hinge information
+    final folds = mediaQuery.displayFeatures
+        .where((f) => f.type == DisplayFeatureType.fold ||
+                      f.type == DisplayFeatureType.hinge)
+        .toList();
+
+    if (folds.isEmpty) return child;
+
+    final hinge = folds.first.bounds;
+    // Split layout around the hinge
+    return Row(children: [
+      SizedBox(width: hinge.left, child: child),
+      SizedBox(width: hinge.width),  // Hinge gap
+      Expanded(child: SecondaryPane()),
+    ]);
+  }
+}
+
+// === flutter_adaptive_scaffold (official package) ===
+AdaptiveScaffold(
+  selectedIndex: _selectedIndex,
+  onSelectedIndexChange: (i) => setState(() => _selectedIndex = i),
+  destinations: const [
+    NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+    NavigationDestination(icon: Icon(Icons.class_), label: 'Classes'),
+  ],
+  body: (_) => const ClassListPane(),
+  secondaryBody: (_) => _selectedDetail ?? const EmptyDetailPane(),
+)`,funFact:"Samsung's Galaxy Z Fold line has sold over 10 million units since 2019. In 2023 Google shipped the first Pixel Fold. The foldable market is growing at 50%+ annually. Flutter added DisplayFeature (fold detection) API in Flutter 2.5 (2021) — earlier than both React Native and Kotlin/Compose had stable foldable APIs, reflecting Google's investment in Flutter for their own hardware.",quiz:[{q:"What is the key difference between using MediaQuery.of(context).size and LayoutBuilder for responsive layouts?",opts:["MediaQuery is more accurate","MediaQuery gives the full screen dimensions and triggers a rebuild of the entire subtree when size changes (e.g., keyboard opening). LayoutBuilder gives the constraints available to a specific widget and rebuilds only that subtree — prefer LayoutBuilder for widget-level adaptations","LayoutBuilder only works inside Scaffold","MediaQuery does not work on tablets"],ans:1},{q:"Material 3's WindowSizeClass defines three breakpoints. What are they and what navigation pattern does each suggest?",opts:["small/medium/large — all use BottomNavigationBar","compact (<600dp): BottomNavigationBar with stack navigation. medium (600–840dp): NavigationRail with optional two-pane. expanded (840dp+): NavigationDrawer or persistent NavigationRail with full master-detail side-by-side","mobile/tablet/desktop — based on device type not screen size","WindowSizeClass is a Compose concept not available in Flutter"],ans:1},{q:"How do you implement a master-detail layout that shows a list+detail on tablets but navigates to detail on phones?",opts:["Create two separate apps — one for phone and one for tablet","Use LayoutBuilder to check available width. If width >= 840dp, render a Row with a fixed-width list pane and an Expanded detail pane side-by-side. If width < 840dp, render only the list pane and use Navigator.push to navigate to a detail screen on item tap","Master-detail is not supported in Flutter without a package","Use Platform.isTablet to check device type"],ans:1},{q:"What is the displayFeatures API and why does it matter for foldable devices?",opts:["It lists the device's display resolution and refresh rate","MediaQuery.displayFeatures provides information about physical display obstructions including fold hinges and cutouts — their type, position, and bounds. Use this to avoid placing interactive content over the hinge crease, which can make taps unreliable on foldable devices","It is an Android-only API not available in Flutter","displayFeatures only reports notches and cutouts, not fold hinges"],ans:1},{q:"Why is BottomNavigationBar the recommended navigation pattern for phones but NOT for tablets or desktops?",opts:["BottomNavigationBar looks bad on tablets","On phones, the thumb naturally reaches the bottom of the screen (thumb zone). On larger screens, the bottom edge is far from the natural hand position, making BottomNavigationBar ergonomically awkward. NavigationRail on the left side is more thumb-friendly and uses the additional horizontal space effectively","BottomNavigationBar has a maximum of 5 items which is not enough for tablets","BottomNavigationBar is deprecated in Material 3"],ans:1},{q:"What does flutter_adaptive_scaffold's 'body' and 'secondaryBody' slot system provide?",opts:["Two separate Scaffolds rendered simultaneously","Automatic layout that shows only 'body' on compact screens, and shows both 'body' (left/primary) and 'secondaryBody' (right/detail) side-by-side on expanded screens — eliminating the need to manually write LayoutBuilder master-detail logic","secondaryBody is only shown on desktop, not tablets","The slot system is for web deployments only"],ans:1},{q:"A Flutter app designed only for phones needs to support tablets. What is the most impactful first change to make?",opts:["Rewrite the app with separate tablet widgets","Replace hardcoded widths (e.g., Container(width: 360)) with flexible constraints using Expanded, Flexible, and FractionallySizedBox. Add LayoutBuilder to switch navigation from BottomNavigationBar to NavigationRail at 600dp. This provides the biggest UX improvement with the least code change","Add a viewport meta tag","Tablets automatically scale phone UIs correctly"],ans:1},{q:"When should you use Platform.isIOS (from dart:io) vs Theme.of(context).platform for platform-adaptive widget selection?",opts:["They are identical — use either","Platform.isIOS reads the actual runtime platform — always correct but requires dart:io (not available on web). Theme.of(context).platform can be overridden in tests and on web (defaults to platform behavior). Prefer Theme.of(context).platform for widget code so you can test both platforms; use Platform.isIOS for non-UI platform-specific code (file paths, native APIs)","Platform.isIOS is deprecated in Flutter 3","Theme.of(context).platform always returns android"],ans:1}],challenge:"Design the adaptive layout for the school management app: (1) describe the navigation component used on each WindowSizeClass breakpoint, (2) sketch the class list screen layout for compact vs expanded, (3) explain how you handle the foldable case where the hinge splits the screen horizontally.",resources:[{type:"docs",title:"Flutter adaptive layout docs",url:"https://docs.flutter.dev/ui/layout/responsive/adaptive-responsive",source:"Flutter Docs"},{type:"docs",title:"flutter_adaptive_scaffold package",url:"https://pub.dev/packages/flutter_adaptive_scaffold",source:"pub.dev"},{type:"docs",title:"Material 3 — Adaptive design",url:"https://m3.material.io/foundations/layout/applying-layout/window-size-classes",source:"Material Design"},{type:"docs",title:"Flutter — Foldable support",url:"https://docs.flutter.dev/ui/layout/responsive/building-adaptive-apps",source:"Flutter Docs"},{type:"docs",title:"NavigationRail API",url:"https://api.flutter.dev/flutter/material/NavigationRail-class.html",source:"Flutter Docs"}],eli5:"Imagine you're arranging furniture. On a phone (small room), you put everything in a line because there's only one wall. On a tablet (bigger room), you put the list on one side and the details on the other wall. On a foldable (a room with a fold-down partition in the middle), you put things on either side of the partition and avoid putting the TV right on the fold line.",codeWalkthrough:["LayoutBuilder constraints.maxWidth — measures available space for THIS widget, not the full screen; more precise than MediaQuery for component-level decisions","isMedium = constraints.maxWidth >= 600 — compact/medium breakpoint; switches navigation widget","isExpanded = constraints.maxWidth >= 840 — medium/expanded breakpoint; enables side-by-side master-detail","NavigationRail only rendered when isMedium — Row() with conditional if shows it as a sibling to the main content area","_buildMasterDetail() uses a fixed 360dp SizedBox for the list pane — provides consistent list width across different expanded screen sizes","mediaQuery.displayFeatures.where(type == fold) — filters the DisplayFeature list to find only fold hinges","hinge.bounds.left — the pixel position of the hinge; SizedBox(width: hinge.left) places content exactly up to the hinge","AdaptiveScaffold secondaryBody — shown alongside body on expanded screens; null shows nothing in the secondary pane"],bugChallenge:{code:`class ResponsiveLayout extends StatelessWidget {
+  final Widget child;
+  const ResponsiveLayout({required this.child, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width > 600) {
+      return Row(children: [
+        SizedBox(width: 300, child: const Sidebar()),
+        Expanded(child: child),
+      ]);
+    }
+    return child;
+  }
+}`,hint:"This works but has a performance issue and a potential layout issue. What are they?",answer:"Performance issue: MediaQuery.of(context) subscribes to ALL MediaQuery changes — including keyboard appearance, system font size changes, and safe area changes. When the keyboard opens (which changes MediaQuery.viewInsets), this entire widget rebuilds unnecessarily. Fix: use MediaQuery.sizeOf(context) (Flutter 3.7+) which only rebuilds on size changes, or wrap in a LayoutBuilder to get constraints local to this widget. Layout issue: Using a hardcoded 600 pixel threshold is fragile — this is 600 logical pixels of the full screen, but if this widget is embedded in a narrow container (e.g., inside a dialog or side panel), the Row layout may not fit. Prefer LayoutBuilder's constraints.maxWidth for widget-level adaptation."},difficulty:"intermediate",prereqs:[13,14]},
+
+{id:49,title:"Flutter Web: Rendering, Constraints & SEO Limitations",subtitle:"HTML vs CanvasKit vs Wasm rendering, SEO challenges, when Flutter Web is appropriate",analogy:"Flutter Web's rendering modes are like three ways to paint a mural on a wall. HTML renderer paints directly on the wall using the building's built-in paint (browser DOM). CanvasKit brings its own special paint and paints on a canvas stretched over the wall — beautiful and consistent, but a search engine sees a canvas, not the mural. Wasm brings the same special paint but in a much smaller, faster-loading tube.",points:[{t:"Three Rendering Modes",d:"Flutter Web has three renderers: HTML (legacy, DOM-based, small bundle), CanvasKit (Skia-based canvas, large ~1.5MB bundle, pixel-identical to mobile), and WebAssembly/Wasm (new, highest performance, requires Chrome/Firefox with Wasm GC support)."},{t:"HTML Renderer",d:"Uses HTML/CSS/Canvas 2D for rendering. Smallest bundle size (~200KB gzipped). Good SEO — content is in the DOM. Limitations: not pixel-identical to mobile Flutter, some widgets render differently, text rendering varies by browser. Being phased out in favour of Wasm."},{t:"CanvasKit Renderer",d:"Embeds Skia (C++ compiled to Wasm) and renders everything to an HTML Canvas element. Pixel-identical to mobile Flutter. Large initial bundle (~1.5MB). Poor SEO — all content is in a canvas, not crawlable DOM elements. Long initial load time."},{t:"WebAssembly (Wasm) Renderer",d:"New in Flutter 3.22+. Compiles Dart to WebAssembly for native-speed execution. Requires dart2wasm, browser Wasm GC support (Chrome 119+, Firefox 120+). Smaller than CanvasKit, faster startup, better performance. Still canvas-based (same SEO limitations as CanvasKit)."},{t:"SEO Limitations",d:"CanvasKit and Wasm render to a canvas element — search engine crawlers cannot read text content, headings, or links from a canvas. The HTML renderer provides DOM content but with limitations. For content-heavy public websites (blogs, marketing, e-commerce), Flutter Web is the wrong choice."},{t:"When Flutter Web IS Appropriate",d:"Internal tools, dashboards, admin panels (no SEO needed). Apps where users arrive authenticated (links not crawled). Complex interactive applications (design tools, data visualisation). Progressive Web Apps (PWA) built on an existing Flutter codebase. When the app is already Flutter and web is a secondary target."},{t:"Routing for Web",d:"go_router supports URL-based routing for Flutter Web. The browser back/forward buttons must work. Use path-based routes (e.g., /dashboard/reports) not hash-based (#/dashboard). Handle deep links — users must be able to bookmark and share URLs."},{t:"Responsive Web Layouts",d:"Flutter Web uses the same adaptive layout patterns as tablets/desktop. LayoutBuilder and MediaQuery work identically. Additionally consider: mouse hover states (MouseRegion), right-click context menus, keyboard shortcuts, and scrollbar visibility."},{t:"Performance Considerations",d:"Avoid large asset bundles on web. Lazy-load heavy widgets with deferred imports. Use const constructors aggressively. CanvasKit's 1.5MB initial bundle is a real user-experience cost — measure Time To Interactive (TTI) before committing to it."},{t:"PWA Support",d:"Flutter Web generates a valid PWA manifest and service worker. Users can install your web app to their home screen. Service worker enables offline capability (though Flutter's internal routing may conflict with service worker caching — test carefully)."}],whatIs:"Flutter Web allows deploying a Flutter codebase to a browser. Understanding its rendering modes, limitations, and appropriate use cases is critical for senior engineers advising on architecture — choosing Flutter Web blindly for a public website is a common and costly mistake.",realWorld:"The SaaS collaboration platform uses Flutter Web for its authenticated dashboard (no SEO needed, pixel-identical to the mobile app, complex interactive UI). Their public marketing website is Next.js (SEO-critical). The boundary decision is deliberate: Flutter Web for the app, traditional web for discovery. A senior engineer defined this boundary during architecture planning.",code:`// === CHOOSING RENDERER IN index.html ===
+/*
+<!-- flutter_bootstrap.js auto-selects: Wasm if supported, else CanvasKit -->
+<script src="flutter_bootstrap.js" async>
+</script>
+
+<!-- Force CanvasKit -->
+<script>
+  window.flutterConfiguration = { renderer: "canvaskit" };
+</script>
+
+<!-- Force HTML renderer (for SEO or fast initial load) -->
+<script>
+  window.flutterConfiguration = { renderer: "html" };
+</script>
+*/
+
+// === URL-BASED ROUTING WITH go_router ===
+final router = GoRouter(
+  initialLocation: '/dashboard',
+  routes: [
+    GoRoute(
+      path: '/dashboard',
+      builder: (context, state) => const DashboardScreen(),
+      routes: [
+        GoRoute(
+          path: 'reports/:reportId',
+          builder: (context, state) => ReportDetailScreen(
+            reportId: state.pathParameters['reportId']!,
+          ),
+        ),
+      ],
+    ),
+    GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
+  ],
+);
+
+// === MOUSE HOVER STATE FOR WEB ===
+class HoverableCard extends StatefulWidget {
+  final Widget child;
+  final VoidCallback onTap;
+  const HoverableCard({required this.child, required this.onTap, super.key});
+  @override
+  State<HoverableCard> createState() => _HoverableCardState();
+}
+
+class _HoverableCardState extends State<HoverableCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                : Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+}
+
+// === DEFERRED LOADING — REDUCE INITIAL BUNDLE ===
+// heavy_chart.dart
+library heavy_chart;
+// ... complex charting widget
+
+// In dashboard.dart
+import 'heavy_chart.dart' deferred as heavyChart;
+
+class DashboardScreen extends StatefulWidget {
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  bool _chartLoaded = false;
+
+  Future<void> _loadChart() async {
+    await heavyChart.loadLibrary();
+    setState(() => _chartLoaded = true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      ElevatedButton(
+        onPressed: _loadChart,
+        child: const Text('Load Analytics Chart'),
+      ),
+      if (_chartLoaded) heavyChart.HeavyChartWidget(),
+    ]);
+  }
+}
+
+// === SEO METADATA (index.html for Flutter Web) ===
+/*
+<head>
+  <title>Collaboration Dashboard — MyApp</title>
+  <meta name="description" content="Manage your team workspace">
+  <meta property="og:title" content="MyApp Dashboard">
+  <!-- Note: only index.html metadata is crawlable —
+       content inside the Flutter canvas is NOT -->
+</head>
+*/`,funFact:"Flutter Web's CanvasKit renderer ships an entire rendering engine (Skia, compiled to WebAssembly) in the browser. At ~1.5MB gzipped, that single file is larger than the entire jQuery library (87KB) and approaches the size of a small native app. This is the fundamental tradeoff: pixel perfection everywhere in exchange for a heavier initial payload.",quiz:[{q:"What is the primary SEO limitation of Flutter Web's CanvasKit and Wasm renderers?",opts:["They generate too many HTTP requests for crawlers","All content is rendered to an HTML Canvas element — search engine crawlers cannot read text, headings, or links from canvas pixels. Only the static content in index.html is crawlable. This makes CanvasKit/Wasm inappropriate for public content-heavy websites","They require JavaScript to be enabled which blocks crawlers","CanvasKit loads too slowly for crawlers to wait"],ans:1},{q:"For which type of project is Flutter Web the STRONGEST choice?",opts:["A public e-commerce store with thousands of product pages","A company blog with SEO-critical articles","An authenticated internal dashboard tool where users arrive after login (no SEO requirement), the app is already built in Flutter for mobile, and complex interactive UI requires pixel-identical rendering","A marketing landing page with Core Web Vitals requirements"],ans:2},{q:"What is the key advantage of the new Wasm renderer over CanvasKit?",opts:["Wasm renderer works in all browsers including IE11","Wasm renderer has better SEO than CanvasKit","Wasm compiles Dart to native WebAssembly for significantly faster execution and potentially smaller bundle size than CanvasKit's Skia-based approach, while maintaining pixel-identical rendering — at the cost of requiring a browser with Wasm GC support (Chrome 119+, Firefox 120+)","Wasm renderer uses the browser DOM — enabling SEO"],ans:2},{q:"A Flutter Web app uses CanvasKit and loads slowly on first visit. What is the most impactful single change?",opts:["Switch to a faster CDN for hosting","Switch to the HTML renderer or Wasm renderer which have smaller initial bundles, and implement deferred loading for heavy widgets (using Dart's deferred imports) to split the bundle so only what is needed for the initial view loads first","Add more server RAM","Enable Flutter Web service worker caching"],ans:1},{q:"How does go_router support browser navigation (back/forward buttons) in Flutter Web?",opts:["go_router does not support web navigation — use Navigator 2.0 directly","go_router implements Router API (Navigator 2.0) which integrates with the browser's history stack — browser back/forward trigger route changes, and URL changes (typed or linked) navigate to the correct screen. Routes must use path-based URLs (not hash) for bookmark support","The browser back button always exits the Flutter web app","go_router requires a separate web configuration file"],ans:1},{q:"What does MouseRegion provide in Flutter Web and why does it not exist in mobile Flutter?",opts:["MouseRegion tracks finger position on touchscreens","MouseRegion detects mouse hover enter/exit events and allows setting the cursor style (SystemMouseCursors.click, .text, etc.) — essential for web UX where hover states indicate interactivity. Mobile devices have no mouse pointer so MouseRegion has no effect on mobile (it exists but fires no events)","MouseRegion is a Flutter Web-only widget that does not compile for mobile","MouseRegion provides right-click context menu support"],ans:1},{q:"When would you NOT use Flutter Web even if the project already has a Flutter mobile app?",opts:["Never — if you have a Flutter mobile app you should always add web support","When the web target requires strong SEO (public landing pages, blogs, e-commerce product pages), fast initial load (Core Web Vitals compliance), or heavy server-side rendering — traditional web frameworks (Next.js, Nuxt, SvelteKit) are better suited for these requirements","Flutter Web performance is good enough for any use case","Only avoid Flutter Web for gaming applications"],ans:1},{q:"What is deferred loading in Flutter Web and what problem does it solve?",opts:["It defers the rendering of off-screen widgets (virtual scrolling)","Dart's deferred imports (import 'file.dart' deferred as lib) allow splitting the compiled bundle — the deferred library is only downloaded when loadLibrary() is called at runtime. This reduces the initial bundle size, improving Time To Interactive (TTI) for Flutter Web apps where only a subset of features are needed immediately","Deferred loading caches API responses for offline use","It postpones widget builds until the widget enters the viewport"],ans:1}],challenge:"A fintech company asks if they should use Flutter Web for their public-facing loan application form (must be SEO-indexed by Google) and their internal loan officer dashboard. Give your recommendation for each use case with reasoning, covering: rendering mode implications, SEO, performance, and development effort.",resources:[{type:"docs",title:"Flutter Web rendering modes",url:"https://docs.flutter.dev/platform-integration/web/renderers",source:"Flutter Docs"},{type:"docs",title:"Flutter Web — building for web",url:"https://docs.flutter.dev/platform-integration/web",source:"Flutter Docs"},{type:"docs",title:"go_router web support",url:"https://pub.dev/packages/go_router",source:"pub.dev"},{type:"docs",title:"Flutter Web Wasm",url:"https://docs.flutter.dev/platform-integration/web/wasm",source:"Flutter Docs"},{type:"docs",title:"Deferred loading in Dart",url:"https://dart.dev/language/libraries#lazily-loading-a-library",source:"Dart Docs"}],eli5:"Flutter Web is like projecting your phone app onto a big screen at a cinema. The movie looks perfect — same pixel-for-pixel quality. But the search engine (like a movie reviewer) can only read the cinema's sign outside, not what's on screen. So if people need to find your app by Googling for it, the cinema isn't right. But if your users already have a ticket (they're logged in), the cinema is perfect.",codeWalkthrough:["window.flutterConfiguration = { renderer: 'canvaskit' } — forces CanvasKit in index.html before Flutter bootstrap; override per environment","go_router initialLocation + nested routes — creates a URL hierarchy /dashboard/reports/:id that the browser history stack can navigate","MouseRegion onEnter/onExit — fires on desktop/web hover; no-ops on mobile touch devices","AnimatedContainer with duration — smooth 150ms hover state transition for professional web feel","import deferred as heavyChart — deferred library not downloaded at startup; loadLibrary() triggers the download on demand","heavyChart.loadLibrary() returns a Future — await it before rendering the deferred widget","if (_chartLoaded) heavyChart.HeavyChartWidget() — conditional render after deferred load completes","SEO meta tags in index.html — only static HTML content is crawlable; JavaScript-rendered content is not seen by most crawlers"],bugChallenge:{code:`// Flutter Web app router setup
+final router = GoRouter(
+  initialLocation: '/#/dashboard',
+  routes: [
+    GoRoute(path: '/#/dashboard', builder: (_, __) => const DashboardScreen()),
+    GoRoute(path: '/#/settings', builder: (_, __) => const SettingsScreen()),
+  ],
+);`,hint:"These routes will not work correctly with browser navigation. What is the problem with the path format?",answer:"Bug: The routes use hash-based paths ('/#/dashboard') which is incorrect for go_router. go_router uses path-based routing ('/dashboard'), not hash-based routing. Hash-based URLs are not supported for deep linking or bookmarking in the same way. The '#' in a URL is handled client-side by the browser's history API but go_router's Router API integration expects clean path-based URLs. Fix: remove the '#/' prefix — use '/dashboard' and '/settings'. If hash-based routing is required (e.g., to avoid server-side routing configuration), use HashUrlStrategy explicitly, but this is generally not recommended for production Flutter Web apps."},difficulty:"intermediate",prereqs:[10,48]},
+
+{id:50,title:"Flutter Web + Wasm: What, Why & Deployment",subtitle:"WebAssembly compilation, performance gains, current limitations, deployment workflow",analogy:"Think of CanvasKit Flutter Web as a powerful diesel generator — it gets the job done anywhere but is heavy and slow to start. Wasm Flutter Web is a Tesla — it has a bigger initial investment (browser compatibility requirements) but once it runs, it is dramatically faster and cleaner. Not all garages support Teslas yet (older browsers), but the direction is clear.",points:[{t:"What is WebAssembly",d:"WebAssembly (Wasm) is a binary instruction format for a stack-based virtual machine. It runs in all modern browsers at near-native speed. Wasm code is compact, fast to parse, and executes in a sandboxed environment. It was designed to complement JavaScript, not replace it."},{t:"Dart-to-Wasm Compilation",d:"dart2wasm compiles Dart code directly to WebAssembly bytecode — bypassing the JavaScript compilation step (dart2js). The result executes in the browser's Wasm runtime instead of the JS engine. Requires Dart 3.3+ and Flutter 3.22+."},{t:"Why Wasm Matters for Flutter Web",d:"Previous Flutter Web used dart2js (Dart compiled to JavaScript). JavaScript is interpreted/JIT-compiled — performance is inconsistent. Wasm is AOT-compiled at the browser level — execution is predictable, faster, especially for Dart's type system and object model."},{t:"Performance Improvements",d:"Benchmarks show 2-3x faster execution for compute-heavy code compared to dart2js. Startup time improves compared to CanvasKit (smaller initial payload, no Skia Wasm loading). Rendering pipeline stays canvas-based — same visual output as CanvasKit."},{t:"Browser Compatibility",d:"Wasm GC (Garbage Collection) extension is required — supported in Chrome 119+ (Oct 2023) and Firefox 120+ (Nov 2023). Safari added support in Safari 18 (Sep 2024). IE is not supported. Check Can I Use for current coverage. Flutter falls back to CanvasKit for unsupported browsers."},{t:"Current Limitations",d:"dart:mirrors is unsupported in Wasm (also true for dart2js in release mode). JS interop requires package:web (not dart:html — deprecated for Wasm). Some Flutter plugins using dart:html break on Wasm. Platform-specific code needs migration to package:web API."},{t:"JS Interop Migration",d:"dart:html is deprecated for Flutter Wasm. Use package:web (the new Dart web API package) which maps to browser IDL types. Also use dart:js_interop for calling JavaScript from Dart. This is a breaking change for plugins — check pub.dev compatibility."},{t:"Deployment Workflow",d:"flutter build web --wasm generates a build/web directory with Wasm artifacts (.wasm file, JS bootstrap). Deploy to any static host (Firebase Hosting, Vercel, GitHub Pages, AWS S3+CloudFront). Serve with correct MIME type for .wasm files (application/wasm). Enable COOP/COEP headers for SharedArrayBuffer."},{t:"Fallback Strategy",d:"Flutter's build system generates both Wasm and CanvasKit bundles and auto-selects based on browser capabilities. The flutter_bootstrap.js file contains the feature detection logic — you do not need to manually manage fallbacks."},{t:"When to Choose Flutter Web + Wasm",d:"Complex interactive web apps (data visualisation, design tools, collaborative editors) that need maximum performance. Teams already using Flutter for mobile who want a high-performance web target. When the user base is known to use modern browsers (internal tools, enterprise apps). NOT for SEO-critical public websites."}],whatIs:"Flutter Web with WebAssembly compilation is the current frontier of Flutter Web performance. It represents the maturation of Flutter's web support from an experimental curiosity to a genuinely competitive option for complex interactive web applications — while honest about its limitations for SEO-dependent use cases.",realWorld:"The SaaS collaboration platform's web dashboard migrates from CanvasKit to Wasm after Flutter 3.22 ships. The complex real-time collaborative canvas (whiteboard feature) benefits from 2-3x faster DOM-equivalent computation. The team updates their Firebase Hosting configuration to add COOP/COEP headers. They add package:web migrations for two plugins. Browser analytics confirm 95%+ of their enterprise users are on Chrome 119+ or Firefox 120+.",code:`// === BUILD COMMANDS ===
+// Build with Wasm (Flutter 3.22+)
+// flutter build web --wasm
+
+// Build with specific renderer fallback
+// flutter build web --wasm --dart-define=FLUTTER_WEB_AUTO_DETECT=true
+
+// Serve locally with correct Wasm MIME type
+// flutter run -d chrome --wasm
+
+// === REQUIRED RESPONSE HEADERS (firebase.json) ===
+/*
+{
+  "hosting": {
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+          { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" }
+        ]
+      },
+      {
+        "key": "Content-Type",
+        "value": "application/wasm",
+        "source": "**.wasm"
+      }
+    ]
+  }
+}
+*/
+
+// === JS INTEROP — MIGRATING FROM dart:html TO package:web ===
+
+// OLD (dart:html — does NOT work with Wasm):
+import 'dart:html' as html;
+
+void downloadFile(String url, String filename) {
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute('download', filename)
+    ..click();
+}
+
+// NEW (package:web + dart:js_interop — Wasm-compatible):
+import 'package:web/web.dart' as web;
+import 'dart:js_interop';
+
+void downloadFile(String url, String filename) {
+  final anchor = web.document.createElement('a') as web.HTMLAnchorElement;
+  anchor.href = url;
+  anchor.download = filename;
+  web.document.body!.append(anchor);
+  anchor.click();
+  anchor.remove();
+}
+
+// === CONDITIONAL IMPORTS — SUPPORT BOTH MOBILE AND WEB ===
+// web_utils_stub.dart (for non-web platforms)
+void downloadFile(String url, String filename) {
+  throw UnsupportedError('downloadFile only supported on web');
+}
+
+// web_utils_web.dart (for web platforms)
+import 'package:web/web.dart' as web;
+void downloadFile(String url, String filename) {
+  // ... web implementation
+}
+
+// In your service:
+import 'web_utils_stub.dart'
+    if (dart.library.js_interop) 'web_utils_web.dart';
+
+// === CHECKING WASM SUPPORT IN FLUTTER BOOTSTRAP ===
+/*
+flutter_bootstrap.js auto-detects Wasm GC support:
+- if (WebAssembly.validate(wasmGcFeatureDetectionBytes)) -> load .wasm
+- else -> fall back to CanvasKit JS bundle
+
+You can read which path was taken:
+*/
+import 'dart:js_interop';
+
+@JS('window.__flutter_loader_initialized_with_wasm')
+external bool get isWasmEnabled;
+
+// === PERFORMANCE MEASUREMENT ===
+class PerformanceTracker {
+  static void measureFrameTime() {
+    // Compare Wasm vs CanvasKit rendering
+    final stopwatch = Stopwatch()..start();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final frameTime = stopwatch.elapsedMicroseconds;
+      analytics.logEvent('frame_time', parameters: {
+        'microseconds': frameTime,
+        'renderer': isWasmEnabled ? 'wasm' : 'canvaskit',
+      });
+    });
+  }
+}
+
+// === PUBSPEC.YAML — REQUIRED DEPENDENCIES ===
+/*
+dependencies:
+  flutter:
+    sdk: flutter
+  web: ^1.0.0          # New Wasm-compatible web APIs (replaces dart:html)
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+*/`,funFact:"WebAssembly was designed by a consortium of four browser vendors (Mozilla, Google, Microsoft, Apple) and became a W3C standard in 2019. It is the fourth language natively understood by web browsers (after HTML, CSS, and JavaScript). The Dart team at Google contributed to Wasm GC design specifically because they needed garbage-collected language support — Dart's type-safe object model maps naturally to Wasm GC types.",quiz:[{q:"What fundamental architectural change does Dart-to-Wasm compilation make compared to the previous dart2js approach?",opts:["Wasm uses a different rendering engine than CanvasKit","dart2js compiles Dart to JavaScript which is then JIT-compiled by the browser's JS engine — variable performance. dart2wasm compiles Dart directly to WebAssembly bytecode which runs in the browser's Wasm runtime — more predictable, faster execution, especially for Dart's type-safe object model","Wasm compilation allows Flutter Web to generate SEO-friendly content","Wasm replaces the entire Flutter framework with a web-native implementation"],ans:1},{q:"Why do COOP and COEP HTTP response headers matter for Flutter Web Wasm deployment?",opts:["They enable HTTPS for Wasm files","COOP (Cross-Origin-Opener-Policy: same-origin) and COEP (Cross-Origin-Embedder-Policy: require-corp) are required to enable SharedArrayBuffer, which Wasm uses for multi-threaded execution. Without these headers, some Wasm features are disabled by the browser","They set the correct MIME type for .wasm files","They prevent CORS errors when loading Wasm binaries"],ans:1},{q:"A Flutter plugin uses dart:html for file download functionality. What problem does this cause with Wasm builds and what is the fix?",opts:["dart:html works fine with Wasm — no changes needed","dart:html is deprecated and incompatible with Flutter Wasm builds. The plugin will either fail to compile or produce incorrect behaviour. Fix: migrate to package:web (which provides Wasm-compatible browser APIs) and dart:js_interop for JavaScript interoperability","The plugin must be rewritten in JavaScript","dart:html automatically converts to package:web during the Wasm build"],ans:1},{q:"What browser compatibility is required for Flutter Wasm and how does Flutter handle unsupported browsers?",opts:["All modern browsers support Wasm — no compatibility concern","Wasm GC is required: Chrome 119+ (Oct 2023), Firefox 120+ (Nov 2023), Safari 18 (Sep 2024). Flutter's flutter_bootstrap.js auto-detects Wasm GC support and falls back to the CanvasKit (JS-based) bundle for unsupported browsers — the app still works, just without Wasm performance benefits","Flutter Wasm only works in Chrome — other browsers are not supported","Older browsers receive a 'browser not supported' error page"],ans:1},{q:"For which use case would you recommend Flutter Web + Wasm over a traditional JavaScript framework like Next.js?",opts:["A public blog with 10,000 articles requiring Google indexing","A complex internal analytics dashboard with real-time data visualisation, used exclusively by enterprise customers on modern browsers, where the company already has a Flutter mobile app — Wasm provides maximum performance, code reuse is high, and SEO is irrelevant","Any web application — Flutter Wasm is always superior","An e-commerce store with product listings"],ans:1},{q:"What is the role of dart:js_interop in Flutter Wasm development?",opts:["It compiles JavaScript libraries to Dart","dart:js_interop is the Wasm-compatible API for calling JavaScript code from Dart — replacing the older dart:js package. It uses @JS() annotations for bindings and JSAny types. Required when your Flutter Web app needs to call browser JavaScript APIs not yet covered by package:web","It provides a JavaScript runtime inside Dart for running JS code","dart:js_interop is only needed when embedding Flutter inside an existing JS app"],ans:1},{q:"How does the Flutter build system handle the Wasm/CanvasKit fallback strategy during deployment?",opts:["Developers must manually create two separate builds and write their own feature detection","flutter build --wasm generates both Wasm artifacts and a CanvasKit fallback. The generated flutter_bootstrap.js contains browser feature detection (checking for Wasm GC support) and automatically loads the appropriate bundle — developers deploy one set of files and the browser receives the best available renderer","Wasm and CanvasKit cannot coexist in the same build","The server determines which renderer to serve based on the User-Agent header"],ans:1},{q:"What performance improvement can you expect from Flutter Wasm compared to CanvasKit (dart2js) for compute-heavy Dart code?",opts:["Wasm is 10-50x faster for all operations","Wasm is slower than CanvasKit because Wasm compilation overhead","Benchmarks show approximately 2-3x faster execution for compute-intensive Dart code compared to dart2js/CanvasKit. Rendering-bound operations (drawing frames) see smaller gains since both use the same canvas pipeline. The biggest wins are in Dart business logic: parsing, state management, algorithms","Wasm and CanvasKit have identical performance — the difference is only in bundle size"],ans:2}],challenge:"Design the migration plan for the SaaS collaboration platform moving their Flutter Web dashboard from CanvasKit to Wasm: (1) list the compatibility checks you would run before migration, (2) what plugin audit is required, (3) what server/CDN configuration changes are needed, (4) how you measure whether the migration actually improved performance.",resources:[{type:"docs",title:"Flutter Web Wasm — official docs",url:"https://docs.flutter.dev/platform-integration/web/wasm",source:"Flutter Docs"},{type:"docs",title:"package:web",url:"https://pub.dev/packages/web",source:"pub.dev"},{type:"docs",title:"dart:js_interop",url:"https://dart.dev/interop/js-interop",source:"Dart Docs"},{type:"docs",title:"WebAssembly — W3C spec",url:"https://webassembly.org/",source:"W3C"},{type:"docs",title:"Can I use — Wasm GC",url:"https://caniuse.com/wasm-gc",source:"caniuse.com"}],eli5:"Imagine your Flutter app is a chef cooking in a foreign country (the browser). Before Wasm, the chef had to translate every recipe into the local language (JavaScript) on the fly — sometimes getting it wrong or slow. With Wasm, the chef learned to speak the kitchen's native dialect directly. The food looks identical but comes out twice as fast. Some very old kitchens (old browsers) don't understand the new dialect yet, so the chef still carries the translation book as a backup.",codeWalkthrough:["flutter build web --wasm — triggers dart2wasm compiler instead of dart2js; generates .wasm file alongside JS bootstrap","COOP/COEP headers in firebase.json — enables SharedArrayBuffer required by Wasm threading; must be set at hosting level","dart:html AnchorElement — the OLD approach; works with dart2js but fails to compile or misbehaves with dart2wasm","package:web HTMLAnchorElement — the NEW approach; uses Wasm-compatible IDL bindings generated from browser specs","conditional imports (stub/web pattern) — allows same Dart code to work on mobile (stub) and web (web implementation) by selecting the correct file at compile time","@JS() annotation with external keyword — dart:js_interop binding; tells the Dart compiler this function is implemented in JavaScript","flutter_bootstrap.js auto-detection — checks for Wasm GC support, loads .wasm bundle if available, falls back to CanvasKit JS otherwise","WidgetsBinding.addPostFrameCallback — fires after each frame completes; used here to measure actual frame render time and log renderer type"],bugChallenge:{code:`// Flutter Web Wasm app — file download utility
+import 'dart:html' as html;
+
+class FileDownloadService {
+  void downloadReport(String url) {
+    final link = html.document.createElement('a') as html.AnchorElement;
+    link.href = url;
+    link.download = 'report.pdf';
+    html.document.body!.children.add(link);
+    link.click();
+    html.document.body!.children.remove(link);
+  }
+}`,hint:"This code compiles with CanvasKit (dart2js) but fails with Wasm. Why?",answer:"Bug: dart:html is incompatible with Flutter Wasm (dart2wasm). The dart:html library uses JavaScript interop patterns that predate the Wasm-compatible dart:js_interop specification. When building with --wasm, dart:html either fails to compile or produces incorrect behaviour. Fix: migrate to package:web and dart:js_interop — import 'package:web/web.dart' as web; then use web.document.createElement('a') as web.HTMLAnchorElement with the package:web API. For cross-platform code (mobile + web), wrap in a conditional import pattern so mobile platforms use a stub that throws UnsupportedError."},difficulty:"intermediate",prereqs:[49]},
+{id:51,title:"Desktop: macOS, Windows, Linux — Packaging & Inputs",subtitle:"Shipping Flutter beyond mobile — menus, shortcuts, and native packaging",analogy:"Think of desktop Flutter like moving from a studio apartment (mobile) to a full house — you get extra rooms (menu bar, system tray, window controls) but you also have to manage more infrastructure (packaging formats, keyboard input, multi-window state).",points:[{t:"Desktop targets overview",d:"Flutter supports macOS (AppKit), Windows (Win32/ANGLE), and Linux (GTK) from a single codebase. Enable with 'flutter config --enable-macos-desktop' etc. Each platform has its own plugin ecosystem and rendering path."},{t:"When desktop Flutter makes sense",d:"Cross-platform internal tools, Electron replacements, developer utilities, and apps already shipping on mobile where a desktop companion adds value. Avoid when heavy native platform APIs (CAMetalLayer, Win32 COM) dominate the feature set."},{t:"Window management",d:"package:window_manager lets you set size, min/max bounds, title, always-on-top, and listen to window lifecycle events. For multi-window, use package:desktop_multi_window. macOS needs NSPrincipalClass set in Info.plist."},{t:"Menu bar & system tray",d:"Use MenuBar widget (Flutter 3.7+) for native-feeling menu bars on macOS/Windows. package:tray_manager provides system tray icons with context menus — critical for background-running apps like sync clients."},{t:"Keyboard shortcuts",d:"Wrap the widget tree with Shortcuts + Actions or use CallbackShortcuts for simpler cases. FocusTraversalGroup controls tab order. HardwareKeyboard.instance.isKeyPressed lets you detect modifier keys for custom combos."},{t:"Mouse & trackpad input",d:"MouseRegion, Listener, and GestureDetector cover hover, right-click (secondary tap), scroll, and drag. Use SystemMouseCursors for cursor changes on hover. Trackpad precision scrolling is handled by PointerScrollEvent."},{t:"Context menus",d:"Flutter 3.3+ provides ContextMenuController and AdaptiveTextSelectionToolbar. For custom context menus on right-click, use GestureDetector onSecondaryTapDown + Overlay to position a menu at the cursor position."},{t:"MSIX packaging (Windows)",d:"msix package generates a signed MSIX installer for Microsoft Store or sideloading. Configure in pubspec.yaml: publisher CN, logo, capabilities. Run 'flutter pub run msix:create'. Requires Windows SDK and optionally a code-signing cert."},{t:"DMG packaging (macOS)",d:"flutter build macos produces a .app bundle. Wrap in a DMG with create-dmg or Xcode's Disk Utility. For Mac App Store, entitlements.plist must list sandbox capabilities. Notarisation required for distribution outside the store."},{t:"AppImage / Snap / Flatpak (Linux)",d:"flutter build linux produces a self-contained binary + data folder. Package as AppImage with appimagetool for portable distribution. Snap and Flatpak require manifest files but give access to software centres."},{t:"Platform channel differences on desktop",d:"Many mobile plugins don't have desktop implementations. Check pub.dev 'Platforms' badge. For missing plugins, write a desktop platform channel in Swift (macOS), C++ (Windows), or C (Linux) using the FFI or method-channel approach."},{t:"Responsive layout for desktop",d:"Use LayoutBuilder + breakpoints. Desktop users resize windows freely — test at 800px, 1200px, 1600px widths. Scaffold + NavigationRail suits medium screens; NavigationDrawer + sidebar layouts suit large. Avoid hard-coded pixel widths."}],whatIs:"Flutter desktop extends the Flutter SDK to compile native applications for macOS, Windows, and Linux, using the same widget tree but exposing platform-specific packaging, input models, and OS integration APIs.",realWorld:"A SaaS collaboration tool like Tixio ships a Flutter desktop client so enterprise teams can have the app live in their system tray with native keyboard shortcuts (Cmd+K search, Cmd+N new channel) and receive OS notifications even when the window is hidden.",code:`// Window setup with window_manager
+import 'package:window_manager/window_manager.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  const options = WindowOptions(
+    size: Size(1280, 800),
+    minimumSize: Size(800, 600),
+    center: true,
+    title: 'Tixio Desktop',
+    titleBarStyle: TitleBarStyle.hidden, // custom title bar
+  );
+  await windowManager.waitUntilReadyToShow(options, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
+  runApp(const App());
+}
+
+// Keyboard shortcut registration
+class SearchShortcut extends StatelessWidget {
+  const SearchShortcut({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.keyK, meta: true): () =>
+            SearchOverlay.show(context),
+        const SingleActivator(LogicalKeyboardKey.keyK, control: true): () =>
+            SearchOverlay.show(context),
+      },
+      child: Focus(autofocus: true, child: child),
+    );
+  }
+}`,funFact:"Flutter desktop was originally built to power Google's internal tooling at scale before being released publicly — meaning production-grade internal apps validated the approach before the community got access.",quiz:[{q:"Which Flutter widget provides native-feeling menu bars on macOS and Windows in Flutter 3.7+?",opts:["AppBar","MenuBar","NativeMenu","PlatformMenu"],ans:1},{q:"You need your desktop app to run in the background and show a tray icon. Which package is the standard choice?",opts:["package:desktop_window","package:tray_manager","package:system_tray_flutter","package:overlay_support"],ans:1},{q:"A user right-clicks on a list item expecting a context menu. Which event on GestureDetector captures this?",opts:["onLongPress","onTertiaryTapDown","onSecondaryTapDown","onDoubleTap"],ans:2},{q:"What is the correct tool/package for generating a signed MSIX installer for Windows?",opts:["flutter_windows_installer","msix","win32_packager","flutter build appx"],ans:1},{q:"For macOS distribution outside the App Store, what is required beyond building the .app bundle?",opts:["Code signing only","Notarisation with Apple","An App Store receipt","A provisioning profile"],ans:1},{q:"Which class lets you detect whether a modifier key (Shift, Ctrl) is currently held down?",opts:["RawKeyboard","HardwareKeyboard","KeyEventManager","FocusManager"],ans:1},{q:"A mobile plugin you rely on shows no desktop platform support on pub.dev. What is the correct approach?",opts:["Use dart:ffi to call the mobile binary","Write a desktop platform channel implementation in the platform's native language","Switch to a web plugin","Use a method channel stub that returns null"],ans:1},{q:"Which widget controls the tab-focus traversal order across interactive widgets on desktop?",opts:["FocusScope","FocusNode","FocusTraversalGroup","TabController"],ans:2}],challenge:"Build a minimal Flutter macOS app with: (1) a hidden title bar using window_manager, (2) a Cmd+K shortcut that shows a search overlay, (3) a system tray icon with 'Show' and 'Quit' menu items, and (4) a minimum window size of 800x600.",resources:[{type:"docs",title:"Flutter Desktop Support",url:"https://docs.flutter.dev/platform-integration/desktop",source:"Flutter Docs"},{type:"docs",title:"window_manager package",url:"https://pub.dev/packages/window_manager",source:"pub.dev"},{type:"docs",title:"MSIX packaging for Flutter",url:"https://pub.dev/packages/msix",source:"pub.dev"},{type:"article",title:"Building Desktop Apps with Flutter",url:"https://medium.com/flutter/flutter-for-desktop-creating-and-running-a-desktop-app-with-flutter-7c8e13e7bdd0",source:"Flutter Medium"}],eli5:"Mobile apps are like phones — everyone carries one the same way. Desktop apps are like computers — people use mice and keyboards and want menus at the top of the screen. Flutter can make both, but you have to learn the computer rules: how to package it for Windows or Mac, how to handle right-clicks, and how to add a little icon in the corner of the screen.",codeWalkthrough:["windowManager.ensureInitialized() must be called after WidgetsFlutterBinding — it hooks into the native window before Flutter renders anything.","WindowOptions defines the initial size, minimum size, and whether to use a custom title bar (titleBarStyle: hidden removes the native chrome).","waitUntilReadyToShow ensures the window is fully configured before making it visible, preventing a flash of default-sized window.","CallbackShortcuts maps SingleActivator key combinations to callbacks — meta: true handles Cmd on macOS, control: true handles Ctrl on Windows/Linux.","Both Cmd+K and Ctrl+K are registered so the same shortcut works cross-platform without conditional logic in the business layer.","Focus(autofocus: true) ensures the widget tree receives keyboard events immediately on startup without the user clicking first.","SearchOverlay.show(context) is a static method that uses Overlay.of(context) to insert a full-screen search UI without a route push.","The pattern separates window lifecycle (main) from input handling (SearchShortcut widget) cleanly."],bugChallenge:{code:`// Attempting to show a context menu on right-click
+GestureDetector(
+  onSecondaryTap: (details) {
+    showMenu(
+      context: context,
+      position: RelativeRect.fill,
+      items: [
+        PopupMenuItem(child: Text('Copy')),
+        PopupMenuItem(child: Text('Delete')),
+      ],
+    );
+  },
+  child: const ListTile(title: Text('Item')),
+)`,hint:"The menu appears but in the wrong position. What's wrong with how position is calculated?",answer:"Bug: RelativeRect.fill positions the menu at the edges of the screen, not at the cursor. Fix: use the tap details to get the global position. Use onSecondaryTapDown instead of onSecondaryTap (which doesn't provide position), then compute: final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox; and position: RelativeRect.fromRect(details.globalPosition & const Size(1,1), Offset.zero & overlay.size). This places the menu exactly where the user right-clicked."},difficulty:"intermediate",prereqs:[48]},
+{id:52,title:"GraphQL vs REST: When to Choose Which",subtitle:"Understanding query languages, pagination strategies, and caching tradeoffs for senior interviews",analogy:"REST is like a restaurant with a fixed menu — you order dish #3 and get exactly what's listed. GraphQL is like ordering à la carte — you tell the kitchen exactly which ingredients you want on your plate and nothing more, but the kitchen needs more sophisticated infrastructure to handle custom orders.",points:[{t:"REST fundamentals",d:"REST uses HTTP verbs (GET, POST, PUT, PATCH, DELETE) mapped to resources (/users, /orders/:id). Responses are server-defined — the server decides what fields are returned. Ideal for simple CRUD, public APIs, and teams with strong HTTP caching infrastructure."},{t:"GraphQL fundamentals",d:"GraphQL exposes a single endpoint (POST /graphql). Clients send queries specifying exactly which fields they need. The schema is strongly typed (SDL). Mutations change data; subscriptions push real-time updates over WebSocket."},{t:"Over-fetching and under-fetching",d:"REST suffers from over-fetching (extra fields you don't need) and under-fetching (requiring multiple requests to assemble a view). GraphQL solves both — one query can span multiple resource types and return only requested fields."},{t:"N+1 problem in GraphQL",d:"A naive GraphQL resolver fetches related data per-item in a loop, causing N+1 database queries. DataLoader (batching + caching) solves this by grouping per-field fetches into a single DB query per request cycle."},{t:"Cursor vs offset pagination",d:"Offset pagination (page=2&limit=20) is simple but breaks when items are inserted/deleted mid-list. Cursor pagination uses an opaque pointer (after: 'base64cursor') to the last seen item — stable under mutations, preferred for real-time feeds and infinite scroll."},{t:"HTTP caching vs Apollo-style caching",d:"REST benefits from HTTP cache headers (Cache-Control, ETags, CDN caching) because GET requests are cacheable by URL. GraphQL uses POST by default — not HTTP-cacheable. Apollo Client uses a normalized in-memory cache keyed by __typename + id, which is more powerful but application-level only."},{t:"Flutter packages for GraphQL",d:"graphql_flutter wraps Apollo-style client with Query/Mutation/Subscription widgets. ferry generates type-safe Dart classes from your schema. graphql (dart) provides lower-level client access. All support subscriptions over WebSocket."},{t:"When to choose GraphQL",d:"Choose GraphQL when: multiple client types (mobile, web, TV) need different data shapes; rapid frontend iteration without backend changes; complex nested data; real-time via subscriptions. Avoid for simple CRUD APIs, file uploads (multipart is awkward), or teams unfamiliar with the tooling overhead."},{t:"When to choose REST",d:"Choose REST when: public API with external consumers who expect standard HTTP; strong CDN caching requirements; simple CRUD; team expertise is REST-oriented; or you need HTTP-level caching for performance without application-layer solutions."},{t:"Schema-first vs code-first",d:"Schema-first: write SDL (.graphql files) first, generate server resolvers and client types. Code-first: define resolvers in code and auto-generate SDL. Schema-first is preferred for cross-team contracts; code-first suits small teams moving fast."},{t:"Subscriptions and real-time",d:"GraphQL subscriptions use WebSocket (graphql-ws protocol). The Flutter client maintains a persistent connection. For mobile, this means managing reconnection on network change — graphql_flutter handles this but you must configure keepAlive intervals."},{t:"Federation and microservices",d:"Apollo Federation lets multiple GraphQL services compose into a supergraph. Each service owns a subgraph (schema slice). The gateway stitches queries. This is the enterprise pattern when REST microservices would require a BFF layer."}],whatIs:"GraphQL is a query language and runtime for APIs that lets clients specify exactly the data they need, while REST is an architectural style using HTTP methods and resource-based URLs. Each has distinct caching, tooling, and performance characteristics.",realWorld:"A fintech claims app uses REST for its payment processing endpoints (leveraging HTTP caching and simple audit logs) but adds a GraphQL layer for its mobile client's dashboard — allowing the app to fetch claim status, related documents, and user profile in a single query instead of three separate REST calls.",code:`// graphql_flutter — typed query with ferry
+// schema.graphql excerpt:
+// type Claim { id: ID!, status: ClaimStatus!, amount: Float!, documents: [Document!]! }
+
+// Generated with ferry + build_runner:
+// flutter pub run build_runner build
+
+import 'package:ferry/ferry.dart';
+import 'package:ferry_flutter/ferry_flutter.dart';
+import 'claims_query.req.gql.dart';
+import 'claims_query.data.gql.dart';
+
+class ClaimsDashboard extends StatelessWidget {
+  const ClaimsDashboard({super.key, required this.userId});
+  final String userId;
+
+  @override
+  Widget build(BuildContext context) {
+    final client = context.read<Client>();
+    final request = GClaimsQueryReq((b) => b..vars.userId = userId);
+
+    return Operation(
+      client: client,
+      operationRequest: request,
+      builder: (context, response, error) {
+        if (response?.loading ?? true) return const CircularProgressIndicator();
+        if (error != null) return ErrorView(error: error);
+
+        final claims = response!.data!.claims;
+        return ListView.builder(
+          itemCount: claims.length,
+          itemBuilder: (_, i) => ClaimTile(claim: claims[i]),
+        );
+      },
+    );
+  }
+}
+
+// Cursor pagination query
+const claimsQuery = r\'''
+  query ClaimsQuery(\$userId: ID!, \$after: String, \$first: Int = 20) {
+    claims(userId: \$userId, after: \$after, first: \$first) {
+      edges { node { id status amount } cursor }
+      pageInfo { hasNextPage endCursor }
+    }
+  }
+\''';`,funFact:"GitHub migrated its public API from REST to GraphQL (v4) because mobile clients were making 300+ REST calls to render a single pull request page. The GraphQL API reduced that to a single query.",quiz:[{q:"What problem does DataLoader solve in a GraphQL server?",opts:["Schema validation errors","N+1 database query problem","WebSocket reconnection","Cursor pagination complexity"],ans:1},{q:"Why is HTTP caching harder with GraphQL than with REST?",opts:["GraphQL uses a binary protocol","GraphQL queries are sent via POST by default, which is not HTTP-cacheable","GraphQL responses lack ETag headers","GraphQL uses a different status code system"],ans:1},{q:"Which pagination strategy is more stable when items are inserted into a feed mid-scroll?",opts:["Offset pagination","Page-number pagination","Cursor-based pagination","Keyset pagination with primary key"],ans:2},{q:"In Flutter, which package generates type-safe Dart classes from a GraphQL schema using build_runner?",opts:["graphql_flutter","graphql_dart","ferry","artemis_lite"],ans:2},{q:"A mobile app needs different data shapes than the web dashboard from the same API. Which is a stronger argument for GraphQL?",opts:["REST can't handle multiple clients","GraphQL allows each client to request exactly the fields it needs without a backend change","GraphQL is always faster than REST","REST requires versioning for every client change"],ans:1},{q:"Apollo Federation is used to:",opts:["Cache GraphQL responses on a CDN","Compose multiple GraphQL subgraphs into a unified supergraph","Handle file uploads in GraphQL","Convert REST endpoints to GraphQL automatically"],ans:1},{q:"Which scenario is a strong argument FOR using REST over GraphQL?",opts:["You have three different client types with different data needs","You need real-time updates via subscriptions","You need a public API that benefits from CDN-level HTTP caching","You have complex nested relationships between entities"],ans:2},{q:"GraphQL subscriptions use which underlying transport protocol?",opts:["HTTP long-polling","Server-Sent Events","WebSocket","gRPC streams"],ans:2}],challenge:"Design a GraphQL schema for a multi-workspace chat app: define types for Workspace, Channel, Message, and User. Write a query that fetches a channel's last 20 messages with cursor pagination, and a subscription for new messages. Implement a basic Operation widget in Flutter using graphql_flutter that handles loading, error, and data states.",resources:[{type:"docs",title:"GraphQL official documentation",url:"https://graphql.org/learn/",source:"graphql.org"},{type:"docs",title:"graphql_flutter package",url:"https://pub.dev/packages/graphql_flutter",source:"pub.dev"},{type:"docs",title:"ferry — type-safe GraphQL for Dart",url:"https://pub.dev/packages/ferry",source:"pub.dev"},{type:"article",title:"GraphQL vs REST — When to use which",url:"https://www.apollographql.com/blog/graphql/basics/graphql-vs-rest/",source:"Apollo Blog"}],eli5:"Imagine you ask a waiter for a burger. With REST, the waiter always brings the burger with fries, salad, and a drink — even if you only wanted the burger. With GraphQL, you tell the waiter exactly what you want: 'just the burger patty and the bun, no extras.' You get exactly what you asked for, nothing more.",codeWalkthrough:["ferry generates type-safe request/response classes from your SDL schema at build time — GClaimsQueryReq and GClaimsQueryData are Dart classes, not raw maps.","GClaimsQueryReq builder sets typed variables (vars.userId) — compile-time safety means typos in field names are caught before runtime.","Operation widget (from ferry_flutter) subscribes to the client's response stream and rebuilds automatically when data, loading state, or errors change.","response?.loading ?? true handles the initial state where response is null before the first server reply arrives.","The query string uses cursor-based pagination — \$after accepts the endCursor from the previous page's pageInfo.","edges { node { ... } cursor } is the Relay-style pagination pattern — each edge carries the item and its cursor position.","pageInfo.hasNextPage tells the UI whether to show a 'load more' button or trigger the next fetch on scroll.","The client is read from context via Provider — ferry's Client is typically provided at the app root with configured link chain (auth, error, http)."],bugChallenge:{code:`// Attempting a GraphQL subscription for new messages
+final subscriptionRequest = GNewMessageSubReq(
+  (b) => b..vars.channelId = channelId,
+);
+
+Operation(
+  client: client,
+  operationRequest: subscriptionRequest,
+  builder: (context, response, error) {
+    if (response?.data == null) return const SizedBox();
+    final msg = response!.data!.newMessage;
+    return MessageBubble(message: msg);
+  },
+);`,hint:"The subscription connects but only ever shows one message — new messages don't appear. What's the architectural mistake?",answer:"Bug: the Operation widget re-renders on each subscription event but replaces the single displayed message rather than accumulating messages into a list. Subscriptions emit individual events, not full lists. Fix: use a StreamBuilder or listen to the client's responseStream imperatively, accumulating messages into a local state list. With flutter_bloc or Riverpod: use an AsyncNotifier that listens to the subscription stream and adds each new message to a List<Message> state, then display the full list. The Operation widget pattern works for queries/mutations but is awkward for accumulating subscription events."},difficulty:"intermediate",prereqs:[23]},
+{id:53,title:"Firebase vs Supabase vs Custom Backend — Practical Comparison",subtitle:"Choosing the right backend for your Flutter app — tradeoffs, pricing, and migration paths",analogy:"Firebase is a fully-furnished apartment — move in instantly but you can't knock down walls. Supabase is a furnished apartment where you own the building — more control but you manage the plumbing. A custom backend is building your own house — maximum control, maximum responsibility.",points:[{t:"Firebase overview",d:"Firebase is Google's BaaS offering: Firestore (NoSQL), Realtime Database, Auth, Cloud Functions, Storage, FCM, Crashlytics, Analytics, Remote Config. Tightly integrated, excellent Flutter SDK (FlutterFire), generous free tier. Proprietary and vendor-locked."},{t:"Supabase overview",d:"Supabase is an open-source BaaS built on PostgreSQL. Offers: Auth (JWT + OAuth), Postgres database with Row Level Security, Realtime (via Postgres replication), Storage, Edge Functions (Deno). Self-hostable. supabase_flutter package is the Flutter client."},{t:"Custom backend overview",d:"REST or GraphQL API built with Node.js/NestJS, Go, Dart (Shelf/Dart Frog), or any backend framework. Full control over schema, business logic, scaling, and costs. Requires building auth, storage, push notifications, and all infrastructure yourself."},{t:"Offline support comparison",d:"Firestore has built-in offline persistence (local SQLite cache, automatic sync). Supabase has no built-in offline — you handle it with flutter_drift or Hive + manual sync. Custom: you design the offline layer entirely. Firestore wins for rapid offline-capable apps."},{t:"Real-time capabilities",d:"Firestore: snapshot listeners on collections/documents — push updates on change. Supabase Realtime: subscribe to Postgres table changes (INSERT/UPDATE/DELETE) via WebSocket. Custom: WebSocket server or SSE. Firestore is simpler; Supabase Realtime is powerful for relational data."},{t:"Authentication options",d:"Firebase Auth: Email/password, Google, Apple, Facebook, phone OTP, anonymous, custom tokens. Supabase Auth: Email, OAuth (Google, GitHub, etc.), magic links, phone OTP, SSO (enterprise). Custom: implement JWT yourself or use Auth0/Clerk — more complex but fully controlled."},{t:"Pricing model and scalability limits",d:"Firebase: pay per read/write/storage — costs spike with high read volume (Firestore charges per document read). Supabase: pay per project/compute — predictable pricing, better for read-heavy workloads. Custom: you control costs but pay for DevOps time."},{t:"PostgreSQL advantages (Supabase)",d:"Supabase gives you full SQL — joins, transactions, complex queries, views, stored procedures. Row Level Security (RLS) policies enforce data access at DB level. Firestore is NoSQL — no joins, limited query operators, denormalization required."},{t:"Vendor lock-in and migration",d:"Firebase has significant lock-in: Firestore data model, security rules DSL, Cloud Functions triggers. Migrating away requires data export + schema redesign. Supabase is self-hostable and uses standard PostgreSQL — export with pg_dump. Custom: you own everything."},{t:"Flutter SDK quality",d:"FlutterFire (Firebase Flutter) is mature, officially supported by Google, and deeply integrated. supabase_flutter is active and growing but younger. Custom backends use your own http/dio layer — full control but no magic."},{t:"When to choose Firebase",d:"Best for: MVPs and startups needing speed, apps requiring offline-first with zero custom sync code, teams without backend engineers, projects leveraging Firebase ecosystem (Analytics + Crashlytics + FCM together). Avoid at scale if Firestore read costs become prohibitive."},{t:"When to choose Supabase or custom",d:"Supabase: when you need relational data, SQL queries, predictable pricing, or self-hosting. Custom: when business logic is complex, regulatory compliance requires data sovereignty, or the team has strong backend expertise and performance requirements exceed BaaS capabilities."}],whatIs:"Firebase, Supabase, and custom backends are three approaches to providing server-side functionality for Flutter apps, each with different tradeoffs in speed of development, flexibility, cost, and control.",realWorld:"A school management app starts with Firebase for rapid MVP (auth + Firestore for student records + FCM for notifications). At 50 schools with heavy read traffic, Firestore costs spike. The team migrates to Supabase — PostgreSQL handles complex attendance reports with SQL joins, RLS secures per-school data access, and costs become predictable.",code:`// Supabase Flutter — auth + realtime + RLS example
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+Future<void> main() async {
+  await Supabase.initialize(
+    url: 'https://your-project.supabase.co',
+    anonKey: 'your-anon-key',
+  );
+  runApp(const App());
+}
+
+final supabase = Supabase.instance.client;
+
+// Sign in with email
+Future<void> signIn(String email, String password) async {
+  final response = await supabase.auth.signInWithPassword(
+    email: email,
+    password: password,
+  );
+  // JWT is automatically attached to subsequent requests
+}
+
+// Query with RLS — only returns rows the authenticated user can access
+Future<List<Map<String, dynamic>>> fetchMyWorkspaces() async {
+  final data = await supabase
+      .from('workspaces')
+      .select('id, name, members(user_id, role)')
+      .order('created_at', ascending: false);
+  return data;
+}
+
+// Realtime subscription — listen to new messages in a channel
+void subscribeToChannel(String channelId, Function(Map) onMessage) {
+  supabase
+      .channel('messages:\$channelId')
+      .onPostgresChanges(
+        event: PostgresChangeEvent.insert,
+        schema: 'public',
+        table: 'messages',
+        filter: PostgresChangeFilter(
+          type: PostgresChangeFilterType.eq,
+          column: 'channel_id',
+          value: channelId,
+        ),
+        callback: (payload) => onMessage(payload.newRecord),
+      )
+      .subscribe();
+}`,funFact:"Supabase reached 1 million databases hosted in 2023, just three years after launch — growing faster than Firebase did in its first three years, largely because of the PostgreSQL-familiar developer experience.",quiz:[{q:"Which backend has built-in offline persistence with automatic sync in its Flutter SDK?",opts:["Supabase","Custom NestJS backend","Firebase Firestore","All three equally"],ans:2},{q:"A fintech app must store user data only on EU servers due to GDPR. Which option best supports this requirement?",opts:["Firebase (select EU region)","Supabase self-hosted on EU infrastructure","Firebase with VPC","Supabase cloud only"],ans:1},{q:"What is the main pricing concern with Firestore at scale compared to Supabase?",opts:["Firestore charges per concurrent user","Firestore charges per document read — costs spike with read-heavy workloads","Firestore has a lower storage limit","Firestore charges for WebSocket connections"],ans:1},{q:"Row Level Security (RLS) in Supabase enforces access control at which layer?",opts:["Flutter app layer","API gateway layer","PostgreSQL database layer","Edge function layer"],ans:2},{q:"Which Flutter package provides the official Supabase client?",opts:["supabase_dart","flutter_supabase","supabase_flutter","cloud_supabase"],ans:2},{q:"A new startup with no backend engineer needs offline-capable mobile app in 4 weeks. Which choice is most pragmatic?",opts:["Custom NestJS + SQLite sync","Supabase with manual offline logic","Firebase Firestore with offline persistence enabled","Supabase with Postgres replication"],ans:2},{q:"How does Supabase Realtime deliver data change events to Flutter clients?",opts:["HTTP polling","Server-Sent Events","WebSocket based on Postgres replication","Firebase Cloud Messaging"],ans:2},{q:"Migrating from Firebase to PostgreSQL requires which primary schema transformation?",opts:["Replacing JWT with custom tokens","Redesigning denormalized Firestore collections into normalized relational tables","Re-implementing FCM with APNs","Replacing Security Rules with RLS (identical syntax)"],ans:1}],challenge:"Design the data layer for a school management app: (1) Define a Supabase schema for schools, students, and attendance with appropriate foreign keys. (2) Write RLS policies so teachers only see students from their school. (3) Implement a Supabase Realtime subscription in Flutter that updates the UI when a new attendance record is inserted. (4) Compare how you would implement the same offline-first requirement with Firebase vs Supabase.",resources:[{type:"docs",title:"FlutterFire documentation",url:"https://firebase.flutter.dev/docs/overview",source:"FlutterFire"},{type:"docs",title:"Supabase Flutter quickstart",url:"https://supabase.com/docs/guides/getting-started/quickstarts/flutter",source:"Supabase Docs"},{type:"article",title:"Firebase vs Supabase — detailed comparison",url:"https://supabase.com/alternatives/supabase-vs-firebase",source:"Supabase Blog"},{type:"docs",title:"Supabase Row Level Security",url:"https://supabase.com/docs/guides/database/postgres/row-level-security",source:"Supabase Docs"}],eli5:"Firebase is like a toy train set — it's ready to play with in 5 minutes and everything fits together perfectly. Supabase is like Lego — a bit more work to build but you can make any shape you want and you can take it apart and rebuild it. A custom backend is like woodworking — you make exactly what you want but you need real skills and tools.",codeWalkthrough:["Supabase.initialize() is called before runApp — it sets up the global client with your project URL and anon key (safe to include in client code).","supabase.auth.signInWithPassword returns an AuthResponse — the JWT session is stored automatically and appended to all subsequent API calls.","fetchMyWorkspaces uses Supabase's query builder — .select('id, name, members(user_id, role)') performs a JOIN to the members table in a single request.","RLS policies on the 'workspaces' table (defined in Supabase dashboard or SQL) automatically filter results — the Flutter client doesn't need to add userId filters.","supabase.channel() creates a named Realtime channel — the name is arbitrary but should be unique per subscription to avoid conflicts.","onPostgresChanges with PostgresChangeEvent.insert listens only to new row insertions, not updates or deletes — reducing noise.","The filter ensures only messages for the specific channelId trigger the callback — server-side filtering reduces bandwidth.","payload.newRecord is a Map of the newly inserted row's columns — typed models should be created with fromJson for production use."],bugChallenge:{code:`// Supabase realtime subscription
+class ChatNotifier extends StateNotifier<List<Message>> {
+  ChatNotifier() : super([]);
+  RealtimeChannel? _channel;
+
+  void subscribe(String channelId) {
+    _channel = supabase
+        .channel('messages')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.insert,
+          schema: 'public',
+          table: 'messages',
+          callback: (payload) {
+            state = [...state, Message.fromJson(payload.newRecord)];
+          },
+        )
+        .subscribe();
+  }
+
+  @override
+  void dispose() {
+    _channel?.unsubscribe();
+    super.dispose();
+  }
+}`,hint:"Multiple users open different chat channels. Messages from other channels appear in the wrong chat. What's missing?",answer:"Bug: the channel filter is missing — all message inserts across the entire 'messages' table trigger the callback regardless of channel_id. Fix: add a PostgresChangeFilter to the onPostgresChanges call: filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: 'channel_id', value: channelId). Also, the channel name 'messages' is shared across all ChatNotifier instances — if two channels are open simultaneously, they conflict. Fix: use a unique channel name like 'messages:\$channelId' so each subscription is isolated."},difficulty:"intermediate",prereqs:[27]},
+{id:54,title:"Monetization: IAP, Subscriptions, Ads & RevenueCat",subtitle:"Implementing in-app purchases, subscription lifecycles, and ad monetization the right way",analogy:"Monetization is like running a coffee shop: you can sell individual drinks (one-time IAP), sell monthly subscriptions (premium membership), or let advertisers put posters on your wall (ads). RevenueCat is like a POS system that handles all payment types, tracks memberships, and talks to the credit card networks so you don't have to.",points:[{t:"In-app purchase types",d:"Consumables (coins, credits — can be purchased repeatedly), Non-consumables (remove ads, unlock level — bought once), Auto-renewable subscriptions (monthly/annual — renews until cancelled), Non-renewing subscriptions (time-limited access, not auto-renewed). Each has different restoration logic."},{t:"StoreKit (iOS) and Play Billing (Android)",d:"iOS uses StoreKit 2 (modern Swift API, introduced iOS 15) and the legacy StoreKit 1. Android uses Google Play Billing Library 6+. Both have different product setup flows, testing environments (StoreKit Testing/TestFlight vs license testers), and receipt formats."},{t:"in_app_purchase package",d:"Flutter's official package:in_app_purchase abstracts StoreKit and Play Billing behind a common API. Handles: product listing, purchase initiation, purchase stream, delivery verification, and restore. Lower-level but cross-platform without a third-party dependency."},{t:"RevenueCat integration",d:"RevenueCat is a cross-platform subscription management SDK. It handles purchase validation, webhook delivery, entitlement management, and analytics. purchases_flutter is the Flutter SDK. Reduces 6 weeks of billing code to 2 days. Used by thousands of apps including major fintech products."},{t:"Entitlements and offerings",d:"RevenueCat models access as Entitlements (what the user can access: 'premium') mapped to Products (App Store/Play Store SKUs). Offerings are paywalls — different product bundles you can A/B test. Change products without app release by configuring in RevenueCat dashboard."},{t:"Subscription lifecycle",d:"Trial → Active → Grace period (payment failed, access continues briefly) → Lapsed (access revoked) → Cancelled → Expired. RevenueCat tracks all states via CustomerInfo. Your app checks entitlements, not raw subscription state, for cleaner logic."},{t:"Receipt validation and server-side verification",d:"Apple/Google receipts must be validated server-side to prevent fraud. RevenueCat handles this automatically. For custom backends: POST the receipt to Apple/Google validation servers, check the response, and update your DB. Never trust client-side receipt data alone."},{t:"Paywall strategies",d:"Hard paywalls (block feature entirely), soft paywalls (show feature, gate on use), freemium (core free, power features paid), trial-first (14-day trial before payment). RevenueCat Paywalls allows building no-code paywalls with remote configuration and A/B testing."},{t:"AdMob integration",d:"google_mobile_ads package provides Banner, Interstitial, Rewarded, and Native ads. Always initialize before using: MobileAds.instance.initialize(). Load ads before showing — preload rewarded ads especially. Comply with ATT (iOS) and consent requirements (GDPR) or ads won't show."},{t:"ATT and consent frameworks",d:"iOS 14+ requires App Tracking Transparency prompt before showing personalized ads. Use app_tracking_transparency package. Android requires UMP (User Messaging Platform) consent for GDPR. Failure to implement costs significant ad revenue in EU/US markets."},{t:"Hybrid monetization",d:"Many successful apps combine subscriptions + IAP + ads: free tier shows ads, paid subscription removes ads, consumable IAP for power users. Design your entitlement model to handle all three. RevenueCat's CustomerInfo.activeSubscriptions + activeEntitlements covers subscription state; ad visibility logic is separate."},{t:"Pricing and conversion optimization",d:"Offer annual plan prominently (typically 30-50% discount vs monthly — higher LTV). Trial conversion rates: 7-day trial converts better than 14-day in many categories. Price anchoring: show annual/monthly/weekly options to make monthly look reasonable. Test with RevenueCat Experiments."}],whatIs:"Monetization in Flutter apps involves implementing in-app purchases, subscriptions, and advertising using platform-native billing systems abstracted by packages like in_app_purchase and RevenueCat, combined with ad SDKs like AdMob.",realWorld:"A field operations SaaS app uses RevenueCat to manage team subscriptions: free tier for 3 users, Pro at 29 USD/month for unlimited users. RevenueCat handles Apple/Google receipt validation, grace periods when a company's card expires, and sends webhooks to the NestJS backend to update the team's feature access in Supabase.",code:`// RevenueCat Flutter integration
+import 'package:purchases_flutter/purchases_flutter.dart';
+
+class PurchaseService {
+  static Future<void> initialize() async {
+    await Purchases.setLogLevel(LogLevel.debug);
+    final config = PurchasesConfiguration(
+      Platform.isIOS ? 'appl_your_key' : 'goog_your_key',
+    );
+    await Purchases.configure(config);
+  }
+
+  // Identify user after login (links purchases to your user ID)
+  static Future<void> identifyUser(String userId) async {
+    await Purchases.logIn(userId);
+  }
+
+  // Check if user has 'premium' entitlement
+  static Future<bool> hasPremiumAccess() async {
+    final customerInfo = await Purchases.getCustomerInfo();
+    return customerInfo.entitlements.active.containsKey('premium');
+  }
+
+  // Fetch current offering and display paywall
+  static Future<Offerings> getOfferings() async {
+    return await Purchases.getOfferings();
+  }
+
+  // Purchase a package (e.g., monthly subscription)
+  static Future<CustomerInfo> purchasePackage(Package package) async {
+    try {
+      return await Purchases.purchasePackage(package);
+    } on PurchasesErrorCode catch (e) {
+      if (e == PurchasesErrorCode.purchaseCancelledError) {
+        throw const UserCancelledPurchaseException();
+      }
+      rethrow;
+    }
+  }
+
+  // Restore purchases (required by App Store guidelines)
+  static Future<CustomerInfo> restorePurchases() async {
+    return await Purchases.restorePurchases();
+  }
+}
+
+// Usage in paywall widget
+class PaywallScreen extends StatefulWidget {
+  const PaywallScreen({super.key});
+  @override
+  State<PaywallScreen> createState() => _PaywallScreenState();
+}
+
+class _PaywallScreenState extends State<PaywallScreen> {
+  Offerings? _offerings;
+
+  @override
+  void initState() {
+    super.initState();
+    PurchaseService.getOfferings().then((o) => setState(() => _offerings = o));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final offering = _offerings?.current;
+    if (offering == null) return const CircularProgressIndicator();
+
+    return Column(
+      children: offering.availablePackages.map((pkg) {
+        return ElevatedButton(
+          onPressed: () async {
+            final info = await PurchaseService.purchasePackage(pkg);
+            if (info.entitlements.active.containsKey('premium')) {
+              Navigator.pop(context, true);
+            }
+          },
+          child: Text('\${pkg.packageType.name} — \${pkg.storeProduct.priceString}'),
+        );
+      }).toList(),
+    );
+  }
+}`,funFact:"RevenueCat processes over 1 billion USD in annual in-app revenue across its platform and is used by apps in over 30,000 companies. Its SDK typically saves 4-8 weeks of engineering time per app compared to implementing StoreKit and Play Billing directly.",quiz:[{q:"Which type of IAP can be purchased multiple times by the same user (e.g., in-game coins)?",opts:["Non-consumable","Auto-renewable subscription","Consumable","Non-renewing subscription"],ans:2},{q:"What is a RevenueCat Entitlement?",opts:["A specific App Store product SKU","An abstraction representing what a user has access to, mapped to one or more products","A webhook event type","A paywall configuration"],ans:1},{q:"Why should receipt validation be performed server-side rather than client-side?",opts:["Client devices can't access the internet","Server-side validation prevents receipt forgery and tampering from the client","Apple requires server-side validation for all apps","Play Billing doesn't provide receipts to the app"],ans:1},{q:"A user's subscription payment fails. What period allows continued access while the issue resolves?",opts:["Lapsed period","Cancelled period","Grace period","Pending period"],ans:2},{q:"Which iOS requirement must be handled before showing personalized ads?",opts:["Sign in with Apple","App Tracking Transparency (ATT) consent prompt","HealthKit permission","Push notification permission"],ans:1},{q:"What does Purchases.logIn(userId) accomplish in RevenueCat?",opts:["Creates a new RevenueCat account","Links the device's purchases to your app's user ID for cross-device access","Authenticates with the App Store","Validates the current receipt"],ans:1},{q:"The App Store guidelines require your app to provide a 'Restore Purchases' option. What RevenueCat method handles this?",opts:["Purchases.syncPurchases()","Purchases.checkEntitlements()","Purchases.restorePurchases()","Purchases.refreshReceipts()"],ans:2},{q:"RevenueCat Experiments allow you to A/B test:",opts:["App UI layouts","Different offering configurations (price points, trial lengths) without app releases","Firebase Remote Config values","Ad placement strategies"],ans:1}],challenge:"Implement a complete paywall flow: (1) Initialize RevenueCat on app start with platform-specific API keys. (2) After login, identify the user. (3) Build a PaywallScreen that fetches the current offering and displays monthly/annual packages with prices. (4) Handle the purchase flow including cancellation and error states. (5) Gate a premium feature behind an entitlement check. (6) Add a Restore Purchases button.",resources:[{type:"docs",title:"RevenueCat Flutter SDK documentation",url:"https://www.revenuecat.com/docs/getting-started/installation/flutter",source:"RevenueCat Docs"},{type:"docs",title:"purchases_flutter package",url:"https://pub.dev/packages/purchases_flutter",source:"pub.dev"},{type:"docs",title:"Flutter in_app_purchase package",url:"https://pub.dev/packages/in_app_purchase",source:"pub.dev"},{type:"docs",title:"Google Mobile Ads Flutter",url:"https://pub.dev/packages/google_mobile_ads",source:"pub.dev"},{type:"article",title:"Subscription lifecycle states explained",url:"https://www.revenuecat.com/blog/engineering/subscription-lifecycle/",source:"RevenueCat Blog"}],eli5:"Making money from your app is like running a lemonade stand with different options: sell a glass (one-time purchase), sell a monthly membership card (subscription), or let someone put a sign near your stand for money (ads). RevenueCat is your cashier who handles all the payments, remembers who has a membership card, and makes sure no one sneaks past without paying.",codeWalkthrough:["PurchasesConfiguration takes the platform-specific key — using Platform.isIOS ternary avoids shipping both keys to both platforms unnecessarily.","Purchases.logIn(userId) must be called after your own auth completes — it links anonymous device purchases to your authenticated user, enabling cross-device subscription access.","entitlements.active.containsKey('premium') is the canonical access check — always check entitlements, never raw subscription state, for clean feature gating logic.","Purchases.getOfferings() fetches the current offering configured in RevenueCat dashboard — changing products requires no app update.","offering.availablePackages contains the packages defined for that offering — monthly, annual, weekly, or custom configured in the dashboard.","purchasePackage wraps the native StoreKit/Play Billing purchase flow — RevenueCat handles receipt posting and validation automatically.","PurchasesErrorCode.purchaseCancelledError must be caught and handled gracefully — it's a normal user action, not an error to report.","Purchases.restorePurchases() is required by App Store Review guidelines — failure to include it is a common rejection reason."],bugChallenge:{code:`class PremiumGate extends StatelessWidget {
+  const PremiumGate({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Purchases.getCustomerInfo(),
+      builder: (context, snapshot) {
+        final info = snapshot.data;
+        final isPremium = info?.activeSubscriptions.isNotEmpty ?? false;
+        if (!isPremium) return const PaywallScreen();
+        return child;
+      },
+    );
+  }
+}`,hint:"A user buys a one-time non-consumable 'lifetime access' IAP. PremiumGate still shows the paywall. Why?",answer:"Bug: activeSubscriptions only contains auto-renewable subscriptions — it does NOT include non-consumable or non-renewing purchases. A lifetime IAP would be delivered as a non-consumable, appearing in entitlements.active or nonSubscriptionTransactions, not activeSubscriptions. Fix: check entitlements instead — info?.entitlements.active.containsKey('premium') ?? false — this is the correct check because RevenueCat entitlements aggregate all access-granting purchases (subscriptions, non-consumables, promotional grants) into a single boolean. Also, FutureBuilder recreates the Future on every rebuild — cache getCustomerInfo() result or use a StreamBuilder with Purchases.customerInfoStream for reactive updates."},difficulty:"intermediate",prereqs:[27]},
+{id:55,title:"Logging, Observability, Analytics & Feature Flags",subtitle:"Monitoring production health, understanding user behaviour, and shipping safely with flags",analogy:"Observability is like a pilot's cockpit — analytics tells you where the plane is going (user journeys), logging tells you what the engines are doing (system events), crash reporting tells you when something breaks (incidents), and feature flags let you flick switches mid-flight without landing the plane (deployments).",points:[{t:"Structured logging",d:"Use structured logs (JSON key-value pairs) instead of plain print statements. In Flutter: the logger package or talker package provides log levels (verbose, debug, info, warning, error, fatal). In production, pipe logs to a backend service. Never log PII (names, emails, payment data)."},{t:"Firebase Crashlytics",d:"FlutterError.onError and PlatformDispatcher.instance.onError should forward errors to Crashlytics. Use Crashlytics.instance.recordError for caught errors. Set custom keys (userId, screen, feature) before crashes for context. Separate fatal vs non-fatal errors."},{t:"Analytics event design",d:"Good analytics events answer business questions: not 'button_tap' but 'checkout_started {plan: annual, source: paywall_v2}'. Define an event taxonomy upfront. Use consistent naming: noun_verb (signup_completed, message_sent, payment_failed). Track funnels, not just pageviews."},{t:"Firebase Analytics vs Amplitude vs Mixpanel",d:"Firebase Analytics: free, integrates with AdWords/BigQuery, limited real-time querying. Amplitude: strong funnel analysis, cohort analysis, free tier generous. Mixpanel: event-based, powerful retention analysis, SQL access on paid plans. For Flutter: firebase_analytics, amplitude_flutter, mixpanel_flutter packages."},{t:"Feature flags with Remote Config",d:"Firebase Remote Config allows changing app behaviour without a release. Use for: feature rollouts (enable for 10% users), A/B testing, kill switches (disable broken feature), config values (paywall prices, timeout durations). Always define safe defaults in code."},{t:"Remote Config best practices",d:"Fetch + activate at app start (with cacheExpiration). Use minimum fetch interval to avoid hitting quota (default 12h in prod, 0 in debug). Define parameter groups for organization. Document every flag with owner, purpose, and expiry date — flags accumulate and become technical debt."},{t:"A/B testing basics",d:"Firebase A/B Testing uses Remote Config under the hood. Define a metric (retention D1, purchase conversion), create variants, set audience (% of users or user segment), let it run to statistical significance (usually 2-4 weeks, minimum 1000 users per variant). Don't peek early."},{t:"Crash triage workflow",d:"Step 1: Crashlytics alert → check crash-free user rate (target >99.5%). Step 2: Identify top crash by impacted users. Step 3: Read stack trace + custom keys. Step 4: Reproduce locally. Step 5: Fix and verify in staging. Step 6: Release with crash rate monitoring. Step 7: Close issue in Crashlytics."},{t:"ANR analysis",d:"ANR (Application Not Responding) on Android occurs when the main thread is blocked >5s. Firebase Crashlytics captures ANRs. Common causes: synchronous network calls on main thread, heavy computation without compute() isolate, blocking I/O. Use Android Vitals in Play Console for additional ANR data."},{t:"Memory leak detection",d:"Use flutter_memory_monitor or DevTools Memory tab. Common leaks: StreamSubscription not cancelled, AnimationController not disposed, timers not cancelled, large images in memory. LeakTracker (Flutter SDK built-in, debug mode) auto-detects widget lifecycle leaks."},{t:"Monitoring production health dashboard",d:"Key metrics to track: crash-free user rate (>99.5%), ANR rate (<0.47% for Play Store featuring), p50/p95 API latency, DAU/MAU ratio (engagement health), error rate by endpoint. Use Firebase Performance Monitoring for network request tracing."},{t:"Privacy and consent for analytics",d:"GDPR requires consent before tracking EU users. Firebase Analytics respects Analytics Collection Enabled flag. Implement a consent gate at first launch. Consider consent management platforms (OneTrust, Usercentrics). Never track without consent — fines are severe and app stores enforce this."}],whatIs:"Observability in Flutter apps combines crash reporting, analytics, logging, and feature flags to understand production health, user behaviour, and ship new features safely with controlled rollouts.",realWorld:"A SaaS collaboration app tracks workspace_created, message_sent, and file_uploaded events in Amplitude for funnel analysis. Feature flags in Remote Config gate the new AI summarization feature to 5% of Pro users. Crashlytics custom keys (workspaceId, userRole) help reproduce workspace-specific crashes in minutes.",code:`// Comprehensive observability setup
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:talker_flutter/talker_flutter.dart';
+
+final talker = TalkerFlutter.init();
+
+Future<void> setupObservability() async {
+  // Crashlytics — catch all Flutter errors
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+}
+
+// Analytics service with event taxonomy
+class Analytics {
+  static final _analytics = FirebaseAnalytics.instance;
+
+  static Future<void> workspaceCreated({
+    required String plan,
+    required int memberCount,
+  }) async {
+    await _analytics.logEvent(
+      name: 'workspace_created',
+      parameters: {'plan': plan, 'member_count': memberCount},
+    );
+    talker.info('workspace_created plan=\$plan members=\$memberCount');
+  }
+
+  static Future<void> paymentFailed({
+    required String reason,
+    required String plan,
+  }) async {
+    await _analytics.logEvent(
+      name: 'payment_failed',
+      parameters: {'reason': reason, 'plan': plan},
+    );
+    // Also record as non-fatal for investigation
+    FirebaseCrashlytics.instance.recordError(
+      'PaymentFailed: \$reason',
+      null,
+      fatal: false,
+      information: ['plan: \$plan'],
+    );
+  }
+}
+
+// Feature flags with Remote Config
+class FeatureFlags {
+  static final _config = FirebaseRemoteConfig.instance;
+
+  static Future<void> initialize() async {
+    await _config.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(hours: 12),
+    ));
+    // Safe defaults — app works without network
+    await _config.setDefaults({
+      'ai_summary_enabled': false,
+      'max_file_upload_mb': 25,
+      'paywall_variant': 'control',
+    });
+    await _config.fetchAndActivate();
+  }
+
+  static bool get aiSummaryEnabled => _config.getBool('ai_summary_enabled');
+  static int get maxFileUploadMb => _config.getInt('max_file_upload_mb');
+  static String get paywallVariant => _config.getString('paywall_variant');
+}`,funFact:"Spotify uses feature flags to deploy code to 100% of users but enable features for 0% initially — every new feature ships dark (deployed but inactive) and is turned on gradually. This decouples deployment from release, dramatically reducing incident risk.",quiz:[{q:"Which Flutter error handler catches errors in the Flutter framework itself (widget build errors, etc.)?",opts:["PlatformDispatcher.instance.onError","runZonedGuarded","FlutterError.onError","Isolate.current.addErrorListener"],ans:2},{q:"An analytics event named 'btn_tapped' is considered poor practice. Why?",opts:["It's too long","It doesn't answer a business question — it lacks context about what button and what outcome","It uses snake_case instead of camelCase","Firebase Analytics doesn't support custom events"],ans:1},{q:"What is the default minimum fetch interval for Firebase Remote Config in production?",opts:["1 minute","1 hour","12 hours","24 hours"],ans:2},{q:"ANR (Application Not Responding) on Android is triggered when the main thread is blocked for how long?",opts:["1 second","5 seconds","10 seconds","30 seconds"],ans:1},{q:"Which tool in the Flutter SDK automatically detects widget lifecycle memory leaks in debug mode?",opts:["DevTools Profiler","flutter_memory_monitor","LeakTracker","MemoryObserver"],ans:2},{q:"GDPR compliance for analytics requires:",opts:["Storing all data in the EU","Getting user consent before tracking EU residents","Using only first-party analytics tools","Anonymising all data after 30 days"],ans:1},{q:"A feature flag is left in the codebase 2 years after the feature fully launched. This is an example of:",opts:["Good defensive programming","Feature flag technical debt","Remote Config misconfiguration","A/B test still running"],ans:1},{q:"Crashlytics.instance.recordError with fatal: false is used for:",opts:["Crashes that kill the app","Caught exceptions worth investigating but that didn't crash the app","Firebase performance traces","ANR detection"],ans:1}],challenge:"Set up a complete observability stack for a Flutter app: (1) Configure Crashlytics to catch both Flutter framework errors and platform errors. (2) Create an Analytics class with at least 3 semantically named events (with parameters). (3) Set up Remote Config with 3 feature flags and safe defaults. (4) Implement a crash triage checklist for a hypothetical NullPointerException in a payment screen. (5) Define what a healthy crash-free user rate target should be.",resources:[{type:"docs",title:"Firebase Crashlytics Flutter setup",url:"https://firebase.flutter.dev/docs/crashlytics/overview",source:"FlutterFire"},{type:"docs",title:"Firebase Remote Config Flutter",url:"https://firebase.flutter.dev/docs/remote-config/overview",source:"FlutterFire"},{type:"docs",title:"Talker — Flutter logging package",url:"https://pub.dev/packages/talker_flutter",source:"pub.dev"},{type:"docs",title:"Firebase Analytics Flutter",url:"https://firebase.flutter.dev/docs/analytics/overview",source:"FlutterFire"},{type:"article",title:"Feature flag best practices",url:"https://martinfowler.com/articles/feature-toggles.html",source:"Martin Fowler"}],eli5:"Imagine your app is a spaceship. Logging is the flight recorder that writes down everything that happens. Crashlytics is the emergency beacon that screams if something breaks. Analytics is the mission report that tells you how the journey went. Feature flags are the control switches that let ground control turn things on and off while you're flying.",codeWalkthrough:["FlutterError.onError catches errors inside the Flutter framework — widget build failures, assertion errors, rendering exceptions.","PlatformDispatcher.instance.onError catches errors in async code and platform-level errors not caught by Flutter — the two together give full coverage.","recordFlutterFatalError vs recordError: fatal errors crashed the app; non-fatal were caught but worth tracking. Crashlytics groups these separately in the dashboard.","Analytics.workspaceCreated logs to both Firebase Analytics and the local talker logger — production log for analysis, local log for debugging.","payment_failed is also recorded as a non-fatal Crashlytics error with context — this surfaces payment issues in the Crashlytics dashboard alongside crashes for prioritisation.","RemoteConfigSettings sets fetchTimeout (network call timeout) and minimumFetchInterval (how often to hit the server — avoid quota exhaustion).","setDefaults ensures the app behaves correctly even on first launch before Remote Config fetches — critical for flags that gate core features.","fetchAndActivate() fetches new values AND activates them atomically — fetching without activating leaves stale values until the next app restart."],bugChallenge:{code:`class FeatureFlags {
+  static final _config = FirebaseRemoteConfig.instance;
+
+  static Future<void> initialize() async {
+    await _config.fetchAndActivate();
+  }
+
+  static bool get newDashboard => _config.getBool('new_dashboard');
+}
+
+// In main():
+await FeatureFlags.initialize();
+if (FeatureFlags.newDashboard) {
+  runApp(const NewDashboardApp());
+} else {
+  runApp(const LegacyApp());
+}`,hint:"This crashes on first install and sometimes fails silently. Two things are wrong.",answer:"Bug 1: No setDefaults call — on first install, before any fetch completes, getBool('new_dashboard') returns false (the SDK default for missing bool keys) but this is accidental behaviour, not intentional. If the default should be true, the app incorrectly shows the legacy UI. Fix: call setDefaults({'new_dashboard': false}) with explicit intent before fetchAndActivate. Bug 2: No setConfigSettings call — without minimumFetchInterval configuration, the SDK uses its default (12h in production, unlimited in debug) but more importantly there is no fetchTimeout set. If the network is slow, fetchAndActivate can hang indefinitely. Fix: add RemoteConfigSettings with a fetchTimeout of 10 seconds so the app startup isn't blocked on a slow Remote Config server — it falls back to cached/default values gracefully."},difficulty:"intermediate",prereqs:[27,29]},
+{id:56,title:"System Design I: Real-time Collaboration App",subtitle:"Designing a Tixio-style multi-workspace chat platform — architecture, WebSockets, offline queue, and scaling",analogy:"Designing a real-time collaboration app is like designing a city's postal and telephone system simultaneously — messages must deliver instantly (phone calls), survive network outages (mail backup), handle millions of concurrent users (city scale), and organize communication by neighborhoods (workspaces) and streets (channels).",points:[{t:"Requirements gathering — the most important step",d:"Senior interviewers watch HOW you gather requirements, not just what you design. Clarify: scale (MAU, concurrent users, message volume), geography (single region vs global), real-time requirements (latency SLA), offline needs, message persistence duration, file sharing limits, and compliance (GDPR, data residency). State your assumptions explicitly."},{t:"High-level architecture layers",d:"Client (Flutter) → API Gateway (load balancer + auth) → Application servers (NestJS/Go) → WebSocket server cluster → Message broker (Redis Pub/Sub or Kafka) → Persistence layer (PostgreSQL + Redis cache) → Object storage (S3/Supabase Storage for files) → Push notification service (FCM/APNs). Draw this top-down in interviews."},{t:"Data model design",d:"Core entities: User, Workspace, WorkspaceMember (role: owner/admin/member), Channel (public/private), ChannelMember, Message (id, channelId, authorId, content, type, replyToId, reactions, editedAt, deletedAt), FileAttachment, PresenceRecord. Use UUIDs for all IDs — distributed-safe and non-guessable."},{t:"WebSocket design and connection management",d:"Each Flutter client opens a persistent WebSocket to a sticky-load-balanced server. On connect: authenticate via JWT, subscribe to all channels the user is a member of, receive missed messages since last_seen_at. Server sends typed events: message.new, message.edited, member.typing, presence.update, channel.created."},{t:"Offline message queue",d:"Flutter client maintains a local SQLite queue (drift) of outbound messages. On send: write to local DB with status=pending, display optimistically in UI. Background isolate attempts WS send; on ACK from server, mark status=sent with server-assigned ID. On reconnect, flush queue in order. Never lose a user's message."},{t:"Presence and typing indicators",d:"Presence: client sends heartbeat every 30s over WS. Server marks user online; TTL expires after 45s without heartbeat. Typing: client sends typing.start on first keypress, typing.stop on 3s inactivity or send. Server fans out to channel members. Do NOT persist typing events to DB — ephemeral only."},{t:"Message delivery guarantees",d:"At-least-once delivery from server to client (client deduplicates by message ID). Client-to-server: queue + retry gives at-least-once. For exactly-once semantics, use idempotency keys (client generates UUID per message; server rejects duplicates). Sequence numbers per channel allow gap detection for missed messages."},{t:"Fan-out architecture",d:"When a message is sent to a channel with 500 members: naive approach broadcasts to all 500 WS connections on one server — doesn't scale. Better: use Redis Pub/Sub channel per workspace. Each WS server subscribes to relevant workspace channels. When a message arrives, the broker fans it out to all servers, each delivering to their connected members."},{t:"Scaling considerations",d:"WS servers are stateful — use sticky sessions (consistent hashing by userId). Horizontal scaling: add WS servers, Redis handles cross-server pub/sub. Database: read replicas for message history queries; write to primary. For 10M messages/day: PostgreSQL handles it with proper indexing (channelId + createdAt). For 100M+: consider TimescaleDB or Cassandra for time-series message storage."},{t:"File sharing design",d:"Client uploads file directly to S3/Supabase Storage via presigned URL (avoids routing large files through app server). On upload complete, client sends message with fileUrl. Server validates URL ownership before persisting. Thumbnails: generate server-side on upload trigger. Max file size enforced at presigned URL generation."},{t:"Interview narration strategy",d:"Structure your answer: (1) Clarify requirements — 2 minutes. (2) High-level diagram — 3 minutes. (3) Deep dive into 2-3 components the interviewer flags as interesting. (4) Discuss tradeoffs of your choices. (5) Address scaling and failure scenarios. Signal seniority by mentioning what you'd NOT build initially (over-engineering is a red flag)."},{t:"Failure handling and resilience",d:"WS connection drop: client reconnects with exponential backoff (1s, 2s, 4s, max 30s). Reconnect sends last_event_id to receive missed messages. Server crash: Redis pub/sub state is in-memory — on restart, clients reconnect and replay. Message loss window: minimize by persisting to DB before broadcasting. Circuit breaker on external services (FCM, S3)."}],whatIs:"A real-time collaboration system design covers the architecture needed to support multi-workspace messaging with presence, offline queuing, file sharing, and horizontal scaling — a common senior Flutter/backend system design interview topic.",realWorld:"Tixio is a Teamz Lab SaaS product providing multi-workspace collaboration. Its Flutter app maintains a persistent WebSocket connection, queues messages locally when offline, and uses Redis Pub/Sub to fan out messages across server instances to connected team members worldwide.",code:`// Flutter: Offline message queue with optimistic UI
+// drift schema
+class Messages extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get localId => text()(); // client-generated UUID
+  TextColumn get serverId => text().nullable()(); // assigned after ACK
+  TextColumn get channelId => text()();
+  TextColumn get content => text()();
+  TextColumn get status => text().withDefault(const Constant('pending'))();
+  // pending | sending | sent | failed
+  DateTimeColumn get createdAt => dateTime()();
+}
+
+// MessageQueue service
+class MessageQueue {
+  final AppDatabase _db;
+  final WebSocketService _ws;
+  bool _flushing = false;
+
+  MessageQueue(this._db, this._ws);
+
+  // Called when user taps Send
+  Future<Message> enqueue(String channelId, String content) async {
+    final localId = const Uuid().v4();
+    final msg = await _db.messagesDao.insertMessage(
+      localId: localId,
+      channelId: channelId,
+      content: content,
+      status: 'pending',
+    );
+    unawaited(flush()); // attempt immediate send
+    return msg;
+  }
+
+  // Called on WS connect and network restore
+  Future<void> flush() async {
+    if (_flushing || !_ws.isConnected) return;
+    _flushing = true;
+    try {
+      final pending = await _db.messagesDao.getPendingMessages();
+      for (final msg in pending) {
+        await _db.messagesDao.updateStatus(msg.localId, 'sending');
+        try {
+          final serverMsg = await _ws.sendMessage(
+            channelId: msg.channelId,
+            content: msg.content,
+            idempotencyKey: msg.localId,
+          );
+          await _db.messagesDao.markSent(
+            localId: msg.localId,
+            serverId: serverMsg.id,
+          );
+        } catch (e) {
+          await _db.messagesDao.updateStatus(msg.localId, 'failed');
+        }
+      }
+    } finally {
+      _flushing = false;
+    }
+  }
+}
+
+// WebSocket event dispatcher
+class WebSocketService {
+  late WebSocketChannel _channel;
+  final StreamController<WsEvent> _events = StreamController.broadcast();
+
+  Stream<WsEvent> get events => _events.stream;
+  bool get isConnected => _channel.closeCode == null;
+
+  void connect(String token) {
+    _channel = WebSocketChannel.connect(
+      Uri.parse('wss://api.tixio.com/ws?token=\$token'),
+    );
+    _channel.stream.listen(
+      (data) => _events.add(WsEvent.fromJson(jsonDecode(data as String))),
+      onDone: _handleDisconnect,
+      onError: (e) => _handleDisconnect(),
+    );
+  }
+
+  void _handleDisconnect() {
+    // Exponential backoff reconnect
+    Future.delayed(const Duration(seconds: 2), () => reconnect());
+  }
+
+  Future<ServerMessage> sendMessage({
+    required String channelId,
+    required String content,
+    required String idempotencyKey,
+  }) async {
+    final completer = Completer<ServerMessage>();
+    _channel.sink.add(jsonEncode({
+      'type': 'message.send',
+      'channelId': channelId,
+      'content': content,
+      'idempotencyKey': idempotencyKey,
+    }));
+    // Listen for ACK matching idempotencyKey
+    final sub = events
+        .where((e) => e.type == 'message.ack' && e.idempotencyKey == idempotencyKey)
+        .first
+        .then((e) => completer.complete(ServerMessage.fromEvent(e)));
+    return completer.future.timeout(const Duration(seconds: 10));
+  }
+}`,funFact:"Slack's architecture originally used a single MySQL database per workspace ('cell-based architecture'). This allowed them to scale to thousands of workspaces without a single database becoming a bottleneck — an elegant design that influenced many subsequent collaboration tools.",quiz:[{q:"In a WebSocket fan-out architecture with multiple server instances, what component enables cross-server message delivery?",opts:["A shared file system","Redis Pub/Sub or a message broker","Sticky session routing alone","A database trigger"],ans:1},{q:"What is the purpose of an idempotency key when sending messages?",opts:["To encrypt the message content","To prevent duplicate messages when the client retries after a failed send","To authenticate the WebSocket connection","To sort messages in the correct order"],ans:1},{q:"A channel has 5000 members. A message arrives. What is wrong with broadcasting directly from the receiving server to all 5000 WebSocket connections?",opts:["WebSockets can't handle 5000 connections","It works fine for any scale","It only works if all connections are on the same server — horizontal scaling breaks this naive approach","Message ordering is violated"],ans:2},{q:"Typing indicators should NOT be persisted to the database because:",opts:["They are too large to store","They are ephemeral and transient — persisting them wastes storage and adds write load for zero user benefit","Database writes are too slow for typing events","GDPR prohibits storing typing data"],ans:1},{q:"A user sends a message while offline. The correct optimistic UI approach is:",opts:["Show a spinner and block the UI until connected","Display the message immediately with a 'pending' indicator and queue it for delivery on reconnect","Reject the send attempt and show an error","Buffer the message in memory only"],ans:1},{q:"For storing 100M+ messages per day with time-range queries, which storage consideration should you raise in an interview?",opts:["Use Redis sorted sets","Standard PostgreSQL is sufficient at any scale","Consider TimescaleDB or Cassandra for time-series optimised storage","Store messages in object storage as JSON files"],ans:2},{q:"File uploads in a well-designed system should:",opts:["Route through the application server for virus scanning before storage","Upload directly to object storage via presigned URL to avoid routing large files through app servers","Be stored in the PostgreSQL database as BLOBs","Be compressed client-side before sending to the WebSocket"],ans:1},{q:"In a senior system design interview, mentioning what you would NOT build initially signals:",opts:["Lack of knowledge about advanced features","Engineering maturity — avoiding over-engineering and focusing on the right abstractions for current scale","That you are unfamiliar with the full system","Poor preparation"],ans:1}],challenge:"Whiteboard the complete system design for a Tixio-like collaboration app. Cover: (1) Requirements clarification (list 6 questions you'd ask). (2) High-level architecture diagram with all layers. (3) Data model for workspaces, channels, and messages. (4) WebSocket connection lifecycle (connect, auth, subscribe, disconnect, reconnect). (5) Offline message queue flow. (6) How you'd scale from 1K to 1M concurrent users. (7) One failure scenario and your mitigation strategy.",resources:[{type:"article",title:"Slack's architecture and scaling story",url:"https://slack.engineering/flannel-an-application-level-edge-cache-to-make-slack-scale/",source:"Slack Engineering"},{type:"docs",title:"Redis Pub/Sub documentation",url:"https://redis.io/docs/manual/pubsub/",source:"Redis Docs"},{type:"article",title:"Designing real-time messaging systems",url:"https://systemdesign.one/slack-architecture/",source:"systemdesign.one"},{type:"docs",title:"WebSocketChannel Flutter package",url:"https://pub.dev/packages/web_socket_channel",source:"pub.dev"},{type:"article",title:"System design interview framework",url:"https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction",source:"hellointerview.com"}],eli5:"Imagine you're designing a city's communication system. Everyone lives in neighborhoods (workspaces) with streets (channels). When someone shouts a message on a street, a runner (WebSocket server) carries it to everyone on that street. If the runner is sick, a backup runner takes over. If you're sleeping (offline), your messages are saved in your mailbox (queue) and delivered when you wake up. The post office (Redis) makes sure all runners know all the news.",codeWalkthrough:["Messages table uses both localId (UUID from client) and serverId (assigned after server ACK) — this enables optimistic UI (show message immediately) while correctly reconciling with the server's canonical ID.","status column tracks the message lifecycle: pending → sending → sent/failed — the UI uses this to show delivery indicators (clock icon, check mark, error icon).","enqueue() writes to local DB first, then calls flush() with unawaited — the UI responds immediately while delivery happens asynchronously.","flush() guards with _flushing flag to prevent concurrent flush calls (e.g., from reconnect + manual retry simultaneously) causing duplicate sends.","sendMessage sets idempotencyKey from localId — the server returns the same idempotencyKey in the ACK, allowing the client to match and mark the correct message as sent.","The WS event listener uses .first on a filtered stream — it awaits exactly one matching ACK event then completes the Completer.","timeout(10 seconds) on the ACK wait prevents the flush from hanging indefinitely if the server doesn't ACK — triggers the catch block and marks message as failed for retry.","_handleDisconnect triggers reconnect after 2s — a full implementation uses exponential backoff with jitter to avoid thundering herd when a server restarts and many clients reconnect simultaneously."],bugChallenge:{code:`// WebSocket reconnect with message replay
+class ChatBloc extends Bloc<ChatEvent, ChatState> {
+  StreamSubscription? _wsSub;
+
+  ChatBloc() : super(ChatInitial()) {
+    on<ConnectWs>((event, emit) {
+      _ws.connect(event.token);
+      _wsSub = _ws.events.listen((wsEvent) {
+        add(WsEventReceived(wsEvent));
+      });
+    });
+    on<WsEventReceived>((event, emit) {
+      final messages = (state as ChatLoaded).messages;
+      emit(ChatLoaded(messages: [...messages, event.wsEvent.message]));
+    });
+    on<DisconnectWs>((event, emit) {
+      _wsSub?.cancel();
+      _ws.disconnect();
+    });
+  }
+}`,hint:"After network reconnect, the user sees duplicate messages and misses some messages sent while offline. Two architectural issues cause this.",answer:"Bug 1: On reconnect, the client re-subscribes and receives new messages, but doesn't request missed messages from when it was disconnected. Fix: track lastEventId or lastSeenAt per channel; on WS reconnect, send a 'replay' request to the server for messages since lastSeenAt. The server returns missed messages before resuming live events. Bug 2: No deduplication — if the server replays messages that were already in the local DB (from optimistic inserts), they appear twice. Fix: deduplicate by message ID before adding to state — check if messages list already contains a message with the same serverId or localId before appending. In practice, use a LinkedHashMap keyed by message ID for O(1) dedup in the state."},difficulty:"advanced",prereqs:[20,24,26]},
+{id:57,title:"System Design II: Fintech Claims/Payment App",subtitle:"Designing a secure, compliant payment and claims processing system — auth, encryption, document handling, and error cascades",analogy:"Designing a fintech app is like designing a bank vault inside a shopping mall. The mall needs to be accessible and fast, but the vault needs multiple locks, audit logs of every access, and fail-safe mechanisms — if one lock breaks, the vault stays locked, not open.",points:[{t:"Fintech requirements clarification",d:"Always clarify before designing: transaction volume (TPS), geography and currency support, compliance requirements (PCI-DSS for card data, GDPR for EU users, SOC 2 for enterprise clients), settlement requirements (real-time vs T+2), reversal and dispute windows, fraud detection requirements, and regulatory reporting needs."},{t:"Security-first architecture principle",d:"Fintech systems are threat modeled from day one. OWASP Mobile Top 10 applies to Flutter: insecure data storage, unprotected endpoints, insufficient transport layer security, client-side injection, reverse engineering. Defense in depth: every layer assumes the one above it can be compromised."},{t:"Authentication architecture — BankID and strong auth",d:"For Scandinavian markets: BankID/MitID provides government-grade identity verification. Flow: initiate auth → redirect to BankID app → receive signed JWT with identity claims. For other markets: SMS OTP + TOTP as MFA. JWT short-lived (15min) + refresh token (7 days, rotated on use, stored in secure storage not localStorage)."},{t:"Encrypted local storage",d:"Sensitive data (token, account numbers, cached claim data) must never be in plain SharedPreferences. Use flutter_secure_storage (iOS Keychain, Android EncryptedSharedPreferences / Keystore). For structured sensitive data: drift with SQLCipher encryption. Never log sensitive values — redact in error reports."},{t:"API design for payment flows",d:"Payment endpoints must be idempotent. Use idempotency keys (client sends UUID header, server returns same response for duplicate requests). Payment state machine: INITIATED → PROCESSING → COMPLETED / FAILED / REVERSED. Never allow direct state jumps — validate transitions server-side. Return machine-readable error codes, not just HTTP status."},{t:"Document upload for claims",d:"Claims require document evidence (photos, PDFs). Flow: client requests presigned S3 URL → uploads directly to S3 → sends documentId to API → API validates ownership and associates with claim. Client-side: compress images before upload (flutter_image_compress). Enforce file type allowlist. Scan for malware server-side (ClamAV or AWS Macie)."},{t:"Error handling cascades",d:"Fintech errors have business consequences. Design for: network timeout (retry with exponential backoff + idempotency key), partial payment (saga pattern — compensating transactions), third-party gateway failure (circuit breaker), user session expired mid-payment (save payment state, resume after re-auth). Never show raw error messages to users — map to user-friendly strings."},{t:"Saga pattern for distributed transactions",d:"When a claim payout involves multiple steps (verify claim → reserve funds → initiate transfer → update ledger → send notification), use the Saga pattern. Each step has a compensating transaction. If step 3 fails, automatically reverse steps 1 and 2. Choreography sagas (event-driven) suit microservices; orchestration sagas (central coordinator) are easier to debug."},{t:"Audit logging and compliance",d:"Every financial action must be logged: who, what, when, from which IP/device. Logs are immutable (append-only, separate from application DB). PostgreSQL with insert-only policy, or dedicated audit log service. Log retention: 7 years for most financial regulations. Audit logs must be available for regulatory inspection within 24 hours."},{t:"Flutter security implementation",d:"Certificate pinning: prevent MITM attacks by pinning the server's TLS certificate. Use dio with a custom certificate validator or package:ssl_pinning_plugin. Root/jailbreak detection: package:flutter_jailbreak_detection — deny app function on compromised devices for regulatory compliance. Screenshot prevention: FLAG_SECURE on Android, iOS overlayWindow on backgrounding."},{t:"Offline handling in fintech",d:"Fintech apps should be conservative about offline capabilities. Acceptable offline: view cached account balance (marked as 'last updated'), view claim history. NOT acceptable offline: initiate payments, submit new claims. Show clear 'offline' banners. Queue non-critical actions (support messages) but gate financial transactions behind connectivity check."},{t:"Interview narration for fintech design",d:"Signal seniority with: (1) Mentioning compliance by name (PCI-DSS, GDPR) without prompting. (2) Proposing the saga pattern for multi-step transactions before the interviewer asks about failure scenarios. (3) Discussing idempotency before discussing retry logic. (4) Noting that the audit log should be a separate system from the application database. (5) Raising the BankID/MFA requirement proactively for EU fintech."}],whatIs:"A fintech claims and payment system design covers the security architecture, authentication patterns, encrypted storage, idempotent API design, document handling, and compliance requirements needed to build a production-grade financial application in Flutter.",realWorld:"Payback and TapMeHome are fintech apps requiring claims processing with document upload, BankID authentication, and strict audit trails. The Flutter client uses flutter_secure_storage for JWT storage, certificate pinning via dio, and the saga pattern on the backend to handle multi-step claim payouts with automatic compensation on failure.",code:`// Fintech Flutter: Secure auth + payment flow
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:dio/dio.dart';
+
+// Secure token storage
+class SecureTokenStore {
+  static const _storage = FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock_this_device),
+  );
+
+  static Future<void> saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    await Future.wait([
+      _storage.write(key: 'access_token', value: accessToken),
+      _storage.write(key: 'refresh_token', value: refreshToken),
+    ]);
+  }
+
+  static Future<String?> getAccessToken() =>
+      _storage.read(key: 'access_token');
+
+  static Future<void> clearAll() async {
+    await _storage.deleteAll();
+  }
+}
+
+// Dio with auth interceptor + certificate pinning
+class ApiClient {
+  static Dio create() {
+    final dio = Dio(BaseOptions(
+      baseUrl: 'https://api.payback-app.com',
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 30),
+    ));
+
+    // Certificate pinning (simplified — use ssl_pinning_plugin for production)
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      final client = HttpClient();
+      client.badCertificateCallback = (cert, host, port) {
+        // Validate against pinned certificate SHA256 fingerprint
+        return CertificatePinner.isValid(cert, host);
+      };
+      return client;
+    };
+
+    // Auth interceptor with token refresh
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final token = await SecureTokenStore.getAccessToken();
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer \$token';
+        }
+        options.headers['X-Idempotency-Key'] = const Uuid().v4();
+        handler.next(options);
+      },
+      onError: (error, handler) async {
+        if (error.response?.statusCode == 401) {
+          // Attempt token refresh
+          final refreshed = await _refreshToken();
+          if (refreshed) {
+            // Retry original request
+            handler.resolve(await dio.fetch(error.requestOptions));
+            return;
+          }
+          // Refresh failed — clear tokens and redirect to login
+          await SecureTokenStore.clearAll();
+          GetIt.I<AuthRouter>().navigateToLogin();
+        }
+        handler.next(error);
+      },
+    ));
+
+    return dio;
+  }
+}
+
+// Payment state machine — enforced both client and server
+enum PaymentStatus { initiated, processing, completed, failed, reversed }
+
+class PaymentStateMachine {
+  static const Map<PaymentStatus, Set<PaymentStatus>> _validTransitions = {
+    PaymentStatus.initiated: {PaymentStatus.processing},
+    PaymentStatus.processing: {PaymentStatus.completed, PaymentStatus.failed},
+    PaymentStatus.failed: {PaymentStatus.reversed},
+    PaymentStatus.completed: {PaymentStatus.reversed},
+    PaymentStatus.reversed: {},
+  };
+
+  static bool canTransition(PaymentStatus from, PaymentStatus to) =>
+      _validTransitions[from]?.contains(to) ?? false;
+}
+
+// Claim document upload with presigned URL
+class ClaimDocumentService {
+  final Dio _dio;
+
+  Future<String> uploadDocument(File imageFile) async {
+    // 1. Compress image
+    final compressed = await FlutterImageCompress.compressAndGetFile(
+      imageFile.path,
+      '\${imageFile.path}_compressed.jpg',
+      quality: 80,
+      minWidth: 1920,
+    );
+
+    // 2. Get presigned URL
+    final presignedResponse = await _dio.post('/claims/documents/presign', data: {
+      'contentType': 'image/jpeg',
+      'fileSize': compressed!.lengthSync(),
+    });
+    final uploadUrl = presignedResponse.data['uploadUrl'] as String;
+    final documentId = presignedResponse.data['documentId'] as String;
+
+    // 3. Upload directly to S3
+    await Dio().put(
+      uploadUrl,
+      data: compressed.openRead(),
+      options: Options(
+        headers: {
+          'Content-Type': 'image/jpeg',
+          'Content-Length': compressed.lengthSync(),
+        },
+      ),
+    );
+
+    return documentId; // Return ID for claim association
+  }
+}`,funFact:"The average fintech data breach costs 5.9 million USD — nearly double the cross-industry average. This is why fintech apps undergo the most rigorous security architecture reviews, and why senior fintech interviews always include security design questions.",quiz:[{q:"Why must payment API endpoints be idempotent?",opts:["To improve performance","To allow clients to safely retry requests after network failures without double-charging","To comply with GDPR","To support offline transactions"],ans:1},{q:"JWT access tokens in a fintech Flutter app must be stored in:",opts:["SharedPreferences","flutter_secure_storage (iOS Keychain / Android Keystore)","A local SQLite database","In-memory only (no persistence)"],ans:1},{q:"What does the Saga pattern solve in a multi-step payment flow?",opts:["SQL transaction isolation","Distributed transaction consistency across multiple services — each step has a compensating transaction for rollback","JWT token refresh","WebSocket reconnection"],ans:1},{q:"Certificate pinning in a fintech app prevents:",opts:["SQL injection attacks","Man-in-the-middle attacks by validating the server's TLS certificate against a pinned fingerprint","Reverse engineering of the APK","Screenshot capture of sensitive screens"],ans:1},{q:"An audit log for financial transactions must be:",opts:["Stored in the same database as application data for easy joining","Append-only and immutable, retained for 7 years, separate from application data","Deleted after 30 days to comply with GDPR","Stored in device local storage"],ans:1},{q:"Which actions should NOT work when a fintech app is offline?",opts:["Viewing cached account balance","Viewing previous claim history","Initiating a new payment or submitting a new claim","Reading the help documentation"],ans:2},{q:"BankID authentication is primarily used in which region and provides what advantage?",opts:["US — provides biometric authentication","Scandinavia — provides government-grade identity verification with legal binding","UK — provides Open Banking access","Germany — provides PCI-DSS compliant auth"],ans:1},{q:"When the payment gateway times out mid-transaction, the safest client behaviour is:",opts:["Immediately retry without waiting","Retry with the same idempotency key after exponential backoff","Show success to avoid confusing the user","Cancel the transaction immediately"],ans:1}],challenge:"Design the complete auth and payment flow for a claims app: (1) BankID authentication flow with JWT issuance. (2) Secure token storage implementation. (3) Document upload flow with presigned URLs and client-side compression. (4) Payment state machine (define all states and valid transitions). (5) Error handling for: network timeout mid-payment, session expiry during document upload, payment gateway failure. (6) What audit data would you log for a claim submission?",resources:[{type:"article",title:"OWASP Mobile Security Testing Guide",url:"https://owasp.org/www-project-mobile-security-testing-guide/",source:"OWASP"},{type:"docs",title:"flutter_secure_storage package",url:"https://pub.dev/packages/flutter_secure_storage",source:"pub.dev"},{type:"article",title:"Saga pattern for distributed transactions",url:"https://microservices.io/patterns/data/saga.html",source:"microservices.io"},{type:"article",title:"PCI DSS mobile payment guidelines",url:"https://www.pcisecuritystandards.org/document_library/",source:"PCI SSC"},{type:"docs",title:"Dio HTTP client for Flutter",url:"https://pub.dev/packages/dio",source:"pub.dev"}],eli5:"Building a fintech app is like being a bank manager. You need super-strong locks on every door (encryption and secure storage), cameras recording everything (audit logs), guards checking IDs carefully (strong auth with BankID), and emergency plans for when things go wrong (saga pattern). If the electricity goes out mid-transaction, you need to know exactly what happened and put everything back exactly as it was.",codeWalkthrough:["FlutterSecureStorage with AndroidOptions(encryptedSharedPreferences: true) uses Android's EncryptedSharedPreferences backed by the Android Keystore — hardware-backed on devices with a secure element.","IOSOptions with first_unlock_this_device means tokens are accessible after the first device unlock but not while the device is locked — balancing security with background refresh capability.","Future.wait saves both tokens atomically — avoids a state where access token is saved but refresh token write fails.","The Dio interceptor adds X-Idempotency-Key on every mutating request — generated fresh per request so retries use the same key (stored in a retry handler, not shown here for brevity).","onError intercept for 401 attempts a token refresh before failing — this handles silent token refresh without the user seeing a login screen for normal session continuation.","After refresh, handler.resolve(await dio.fetch(error.requestOptions)) retries the original request with the new token — the original caller's Future receives the retried response transparently.","PaymentStateMachine encodes valid state transitions as a const Map — invalid transitions are caught before the API call, preventing invalid state mutation requests.","ClaimDocumentService uploads via presigned URL: the app server issues a time-limited, scope-limited S3 URL; the file never passes through the app server, reducing load and keeping PII data out of application logs."],bugChallenge:{code:`class AuthInterceptor extends Interceptor {
+  bool _isRefreshing = false;
+
+  @override
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 401) {
+      final newToken = await _refreshAccessToken();
+      if (newToken != null) {
+        err.requestOptions.headers['Authorization'] = 'Bearer \$newToken';
+        final response = await Dio().fetch(err.requestOptions);
+        handler.resolve(response);
+        return;
+      }
+    }
+    handler.next(err);
+  }
+}`,hint:"Multiple concurrent API calls all return 401 simultaneously. What happens and how do you fix it?",answer:"Bug: Multiple concurrent 401 errors trigger _refreshAccessToken() simultaneously — resulting in multiple parallel refresh token requests to the server. Most servers invalidate the refresh token after first use (rotation), so only the first refresh succeeds; the rest fail with invalid_token, logging the user out incorrectly. Fix: use the _isRefreshing flag and a queue. When _isRefreshing is true, queue subsequent 401 retries and wait for the single in-flight refresh to complete, then retry all queued requests with the new token. Pattern: use a Completer<String> stored as a field — first 401 starts the refresh and sets the completer; subsequent 401s await the same completer. Also: new Dio() inside the interceptor creates a new instance without interceptors — use the original dio instance reference (passed to the interceptor constructor) to avoid infinite loops when retrying."},difficulty:"advanced",prereqs:[20,23,45]},
+{id:58,title:"System Design III: Offline-First Field App at Scale",subtitle:"Designing for 10K+ field workers in low-connectivity — sync queues, conflict resolution, and battery optimisation",analogy:"An offline-first field app is like a clipboard that works anywhere — even underground, in rice fields, or in a tunnel. You write on it all day, then when you're back in range, it automatically syncs with the office filing cabinet. But 10,000 people might edit the same file, so you need rules about who wins when two people changed the same thing.",points:[{t:"The offline-first requirement",d:"Field apps used by NGO workers (BRAC), utility crews (Hazira Khata), or farm extension officers operate in areas with no connectivity for hours or days. Offline-first means the app is fully functional without internet — reading, writing, and form submission all work locally. Sync is a background concern, not a blocking one."},{t:"Requirements for field apps at scale",d:"Always clarify: how many field workers (10K in this case), geographic distribution, average connectivity window (30min/day?), data volume per worker per day, multi-device (one worker, two phones?), supervisor review workflow, data integrity requirements, and whether conflicts are common (multiple workers editing the same record)."},{t:"Local database design with Drift",d:"Drift (formerly Moor) provides type-safe SQLite with migrations. Schema for field apps: entities like Household, Beneficiary, Visit, FormSubmission, SyncStatus. Add sync metadata to every table: serverId (nullable until synced), clientId (UUID, always set), syncState (pending/syncing/synced/conflict), updatedAt, createdAt, deletedAt (soft delete for sync)."},{t:"Sync queue architecture",d:"Every local write (insert, update, delete) generates a SyncQueueEntry: {id, entityType, entityId, operation, payload, timestamp, retryCount, status}. A background isolate processes this queue when connectivity is available. Queue is ordered by timestamp — maintains causality. Failed entries are retried with exponential backoff up to a max retry count."},{t:"Conflict resolution strategies",d:"Last-Write-Wins (LWW): server timestamp determines winner — simple but can silently discard work. Merge (field-level): if two workers edited different fields of the same record, both changes are merged — complex but data-preserving. Manual: flag as conflict, surface to supervisor for resolution — correct but requires UX. Choose based on data importance: demographic data needs merge; GPS coordinates can use LWW."},{t:"Delta sync vs full sync",d:"Full sync: download all records the user has access to — simple but slow for large datasets. Delta sync: server tracks a 'sync cursor' (timestamp or sequence number) per client; only changes since cursor are returned. Much more efficient. Vector clocks (Merkle trees) enable distributed delta sync without a central cursor — used by CRDTs."},{t:"Background sync implementation",d:"On Android: WorkManager with PeriodicWorkRequest (minimum 15min interval) for guaranteed background execution. Constraint: NetworkType.CONNECTED. On iOS: BGTaskScheduler (BGAppRefreshTask or BGProcessingTask). In Flutter: use workmanager package. Sync in a dart isolate to avoid blocking UI. Report progress back to UI via IsolateNameServer."},{t:"Battery optimisation",d:"Background sync is a battery drain risk. Mitigations: batch multiple changes into one HTTP request, use sync windows when device is charging, compress payloads (gzip), avoid syncing images in background (defer to WiFi), exponential backoff on failure (avoid hammering server and wasting battery), monitor with Android Battery Historian."},{t:"Data integrity and consistency",d:"Use database transactions for multi-table writes — never leave data in a partial state. Ensure every locally-created record has a deterministic UUID (clientId) before sync — server acknowledges with its own ID (serverId). Reference foreign keys using clientId until serverId is known, then optionally migrate references."},{t:"Server-side sync endpoint design",d:"POST /sync/push: accepts array of change records with clientId, timestamp, operation. Server processes, detects conflicts, returns results per change: {clientId, status: 'accepted'|'conflict', serverRecord}. GET /sync/pull?cursor=X: returns all changes since cursor for this user's data scope. Return new cursor in response. Batch size limit (e.g., 500 records) prevents timeout."},{t:"Handling large-scale conflict scenarios",d:"With 10K workers, many workers may have the same supervisor or visit the same household. Design access scopes: each worker only syncs data within their assigned area (GPS-bounded or assignment-based). This dramatically reduces conflict probability and sync payload size. Server enforces scope at both push and pull endpoints."},{t:"Interview narration for offline-first design",d:"Signal seniority: (1) Raise the conflict resolution question before the interviewer does — it shows you understand the hard problem. (2) Distinguish between 'offline capable' (reads work) and 'offline-first' (writes and reads work). (3) Discuss sync cursor and delta sync rather than polling. (4) Mention WorkManager/BGTaskScheduler for background sync. (5) Ask about the conflict rate in practice — it changes the conflict strategy choice."}],whatIs:"An offline-first field app architecture enables full CRUD functionality without connectivity for thousands of concurrent field workers, with background synchronization, conflict resolution, and battery-optimized sync strategies.",realWorld:"BRAC's digital data collection tools and FieldBuzz (Bangladesh field operations platform) operate in areas where connectivity is intermittent. Field officers collect household data, visit records, and form submissions offline all day, with the app syncing when they return to areas with signal — maintaining data integrity across 10,000+ concurrent workers.",code:`// Offline-first sync architecture with Drift + WorkManager
+
+// Drift schema with sync metadata
+class Visits extends Table {
+  TextColumn get clientId => text()(); // UUID, set at creation
+  TextColumn get serverId => text().nullable()(); // set after sync ACK
+  TextColumn get householdId => text()();
+  TextColumn get officerId => text()();
+  TextColumn get notes => text().withDefault(const Constant(''))();
+  TextColumn get gpsLat => real().nullable().map(const RealConverter())();
+  TextColumn get syncState => text().withDefault(const Constant('pending'))();
+  // pending | syncing | synced | conflict
+  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get deletedAt => dateTime().nullable()(); // soft delete
+
+  @override
+  Set<Column> get primaryKey => {clientId};
+}
+
+class SyncQueueEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get entityType => text()(); // 'visit', 'household', etc.
+  TextColumn get entityId => text()(); // clientId of the entity
+  TextColumn get operation => text()(); // 'insert' | 'update' | 'delete'
+  TextColumn get payload => text()(); // JSON of changed fields only
+  DateTimeColumn get enqueuedAt => dateTime()();
+  IntColumn get retryCount => integer().withDefault(const Constant(0))();
+  TextColumn get status => text().withDefault(const Constant('pending'))();
+}
+
+// Visit DAO — every write enqueues a sync entry
+extension VisitDao on AppDatabase {
+  Future<void> createVisit(VisitsCompanion visit) async {
+    await transaction(() async {
+      await into(visits).insert(visit);
+      await into(syncQueueEntries).insert(SyncQueueEntriesCompanion.insert(
+        entityType: 'visit',
+        entityId: visit.clientId.value,
+        operation: 'insert',
+        payload: jsonEncode(visit.toJson()),
+        enqueuedAt: DateTime.now(),
+      ));
+    });
+  }
+}
+
+// WorkManager task (runs in background isolate)
+@pragma('vm:entry-point')
+void syncBackgroundTask() {
+  Workmanager().executeTask((taskName, inputData) async {
+    try {
+      await SyncService.runSync();
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false); // WorkManager will retry
+    }
+  });
+}
+
+// Sync service
+class SyncService {
+  static Future<void> runSync() async {
+    final db = await DatabaseFactory.open();
+    final api = ApiClient.create();
+
+    // Push: send pending queue entries
+    final pending = await db.syncQueueDao.getPendingEntries(limit: 100);
+    if (pending.isEmpty) return;
+
+    final response = await api.post('/sync/push', data: {
+      'changes': pending.map((e) => e.toJson()).toList(),
+    });
+
+    for (final result in response.data['results']) {
+      final clientId = result['clientId'] as String;
+      if (result['status'] == 'accepted') {
+        await db.syncQueueDao.markSent(clientId);
+        await db.visitsDao.updateServerId(
+          clientId: clientId,
+          serverId: result['serverId'] as String,
+          syncState: 'synced',
+        );
+      } else if (result['status'] == 'conflict') {
+        await db.visitsDao.markConflict(clientId, result['serverRecord']);
+      }
+    }
+
+    // Pull: fetch changes since last cursor
+    final cursor = await db.syncMetaDao.getCursor();
+    final pullResponse = await api.get('/sync/pull', queryParameters: {
+      'cursor': cursor,
+      'limit': 500,
+    });
+
+    await db.transaction(() async {
+      for (final record in pullResponse.data['records']) {
+        await db.visitsDao.upsertFromServer(record);
+      }
+      await db.syncMetaDao.setCursor(pullResponse.data['newCursor']);
+    });
+  }
+}
+
+// WorkManager registration
+Future<void> registerBackgroundSync() async {
+  await Workmanager().registerPeriodicTask(
+    'field_sync',
+    'syncBackgroundTask',
+    frequency: const Duration(minutes: 15),
+    constraints: Constraints(networkType: NetworkType.connected),
+    existingWorkPolicy: ExistingWorkPolicy.keep,
+  );
+}`,funFact:"The Open Data Kit (ODK) — used by WHO, CDC, and hundreds of NGOs for field data collection across 100+ countries — was one of the first mobile systems to prove offline-first data collection at massive scale, influencing the architecture of most modern field app platforms including BRAC's digital tools.",quiz:[{q:"What distinguishes 'offline-first' from 'offline-capable'?",opts:["Offline-first apps use SQLite; offline-capable apps use Hive","Offline-first means full read AND write functionality without internet; offline-capable may only mean reads work or the app doesn't crash offline","Offline-first requires WorkManager; offline-capable does not","They are synonymous terms"],ans:1},{q:"On Android, which component provides guaranteed background execution for sync tasks with network connectivity constraints?",opts:["Dart isolates","AlarmManager","WorkManager","JobIntentService"],ans:2},{q:"A field worker and their supervisor both edit the 'notes' field of the same household record while offline. Which conflict resolution strategy preserves both edits?",opts:["Last-Write-Wins","Field-level merge","Timestamp ordering","Server-wins"],ans:1},{q:"What is a 'sync cursor' and why is it preferable to full sync for large datasets?",opts:["A UI progress indicator for sync","A server-side pointer tracking which changes have been delivered to a client — allows delta sync of only changed records since last sync, much more efficient than downloading everything","A database index for the sync queue","A WorkManager task ID"],ans:1},{q:"Why should every locally-created record have a UUID (clientId) set before it reaches the server?",opts:["UUIDs are required by SQLite","The client can reference the record in foreign keys and the sync queue before the server assigns its own ID","UUIDs enable encryption","The server cannot generate IDs for mobile clients"],ans:1},{q:"To minimize battery drain from background sync, which approach is most effective?",opts:["Sync every 5 minutes with small payloads","Batch multiple changes into a single request, use exponential backoff on failure, and defer large payloads to WiFi connections","Use push notifications to trigger sync instead of polling","Disable sync when battery is below 50%"],ans:1},{q:"Soft deletes (deletedAt column) are important for offline-first sync because:",opts:["Hard deletes cause SQLite corruption","The server needs to communicate deletions to other clients via pull sync — a hard delete leaves no record to sync the deletion","They improve query performance","GDPR requires soft deletes"],ans:1},{q:"Limiting each worker's sync scope to their assigned geographic area helps by:",opts:["Reducing conflict probability and sync payload size","Improving GPS accuracy","Meeting regulatory requirements","Reducing SQLite database size"],ans:0}],challenge:"Design the complete offline-first architecture for a field data collection app with 10,000 workers: (1) Drift schema for Visit and SyncQueueEntry tables with all sync metadata columns. (2) The sync queue write pattern (transaction ensures queue entry is always created with the data change). (3) WorkManager task registration with correct constraints. (4) Push sync flow — describe what happens when a conflict is detected. (5) Pull sync flow with cursor-based delta sync. (6) How would you handle the scenario where a worker's device was offline for 7 days?",resources:[{type:"docs",title:"WorkManager Flutter package",url:"https://pub.dev/packages/workmanager",source:"pub.dev"},{type:"docs",title:"Drift (SQLite ORM) documentation",url:"https://drift.simonbinder.eu/",source:"Drift Docs"},{type:"article",title:"Offline-first app architecture patterns",url:"https://www.raywenderlich.com/10217168-offline-first-android-in-depth",source:"raywenderlich.com"},{type:"article",title:"Conflict resolution strategies in distributed systems",url:"https://martinfowler.com/bliki/CQRS.html",source:"Martin Fowler"},{type:"article",title:"CRDTs for conflict-free synchronisation",url:"https://crdt.tech/",source:"crdt.tech"}],eli5:"Imagine 10,000 people all working in places with no phone signal, all writing notes in their personal notebooks. When they get signal again, all their notebooks need to update a single big shared notebook in the office. If two people wrote different things about the same family, someone (or a smart rule) has to decide what the shared notebook says. The app has to do this automatically, without losing anyone's work, and without draining their phone battery doing it.",codeWalkthrough:["The Visits table includes both clientId (UUID set at creation) and serverId (set after server ACK) — this two-ID pattern is fundamental to offline-first; the client uses clientId for all local references.","syncState column tracks the sync lifecycle: pending (awaiting sync), syncing (in-flight), synced (confirmed by server), conflict (server rejected with newer version).","createVisit uses a Drift transaction to insert the visit AND its sync queue entry atomically — if either write fails, both are rolled back, ensuring the queue is never missing an entry for a local change.","SyncQueueEntry.operation captures 'insert'/'update'/'delete' so the server can apply the correct operation when processing the push.","syncBackgroundTask is annotated with @pragma('vm:entry-point') — this prevents the Dart tree shaker from removing the function, which would cause WorkManager to fail to find it.","Workmanager().executeTask returning false signals WorkManager to retry the task — returning true marks it as complete. The retry policy is configured separately.","In runSync(), the push batch limit of 100 prevents a single sync from timing out when the queue is very large (e.g., after 7 days offline).","The pull sync uses a transaction to atomically upsert all received records AND update the cursor — if the transaction rolls back, the cursor is not advanced and the same records are re-fetched on next sync."],bugChallenge:{code:`// Sync queue processing
+Future<void> processQueue() async {
+  final entries = await db.syncQueueDao.getAllPending();
+  
+  for (final entry in entries) {
+    try {
+      final result = await api.post('/sync/push-single', data: entry.toJson());
+      if (result.data['status'] == 'accepted') {
+        await db.syncQueueDao.delete(entry);
+      }
+    } catch (e) {
+      // Will retry on next sync
+    }
+  }
+}`,hint:"This approach causes major problems at scale with 10K workers, even when it works correctly. What are the two architectural problems?",answer:"Bug 1: N HTTP requests for N queue entries — if a worker has 500 pending changes after a day offline, this makes 500 sequential API calls. Each round-trip is 100-500ms over mobile networks, making the total sync take 50-250 seconds. Fix: batch all entries into a single POST /sync/push request with an array payload — one round-trip regardless of queue size. Bug 2: Sequential processing — if one entry fails (e.g., entry 50 of 500), the loop catches the error and continues, but the failed entry remains 'pending'. On next sync it is re-attempted, but entries 51-500 that succeeded are also re-queued (since we only delete on success). Fix: track status per entry (sent/failed) and only re-process failed entries. With batch processing: the server returns per-entry results, allowing targeted retry of only conflicted or failed entries."},difficulty:"advanced",prereqs:[25,26,28]},
+{id:59,title:"Production Debugging, Incident Response & Root Cause Analysis",subtitle:"Triaging crashes, reading stack traces, memory leaks, rollback strategies, and post-mortems",analogy:"Production debugging is like being a detective at a crime scene that's still happening. The clues are stack traces and logs, the witnesses are your monitoring tools, and you need to find the culprit (root cause) fast enough to stop the damage — while keeping stakeholders calm and informed throughout.",points:[{t:"Crashlytics triage workflow",d:"Step 1: Monitor crash-free user rate in Firebase Console (alert if it drops below 99.5%). Step 2: Sort crashes by 'Impacted users' descending — fix high-impact crashes first. Step 3: Read the crash report: exception type, stack trace, OS version, device model, custom keys. Step 4: Check if custom keys (userId, screen, featureFlag) correlate with a specific cohort. Step 5: Reproduce locally."},{t:"Reading Flutter stack traces",d:"Flutter stack traces differ by mode: debug mode shows full Dart frames with file/line. Profile/release mode may show obfuscated frames. If you shipped with --obfuscate and --split-debug-info, use flutter symbolize to decode. Key frames: find the first frame in YOUR code (not framework), then trace the call chain upward to find the trigger."},{t:"Reproducing production issues",d:"Steps: (1) Identify the OS version, device model, and Flutter version from the crash report. (2) Check custom keys — what screen was the user on? (3) Review recent commits for changes to that code path. (4) Use git bisect to find the introducing commit if the regression is confirmed. (5) Write a test that reproduces the crash before fixing it."},{t:"ANR (Application Not Responding) analysis",d:"ANRs are caused by blocking the main thread >5s on Android. Crashlytics captures ANR traces. Read the thread dump: identify the main thread's stack frame — is it waiting on a lock, doing I/O, or running computation? Common Flutter ANRs: Platform.isAndroid check in a plugin during startup, synchronous method channel call, or a heavy image decode not wrapped in compute()."},{t:"Memory leak detection workflow",d:"Step 1: Run the app in debug mode and navigate the suspected flow multiple times. Step 2: Open DevTools Memory tab → take heap snapshots before and after. Step 3: Compare snapshots — look for growing object counts. Step 4: Enable LeakTracker (built into Flutter SDK, debug mode) — it auto-reports widget lifecycle leaks. Step 5: Check for uncancelled StreamSubscriptions, undisposed controllers, and timers."},{t:"Common Flutter memory leaks",d:"1. StreamSubscription not cancelled in dispose(). 2. AnimationController, TextEditingController, ScrollController not disposed. 3. Timer.periodic not cancelled. 4. GlobalKey held in a static variable. 5. Image.network loading large images without cacheWidth/cacheHeight constraints (loads full resolution into memory). 6. setState called after dispose (widget unmounted)."},{t:"Git bisect for regression finding",d:"git bisect start; git bisect bad HEAD; git bisect good v2.3.0 (last known good release). Git checks out the midpoint commit. Test: does the crash reproduce? git bisect good or git bisect bad. Repeat until the exact introducing commit is identified. For automated: git bisect run flutter test test/regression_test.dart."},{t:"Rollback strategies",d:"Hot fix: fix the bug and ship immediately (use fast-track App Store/Play Store review for critical crashes). Feature flag rollback: if the crash is gated by a Remote Config flag, disable the flag immediately — no release required. In-app kill switch: Remote Config boolean that disables a feature and shows a maintenance message. Code rollback: revert the bad commit on backend/API if the issue is server-side."},{t:"Incident communication",d:"Severity levels: P0 (app unusable for >1% of users), P1 (major feature broken), P2 (minor feature degraded). P0 response: 5min acknowledgment, 30min status update, resolution ETA. Communication channels: status page update, in-app banner via Remote Config, team Slack incident channel. Never leave users silent during an outage."},{t:"Post-mortem process",d:"Blameless post-mortem: focus on systems, not people. Document: timeline (when detected, when fixed), root cause (5-Whys analysis), contributing factors, customer impact (users affected × duration), immediate fix, and action items. Action items must have owners and deadlines. Share with the team — post-mortems are learning opportunities, not blame sessions."},{t:"5-Whys root cause analysis",d:"Example: App crashes on payment screen. Why? → NullPointerException on user.paymentMethod. Why was it null? → The API returned 200 with an empty paymentMethod field. Why? → A backend migration renamed the field. Why wasn't this caught? → No integration test covered this field. Why? → Integration tests weren't required for backend API changes. Root cause: missing contract testing between Flutter app and backend API."},{t:"Preventing regressions",d:"After every production bug: write a test that would have caught it. For null safety issues: run in strict mode. For API contract breaks: implement consumer-driven contract tests (Pact). For performance regressions: add DevTools performance benchmarks to CI. For crash rate monitoring: set up Crashlytics alerts before regression reaches 1% of users."}],whatIs:"Production debugging combines crash triage, stack trace analysis, memory leak detection, git bisect, rollback strategies, and structured incident response processes to minimize user impact and prevent recurrence of production issues.",realWorld:"A fintech payment app sees a P0 crash spike after a release — crash-free rate drops to 97%. Crashlytics shows NullPointerException in PaymentScreen, affecting Android 12 users. Custom keys reveal it's users with saved cards. Git bisect identifies the introducing commit in 10 minutes. A Remote Config kill switch disables the saved-card flow immediately. The fix ships within 2 hours. A post-mortem adds contract tests to prevent similar API contract breaks.",code:`// Production debugging toolkit
+
+// 1. Symbolize obfuscated stack trace
+// Command line: flutter symbolize -i crashlytics_stack.txt -d path/to/app.android-arm64.symbols
+
+// 2. LeakTracker integration (debug mode)
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
+
+void main() {
+  // Enable leak tracking in debug/test builds
+  LeakTracking.enable();
+  runApp(const App());
+}
+
+// 3. Proper resource disposal to prevent leaks
+class ChatScreenState extends State<ChatScreen> {
+  late StreamSubscription<WsEvent> _wsSub;
+  late AnimationController _typingController;
+  late TextEditingController _messageController;
+  Timer? _typingTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _typingController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    )..repeat(reverse: true);
+    _messageController = TextEditingController();
+    _wsSub = context.read<WsService>().events.listen(_handleEvent);
+  }
+
+  @override
+  void dispose() {
+    _typingController.dispose(); // MUST dispose all controllers
+    _messageController.dispose();
+    _wsSub.cancel(); // MUST cancel subscriptions
+    _typingTimer?.cancel(); // MUST cancel timers
+    super.dispose();
+  }
+
+  void _onTyping() {
+    _typingTimer?.cancel();
+    _typingTimer = Timer(const Duration(seconds: 3), _sendTypingStop);
+  }
+}
+
+// 4. Crashlytics context for better triage
+class CrashlyticsContext {
+  static Future<void> setUserContext({
+    required String userId,
+    required String screen,
+    required String featureFlag,
+  }) async {
+    await FirebaseCrashlytics.instance.setUserIdentifier(userId);
+    await FirebaseCrashlytics.instance.setCustomKey('screen', screen);
+    await FirebaseCrashlytics.instance.setCustomKey('feature_flag', featureFlag);
+    await FirebaseCrashlytics.instance.setCustomKey(
+      'app_version',
+      (await PackageInfo.fromPlatform()).version,
+    );
+  }
+}
+
+// 5. Memory-safe image loading
+Image.network(
+  url,
+  cacheWidth: 400, // Decode at display size, not full resolution
+  cacheHeight: 400,
+  errorBuilder: (_, error, __) => const Icon(Icons.broken_image),
+)
+
+// 6. Remote Config kill switch
+class FeatureGuard extends StatelessWidget {
+  final String flagKey;
+  final Widget child;
+  final Widget fallback;
+
+  const FeatureGuard({
+    required this.flagKey,
+    required this.child,
+    this.fallback = const SizedBox.shrink(),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = FirebaseRemoteConfig.instance.getBool(flagKey);
+    return enabled ? child : fallback;
+  }
+}`,funFact:"Google's Site Reliability Engineering (SRE) book introduced the concept of blameless post-mortems to the industry. Before this practice, engineers would hide bugs to avoid blame — blameless culture creates psychological safety that leads to faster incident disclosure and resolution, ultimately improving system reliability.",quiz:[{q:"When triaging crashes in Crashlytics, what is the correct primary sorting criteria?",opts:["Most recent crash first","Impacted users count descending — fix crashes affecting the most users first","Crash frequency","Newest app version only"],ans:1},{q:"Your app shipped with --obfuscate --split-debug-info. Crashlytics shows an unreadable stack trace. What do you do?",opts:["The stack trace cannot be recovered","Use flutter symbolize with the .symbols file generated at build time","Rebuild without obfuscation and wait for more crashes","Contact Firebase support"],ans:1},{q:"git bisect is used to:",opts:["Revert a bad commit","Find the exact commit that introduced a regression by binary search through commit history","Merge two branches","Split a large commit into smaller ones"],ans:1},{q:"Which of these is NOT a common source of memory leaks in Flutter?",opts:["StreamSubscription not cancelled in dispose()","AnimationController not disposed","Using const constructors","Timer.periodic not cancelled"],ans:2},{q:"A P0 incident means:",opts:["A minor UI bug affecting <1% of users","The app is unusable or a critical feature is broken for a significant percentage of users — requires immediate response","A crash that only affects one device model","A backend API timeout"],ans:1},{q:"The 5-Whys root cause analysis technique is used in post-mortems to:",opts:["Identify which engineer caused the bug","Find the underlying systemic cause rather than stopping at the immediate symptom","Measure incident duration","Calculate the cost of the outage"],ans:1},{q:"The fastest way to mitigate a crash spike caused by a new feature without releasing a hotfix is:",opts:["Submit an emergency App Store update","Use a Remote Config feature flag to disable the crashing feature remotely","Revert the last git commit on the repository","Send a push notification asking users to update"],ans:1},{q:"cacheWidth and cacheHeight on Image.network are important for performance because:",opts:["They set the displayed size of the image on screen","They instruct Flutter to decode the image at display size rather than full resolution, reducing memory usage for large remote images","They enable HTTP caching of the image","They prevent image loading on slow connections"],ans:1}],challenge:"Conduct a mock incident response: (1) A crash spike hits your payment app — crash-free rate drops to 96.5% 30 minutes after a release. Write your step-by-step triage process. (2) Crashlytics shows the crash is on Android 12 in PaymentConfirmationScreen. What custom keys would you have pre-configured to help narrow this down? (3) You identify the introducing commit using git bisect. Write the git bisect commands. (4) Design a kill switch strategy using Remote Config. (5) Write a 5-Whys analysis for the fictional root cause: 'API response field renamed without updating the Flutter model'.",resources:[{type:"docs",title:"Firebase Crashlytics Flutter documentation",url:"https://firebase.flutter.dev/docs/crashlytics/overview",source:"FlutterFire"},{type:"docs",title:"Flutter DevTools Memory documentation",url:"https://docs.flutter.dev/tools/devtools/memory",source:"Flutter Docs"},{type:"article",title:"Google SRE Book — Postmortem Culture",url:"https://sre.google/sre-book/postmortem-culture/",source:"Google SRE"},{type:"docs",title:"git bisect documentation",url:"https://git-scm.com/docs/git-bisect",source:"Git Docs"},{type:"article",title:"Flutter performance profiling",url:"https://docs.flutter.dev/perf/ui-performance",source:"Flutter Docs"}],eli5:"Production debugging is like being a doctor when someone calls saying they're sick. First you check who's most sick (crash rate). Then you ask questions about symptoms (stack trace, custom keys). Then you look at what they ate recently (recent commits). Then you give them medicine that works immediately (kill switch or hotfix). Then you write down what happened so you don't make the same mistake again (post-mortem).",codeWalkthrough:["LeakTracking.enable() in debug builds activates Flutter's built-in leak detector — it monitors widget and object lifecycles and reports when objects survive past their expected disposal point.","_typingController.dispose() is called before super.dispose() — all custom resources must be released before the State is torn down.","_wsSub.cancel() in dispose() is the most commonly forgotten cleanup — StreamSubscriptions hold a reference to the stream and its listener, preventing garbage collection of the entire widget tree in some cases.","_typingTimer?.cancel() uses null-safe call — the timer may not have been created yet if the user never typed, so null check is necessary.","CrashlyticsContext.setUserContext should be called on each screen navigation and after login — custom keys give you filtering power in the Crashlytics dashboard (e.g., 'show me only crashes on PaymentScreen for users with the new-checkout flag').","setCustomKey('app_version', ...) supplements Crashlytics' built-in version tracking — useful when you need to filter by semantic version in custom queries.","Image.network with cacheWidth/cacheHeight decodes the image into a smaller bitmap — without these, a 4000x3000 JPEG is decoded into a ~46MB memory buffer even if displayed at 100x100 pixels.","FeatureGuard wraps any feature widget — when the Remote Config flag is false, it renders SizedBox.shrink() (nothing) instead of the feature, giving you a remote kill switch for any feature in the app."],bugChallenge:{code:`class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late Future<User> _userFuture;
+  StreamSubscription? _syncSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _userFuture = context.read<UserRepo>().fetchUser();
+    _syncSub = context.read<SyncService>().onSync.listen((event) {
+      setState(() {
+        _userFuture = context.read<UserRepo>().fetchUser();
+      });
+    });
+  }
+}`,hint:"This screen causes two types of issues reported in Crashlytics. What are they?",answer:"Bug 1: Missing dispose() — _syncSub is never cancelled. When ProfileScreen is popped from the navigator, the StreamSubscription continues to hold a reference to the State object. When onSync fires, setState is called on a disposed widget, causing 'setState called after dispose' — a common Crashlytics error. Fix: override dispose() and call _syncSub?.cancel() then super.dispose(). Bug 2: setState reassigns _userFuture to a new Future on every sync event. FutureBuilder with a new Future re-shows the loading state on every sync, causing flickering. Fix: use a StreamBuilder instead of FutureBuilder + manual Future reassignment, or update the user data in a local state variable (User? _user) and call setState with the new user directly without creating a new Future."},difficulty:"advanced",prereqs:[29,30]},
+{id:60,title:"CS Basics: Big-O, Memory, Concurrency & Networking",subtitle:"Surviving senior interview CS theory questions — complexity, memory models, and HTTP fundamentals",analogy:"CS fundamentals are like knowing how engines work when you're a racing driver — you don't need to build the engine, but understanding why a diesel engine behaves differently at altitude helps you race smarter. Similarly, knowing Big-O helps you choose the right data structure, and knowing how TCP works helps you debug mobile network issues.",points:[{t:"Big-O notation fundamentals",d:"Big-O describes worst-case time or space complexity as input size n grows. O(1) constant (HashMap lookup), O(log n) logarithmic (binary search), O(n) linear (list scan), O(n log n) linearithmic (merge sort), O(n²) quadratic (nested loops), O(2^n) exponential (naive recursion). Drop constants and lower terms: O(3n + 5) = O(n)."},{t:"Common Dart/Flutter Big-O scenarios",d:"List<T>.add() amortized O(1), List<T>.insert(0, x) O(n) (shifts all elements), Map<K,V>.containsKey() O(1), Set<T>.contains() O(1), List<T>.contains() O(n). Using a Set for membership testing instead of a List changes an O(n) loop to O(1) — common Flutter interview question."},{t:"Space complexity",d:"Space complexity measures additional memory used relative to input size. A function that creates a copy of a list is O(n) space. Recursive algorithms use O(depth) stack space — deep recursion risks stack overflow. Iterative alternatives use O(1) stack space. Flutter: large widget trees have O(n) memory where n is the number of live widgets."},{t:"Stack vs heap memory",d:"Stack: function call frames, local variables, fixed-size allocations — automatically managed, LIFO, fast allocation. Heap: objects, strings, collections — managed by Dart's garbage collector. In Dart: all objects live on the heap; local primitive-ish references (int, double, bool) are passed by value on the stack in optimized builds but are still Dart objects conceptually."},{t:"Dart garbage collection",d:"Dart uses a generational garbage collector: new objects go into 'young generation' (collected frequently, fast). Long-lived objects are promoted to 'old generation' (collected infrequently). Flutter DevTools Memory tab shows GC events. Avoid creating excessive short-lived objects in build() — reduces GC pressure."},{t:"Process vs thread vs isolate",d:"Process: independent memory space, OS-managed. Thread: shares process memory, OS-managed, risk of data races. Isolate (Dart): isolated memory heap, no shared memory, communicates via message passing (SendPort/ReceivePort). Dart's isolate model eliminates data races — you can't corrupt shared state because there is no shared state."},{t:"Concurrency vs parallelism",d:"Concurrency: multiple tasks in progress at the same time (may not run simultaneously) — Dart's event loop handles I/O concurrency on a single thread. Parallelism: multiple tasks running simultaneously on multiple CPU cores — Dart achieves with Isolate.spawn(). async/await in Dart is concurrent (cooperative scheduling), not parallel."},{t:"Dart event loop model",d:"Dart has two queues: microtask queue (higher priority — Future.value, scheduleMicrotask) and event queue (lower priority — I/O, timers, user input). The event loop processes all microtasks before the next event. Understanding this explains why Future.value() callbacks run before Timer(Duration.zero). Heavy sync code on the main isolate blocks both queues."},{t:"TCP/IP basics",d:"IP (Internet Protocol): routes packets across networks by IP address. TCP (Transmission Control Protocol): adds reliability (acknowledgement, retransmission), ordering, and flow control on top of IP. TCP connection: 3-way handshake (SYN → SYN-ACK → ACK). HTTP uses TCP. WebSocket upgrades an HTTP connection to a persistent TCP channel."},{t:"HTTP/HTTPS request lifecycle",d:"1. DNS resolution (domain → IP). 2. TCP 3-way handshake. 3. TLS handshake (for HTTPS — certificate validation, key exchange, ~1-2 additional round trips). 4. HTTP request sent. 5. Server processes, responds. 6. Connection reused (HTTP/1.1 keep-alive) or closed. HTTP/2 adds multiplexing (multiple requests over one connection). HTTP/3 uses QUIC (UDP-based, faster on lossy networks)."},{t:"DNS resolution",d:"DNS translates human-readable domains (api.myapp.com) to IP addresses. Hierarchy: recursive resolver (ISP/Google/Cloudflare) → root servers → TLD servers (.com, .io) → authoritative nameserver for the domain. TTL (Time To Live) controls caching. In mobile apps: DNS lookup adds latency on first request — HTTP client caches resolved IPs. DNSSEC prevents DNS spoofing."},{t:"REST constraints and HTTP methods",d:"REST (Representational State Transfer) constraints: stateless (server doesn't store client session), cacheable (responses indicate cacheability), uniform interface (resource-based URLs, standard verbs). HTTP semantics: GET (read, idempotent, cacheable), POST (create, not idempotent), PUT (replace, idempotent), PATCH (partial update), DELETE (idempotent). Idempotent: same result regardless of how many times applied."}],whatIs:"Computer science fundamentals — algorithm complexity, memory management, concurrency models, and networking — are the theoretical foundations that senior Flutter engineers are expected to understand at a practical level during technical interviews.",realWorld:"In a field app sync interview, an interviewer asks why you chose a Map<String, Visit> over a List<Visit> for the in-memory cache. Answer: 'O(1) lookup by visitId vs O(n) linear scan — at 10K records, the Map is 10,000x faster for individual lookups.' This is Big-O applied directly to Flutter architecture decisions.",code:`// CS fundamentals in Dart/Flutter context
+
+// Big-O examples in practice
+void bigoExamples() {
+  final list = List.generate(1000, (i) => i);
+  final set = list.toSet();
+  final map = {for (final i in list) i: 'value_\$i'};
+
+  // O(n) — scans entire list
+  final inList = list.contains(999); // avoid for large lists
+
+  // O(1) — hash lookup
+  final inSet = set.contains(999); // prefer for membership tests
+  final inMap = map.containsKey(999); // prefer for key lookup
+
+  // O(n) — avoid insert at beginning of large lists
+  list.insert(0, -1); // shifts all 1000 elements
+  list.add(1001);     // O(1) amortized — append to end
+}
+
+// Isolate for parallel computation (true parallelism)
+Future<List<Visit>> processLargeDatasetInIsolate(List<Map> rawData) async {
+  return await Isolate.run(() {
+    // This runs on a separate OS thread with its own memory
+    return rawData.map(Visit.fromJson).toList();
+    // No shared state — data is copied to the isolate
+  });
+}
+
+// Dart event loop — microtask vs event queue
+void eventLoopDemo() {
+  print('1: sync');
+
+  Future(() => print('3: event queue')); // added to event queue
+
+  Future.microtask(() => print('2: microtask')); // added to microtask queue
+
+  print('1: sync continues');
+  // Output order: '1: sync', '1: sync continues', '2: microtask', '3: event queue'
+}
+
+// TCP keep-alive and connection reuse with Dio
+Dio createOptimizedClient() {
+  final dio = Dio();
+  // Dio reuses connections via keep-alive automatically
+  // HTTP/2 is enabled when server supports it — multiple requests on one TCP connection
+  dio.options.connectTimeout = const Duration(seconds: 5); // TCP + TLS handshake
+  dio.options.receiveTimeout = const Duration(seconds: 30);
+  return dio;
+}
+
+// Memory-efficient list processing — O(1) space with lazy iteration
+Iterable<Visit> filterHighPriorityLazy(List<Visit> visits) sync* {
+  for (final visit in visits) {
+    if (visit.priority == Priority.high) {
+      yield visit; // lazy — doesn't create intermediate list
+    }
+  }
+}
+
+// Compare: O(n) space intermediate list
+List<Visit> filterHighPriorityEager(List<Visit> visits) =>
+    visits.where((v) => v.priority == Priority.high).toList(); // toList() materializes
+
+// O(n log n) sort vs O(n²) naive sort
+void sortingComplexity(List<Visit> visits) {
+  // Dart's sort() uses TimSort — O(n log n) worst case
+  visits.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+
+  // Never implement bubble sort — O(n²) — mention this in interviews
+}`,funFact:"Dart's isolate model was deliberately designed after the lessons learned from Java's thread model. Java threads sharing memory led to decades of concurrency bugs, deadlocks, and race conditions. Dart's approach — no shared memory, message-passing only — makes concurrent code dramatically safer, at the cost of needing to copy data between isolates.",quiz:[{q:"What is the Big-O complexity of List<T>.contains() in Dart?",opts:["O(1)","O(log n)","O(n)","O(n log n)"],ans:2},{q:"You need to check membership in a collection of 100,000 user IDs on every incoming WebSocket message. Which Dart data structure gives O(1) lookup?",opts:["List<String>","Queue<String>","Set<String>","LinkedList<String>"],ans:2},{q:"What is the key difference between Dart isolates and OS threads?",opts:["Isolates are faster than threads","Isolates have isolated memory heaps and communicate only via message passing — no shared state, no data races","Isolates run on multiple CPU cores; threads do not","Isolates are only available on mobile platforms"],ans:1},{q:"In Dart's event loop, which queue has higher priority — microtask or event?",opts:["Event queue","Microtask queue","They have equal priority","It depends on the platform"],ans:1},{q:"What are the three steps of a TCP 3-way handshake?",opts:["GET → ACK → CLOSE","SYN → SYN-ACK → ACK","CONNECT → ACCEPT → DATA","HELLO → HELLO-ACK → READY"],ans:1},{q:"Which HTTP method is idempotent and cacheable?",opts:["POST","PATCH","PUT","GET"],ans:3},{q:"async/await in Dart achieves:",opts:["True parallelism on multiple CPU cores","Concurrency via cooperative scheduling on a single thread — tasks yield at await points","Thread-based concurrency","Process-level isolation"],ans:1},{q:"Why does List.insert(0, item) have O(n) complexity while List.add(item) is O(1)?",opts:["insert() requires sorting; add() does not","insert() at position 0 must shift all n existing elements right; add() appends to the end without shifting","insert() allocates a new list; add() does not","They have the same complexity"],ans:1}],challenge:"Answer these as you would in a senior Flutter interview: (1) You have a List of 50,000 message IDs and need to check if a new incoming message is a duplicate on every WebSocket event. What data structure do you use and why? (2) A Flutter screen feels janky during a data processing operation. How do you move the work off the main thread? Show the code. (3) Explain why Future.microtask() runs before Timer(Duration.zero) in Dart. (4) A mobile user makes an HTTPS request to a cold server. List every network step from URL to response. (5) What is the difference between PUT and PATCH? When would you use each?",resources:[{type:"article",title:"Big-O complexity cheat sheet",url:"https://www.bigocheatsheet.com/",source:"bigocheatsheet.com"},{type:"docs",title:"Dart concurrency documentation",url:"https://dart.dev/language/concurrency",source:"Dart Docs"},{type:"article",title:"How HTTPS works",url:"https://howhttps.works/",source:"howhttps.works"},{type:"article",title:"Dart event loop explained",url:"https://medium.com/dartlang/dart-asynchronous-programming-isolates-and-event-loops-bffc3e296a6a",source:"Dart Medium"},{type:"docs",title:"Flutter Isolate.run documentation",url:"https://api.dart.dev/stable/dart-isolate/Isolate/run.html",source:"Dart API Docs"}],eli5:"Big-O is like measuring how long it takes to find a toy. If you have 1 box (O(1)), it's instant. If you search 10 boxes one by one (O(n)), it takes 10 times longer for 10 boxes. Isolates are like two kids doing homework in separate rooms — they don't fight over the same pencil (no shared memory). HTTP is like sending a letter: you look up the address (DNS), walk to the post office (TCP handshake), seal the envelope with wax (HTTPS), send it, and wait for a reply.",codeWalkthrough:["set.contains(999) is O(1) because Dart's HashSet computes a hash of 999 and does a direct bucket lookup — no iteration required regardless of set size.","list.contains(999) is O(n) because Dart scans from index 0 to the end — at 100K elements, this is 100K comparisons per check.","Isolate.run() copies rawData into the new isolate's memory space — this has a cost (serialization), but subsequent processing is truly parallel on a separate CPU core.","The return value is copied back from the isolate to the calling isolate — no shared memory means no thread-safety concerns but data copy overhead.","eventLoopDemo output order: sync code runs first (no queue), then all microtasks are drained, then events are processed — Future.microtask always beats Future() timer callbacks.","sync* generator with yield* lazy evaluation — filterHighPriorityLazy produces values one at a time without creating an intermediate list, using O(1) additional space.","filterHighPriorityEager's .toList() materializes all filtered results into a new list — O(k) space where k is the number of matching items.","dio.options.connectTimeout covers both the TCP handshake and TLS negotiation — on slow mobile networks, TLS adds 1-3 round trips (about 200-600ms) so the timeout should account for this."],bugChallenge:{code:`// Checking for duplicate messages in real-time chat
+class MessageDeduplicator {
+  final List<String> _seenIds = [];
+
+  bool isDuplicate(String messageId) {
+    if (_seenIds.contains(messageId)) return true;
+    _seenIds.add(messageId);
+    return false;
+  }
+}`,hint:"This works correctly but has a performance problem and a memory problem in a busy chat app. What are they?",answer:"Performance bug: _seenIds.contains() is O(n) — as the list grows with thousands of message IDs, every incoming message checks against the entire list. In a busy channel with 10K messages, each dedup check scans 10K items. Fix: use a Set<String> instead of List<String> — _seenIds.contains() becomes O(1) regardless of set size. Memory bug: the _seenIds list grows unbounded — in a long-running session, it accumulates every message ID ever seen, consuming increasing memory indefinitely. Fix: implement an LRU-style eviction by limiting the set to the last N IDs (e.g., 10,000) and removing the oldest entries when the limit is exceeded, or use a time-based expiry (only keep IDs from the last hour, since duplicates arrive within seconds of the original)."},difficulty:"intermediate",prereqs:[]}
+];
