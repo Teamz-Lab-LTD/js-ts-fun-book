@@ -1,0 +1,138 @@
+// config.js — Android Interview Mastery Course Configuration
+// The HTML engine reads this config to render everything.
+
+const COURSE_CONFIG = {
+  // Course identity
+  title: 'Android Interview Mastery: Zero to Senior in 72 Lessons',
+  subtitle: 'Land Your Senior Android Role — <strong>72 Interview-Focused Lessons</strong> — Kotlin, Coroutines, Compose, Architecture, Testing & Behavioral | Free, No Signup | by Teamz Lab',
+  shortTitle: 'Android Interview Mastery',
+
+  // Organization
+  org: 'Teamz Lab',
+  orgUrl: 'https://github.com/Teamz-Lab-LTD',
+  orgFull: 'Teamz Lab LTD',
+
+  // URLs
+  siteUrl: 'https://learn.teamzlab.com/',
+  canonicalUrl: 'https://learn.teamzlab.com/learn.html?course=android-interview-mastery',
+  ogImage: 'https://learn.teamzlab.com/og-android-interview.png',
+
+  // SEO
+  description: 'Free interactive Android interview preparation course with {lessonCount} lessons. Master Kotlin, Coroutines, Flow, Jetpack Compose, MVVM, Clean Architecture, Hilt, Room, Retrofit, testing, CI/CD, system design, DSA, and behavioral interviews. Built for mid-to-senior Android developers targeting remote roles in 2026-2027. No signup required.',
+  keywords: 'android interview questions 2026, senior android interview preparation, kotlin interview questions, android coroutines interview, jetpack compose interview questions, android clean architecture interview, android testing interview, android system design interview, android behavioral interview, android remote jobs, senior android developer preparation, hilt dependency injection interview, room database interview, android performance interview, kotlin flow interview, android ci cd interview, android developer career 2027',
+  topics: ['Kotlin', 'Coroutines', 'Flow', 'Jetpack Compose', 'MVVM', 'Clean Architecture', 'Hilt', 'Room', 'Retrofit', 'WorkManager', 'Testing', 'CI/CD', 'System Design', 'Performance', 'Firebase', 'Security', 'DSA', 'Behavioral Interview', 'Material Design 3'],
+  educationalLevel: 'Mid-Level to Senior',
+
+  // Footer tagline
+  footerTagline: 'Built to get you hired as a Senior Android Engineer. Every lesson is an interview advantage.',
+
+  // Topic categories for dashboard (lesson IDs grouped by topic)
+  topicMap: {
+    'Kotlin Core':              [1, 2, 3, 4, 5, 6],
+    'Coroutines & Flow':        [7, 8, 9, 10],
+    'Android Architecture':     [11, 12, 13, 14, 15, 16],
+    'UI: XML & Compose':        [17, 18, 19, 20, 21, 22],
+    'Architecture Patterns':    [23, 24, 25, 26],
+    'Networking & Data':        [27, 28, 29, 30, 31],
+    'Background & Platform':    [32, 33, 34, 35],
+    'Performance & Debugging':  [36, 37],
+    'Testing':                  [38, 39, 40, 41, 42, 43],
+    'Build & Release':          [44, 45, 46, 47],
+    'Crossover & Polish':       [48, 49, 50, 51, 52, 53, 54],
+    'Legacy & Platform APIs':   [55, 56, 57],
+    'System Design':            [58, 59, 60, 61],
+    'CS & DSA':                 [62, 63, 64, 65],
+    'Behavioral & Career':      [66, 67, 68, 69, 70, 71, 72]
+  },
+
+  // Concept flow diagrams per lesson ID (4 concepts each)
+  conceptFlows: {
+    1:  ['val/var', 'Null Safety', 'when', 'Data Class'],
+    2:  ['Collections', 'Lambdas', 'Scope Functions', 'Higher-Order'],
+    3:  ['OOP', 'Interfaces', 'Abstract', 'Composition'],
+    4:  ['Sealed', 'Enum', 'Object', 'Companion'],
+    5:  ['Generics', 'Variance', 'Extensions', 'Inline/Reified'],
+    6:  ['try/catch', 'Result', 'runCatching', 'Defensive'],
+    7:  ['suspend', 'Dispatchers', 'Structured', 'Launch/Async'],
+    8:  ['Cancellation', 'Supervisor', 'Exception', 'Scope'],
+    9:  ['Flow', 'Cold Stream', 'Operators', 'Collect'],
+    10: ['StateFlow', 'SharedFlow', 'LiveData', 'Channel'],
+    11: ['MVC', 'MVP', 'MVVM', 'MVI'],
+    12: ['Activity', 'Fragment', 'Service', 'Receiver'],
+    13: ['onCreate', 'onResume', 'Config Change', 'onDestroy'],
+    14: ['Intent', 'PendingIntent', 'TaskStack', 'LaunchMode'],
+    15: ['ViewModel', 'SavedState', 'Lifecycle', 'Survive'],
+    16: ['LiveData', 'observe', 'Lifecycle', 'Legacy'],
+    17: ['XML', 'ConstraintLayout', 'RecyclerView', 'Adapter'],
+    18: ['Composable', 'State', 'Recomposition', 'UI Tree'],
+    19: ['remember', 'rememberSaveable', 'Hoisting', 'State'],
+    20: ['LaunchedEffect', 'SideEffect', 'Disposable', 'Derived'],
+    21: ['Recomposition', 'Stability', 'Keys', 'Performance'],
+    22: ['Fragment Nav', 'Compose Nav', 'Deep Links', 'Back Stack'],
+    23: ['Layers', 'Domain', 'Data', 'Presentation'],
+    24: ['Repository', 'UseCase', 'DI', 'Inversion'],
+    25: ['MVVM', 'MVI', 'Clean', 'Tradeoffs'],
+    26: ['Hilt', 'Dagger', 'Manual DI', 'Modules'],
+    27: ['Retrofit', 'OkHttp', 'Interceptor', 'Token Refresh'],
+    28: ['Room', 'DAO', 'Migration', 'Relations'],
+    29: ['DataStore', 'SharedPrefs', 'Room', 'When Which'],
+    30: ['Offline-First', 'Sync', 'Conflict', 'Optimistic'],
+    31: ['Firebase Auth', 'FCM', 'Crashlytics', 'RemoteConfig'],
+    32: ['WorkManager', 'Foreground', 'Background', 'Limits'],
+    33: ['Notification', 'Channel', 'Deep Link', 'App Link'],
+    34: ['Permissions', 'Storage', 'Scoped', 'Privacy'],
+    35: ['JWT', 'SecureStorage', 'Biometrics', 'Encryption'],
+    36: ['ANR', 'Jank', 'Memory Leak', 'Startup'],
+    37: ['Logcat', 'Profiler', 'LeakCanary', 'StrictMode'],
+    38: ['Unit', 'Instrumentation', 'UI Test', 'Strategy'],
+    39: ['JUnit', 'Mockk', 'Fakes', 'Assertions'],
+    40: ['ViewModel Test', 'Flow Test', 'Turbine', 'Dispatchers'],
+    41: ['Room Test', 'Network Mock', 'Repository', 'Fake'],
+    42: ['ComposeTest', 'TestRule', 'Semantic', 'Assert'],
+    43: ['Espresso', 'Instrumentation', 'IdlingResource', 'Legacy'],
+    44: ['Modules', 'Feature', 'Scalability', 'Build Time'],
+    45: ['Gradle', 'Dependencies', 'Variants', 'Flavors'],
+    46: ['Signing', 'Release', 'PlayConsole', 'Versioning'],
+    47: ['GitHub Actions', 'Fastlane', 'Bitrise', 'Pipeline'],
+    48: ['Flow vs Stream', 'Dart vs Kotlin', 'Crossover', 'Interview'],
+    49: ['Compose vs Flutter', 'Tradeoffs', 'When Each', 'Answer'],
+    50: ['TalkBack', 'Semantics', 'Touch Target', 'Focus'],
+    51: ['Localization', 'RTL', 'Plurals', 'Resources'],
+    52: ['Adaptive', 'Tablet', 'Foldable', 'Multi-Window'],
+    53: ['Material 3', 'Dynamic Color', 'Dark Mode', 'Theming'],
+    54: ['RecyclerView', 'LazyColumn', 'Legacy', 'Modern'],
+    55: ['BroadcastReceiver', 'Service', 'Binder', 'Bound'],
+    56: ['ContentProvider', 'FileProvider', 'URI', 'Sharing'],
+    57: ['Camera', 'Bluetooth', 'NFC', 'Sensors'],
+    58: ['Offline App', 'Field Ops', 'Scale', 'Sync'],
+    59: ['School App', 'Local DB', 'Reports', 'Sync'],
+    60: ['Secure Auth', 'Payment', 'Claims', 'Compliance'],
+    61: ['Debugging', 'Crash Triage', 'Rollback', 'PostMortem'],
+    62: ['Big-O', 'Memory', 'Threading', 'Networking'],
+    63: ['Arrays', 'Strings', 'HashMap', 'Two Pointers'],
+    64: ['Stack', 'Queue', 'LinkedList', 'Binary Search'],
+    65: ['Trees', 'Graphs', 'BFS/DFS', 'Intervals'],
+    66: ['Project Stories', 'W-STAR', 'Architecture', 'Impact'],
+    67: ['Confidence', 'Concise', 'Pressure', 'Safe Phrases'],
+    68: ['Mentoring', 'Ownership', 'Conflict', 'Ambiguity'],
+    69: ['Salary', 'Negotiation', 'Remote', 'Relocation'],
+    70: ['Technical Mock', 'Kotlin', 'Android', 'Scoring'],
+    71: ['Architecture Mock', 'System Design', 'Tradeoffs', 'Scoring'],
+    72: ['Behavioral Mock', 'Mixed', 'Senior', 'Full Sim']
+  },
+
+  // SRS settings
+  srsEnabled: true,
+  srsBoxIntervals: [1, 3, 7, 14, 30],
+
+  // XP rewards
+  xpRewards: {
+    lessonComplete: 100,
+    quizCorrect: 20,
+    quizPerfect: 50,
+    challengeComplete: 75,
+    bugFound: 40,
+    flashcardReview: 10,
+    streakBonus: 25
+  }
+};
