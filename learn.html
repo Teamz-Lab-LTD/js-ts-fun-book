@@ -1502,6 +1502,45 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
   /* Promoted items */
   .promoted-items { grid-template-columns:1fr; }
 }
+
+/* ============================================
+   PLUGIN: Interactive Visualizations
+   Generic styles for course plugins (geometry, graphs, etc.)
+   ============================================ */
+.interactive-area { margin:1.5rem 0; border-radius:12px; border:1px solid var(--border); overflow:hidden; background:var(--surface); }
+.interactive-area__header { padding:0.8rem 1rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:0.5rem; font-weight:600; font-size:var(--text-md); color:var(--heading); }
+.interactive-area__header svg { flex-shrink:0; }
+.interactive-area__body { padding:1rem; position:relative; }
+.interactive-area canvas { display:block; max-width:100%; margin:0 auto; border-radius:8px; cursor:crosshair; touch-action:none; }
+.interactive-area__controls { padding:0.8rem 1rem; border-top:1px solid var(--border); display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; }
+.interactive-area__btn { padding:0.4rem 0.8rem; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--text-sm); cursor:pointer; transition:all 0.2s; }
+.interactive-area__btn:hover { border-color:var(--accent); color:var(--accent); }
+.interactive-area__btn.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+.interactive-area__info { font-size:var(--text-sm); color:var(--text-muted); margin-left:auto; }
+
+/* Step-by-step solution revealer */
+.step-reveal { margin:0; }
+.step-reveal__progress { display:flex; gap:0.3rem; padding:0 0 0.8rem; flex-wrap:wrap; }
+.step-reveal__dot { width:10px; height:10px; border-radius:50%; background:var(--border); transition:all 0.3s; }
+.step-reveal__dot.done { background:var(--accent); }
+.step-reveal__dot.current { background:var(--accent); box-shadow:0 0 8px var(--accent); }
+.step-reveal__step { padding:0.8rem 1rem; border-left:3px solid var(--border); margin-bottom:0.5rem; border-radius:0 8px 8px 0; background:var(--bg); transition:all 0.4s ease; }
+.step-reveal__step.hidden { opacity:0.15; transform:translateY(4px); filter:blur(2px); pointer-events:none; }
+.step-reveal__step.revealed { opacity:1; transform:translateY(0); filter:none; border-left-color:var(--accent); }
+.step-reveal__step.current { border-left-color:var(--accent); box-shadow:0 0 12px rgba(217,254,6,0.1); }
+.step-reveal__label { font-weight:700; color:var(--accent); font-size:var(--text-sm); margin-bottom:0.3rem; }
+.step-reveal__content { font-family:'Fira Code',Consolas,monospace; font-size:var(--text-sm); white-space:pre-wrap; line-height:1.6; color:var(--text); }
+.step-reveal__actions { display:flex; gap:0.5rem; margin-top:0.8rem; align-items:center; }
+.step-reveal__btn { padding:0.5rem 1.2rem; border-radius:22px; border:none; font-family:var(--font); font-weight:600; font-size:var(--text-sm); cursor:pointer; transition:all 0.2s; }
+.step-reveal__btn--next { background:var(--accent); color:var(--accent-text); }
+.step-reveal__btn--next:hover { transform:scale(1.03); box-shadow:0 2px 12px rgba(217,254,6,0.3); }
+.step-reveal__btn--reset { background:var(--surface); color:var(--text-muted); border:1px solid var(--border); }
+.step-reveal__btn--all { background:var(--surface); color:var(--text-muted); border:1px solid var(--border); }
+.step-reveal__counter { font-size:var(--text-sm); color:var(--text-muted); margin-left:auto; }
+@media(max-width:600px){
+  .interactive-area canvas { max-height:280px; }
+  .step-reveal__step { padding:0.6rem 0.8rem; }
+}
 </style>
 </head>
 <body>
@@ -1804,11 +1843,21 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
     s.onerror=function(){document.body.innerHTML='<div style="text-align:center;padding:4rem;font-family:Poppins,sans-serif"><h1 style="color:#f44">Course not found</h1><p style="color:#999;margin:1rem 0">Could not load: '+src+'</p><a href="index.html" style="color:#D9FE06">Browse all courses</a></div>';};
     document.head.appendChild(s);
   }
-  // Load config first, then data, then init
+  // Load config first, then data, then plugins, then init
   loadScript(base+'config.js',function(){
     loadScript(base+'data.js',function(){
-      // Fire custom event so the main script knows data is ready
-      window.dispatchEvent(new Event('courseLoaded'));
+      // Load course plugins if configured (SOLID: courses inject their own features)
+      var plugins=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.plugins)||[];
+      var pi=0;
+      function loadNextPlugin(){
+        if(pi>=plugins.length){window.dispatchEvent(new Event('courseLoaded'));return;}
+        var src=plugins[pi].startsWith('http')?plugins[pi]:base+plugins[pi];
+        pi++;
+        var s=document.createElement('script');s.src=src;
+        s.onload=loadNextPlugin;s.onerror=loadNextPlugin;
+        document.head.appendChild(s);
+      }
+      loadNextPlugin();
     });
   });
 })();
@@ -3341,6 +3390,8 @@ function render(){
   h+=`<div class="nav-hint"><span><span class="kbd">&larr;</span> ${t('prev')}</span><span><span class="kbd">&rarr;</span> ${t('next')}</span><span><span class="kbd">D</span> ${t('dashboard')}</span><span><span class="kbd">N</span> ${t('myNotes')}</span><span><span class="kbd">T</span> Theme</span><span><span class="kbd">?</span> Help</span></div>`;
 
   document.getElementById('content').innerHTML=h;
+  // Plugin render hook — courses can inject interactives after DOM is ready (SOLID: Open/Closed)
+  if(window.__onLessonRender){try{window.__onLessonRender(l,document.getElementById('content'));}catch(e){console.warn('Plugin render error:',e);}}
   lockTechnicalTerms(document.getElementById('content'));
   lockTechnicalTerms(document.getElementById('sidebar'));
   initScrollReveal();

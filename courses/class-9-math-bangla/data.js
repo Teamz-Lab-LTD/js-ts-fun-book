@@ -566,7 +566,8 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       2
-    ]
+    ],
+    "interactive": {"type":"numberLine","range":[-5,5],"step":1,"points":[{"value":-3,"label":"−৩","color":"#FF6B6B"},{"value":0,"label":"০","color":"#D9FE06"},{"value":1.5,"label":"১.৫","color":"#4ECDC4"},{"value":3.14,"label":"π≈৩.১৪","color":"#A78BFA"}],"intervals":[{"from":-5,"to":5,"label":"বাস্তব সংখ্যা (ℝ)","color":"rgba(217,254,6,0.08)"}]}
   },
   {
     "id": 5,
@@ -715,7 +716,8 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       4
-    ]
+    ],
+    "interactive": {"type":"numberLine","range":[-4,4],"step":1,"points":[{"value":0.5,"label":"½ (মূলদ)","color":"#4ECDC4"},{"value":-1.333,"label":"−⁴⁄₃ (মূলদ)","color":"#4ECDC4"},{"value":1.414,"label":"√2 (অমূলদ)","color":"#FF6B6B"},{"value":3.14,"label":"π (অমূলদ)","color":"#FF6B6B"}]}
   },
   {
     "id": 6,
@@ -1010,7 +1012,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       6
-    ]
+    ],
+    "interactive": {"type":"numberLine","range":[-5,5],"step":1,"points":[{"value":-3,"label":"−৩","color":"#FF6B6B"},{"value":-1,"label":"−১","color":"#FB923C"},{"value":0,"label":"০","color":"#D9FE06"},{"value":2,"label":"২","color":"#4ECDC4"},{"value":4,"label":"৪","color":"#45B7D1"}]}
   },
   {
     "id": 8,
@@ -1488,7 +1491,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       9
-    ]
+    ],
+    "interactive": {"type":"venn","sets":[{"label":"A","elements":["১","৩","৫","৭","৯"]},{"label":"B","elements":["৩","৬","৯","১২"]}],"highlight":"intersection","operationLabel":"A∩B = {৩, ৯}"}
   },
   {
     "id": 11,
@@ -1658,7 +1662,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       10
-    ]
+    ],
+    "interactive": {"type":"graph","equations":["y = 2*x + 1"],"xRange":[-5,5],"yRange":[-5,12],"points":[{"x":0,"y":1,"label":"(0,1)"},{"x":2,"y":5,"label":"(2,5)"}]}
   },
   {
     "id": 12,
@@ -5109,7 +5114,8 @@ const LESSONS_DATA = [
     "prereqs": [
       20,
       31
-    ]
+    ],
+    "interactive": {"type":"graph","equations":["y = x**2 - 5*x + 6"],"xRange":[-2,7],"yRange":[-2,10],"points":[{"x":2,"y":0,"label":"মূল (2,0)","color":"#FF6B6B"},{"x":3,"y":0,"label":"মূল (3,0)","color":"#FF6B6B"},{"x":2.5,"y":-0.25,"label":"শীর্ষ","color":"#D9FE06"}]}
   },
   {
     "id": 34,
@@ -5759,7 +5765,8 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       3
-    ]
+    ],
+    "interactive": {"type":"triangle","labels":["A","B","C"]}
   },
   {
     "id": 38,
@@ -6185,7 +6192,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       39
-    ]
+    ],
+    "interactive": {"type":"triangle","labels":["P","Q","R"],"showAngles":true,"showSides":true}
   },
   {
     "id": 41,
@@ -6450,7 +6458,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       40
-    ]
+    ],
+    "interactive": {"type":"triangle","labels":["A","B","C"],"showAngles":true,"showSides":true}
   },
   {
     "id": 43,
@@ -6604,7 +6613,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       42
-    ]
+    ],
+    "interactive": {"type":"quadrilateral","labels":["A","B","C","D"],"showAngles":true,"showSides":true}
   },
   {
     "id": 44,
@@ -6767,7 +6777,8 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       37
-    ]
+    ],
+    "interactive": {"type":"circle","labels":["O","A"]}
   },
   {
     "id": 45,
@@ -7085,7 +7096,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       45
-    ]
+    ],
+    "interactive": {"type":"circle","labels":["O","P"]}
   },
   {
     "id": 47,
@@ -7717,7 +7729,8 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       40
-    ]
+    ],
+    "interactive": {"type":"angle","angle":45,"showTrig":true}
   },
   {
     "id": 51,
@@ -7876,7 +7889,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       50
-    ]
+    ],
+    "interactive": {"type":"angle","angle":30,"showTrig":true}
   },
   {
     "id": 52,
@@ -8030,7 +8044,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       51
-    ]
+    ],
+    "interactive": {"type":"angle","angle":60,"showTrig":true}
   },
   {
     "id": 53,
@@ -9260,7 +9275,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       31
-    ]
+    ],
+    "interactive": {"type":"graph","equations":["y = 2*x + 1","y = -x + 7"],"xRange":[-2,8],"yRange":[-2,10],"points":[{"x":2,"y":5,"label":"ছেদবিন্দু (2,5)","color":"#FF6B6B"}]}
   },
   {
     "id": 61,
@@ -9734,7 +9750,8 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       61
-    ]
+    ],
+    "interactive": {"type":"graph","equations":["y = x + 1","y = -0.5*x + 4"],"xRange":[-3,8],"yRange":[-2,8],"points":[{"x":2,"y":3,"label":"সমাধান (2,3)","color":"#FF6B6B"}]}
   },
   {
     "id": 64,
@@ -9885,7 +9902,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       13
-    ]
+    ],
+    "interactive": {"type":"graph","equations":["y = 3*x + 2"],"xRange":[0,8],"yRange":[0,28],"points":[{"x":1,"y":5,"label":"a₁=5"},{"x":2,"y":8,"label":"a₂=8"},{"x":3,"y":11,"label":"a₃=11"},{"x":4,"y":14,"label":"a₄=14"}]}
   },
   {
     "id": 65,
@@ -11028,7 +11046,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       40
-    ]
+    ],
+    "interactive": {"type":"triangle","labels":["A","B","C"],"showSides":true,"showAngles":false}
   },
   {
     "id": 73,
@@ -11177,7 +11196,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       72
-    ]
+    ],
+    "interactive": {"type":"rectangle","labels":["A","B","C","D"],"showSides":true,"showAngles":true}
   },
   {
     "id": 74,
@@ -11323,7 +11343,8 @@ const LESSONS_DATA = [
     "prereqs": [
       44,
       73
-    ]
+    ],
+    "interactive": {"type":"circle","labels":["O","A"]}
   },
   {
     "id": 75,
@@ -11631,7 +11652,8 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       2
-    ]
+    ],
+    "interactive": {"type":"bar","data":[{"label":"গণিত","value":45},{"label":"বাংলা","value":38},{"label":"ইংরেজি","value":42},{"label":"বিজ্ঞান","value":35},{"label":"সমাজ","value":30}]}
   },
   {
     "id": 77,
@@ -11776,7 +11798,8 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       76
-    ]
+    ],
+    "interactive": {"type":"bar","data":[{"label":"১০-২০","value":5},{"label":"২০-৩০","value":8},{"label":"৩০-৪০","value":15},{"label":"৪০-৫০","value":12},{"label":"৫০-৬০","value":7},{"label":"৬০-৭০","value":3}]}
   },
   {
     "id": 78,
@@ -11935,6 +11958,7 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       77
-    ]
+    ],
+    "interactive": {"type":"pie","data":[{"label":"গণিত","value":30},{"label":"বাংলা","value":25},{"label":"ইংরেজি","value":20},{"label":"বিজ্ঞান","value":15},{"label":"সমাজ","value":10}]}
   }
 ];

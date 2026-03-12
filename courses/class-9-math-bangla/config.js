@@ -3,6 +3,9 @@
 // The HTML engine reads this config to render everything.
 
 const COURSE_CONFIG = {
+  // Plugins — loaded after data.js (SOLID: inject course-specific features from outside)
+  plugins: ['interactive.js'],
+
   // Course identity
   title: 'নবম শ্রেণির গণিত — শূন্য থেকে পরীক্ষায় ৯৫+',
   subtitle: 'বাংলাদেশ NCTB সিলেবাস — <strong>৭৮টি সহজ পাঠ</strong> — দুর্বল ভিত্তি থেকে পরীক্ষায় সেরা নম্বর | বিনামূল্যে, সাইনআপ ছাড়া | by Teamz Lab',
