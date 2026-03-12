@@ -130,7 +130,40 @@ const LESSONS_DATA = [
       "answer": "ভুলটা হলো কমলার দামে। ২ × ২০০ = ৪০০ টাকা, ২০০ টাকা না। সঠিক মোট = ৪৫০ + ৪০০ = ৮৫০ টাকা। গুণ করার সময় সংখ্যা ঠিকমতো গুণ হচ্ছে কিনা যাচাই করা জরুরি।"
     },
     "difficulty": "beginner",
-    "prereqs": []
+    "prereqs": [],
+    "interactive": {
+      "type": "numberLine",
+      "range": [
+        -10,
+        10
+      ],
+      "points": [
+        {
+          "value": -5,
+          "label": "ঋণাত্মক"
+        },
+        {
+          "value": 0,
+          "label": "শূন্য"
+        },
+        {
+          "value": 5,
+          "label": "ধনাত্মক"
+        }
+      ],
+      "intervals": [
+        {
+          "from": -10,
+          "to": 0,
+          "label": "ঋণাত্মক সংখ্যা"
+        },
+        {
+          "from": 0,
+          "to": 10,
+          "label": "ধনাত্মক সংখ্যা"
+        }
+      ]
+    }
   },
   {
     "id": 2,
@@ -271,7 +304,33 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       1
-    ]
+    ],
+    "interactive": {
+      "type": "numberLine",
+      "range": [
+        -5,
+        5
+      ],
+      "step": 1,
+      "points": [
+        {
+          "value": -3,
+          "label": "-৩"
+        },
+        {
+          "value": 0,
+          "label": "০"
+        },
+        {
+          "value": 2.5,
+          "label": "২.৫"
+        },
+        {
+          "value": 1.4142135623730951,
+          "label": "√২"
+        }
+      ]
+    }
   },
   {
     "id": 3,
@@ -418,7 +477,54 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       1
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "গাণিতিক চিহ্ন এক্সপ্লোরার",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 8
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 3
+        }
+      ],
+      "formulas": [
+        {
+          "label": "a + b",
+          "expr": "a+b"
+        },
+        {
+          "label": "a - b",
+          "expr": "a-b"
+        },
+        {
+          "label": "a × b",
+          "expr": "a*b"
+        },
+        {
+          "label": "a ÷ b",
+          "expr": "(a/b).toFixed(3)"
+        },
+        {
+          "label": "a²",
+          "expr": "a*a"
+        },
+        {
+          "label": "√a",
+          "expr": "Math.sqrt(a).toFixed(3)"
+        }
+      ],
+      "hint": "💡 a ও b বদলাও — দেখো গাণিতিক অপারেশন কিভাবে কাজ করে!"
+    }
   },
   {
     "id": 4,
@@ -567,7 +673,44 @@ const LESSONS_DATA = [
     "prereqs": [
       2
     ],
-    "interactive": {"type":"numberLine","range":[-5,5],"step":1,"points":[{"value":-3,"label":"−৩","color":"#FF6B6B"},{"value":0,"label":"০","color":"#D9FE06"},{"value":1.5,"label":"১.৫","color":"#4ECDC4"},{"value":3.14,"label":"π≈৩.১৪","color":"#A78BFA"}],"intervals":[{"from":-5,"to":5,"label":"বাস্তব সংখ্যা (ℝ)","color":"rgba(217,254,6,0.08)"}]}
+    "interactive": {
+      "type": "numberLine",
+      "range": [
+        -5,
+        5
+      ],
+      "step": 1,
+      "points": [
+        {
+          "value": -3,
+          "label": "−৩",
+          "color": "#FF6B6B"
+        },
+        {
+          "value": 0,
+          "label": "০",
+          "color": "#D9FE06"
+        },
+        {
+          "value": 1.5,
+          "label": "১.৫",
+          "color": "#4ECDC4"
+        },
+        {
+          "value": 3.14,
+          "label": "π≈৩.১৪",
+          "color": "#A78BFA"
+        }
+      ],
+      "intervals": [
+        {
+          "from": -5,
+          "to": 5,
+          "label": "বাস্তব সংখ্যা (ℝ)",
+          "color": "rgba(217,254,6,0.08)"
+        }
+      ]
+    }
   },
   {
     "id": 5,
@@ -717,7 +860,36 @@ const LESSONS_DATA = [
     "prereqs": [
       4
     ],
-    "interactive": {"type":"numberLine","range":[-4,4],"step":1,"points":[{"value":0.5,"label":"½ (মূলদ)","color":"#4ECDC4"},{"value":-1.333,"label":"−⁴⁄₃ (মূলদ)","color":"#4ECDC4"},{"value":1.414,"label":"√2 (অমূলদ)","color":"#FF6B6B"},{"value":3.14,"label":"π (অমূলদ)","color":"#FF6B6B"}]}
+    "interactive": {
+      "type": "numberLine",
+      "range": [
+        -4,
+        4
+      ],
+      "step": 1,
+      "points": [
+        {
+          "value": 0.5,
+          "label": "½ (মূলদ)",
+          "color": "#4ECDC4"
+        },
+        {
+          "value": -1.333,
+          "label": "−⁴⁄₃ (মূলদ)",
+          "color": "#4ECDC4"
+        },
+        {
+          "value": 1.414,
+          "label": "√2 (অমূলদ)",
+          "color": "#FF6B6B"
+        },
+        {
+          "value": 3.14,
+          "label": "π (অমূলদ)",
+          "color": "#FF6B6B"
+        }
+      ]
+    }
   },
   {
     "id": 6,
@@ -872,7 +1044,35 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       5
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "করণী সরলীকরণ",
+      "sliders": [
+        {
+          "label": "n",
+          "min": 2,
+          "max": 100,
+          "step": 1,
+          "value": 12
+        }
+      ],
+      "formulas": [
+        {
+          "label": "√n",
+          "expr": "Math.sqrt(n).toFixed(4)"
+        },
+        {
+          "label": "সরলীকৃত",
+          "expr": "(() => { let x=n; let f=1; for(let i=2;i*i<=x;i++){while(x%(i*i)===0){x/=(i*i);f*=i;}} return f>1 ? f+\"√\"+x : \"√\"+n; })()"
+        },
+        {
+          "label": "মূলদ?",
+          "expr": "Number.isInteger(Math.sqrt(n)) ? \"হ্যাঁ ✓ (পূর্ণবর্গ)\" : \"না ✗ (অমূলদ)\""
+        }
+      ],
+      "hint": "💡 n বদলাও — দেখো কোনগুলো পূর্ণবর্গ আর কোনগুলো অমূলদ!"
+    }
   },
   {
     "id": 7,
@@ -1013,7 +1213,41 @@ const LESSONS_DATA = [
     "prereqs": [
       6
     ],
-    "interactive": {"type":"numberLine","range":[-5,5],"step":1,"points":[{"value":-3,"label":"−৩","color":"#FF6B6B"},{"value":-1,"label":"−১","color":"#FB923C"},{"value":0,"label":"০","color":"#D9FE06"},{"value":2,"label":"২","color":"#4ECDC4"},{"value":4,"label":"৪","color":"#45B7D1"}]}
+    "interactive": {
+      "type": "numberLine",
+      "range": [
+        -5,
+        5
+      ],
+      "step": 1,
+      "points": [
+        {
+          "value": -3,
+          "label": "−৩",
+          "color": "#FF6B6B"
+        },
+        {
+          "value": -1,
+          "label": "−১",
+          "color": "#FB923C"
+        },
+        {
+          "value": 0,
+          "label": "০",
+          "color": "#D9FE06"
+        },
+        {
+          "value": 2,
+          "label": "২",
+          "color": "#4ECDC4"
+        },
+        {
+          "value": 4,
+          "label": "৪",
+          "color": "#45B7D1"
+        }
+      ]
+    }
   },
   {
     "id": 8,
@@ -1155,7 +1389,34 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       3
-    ]
+    ],
+    "interactive": {
+      "type": "venn",
+      "sets": [
+        {
+          "label": "A",
+          "elements": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "label": "B",
+          "elements": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      ],
+      "highlight": "union",
+      "operationLabel": "সেটের ভিত্তি: A ∪ B"
+    }
   },
   {
     "id": 9,
@@ -1330,6 +1591,61 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       8
+    ],
+    "interactive": [
+      {
+        "type": "venn",
+        "sets": [
+          {
+            "label": "A",
+            "elements": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "label": "B",
+            "elements": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ],
+        "highlight": "differenceA",
+        "operationLabel": "A ⊂ B (A হলো B-এর উপসেট)"
+      },
+      {
+        "type": "slider",
+        "title": "উপসেট গণনা: 2ⁿ",
+        "sliders": [
+          {
+            "label": "n",
+            "min": 0,
+            "max": 8,
+            "step": 1,
+            "value": 3
+          }
+        ],
+        "formulas": [
+          {
+            "label": "সেটের উপাদান সংখ্যা",
+            "expr": "n"
+          },
+          {
+            "label": "উপসেট সংখ্যা (2ⁿ)",
+            "expr": "Math.pow(2,n)"
+          },
+          {
+            "label": "প্রকৃত উপসেট (2ⁿ-1)",
+            "expr": "Math.pow(2,n)-1"
+          }
+        ],
+        "hint": "💡 n বাড়ালে উপসেট সংখ্যা দ্বিগুণ হয়!"
+      }
     ]
   },
   {
@@ -1492,7 +1808,32 @@ const LESSONS_DATA = [
     "prereqs": [
       9
     ],
-    "interactive": {"type":"venn","sets":[{"label":"A","elements":["১","৩","৫","৭","৯"]},{"label":"B","elements":["৩","৬","৯","১২"]}],"highlight":"intersection","operationLabel":"A∩B = {৩, ৯}"}
+    "interactive": {
+      "type": "venn",
+      "sets": [
+        {
+          "label": "A",
+          "elements": [
+            "১",
+            "৩",
+            "৫",
+            "৭",
+            "৯"
+          ]
+        },
+        {
+          "label": "B",
+          "elements": [
+            "৩",
+            "৬",
+            "৯",
+            "১২"
+          ]
+        }
+      ],
+      "highlight": "intersection",
+      "operationLabel": "A∩B = {৩, ৯}"
+    }
   },
   {
     "id": 11,
@@ -1663,7 +2004,32 @@ const LESSONS_DATA = [
     "prereqs": [
       10
     ],
-    "interactive": {"type":"graph","equations":["y = 2*x + 1"],"xRange":[-5,5],"yRange":[-5,12],"points":[{"x":0,"y":1,"label":"(0,1)"},{"x":2,"y":5,"label":"(2,5)"}]}
+    "interactive": {
+      "type": "graph",
+      "equations": [
+        "y = 2*x + 1"
+      ],
+      "xRange": [
+        -5,
+        5
+      ],
+      "yRange": [
+        -5,
+        12
+      ],
+      "points": [
+        {
+          "x": 0,
+          "y": 1,
+          "label": "(0,1)"
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "label": "(2,5)"
+        }
+      ]
+    }
   },
   {
     "id": 12,
@@ -1833,6 +2199,50 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       11
+    ],
+    "interactive": [
+      {
+        "type": "graph",
+        "title": "ফাংশন যাচাই: উল্লম্ব রেখা পরীক্ষা",
+        "equations": [
+          "y = 2x + 1",
+          "y = x^2"
+        ],
+        "xRange": [
+          -5,
+          5
+        ],
+        "yRange": [
+          -2,
+          10
+        ]
+      },
+      {
+        "type": "venn",
+        "sets": [
+          {
+            "label": "ডোমেইন",
+            "elements": [
+              -2,
+              -1,
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "label": "রেঞ্জ",
+            "elements": [
+              1,
+              3,
+              5,
+              7,
+              9
+            ]
+          }
+        ],
+        "operationLabel": "f(x) = 2x+1: ডোমেইন → রেঞ্জ"
+      }
     ]
   },
   {
@@ -2005,7 +2415,35 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       3
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "বীজগাণিতিক রাশি এক্সপ্লোরার",
+      "sliders": [
+        {
+          "label": "x",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 3
+        }
+      ],
+      "formulas": [
+        {
+          "label": "2x + 5",
+          "expr": "2*x+5"
+        },
+        {
+          "label": "x² - 4",
+          "expr": "x*x-4"
+        },
+        {
+          "label": "3x² + 2x - 1",
+          "expr": "3*x*x+2*x-1"
+        }
+      ],
+      "hint": "💡 x বদলাও — দেখো রাশির মান কিভাবে পরিবর্তন হয়!"
+    }
   },
   {
     "id": 14,
@@ -2159,7 +2597,55 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       13
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "বর্গসূত্র: (a+b)² = a²+2ab+b²",
+      "visual": "square",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "value": 4
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "value": 3
+        }
+      ],
+      "formulas": [
+        {
+          "label": "(a+b)²",
+          "expr": "(a+b)*(a+b)"
+        },
+        {
+          "label": "a²",
+          "expr": "a*a"
+        },
+        {
+          "label": "2ab",
+          "expr": "2*a*b"
+        },
+        {
+          "label": "b²",
+          "expr": "b*b"
+        },
+        {
+          "label": "a²+2ab+b²",
+          "expr": "a*a+2*a*b+b*b"
+        },
+        {
+          "label": "সমান?",
+          "expr": "(a+b)*(a+b)===a*a+2*a*b+b*b?\"✓ সবসময় সমান!\":\"✗\""
+        }
+      ],
+      "hint": "💡 যেকোনো a, b তে (a+b)² = a²+2ab+b² — ছবিতে দেখো কেন!"
+    }
   },
   {
     "id": 15,
@@ -2297,6 +2783,79 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       14
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "(a-b)² = a²-2ab+b²",
+        "visual": "square",
+        "sliders": [
+          {
+            "label": "a",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "value": 5
+          },
+          {
+            "label": "b",
+            "min": 1,
+            "max": 9,
+            "step": 1,
+            "value": 2
+          }
+        ],
+        "formulas": [
+          {
+            "label": "(a-b)²",
+            "expr": "(a-b)*(a-b)"
+          },
+          {
+            "label": "a²-2ab+b²",
+            "expr": "a*a-2*a*b+b*b"
+          },
+          {
+            "label": "সমান?",
+            "expr": "(a-b)*(a-b)===a*a-2*a*b+b*b?\"✓ সবসময় সমান!\":\"✗\""
+          }
+        ],
+        "hint": "💡 বর্গসূত্র: (a-b)² = a²-2ab+b²"
+      },
+      {
+        "type": "slider",
+        "title": "(a+b)(a-b) = a²-b²",
+        "sliders": [
+          {
+            "label": "a",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "value": 5
+          },
+          {
+            "label": "b",
+            "min": 1,
+            "max": 9,
+            "step": 1,
+            "value": 3
+          }
+        ],
+        "formulas": [
+          {
+            "label": "(a+b)(a-b)",
+            "expr": "(a+b)*(a-b)"
+          },
+          {
+            "label": "a²-b²",
+            "expr": "a*a-b*b"
+          },
+          {
+            "label": "সমান?",
+            "expr": "(a+b)*(a-b)===a*a-b*b?\"✓ সর্বদা সত্য!\":\"✗\""
+          }
+        ],
+        "hint": "💡 এটাই বর্গের পার্থক্য সূত্র!"
+      }
     ]
   },
   {
@@ -2435,7 +2994,58 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       14
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "a²-b² = (a+b)(a-b) প্রমাণ",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 15,
+          "step": 1,
+          "value": 7
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 14,
+          "step": 1,
+          "value": 4
+        }
+      ],
+      "formulas": [
+        {
+          "label": "a²",
+          "expr": "a*a"
+        },
+        {
+          "label": "b²",
+          "expr": "b*b"
+        },
+        {
+          "label": "a²-b²",
+          "expr": "a*a-b*b"
+        },
+        {
+          "label": "(a+b)",
+          "expr": "a+b"
+        },
+        {
+          "label": "(a-b)",
+          "expr": "a-b"
+        },
+        {
+          "label": "(a+b)(a-b)",
+          "expr": "(a+b)*(a-b)"
+        },
+        {
+          "label": "সমান?",
+          "expr": "a*a-b*b===(a+b)*(a-b)?\"✓ প্রমাণিত!\":\"✗\""
+        }
+      ],
+      "hint": "💡 a²-b² সবসময় (a+b)(a-b) — উৎপাদকে বিশ্লেষণে কাজে লাগে!"
+    }
   },
   {
     "id": 17,
@@ -2584,7 +3194,59 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       15
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "ঘনসূত্র: (a+b)³",
+      "visual": "cube",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "value": 1
+        }
+      ],
+      "formulas": [
+        {
+          "label": "(a+b)³",
+          "expr": "Math.pow(a+b,3)"
+        },
+        {
+          "label": "a³",
+          "expr": "Math.pow(a,3)"
+        },
+        {
+          "label": "3a²b",
+          "expr": "3*a*a*b"
+        },
+        {
+          "label": "3ab²",
+          "expr": "3*a*b*b"
+        },
+        {
+          "label": "b³",
+          "expr": "Math.pow(b,3)"
+        },
+        {
+          "label": "a³+3a²b+3ab²+b³",
+          "expr": "Math.pow(a,3)+3*a*a*b+3*a*b*b+Math.pow(b,3)"
+        },
+        {
+          "label": "সমান?",
+          "expr": "Math.pow(a+b,3)===Math.pow(a,3)+3*a*a*b+3*a*b*b+Math.pow(b,3)?\"✓ সর্বদা!\":\"✗\""
+        }
+      ],
+      "hint": "💡 (a+b)³ = a³+3a²b+3ab²+b³ — ঘনক ভেঙে দেখো!"
+    }
   },
   {
     "id": 18,
@@ -2716,7 +3378,54 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       17
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "a³+b³ ও a³-b³ সূত্র",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 8,
+          "step": 1,
+          "value": 3
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 7,
+          "step": 1,
+          "value": 2
+        }
+      ],
+      "formulas": [
+        {
+          "label": "a³+b³",
+          "expr": "Math.pow(a,3)+Math.pow(b,3)"
+        },
+        {
+          "label": "(a+b)(a²-ab+b²)",
+          "expr": "(a+b)*(a*a-a*b+b*b)"
+        },
+        {
+          "label": "সমান?",
+          "expr": "Math.pow(a,3)+Math.pow(b,3)===(a+b)*(a*a-a*b+b*b)?\"✓\":\"✗\""
+        },
+        {
+          "label": "a³-b³",
+          "expr": "Math.pow(a,3)-Math.pow(b,3)"
+        },
+        {
+          "label": "(a-b)(a²+ab+b²)",
+          "expr": "(a-b)*(a*a+a*b+b*b)"
+        },
+        {
+          "label": "সমান?",
+          "expr": "Math.pow(a,3)-Math.pow(b,3)===(a-b)*(a*a+a*b+b*b)?\"✓\":\"✗\""
+        }
+      ],
+      "hint": "💡 a³±b³ = (a±b)(a²∓ab+b²) — দুটো সূত্রই যাচাই করো!"
+    }
   },
   {
     "id": 19,
@@ -2871,7 +3580,46 @@ const LESSONS_DATA = [
     "prereqs": [
       16,
       18
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "উৎপাদকে বিশ্লেষণ: x²+bx+c",
+      "sliders": [
+        {
+          "label": "p",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 3
+        },
+        {
+          "label": "q",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 2
+        }
+      ],
+      "formulas": [
+        {
+          "label": "(x+p)(x+q) বিস্তার:",
+          "expr": "\"x² + \"+(p+q)+\"x + \"+(p*q)"
+        },
+        {
+          "label": "b = p+q =",
+          "expr": "p+q"
+        },
+        {
+          "label": "c = p×q =",
+          "expr": "p*q"
+        },
+        {
+          "label": "x²+5x+6",
+          "expr": "\"= (x+\"+p+\")(x+\"+q+\")\""
+        }
+      ],
+      "hint": "💡 p,q বদলাও — b=p+q, c=p×q — এটাই মধ্যপদ বিশ্লেষণের মূল ধারণা!"
+    }
   },
   {
     "id": 20,
@@ -3020,7 +3768,61 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       19
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "মধ্যপদ বিশ্লেষণ: ax²+bx+c",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "b",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 7
+        },
+        {
+          "label": "c",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 3
+        }
+      ],
+      "formulas": [
+        {
+          "label": "ax²+bx+c",
+          "expr": "a+\"x²+\"+(b>=0?\"+\":\"\")+b+\"x+\"+(c>=0?\"+\":\"\")+c"
+        },
+        {
+          "label": "ac =",
+          "expr": "a*c"
+        },
+        {
+          "label": "বিবেচক b²-4ac =",
+          "expr": "b*b-4*a*c"
+        },
+        {
+          "label": "মূল আছে?",
+          "expr": "b*b-4*a*c>=0?\"✓ হ্যাঁ (\"+((b*b-4*a*c===0)?\"একটি সমান মূল\":\"দুটি ভিন্ন মূল\")+\")\":\"✗ নেই (কাল্পনিক)\""
+        },
+        {
+          "label": "x₁ =",
+          "expr": "b*b-4*a*c>=0?((-b+Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(3):\"—\""
+        },
+        {
+          "label": "x₂ =",
+          "expr": "b*b-4*a*c>=0?((-b-Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(3):\"—\""
+        }
+      ],
+      "hint": "💡 a,b,c বদলাও — দেখো মূল কিভাবে পাল্টায়!"
+    }
   },
   {
     "id": 21,
@@ -3159,7 +3961,42 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       19
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "সূত্র দিয়ে উৎপাদকে বিশ্লেষণ",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "value": 4
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "value": 5
+        }
+      ],
+      "formulas": [
+        {
+          "label": "a²-b² =",
+          "expr": "a*a-b*b+\" = (\"+a+\"+\"+b+\")(\"+a+\"-\"+b+\") = \"+(a+b)+\"×\"+(a-b)"
+        },
+        {
+          "label": "a²+2ab+b² =",
+          "expr": "a*a+2*a*b+b*b+\" = (\"+a+\"+\"+b+\")² = \"+Math.pow(a+b,2)"
+        },
+        {
+          "label": "a²-2ab+b² =",
+          "expr": "a*a-2*a*b+b*b+\" = (\"+a+\"-\"+b+\")² = \"+Math.pow(a-b,2)"
+        }
+      ],
+      "hint": "💡 সূত্র চিনে নাও → সরাসরি উৎপাদক বের করো!"
+    }
   },
   {
     "id": 22,
@@ -3320,6 +4157,63 @@ const LESSONS_DATA = [
     "prereqs": [
       20,
       21
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "উৎপাদক উপপাদ্য: f(a)=0 → (x-a) উৎপাদক",
+        "sliders": [
+          {
+            "label": "a",
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "value": 2
+          }
+        ],
+        "formulas": [
+          {
+            "label": "f(x) = x³-6x²+11x-6",
+            "expr": "\"f(\"+a+\") = \"+((a*a*a)-(6*a*a)+(11*a)-6)"
+          },
+          {
+            "label": "(x-a) উৎপাদক?",
+            "expr": "((a*a*a)-(6*a*a)+(11*a)-6)===0?\"✓ হ্যাঁ! (x-\"+a+\") একটি উৎপাদক\":\"✗ না, f(\"+a+\")≠0\""
+          }
+        ],
+        "hint": "💡 a=1,2,3 চেষ্টা করো — কোন মানে f(a)=0 হয়?"
+      },
+      {
+        "type": "graph",
+        "equations": [
+          "y = x^3-6x^2+11x-6"
+        ],
+        "xRange": [
+          -1,
+          5
+        ],
+        "yRange": [
+          -5,
+          5
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": 0,
+            "label": "(1,0)"
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "label": "(2,0)"
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "label": "(3,0)"
+          }
+        ]
+      }
     ]
   },
   {
@@ -3480,7 +4374,58 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       22
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "বীজগাণিতিক রাশি: মান নির্ণয়",
+      "sliders": [
+        {
+          "label": "x",
+          "min": -5,
+          "max": 5,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "y",
+          "min": -5,
+          "max": 5,
+          "step": 1,
+          "value": 3
+        }
+      ],
+      "formulas": [
+        {
+          "label": "x+y",
+          "expr": "x+y"
+        },
+        {
+          "label": "x-y",
+          "expr": "x-y"
+        },
+        {
+          "label": "xy",
+          "expr": "x*y"
+        },
+        {
+          "label": "x²+y²",
+          "expr": "x*x+y*y"
+        },
+        {
+          "label": "(x+y)²",
+          "expr": "(x+y)*(x+y)"
+        },
+        {
+          "label": "(x+y)²=x²+2xy+y²?",
+          "expr": "(x+y)*(x+y)===x*x+2*x*y+y*y?\"✓ সর্বদা সত্য!\":\"✗\""
+        },
+        {
+          "label": "x²-y²=(x+y)(x-y)?",
+          "expr": "x*x-y*y===(x+y)*(x-y)?\"✓ সর্বদা সত্য!\":\"✗\""
+        }
+      ],
+      "hint": "💡 যেকোনো x,y তে সূত্রগুলো সত্য কিনা যাচাই করো!"
+    }
   },
   {
     "id": 24,
@@ -3649,7 +4594,58 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       13
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "সূচকের নিয়ম",
+      "visual": "exponent",
+      "sliders": [
+        {
+          "label": "base",
+          "min": 2,
+          "max": 10,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "m",
+          "min": 0,
+          "max": 6,
+          "step": 1,
+          "value": 3
+        },
+        {
+          "label": "n",
+          "min": 0,
+          "max": 6,
+          "step": 1,
+          "value": 2
+        }
+      ],
+      "formulas": [
+        {
+          "label": "base^m",
+          "expr": "Math.pow(base,m)"
+        },
+        {
+          "label": "base^n",
+          "expr": "Math.pow(base,n)"
+        },
+        {
+          "label": "base^m × base^n = base^(m+n)",
+          "expr": "Math.pow(base,m)*Math.pow(base,n)+\" = \"+Math.pow(base,m+n)"
+        },
+        {
+          "label": "base^m ÷ base^n = base^(m-n)",
+          "expr": "(Math.pow(base,m)/Math.pow(base,n)).toFixed(4)+\" = \"+Math.pow(base,m-n).toFixed(4)"
+        },
+        {
+          "label": "(base^m)^n = base^(mn)",
+          "expr": "Math.pow(Math.pow(base,m),n)+\" = \"+Math.pow(base,m*n)"
+        }
+      ],
+      "hint": "💡 সূচক বদলাও — গুণনে সূচক যোগ হয়, ভাগে বিয়োগ হয়!"
+    }
   },
   {
     "id": 25,
@@ -3796,7 +4792,50 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       24
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "শূন্য, ঋণাত্মক ও ভগ্নাংশ সূচক",
+      "sliders": [
+        {
+          "label": "base",
+          "min": 2,
+          "max": 10,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "n",
+          "min": -4,
+          "max": 4,
+          "step": 1,
+          "value": -2
+        }
+      ],
+      "formulas": [
+        {
+          "label": "base^n",
+          "expr": "Math.pow(base,n).toFixed(6)"
+        },
+        {
+          "label": "base^0",
+          "expr": "1+\" (সর্বদা ১!)\""
+        },
+        {
+          "label": "base^(-n) = 1/base^n",
+          "expr": "(1/Math.pow(base,Math.abs(n))).toFixed(6)"
+        },
+        {
+          "label": "base^(1/2) = √base",
+          "expr": "Math.pow(base,0.5).toFixed(4)"
+        },
+        {
+          "label": "base^(1/3) = ∛base",
+          "expr": "Math.pow(base,1/3).toFixed(4)"
+        }
+      ],
+      "hint": "💡 ঋণাত্মক সূচক = উল্টানো (1/base^n), ভগ্নাংশ সূচক = মূল!"
+    }
   },
   {
     "id": 26,
@@ -3964,6 +5003,59 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       25
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "লগারিদম কী? logₐ(x) = y মানে a^y = x",
+        "sliders": [
+          {
+            "label": "base",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "value": 10
+          },
+          {
+            "label": "x",
+            "min": 1,
+            "max": 1000,
+            "step": 1,
+            "value": 100
+          }
+        ],
+        "formulas": [
+          {
+            "label": "log_base(x)",
+            "expr": "(Math.log(x)/Math.log(base)).toFixed(4)"
+          },
+          {
+            "label": "যাচাই: base^result",
+            "expr": "Math.pow(base,Math.log(x)/Math.log(base)).toFixed(2)+\" (= x? ✓)\""
+          },
+          {
+            "label": "অর্থ:",
+            "expr": "\"\"+base+\"^\"+(Math.log(x)/Math.log(base)).toFixed(2)+\" = \"+x"
+          }
+        ],
+        "hint": "💡 log মানে: \"কত ঘাত করলে x পাবো?\" — base ও x বদলাও!"
+      },
+      {
+        "type": "graph",
+        "title": "y = log(x) ও y = base^x পরস্পর বিপরীত",
+        "equations": [
+          "y = Math.log(x)/Math.log(2)",
+          "y = 2^x"
+        ],
+        "xRange": [
+          -2,
+          8
+        ],
+        "yRange": [
+          -3,
+          8
+        ]
+      }
     ]
   },
   {
@@ -4125,7 +5217,54 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       26
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "লগারিদমের নিয়ম",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 4
+        },
+        {
+          "label": "b",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 5
+        }
+      ],
+      "formulas": [
+        {
+          "label": "log(a×b)",
+          "expr": "Math.log10(a*b).toFixed(4)"
+        },
+        {
+          "label": "log(a)+log(b)",
+          "expr": "(Math.log10(a)+Math.log10(b)).toFixed(4)"
+        },
+        {
+          "label": "সমান? (গুণন→যোগ)",
+          "expr": "Math.abs(Math.log10(a*b)-(Math.log10(a)+Math.log10(b)))<0.001?\"✓ log(ab)=log(a)+log(b)\":\"✗\""
+        },
+        {
+          "label": "log(a/b)",
+          "expr": "Math.log10(a/b).toFixed(4)"
+        },
+        {
+          "label": "log(a)-log(b)",
+          "expr": "(Math.log10(a)-Math.log10(b)).toFixed(4)"
+        },
+        {
+          "label": "সমান? (ভাগ→বিয়োগ)",
+          "expr": "Math.abs(Math.log10(a/b)-(Math.log10(a)-Math.log10(b)))<0.001?\"✓ log(a/b)=log(a)-log(b)\":\"✗\""
+        }
+      ],
+      "hint": "💡 লগারিদম গুণকে যোগে আর ভাগকে বিয়োগে রূপান্তর করে!"
+    }
   },
   {
     "id": 28,
@@ -4279,7 +5418,39 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       27
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "ম্যান্টিসা ও বৈশিষ্ট্যাংশ",
+      "sliders": [
+        {
+          "label": "x",
+          "min": 1,
+          "max": 99999,
+          "step": 1,
+          "value": 1234
+        }
+      ],
+      "formulas": [
+        {
+          "label": "log₁₀(x)",
+          "expr": "Math.log10(x).toFixed(6)"
+        },
+        {
+          "label": "বৈশিষ্ট্যাংশ (পূর্ণ অংশ)",
+          "expr": "Math.floor(Math.log10(x))"
+        },
+        {
+          "label": "ম্যান্টিসা (দশমিক অংশ)",
+          "expr": "(Math.log10(x)-Math.floor(Math.log10(x))).toFixed(6)"
+        },
+        {
+          "label": "অর্থ: x = 10^",
+          "expr": "Math.floor(Math.log10(x))+\" × 10^\"+(Math.log10(x)-Math.floor(Math.log10(x))).toFixed(4)"
+        }
+      ],
+      "hint": "💡 বৈশিষ্ট্যাংশ = সংখ্যার অঙ্ক সংখ্যা - ১, ম্যান্টিসা সবসময় 0 থেকে 1 এর মধ্যে!"
+    }
   },
   {
     "id": 29,
@@ -4453,7 +5624,50 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       28
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "সূচক ও লগারিদম: মিশ্র অনুশীলন",
+      "sliders": [
+        {
+          "label": "base",
+          "min": 2,
+          "max": 10,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "x",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "value": 8
+        }
+      ],
+      "formulas": [
+        {
+          "label": "base^log_base(x)",
+          "expr": "Math.pow(base,Math.log(x)/Math.log(base)).toFixed(3)+\" (= x ✓)\""
+        },
+        {
+          "label": "log_base(base^x)",
+          "expr": "(Math.log(Math.pow(base,x))/Math.log(base)).toFixed(3)+\" (= x ✓)\""
+        },
+        {
+          "label": "log_base(x²)",
+          "expr": "(Math.log(x*x)/Math.log(base)).toFixed(4)"
+        },
+        {
+          "label": "2×log_base(x)",
+          "expr": "(2*Math.log(x)/Math.log(base)).toFixed(4)"
+        },
+        {
+          "label": "সমান? (ঘাত→গুণ)",
+          "expr": "Math.abs((Math.log(x*x)/Math.log(base))-(2*Math.log(x)/Math.log(base)))<0.001?\"✓ log(x²)=2log(x)\":\"✗\""
+        }
+      ],
+      "hint": "💡 base^(log x) = x এবং log(base^x) = x — পরস্পর বিপরীত!"
+    }
   },
   {
     "id": 30,
@@ -4621,7 +5835,35 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       13
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "সমীকরণ কী? বাম পক্ষ = ডান পক্ষ",
+      "sliders": [
+        {
+          "label": "x",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 4
+        }
+      ],
+      "formulas": [
+        {
+          "label": "2x + 3",
+          "expr": "2*x+3"
+        },
+        {
+          "label": "11",
+          "expr": "11"
+        },
+        {
+          "label": "সমান? (2x+3=11)",
+          "expr": "2*x+3===11?\"✓ x=\"+x+\" সমাধান!\":\"✗ 2×\"+x+\"+3=\"+(2*x+3)+\"≠11\""
+        }
+      ],
+      "hint": "💡 x বদলাও — কোন মানে বাম পক্ষ = ডান পক্ষ হয়?"
+    }
   },
   {
     "id": 31,
@@ -4779,6 +6021,69 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       30
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "প্রথম ঘাতের সমীকরণ সমাধান",
+        "sliders": [
+          {
+            "label": "a",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "value": 3
+          },
+          {
+            "label": "b",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": 5
+          },
+          {
+            "label": "c",
+            "min": -20,
+            "max": 20,
+            "step": 1,
+            "value": 14
+          }
+        ],
+        "formulas": [
+          {
+            "label": "সমীকরণ: ax+b=c",
+            "expr": "a+\"x+\"+(b>=0?\"+\":\"\")+b+\" = \"+c"
+          },
+          {
+            "label": "ax = c-b",
+            "expr": "a+\"x = \"+(c-b)"
+          },
+          {
+            "label": "x = (c-b)/a",
+            "expr": "((c-b)/a).toFixed(3)"
+          },
+          {
+            "label": "যাচাই: a×x+b",
+            "expr": "(a*((c-b)/a)+b).toFixed(3)+\" (= c? ✓)\""
+          }
+        ],
+        "hint": "💡 a,b,c বদলাও — সমাধান ধাপে ধাপে দেখো!"
+      },
+      {
+        "type": "graph",
+        "title": "y = ax+b এর লেখচিত্র",
+        "equations": [
+          "y = 3x + 5"
+        ],
+        "xRange": [
+          -5,
+          5
+        ],
+        "yRange": [
+          -10,
+          20
+        ]
+      }
     ]
   },
   {
@@ -4938,7 +6243,31 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       31
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "শাব্দিক সমস্যা → সমীকরণ",
+      "sliders": [
+        {
+          "label": "x",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "value": 15
+        }
+      ],
+      "formulas": [
+        {
+          "label": "সমস্যা: বাবার বয়স x, ছেলের x-25",
+          "expr": "\"বাবা: \"+x+\", ছেলে: \"+(x-25)"
+        },
+        {
+          "label": "বাবা = 2×ছেলে?",
+          "expr": "x===2*(x-25)?\"✓ x=\"+x+\" সমাধান!\":\"✗ \"+x+\"≠\"+2*(x-25)"
+        }
+      ],
+      "hint": "💡 x বদলাও — কোন বয়সে বাবা ছেলের দ্বিগুণ?"
+    }
   },
   {
     "id": 33,
@@ -5115,7 +6444,40 @@ const LESSONS_DATA = [
       20,
       31
     ],
-    "interactive": {"type":"graph","equations":["y = x**2 - 5*x + 6"],"xRange":[-2,7],"yRange":[-2,10],"points":[{"x":2,"y":0,"label":"মূল (2,0)","color":"#FF6B6B"},{"x":3,"y":0,"label":"মূল (3,0)","color":"#FF6B6B"},{"x":2.5,"y":-0.25,"label":"শীর্ষ","color":"#D9FE06"}]}
+    "interactive": {
+      "type": "graph",
+      "equations": [
+        "y = x**2 - 5*x + 6"
+      ],
+      "xRange": [
+        -2,
+        7
+      ],
+      "yRange": [
+        -2,
+        10
+      ],
+      "points": [
+        {
+          "x": 2,
+          "y": 0,
+          "label": "মূল (2,0)",
+          "color": "#FF6B6B"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "label": "মূল (3,0)",
+          "color": "#FF6B6B"
+        },
+        {
+          "x": 2.5,
+          "y": -0.25,
+          "label": "শীর্ষ",
+          "color": "#D9FE06"
+        }
+      ]
+    }
   },
   {
     "id": 34,
@@ -5274,6 +6636,73 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       33
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "উৎপাদক পদ্ধতিতে দ্বিঘাত সমীকরণ",
+        "sliders": [
+          {
+            "label": "p",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": 2
+          },
+          {
+            "label": "q",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": 3
+          }
+        ],
+        "formulas": [
+          {
+            "label": "সমীকরণ: (x-p)(x-q)=0",
+            "expr": "\"x²+\"+(-(p+q))+\"x+\"+(p*q)+\" = 0\""
+          },
+          {
+            "label": "মূল: x = p বা q",
+            "expr": "\"x = \"+p+\" বা x = \"+q"
+          },
+          {
+            "label": "মূলের যোগ (p+q)",
+            "expr": "p+q"
+          },
+          {
+            "label": "মূলের গুণ (p×q)",
+            "expr": "p*q"
+          }
+        ],
+        "hint": "💡 p,q হলো মূল — সমীকরণ তৈরি হয় (x-p)(x-q)=0 থেকে!"
+      },
+      {
+        "type": "graph",
+        "equations": [
+          "y = x^2-5x+6"
+        ],
+        "xRange": [
+          -2,
+          7
+        ],
+        "yRange": [
+          -2,
+          10
+        ],
+        "points": [
+          {
+            "x": 2,
+            "y": 0,
+            "label": "x=2"
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "label": "x=3"
+          }
+        ]
+      }
     ]
   },
   {
@@ -5443,6 +6872,68 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       34
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "দ্বিঘাত সূত্র ও বিবেচক",
+        "sliders": [
+          {
+            "label": "a",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "value": 1
+          },
+          {
+            "label": "b",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": -5
+          },
+          {
+            "label": "c",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": 6
+          }
+        ],
+        "formulas": [
+          {
+            "label": "বিবেচক D = b²-4ac",
+            "expr": "b*b-4*a*c"
+          },
+          {
+            "label": "D > 0?",
+            "expr": "b*b-4*a*c>0?\"দুটি ভিন্ন বাস্তব মূল\":b*b-4*a*c===0?\"একটি সমান মূল\":\"কোনো বাস্তব মূল নেই\""
+          },
+          {
+            "label": "x₁ = (-b+√D)/2a",
+            "expr": "b*b-4*a*c>=0?((-b+Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(3):\"কাল্পনিক\""
+          },
+          {
+            "label": "x₂ = (-b-√D)/2a",
+            "expr": "b*b-4*a*c>=0?((-b-Math.sqrt(b*b-4*a*c))/(2*a)).toFixed(3):\"কাল্পনিক\""
+          }
+        ],
+        "hint": "💡 D>0: দুটি মূল, D=0: একটি মূল, D<0: কোনো বাস্তব মূল নেই!"
+      },
+      {
+        "type": "graph",
+        "equations": [
+          "y = x^2-5x+6"
+        ],
+        "xRange": [
+          -2,
+          7
+        ],
+        "yRange": [
+          -2,
+          10
+        ]
+      }
     ]
   },
   {
@@ -5618,7 +7109,35 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       35
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "দ্বিঘাত সমীকরণ: বাস্তব সমস্যা",
+      "sliders": [
+        {
+          "label": "x",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "value": 5
+        }
+      ],
+      "formulas": [
+        {
+          "label": "আয়তক্ষেত্রের দৈর্ঘ্য x, প্রস্থ x-3",
+          "expr": "\"দৈর্ঘ্য: \"+x+\", প্রস্থ: \"+(x-3)"
+        },
+        {
+          "label": "ক্ষেত্রফল = x(x-3)",
+          "expr": "x*(x-3)"
+        },
+        {
+          "label": "ক্ষেত্রফল = 40?",
+          "expr": "x*(x-3)===40?\"✓ x=\"+x+\" সমাধান!\":\"✗ \"+x*(x-3)+\"≠40\""
+        }
+      ],
+      "hint": "💡 কোন x-এ ক্ষেত্রফল ঠিক 40 হয়?"
+    }
   },
   {
     "id": 37,
@@ -5766,7 +7285,14 @@ const LESSONS_DATA = [
     "prereqs": [
       3
     ],
-    "interactive": {"type":"triangle","labels":["A","B","C"]}
+    "interactive": {
+      "type": "triangle",
+      "labels": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
   },
   {
     "id": 38,
@@ -5898,7 +7424,56 @@ const LESSONS_DATA = [
     "difficulty": "beginner",
     "prereqs": [
       37
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "স্বতঃসিদ্ধ: দুটি বিন্দু দিয়ে একটিই সরলরেখা",
+      "sliders": [
+        {
+          "label": "x₁",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "y₁",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "value": 3
+        },
+        {
+          "label": "x₂",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "value": 8
+        },
+        {
+          "label": "y₂",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "value": 7
+        }
+      ],
+      "formulas": [
+        {
+          "label": "ঢাল m = (y₂-y₁)/(x₂-x₁)",
+          "expr": "x₂!==x₁?((y₂-y₁)/(x₂-x₁)).toFixed(3):\"অসংজ্ঞায়িত (উল্লম্ব)\""
+        },
+        {
+          "label": "দূরত্ব",
+          "expr": "Math.sqrt(Math.pow(x₂-x₁,2)+Math.pow(y₂-y₁,2)).toFixed(3)"
+        },
+        {
+          "label": "মধ্যবিন্দু",
+          "expr": "\"(\"+((x₁+x₂)/2).toFixed(1)+\", \"+((y₁+y₂)/2).toFixed(1)+\")\""
+        }
+      ],
+      "hint": "💡 যেকোনো দুটি বিন্দু দিয়ে একটিমাত্র সরলরেখা যায় — এটি স্বতঃসিদ্ধ!"
+    }
   },
   {
     "id": 39,
@@ -6045,7 +7620,43 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       38
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "সম্পূরক ও পূরক কোণ",
+      "sliders": [
+        {
+          "label": "θ",
+          "min": 0,
+          "max": 180,
+          "step": 1,
+          "value": 60
+        }
+      ],
+      "formulas": [
+        {
+          "label": "θ",
+          "expr": "θ+\"°\""
+        },
+        {
+          "label": "সম্পূরক (180°-θ)",
+          "expr": "(180-θ)+\"°\""
+        },
+        {
+          "label": "পূরক (90°-θ)",
+          "expr": "θ<=90?(90-θ)+\"°\":\"θ>90° তাই পূরক নেই\""
+        },
+        {
+          "label": "বিপ্রতীপ কোণ",
+          "expr": "θ+\"° (সর্বদা সমান)\""
+        },
+        {
+          "label": "θ + সম্পূরক =",
+          "expr": "(θ+(180-θ))+\"° = 180° ✓\""
+        }
+      ],
+      "hint": "💡 θ বদলাও — সম্পূরক কোণ সবসময় 180° পূর্ণ করে!"
+    }
   },
   {
     "id": 40,
@@ -6193,7 +7804,16 @@ const LESSONS_DATA = [
     "prereqs": [
       39
     ],
-    "interactive": {"type":"triangle","labels":["P","Q","R"],"showAngles":true,"showSides":true}
+    "interactive": {
+      "type": "triangle",
+      "labels": [
+        "P",
+        "Q",
+        "R"
+      ],
+      "showAngles": true,
+      "showSides": true
+    }
   },
   {
     "id": 41,
@@ -6326,7 +7946,18 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       40
-    ]
+    ],
+    "interactive": {
+      "type": "triangle",
+      "shape": "triangle",
+      "showAngles": true,
+      "showSides": true,
+      "labels": [
+        "P",
+        "Q",
+        "R"
+      ]
+    }
   },
   {
     "id": 42,
@@ -6459,7 +8090,16 @@ const LESSONS_DATA = [
     "prereqs": [
       40
     ],
-    "interactive": {"type":"triangle","labels":["A","B","C"],"showAngles":true,"showSides":true}
+    "interactive": {
+      "type": "triangle",
+      "labels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "showAngles": true,
+      "showSides": true
+    }
   },
   {
     "id": 43,
@@ -6614,7 +8254,17 @@ const LESSONS_DATA = [
     "prereqs": [
       42
     ],
-    "interactive": {"type":"quadrilateral","labels":["A","B","C","D"],"showAngles":true,"showSides":true}
+    "interactive": {
+      "type": "quadrilateral",
+      "labels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "showAngles": true,
+      "showSides": true
+    }
   },
   {
     "id": 44,
@@ -6778,7 +8428,13 @@ const LESSONS_DATA = [
     "prereqs": [
       37
     ],
-    "interactive": {"type":"circle","labels":["O","A"]}
+    "interactive": {
+      "type": "circle",
+      "labels": [
+        "O",
+        "A"
+      ]
+    }
   },
   {
     "id": 45,
@@ -6942,7 +8598,16 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       44
-    ]
+    ],
+    "interactive": {
+      "type": "circle",
+      "shape": "circle",
+      "labels": [
+        "O",
+        "P"
+      ],
+      "title": "জ্যা ও কেন্দ্র — বিন্দু টেনে দেখো"
+    }
   },
   {
     "id": 46,
@@ -7097,7 +8762,12 @@ const LESSONS_DATA = [
     "prereqs": [
       45
     ],
-    "interactive": {"type":"circle","labels":["O","P"]}
+    "interactive": {
+      "type": "angle",
+      "title": "কেন্দ্রীয় কোণ ও পরিধি কোণ",
+      "angle": 60,
+      "showTrig": false
+    }
   },
   {
     "id": 47,
@@ -7246,7 +8916,42 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       46
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "চক্রীয় চতুর্ভুজ: বিপরীত কোণের যোগ = 180°",
+      "sliders": [
+        {
+          "label": "∠A",
+          "min": 30,
+          "max": 150,
+          "step": 1,
+          "value": 70
+        },
+        {
+          "label": "∠B",
+          "min": 30,
+          "max": 150,
+          "step": 1,
+          "value": 110
+        }
+      ],
+      "formulas": [
+        {
+          "label": "∠A + ∠C = 180°",
+          "expr": "\"∠C = \"+(180-∠A)+\"° → ∠A+∠C = \"+∠A+\"+\"+(180-∠A)+\" = 180° ✓\""
+        },
+        {
+          "label": "∠B + ∠D = 180°",
+          "expr": "\"∠D = \"+(180-∠B)+\"° → ∠B+∠D = \"+∠B+\"+\"+(180-∠B)+\" = 180° ✓\""
+        },
+        {
+          "label": "চারটি কোণের যোগ",
+          "expr": "(∠A+(180-∠A)+∠B+(180-∠B))+\"° = 360° ✓\""
+        }
+      ],
+      "hint": "💡 চক্রীয় চতুর্ভুজে বিপরীত কোণ জোড়া সবসময় 180°!"
+    }
   },
   {
     "id": 48,
@@ -7411,6 +9116,44 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       47
+    ],
+    "interactive": [
+      {
+        "type": "circle",
+        "shape": "circle",
+        "labels": [
+          "O",
+          "P"
+        ]
+      },
+      {
+        "type": "slider",
+        "title": "স্পর্শক উপপাদ্য: স্পর্শক ⊥ ব্যাসার্ধ (90°)",
+        "sliders": [
+          {
+            "label": "r",
+            "min": 20,
+            "max": 100,
+            "step": 5,
+            "value": 50
+          }
+        ],
+        "formulas": [
+          {
+            "label": "ব্যাসার্ধ",
+            "expr": "r"
+          },
+          {
+            "label": "স্পর্শকের সাথে কোণ",
+            "expr": "\"90° (সর্বদা সমকোণ ✓)\""
+          },
+          {
+            "label": "স্পর্শকের দৈর্ঘ্য (d=80 থেকে)",
+            "expr": "Math.sqrt(80*80-r*r).toFixed(1)+\" (পিথাগোরাস)\""
+          }
+        ],
+        "hint": "💡 স্পর্শক সবসময় ব্যাসার্ধের সাথে 90° কোণ করে!"
+      }
     ]
   },
   {
@@ -7581,7 +9324,15 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       48
-    ]
+    ],
+    "interactive": {
+      "type": "circle",
+      "shape": "circle",
+      "labels": [
+        "O",
+        "A"
+      ]
+    }
   },
   {
     "id": 50,
@@ -7730,7 +9481,11 @@ const LESSONS_DATA = [
     "prereqs": [
       40
     ],
-    "interactive": {"type":"angle","angle":45,"showTrig":true}
+    "interactive": {
+      "type": "angle",
+      "angle": 45,
+      "showTrig": true
+    }
   },
   {
     "id": 51,
@@ -7890,7 +9645,11 @@ const LESSONS_DATA = [
     "prereqs": [
       50
     ],
-    "interactive": {"type":"angle","angle":30,"showTrig":true}
+    "interactive": {
+      "type": "angle",
+      "angle": 30,
+      "showTrig": true
+    }
   },
   {
     "id": 52,
@@ -8045,7 +9804,11 @@ const LESSONS_DATA = [
     "prereqs": [
       51
     ],
-    "interactive": {"type":"angle","angle":60,"showTrig":true}
+    "interactive": {
+      "type": "angle",
+      "angle": 60,
+      "showTrig": true
+    }
   },
   {
     "id": 53,
@@ -8193,6 +9956,49 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       52
+    ],
+    "interactive": [
+      {
+        "type": "angle",
+        "angle": 45,
+        "showTrig": true
+      },
+      {
+        "type": "slider",
+        "title": "ত্রিকোণমিতিক অভেদ যাচাই",
+        "sliders": [
+          {
+            "label": "θ",
+            "min": 1,
+            "max": 89,
+            "step": 1,
+            "value": 45
+          }
+        ],
+        "formulas": [
+          {
+            "label": "sin²θ + cos²θ",
+            "expr": "(Math.pow(Math.sin(θ*Math.PI/180),2)+Math.pow(Math.cos(θ*Math.PI/180),2)).toFixed(6)"
+          },
+          {
+            "label": "= 1? ✓",
+            "expr": "\"সবসময় 1! (পিথাগোরীয় অভেদ)\""
+          },
+          {
+            "label": "sec²θ - tan²θ",
+            "expr": "(Math.pow(1/Math.cos(θ*Math.PI/180),2)-Math.pow(Math.tan(θ*Math.PI/180),2)).toFixed(6)"
+          },
+          {
+            "label": "= 1? ✓",
+            "expr": "\"সবসময় 1!\""
+          },
+          {
+            "label": "cosec²θ - cot²θ",
+            "expr": "(Math.pow(1/Math.sin(θ*Math.PI/180),2)-Math.pow(Math.cos(θ*Math.PI/180)/Math.sin(θ*Math.PI/180),2)).toFixed(6)"
+          }
+        ],
+        "hint": "💡 θ যাই হোক — sin²θ+cos²θ = 1 সবসময় সত্য!"
+      }
     ]
   },
   {
@@ -8331,7 +10137,47 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       53
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "বিশেষ কোণের মান তুলনা",
+      "sliders": [
+        {
+          "label": "θ",
+          "min": 0,
+          "max": 90,
+          "step": 15,
+          "value": 30
+        }
+      ],
+      "formulas": [
+        {
+          "label": "sin θ",
+          "expr": "Math.sin(θ*Math.PI/180).toFixed(4)"
+        },
+        {
+          "label": "cos θ",
+          "expr": "Math.cos(θ*Math.PI/180).toFixed(4)"
+        },
+        {
+          "label": "tan θ",
+          "expr": "θ===90?\"∞\":Math.tan(θ*Math.PI/180).toFixed(4)"
+        },
+        {
+          "label": "sin 30°=½?",
+          "expr": "Math.sin(30*Math.PI/180).toFixed(4)+\" (= 0.5 ✓)\""
+        },
+        {
+          "label": "cos 60°=½?",
+          "expr": "Math.cos(60*Math.PI/180).toFixed(4)+\" (= 0.5 ✓)\""
+        },
+        {
+          "label": "tan 45°=1?",
+          "expr": "Math.tan(45*Math.PI/180).toFixed(4)+\" (= 1 ✓)\""
+        }
+      ],
+      "hint": "💡 0°,30°,45°,60°,90° — এই বিশেষ কোণের মান মুখস্থ রাখো!"
+    }
   },
   {
     "id": 55,
@@ -8468,7 +10314,14 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       51
-    ]
+    ],
+    "interactive": {
+      "type": "heightDistance",
+      "angle": 30,
+      "height": 50,
+      "objectLabel": "ভবন",
+      "title": "উন্নতি কোণ — কোণ বদলাও ও উচ্চতা দেখো"
+    }
   },
   {
     "id": 56,
@@ -8640,6 +10493,50 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       55
+    ],
+    "interactive": [
+      {
+        "type": "heightDistance",
+        "angle": 45,
+        "height": 60,
+        "objectLabel": "মিনার",
+        "title": "উচ্চতা নির্ণয়"
+      },
+      {
+        "type": "slider",
+        "title": "tan θ দিয়ে উচ্চতা নির্ণয়",
+        "sliders": [
+          {
+            "label": "θ",
+            "min": 10,
+            "max": 80,
+            "step": 1,
+            "value": 30
+          },
+          {
+            "label": "d",
+            "min": 10,
+            "max": 200,
+            "step": 5,
+            "value": 100
+          }
+        ],
+        "formulas": [
+          {
+            "label": "tan θ",
+            "expr": "Math.tan(θ*Math.PI/180).toFixed(4)"
+          },
+          {
+            "label": "উচ্চতা h = d×tan θ",
+            "expr": "(d*Math.tan(θ*Math.PI/180)).toFixed(2)"
+          },
+          {
+            "label": "অতিভুজ = d/cos θ",
+            "expr": "(d/Math.cos(θ*Math.PI/180)).toFixed(2)"
+          }
+        ],
+        "hint": "💡 দূরত্ব ও কোণ জানলেই উচ্চতা বের করা যায়!"
+      }
     ]
   },
   {
@@ -8803,6 +10700,60 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       13
+    ],
+    "interactive": [
+      {
+        "type": "proportionBar",
+        "pairs": [
+          {
+            "a": 2,
+            "b": 3
+          },
+          {
+            "a": 4,
+            "b": 6
+          }
+        ],
+        "labels": [
+          "a:b",
+          "c:d"
+        ]
+      },
+      {
+        "type": "slider",
+        "title": "অনুপাত এক্সপ্লোরার",
+        "sliders": [
+          {
+            "label": "a",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "value": 4
+          },
+          {
+            "label": "b",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "value": 6
+          }
+        ],
+        "formulas": [
+          {
+            "label": "a:b",
+            "expr": "a+\":\"+b"
+          },
+          {
+            "label": "সরলীকৃত",
+            "expr": "(() => { let g=a; let h=b; while(h){let t=h;h=g%h;g=t;} return (a/g)+\":\"+(b/g); })()"
+          },
+          {
+            "label": "ভগ্নাংশ a/b",
+            "expr": "(a/b).toFixed(4)"
+          }
+        ],
+        "hint": "💡 অনুপাত সরলীকরণ: উভয়কে গসাগু দিয়ে ভাগ করো!"
+      }
     ]
   },
   {
@@ -8954,7 +10905,42 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       57
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "ক্রমিক সমানুপাত: a:b = b:c → b²=ac",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 4
+        },
+        {
+          "label": "c",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 9
+        }
+      ],
+      "formulas": [
+        {
+          "label": "b (মধ্যসমানুপাতী) = √(ac)",
+          "expr": "Math.sqrt(a*c).toFixed(3)"
+        },
+        {
+          "label": "b² = ac?",
+          "expr": "Math.abs(a*c-Math.pow(Math.sqrt(a*c),2))<0.01?\"✓ b²=\"+Math.round(a*c)+\" = a×c\":\"✗\""
+        },
+        {
+          "label": "a:b:c",
+          "expr": "a+\":\"+Math.sqrt(a*c).toFixed(1)+\":\"+c"
+        }
+      ],
+      "hint": "💡 ক্রমিক সমানুপাতে মধ্যপদ = √(প্রথম×তৃতীয়)"
+    }
   },
   {
     "id": 59,
@@ -9111,7 +11097,49 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       58
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "সমানুপাত: বাস্তব সমস্যা",
+      "sliders": [
+        {
+          "label": "মূল্য",
+          "min": 10,
+          "max": 500,
+          "step": 10,
+          "value": 100
+        },
+        {
+          "label": "পরিমাণ",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 5
+        },
+        {
+          "label": "নতুন_পরিমাণ",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "value": 12
+        }
+      ],
+      "formulas": [
+        {
+          "label": "একক মূল্য",
+          "expr": "(মূল্য/পরিমাণ).toFixed(2)"
+        },
+        {
+          "label": "নতুন মূল্য",
+          "expr": "(মূল্য/পরিমাণ*নতুন_পরিমাণ).toFixed(2)"
+        },
+        {
+          "label": "অনুপাত",
+          "expr": "পরিমাণ+\":\"+নতুন_পরিমাণ+\" = \"+মূল্য+\":\"+(মূল্য/পরিমাণ*নতুন_পরিমাণ).toFixed(0)"
+        }
+      ],
+      "hint": "💡 একক মূল্য বের করো → যেকোনো পরিমাণের দাম বের করো!"
+    }
   },
   {
     "id": 60,
@@ -9276,7 +11304,73 @@ const LESSONS_DATA = [
     "prereqs": [
       31
     ],
-    "interactive": {"type":"graph","equations":["y = 2*x + 1","y = -x + 7"],"xRange":[-2,8],"yRange":[-2,10],"points":[{"x":2,"y":5,"label":"ছেদবিন্দু (2,5)","color":"#FF6B6B"}]}
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "সহসমীকরণ: দুটি সমীকরণের সাধারণ সমাধান",
+        "sliders": [
+          {
+            "label": "x",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": 2
+          },
+          {
+            "label": "y",
+            "min": -10,
+            "max": 10,
+            "step": 1,
+            "value": 3
+          }
+        ],
+        "formulas": [
+          {
+            "label": "2x + y",
+            "expr": "2*x+y"
+          },
+          {
+            "label": "= 7?",
+            "expr": "2*x+y===7?\"✓\":\"✗ \"+(2*x+y)+\"≠7\""
+          },
+          {
+            "label": "x - y",
+            "expr": "x-y"
+          },
+          {
+            "label": "= -1?",
+            "expr": "x-y===-1?\"✓\":\"✗ \"+(x-y)+\"≠-1\""
+          },
+          {
+            "label": "উভয় সমীকরণ সিদ্ধ?",
+            "expr": "(2*x+y===7&&x-y===-1)?\"✓ x=\"+x+\", y=\"+y+\" সমাধান!\":\"✗ এখনো মেলেনি\""
+          }
+        ],
+        "hint": "💡 x,y বদলাও — একই সাথে দুটো সমীকরণ মেলানোর চেষ্টা করো!"
+      },
+      {
+        "type": "graph",
+        "equations": [
+          "y = -2x+7",
+          "y = x+1"
+        ],
+        "xRange": [
+          -2,
+          6
+        ],
+        "yRange": [
+          -2,
+          10
+        ],
+        "points": [
+          {
+            "x": 2,
+            "y": 3,
+            "label": "সমাধান (2,3)"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 61,
@@ -9435,7 +11529,74 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       60
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "প্রতিস্থাপন ও নিরসন পদ্ধতি",
+      "sliders": [
+        {
+          "label": "a₁",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "value": 2
+        },
+        {
+          "label": "b₁",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "value": 1
+        },
+        {
+          "label": "c₁",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": 7
+        },
+        {
+          "label": "a₂",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "value": 1
+        },
+        {
+          "label": "b₂",
+          "min": -5,
+          "max": -1,
+          "step": 1,
+          "value": -1
+        },
+        {
+          "label": "c₂",
+          "min": -10,
+          "max": 10,
+          "step": 1,
+          "value": -1
+        }
+      ],
+      "formulas": [
+        {
+          "label": "সমীকরণ ১",
+          "expr": "a₁+\"x+\"+b₁+\"y=\"+c₁"
+        },
+        {
+          "label": "সমীকরণ ২",
+          "expr": "a₂+\"x+\"+b₂+\"y=\"+c₂"
+        },
+        {
+          "label": "x =",
+          "expr": "((c₁*b₂-c₂*b₁)/(a₁*b₂-a₂*b₁)).toFixed(3)"
+        },
+        {
+          "label": "y =",
+          "expr": "((a₁*c₂-a₂*c₁)/(a₁*b₂-a₂*b₁)).toFixed(3)"
+        }
+      ],
+      "hint": "💡 ক্র্যামারের সূত্র: x=(c₁b₂-c₂b₁)/(a₁b₂-a₂b₁)"
+    }
   },
   {
     "id": 62,
@@ -9593,7 +11754,30 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       61
-    ]
+    ],
+    "interactive": {
+      "type": "graph",
+      "title": "সহসমীকরণ: দুই রেখার ছেদবিন্দু",
+      "equations": [
+        "y = x+1",
+        "y = -x+5"
+      ],
+      "xRange": [
+        -2,
+        8
+      ],
+      "yRange": [
+        -2,
+        8
+      ],
+      "points": [
+        {
+          "x": 2,
+          "y": 3,
+          "label": "সমাধান"
+        }
+      ]
+    }
   },
   {
     "id": 63,
@@ -9751,7 +11935,29 @@ const LESSONS_DATA = [
     "prereqs": [
       61
     ],
-    "interactive": {"type":"graph","equations":["y = x + 1","y = -0.5*x + 4"],"xRange":[-3,8],"yRange":[-2,8],"points":[{"x":2,"y":3,"label":"সমাধান (2,3)","color":"#FF6B6B"}]}
+    "interactive": {
+      "type": "graph",
+      "equations": [
+        "y = x + 1",
+        "y = -0.5*x + 4"
+      ],
+      "xRange": [
+        -3,
+        8
+      ],
+      "yRange": [
+        -2,
+        8
+      ],
+      "points": [
+        {
+          "x": 2,
+          "y": 3,
+          "label": "সমাধান (2,3)",
+          "color": "#FF6B6B"
+        }
+      ]
+    }
   },
   {
     "id": 64,
@@ -9903,7 +12109,42 @@ const LESSONS_DATA = [
     "prereqs": [
       13
     ],
-    "interactive": {"type":"graph","equations":["y = 3*x + 2"],"xRange":[0,8],"yRange":[0,28],"points":[{"x":1,"y":5,"label":"a₁=5"},{"x":2,"y":8,"label":"a₂=8"},{"x":3,"y":11,"label":"a₃=11"},{"x":4,"y":14,"label":"a₄=14"}]}
+    "interactive": {
+      "type": "graph",
+      "equations": [
+        "y = 3*x + 2"
+      ],
+      "xRange": [
+        0,
+        8
+      ],
+      "yRange": [
+        0,
+        28
+      ],
+      "points": [
+        {
+          "x": 1,
+          "y": 5,
+          "label": "a₁=5"
+        },
+        {
+          "x": 2,
+          "y": 8,
+          "label": "a₂=8"
+        },
+        {
+          "x": 3,
+          "y": 11,
+          "label": "a₃=11"
+        },
+        {
+          "x": 4,
+          "y": 14,
+          "label": "a₄=14"
+        }
+      ]
+    }
   },
   {
     "id": 65,
@@ -10039,6 +12280,69 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       64
+    ],
+    "interactive": [
+      {
+        "type": "slider",
+        "title": "জ্যামিতিক ধারা: a, ar, ar², ar³...",
+        "visual": "exponent",
+        "sliders": [
+          {
+            "label": "a",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "value": 2
+          },
+          {
+            "label": "r",
+            "min": -3,
+            "max": 3,
+            "step": 0.5,
+            "value": 2
+          },
+          {
+            "label": "n",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "value": 5
+          }
+        ],
+        "formulas": [
+          {
+            "label": "n-তম পদ = a×r^(n-1)",
+            "expr": "(a*Math.pow(r,n-1)).toFixed(2)"
+          },
+          {
+            "label": "যোগফল Sₙ",
+            "expr": "r===1?a*n+\" (r=1)\":((a*(Math.pow(r,n)-1))/(r-1)).toFixed(2)"
+          },
+          {
+            "label": "অনুপাত r",
+            "expr": "r"
+          },
+          {
+            "label": "প্রথম 5 পদ",
+            "expr": "[0,1,2,3,4].map(i=>(a*Math.pow(r,i)).toFixed(1)).join(\", \")"
+          }
+        ],
+        "hint": "💡 r>1: ধারা বাড়ে, 0<r<1: ধারা কমে, r<0: চিহ্ন বদলায়!"
+      },
+      {
+        "type": "graph",
+        "equations": [
+          "y = 2^x"
+        ],
+        "xRange": [
+          0,
+          6
+        ],
+        "yRange": [
+          0,
+          70
+        ]
+      }
     ]
   },
   {
@@ -10185,7 +12489,49 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       65
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "ধারার সূত্র বাছাই",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "value": 3
+        },
+        {
+          "label": "d",
+          "min": -5,
+          "max": 5,
+          "step": 1,
+          "value": 4
+        },
+        {
+          "label": "n",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "value": 8
+        }
+      ],
+      "formulas": [
+        {
+          "label": "গাণিতিক: n-তম পদ = a+(n-1)d",
+          "expr": "a+(n-1)*d"
+        },
+        {
+          "label": "গাণিতিক: যোগফল = n/2×(2a+(n-1)d)",
+          "expr": "(n/2*(2*a+(n-1)*d)).toFixed(1)"
+        },
+        {
+          "label": "ধারা:",
+          "expr": "[0,1,2,3,4].map(i=>a+i*d).join(\", \")+\"...\""
+        }
+      ],
+      "hint": "💡 পার্থক্য (d) ধ্রুবক হলে → গাণিতিক ধারা!"
+    }
   },
   {
     "id": 67,
@@ -10317,7 +12663,12 @@ const LESSONS_DATA = [
     "prereqs": [
       40,
       57
-    ]
+    ],
+    "interactive": {
+      "type": "similarTriangle",
+      "ratio": 1.5,
+      "title": "ত্রিভুজের অনুপাত জ্যামিতি — অনুপাত বদলাও"
+    }
   },
   {
     "id": 68,
@@ -10466,6 +12817,52 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       67
+    ],
+    "interactive": [
+      {
+        "type": "similarTriangle",
+        "ratio": 2,
+        "title": "সদৃশতা: AA / SSS / SAS"
+      },
+      {
+        "type": "slider",
+        "title": "সদৃশতা অনুপাত",
+        "sliders": [
+          {
+            "label": "k",
+            "min": 0.5,
+            "max": 3,
+            "step": 0.1,
+            "value": 1.5
+          },
+          {
+            "label": "a",
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "value": 5
+          }
+        ],
+        "formulas": [
+          {
+            "label": "ছোট ত্রিভুজের বাহু a",
+            "expr": "a"
+          },
+          {
+            "label": "বড় ত্রিভুজের বাহু ka",
+            "expr": "(k*a).toFixed(1)"
+          },
+          {
+            "label": "ক্ষেত্রফলের অনুপাত k²",
+            "expr": "(k*k).toFixed(2)"
+          },
+          {
+            "label": "ছোটের ক্ষেত্রফল 1 হলে বড়ের",
+            "expr": "(k*k).toFixed(2)"
+          }
+        ],
+        "hint": "💡 বাহুর অনুপাত k হলে ক্ষেত্রফলের অনুপাত k²!"
+      }
     ]
   },
   {
@@ -10615,7 +13012,43 @@ const LESSONS_DATA = [
     "difficulty": "intermediate",
     "prereqs": [
       67
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "প্রতিসমতা: রেখা ও ঘূর্ণন",
+      "sliders": [
+        {
+          "label": "বাহু",
+          "min": 3,
+          "max": 8,
+          "step": 1,
+          "value": 4
+        }
+      ],
+      "formulas": [
+        {
+          "label": "সুষম বহুভুজের বাহু",
+          "expr": "বাহু"
+        },
+        {
+          "label": "প্রতিসমতা রেখার সংখ্যা",
+          "expr": "বাহু"
+        },
+        {
+          "label": "ঘূর্ণন প্রতিসমতার ক্রম",
+          "expr": "বাহু"
+        },
+        {
+          "label": "ঘূর্ণন কোণ",
+          "expr": "(360/বাহু).toFixed(1)+\"°\""
+        },
+        {
+          "label": "অন্তঃকোণের মাপ",
+          "expr": "((বাহু-2)*180/বাহু).toFixed(1)+\"°\""
+        }
+      ],
+      "hint": "💡 সুষম n-ভুজে n টি প্রতিসমতা রেখা ও n ক্রমের ঘূর্ণন প্রতিসমতা!"
+    }
   },
   {
     "id": 70,
@@ -10748,6 +13181,54 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       40
+    ],
+    "interactive": [
+      {
+        "type": "triangle",
+        "shape": "triangle",
+        "showAngles": true,
+        "showSides": true,
+        "labels": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "type": "slider",
+        "title": "সমান ভূমি ও উচ্চতা = সমান ক্ষেত্রফল",
+        "sliders": [
+          {
+            "label": "ভূমি",
+            "min": 5,
+            "max": 20,
+            "step": 1,
+            "value": 10
+          },
+          {
+            "label": "উচ্চতা",
+            "min": 3,
+            "max": 15,
+            "step": 1,
+            "value": 6
+          }
+        ],
+        "formulas": [
+          {
+            "label": "ত্রিভুজের ক্ষেত্রফল = ½×ভূমি×উচ্চতা",
+            "expr": "(0.5*ভূমি*উচ্চতা).toFixed(1)"
+          },
+          {
+            "label": "সামান্তরিকের ক্ষেত্রফল = ভূমি×উচ্চতা",
+            "expr": "(ভূমি*উচ্চতা).toFixed(1)"
+          },
+          {
+            "label": "ত্রিভুজ = সামান্তরিকের অর্ধেক?",
+            "expr": "(0.5*ভূমি*উচ্চতা).toFixed(1)+\" = \"+(ভূমি*উচ্চতা/2).toFixed(1)+\" ✓\""
+          }
+        ],
+        "hint": "💡 একই ভূমি ও উচ্চতায় সব ত্রিভুজের ক্ষেত্রফল সমান!"
+      }
     ]
   },
   {
@@ -10897,7 +13378,49 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       70
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "ক্ষেত্রফল উপপাদ্যের প্রয়োগ",
+      "sliders": [
+        {
+          "label": "a",
+          "min": 3,
+          "max": 20,
+          "step": 1,
+          "value": 8
+        },
+        {
+          "label": "b",
+          "min": 3,
+          "max": 20,
+          "step": 1,
+          "value": 6
+        },
+        {
+          "label": "h",
+          "min": 2,
+          "max": 15,
+          "step": 1,
+          "value": 5
+        }
+      ],
+      "formulas": [
+        {
+          "label": "সামান্তরিক ক্ষেত্রফল = a×h",
+          "expr": "(a*h).toFixed(1)"
+        },
+        {
+          "label": "ত্রিভুজ ক্ষেত্রফল = ½×a×h",
+          "expr": "(0.5*a*h).toFixed(1)"
+        },
+        {
+          "label": "ট্রাপিজিয়াম = ½×(a+b)×h",
+          "expr": "(0.5*(a+b)*h).toFixed(1)"
+        }
+      ],
+      "hint": "💡 সূত্র: সামান্তরিক = ভূমি×উচ্চতা, ত্রিভুজ = অর্ধেক!"
+    }
   },
   {
     "id": 72,
@@ -11047,7 +13570,16 @@ const LESSONS_DATA = [
     "prereqs": [
       40
     ],
-    "interactive": {"type":"triangle","labels":["A","B","C"],"showSides":true,"showAngles":false}
+    "interactive": {
+      "type": "triangle",
+      "labels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "showSides": true,
+      "showAngles": false
+    }
   },
   {
     "id": 73,
@@ -11197,7 +13729,17 @@ const LESSONS_DATA = [
     "prereqs": [
       72
     ],
-    "interactive": {"type":"rectangle","labels":["A","B","C","D"],"showSides":true,"showAngles":true}
+    "interactive": {
+      "type": "rectangle",
+      "labels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "showSides": true,
+      "showAngles": true
+    }
   },
   {
     "id": 74,
@@ -11344,7 +13886,13 @@ const LESSONS_DATA = [
       44,
       73
     ],
-    "interactive": {"type":"circle","labels":["O","A"]}
+    "interactive": {
+      "type": "circle",
+      "labels": [
+        "O",
+        "A"
+      ]
+    }
   },
   {
     "id": 75,
@@ -11503,7 +14051,54 @@ const LESSONS_DATA = [
     "difficulty": "advanced",
     "prereqs": [
       74
-    ]
+    ],
+    "interactive": {
+      "type": "slider",
+      "title": "ত্রিমাত্রিক আকৃতি",
+      "sliders": [
+        {
+          "label": "r",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "value": 5
+        },
+        {
+          "label": "h",
+          "min": 1,
+          "max": 15,
+          "step": 1,
+          "value": 8
+        }
+      ],
+      "formulas": [
+        {
+          "label": "সিলিন্ডার আয়তন = πr²h",
+          "expr": "(Math.PI*r*r*h).toFixed(1)"
+        },
+        {
+          "label": "সিলিন্ডার পৃষ্ঠ = 2πr(r+h)",
+          "expr": "(2*Math.PI*r*(r+h)).toFixed(1)"
+        },
+        {
+          "label": "শঙ্কু আয়তন = ⅓πr²h",
+          "expr": "(Math.PI*r*r*h/3).toFixed(1)"
+        },
+        {
+          "label": "গোলক আয়তন = ⁴⁄₃πr³",
+          "expr": "(4*Math.PI*r*r*r/3).toFixed(1)"
+        },
+        {
+          "label": "গোলক পৃষ্ঠ = 4πr²",
+          "expr": "(4*Math.PI*r*r).toFixed(1)"
+        },
+        {
+          "label": "ঘনক আয়তন (বাহু=r)",
+          "expr": "Math.pow(r,3).toFixed(1)"
+        }
+      ],
+      "hint": "💡 r ও h বদলাও — দেখো আয়তন কিভাবে পাল্টায়!"
+    }
   },
   {
     "id": 76,
@@ -11653,7 +14248,31 @@ const LESSONS_DATA = [
     "prereqs": [
       2
     ],
-    "interactive": {"type":"bar","data":[{"label":"গণিত","value":45},{"label":"বাংলা","value":38},{"label":"ইংরেজি","value":42},{"label":"বিজ্ঞান","value":35},{"label":"সমাজ","value":30}]}
+    "interactive": {
+      "type": "bar",
+      "data": [
+        {
+          "label": "গণিত",
+          "value": 45
+        },
+        {
+          "label": "বাংলা",
+          "value": 38
+        },
+        {
+          "label": "ইংরেজি",
+          "value": 42
+        },
+        {
+          "label": "বিজ্ঞান",
+          "value": 35
+        },
+        {
+          "label": "সমাজ",
+          "value": 30
+        }
+      ]
+    }
   },
   {
     "id": 77,
@@ -11799,7 +14418,35 @@ const LESSONS_DATA = [
     "prereqs": [
       76
     ],
-    "interactive": {"type":"bar","data":[{"label":"১০-২০","value":5},{"label":"২০-৩০","value":8},{"label":"৩০-৪০","value":15},{"label":"৪০-৫০","value":12},{"label":"৫০-৬০","value":7},{"label":"৬০-৭০","value":3}]}
+    "interactive": {
+      "type": "bar",
+      "data": [
+        {
+          "label": "১০-২০",
+          "value": 5
+        },
+        {
+          "label": "২০-৩০",
+          "value": 8
+        },
+        {
+          "label": "৩০-৪০",
+          "value": 15
+        },
+        {
+          "label": "৪০-৫০",
+          "value": 12
+        },
+        {
+          "label": "৫০-৬০",
+          "value": 7
+        },
+        {
+          "label": "৬০-৭০",
+          "value": 3
+        }
+      ]
+    }
   },
   {
     "id": 78,
@@ -11959,6 +14606,30 @@ const LESSONS_DATA = [
     "prereqs": [
       77
     ],
-    "interactive": {"type":"pie","data":[{"label":"গণিত","value":30},{"label":"বাংলা","value":25},{"label":"ইংরেজি","value":20},{"label":"বিজ্ঞান","value":15},{"label":"সমাজ","value":10}]}
+    "interactive": {
+      "type": "pie",
+      "data": [
+        {
+          "label": "গণিত",
+          "value": 30
+        },
+        {
+          "label": "বাংলা",
+          "value": 25
+        },
+        {
+          "label": "ইংরেজি",
+          "value": 20
+        },
+        {
+          "label": "বিজ্ঞান",
+          "value": 15
+        },
+        {
+          "label": "সমাজ",
+          "value": 10
+        }
+      ]
+    }
   }
 ];

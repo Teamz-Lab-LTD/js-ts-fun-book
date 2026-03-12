@@ -1518,6 +1518,27 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 .interactive-area__btn.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
 .interactive-area__info { font-size:var(--text-sm); color:var(--text-muted); margin-left:auto; }
 
+/* Interactive info panel — live formulas & values */
+.interactive-info-panel { padding:0.7rem 0.9rem; border-top:1px solid var(--border); display:flex; flex-wrap:wrap; gap:0.4rem 1.2rem; font-family:var(--font); align-items:baseline; }
+.info-formula { width:100%; font-size:var(--text-sm); color:var(--heading); font-weight:600; padding:0.2rem 0; letter-spacing:0.02em; }
+.info-value { font-size:var(--text-sm); color:var(--text); display:flex; gap:0.3rem; }
+.info-label { color:var(--text-muted); font-weight:500; }
+.info-num { font-weight:700; font-variant-numeric:tabular-nums; }
+.info-hint { width:100%; font-size:var(--text-xs); color:var(--text-muted); font-style:italic; padding-top:0.2rem; }
+
+/* Slider explorer */
+.slider-explorer { padding:0.5rem; }
+.slider-controls { display:flex; flex-direction:column; gap:0.5rem; padding:0.5rem 0.5rem 0.8rem; }
+.slider-row { display:flex; align-items:center; gap:0.6rem; }
+.slider-label { font-family:var(--font); font-size:var(--text-sm); font-weight:600; color:var(--text); min-width:90px; white-space:nowrap; }
+.slider-val { color:var(--heading); font-weight:700; font-variant-numeric:tabular-nums; }
+.slider-input { flex:1; accent-color:var(--accent); height:6px; cursor:pointer; }
+.slider-formulas { padding:0.5rem 0.5rem; display:flex; flex-wrap:wrap; gap:0.3rem 1rem; }
+.slider-formula-row { font-family:var(--font); font-size:var(--text-sm); color:var(--text); display:flex; gap:0.3rem; align-items:baseline; }
+.slider-formula-label { font-weight:500; color:var(--text-muted); }
+.slider-formula-result { font-weight:700; color:var(--heading); font-variant-numeric:tabular-nums; }
+.slider-visual { display:flex; justify-content:center; padding:0.5rem; }
+
 /* Step-by-step solution revealer */
 .step-reveal { margin:0; }
 .step-reveal__progress { display:flex; gap:0.3rem; padding:0 0 0.8rem; flex-wrap:wrap; }
@@ -3282,8 +3303,9 @@ function render(){
     h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('challenge')}</h4><p>${l.challenge}</p></div>`;
   }
 
-  // Typing Challenge
-  if(l.code&&l.code.length<500){
+  // Typing Challenge (skip for non-code courses like math — controlled by config)
+  const typingEnabled=!(COURSE_CONFIG.disableTypingChallenge);
+  if(typingEnabled&&l.code&&l.code.length<500){
     if(typingActive){
       const targetCode=l.code.trim();
       h+=`<div class="typing-challenge reveal"><div class="typing-header"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M6 21h12"/><path d="M12 17v4"/></svg> Type the Code</span><div class="typing-stats" id="typing-stats">0 / ${targetCode.length} chars</div></div><div class="typing-progress"><div class="typing-progress-fill" id="typing-progress-fill" style="width:0%"></div></div><div class="typing-area"><div class="typing-target notranslate">${escHtml(targetCode)}</div><textarea class="typing-input" id="typing-input" oninput="checkTyping()" spellcheck="false" autocomplete="off" placeholder="Start typing..."></textarea></div><div class="typing-result" id="typing-result"></div></div>`;
@@ -4821,6 +4843,11 @@ currentLang=normalizeLang(currentLang);
 const urlLangParam=new URLSearchParams(location.search).get('lang');
 if(urlLangParam){
   currentLang=normalizeLang(urlLangParam);
+}
+// Course default language (e.g. Bangla for math course) — apply only on first visit
+if(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.defaultLang&&currentLang==='en'&&!urlLangParam){
+  const savedLang=localStorage.getItem(LS_PREFIX+'lang_set');
+  if(!savedLang){currentLang=normalizeLang(COURSE_CONFIG.defaultLang);localStorage.setItem(LS_PREFIX+'lang_set','1');}
 }
 trackSessionStart();
 initTheme();

@@ -6,6 +6,10 @@ const COURSE_CONFIG = {
   // Plugins — loaded after data.js (SOLID: inject course-specific features from outside)
   plugins: ['interactive.js'],
 
+  // Course-specific features
+  defaultLang: 'bn',                // Bangla by default (only this course)
+  disableTypingChallenge: true,     // No "Type the Code" — this is math, not coding
+
   // Course identity
   title: 'নবম শ্রেণির গণিত — শূন্য থেকে পরীক্ষায় ৯৫+',
   subtitle: 'বাংলাদেশ NCTB সিলেবাস — <strong>৭৮টি সহজ পাঠ</strong> — দুর্বল ভিত্তি থেকে পরীক্ষায় সেরা নম্বর | বিনামূল্যে, সাইনআপ ছাড়া | by Teamz Lab',
