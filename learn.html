@@ -2184,7 +2184,33 @@ const UI_STRINGS={
     autoSaved:'Auto-saved',
     done:'Done',
     unlockCompleteNextHint:'To unlock **Complete & Next**: answer all quiz questions above and score 80% or higher. Got some wrong? Click **Retake Quiz** above to clear your answers and try again.',
-    unlockCompleteNextTitle:'Answer all quiz questions with 80%+ to unlock. Use Retake Quiz to try again.'
+    unlockCompleteNextTitle:'Answer all quiz questions with 80%+ to unlock. Use Retake Quiz to try again.',
+    thinkDeeper:'Think Deeper',
+    elaborativeInterrogation:'Elaborative Interrogation',
+    thinkDeeperDefaultQ:'Imagine you\'re building a real app (like Instagram or a to-do list). Why would you need <strong>{title}</strong>? What problems would you face WITHOUT it?',
+    everydayAnalogy:'Everyday Analogy:',
+    whyItMatters:'Why It Matters:',
+    realExample:'Real Example:',
+    realExampleText:'Let\'s say you\'re building a social media app. <strong>{title}</strong> helps you handle the {keyPoints} part. Without it, your app would be buggy, hard to maintain, or simply wouldn\'t work as users expect.',
+    keyTakeaways:'Key Takeaways:',
+    howItConnects:'How It Connects:',
+    howItConnectsText:'This topic connects to everything you\'ll learn next. Master <strong>{title}</strong> and the upcoming lessons will click much faster — each concept builds on the ones before it, like LEGO blocks!',
+    tryAnswerFirst:'Try to answer this yourself first, then reveal the explanation below!',
+    showExplanation:'Show Explanation',
+    hideExplanation:'Hide Explanation',
+    flashcardOn:'Card View',
+    flashcardOff:'Flashcard Mode',
+    flashcardOnHint:'Click cards to flip',
+    flashcardOffHint:'Switch to interactive flashcards',
+    pointOf:'Point {n} of {total}',
+    easy:'Easy',
+    hard:'Hard',
+    askAi:'Ask AI',
+    markedEasy:'Marked as easy — you know this!',
+    markedHard:'Marked as hard — will show more often',
+    quizScore:'You got {c}/{t} correct. Mastery target: {p}%.',
+    retakeQuiz:'Retake Quiz',
+    masteryUnlocked:'Mastery unlocked. You can continue.'
   },
   bn:{
     lessonsCompleted:'টি লেসন সম্পন্ন',
@@ -2193,7 +2219,7 @@ const UI_STRINGS={
     funFact:'মজার তথ্য',
     challenge:'চ্যালেঞ্জ',
     quiz:'কুইজ',
-    codeExample:'Code Example',
+    codeExample:'উদাহরণ',
     previous:'পূর্বেরটি',
     completeNext:'সম্পন্ন করে পরেরটিতে যান',
     finish:'শেষ!',
@@ -2205,15 +2231,15 @@ const UI_STRINGS={
     videos:'ভিডিও',
     articles:'আর্টিকেল',
     docs:'ডকুমেন্টেশন',
-    flashcardMode:'Flashcard Mode',
+    flashcardMode:'ফ্ল্যাশকার্ড মোড',
     dashboard:'ড্যাশবোর্ড',
     review:'রিভিউ',
     mix:'মিক্স',
-    getCertificate:'Certificate নিন',
+    getCertificate:'সার্টিফিকেট নিন',
     certTitle:'কোর্স সম্পন্নের সার্টিফিকেট',
     certSubtitle:'এই সার্টিফিকেট নিশ্চিত করে যে',
     certCompleted:'সফলভাবে এই কোর্স সম্পন্ন করেছেন',
-    certCourse:'Free Full-Stack Playbook',
+    certCourse:'নবম শ্রেণি গণিত',
     certLessons:'লেসন',
     certQuizzes:'কুইজ',
     certPoints:'পয়েন্ট',
@@ -2227,29 +2253,55 @@ const UI_STRINGS={
     keepPracticing:'চর্চা চালিয়ে যান!',
     prev:'পূর্বেরটি',
     next:'পরেরটি',
-    eli5:'Explain Like I\'m 5',
+    eli5:'সহজ ভাষায় বুঝাও',
     eli5Label:'সবচেয়ে সহজ ব্যাখ্যা',
-    spotBug:'Bug খুঁজে বের করুন!',
-    spotBugDesc:'এই কোডে কী ভুল আছে খুঁজে পান?',
-    hint:'Hint দেখুন',
+    spotBug:'ভুল খুঁজে বের করো!',
+    spotBugDesc:'এই সমস্যায় কী ভুল আছে খুঁজে বের করো?',
+    hint:'হিন্ট দেখো',
     revealAnswer:'উত্তর দেখুন',
-    walkthrough:'Walkthrough',
-    clickLine:'যেকোনো লাইনে ক্লিক করে ব্যাখ্যা দেখুন',
+    walkthrough:'ধাপে ধাপে ব্যাখ্যা',
+    clickLine:'যেকোনো লাইনে ক্লিক করে ব্যাখ্যা দেখো',
     thinkOfIt:'এভাবে ভাবুন...',
-    conceptFlow:'Concept Flow',
+    conceptFlow:'ধারণার প্রবাহ',
     difficulty:'কঠিনতা',
     prereqLabel:'পূর্বশর্ত',
     beginner:'বিগিনার',
     intermediate:'ইন্টারমিডিয়েট',
     advanced:'অ্যাডভান্সড',
-    skillTree:'স্কিল ট্রি',
+    skillTree:'দক্ষতার গাছ',
     myNotes:'আমার নোট',
     notesSaved:'সংরক্ষিত',
     notesPlaceholder:'এই লেসনের নোট এখানে লিখুন... আপনার ডিভাইসে সংরক্ষিত থাকবে।',
     autoSaved:'অটো-সেভ হয়েছে',
-    done:'Done',
+    done:'হয়ে গেছে',
     unlockCompleteNextHint:'**সম্পন্ন এবং পরবর্তী** আনলক করতে: উপরের সব কুইজের উত্তর দিন এবং ৮০% বা তার বেশি স্কোর করুন। ভুল হয়েছে? আবার চেষ্টা করতে উপরের **কুইজ আবার করুন** ক্লিক করুন।',
-    unlockCompleteNextTitle:'আনলক করতে সব কুইজে ৮০%+ স্কোর করুন। আবার চেষ্টা করতে কুইজ আবার করুন ব্যবহার করুন।'
+    unlockCompleteNextTitle:'আনলক করতে সব কুইজে ৮০%+ স্কোর করুন। আবার চেষ্টা করতে কুইজ আবার করুন ব্যবহার করুন।',
+    thinkDeeper:'গভীরভাবে ভাবো',
+    elaborativeInterrogation:'বিশ্লেষণমূলক চিন্তা',
+    thinkDeeperDefaultQ:'ধরো তুমি একটা রিয়েল প্রজেক্ট বানাচ্ছো। <strong>{title}</strong> কেন দরকার? এটা ছাড়া কী কী সমস্যা হতো বলো তো?',
+    everydayAnalogy:'সহজ উদাহরণ:',
+    whyItMatters:'কেন এটা গুরুত্বপূর্ণ:',
+    realExample:'বাস্তব উদাহরণ:',
+    realExampleText:'ধরো তুমি একটা অ্যাপ বানাচ্ছো। <strong>{title}</strong> তোমাকে {keyPoints} — এই জিনিসগুলো ঠিকভাবে করতে সাহায্য করবে। এটা ছাড়া তোমার কাজ অনেক কঠিন হয়ে যেত!',
+    keyTakeaways:'মূল বিষয়গুলো:',
+    howItConnects:'কীভাবে সব জুড়ে যায়:',
+    howItConnectsText:'এই টপিকটা পরের সব লেসনের সাথে কানেক্টেড। <strong>{title}</strong> ভালোভাবে শিখলে পরের টপিকগুলো পানির মতো সহজ লাগবে — একেকটা ধাপ আগেরটার উপর দাঁড়ায়, ঠিক লেগো ব্লকের মতো!',
+    tryAnswerFirst:'আগে নিজে উত্তর দেওয়ার চেষ্টা করো, তারপর ব্যাখ্যা দেখো!',
+    showExplanation:'ব্যাখ্যা দেখো',
+    hideExplanation:'ব্যাখ্যা লুকাও',
+    flashcardOn:'কার্ড ভিউ',
+    flashcardOff:'ফ্ল্যাশকার্ড মোড',
+    flashcardOnHint:'কার্ডে ক্লিক করে উল্টাও',
+    flashcardOffHint:'ইন্টারেক্টিভ ফ্ল্যাশকার্ডে যাও',
+    pointOf:'পয়েন্ট {n} / {total}',
+    easy:'সহজ',
+    hard:'কঠিন',
+    askAi:'AI-কে জিজ্ঞেস করো',
+    markedEasy:'সহজ হিসেবে চিহ্নিত — তুমি এটা জানো!',
+    markedHard:'কঠিন হিসেবে চিহ্নিত — আরো বেশি দেখাবে',
+    quizScore:'{c}/{t} টা সঠিক। মাস্টারি টার্গেট: {p}%।',
+    retakeQuiz:'কুইজ আবার করো',
+    masteryUnlocked:'মাস্টারি আনলক হয়ে গেছে! পরেরটায় যেতে পারো।'
   }
 };
 function t(key){return (UI_STRINGS[currentLang]||UI_STRINGS.en)[key]||UI_STRINGS.en[key]||key;}
@@ -2627,12 +2679,12 @@ function getQuizExplanation(lessonIdx,quizIdx,picked,ans,isCorrect){
   const q=lesson&&lesson.quiz&&lesson.quiz[quizIdx];
   if(!lesson||!q) return '';
   if(q.explanation) return q.explanation;
-  const correctOpt=q.opts&&q.opts[ans]?q.opts[ans]:'the correct option';
-  const cue=(lesson.points&&lesson.points[quizIdx%lesson.points.length])?lesson.points[quizIdx%lesson.points.length].t:'the lesson key concept';
+  const correctOpt=q.opts&&q.opts[ans]?q.opts[ans]:(currentLang==='bn'?'সঠিক উত্তর':'the correct option');
+  const cue=(lesson.points&&lesson.points[quizIdx%lesson.points.length])?lesson.points[quizIdx%lesson.points.length].t:(currentLang==='bn'?'এই লেসনের মূল বিষয়':'the lesson key concept');
   if(isCorrect){
-    return 'Correct. "'+escHtml(correctOpt)+'" matches '+escHtml(cue)+'.';
+    return currentLang==='bn'?'সঠিক! "'+escHtml(correctOpt)+'" — '+escHtml(cue)+' এর সাথে মিলেছে।':'Correct. "'+escHtml(correctOpt)+'" matches '+escHtml(cue)+'.';
   }
-  return 'Not quite. Correct answer: "'+escHtml(correctOpt)+'". Review '+escHtml(cue)+' and retry.';
+  return currentLang==='bn'?'এটা ঠিক হয়নি। সঠিক উত্তর: "'+escHtml(correctOpt)+'"। '+escHtml(cue)+' আবার দেখো।':'Not quite. Correct answer: "'+escHtml(correctOpt)+'". Review '+escHtml(cue)+' and retry.';
 }
 
 // Seeded shuffle for quiz options — consistent per quiz, randomized across quizzes
@@ -2646,7 +2698,9 @@ function shuffleOpts(opts,ans,seed){
 function getLevel(xp){return Math.floor(xp/100)+1;}
 function getXpInLevel(xp){return xp%100;}
 function getLevelTitle(lvl){
-  const titles=['Newbie','Apprentice','Coder','Developer','Engineer','Architect','Guru','Legend','Master','Grandmaster'];
+  const titlesEn=['Newbie','Apprentice','Coder','Developer','Engineer','Architect','Guru','Legend','Master','Grandmaster'];
+  const titlesBn=['নবীন','শিক্ষানবিশ','গণিতবিদ','দক্ষ','বিশেষজ্ঞ','স্থপতি','গুরু','কিংবদন্তি','মাস্টার','গ্র্যান্ডমাস্টার'];
+  const titles=currentLang==='bn'?titlesBn:titlesEn;
   return titles[Math.min(lvl-1,titles.length-1)];
 }
 function addXp(amount,reason){
@@ -2668,9 +2722,9 @@ function updateXpBar(){
   const el=document.getElementById('xp-level');
   const fill=document.getElementById('xp-fill');
   const txt=document.getElementById('xp-text');
-  if(el) el.textContent=`Lv ${lvl} ${getLevelTitle(lvl)}`;
+  if(el) el.textContent=(currentLang==='bn'?'লে. ':'Lv ')+lvl+' '+getLevelTitle(lvl);
   if(fill) fill.style.width=inLvl+'%';
-  if(txt) txt.textContent=`${inLvl} / 100 XP`;
+  if(txt) txt.textContent=inLvl+' / 100 XP';
 }
 
 // Reading time estimate
@@ -2824,32 +2878,32 @@ function renderDashboard(){
     });
     bookmarkList+='</div>';
   }else{
-    bookmarkList='<div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.5rem">No bookmarks yet. Click the bookmark icon on any lesson.</div>';
+    bookmarkList='<div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.5rem">'+(currentLang==='bn'?'এখনো বুকমার্ক নেই। যেকোনো লেসনে বুকমার্ক আইকনে ক্লিক করো।':'No bookmarks yet. Click the bookmark icon on any lesson.')+'</div>';
   }
 
   document.getElementById('dashboard').innerHTML=`<div class="dashboard">
-    <h2 style="color:var(--heading);font-size:var(--text-h4);margin-bottom:0.3rem">Your Learning Dashboard</h2>
-    <p style="color:var(--text-muted);font-size:var(--text-md)">Track your progress, see your strengths, and plan what to learn next.</p>
+    <h2 style="color:var(--heading);font-size:var(--text-h4);margin-bottom:0.3rem">${currentLang==='bn'?'তোমার লার্নিং ড্যাশবোর্ড':'Your Learning Dashboard'}</h2>
+    <p style="color:var(--text-muted);font-size:var(--text-md)">${currentLang==='bn'?'তোমার অগ্রগতি দেখো, শক্তিগুলো চেনো, আর পরবর্তী কী শিখবে ঠিক করো।':'Track your progress, see your strengths, and plan what to learn next.'}</p>
     ${adSlot('dashboard-top')}
     <div class="dashboard-grid">
       <div class="dash-card">
-        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Overall Progress</h3>
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${currentLang==='bn'?'সামগ্রিক অগ্রগতি':'Overall Progress'}</h3>
         <div class="donut-container">
           ${donutSvg}
-          <div class="donut-center"><div class="dash-stat">${pct}%</div><div class="dash-label">${completedCount}/${totalLessons} lessons</div></div>
+          <div class="donut-center"><div class="dash-stat">${pct}%</div><div class="dash-label">${completedCount}/${totalLessons} ${currentLang==='bn'?'টি লেসন':'lessons'}</div></div>
         </div>
       </div>
       <div class="dash-card">
-        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Stats</h3>
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> ${currentLang==='bn'?'পরিসংখ্যান':'Stats'}</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;text-align:center">
-          <div><div class="dash-stat" style="font-size:var(--text-h3)">${lvl}</div><div class="dash-label">Level</div></div>
-          <div><div class="dash-stat" style="font-size:var(--text-h3)">${xp}</div><div class="dash-label">Total XP</div></div>
-          <div><div class="dash-stat" style="font-size:var(--text-h3)">${correctQuizzes}/${totalQuizzes}</div><div class="dash-label">Quizzes Correct</div></div>
-          <div><div class="dash-stat" style="font-size:var(--text-h3)">${Object.values(pointReactions).filter(v=>v==='got').length}</div><div class="dash-label">Got It</div></div>
+          <div><div class="dash-stat" style="font-size:var(--text-h3)">${lvl}</div><div class="dash-label">${currentLang==='bn'?'লেভেল':'Level'}</div></div>
+          <div><div class="dash-stat" style="font-size:var(--text-h3)">${xp}</div><div class="dash-label">${currentLang==='bn'?'মোট XP':'Total XP'}</div></div>
+          <div><div class="dash-stat" style="font-size:var(--text-h3)">${correctQuizzes}/${totalQuizzes}</div><div class="dash-label">${currentLang==='bn'?'কুইজ সঠিক':'Quizzes Correct'}</div></div>
+          <div><div class="dash-stat" style="font-size:var(--text-h3)">${Object.values(pointReactions).filter(v=>v==='got').length}</div><div class="dash-label">${currentLang==='bn'?'বুঝে গেছি':'Got It'}</div></div>
         </div>
       </div>
       <div class="dash-card" style="grid-column:1/-1">
-        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Progress by Topic</h3>
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> ${currentLang==='bn'?'টপিক অনুযায়ী অগ্রগতি':'Progress by Topic'}</h3>
         ${topicBars}
       </div>
       <div class="dash-card" style="grid-column:1/-1">${adSlot('dashboard-mid')}</div>
@@ -2867,7 +2921,7 @@ function renderDashboard(){
         let cards='';
         // Struggling With card
         cards+=`<div class="dash-card">
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Needs Review (Hard)</h3>`;
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${currentLang==='bn'?'রিভিউ দরকার (কঠিন)':'Needs Review (Hard)'}</h3>`;
         if(hardItems.length>0){
           cards+='<div style="max-height:180px;overflow-y:auto">';
           hardItems.forEach(item=>{
@@ -2878,12 +2932,12 @@ function renderDashboard(){
           });
           cards+='</div>';
         } else {
-          cards+='<div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.5rem">No hard topics marked. Use the <strong>Hard</strong> button on any point that confuses you!</div>';
+          cards+='<div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.5rem">'+(currentLang==='bn'?'এখনো কোনো কঠিন টপিক চিহ্নিত হয়নি। যেকোনো পয়েন্টে <strong>কঠিন</strong> বাটন ব্যবহার করো!':'No hard topics marked. Use the <strong>Hard</strong> button on any point that confuses you!')+'</div>';
         }
         cards+='</div>';
         // Completed Lessons card
         cards+=`<div class="dash-card">
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Completed Lessons (${completed.size})</h3>`;
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${currentLang==='bn'?'সম্পন্ন লেসন':'Completed Lessons'} (${completed.size})</h3>`;
         if(completed.size>0){
           cards+='<div style="max-height:200px;overflow-y:auto">';
           [...completed].sort((a,b)=>a-b).forEach(idx=>{
@@ -2894,25 +2948,25 @@ function renderDashboard(){
           });
           cards+='</div>';
         } else {
-          cards+='<div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.5rem">No lessons completed yet. Start learning!</div>';
+          cards+='<div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.5rem">'+(currentLang==='bn'?'এখনো কোনো লেসন শেষ হয়নি। শেখা শুরু করো!':'No lessons completed yet. Start learning!')+'</div>';
         }
         cards+='</div>';
         // Bookmarks card
         cards+=`<div class="dash-card">
-        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> Bookmarked Lessons</h3>
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg> ${currentLang==='bn'?'বুকমার্ক করা লেসন':'Bookmarked Lessons'}</h3>
         ${bookmarkList}
       </div>`;
         return cards;
       })()}
       <div class="dash-card">
-        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg> Suggested Next</h3>
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg> ${currentLang==='bn'?'পরবর্তী সাজেশন':'Suggested Next'}</h3>
         ${completedCount<totalLessons?
           `<div style="cursor:pointer" onclick="goTo(${[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0})">
             <div style="font-weight:700;color:var(--heading);font-size:var(--text-h6)">${L[[...Array(totalLessons).keys()].find(i=>!completed.has(i))||0].title}</div>
-            <div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.3rem">Continue your learning journey</div>
-            <div class="btn btn-next" style="margin-top:1rem;display:inline-block;font-size:var(--text-md);padding:0.5rem 1.5rem">Start Lesson</div>
+            <div style="color:var(--text-muted);font-size:var(--text-md);margin-top:0.3rem">${currentLang==='bn'?'শেখার যাত্রা চালিয়ে যাও':'Continue your learning journey'}</div>
+            <div class="btn btn-next" style="margin-top:1rem;display:inline-block;font-size:var(--text-md);padding:0.5rem 1.5rem">${currentLang==='bn'?'লেসন শুরু করো':'Start Lesson'}</div>
           </div>`
-          :'<div style="color:var(--heading);font-size:var(--text-h6);font-weight:700">All lessons completed! You are a Fullstack Hero!</div>'}
+          :'<div style="color:var(--heading);font-size:var(--text-h6);font-weight:700">'+(currentLang==='bn'?'সব লেসন শেষ! তুমি একজন গণিত হিরো!':'All lessons completed! You are a Fullstack Hero!')+'</div>'}
       </div>
       <div class="dash-card" style="grid-column:1/-1">
         <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><path d="M12 8v4"/><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M12 12l-6 2M12 12l6 2"/></svg> ${t('skillTree')}</h3>
@@ -3081,7 +3135,7 @@ function render(){
   const isBookmarked=bookmarks.has(current);
   let h='';
   h+=`<div class="lesson-head">
-    <button class="bookmark-btn ${isBookmarked?'bookmarked':''}" onclick="toggleBookmark(${current})" title="${isBookmarked?'Remove bookmark':'Bookmark this lesson'}">
+    <button class="bookmark-btn ${isBookmarked?'bookmarked':''}" onclick="toggleBookmark(${current})" title="${isBookmarked?(currentLang==='bn'?'বুকমার্ক সরাও':'Remove bookmark'):(currentLang==='bn'?'বুকমার্ক করো':'Bookmark this lesson')}">
       <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
     </button>
     <span class="lesson-emoji">${bigIcon(l.id)}</span>
@@ -3122,34 +3176,29 @@ function render(){
   // Elaborative Interrogation — "Think Deeper" with rich explanation
   {
     const keyPoints=l.points.slice(0,3).map(p=>p.t).join(', ');
-    const whyQ=l.whyQuestion||'Imagine you\'re building a real app (like Instagram or a to-do list). Why would you need <strong>'+escHtml(l.title)+'</strong>? What problems would you face WITHOUT it?';
+    const whyQ=l.whyQuestion||t('thinkDeeperDefaultQ').replace('{title}',escHtml(l.title));
 
     // Build a rich, beginner-friendly answer from lesson data
     let richAnswer='';
     if(l.whyAnswer){
       richAnswer=l.whyAnswer;
     } else {
-      // Everyday analogy
-      richAnswer+='<div class="think-deeper-section"><strong>Everyday Analogy:</strong> '+l.analogy+'</div>';
-      // Why it matters
-      richAnswer+='<div class="think-deeper-section"><strong>Why It Matters:</strong> '+l.realWorld+'</div>';
-      // Real example scenario
-      richAnswer+='<div class="think-deeper-section"><strong>Real Example:</strong> Let\'s say you\'re building a social media app. <strong>'+escHtml(l.title)+'</strong> helps you handle the '+escHtml(keyPoints)+' part. Without it, your app would be buggy, hard to maintain, or simply wouldn\'t work as users expect.</div>';
-      // Key takeaways from points
-      richAnswer+='<div class="think-deeper-section"><strong>Key Takeaways:</strong><ul class="think-deeper-list">';
+      richAnswer+='<div class="think-deeper-section"><strong>'+t('everydayAnalogy')+'</strong> '+l.analogy+'</div>';
+      richAnswer+='<div class="think-deeper-section"><strong>'+t('whyItMatters')+'</strong> '+l.realWorld+'</div>';
+      richAnswer+='<div class="think-deeper-section"><strong>'+t('realExample')+'</strong> '+t('realExampleText').replace('{title}',escHtml(l.title)).replace('{keyPoints}',escHtml(keyPoints))+'</div>';
+      richAnswer+='<div class="think-deeper-section"><strong>'+t('keyTakeaways')+'</strong><ul class="think-deeper-list">';
       l.points.slice(0,4).forEach(p=>{
         richAnswer+='<li><strong>'+escHtml(p.t)+'</strong> — '+escHtml(p.d.length>120?p.d.substring(0,120)+'...':p.d)+'</li>';
       });
       richAnswer+='</ul></div>';
-      // Connection to other lessons
-      richAnswer+='<div class="think-deeper-section"><strong>How It Connects:</strong> This topic connects to everything you\'ll learn next. Master <strong>'+escHtml(l.title)+'</strong> and the upcoming lessons will click much faster — each concept builds on the ones before it, like LEGO blocks!</div>';
+      richAnswer+='<div class="think-deeper-section"><strong>'+t('howItConnects')+'</strong> '+t('howItConnectsText').replace('{title}',escHtml(l.title))+'</div>';
     }
 
     h+=`<div class="why-prompt reveal">
-      <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Think Deeper <span class="method-badge elaboration" style="margin-left:0.5rem">Elaborative Interrogation</span>${aiLinks(l.title,'think deeper explanation with real world examples')}</h4>
+      <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('thinkDeeper')} <span class="method-badge elaboration" style="margin-left:0.5rem">${t('elaborativeInterrogation')}</span>${aiLinks(l.title,'think deeper explanation with real world examples')}</h4>
       <div class="why-prompt-q">${whyQ}</div>
-      <p style="font-size:var(--text-sm);color:var(--text-muted);margin:0.3rem 0 0.5rem">Try to answer this yourself first, then reveal the explanation below!</p>
-      <button class="why-reveal-btn" onclick="const a=document.getElementById('why-answer-${current}');a.style.display=a.style.display==='block'?'none':'block';this.textContent=a.style.display==='block'?'Hide Explanation':'Show Explanation'">Show Explanation</button>
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin:0.3rem 0 0.5rem">${t('tryAnswerFirst')}</p>
+      <button class="why-reveal-btn" onclick="const a=document.getElementById('why-answer-${current}');a.style.display=a.style.display==='block'?'none':'block';this.textContent=a.style.display==='block'?t('hideExplanation'):t('showExplanation')">${t('showExplanation')}</button>
       <div class="why-answer" id="why-answer-${current}">${richAnswer}</div>
     </div>`;
   }
@@ -3161,9 +3210,9 @@ function render(){
   h+=`<div style="display:flex;align-items:center;gap:0.5rem;margin:1.5rem 0 0">
     <button class="flashcard-toggle ${flashcardMode?'active':''}" onclick="toggleFlashcard()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      ${flashcardMode?'Card View':'Flashcard Mode'}
+      ${flashcardMode?t('flashcardOn'):t('flashcardOff')}
     </button>
-    <span style="font-size:var(--text-sm);color:var(--text-muted)">${flashcardMode?'Click cards to flip':'Switch to interactive flashcards'}</span>
+    <span style="font-size:var(--text-sm);color:var(--text-muted)">${flashcardMode?t('flashcardOnHint'):t('flashcardOffHint')}</span>
   </div>`;
 
   if(flashcardMode){
@@ -3262,12 +3311,12 @@ function render(){
     if(lessonQuizStats.answered>0){
       const mastered=lessonQuizStats.answered===lessonQuizStats.total&&lessonQuizStats.pct>=MASTERY_THRESHOLD;
       const masteryPct=Math.round(MASTERY_THRESHOLD*100);
-      h+=`<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>You got ${lessonQuizStats.correct}/${lessonQuizStats.total} correct. Mastery target: ${masteryPct}%.</div>`;
+      h+=`<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('quizScore').replace('{c}',lessonQuizStats.correct).replace('{t}',lessonQuizStats.total).replace('{p}',masteryPct)}</div>`;
       if(lessonQuizStats.answered===lessonQuizStats.total&&!mastered){
-        h+=`<div style="margin-top:0.6rem;text-align:center"><button class="btn btn-prev" onclick="resetLessonQuiz(${current})">Retake Quiz</button></div>`;
+        h+=`<div style="margin-top:0.6rem;text-align:center"><button class="btn btn-prev" onclick="resetLessonQuiz(${current})">${t('retakeQuiz')}</button></div>`;
       }
       if(mastered){
-        h+=`<div style="margin-top:0.6rem;color:var(--quiz-correct-text);text-align:center;font-size:var(--text-sm);font-weight:600">Mastery unlocked. You can continue.</div>`;
+        h+=`<div style="margin-top:0.6rem;color:var(--quiz-correct-text);text-align:center;font-size:var(--text-sm);font-weight:600">${t('masteryUnlocked')}</div>`;
       }
     }
   }
@@ -3608,6 +3657,8 @@ function syncGoogleTranslate(lang){
   else run();
 }
 function setLang(lang){
+  // If course has forceLang, ignore language change requests
+  if(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.forceLang) return;
   lang=normalizeLang(lang);
   if(window.__logEvent)window.__logEvent('language_change',{language:lang});
   currentLang=lang;
@@ -3647,7 +3698,7 @@ function aiLinks(topic,context,extraContent){
   const safeTopic=escHtml(topic).replace(/'/g,"\\'");
   const safeCtx=escHtml(context).replace(/'/g,"\\'");
   const safeExtra=extraContent?escHtml(extraContent).replace(/'/g,"\\'"):'';
-  return '<button class="ask-ai-btn" onclick="event.stopPropagation();askAi(\''+safeTopic+'\',\''+safeCtx+'\',\''+safeExtra+'\')" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button>';
+  return '<button class="ask-ai-btn" onclick="event.stopPropagation();askAi(\''+safeTopic+'\',\''+safeCtx+'\',\''+safeExtra+'\')" title="'+t('askAi')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> '+t('askAi')+'</button>';
 }
 function quizAiButton(topic,question,opts){
   const q=normalizeLessonText(question);
@@ -3784,7 +3835,7 @@ function copyCertLink(){
   if(window.__logEvent)window.__logEvent('certificate_share',{platform:'copy_link'});
   navigator.clipboard.writeText('https://learn.teamzlab.com/learn.html?course=js-ts-fun-book');
   const btn=event.target.closest('.cert-btn');
-  if(btn){const orig=btn.innerHTML;btn.textContent='Copied!';setTimeout(()=>btn.innerHTML=orig,1500);}
+  if(btn){const orig=btn.innerHTML;btn.textContent=currentLang==='bn'?'কপি হয়ে গেছে!':'Copied!';setTimeout(()=>btn.innerHTML=orig,1500);}
 }
 
 // Scroll reveal
@@ -3813,10 +3864,12 @@ function showToast(msg,icon){
 function checkMilestones(){
   const c=completed.size;
   const finalMilestone=L.length;
-  const milestones={1:'You completed your first lesson! The journey begins!',5:'5 lessons done! You are on fire!',10:'10 lessons! You are unstoppable!',20:'20 lessons! Almost a fullstack dev!',30:'30 lessons! Legend status unlocked!',40:'40 lessons! Final stretch now.'};
+  const milestonesEn={1:'You completed your first lesson! The journey begins!',5:'5 lessons done! You are on fire!',10:'10 lessons! You are unstoppable!',20:'20 lessons! Almost halfway!',30:'30 lessons! Legend status unlocked!',40:'40 lessons! Final stretch now.'};
+  const milestonesBn={1:'প্রথম লেসন শেষ! যাত্রা শুরু হলো!',5:'৫টা লেসন শেষ! তুমি দুর্দান্ত!',10:'১০টা লেসন! কেউ তোমাকে আটকাতে পারবে না!',20:'২০টা লেসন! প্রায় অর্ধেক পথ!',30:'৩০টা লেসন! কিংবদন্তি আনলক!',40:'৪০টা লেসন! শেষের দিকে যাচ্ছো!'};
+  const milestones=currentLang==='bn'?milestonesBn:milestonesEn;
   const halfway=Math.max(1,Math.round(L.length/2));
-  milestones[halfway]='Halfway there! '+halfway+' lessons crushed!';
-  milestones[finalMilestone]='ALL LESSONS COMPLETE! You are a Fullstack Hero!';
+  milestones[halfway]=currentLang==='bn'?'অর্ধেক পথ শেষ! '+halfway+' টা লেসন চূর্ণ করেছো!':'Halfway there! '+halfway+' lessons crushed!';
+  milestones[finalMilestone]=currentLang==='bn'?'সব লেসন শেষ! তুমি একজন গণিত হিরো!':'ALL LESSONS COMPLETE! You are a Fullstack Hero!';
   if(milestones[c]){
     const key='milestone-'+c;
     if(!lsGet(key)){
@@ -3951,21 +4004,21 @@ function openNoteForLesson(idx){
 function copyNote(){
   if(window.__logEvent)window.__logEvent('note_copy',{lesson_id:L[current].id});
   const editor=document.getElementById('notes-editor');
-  if(!editor||!editor.innerText.trim()){showToast('No note to copy');return;}
+  if(!editor||!editor.innerText.trim()){showToast(currentLang==='bn'?'কপি করার মতো নোট নেই':'No note to copy');return;}
   const lData=LESSONS_DATA[current];
-  const text='Notes: '+lData.title+'\n\n'+editor.innerText;
-  navigator.clipboard.writeText(text).then(()=>showToast('Note copied!')).catch(()=>showToast('Copy failed'));
+  const text=(currentLang==='bn'?'নোট: ':'Notes: ')+lData.title+'\n\n'+editor.innerText;
+  navigator.clipboard.writeText(text).then(()=>showToast(currentLang==='bn'?'নোট কপি হয়ে গেছে!':'Note copied!')).catch(()=>showToast(currentLang==='bn'?'কপি হয়নি':'Copy failed'));
 }
 function shareNote(){
   if(window.__logEvent)window.__logEvent('note_share',{lesson_id:L[current].id});
   const editor=document.getElementById('notes-editor');
-  if(!editor||!editor.innerText.trim()){showToast('No note to share');return;}
+  if(!editor||!editor.innerText.trim()){showToast(currentLang==='bn'?'শেয়ার করার মতো নোট নেই':'No note to share');return;}
   const lData=LESSONS_DATA[current];
-  const text='My notes on "'+lData.title+'" from Free Full-Stack Playbook:\n\n'+editor.innerText;
+  const text=(currentLang==='bn'?'"'+lData.title+'" এর উপর আমার নোট:\n\n':'My notes on "'+lData.title+'":\n\n')+editor.innerText;
   if(navigator.share){
-    navigator.share({title:'Notes: '+lData.title,text}).catch(()=>{});
+    navigator.share({title:(currentLang==='bn'?'নোট: ':'Notes: ')+lData.title,text}).catch(()=>{});
   } else {
-    navigator.clipboard.writeText(text).then(()=>showToast('Note copied to clipboard!')).catch(()=>showToast('Share failed'));
+    navigator.clipboard.writeText(text).then(()=>showToast(currentLang==='bn'?'নোট কপি হয়ে গেছে!':'Note copied to clipboard!')).catch(()=>showToast(currentLang==='bn'?'শেয়ার হয়নি':'Share failed'));
   }
 }
 function noteCmd(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('notes-editor').focus();saveNoteFloat();}
@@ -4012,7 +4065,7 @@ document.addEventListener('keydown',function(e){
   else if(e.key==='r'||e.key==='R'){e.preventDefault();if(showReview)switchView('lesson');else switchView('review');}
   else if(e.key==='Escape'){closeSidebar();closeSearch();}
   else if(e.key==='/'){e.preventDefault();openSearch();}
-  else if(e.key==='?'){showToast('Keys: &larr; &rarr; navigate, N notes, T theme, D dashboard, R review, / search, ? help');}
+  else if(e.key==='?'){showToast(currentLang==='bn'?'শর্টকাট: &larr; &rarr; নেভিগেশন, N নোট, T থিম, D ড্যাশবোর্ড, R রিভিউ, / সার্চ, ? হেল্প':'Keys: &larr; &rarr; navigate, N notes, T theme, D dashboard, R review, / search, ? help');}
 });
 // Ctrl+K / Cmd+K to open search (works even in input fields)
 document.addEventListener('keydown',function(e){
@@ -4109,13 +4162,13 @@ function openSearch(){
   overlay.innerHTML=`<div class="search-modal">
     <div class="search-input-wrap">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input class="search-input" id="search-input" type="text" placeholder="Search lessons, quizzes, code..." autofocus>
+      <input class="search-input" id="search-input" type="text" placeholder="${currentLang==='bn'?'লেসন, কুইজ, বিষয় খোঁজো...':'Search lessons, quizzes, code...'}" autofocus>
       <span class="search-kbd">ESC</span>
     </div>
     <div class="search-results" id="search-results">
-      <div class="search-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Start typing to search across all lessons...</div>
+      <div class="search-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>${currentLang==='bn'?'টাইপ করো — সব লেসনে খুঁজবে...':'Start typing to search across all lessons...'}</div>
     </div>
-    <div class="search-footer"><span>${L.length} lessons indexed</span><span>Press Enter to go to first result</span></div>
+    <div class="search-footer"><span>${L.length} ${currentLang==='bn'?'টি লেসন ইনডেক্সড':'lessons indexed'}</span><span>${currentLang==='bn'?'প্রথম রেজাল্টে যেতে Enter চাপো':'Press Enter to go to first result'}</span></div>
   </div>`;
   overlay.addEventListener('click',function(e){if(e.target===overlay)closeSearch();});
   document.body.appendChild(overlay);
@@ -4210,7 +4263,7 @@ function performSearch(query){
     if(!seen.has(key)){seen.add(key);unique.push(r);}
   });
   if(unique.length===0){
-    resultsEl.innerHTML='<div class="search-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>No results found for "'+escHtml(query)+'"</div>';
+    resultsEl.innerHTML='<div class="search-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+(currentLang==='bn'?'"'+escHtml(query)+'" খুঁজে কিছু পাওয়া যায়নি':'No results found for "'+escHtml(query)+'"')+'</div>';
     return;
   }
   let html='';
@@ -4295,27 +4348,27 @@ function renderReviewMode(){
   const boxCounts=new Array(intervals.length).fill(0);
   Object.values(srsCards).forEach(c=>{boxCounts[Math.min(c.box,intervals.length-1)]++;});
   let h='<div class="review-mode">';
-  h+='<div class="review-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Spaced Repetition Review</h2>';
-  h+='<p>Review questions at increasing intervals to strengthen long-term memory.</p>';
-  if(reviewStreak>0) h+='<div class="review-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> '+reviewStreak+' day streak!</div>';
-  h+='<div class="method-meta"><div class="method-badges"><span class="method-badge spaced">Spaced Repetition</span><span class="method-badge retrieval">Active Recall</span><span class="method-badge metacognition">Desirable Difficulty</span></div><button class="method-info-btn" aria-label="Why this method works" onclick="openPedagogyInfo(\'review\')">i</button></div></div>';
+  h+='<div class="review-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> '+(currentLang==='bn'?'স্পেসড রিপিটিশন রিভিউ':'Spaced Repetition Review')+'</h2>';
+  h+='<p>'+(currentLang==='bn'?'ধাপে ধাপে রিভিউ করো — দীর্ঘমেয়াদী স্মৃতি মজবুত হবে।':'Review questions at increasing intervals to strengthen long-term memory.')+'</p>';
+  if(reviewStreak>0) h+='<div class="review-streak"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> '+reviewStreak+(currentLang==='bn'?' দিনের স্ট্রিক!':' day streak!')+'</div>';
+  h+='<div class="method-meta"><div class="method-badges"><span class="method-badge spaced">'+(currentLang==='bn'?'স্পেসড রিপিটিশন':'Spaced Repetition')+'</span><span class="method-badge retrieval">'+(currentLang==='bn'?'অ্যাক্টিভ রিকল':'Active Recall')+'</span><span class="method-badge metacognition">'+(currentLang==='bn'?'ডেজায়ারেবল ডিফিকাল্টি':'Desirable Difficulty')+'</span></div><button class="method-info-btn" aria-label="'+(currentLang==='bn'?'কেন এই পদ্ধতি কাজ করে':'Why this method works')+'" onclick="openPedagogyInfo(\'review\')">i</button></div></div>';
   h+='<div class="review-boxes">';
-  const boxLabels=['New','1 day','3 days','1 week','Mastered'];
+  const boxLabels=currentLang==='bn'?['নতুন','১ দিন','৩ দিন','১ সপ্তাহ','মাস্টার্ড']:['New','1 day','3 days','1 week','Mastered'];
   boxCounts.forEach((count,i)=>{
     h+='<div class="review-box"><span class="review-box-count">'+count+'</span>'+boxLabels[i]+'</div>';
   });
   h+='</div>';
   if(due.length===0){
-    h+='<div class="review-empty"><h3>All caught up!</h3><p>No cards due for review right now. Complete more quizzes or check back later.</p>';
-    h+='<button class="btn btn-next" onclick="showReview=false;render()" style="margin-top:1rem">Back to Lessons</button></div>';
+    h+='<div class="review-empty"><h3>'+(currentLang==='bn'?'সব আপডেট!':'All caught up!')+'</h3><p>'+(currentLang==='bn'?'এখন রিভিউ করার মতো কার্ড নেই। আরো কুইজ দাও বা পরে ফিরে আসো।':'No cards due for review right now. Complete more quizzes or check back later.')+'</p>';
+    h+='<button class="btn btn-next" onclick="showReview=false;render()" style="margin-top:1rem">'+(currentLang==='bn'?'লেসনে ফিরে যাও':'Back to Lessons')+'</button></div>';
   }else{
-    h+='<p style="text-align:center;color:var(--text-muted);font-size:var(--text-md)">'+due.length+' card'+(due.length>1?'s':'')+' due for review</p>';
+    h+='<p style="text-align:center;color:var(--text-muted);font-size:var(--text-md)">'+due.length+(currentLang==='bn'?' টি কার্ড রিভিউ করতে হবে':' card'+(due.length>1?'s':'')+' due for review')+'</p>';
     due.forEach((item,idx)=>{
       const cardKey='review-card-'+idx;
       const lessonTitle=L[item.lessonIdx].title;
       const rsh=shuffleOpts(item.q.opts,item.q.ans,item.lessonIdx*100+item.quizIdx+7777);
       h+='<div class="review-card" id="'+cardKey+'">';
-      h+='<div class="review-card-header"><span class="review-card-lesson">Lesson '+L[item.lessonIdx].id+': '+lessonTitle+'</span><span class="review-card-progress">'+(idx+1)+'/'+due.length+'</span></div>';
+      h+='<div class="review-card-header"><span class="review-card-lesson">'+(currentLang==='bn'?'লেসন ':'Lesson ')+L[item.lessonIdx].id+': '+lessonTitle+'</span><span class="review-card-progress">'+(idx+1)+'/'+due.length+'</span></div>';
       h+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;margin-bottom:0.8rem"><div class="review-question" style="margin-bottom:0;flex:1">'+item.q.q+'</div>'+quizAiButton(lessonTitle,item.q.q,rsh.opts)+'</div>';
       h+='<div class="review-opts">';
       rsh.opts.forEach((opt,oi)=>{
@@ -4374,12 +4427,12 @@ function startMixedQuiz(){
 function renderMixedQuiz(){
   const mq=mixedQuizState;
   let h='<div class="mixed-quiz">';
-  h+='<div class="mixed-quiz-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15A9 9 0 115.64 5.64L1 10"/></svg> Mixed Challenge</h2>';
-  h+='<p style="color:var(--text-muted);font-size:var(--text-md)">Questions from different lessons — interleaved practice strengthens your brain!</p>';
-  h+='<div class="method-badges"><span class="method-badge">Interleaving</span><span class="method-badge">Retrieval Practice</span></div></div>';
+  h+='<div class="mixed-quiz-header"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-4px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15A9 9 0 115.64 5.64L1 10"/></svg> '+(currentLang==='bn'?'মিক্সড চ্যালেঞ্জ':'Mixed Challenge')+'</h2>';
+  h+='<p style="color:var(--text-muted);font-size:var(--text-md)">'+(currentLang==='bn'?'বিভিন্ন লেসন থেকে প্রশ্ন — ইন্টারলিভড প্র্যাকটিস তোমার ব্রেইনকে শার্প করে!':'Questions from different lessons — interleaved practice strengthens your brain!')+'</p>';
+  h+='<div class="method-badges"><span class="method-badge">'+(currentLang==='bn'?'ইন্টারলিভিং':'Interleaving')+'</span><span class="method-badge">'+(currentLang==='bn'?'রিট্রিভাল প্র্যাকটিস':'Retrieval Practice')+'</span></div></div>';
   if(mq.questions.length===0&&mq.current===0){
-    h+='<div class="review-empty"><h3>Complete at least 2 lessons first</h3><p>Mixed Challenge pulls random questions from your completed lessons to test cross-topic knowledge. Finish a few lessons and come back!</p>';
-    h+='<button class="btn btn-next" onclick="switchView(\'lesson\')" style="margin-top:1rem">Back to Lessons</button></div></div>';
+    h+='<div class="review-empty"><h3>'+(currentLang==='bn'?'আগে কমপক্ষে ২টা লেসন শেষ করো':'Complete at least 2 lessons first')+'</h3><p>'+(currentLang==='bn'?'মিক্সড চ্যালেঞ্জ তোমার শেষ করা লেসন থেকে র‍্যান্ডম প্রশ্ন নেয়। কয়েকটা লেসন শেষ করে ফিরে আসো!':'Mixed Challenge pulls random questions from your completed lessons to test cross-topic knowledge. Finish a few lessons and come back!')+'</p>';
+    h+='<button class="btn btn-next" onclick="switchView(\'lesson\')" style="margin-top:1rem">'+(currentLang==='bn'?'লেসনে ফিরে যাও':'Back to Lessons')+'</button></div></div>';
     return h;
   }
   h+='<div class="mixed-quiz-progress">';
@@ -4391,16 +4444,16 @@ function renderMixedQuiz(){
   if(mq.current>=mq.questions.length){
     const correct=mq.answers.filter(a=>a).length;
     const total=mq.answers.length;
-    h+='<div class="mixed-quiz-result"><h3>Mixed Challenge Complete!</h3>';
+    h+='<div class="mixed-quiz-result"><h3>'+(currentLang==='bn'?'মিক্সড চ্যালেঞ্জ শেষ!':'Mixed Challenge Complete!')+'</h3>';
     h+='<div class="mixed-quiz-score">'+correct+' / '+total+'</div>';
-    h+='<p style="color:var(--text-muted);margin:0.5rem 0">'+(correct===total?'Perfect interleaved recall!':correct>=total*0.75?'Strong cross-topic knowledge!':'Keep practicing — interleaving takes time!')+'</p>';
+    h+='<p style="color:var(--text-muted);margin:0.5rem 0">'+(currentLang==='bn'?(correct===total?'পারফেক্ট! সব ঠিক!':correct>=total*0.75?'দারুণ! ক্রস-টপিক জ্ঞান মজবুত!':'প্র্যাকটিস চালিয়ে যাও — ইন্টারলিভিং-এ সময় লাগে!'):(correct===total?'Perfect interleaved recall!':correct>=total*0.75?'Strong cross-topic knowledge!':'Keep practicing — interleaving takes time!'))+'</p>';
     h+='<div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem">';
-    h+='<button class="btn btn-prev" onclick="startMixedQuiz()">Try Again</button>';
-    h+='<button class="btn btn-next" onclick="switchView(\'lesson\')">Back to Lessons</button></div></div>';
+    h+='<button class="btn btn-prev" onclick="startMixedQuiz()">'+(currentLang==='bn'?'আবার চেষ্টা করো':'Try Again')+'</button>';
+    h+='<button class="btn btn-next" onclick="switchView(\'lesson\')">'+(currentLang==='bn'?'লেসনে ফিরে যাও':'Back to Lessons')+'</button></div></div>';
   }else{
     const q=mq.questions[mq.current];
     const msh=shuffleOpts(q.q.opts,q.q.ans,q.lessonIdx*100+q.quizIdx+5555);
-    h+='<div class="review-card"><div class="review-card-header"><span class="review-card-lesson">From: '+q.lessonTitle+'</span><span class="review-card-progress">'+(mq.current+1)+'/'+mq.questions.length+'</span></div>';
+    h+='<div class="review-card"><div class="review-card-header"><span class="review-card-lesson">'+(currentLang==='bn'?'লেসন: ':'From: ')+q.lessonTitle+'</span><span class="review-card-progress">'+(mq.current+1)+'/'+mq.questions.length+'</span></div>';
     h+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;margin-bottom:0.8rem"><div class="review-question" style="margin-bottom:0;flex:1">'+q.q.q+'</div>'+quizAiButton(q.lessonTitle,q.q.q,msh.opts)+'</div><div class="review-opts">';
     msh.opts.forEach((opt,oi)=>{
       h+='<button class="review-opt" onclick="answerMixedQuiz('+oi+','+msh.ans+')">'+opt+'</button>';
@@ -4499,8 +4552,8 @@ function copyAiPrompt(){
   if(!prompt)return;
   navigator.clipboard.writeText(prompt).then(function(){
     const btn=document.getElementById('ai-copy-prompt-btn');
-    if(btn){btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';btn.style.background='var(--heading)';btn.style.color='var(--bg)';btn.style.borderColor='var(--heading)';}
-  }).catch(function(){showToast('Could not copy — please select and copy manually');});
+    if(btn){btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> '+(currentLang==='bn'?'কপি হয়ে গেছে!':'Copied!');btn.style.background='var(--heading)';btn.style.color='var(--bg)';btn.style.borderColor='var(--heading)';}
+  }).catch(function(){showToast(currentLang==='bn'?'কপি হয়নি — ম্যানুয়ালি সিলেক্ট করে কপি করো':'Could not copy — please select and copy manually');});
 }
 function closeAiJudge(){
   const el=document.getElementById('ai-judge-container');
@@ -4526,7 +4579,7 @@ function rateFlashcard(lessonIdx,pointIdx,diff){
   if(window.__logEvent)window.__logEvent('flashcard_rating',{lesson_id:L[lessonIdx].id,point_index:pointIdx,difficulty:diff});
   flashcardDifficulty[lessonIdx+'-'+pointIdx]=diff;
   saveState();
-  showToast(diff==='easy'?'Marked as easy — you know this!':'Marked as hard — will show more often');
+  showToast(diff==='easy'?t('markedEasy'):t('markedHard'));
 }
 window.showFlashcardPopup=function(lessonIdx,pointIdx){
   const l=L[lessonIdx],p=l.points[pointIdx];
@@ -4541,11 +4594,14 @@ window.showFlashcardPopup=function(lessonIdx,pointIdx){
   const titleFormatted=formatPointContentForDisplay(p.t);
   // Build extra learning sections
   let extraSections='';
-  // Only show per-point code example (no lesson-level fallback — it's irrelevant per-card)
+  // Only show per-point code/example if available
   if(p.code){
-    extraSections+=`<details class="flashcard-popup-extra" open><summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code Example</summary><div class="extra-content"><pre>${escHtml(p.code)}</pre></div></details>`;
+    extraSections+=`<details class="flashcard-popup-extra" open><summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> ${t('codeExample')}</summary><div class="extra-content"><pre>${escHtml(p.code)}</pre></div></details>`;
   }
-  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-meta"><span class="flashcard-popup-lesson">${escHtml(l.title)}</span><span>Point ${pointIdx+1} of ${l.points.length}</span></div><div class="flashcard-popup-title">${titleFormatted}</div><div class="flashcard-popup-body">${bodyFormatted}</div>${eli5}${extraSections}<div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Easy</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hard</button><button class="flashcard-diff-btn done" onclick="if(window.__logEvent)window.__logEvent('flashcard_popup_done',{lesson_id:${l.id},point_index:${pointIdx}});this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg> ${t('done')}</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
+  // Only show ELI5 if it differs meaningfully from the point description
+  const showEli5=pointEli5&&pointEli5!==p.d&&pointEli5!==p.t;
+  const eli5Section=showEli5?eli5:'';
+  overlay.innerHTML=`<div class="flashcard-popup"><button class="flashcard-popup-close" onclick="this.closest('.flashcard-popup-overlay').remove()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="flashcard-popup-meta"><span class="flashcard-popup-lesson">${escHtml(l.title)}</span><span>${t('pointOf').replace('{n}',pointIdx+1).replace('{total}',l.points.length)}</span></div><div class="flashcard-popup-title">${titleFormatted}</div><div class="flashcard-popup-body">${bodyFormatted}</div>${eli5Section}${extraSections}<div class="flashcard-popup-actions"><button class="flashcard-diff-btn easy" onclick="rateFlashcard(${lessonIdx},${pointIdx},'easy');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${t('easy')}</button><button class="flashcard-diff-btn hard" onclick="rateFlashcard(${lessonIdx},${pointIdx},'hard');this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('hard')}</button><button class="flashcard-diff-btn done" onclick="if(window.__logEvent)window.__logEvent('flashcard_popup_done',{lesson_id:${l.id},point_index:${pointIdx}});this.closest('.flashcard-popup-overlay').remove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg> ${t('done')}</button><button class="ask-ai-btn" onclick="askAi('${safeTitle}','${safePt}');this.closest('.flashcard-popup-overlay').remove()" title="${t('askAi')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('askAi')}</button></div></div>`;
   document.body.appendChild(overlay);
 }
 
@@ -4554,11 +4610,13 @@ function showDailyTip(){
   const today=new Date().toDateString();
   if(lsGet('tip_date')===today)return;
   lsSet('tip_date',today);
-  const tips=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!','Tip: Try the Review tab for spaced practice over time.','Tip: Try Mixed Challenge for interleaved practice!','Tip: Write self-explanations — teaching yourself cements learning!','Tip: Rate your confidence before answering quizzes — metacognition helps!','Tip: Press R for spaced review mode!'];
+  const tipsEn=['Tip: Use flashcard mode to test yourself!','Tip: Click any code line in walkthrough mode!','Tip: Press ? for keyboard shortcuts!','Tip: Use the AI help icon for extra explanations!','Tip: Take notes — they save automatically!','Tip: Try the "Spot the Bug" challenges!','Tip: ELI5 mode explains things super simply!','Tip: Complete quizzes to earn XP and level up!','Tip: Your progress is saved — come back anytime!','Tip: Try the Review tab for spaced practice over time.','Tip: Try Mixed Challenge for interleaved practice!','Tip: Write self-explanations — teaching yourself cements learning!','Tip: Rate your confidence before answering quizzes — metacognition helps!','Tip: Press R for spaced review mode!'];
+  const tipsBn=['টিপস: ফ্ল্যাশকার্ড মোডে নিজেকে টেস্ট করো!','টিপস: ধাপে ধাপে ব্যাখ্যায় যেকোনো লাইনে ক্লিক করো!','টিপস: কীবোর্ড শর্টকাটের জন্য ? চাপো!','টিপস: AI-কে জিজ্ঞেস করে আরো ব্যাখ্যা পাও!','টিপস: নোট লেখো — অটো সেভ হয়ে যায়!','টিপস: "ভুল খোঁজো" চ্যালেঞ্জগুলো ট্রাই করো!','টিপস: সহজ ভাষায় বুঝাও মোড চালু করো!','টিপস: কুইজ দিয়ে XP আর লেভেল বাড়াও!','টিপস: তোমার প্রগ্রেস সেভ থাকে — যখন খুশি ফিরে আসো!','টিপস: রিভিউ ট্যাবে স্পেসড প্র্যাকটিস করো!','টিপস: মিক্সড চ্যালেঞ্জে বিভিন্ন টপিক মিলিয়ে প্র্যাকটিস করো!','টিপস: নিজে ব্যাখ্যা লেখো — শেখা পাকাপোক্ত হয়!','টিপস: কুইজে উত্তরের আগে কনফিডেন্স রেট করো!','টিপস: স্পেসড রিভিউর জন্য R চাপো!'];
+  const tips=currentLang==='bn'?tipsBn:tipsEn;
   setTimeout(()=>{showToast(tips[Math.floor(Math.random()*tips.length)],'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--heading)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>');},2000);
 }
 
-const ACHIEVEMENTS={
+const ACHIEVEMENTS_EN={
   perfect:[
     {title:"Absolute Legend",msg:"You didn't just pass — you flexed on every question. The code fears you now."},
     {title:"Bug Terminator",msg:"Zero mistakes. Zero mercy. Bugs see you coming and uninstall themselves."},
@@ -4583,6 +4641,32 @@ const ACHIEVEMENTS={
     {title:"Error 200: Learning OK",msg:"In programming, errors are expected. You're running perfectly — in debug mode."}
   ]
 };
+const ACHIEVEMENTS_BN={
+  perfect:[
+    {title:"একদম লেজেন্ড!",msg:"তুমি শুধু পাস করোনি — প্রতিটা প্রশ্নে ঝড় তুলেছো! গণিত তোমাকে দেখে ভয় পায়।"},
+    {title:"ভুল নিধনকারী",msg:"শূন্য ভুল। শূন্য দয়া। ভুলেরা তোমাকে দেখলেই পালায়।"},
+    {title:"মস্তিষ্ক ওভারক্লকড",msg:"তোমার ব্রেইন ২০০% স্পিডে চলছে। এমনকি ক্যালকুলেটরও ইমপ্রেসড!"},
+    {title:"নিখুঁত বিজয়",msg:"একটাও ভুল নেই! কোথাও একজন গণিত শিক্ষক গর্বে বুক ফুলিয়ে ফেলেছেন।"},
+    {title:"দ্য চোজেন ওয়ান",msg:"ভবিষ্যদ্বাণী সত্য হলো — তুমিই সেই ছাত্র যে সত্যিই মন দিয়ে পড়ে!"}
+  ],
+  great:[
+    {title:"প্রায় কিংবদন্তি!",msg:"একটুর জন্য মিস! কিন্তু সত্যি বলতে, তুমি এখনো বেশিরভাগের চেয়ে ভালো।"},
+    {title:"সিনিয়র এনার্জি",msg:"এই ধরনের স্কোর দেখলে সবাই তোমার কাছ থেকে টিউশন নিতে চাইবে!"},
+    {title:"পারফেকশনের কাছাকাছি",msg:"ফুল মার্কস থেকে একটু দূরে — পরেরবার পাকাপোক্ত!"},
+    {title:"জ্ঞান আনলক!",msg:"তোমার ব্রেইন এইমাত্র লেভেল আপ করেছে। লোডিং বার ৯৫%-এ — শেষটুকু করে ফেলো!"}
+  ],
+  good:[
+    {title:"মজবুত ভিত্তি",msg:"তুমি জিনিসটা জানো! আরেকটু প্র্যাকটিস করলে কেউ আটকাতে পারবে না।"},
+    {title:"ডেঞ্জারাস হচ্ছো!",msg:"তুমি সেই পয়েন্টে আছো যেখানে যথেষ্ট জানো কিন্তু আরো শেখার জায়গা আছে।"},
+    {title:"সঠিক পথে আছো",msg:"রোম একদিনে তৈরি হয়নি — কিন্তু তারাও ধাপে ধাপেই এগিয়েছিল!"}
+  ],
+  tryAgain:[
+    {title:"প্লট টুইস্ট: শিখছো!",msg:"ভুল উত্তর মানেই হার না — রিভিউ করলে এগুলোই সবচেয়ে ভালো মনে থাকে।"},
+    {title:"রিস্পন পয়েন্ট সেট!",msg:"প্রত্যেক ওস্তাদ একসময় ভুল করেছে। তোমার চেকপয়েন্ট সেট হয়ে গেছে — ফিরে এসে জিতো!"},
+    {title:"শেখার মোড: চালু",msg:"ভুল হওয়া মানে তুমি চেষ্টা করছো। চেষ্টা করতে থাকো — এভাবেই শেখা হয়!"}
+  ]
+};
+const ACHIEVEMENTS=currentLang==='bn'?ACHIEVEMENTS_BN:ACHIEVEMENTS_EN;
 
 function getRandomAchievement(score,total){
   const pct=score/total;
@@ -4792,13 +4876,13 @@ function updateQuizUIInPlace(quizIdx,picked,ans,isCorrect,isFinal,attempts){
   if(!lastBox||document.getElementById('quiz-score')) return;
   const mastered=stats.pct>=MASTERY_THRESHOLD;
   const masteryPct=Math.round(MASTERY_THRESHOLD*100);
-  const scoreHtml='<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>You got '+stats.correct+'/'+stats.total+' correct. Mastery target: '+masteryPct+'%.</div>';
+  const scoreHtml='<div class="quiz-score" id="quiz-score" style="display:block"><span class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>'+t('quizScore').replace('{c}',stats.correct).replace('{t}',stats.total).replace('{p}',masteryPct)+'</div>';
   lastBox.insertAdjacentHTML('afterend',scoreHtml);
   if(!mastered){
-    const retakeHtml='<div style="margin-top:0.6rem;text-align:center"><button class="btn btn-prev" onclick="resetLessonQuiz('+current+')">Retake Quiz</button></div>';
+    const retakeHtml='<div style="margin-top:0.6rem;text-align:center"><button class="btn btn-prev" onclick="resetLessonQuiz('+current+')">'+t('retakeQuiz')+'</button></div>';
     document.getElementById('quiz-score').insertAdjacentHTML('afterend',retakeHtml);
   }else{
-    const masteryHtml='<div style="margin-top:0.6rem;color:var(--quiz-correct-text);text-align:center;font-size:var(--text-sm);font-weight:600">Mastery unlocked. You can continue.</div>';
+    const masteryHtml='<div style="margin-top:0.6rem;color:var(--quiz-correct-text);text-align:center;font-size:var(--text-sm);font-weight:600">'+t('masteryUnlocked')+'</div>';
     document.getElementById('quiz-score').insertAdjacentHTML('afterend',masteryHtml);
     // Unlock the Complete & Next button in-place
     const nextBtn=document.querySelector('.btn-next');
@@ -4839,19 +4923,34 @@ function resetLessonQuiz(lessonIdx){
 
 loadState();
 currentLang=normalizeLang(currentLang);
-// Allow cross-page language handoff from index.html via ?lang=xx
-const urlLangParam=new URLSearchParams(location.search).get('lang');
-if(urlLangParam){
-  currentLang=normalizeLang(urlLangParam);
-}
-// Course default language (e.g. Bangla for math course) — apply only on first visit
-if(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.defaultLang&&currentLang==='en'&&!urlLangParam){
-  const savedLang=localStorage.getItem(LS_PREFIX+'lang_set');
-  if(!savedLang){currentLang=normalizeLang(COURSE_CONFIG.defaultLang);localStorage.setItem(LS_PREFIX+'lang_set','1');}
+// forceLang: lock to a specific language — hide selector, no translation
+const _forceLang=(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.forceLang)?normalizeLang(COURSE_CONFIG.forceLang):null;
+if(_forceLang){
+  currentLang=_forceLang;
+}else{
+  // Allow cross-page language handoff from index.html via ?lang=xx
+  const urlLangParam=new URLSearchParams(location.search).get('lang');
+  if(urlLangParam){
+    currentLang=normalizeLang(urlLangParam);
+  }
+  // Course default language (e.g. Bangla for math course) — apply only on first visit
+  if(typeof COURSE_CONFIG!=='undefined'&&COURSE_CONFIG.defaultLang&&currentLang==='en'&&!urlLangParam){
+    const savedLang=localStorage.getItem(LS_PREFIX+'lang_set');
+    if(!savedLang){currentLang=normalizeLang(COURSE_CONFIG.defaultLang);localStorage.setItem(LS_PREFIX+'lang_set','1');}
+  }
 }
 trackSessionStart();
 initTheme();
-initLanguageSelector();
+if(_forceLang){
+  // Hide language selector entirely — course is single-language
+  const langSel=document.querySelector('.lang-selector');
+  if(langSel) langSel.style.display='none';
+  // Prevent Google Translate from ever loading
+  document.documentElement.classList.add('notranslate');
+  document.documentElement.setAttribute('translate','no');
+}else{
+  initLanguageSelector();
+}
 document.documentElement.dir=RTL_LANGS.includes(currentLang)?'rtl':'ltr';
 document.documentElement.lang=currentLang;
 // Set user properties for analytics segmentation
@@ -4876,8 +4975,8 @@ startLessonHeartbeat();
 showDailyTip();
 window.addEventListener('pagehide',()=>endSession('pagehide'));
 window.addEventListener('beforeunload',()=>endSession('beforeunload'));
-// On page load: if non-English was saved, lazy-load Google Translate
-if(currentLang!=='en'){
+// On page load: if non-English was saved, lazy-load Google Translate (skip if forceLang)
+if(!_forceLang&&currentLang!=='en'){
   document.documentElement.classList.remove('notranslate');
   document.documentElement.removeAttribute('translate');
   lockTechnicalTerms(document.body);
@@ -4986,12 +5085,12 @@ function askAi(topic,context,extraContent){
   let html='<div class="ai-judge-overlay" onclick="if(event.target===this)closeAiJudge()">';
   html+='<div class="ai-judge-modal">';
   html+='<button class="ai-judge-close" onclick="closeAiJudge()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
-  html+='<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</h3>';
-  html+='<div class="subtitle">Learn about <strong>'+escHtml(topic)+' — '+escHtml(context)+'</strong></div>';
+  html+='<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> '+t('askAi')+'</h3>';
+  html+='<div class="subtitle">'+(_forceLang==='bn'?'<strong>'+escHtml(topic)+' — '+escHtml(context)+'</strong> সম্পর্কে জানো':'Learn about <strong>'+escHtml(topic)+' — '+escHtml(context)+'</strong>')+'</div>';
   html+='<button class="ai-copy-prompt-btn" id="ai-copy-prompt-btn" onclick="copyAiPrompt()">';
   html+='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
-  html+=' Copy Prompt to Clipboard</button>';
-  html+='<div class="ai-judge-hint">Copy the prompt, then open your favourite AI and paste it.</div>';
+  html+=(_forceLang==='bn'?' প্রম্পট কপি করো':' Copy Prompt to Clipboard')+'</button>';
+  html+='<div class="ai-judge-hint">'+(_forceLang==='bn'?'প্রম্পটটা কপি করো, তারপর তোমার পছন্দের AI-তে পেস্ট করো।':'Copy the prompt, then open your favourite AI and paste it.')+'</div>';
   html+='<div class="ai-tool-list">';
   tools.forEach(function(tool){
     html+='<a href="'+tool.url+'" target="_blank" rel="noopener" class="ai-tool-item" onclick="'+(tool.isYt?'':'copyAiPrompt()')+'">';

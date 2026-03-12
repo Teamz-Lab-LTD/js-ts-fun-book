@@ -1725,14 +1725,15 @@ function toBanglaNum(n){
 }
 
 // Build interactive area wrapper
-function createInteractiveWrapper(title,iconSvg){
+function createInteractiveWrapper(title,iconSvg,subtitle){
+  var sub=subtitle||'টেনে নিয়ে দেখো';
   const area=document.createElement('div');
   area.className='interactive-area';
   area.innerHTML=
     '<div class="interactive-area__header">'+
     (iconSvg||'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 2l20 20M22 2L2 22"/><circle cx="12" cy="12" r="10"/></svg>')+
     ' <span>'+(title||'ইন্টারেক্টিভ ভিজ্যুয়ালাইজেশন')+'</span>'+
-    '<span class="interactive-area__info">টেনে নিয়ে দেখো (drag to interact)</span>'+
+    '<span class="interactive-area__info">'+sub+'</span>'+
     '</div>'+
     '<div class="interactive-area__body"></div>';
   return area;
@@ -1812,8 +1813,15 @@ window.__onLessonRender=function(lesson,contentEl){
 
       if(config.title) title=config.title;
 
+      // Determine subtitle based on interaction type
+      var subtitle;
+      if(isGeo||isAngle||isHeightDist||isSimilar) subtitle='টেনে নিয়ে দেখো';
+      else if(isGraph) subtitle='প্যান ও জুম করো';
+      else if(isSlider||isProportion) subtitle='স্লাইডার টেনে মান বদলাও';
+      else subtitle='ভিজ্যুয়ালাইজেশন দেখো';
+
       // Create wrapper
-      const area=createInteractiveWrapper(title,icon);
+      const area=createInteractiveWrapper(title,icon,subtitle);
 
       // Insert after the "What Is / Real World" section
       const twoCol=contentEl.querySelector('.two-col');

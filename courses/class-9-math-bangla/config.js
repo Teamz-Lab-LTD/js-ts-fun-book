@@ -8,6 +8,7 @@ const COURSE_CONFIG = {
 
   // Course-specific features
   defaultLang: 'bn',                // Bangla by default (only this course)
+  forceLang: 'bn',                   // Lock to Bangla — hide language selector, no Google Translate
   disableTypingChallenge: true,     // No "Type the Code" — this is math, not coding
 
   // Course identity
