@@ -25,6 +25,7 @@ const COURSE_CONFIG = {
 
   // Footer tagline
   footerTagline: 'From basic English to Band 8+. Every lesson brings you closer to your dream score.',
+  thinkDeeperQ: 'Imagine you\'re sitting in the IELTS exam hall. Why would mastering <strong>{title}</strong> help you score higher? What mistakes could cost you a full band WITHOUT it?',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
   topicMap: {

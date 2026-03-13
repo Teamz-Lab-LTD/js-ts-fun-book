@@ -25,6 +25,7 @@ const COURSE_CONFIG = {
 
   // Footer tagline
   footerTagline: 'Built to get you hired. Every lesson is an interview advantage.',
+  thinkDeeperQ: 'Imagine an interviewer asks you about <strong>{title}</strong>. How would you explain it clearly? What follow-up questions might they ask?',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
   topicMap: {

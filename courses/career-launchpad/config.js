@@ -13,6 +13,7 @@ const COURSE_CONFIG = {
   topics: ['Portfolio', 'GitHub', 'LeetCode', 'Mock Interviews', 'Resume', 'LinkedIn', 'Networking', 'Job Applications', 'Salary Negotiation', 'Remote Work', 'AI-Responsible Dev'],
   educationalLevel: 'All Levels',
   footerTagline: 'Knowledge gets you interviews. This course gets you hired.',
+  thinkDeeperQ: 'Imagine you\'re applying for your dream developer job. Why would <strong>{title}</strong> matter in your job search? What could go wrong if you skip it?',
   topicMap: {
     'Portfolio & Projects':     [1, 2, 3],
     'Coding Practice':          [4, 5, 6],

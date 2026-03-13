@@ -26,6 +26,7 @@ const COURSE_CONFIG = {
   ],
   educationalLevel: 'Beginner to Advanced',
   footerTagline: 'Learn the machine beneath the software.',
+  thinkDeeperQ: 'Imagine you\'re designing an embedded system (like a traffic light controller or a washing machine). Why would you need <strong>{title}</strong>? What would fail WITHOUT it?',
   topicMap: {
     'Foundations': [1, 2, 3, 4],
     'Core Processor Model': [5, 6, 7, 8],

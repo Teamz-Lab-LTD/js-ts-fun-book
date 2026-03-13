@@ -126,5 +126,6 @@ const COURSE_CONFIG = {
   },
 
   // Footer stats (auto-calculated if not set)
-  footerTagline: 'Learn TypeScript, NestJS, React, MongoDB, Prisma, Docker, JWT Authentication, Redis, WebSockets & more — all in one place.'
+  footerTagline: 'Learn TypeScript, NestJS, React, MongoDB, Prisma, Docker, JWT Authentication, Redis, WebSockets & more — all in one place.',
+  thinkDeeperQ: 'Imagine you\'re building a real app (like Instagram or a to-do list). Why would you need <strong>{title}</strong>? What problems would you face WITHOUT it?'
 };

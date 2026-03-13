@@ -128,5 +128,6 @@ const COURSE_CONFIG = {
   },
 
   // Footer stats
-  footerTagline: 'Master C++, STL, Sorting (Bubble, Selection, Insertion, Merge), Binary Search, Greedy, Recursion, Dynamic Programming, Graphs, BFS, DFS, Bit Manipulation, Sieve, Combinatorics, Stacks, Queues, Two Pointers, Prefix Sums & Contest Strategy — explained so simply that anyone can learn. The world\'s most beginner-friendly competitive programming course.'
+  footerTagline: 'Master C++, STL, Sorting (Bubble, Selection, Insertion, Merge), Binary Search, Greedy, Recursion, Dynamic Programming, Graphs, BFS, DFS, Bit Manipulation, Sieve, Combinatorics, Stacks, Queues, Two Pointers, Prefix Sums & Contest Strategy — explained so simply that anyone can learn. The world\'s most beginner-friendly competitive programming course.',
+  thinkDeeperQ: 'Imagine you\'re solving a contest problem (like on Codeforces or LeetCode). Why would you need <strong>{title}</strong>? How would the problem become harder WITHOUT it?'
 };

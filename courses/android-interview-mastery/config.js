@@ -25,6 +25,7 @@ const COURSE_CONFIG = {
 
   // Footer tagline
   footerTagline: 'Built to get you hired as a Senior Android Engineer. Every lesson is an interview advantage.',
+  thinkDeeperQ: 'Imagine an interviewer asks you about <strong>{title}</strong> in an Android context. How would you explain it? What real production issues could arise WITHOUT it?',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
   topicMap: {

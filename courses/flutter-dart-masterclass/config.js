@@ -122,5 +122,6 @@ const COURSE_CONFIG = {
   },
 
   // Footer
-  footerTagline: 'Learn Flutter & Dart from scratch: widgets, BLoC state management, Clean Architecture, Repository Pattern, CRUD apps, REST APIs with Dio, Hive local storage, Firebase Auth, GoRouter, GetIt DI, testing & deployment — build production-ready cross-platform apps for free.'
+  footerTagline: 'Learn Flutter & Dart from scratch: widgets, BLoC state management, Clean Architecture, Repository Pattern, CRUD apps, REST APIs with Dio, Hive local storage, Firebase Auth, GoRouter, GetIt DI, testing & deployment — build production-ready cross-platform apps for free.',
+  thinkDeeperQ: 'Imagine you\'re building a cross-platform mobile app (like a food delivery or chat app). Why would you need <strong>{title}</strong>? What would go wrong WITHOUT it?'
 };

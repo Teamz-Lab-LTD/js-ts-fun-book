@@ -2187,7 +2187,7 @@ const UI_STRINGS={
     unlockCompleteNextTitle:'Answer all quiz questions with 80%+ to unlock. Use Retake Quiz to try again.',
     thinkDeeper:'Think Deeper',
     elaborativeInterrogation:'Elaborative Interrogation',
-    thinkDeeperDefaultQ:'Imagine you\'re building a real app (like Instagram or a to-do list). Why would you need <strong>{title}</strong>? What problems would you face WITHOUT it?',
+    thinkDeeperDefaultQ:'Imagine you\'re working on a real-world project. Why would you need <strong>{title}</strong>? What problems would you face WITHOUT it?',
     everydayAnalogy:'Everyday Analogy:',
     whyItMatters:'Why It Matters:',
     realExample:'Real Example:',
@@ -3418,7 +3418,7 @@ function render(){
   // Elaborative Interrogation — "Think Deeper" with rich explanation
   {
     const keyPoints=l.points.slice(0,3).map(p=>p.t).join(', ');
-    const whyQ=l.whyQuestion||t('thinkDeeperDefaultQ').replace('{title}',escHtml(l.title));
+    const whyQ=l.whyQuestion||(COURSE_CONFIG.thinkDeeperQ||t('thinkDeeperDefaultQ')).replace('{title}',escHtml(l.title));
 
     // Build a rich, beginner-friendly answer from lesson data
     let richAnswer='';

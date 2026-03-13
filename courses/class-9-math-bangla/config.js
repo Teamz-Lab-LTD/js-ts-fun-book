@@ -34,6 +34,7 @@ const COURSE_CONFIG = {
 
   // Footer tagline
   footerTagline: 'গণিত কঠিন না — শেখানোর পদ্ধতি ভুল ছিল। এবার সঠিকভাবে শিখো, আত্মবিশ্বাসের সাথে।',
+  thinkDeeperQ: 'ধরো তুমি পরীক্ষার হলে বসে আছো। <strong>{title}</strong> না জানলে কোন কোন প্রশ্ন আটকে যেত? এটা শিখলে পরীক্ষায় কীভাবে কাজে লাগবে?',
 
   // Topic categories for dashboard (lesson IDs grouped by topic)
   // Ordered from foundation → advanced
