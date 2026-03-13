@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://learn.teamzlab.com/</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -13,10 +13,22 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://learn.teamzlab.com/c/js-ts-fun-book.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://learn.teamzlab.com/learn.html?course=flutter-dart-masterclass</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://learn.teamzlab.com/c/flutter-dart-masterclass.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/learn.html?course=cp-kids</loc>
@@ -25,10 +37,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://learn.teamzlab.com/c/cp-kids.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://learn.teamzlab.com/learn.html?course=flutter-interview-mastery</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://learn.teamzlab.com/c/flutter-interview-mastery.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/learn.html?course=android-interview-mastery</loc>
@@ -37,10 +61,22 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://learn.teamzlab.com/c/android-interview-mastery.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://learn.teamzlab.com/learn.html?course=career-launchpad</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://learn.teamzlab.com/c/career-launchpad.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/learn.html?course=ielts-mastery</loc>
@@ -49,9 +85,33 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://learn.teamzlab.com/c/ielts-mastery.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://learn.teamzlab.com/learn.html?course=class-9-math-bangla</loc>
     <lastmod>2026-03-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://learn.teamzlab.com/c/class-9-math-bangla.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://learn.teamzlab.com/learn.html?course=microprocessor-a-z</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://learn.teamzlab.com/c/microprocessor-a-z.html</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
