@@ -14,7 +14,7 @@ const COURSE_CONFIG = {
   // Course identity
   title: 'নবম শ্রেণির গণিত — শূন্য থেকে পরীক্ষায় ৯৫+',
   subtitle: 'বাংলাদেশ NCTB সিলেবাস — <strong>৭৮টি সহজ পাঠ</strong> — দুর্বল ভিত্তি থেকে পরীক্ষায় সেরা নম্বর | বিনামূল্যে, সাইনআপ ছাড়া | by Teamz Lab',
-  shortTitle: 'Class 9 Math Bangla',
+  shortTitle: 'নবম শ্রেণি গণিত',
 
   // Organization
   org: 'Teamz Lab',
@@ -163,8 +163,5 @@ const COURSE_CONFIG = {
   social: {
     hashtags: 'Class9MathBangla,নবমশ্রেণিগণিত,SSCMath,TeamzLab,FreeMathCourse,NCTB',
     tweetTemplate: 'নবম শ্রেণির গণিত একদম ফ্রিতে শিখুন! {lessonCount}টি ইন্টারেক্টিভ পাঠ, কুইজ, ফ্ল্যাশকার্ড — সাইনআপ ছাড়া। বাংলায়, বাংলাদেশি শিক্ষার্থীদের জন্য।'
-  },
-
-  // Footer stats
-  footerTagline: 'গণিত কঠিন না — শেখানোর পদ্ধতি ভুল ছিল। এবার সঠিকভাবে শিখো, আত্মবিশ্বাসের সাথে।'
+  }
 };

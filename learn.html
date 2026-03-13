@@ -2620,27 +2620,35 @@ function applyKeyboardAffordances(root){
 function openPedagogyInfo(context){
   if(window.__logEvent) window.__logEvent('pedagogy_info_open',{context:context||'lesson',lesson_id:L[current]&&L[current].id,session_id:sessionId});
   if(document.getElementById('pedagogy-info-container')) return;
-  const cards=[
+  const cardsEn=[
     {name:'Retrieval Practice',how:'Answering from memory strengthens long-term retention more than re-reading.',source:'https://www.science.org/doi/10.1126/science.1199327'},
     {name:'Spaced Repetition',how:'Revisiting content over time improves durable memory compared with massed practice.',source:'https://www.pnas.org/doi/10.1073/pnas.1102280108'},
     {name:'Interleaving',how:'Mixing related problem types improves discrimination and transfer to new tasks.',source:'https://pubmed.ncbi.nlm.nih.gov/20951662/'},
     {name:'Elaboration',how:'Explaining why ideas are true improves understanding and transfer.',source:'https://www.sciencedirect.com/science/article/pii/S0361476X12000279'},
     {name:'Metacognition',how:'Confidence judgments help calibrate what to review next and reduce overconfidence.',source:'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3734875/'}
   ];
+  const cardsBn=[
+    {name:'রিট্রিভাল প্র্যাকটিস',how:'মুখস্থ না করে মনে করে উত্তর দিলে দীর্ঘমেয়াদী স্মৃতি অনেক বেশি মজবুত হয়।',source:'https://www.science.org/doi/10.1126/science.1199327'},
+    {name:'স্পেসড রিপিটিশন',how:'ধাপে ধাপে রিভিউ করলে একবারে মুখস্থ করার চেয়ে অনেক ভালো মনে থাকে।',source:'https://www.pnas.org/doi/10.1073/pnas.1102280108'},
+    {name:'ইন্টারলিভিং',how:'বিভিন্ন ধরনের সমস্যা মিশিয়ে প্র্যাকটিস করলে বোঝা ও প্রয়োগ দুটোই বাড়ে।',source:'https://pubmed.ncbi.nlm.nih.gov/20951662/'},
+    {name:'ইল্যাবোরেশন',how:'কেন একটা জিনিস সত্য তা নিজে ব্যাখ্যা করলে বোঝা গভীর হয়।',source:'https://www.sciencedirect.com/science/article/pii/S0361476X12000279'},
+    {name:'মেটাকগনিশন',how:'উত্তরের আগে আত্মবিশ্বাস রেট করলে বুঝতে পারো কোনটা রিভিউ করা দরকার।',source:'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3734875/'}
+  ];
+  const cards=currentLang==='bn'?cardsBn:cardsEn;
   const modal=document.createElement('div');
   modal.id='pedagogy-info-container';
   const cardsHtml=cards.map(c=>`
     <div class="pedagogy-card">
       <h4>${escHtml(c.name)}</h4>
       <p>${escHtml(c.how)}</p>
-      <a class="pedagogy-source" href="${c.source}" target="_blank" rel="noopener" onclick="if(window.__logEvent)window.__logEvent('pedagogy_source_click',{method:'${escHtml(c.name).replace(/'/g,"\\'")}'})">Source</a>
+      <a class="pedagogy-source" href="${c.source}" target="_blank" rel="noopener" onclick="if(window.__logEvent)window.__logEvent('pedagogy_source_click',{method:'${escHtml(c.name).replace(/'/g,"\\'")}'})\">${currentLang==='bn'?'সূত্র':'Source'}</a>
     </div>`).join('');
   modal.innerHTML=`<div class="pedagogy-overlay" onclick="if(event.target===this)closePedagogyInfo()">
     <div class="pedagogy-modal">
       <button class="pedagogy-close" onclick="closePedagogyInfo()" aria-label="Close">&times;</button>
       <div class="pedagogy-head">
-        <h3>Why This Lesson Format Works</h3>
-        <p>These methods are used intentionally to improve understanding, retention, and transfer.</p>
+        <h3>${currentLang==='bn'?'কেন এই ফরম্যাটে পড়ানো হচ্ছে':'Why This Lesson Format Works'}</h3>
+        <p>${currentLang==='bn'?'এই পদ্ধতিগুলো ইচ্ছাকৃতভাবে ব্যবহার করা হয়েছে — বোঝা, মনে রাখা, এবং প্রয়োগ করার ক্ষমতা বাড়ানোর জন্য।':'These methods are used intentionally to improve understanding, retention, and transfer.'}</p>
       </div>
       <div class="pedagogy-cards">${cardsHtml}</div>
     </div>
@@ -3246,7 +3254,7 @@ function render(){
     l.points.forEach((p,pi)=>{
       const rKey=current+'-'+pi;
       const reacted=pointReactions[rKey]||'';
-      h+=`<div class="point reveal"><div class="point-title">${p.t}</div><div class="point-desc">${p.d}</div>${p.code?`<pre class="point-code-example">${escHtml(p.code)}</pre>`:''}<div class="point-footer"><div class="point-reactions"><button class="point-react-btn ${reacted==='got'?'reacted':''}" data-key="${rKey}" data-emoji="got" onclick="event.stopPropagation();reactPoint(${current},${pi},'got')" title="Got it — I understand this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="react-label">Got it</span></button><button class="point-react-btn ${reacted==='hard'?'reacted':''}" data-key="${rKey}" data-emoji="hard" onclick="event.stopPropagation();reactPoint(${current},${pi},'hard')" title="Hard — need to review this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="react-label">Hard</span></button><button class="point-react-btn ${reacted==='love'?'reacted':''}" data-key="${rKey}" data-emoji="love" onclick="event.stopPropagation();reactPoint(${current},${pi},'love')" title="Love this — great explanation"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="react-label">Love</span></button></div><button class="ask-ai-btn" onclick="event.stopPropagation();askAi('${escHtml(l.title).replace(/'/g,"\\'")}','${escHtml(p.t).replace(/'/g,"\\'")}')" title="Ask AI about this"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Ask AI</button></div></div>`;
+      h+=`<div class="point reveal"><div class="point-title">${p.t}</div><div class="point-desc">${p.d}</div>${p.code?`<pre class="point-code-example">${escHtml(p.code)}</pre>`:''}<div class="point-footer"><div class="point-reactions"><button class="point-react-btn ${reacted==='got'?'reacted':''}" data-key="${rKey}" data-emoji="got" onclick="event.stopPropagation();reactPoint(${current},${pi},'got')" title="${currentLang==='bn'?'বুঝে গেছি':'Got it — I understand this'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="react-label">${currentLang==='bn'?'বুঝেছি':'Got it'}</span></button><button class="point-react-btn ${reacted==='hard'?'reacted':''}" data-key="${rKey}" data-emoji="hard" onclick="event.stopPropagation();reactPoint(${current},${pi},'hard')" title="${currentLang==='bn'?'কঠিন — আবার দেখতে হবে':'Hard — need to review this'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="react-label">${currentLang==='bn'?'কঠিন':'Hard'}</span></button><button class="point-react-btn ${reacted==='love'?'reacted':''}" data-key="${rKey}" data-emoji="love" onclick="event.stopPropagation();reactPoint(${current},${pi},'love')" title="${currentLang==='bn'?'দারুণ ব্যাখ্যা!':'Love this — great explanation'}"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="react-label">${currentLang==='bn'?'দারুণ':'Love'}</span></button></div><button class="ask-ai-btn" onclick="event.stopPropagation();askAi('${escHtml(l.title).replace(/'/g,"\\'")}','${escHtml(p.t).replace(/'/g,"\\'")}')" title="${t('askAi')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${t('askAi')}</button></div></div>`;
     });
     h+=`</div>`;
   }
@@ -3285,7 +3293,7 @@ function render(){
       const shuffledAns=sh.ans;
       h+=`<div class="quiz-box reveal" id="quiz-${qIdx}"><div class="quiz-counter"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>${t('quiz')} ${qIdx+1} / ${l.quiz.length}</div><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.6rem;margin-bottom:0.5rem"><p style="margin:0;color:var(--text);font-weight:600;flex:1">${q.q}</p>${quizAiButton(l.title,q.q,shuffledOpts)}</div>`;
       if(!answered){
-        h+=`<div class="confidence-bar" id="quiz-confidence-${qIdx}"><span class="confidence-label">How confident?</span><div class="confidence-btns"><button class="confidence-btn ${conf==='low'?'selected low':''}" data-level="low" onclick="setConfidence(${current},${qIdx},'low')">Unsure</button><button class="confidence-btn ${conf==='mid'?'selected mid':''}" data-level="mid" onclick="setConfidence(${current},${qIdx},'mid')">Somewhat</button><button class="confidence-btn ${conf==='high'?'selected high':''}" data-level="high" onclick="setConfidence(${current},${qIdx},'high')">Very Sure</button></div></div>`;
+        h+=`<div class="confidence-bar" id="quiz-confidence-${qIdx}"><span class="confidence-label">${currentLang==='bn'?'কতটুকু আত্মবিশ্বাসী?':'How confident?'}</span><div class="confidence-btns"><button class="confidence-btn ${conf==='low'?'selected low':''}" data-level="low" onclick="setConfidence(${current},${qIdx},'low')">${currentLang==='bn'?'অনিশ্চিত':'Unsure'}</button><button class="confidence-btn ${conf==='mid'?'selected mid':''}" data-level="mid" onclick="setConfidence(${current},${qIdx},'mid')">${currentLang==='bn'?'কিছুটা':'Somewhat'}</button><button class="confidence-btn ${conf==='high'?'selected high':''}" data-level="high" onclick="setConfidence(${current},${qIdx},'high')">${currentLang==='bn'?'খুব নিশ্চিত':'Very Sure'}</button></div></div>`;
       }
       shuffledOpts.forEach((o,i)=>{
         const isCorrect=answered&&i===shuffledAns;
@@ -3296,12 +3304,12 @@ function render(){
       if(attempts>0){
         const solved=quizScores[quizKey];
         if(solved===true){
-          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--quiz-correct-text);font-size:var(--text-sm)">Correct on ${attempts===1?'first try':'attempt '+attempts}. ${getQuizExplanation(current,qIdx,shuffledAns,shuffledAns,true)}</div>`;
+          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--quiz-correct-text);font-size:var(--text-sm)">${currentLang==='bn'?(attempts===1?'প্রথম চেষ্টাতেই সঠিক!':'চেষ্টা '+attempts+'-এ সঠিক।'):'Correct on '+(attempts===1?'first try':'attempt '+attempts)+'.'} ${getQuizExplanation(current,qIdx,shuffledAns,shuffledAns,true)}</div>`;
         }else if(solved===false){
-          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--quiz-wrong-text);font-size:var(--text-sm)">Final attempt used. ${getQuizExplanation(current,qIdx,-1,shuffledAns,false)}</div>`;
+          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--quiz-wrong-text);font-size:var(--text-sm)">${currentLang==='bn'?'সব চেষ্টা শেষ।':'Final attempt used.'} ${getQuizExplanation(current,qIdx,-1,shuffledAns,false)}</div>`;
         }else{
           const remaining=Math.max(0,MAX_QUIZ_ATTEMPTS-attempts);
-          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--warning);font-size:var(--text-sm)">Not correct yet. ${remaining} attempt${remaining===1?'':'s'} left.</div>`;
+          h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="margin-top:0.6rem;color:var(--warning);font-size:var(--text-sm)">${currentLang==='bn'?'এখনো সঠিক হয়নি। আর '+remaining+' টা চেষ্টা বাকি।':'Not correct yet. '+remaining+' attempt'+(remaining===1?'':'s')+' left.'}</div>`;
         }
       }else{
         h+=`<div class="quiz-inline-feedback" id="quiz-feedback-${qIdx}" style="display:none"></div>`;
@@ -3395,16 +3403,16 @@ function render(){
 
   // Self-Explanation Prompt (Metacognition + Elaboration) — at the end after all content
   h+=`<div class="self-explain reveal">
-    <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Explain It Yourself (+10 XP)</h4>
-    <p>Explaining concepts in your own words can strengthen understanding and memory. Write a brief explanation below:</p>
-    <textarea class="self-explain-textarea" id="self-explain-ta" placeholder="In my own words, ${l.title} is about..." oninput="saveSelfExplanation(${current})">${selfExplanations[current]||''}</textarea>
+    <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> ${currentLang==='bn'?'নিজের ভাষায় লেখো (+10 XP)':'Explain It Yourself (+10 XP)'}</h4>
+    <p>${currentLang==='bn'?'নিজের ভাষায় ব্যাখ্যা লিখলে বোঝা ও মনে রাখা দুটোই বাড়ে। নিচে সংক্ষেপে লেখো:':'Explaining concepts in your own words can strengthen understanding and memory. Write a brief explanation below:'}</p>
+    <textarea class="self-explain-textarea" id="self-explain-ta" placeholder="${currentLang==='bn'?'আমার নিজের ভাষায়, '+l.title+' হলো...':'In my own words, '+l.title+' is about...'}" oninput="saveSelfExplanation(${current})">${selfExplanations[current]||''}</textarea>
     <div class="self-explain-footer">
       <span class="self-explain-save" id="self-explain-saved">${t('autoSaved')}</span>
-      <button class="ai-judge-btn" onclick="openAiJudge()" id="ai-judge-trigger" ${selfExplanations[current]&&selfExplanations[current].length>=20?'':'disabled'} title="${selfExplanations[current]&&selfExplanations[current].length>=20?'Get your explanation evaluated by AI':'Write at least 20 characters first'}">
+      <button class="ai-judge-btn" onclick="openAiJudge()" id="ai-judge-trigger" ${selfExplanations[current]&&selfExplanations[current].length>=20?'':'disabled'} title="${selfExplanations[current]&&selfExplanations[current].length>=20?(currentLang==='bn'?'AI দিয়ে তোমার ব্যাখ্যা যাচাই করো':'Get your explanation evaluated by AI'):(currentLang==='bn'?'আগে কমপক্ষে ২০ অক্ষর লেখো':'Write at least 20 characters first')}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/><path d="M8 3.5A17 17 0 0 0 3.5 8"/><path d="M20.5 8A17 17 0 0 0 16 3.5"/><path d="M3.5 16A17 17 0 0 0 8 20.5"/><path d="M16 20.5a17 17 0 0 0 4.5-4.5"/></svg>
-        Judge by AI
+        ${currentLang==='bn'?'AI দিয়ে যাচাই':'Judge by AI'}
       </button>
-      <span class="self-explain-xp">${selfExplanations[current]&&selfExplanations[current].length>=20?'XP earned!':'Min 20 chars for XP'}</span>
+      <span class="self-explain-xp">${selfExplanations[current]&&selfExplanations[current].length>=20?(currentLang==='bn'?'XP পেয়ে গেছো!':'XP earned!'):(currentLang==='bn'?'XP পেতে কমপক্ষে ২০ অক্ষর লেখো':'Min 20 chars for XP')}</span>
     </div>
   </div>`;
 
@@ -3810,11 +3818,11 @@ function showCertificate(){if(window.__logEvent)window.__logEvent('certificate_v
             </a>
             <button class="cert-btn cert-btn-share" onclick="shareCertTwitter()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg>
-              Share on X
+              ${currentLang==='bn'?'X-এ শেয়ার':'Share on X'}
             </button>
             <button class="cert-btn cert-btn-share" onclick="copyCertLink()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-              Copy Link
+              ${currentLang==='bn'?'লিংক কপি':'Copy Link'}
             </button>
           </div>
         </div>
@@ -4695,6 +4703,12 @@ function getAchievementIcon(score,total){
 
 function getBadgeLabel(score,total){
   const pct=score/total;
+  if(currentLang==='bn'){
+    if(pct===1) return 'পারফেক্ট স্কোর';
+    if(pct>=0.75) return 'দারুণ কাজ';
+    if(pct>=0.5) return 'ভালো চেষ্টা';
+    return 'চালিয়ে যাও';
+  }
   if(pct===1) return 'PERFECT SCORE';
   if(pct>=0.75) return 'GREAT JOB';
   if(pct>=0.5) return 'NICE TRY';
@@ -4743,10 +4757,10 @@ function showAchievement(score,total){
       <div class="achievement-score">${score} / ${total}</div>
       <div class="achievement-msg">${a.msg}</div>
       <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:0.8rem;flex-wrap:wrap;">
-        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent('Just scored '+score+'/'+total+' on the Free Full-Stack Playbook! Test yourself:')}&url=${encodeURIComponent('https://learn.teamzlab.com/learn.html?course=js-ts-fun-book')}&hashtags=FullStackPlaybook,LearnToCode" target="_blank" rel="noopener" style="padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);text-decoration:none;font-size:var(--text-sm);font-family:var(--font);" onclick="if(window.__logEvent)window.__logEvent('share_click',{platform:'twitter',context:'achievement'})">Share on X</a>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://learn.teamzlab.com/learn.html?course=js-ts-fun-book')}" target="_blank" rel="noopener" style="padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);text-decoration:none;font-size:var(--text-sm);font-family:var(--font);" onclick="if(window.__logEvent)window.__logEvent('share_click',{platform:'linkedin',context:'achievement'})">Share on LinkedIn</a>
+        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent((currentLang==='bn'?score+'/'+total+' পেয়েছি! তুমিও চেষ্টা করো:':'Just scored '+score+'/'+total+'! Test yourself:'))}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener" style="padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);text-decoration:none;font-size:var(--text-sm);font-family:var(--font);" onclick="if(window.__logEvent)window.__logEvent('share_click',{platform:'twitter',context:'achievement'})">${currentLang==='bn'?'X-এ শেয়ার':'Share on X'}</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener" style="padding:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);text-decoration:none;font-size:var(--text-sm);font-family:var(--font);" onclick="if(window.__logEvent)window.__logEvent('share_click',{platform:'linkedin',context:'achievement'})">${currentLang==='bn'?'লিংকডইনে শেয়ার':'Share on LinkedIn'}</a>
       </div>
-      <button class="achievement-close" onclick="this.closest('.achievement-overlay').remove()">Continue Learning</button>
+      <button class="achievement-close" onclick="this.closest('.achievement-overlay').remove()">${currentLang==='bn'?'শেখা চালিয়ে যাও':'Continue Learning'}</button>
       ${adSlot('between-lessons')}
     </div>
   `;
@@ -4854,18 +4868,18 @@ function updateQuizUIInPlace(quizIdx,picked,ans,isCorrect,isFinal,attempts){
       let analogyHtml='';
       if(l.analogy||relatedPoint){
         analogyHtml='<div class="quiz-analogy-box">';
-        if(l.analogy) analogyHtml+='<div class="quiz-analogy-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg><span><strong>Real-Life Analogy:</strong> '+escHtml(l.analogy)+'</span></div>';
-        if(relatedPoint) analogyHtml+='<div class="quiz-analogy-concept"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span><strong>Key Concept — '+escHtml(relatedPoint.t)+':</strong> '+escHtml(relatedPoint.d)+'</span></div>';
+        if(l.analogy) analogyHtml+='<div class="quiz-analogy-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg><span><strong>'+(currentLang==='bn'?'বাস্তব উদাহরণ:':'Real-Life Analogy:')+'</strong> '+escHtml(l.analogy)+'</span></div>';
+        if(relatedPoint) analogyHtml+='<div class="quiz-analogy-concept"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span><strong>'+(currentLang==='bn'?'মূল ধারণা — ':'Key Concept — ')+escHtml(relatedPoint.t)+':</strong> '+escHtml(relatedPoint.d)+'</span></div>';
         analogyHtml+='</div>';
       }
-      feedbackEl.innerHTML='<span style="color:var(--quiz-correct-text)">Correct on '+(attempts===1?'first try':'attempt '+attempts)+'. '+escHtml(explanation)+'</span>'+analogyHtml;
+      feedbackEl.innerHTML='<span style="color:var(--quiz-correct-text)">'+(currentLang==='bn'?(attempts===1?'প্রথম চেষ্টাতেই সঠিক! ':'চেষ্টা '+attempts+'-এ সঠিক। '):'Correct on '+(attempts===1?'first try':'attempt '+attempts)+'. ')+escHtml(explanation)+'</span>'+analogyHtml;
     }else if(isFinal){
       feedbackEl.style.color='var(--quiz-wrong-text)';
-      feedbackEl.textContent='Final attempt used. '+getQuizExplanation(current,quizIdx,-1,ans,false);
+      feedbackEl.textContent=(currentLang==='bn'?'সব চেষ্টা শেষ। ':'Final attempt used. ')+getQuizExplanation(current,quizIdx,-1,ans,false);
     }else{
       feedbackEl.style.color='var(--warning)';
       const remaining=Math.max(0,MAX_QUIZ_ATTEMPTS-attempts);
-      feedbackEl.textContent='Not correct yet. '+remaining+' attempt'+(remaining===1?'':'s')+' left.';
+      feedbackEl.textContent=currentLang==='bn'?'এখনো সঠিক হয়নি। আর '+remaining+' টা চেষ্টা বাকি।':'Not correct yet. '+remaining+' attempt'+(remaining===1?'':'s')+' left.';
     }
   }
   const l=L[current];
@@ -4948,6 +4962,32 @@ if(_forceLang){
   // Prevent Google Translate from ever loading
   document.documentElement.classList.add('notranslate');
   document.documentElement.setAttribute('translate','no');
+  // Update static HTML placeholders for forced language
+  if(_forceLang==='bn'){
+    const sidebarFilter=document.getElementById('sidebar-filter');
+    if(sidebarFilter) sidebarFilter.placeholder='অধ্যায় খোঁজো...';
+    const notesTitle=document.getElementById('notes-float-lesson');
+    if(notesTitle) notesTitle.textContent='আমার নোট';
+    const tabCurr=document.getElementById('notes-tab-current');
+    if(tabCurr) tabCurr.textContent='এই লেসন';
+    const tabAll=document.getElementById('notes-tab-all');
+    if(tabAll) tabAll.textContent='সব নোট';
+    // Notes action tooltips
+    document.querySelectorAll('button[onclick="copyNote()"]').forEach(b=>b.title='নোট কপি করো');
+    document.querySelectorAll('button[onclick="shareNote()"]').forEach(b=>b.title='নোট শেয়ার করো');
+    // Footer share section
+    const footerShareHeading=document.querySelector('footer div[style*="font-weight:700"]');
+    if(footerShareHeading&&footerShareHeading.textContent.includes('Share this')) footerShareHeading.textContent='বন্ধুদের সাথে শেয়ার করো!';
+    document.querySelectorAll('footer a, footer button').forEach(el=>{
+      const txt=el.textContent.trim();
+      if(txt==='Share on X') el.innerHTML=el.innerHTML.replace('Share on X','X-এ শেয়ার');
+      else if(txt==='Share on LinkedIn') el.innerHTML=el.innerHTML.replace('Share on LinkedIn','লিংকডইনে শেয়ার');
+      else if(txt==='WhatsApp') el.innerHTML=el.innerHTML.replace('WhatsApp','হোয়াটসঅ্যাপ');
+      else if(txt==='Facebook') el.innerHTML=el.innerHTML.replace('Facebook','ফেসবুক');
+      else if(txt==='Reddit') el.innerHTML=el.innerHTML.replace('Reddit','রেডিট');
+      else if(txt==='Copy Link') el.innerHTML=el.innerHTML.replace('Copy Link','লিংক কপি');
+    });
+  }
 }else{
   initLanguageSelector();
 }
