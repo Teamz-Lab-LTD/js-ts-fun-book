@@ -5410,6 +5410,27 @@ if(typeof COURSE_CONFIG!=='undefined'){
       }
     }catch(e){}
   });
+  // Dynamic FAQ schema from quiz data (for Google rich snippets)
+  if(typeof LESSONS_DATA!=='undefined'&&LESSONS_DATA.length){
+    var faqItems=[];
+    LESSONS_DATA.forEach(function(l){
+      if(l.quiz&&l.quiz.length){
+        l.quiz.forEach(function(q){
+          if(faqItems.length<10){
+            var ansText=q.opts[q.ans];
+            faqItems.push({"@type":"Question","name":q.q,"acceptedAnswer":{"@type":"Answer","text":ansText}});
+          }
+        });
+      }
+    });
+    if(faqItems.length){
+      var oldFaq=null;
+      allSchemas.forEach(function(s){try{var d=JSON.parse(s.textContent);if(d['@type']==='FAQPage')oldFaq=s;}catch(e){}});
+      var faqJson=JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqItems});
+      if(oldFaq){oldFaq.textContent=faqJson;}
+      else{var fs=document.createElement('script');fs.type='application/ld+json';fs.textContent=faqJson;document.head.appendChild(fs);}
+    }
+  }
 }
 // View switching helper (avoids closure variable issues in onclick)
 function switchView(view){
