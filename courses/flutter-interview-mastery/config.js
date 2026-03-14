@@ -144,5 +144,23 @@ const COURSE_CONFIG = {
     bugFound: 40,
     flashcardReview: 10,
     streakBonus: 25
+  },
+
+  // Branding & ebook promotion
+  branding: {
+    trustStrip: 'We build production Flutter apps and train dev teams. <strong>This free course is how we give back.</strong>',
+    trustStripCta: 'Need Flutter experts? Talk to us',
+    headerSubtitle: 'Land Your Senior Flutter Role — Free, Interview-Focused Training | by',
+    ebookUrl: 'https://www.amazon.com/dp/B0GS1X86J1',
+    ebookTitle: 'Get the Full Book',
+    ebookSubtitle: 'Flutter App Development — the complete guide on Amazon',
+    footerCtaTitle: 'Need Senior Flutter Developers?',
+    footerCtaDesc: 'Teamz Lab builds production mobile apps and provides <strong style="color:var(--heading)">Flutter consulting, team augmentation & code audits</strong>. We built this free course — imagine what we can do for your team.',
+    services: [
+      { name: 'Flutter App Development', desc: 'Production-grade cross-platform iOS & Android apps with BLoC, Clean Architecture & Firebase' },
+      { name: 'Team Augmentation', desc: 'Senior Flutter developers to embed in your team — architecture, code review & mentoring' },
+      { name: 'Code Audit & Optimization', desc: 'Performance profiling, architecture review, and codebase modernization for existing Flutter apps' },
+      { name: 'AI Integration & Consulting', desc: 'Integrate AI capabilities into your mobile apps — chatbots, image recognition & intelligent features' }
+    ]
   }
 };

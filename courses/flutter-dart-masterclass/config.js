@@ -123,5 +123,23 @@ const COURSE_CONFIG = {
 
   // Footer
   footerTagline: 'Learn Flutter & Dart from scratch: widgets, BLoC state management, Clean Architecture, Repository Pattern, CRUD apps, REST APIs with Dio, Hive local storage, Firebase Auth, GoRouter, GetIt DI, testing & deployment — build production-ready cross-platform apps for free.',
-  thinkDeeperQ: 'Imagine you\'re building a cross-platform mobile app (like a food delivery or chat app). Why would you need <strong>{title}</strong>? What would go wrong WITHOUT it?'
+  thinkDeeperQ: 'Imagine you\'re building a cross-platform mobile app (like a food delivery or chat app). Why would you need <strong>{title}</strong>? What would go wrong WITHOUT it?',
+
+  // Branding & ebook promotion
+  branding: {
+    trustStrip: 'We build production Flutter & cross-platform apps for startups and enterprises. <strong>This free course is how we give back.</strong>',
+    trustStripCta: 'Need a Flutter team? Talk to us',
+    headerSubtitle: 'Learn Flutter & Dart by Building Real Apps — Free, Project-Based Training | by',
+    ebookUrl: 'https://www.amazon.com/dp/B0GS1X86J1',
+    ebookTitle: 'Get the Full Book',
+    ebookSubtitle: 'Flutter App Development — the complete guide on Amazon',
+    footerCtaTitle: 'Need a Flutter Team for Your App?',
+    footerCtaDesc: 'Teamz Lab builds production mobile apps with <strong style="color:var(--heading)">Flutter, Dart, Firebase & Clean Architecture</strong>. We built this free course — imagine what we can build for your business.',
+    services: [
+      { name: 'Flutter App Development', desc: 'Production-grade cross-platform iOS & Android apps with BLoC, Clean Architecture & Firebase' },
+      { name: 'Full-Stack Mobile + Backend', desc: 'End-to-end mobile solutions with NestJS/Node.js backends, REST APIs & real-time features' },
+      { name: 'App Migration & Modernization', desc: 'Migrate native Android/iOS apps to Flutter or upgrade legacy Flutter codebases' },
+      { name: 'AI Integration & Consulting', desc: 'Integrate AI capabilities into your mobile apps — chatbots, image recognition & intelligent features' }
+    ]
+  }
 };

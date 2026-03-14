@@ -127,5 +127,23 @@ const COURSE_CONFIG = {
 
   // Footer stats (auto-calculated if not set)
   footerTagline: 'Learn TypeScript, NestJS, React, MongoDB, Prisma, Docker, JWT Authentication, Redis, WebSockets & more — all in one place.',
-  thinkDeeperQ: 'Imagine you\'re building a real app (like Instagram or a to-do list). Why would you need <strong>{title}</strong>? What problems would you face WITHOUT it?'
+  thinkDeeperQ: 'Imagine you\'re building a real app (like Instagram or a to-do list). Why would you need <strong>{title}</strong>? What problems would you face WITHOUT it?',
+
+  // Branding & ebook promotion
+  branding: {
+    trustStrip: 'We build production-grade web & mobile apps with TypeScript, NestJS, React & Flutter. <strong>This free course is how we give back.</strong>',
+    trustStripCta: 'Need a full-stack team? Talk to us',
+    headerSubtitle: 'From Idea to Deployed App — Free, Project-Based Full-Stack Training | by',
+    ebookUrl: 'https://www.amazon.com/dp/B0GS3GSJ5V',
+    ebookTitle: 'Get the Full Book',
+    ebookSubtitle: 'Zero to Advanced Web Dev — the complete guide on Amazon',
+    footerCtaTitle: 'Need a Full-Stack Team for Your Product?',
+    footerCtaDesc: 'Teamz Lab builds production web apps, mobile apps, and SaaS platforms with <strong style="color:var(--heading)">TypeScript, NestJS, React & Flutter</strong>. We built this free course — imagine what we can build for your business.',
+    services: [
+      { name: 'Full-Stack Web Apps', desc: 'Production-grade TypeScript + NestJS + React applications with scalable architecture' },
+      { name: 'Mobile App Development', desc: 'Cross-platform Flutter & React Native apps for iOS and Android' },
+      { name: 'SaaS & API Development', desc: 'Custom SaaS platforms, REST/GraphQL APIs, and microservices architecture' },
+      { name: 'AI Integration & Consulting', desc: 'Integrate AI capabilities into your existing products — chatbots, automation, and intelligent features' }
+    ]
+  }
 };

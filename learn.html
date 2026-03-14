@@ -730,7 +730,8 @@ footer { text-align:center; padding:3rem; color:var(--text-muted); font-size:var
   .notes-float { width:calc(100vw - 1rem); right:0.5rem; bottom:0.5rem; }
   .notes-fab { bottom:1.2rem; right:1rem; width:44px; height:44px; }
   .coffee-fab { bottom:4.8rem; right:1rem; height:40px; font-size:0.72rem; padding:0 0.8rem 0 0.6rem; }
-  .report-fab { bottom:8.2rem; right:1rem; width:40px; height:40px; }
+  .ebook-fab { bottom:8rem; right:1rem; height:38px; font-size:0.7rem; padding:0 0.7rem 0 0.5rem; }
+  .report-fab { bottom:10.8rem; right:1rem; width:40px; height:40px; }
   .sidebar-toggle { bottom:1rem; left:1rem; width:40px; height:40px; }
   .xp-popup { top:60px; right:10px; font-size:var(--text-sm); padding:0.6rem 1rem; }
 
@@ -1194,12 +1195,32 @@ body { top:0 !important; }
 .coffee-fab:hover { transform:scale(1.08); box-shadow:0 6px 32px rgba(255,221,0,0.5); animation:none; }
 .coffee-fab svg { width:22px; height:22px; flex-shrink:0; }
 
+/* Ebook promo floating button */
+.ebook-fab { position:fixed; bottom:8.8rem; right:1.5rem; height:44px; padding:0 1rem 0 0.7rem; border-radius:99px; background:var(--accent); color:var(--accent-text); border:none; cursor:pointer; z-index:9995; box-shadow:0 4px 20px rgba(217,254,6,0.3); transition:transform 0.3s,box-shadow 0.3s; display:none; align-items:center; gap:0.45rem; text-decoration:none; font-family:'Poppins',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:-0.01em; }
+.ebook-fab:hover { transform:scale(1.08); box-shadow:0 6px 32px rgba(217,254,6,0.5); }
+.ebook-fab svg { width:20px; height:20px; flex-shrink:0; }
+
 /* Report Bug floating button */
-.report-fab { position:fixed; bottom:9.5rem; right:1.5rem; width:44px; height:44px; border-radius:50%; background:var(--surface); border:1px solid var(--border); color:var(--text-muted); cursor:pointer; z-index:9995; box-shadow:0 4px 16px rgba(0,0,0,0.2); transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s,color 0.3s; display:flex; align-items:center; justify-content:center; text-decoration:none; }
+.report-fab { position:fixed; bottom:12rem; right:1.5rem; width:44px; height:44px; border-radius:50%; background:var(--surface); border:1px solid var(--border); color:var(--text-muted); cursor:pointer; z-index:9995; box-shadow:0 4px 16px rgba(0,0,0,0.2); transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s,color 0.3s; display:flex; align-items:center; justify-content:center; text-decoration:none; }
 .report-fab:hover { transform:scale(1.1); border-color:var(--danger); color:var(--danger); box-shadow:0 4px 20px rgba(244,67,54,0.25); }
 .report-fab svg { width:20px; height:20px; }
 
 /* notes/coffee mobile rules consolidated into main @media(max-width:700px) block */
+
+/* In-lesson branding CTA */
+.branding-cta { margin:1.5rem 0; padding:1.2rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; transition:background 0.3s,border-color 0.3s; }
+.branding-cta__title { font-size:var(--text-md); font-weight:700; color:var(--heading); margin-bottom:0.4rem; display:flex; align-items:center; gap:0.5rem; }
+.branding-cta__desc { font-size:var(--text-sm); color:var(--text-muted); margin:0 0 0.8rem; line-height:var(--lh); }
+.branding-cta__btn { display:inline-flex; align-items:center; gap:0.4rem; padding:8px 16px; height:36px; background:var(--heading); color:var(--bg); border:none; border-radius:22px; text-decoration:none; font-size:var(--text-sm); font-weight:600; font-family:var(--font); transition:all 0.3s; }
+.branding-cta__btn:hover { transform:scale(1.05); box-shadow:0 4px 15px rgba(255,255,255,0.1); }
+
+/* In-lesson ebook CTA */
+.ebook-cta { margin:1.5rem 0; padding:1rem 1.2rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; transition:background 0.3s,border-color 0.3s; }
+.ebook-cta__body { flex:1; min-width:200px; }
+.ebook-cta__text { font-size:var(--text-sm); font-weight:600; color:var(--heading); margin-bottom:0.2rem; }
+.ebook-cta__text svg { vertical-align:-2px; margin-right:0.3rem; }
+.ebook-cta__btn { display:inline-flex; align-items:center; gap:0.4rem; padding:8px 16px; height:36px; background:var(--heading); color:var(--bg); border:none; border-radius:22px; text-decoration:none; font-size:var(--text-sm); font-weight:600; font-family:var(--font); white-space:nowrap; transition:all 0.3s; }
+.ebook-cta__btn:hover { transform:scale(1.05); box-shadow:0 4px 15px rgba(255,255,255,0.1); }
 
 /* Spaced Repetition Review Mode */
 .review-mode { max-width:900px; margin:2rem auto; padding:0 2rem; }
@@ -1751,10 +1772,10 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 <div class="ad-slot ad-leaderboard" id="ad-footer" style="display:none;margin:1rem 0">
   <!-- AdSense injected here when enabled -->
 </div>
-<!-- Business CTA — for non-tech visitors -->
-<div style="margin:2rem 0 1.5rem;padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center">
-  <div style="font-size:var(--text-lg);font-weight:700;color:var(--heading);margin-bottom:0.3rem">Need a Website or App Built?</div>
-  <p style="font-size:var(--text-sm);color:var(--text-muted);margin:0 0 0.8rem;line-height:var(--lh)">Don't want to code it yourself? Our team builds production-ready web apps, mobile apps, and SaaS products — and we specialize in <strong style="color:var(--heading)">AI integration</strong> into your existing systems (chatbots, smart automation, AI-powered features & more).</p>
+<!-- Business CTA — dynamic per course -->
+<div id="footer-cta-box" style="margin:2rem 0 1.5rem;padding:1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center">
+  <div id="footer-cta-title" style="font-size:var(--text-lg);font-weight:700;color:var(--heading);margin-bottom:0.3rem">Need a Website or App Built?</div>
+  <p id="footer-cta-desc" style="font-size:var(--text-sm);color:var(--text-muted);margin:0 0 0.8rem;line-height:var(--lh)">Don't want to code it yourself? Our team builds production-ready web apps, mobile apps, and SaaS products — and we specialize in <strong style="color:var(--heading)">AI integration</strong> into your existing systems (chatbots, smart automation, AI-powered features & more).</p>
   <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap">
     <a onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'footer_cta'})" href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" style="padding:0.5rem 1.2rem;background:var(--accent);color:var(--accent-text);border-radius:8px;text-decoration:none;font-size:var(--text-md);font-weight:600;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.4rem">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Hire Us on Upwork
@@ -1766,7 +1787,7 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> See Our Apps
     </a>
   </div>
-  <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.8rem;flex-wrap:wrap">
+  <div class="footer-service-tags" style="display:flex;gap:1rem;justify-content:center;margin-top:0.8rem;flex-wrap:wrap">
     <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 110 2h-1.07A7 7 0 0113 22v-1a1 1 0 112 0v.93A5 5 0 0019 17H5a5 5 0 004 4.93V22a1 1 0 112 0v1a7 7 0 01-6.93-6H3a1 1 0 110-2h1a7 7 0 017-7h1V5.73A2 2 0 0112 2z"/></svg> AI Integration</span>
     <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Web & Mobile Apps</span>
     <span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> SaaS & Startups</span>
@@ -1792,6 +1813,12 @@ input:focus-visible, textarea:focus-visible, [contenteditable="true"]:focus-visi
 <!-- Report Bug floating button -->
 <a class="report-fab" id="report-fab" href="#" target="_blank" rel="noopener noreferrer" title="Report a Bug" onclick="openBugReport(event)">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+</a>
+
+<!-- Ebook promo floating button (shown only when COURSE_CONFIG.branding.ebookUrl is set) -->
+<a class="ebook-fab" id="ebook-fab" href="#" target="_blank" rel="noopener noreferrer" title="Get the Book" onclick="if(window.__logEvent)window.__logEvent('ebook_click',{location:'fab'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+  <span id="ebook-fab-text">Get the Book</span>
 </a>
 
 <!-- Buy Me a Coffee floating button -->
@@ -3594,6 +3621,27 @@ function render(){
     h+=`<div class="challenge reveal"><h4><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>${t('challenge')}</h4><p>${l.challenge}</p></div>`;
   }
 
+  // In-lesson branding CTA (contextual "we can help" for relevant lessons)
+  if(l.brandingCta){
+    const bc=l.brandingCta;
+    h+=`<div class="branding-cta reveal">
+      <div class="branding-cta__title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${escHtml(bc.title)}</div>
+      <p class="branding-cta__desc">${bc.message}</p>
+      <a href="${bc.url||'https://www.upwork.com/agencies/1904602719490921565/'}" target="_blank" rel="noopener noreferrer" class="branding-cta__btn" onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'lesson_cta',lesson:${l.id}})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> ${escHtml(bc.cta||'Talk to Teamz Lab')}</a>
+    </div>`;
+  }
+
+  // In-lesson ebook CTA (drives book sales from relevant lessons)
+  if(l.ebookCta){
+    const eb=l.ebookCta;
+    h+=`<div class="ebook-cta reveal">
+      <div class="ebook-cta__body">
+        <div class="ebook-cta__text"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> ${escHtml(eb.text)}</div>
+      </div>
+      <a href="${eb.url}" target="_blank" rel="noopener noreferrer" class="ebook-cta__btn" onclick="if(window.__logEvent)window.__logEvent('ebook_click',{location:'lesson_cta',lesson:${l.id}})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> ${escHtml(eb.buttonText||'Get the Book')}</a>
+    </div>`;
+  }
+
   // Typing Challenge (skip for non-code courses like math — controlled by config)
   const typingEnabled=!(COURSE_CONFIG.disableTypingChallenge);
   if(typingEnabled&&l.code&&l.code.length<500){
@@ -5263,12 +5311,48 @@ if(typeof COURSE_CONFIG!=='undefined'){
   if(hdrSub){
     const orgUrl=COURSE_CONFIG.orgUrl||'https://teamzlab.com/';
     const org=COURSE_CONFIG.org||'Teamz Lab';
-    const sub=COURSE_CONFIG.subtitle||hdrSub.textContent;
+    const br=COURSE_CONFIG.branding||{};
+    const sub=br.headerSubtitle||COURSE_CONFIG.subtitle||hdrSub.textContent;
     // Make org name a clickable accent link in subtitle
+    const orgLink=`<a href="${orgUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--accent-fg);text-decoration:none;font-weight:700" onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header_subtitle'})">${org}</a>`;
     if(sub.includes(org)){
-      hdrSub.innerHTML=sub.replace(org,`<a href="${orgUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--accent-fg);text-decoration:none;font-weight:700" onclick="if(window.__logEvent)window.__logEvent('hire_click',{location:'header_subtitle'})">${org}</a>`);
+      hdrSub.innerHTML=sub.replace(org,orgLink);
+    }else if(sub.endsWith('by')||sub.endsWith('by ')){
+      hdrSub.innerHTML=sub+' '+orgLink;
     }else{
-      hdrSub.textContent=sub;
+      hdrSub.innerHTML=sub;
+    }
+  }
+  // Apply branding to trust strip and ebook FAB
+  if(COURSE_CONFIG.branding){
+    const br=COURSE_CONFIG.branding;
+    const ts=document.querySelector('.trust-strip');
+    if(ts&&br.trustStrip){
+      const ctaText=br.trustStripCta||'Talk to us';
+      ts.innerHTML=br.trustStrip+' <a href="https://www.upwork.com/agencies/1904602719490921565/" target="_blank" rel="noopener noreferrer" onclick="if(window.__logEvent)window.__logEvent(\'hire_click\',{location:\'trust_strip\'})">'+ctaText+'</a>';
+    }
+    // Show ebook FAB if configured
+    const ebFab=document.getElementById('ebook-fab');
+    if(ebFab&&br.ebookUrl){
+      ebFab.href=br.ebookUrl;
+      ebFab.style.display='flex';
+      ebFab.title=br.ebookSubtitle||'Get the Book';
+      const ebTxt=document.getElementById('ebook-fab-text');
+      if(ebTxt) ebTxt.textContent=br.ebookTitle||'Get the Book';
+    }
+    // Update footer CTA with course-specific services
+    if(br.services&&br.services.length){
+      const ctaTitle=document.getElementById('footer-cta-title');
+      const ctaDesc=document.getElementById('footer-cta-desc');
+      if(ctaTitle) ctaTitle.textContent=br.footerCtaTitle||'Need Help With This?';
+      if(ctaDesc) ctaDesc.innerHTML=br.footerCtaDesc||'Teamz Lab offers professional services related to what you just learned. We help organizations implement real solutions.';
+      // Replace service tags
+      const tagContainer=document.querySelector('#footer-cta-box .footer-service-tags');
+      if(tagContainer){
+        tagContainer.innerHTML=br.services.map(function(s){
+          return '<span style="font-size:var(--text-sm);color:var(--accent-fg);font-weight:600;display:flex;align-items:center;gap:0.3rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-fg)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> '+s.name+'</span>';
+        }).join('');
+      }
     }
   }
   document.title=COURSE_CONFIG.title+' — Free Interactive Lessons';

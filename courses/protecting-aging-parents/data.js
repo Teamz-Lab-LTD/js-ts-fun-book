@@ -5,17 +5,17 @@ const LESSONS_DATA = [
 {
   id: 1,
   title: "The Phone Call That Changed Everything",
-  subtitle: "How a grandmother lost $15,000 to artificial intelligence -- and why it could happen to your parents tomorrow",
+  subtitle: "How a grandmother lost thousands to artificial intelligence -- and why it could happen to your parents tomorrow",
   analogy: "Imagine a master forger who can perfectly copy anyone's handwriting in seconds. Now imagine that forger can also perfectly copy anyone's VOICE. That is what AI voice cloning does -- it listens to a few seconds of someone talking and creates a perfect vocal twin that can say anything the scammer wants.",
   points: [
     {
-      t: "Sharon's Story: A Real $15,000 Loss",
-      d: "Sharon Brightwell, 73, received a late-night call from what sounded exactly like her daughter Melissa. The voice had the same rasp, the same inflection, the same way of saying 'Mom.' It was AI-generated from a 30-second Facebook birthday video.",
-      code: "Scammer (as 'Melissa'): 'Mom! I was in a car accident. A pregnant woman lost her baby. I need $15,000 for the lawyer TONIGHT.' --> Red flags: late-night call + extreme urgency + cash demand + courier pickup"
+      t: "A Real Story: Thousands Lost in One Night",
+      d: "A grandmother in Florida, age 73, received a late-night call from what sounded exactly like her daughter. The voice had the same rasp, the same inflection, the same way of saying 'Mom.' It was AI-generated from a 30-second Facebook birthday video.",
+      code: "Scammer (as 'daughter'): 'Mom! I was in a car accident. A pregnant woman lost her baby. I need money for the lawyer TONIGHT.' --> Red flags: late-night call + extreme urgency + cash demand + courier pickup"
     },
     {
       t: "The 30-Second Voice Theft",
-      d: "Scammers found a Facebook video of Melissa saying 'Happy Birthday Mom!' -- just 30 seconds of audio. They fed it into a free AI voice-cloning tool. Within minutes, they had a synthetic voice that could say anything and sound exactly like Melissa.",
+      d: "Scammers found a Facebook video of the daughter saying 'Happy Birthday Mom!' -- just 30 seconds of audio. They fed it into a free AI voice-cloning tool. Within minutes, they had a synthetic voice that could say anything and sound exactly like her.",
       code: "How voice theft works: Public Facebook video (30 sec) --> AI voice cloning tool ($0-$12/month) --> Perfect synthetic voice that can say ANYTHING in real-time"
     },
     {
@@ -44,9 +44,9 @@ const LESSONS_DATA = [
       code: "Old world: If it sounds like your daughter, it IS your daughter. New world: If it sounds like your daughter, it MIGHT be an AI clone trained on a 30-second Facebook clip. Trust NOTHING without verification."
     },
     {
-      t: "Sharon's Aftermath: Shame and Silence",
-      d: "Sharon was devastated for three months. She told no one except Melissa and lived with shame over her 'gullibility.' Most victims never recover the money. Sharon lost the full $15,000.",
-      code: "Sharon's timeline: 10PM call --> midnight ATM withdrawal --> 12:30AM cash handed to courier --> 6AM discovered the truth --> $15,000 gone forever. Recovery rate for these scams: near zero."
+      t: "The Aftermath: Shame and Silence",
+      d: "The victim was devastated for three months. She told almost no one and lived with shame over her 'gullibility.' Most victims never recover the money.",
+      code: "Typical timeline: Late-night call --> ATM withdrawal --> cash handed to courier --> discovered the truth hours later --> money gone forever. Recovery rate for these scams: near zero."
     },
     {
       t: "Your Parents Are Not Helpless",
@@ -55,8 +55,8 @@ const LESSONS_DATA = [
     }
   ],
   whatIs: "AI voice cloning fraud is a new type of scam where criminals use artificial intelligence to create a perfect copy of a loved one's voice from just a few seconds of audio found on social media. They then call victims -- usually seniors -- pretending to be that loved one in a crisis, demanding immediate money. The voice is so realistic that even family members who have known the person for decades cannot tell the difference.",
-  realWorld: "Sharon Brightwell, a careful 73-year-old in Dover, Florida, received a call at 10 PM that sounded exactly like her daughter Melissa -- panicked about a car accident involving a pregnant woman. A fake 'attorney' came on the line demanding $15,000 for a legal retainer. Sharon withdrew cash from a 24-hour ATM and handed it to a courier at midnight. When she called her real daughter at 6 AM, Melissa had been asleep all night. The $15,000 was gone forever. The scammers had cloned Melissa's voice from a 30-second Facebook birthday video.",
-  code: "ANATOMY OF AN AI VOICE CLONE SCAM\n====================================\n\nSTEP 1 - RECONNAISSANCE:\n  Scammer finds target's family on Facebook\n  Downloads 30-second video of daughter saying\n  'Happy Birthday Mom!'\n\nSTEP 2 - VOICE CLONING:\n  Uploads audio to AI cloning tool (free or $12/month)\n  AI analyzes: pitch, tone, speed, cadence, pronunciation\n  Result: synthetic voice model ready in minutes\n\nSTEP 3 - THE CALL (10:07 PM):\n  Caller ID spoofed to show 'MELISSA'\n  AI voice: 'Mom! I was in a car accident!\n  A pregnant woman lost her baby!\n  I need $15,000 for the lawyer TONIGHT!'\n\nSTEP 4 - THE HANDOFF:\n  Second scammer poses as 'Attorney David Richardson'\n  Professional, calm, authoritative tone\n  'We need cash. A courier will collect tonight.'\n\nSTEP 5 - THE EXTRACTION:\n  Victim drives to 24-hour ATM at midnight\n  Withdraws $15,000 in cash\n  Hands sealed envelope to courier\n  Money is GONE. Irreversible.\n\nSTEP 6 - THE DISCOVERY (6:00 AM):\n  Victim calls real daughter\n  Daughter: 'Mom, I have no idea what you are\n  talking about. I was asleep all night.'\n  $15,000 never recovered.",
+  realWorld: "A careful 73-year-old grandmother in Florida received a call at 10 PM that sounded exactly like her daughter -- panicked about a car accident involving a pregnant woman. A fake 'attorney' came on the line demanding thousands for a legal retainer. She withdrew cash from a 24-hour ATM and handed it to a courier at midnight. When she called her real daughter at 6 AM, she had been asleep all night. The money was gone forever. The scammers had cloned the daughter's voice from a 30-second Facebook birthday video. The full case study with names and details is in the book.",
+  code: "ANATOMY OF AN AI VOICE CLONE SCAM\n====================================\n\nSTEP 1 - RECONNAISSANCE:\n  Scammer finds target's family on Facebook\n  Downloads 30-second video of daughter saying\n  'Happy Birthday Mom!'\n\nSTEP 2 - VOICE CLONING:\n  Uploads audio to AI cloning tool (free or $12/month)\n  AI analyzes: pitch, tone, speed, cadence, pronunciation\n  Result: synthetic voice model ready in minutes\n\nSTEP 3 - THE CALL (Late Night):\n  Caller ID spoofed to show daughter's name\n  AI voice: 'Mom! I was in a car accident!\n  A pregnant woman lost her baby!\n  I need money for the lawyer TONIGHT!'\n\nSTEP 4 - THE HANDOFF:\n  Second scammer poses as an 'attorney'\n  Professional, calm, authoritative tone\n  'We need cash. A courier will collect tonight.'\n\nSTEP 5 - THE EXTRACTION:\n  Victim drives to 24-hour ATM at midnight\n  Withdraws thousands in cash\n  Hands sealed envelope to courier\n  Money is GONE. Irreversible.\n\nSTEP 6 - THE DISCOVERY (Next Morning):\n  Victim calls real daughter\n  Daughter: 'Mom, I have no idea what you are\n  talking about. I was asleep all night.'\n  Money never recovered.",
   funFact: "The FBI received over 100,000 complaints involving voice impersonation scams in just the first six months of 2025 -- that is 555 reported cases PER DAY. And experts estimate that reported cases represent only 10-15% of actual incidents, meaning the real number could be 3,700+ scam calls every single day.",
   quiz: [
     {
@@ -116,9 +116,9 @@ const LESSONS_DATA = [
   analogy: "Think of your parents like a house with the porch light on, the door unlocked, and a sign that says 'Welcome -- come on in!' They are not careless -- they grew up in a neighborhood where that was normal and safe. But the neighborhood has changed. New predators have moved in who specifically look for open doors and welcoming signs. Your parents' wonderful qualities -- trust, generosity, helpfulness -- are exactly what scammers exploit.",
   points: [
     {
-      t: "Robert's Story: Even Experts Get Fooled",
-      d: "Robert Chen, 68, was a 42-year accountant who managed his own taxes on custom spreadsheets. He KNEW banks never ask for SSN over the phone. But when scammers called from his bank's real number, knew his account details, and referenced his actual recent transactions, his critical thinking worked AGAINST him. He gave his SSN and lost $47,000.",
-      code: "Robert's thought process: 'The caller ID shows my bank. They know my account number. They know I ate at Olive Garden last night. This MUST be real.' --> He gave his SSN. $47,000 drained in 3 hours. Only $28,000 recovered after 8 months of fighting."
+      t: "Even Experts Get Fooled",
+      d: "A 68-year-old accountant who managed his own taxes on custom spreadsheets KNEW banks never ask for SSN over the phone. But when scammers called from his bank's real number, knew his account details, and referenced his actual recent transactions, his critical thinking worked AGAINST him. He gave his SSN and lost tens of thousands.",
+      code: "Thought process: 'The caller ID shows my bank. They know my account number. They know where I ate last night. This MUST be real.' --> He gave his SSN. Tens of thousands drained in hours. Only partial recovery after months of fighting."
     },
     {
       t: "They Answer Their Phones",
@@ -167,7 +167,7 @@ const LESSONS_DATA = [
     }
   ],
   whatIs: "Seniors are the number one target for AI-powered fraud not because they are gullible, but because scammers have engineered their tactics to exploit basic human emotions -- love, fear, authority, helpfulness -- that older adults have in abundance. People over 60 actually score BETTER on abstract reasoning tests than younger people, but score lower on recognizing deception because they grew up in a higher-trust world. When that trust collides with AI-powered deception, the results are catastrophic.",
-  realWorld: "Robert Chen, a 68-year-old accountant with 42 years of experience, received a call from his bank's official number. The caller knew his account number and his actual restaurant charge from the previous evening. Robert KNEW banks never ask for SSN over the phone -- he had told his daughter this a hundred times. But the scammer built such a convincing context of legitimacy that Robert's critical thinking worked against him. He gave his SSN and date of birth. Within three hours, $47,000 was drained from his account. After eight months of fighting, he recovered $28,000. The remaining $19,000 was simply gone. His explanation: 'They made the lie more believable than the truth.'",
+  realWorld: "A 68-year-old retired accountant received a call from what appeared to be his bank's official number. The caller knew his account number and his actual restaurant charge from the previous evening. He KNEW banks never ask for SSN over the phone -- he had told his daughter this a hundred times. But the scammer built such a convincing context of legitimacy that his critical thinking worked against him. He gave his SSN and date of birth. Within hours, tens of thousands were drained from his account. After months of fighting, he recovered some but not all of it. His explanation: 'They made the lie more believable than the truth.' The full story is in the book.",
   code: "WHY SENIORS ARE TARGET #1 -- THE 7 FACTORS\n=============================================\n\n1. THEY ANSWER THEIR PHONES\n   Raised in a generation where not answering was rude\n   Scammers can actually REACH them (unlike younger people)\n\n2. THEY HAVE MONEY\n   Decades of saving, investing, paid-off homes\n   Retirement accounts and stock portfolios\n   Scammers follow the money\n\n3. THEY ARE OFTEN ALONE\n   Widows, widowers, empty nesters\n   Phone calls fill a genuine need for connection\n   Isolation makes manipulation more effective\n\n4. THEIR INSTINCTS ARE OUTDATED\n   Grew up where voices could not be faked\n   No mental model for AI voice cloning\n   60 years of experience now MISLEADS them\n\n5. SHAME KEEPS THEM SILENT\n   Fear of losing independence\n   85-90% of victims NEVER report\n   Reported $4.9B could really be $35-50B\n\n6. THEY TRUST AUTHORITY\n   Automatic compliance with 'officials'\n   Police, IRS, bank reps get instant credibility\n   Younger people default to skepticism instead\n\n7. THEY ARE GENEROUS\n   Strong sense of responsibility to help\n   Will move heaven and earth for grandchildren\n   Scammers deliberately target this compassion\n\nRESULT: Not gullible. TARGETED.\nProtection comes from awareness + action,\nnot from being 'smarter.'",
   funFact: "The FBI estimates that reported elder fraud represents only about 15% of actual losses. When you read that seniors lost $4.9 billion in 2024, the actual number could be $35-50 billion. This makes AI-powered elder fraud potentially one of the largest categories of crime in America -- most of it invisible because victims are too ashamed to report it.",
   quiz: [
@@ -182,7 +182,7 @@ const LESSONS_DATA = [
       ans: 2
     },
     {
-      q: "In Robert Chen's case, what made the scam call so convincing?",
+      q: "In the accountant's case, what made the scam call so convincing?",
       opts: ["They used AI to clone his bank manager's voice", "They called from his bank's official number and knew his actual recent transactions", "They threatened to arrest him if he did not comply", "They offered him a prize he had been expecting"],
       ans: 1
     },
@@ -332,7 +332,12 @@ const LESSONS_DATA = [
     answer: "RED FLAGS: (1) The email domain 'firstnational-bank.com' has a HYPHEN -- real bank domains do not typically have hyphens and this is likely a fake lookalike domain. (2) Real banks never ask you to 'verify your identity' by clicking email links -- they have internal systems. (3) The personal details (name, bank, account number, recent purchase) likely came from a data breach, NOT from the real bank. (4) The 24-hour urgency deadline creates panic. (5) The 'click here' link likely leads to a fake website that harvests your login credentials. CORRECT RESPONSE: Do NOT click any links. Call your bank using the number on the back of your debit card. If the charge was really suspicious, they will confirm it."
   },
   difficulty: "beginner",
-  prereqs: [1]
+  prereqs: [1],
+  brandingCta: {
+    title: 'Need AI Fraud Detection for Your Organization?',
+    message: 'Teamz Lab builds custom <strong>voice-clone detection</strong> and <strong>deepfake screening</strong> systems for banks, telecom companies, and elder care facilities. We use the same AI knowledge behind this course to protect your customers at scale. Or get the complete family protection guide: <a href="https://www.amazon.com/dp/B0F2PJ1MG4" target="_blank">Protecting Aging Parents on Amazon</a>.',
+    cta: 'Get AI Safety Consulting'
+  }
 },
 {
   id: 4,
@@ -341,9 +346,9 @@ const LESSONS_DATA = [
   analogy: "The original grandparent scam was like a burglar knocking on your door wearing a cheap Halloween mask. You might be fooled in the dark, but in daylight you would spot the fake. The AI-powered Grandparent Scam 2.0 is like that burglar showing up wearing a Mission Impossible-style perfect silicone mask of your actual grandchild -- same face, same voice, same mannerisms. The disguise is now so perfect that the only defense is a secret password your family agreed on in advance.",
   points: [
     {
-      t: "Margaret's Story: $12,000 Gone at 3 AM",
-      d: "Three days before Christmas 2024, Margaret got a call at 1:47 AM from her grandson 'Tommy.' His voice was panicked -- arrested for a bar fight, facing felony charges, needed $12,000 bail immediately. A 'Detective Whitmore' came on the line to confirm. Margaret wired $12,000 via Western Union at 3:23 AM. When she called the real Tommy, he had been asleep all night.",
-      code: "Timeline: 1:47 AM -- 'Tommy' calls in panic. 2:15 AM -- 'Detective Whitmore' confirms crisis. 2:47 AM -- Margaret gets dressed, drives to Western Union. 3:23 AM -- $12,000 wired to unknown account. 3:45 AM -- Calls real Tommy. He was asleep. Money: GONE. Recovery: ZERO."
+      t: "A Real Case: Thousands Gone Before Dawn",
+      d: "Days before a holiday, a grandmother got a late-night call from her 'grandson.' His voice was panicked -- arrested for a bar fight, facing felony charges, needed bail money immediately. A fake 'detective' came on the line to confirm. She wired thousands via Western Union before dawn. When she called her real grandson, he had been asleep all night.",
+      code: "Timeline: Late-night 'grandson' call --> panic --> fake 'detective' confirms crisis --> grandmother drives to Western Union --> thousands wired to unknown account --> calls real grandson hours later --> he was asleep. Money: GONE. Recovery: ZERO."
     },
     {
       t: "The 6-Step Scam Playbook",
@@ -392,8 +397,8 @@ const LESSONS_DATA = [
     }
   ],
   whatIs: "The Grandparent Scam 2.0 is the most dangerous scam targeting seniors today, causing more financial loss than any other elder fraud scheme. It works by exploiting love and fear to bypass critical thinking entirely. A scammer calls pretending to be a grandchild in crisis -- arrested, in an accident, kidnapped -- using AI-cloned voices that sound identical to the real person. A second scammer poses as an authority figure to add credibility. The victim is pressured to send irreversible payment immediately and told to keep it secret from family. The entire scam is designed so that a grandparent's love for their grandchild overrides every logical safeguard.",
-  realWorld: "Three days before Christmas 2024, Margaret received a call at 1:47 AM. Her grandson 'Tommy' was panicked -- arrested for a bar fight, facing felony assault charges, needed $12,000 bail tonight. A 'Detective Jason Whitmore' confirmed the story and directed her to wire money for 'restitution.' Margaret drove to Western Union at 2:47 AM, wired $12,000 at 3:23 AM, then called the real Tommy. He had been asleep all night in Denver. The wire transfer was irreversible. The money was gone. The Western Union clerk told her gently: 'Once a wire transfer is sent, it is gone. It is in the recipient's account.'",
-  code: "THE GRANDPARENT SCAM 2.0 -- COMPLETE SCRIPT\n=============================================\n\n[1:47 AM -- Phone rings. Caller ID shows 'TOMMY']\n\nSCAMMER (AI-cloned voice, panicked):\n'Grandma! Oh God, Grandma, I am so sorry to call\nso late. I got into a fight at a bar. It was not\nmy fault but the cops arrested me. They are saying\nI assaulted the guy with a bottle. I did not do it!\nI need bail money or I spend the night in a cell.'\n\n[Margaret is shaking, terrified for Tommy]\n\nMARGARET: 'Tommy, where are you? I am calling\na lawyer right now--'\n\nSCAMMER: 'No Grandma, wait! You CANNOT call\nanyone. The lawyer here says if I can post bail\nTONIGHT they might drop the felony charge.'\n\n[Second scammer takes the phone]\n\n'DETECTIVE WHITMORE' (calm, authoritative):\n'Mrs. Reynolds, your grandson is in serious trouble.\nBut the victim will drop charges if restitution is\nmade tonight. We need $12,000 by wire transfer.\nCan you help your grandson?'\n\nMARGARET: 'Yes. What do I do?'\n\n'DETECTIVE': 'Go to Western Union. Wire $12,000\nto this name and account. Do it now.'\n\n[3:23 AM -- Margaret completes wire transfer]\n[3:45 AM -- Calls real Tommy]\n\nTOMMY (groggy): 'Grandma? It is 3 AM.\nI have been sleeping. What is going on?'\n\n[Margaret's world stops. $12,000 is gone forever.]\n\n=== HOW TO STOP THIS SCAM COLD ===\n\nCORRECT RESPONSE AT 1:47 AM:\n\nMARGARET: 'Honey, I love you and I want to help.\nFirst, what is our family code word?'\n\nSCAMMER: '...what?'\n\nMARGARET: 'Our code word. The one we all agreed on.\nTell me the word and I will help you immediately.'\n\nSCAMMER: [Cannot answer. Hangs up.]\n\nSCAM DEFEATED. $12,000 SAVED.",
+  realWorld: "Three days before Christmas, a grandmother received a call in the middle of the night. Her 'grandson' was panicked -- arrested for a bar fight, facing felony assault charges, needed thousands in bail money tonight. A fake 'detective' confirmed the story and directed her to wire money. She drove to Western Union before dawn and wired the money. When she called her real grandson later, he had been asleep all night. The wire transfer was irreversible. The money was gone. The clerk told her gently: 'Once a wire transfer is sent, it is gone.' The full case study with exact details is in the book.",
+  code: "THE GRANDPARENT SCAM 2.0 -- COMPLETE SCRIPT\n=============================================\n\n[1:47 AM -- Phone rings. Caller ID shows grandson's name]\n\nSCAMMER (AI-cloned voice, panicked):\n'Grandma! Oh God, Grandma, I am so sorry to call\nso late. I got into a fight at a bar. It was not\nmy fault but the cops arrested me. They are saying\nI assaulted the guy with a bottle. I did not do it!\nI need bail money or I spend the night in a cell.'\n\n[Grandmother is shaking, terrified]\n\nGRANDMOTHER: 'Where are you? I am calling\na lawyer right now--'\n\nSCAMMER: 'No Grandma, wait! You CANNOT call\nanyone. The lawyer here says if I can post bail\nTONIGHT they might drop the felony charge.'\n\n[Second scammer takes the phone]\n\n'DETECTIVE' (calm, authoritative):\n'Ma'am, your grandson is in serious trouble.\nBut the victim will drop charges if restitution is\nmade tonight. We need thousands by wire transfer.\nCan you help your grandson?'\n\nGRANDMOTHER: 'Yes. What do I do?'\n\n'DETECTIVE': 'Go to Western Union. Wire the money\nto this name and account. Do it now.'\n\n[3:23 AM -- Grandmother completes wire transfer]\n[3:45 AM -- Calls real grandson]\n\nGRANDSON (groggy): 'Grandma? It is 3 AM.\nI have been sleeping. What is going on?'\n\n[Her world stops. The money is gone forever.]\n\n=== HOW TO STOP THIS SCAM COLD ===\n\nCORRECT RESPONSE AT 1:47 AM:\n\nGRANDMOTHER: 'Honey, I love you and I want to help.\nFirst, what is our family code word?'\n\nSCAMMER: '...what?'\n\nGRANDMOTHER: 'Our code word. The one we all agreed on.\nTell me the word and I will help you immediately.'\n\nSCAMMER: [Cannot answer. Hangs up.]\n\nSCAM DEFEATED. THOUSANDS SAVED.",
   funFact: "The FBI reported that losses from deepfake grandparent scams alone exceeded $340 million in just the first three months of 2025. That works out to $155,000 stolen from grandparents every single HOUR. And since only about 15% of victims report, the real number could be over $2 billion per quarter -- meaning a grandparent somewhere in America is being robbed every few seconds.",
   quiz: [
     {
@@ -431,11 +436,11 @@ const LESSONS_DATA = [
   ],
   eli5: "Bad people call grandparents late at night pretending to be their grandchild. They say things like 'Grandma, I am in jail! I need money RIGHT NOW! And do not tell Mom and Dad!' The voice sounds exactly like the real grandchild because a computer copied it. The grandparent panics because they love their grandchild so much, and they send money before checking if it is really true. The money disappears and can never be gotten back. The best protection? A secret family password. Before sending ANY money, ask: 'What is our family code word?' A real grandchild will know it. A bad person will not.",
   codeWalkthrough: [
-    "STEP 1 - THE SETUP: Scammers research the family on social media BEFORE calling. They learn grandchildren's names, locations, and activities. A Facebook post about Tommy studying in Denver gives them everything they need for a convincing story.",
-    "STEP 2 - THE CALL AT 1:47 AM: The late-night timing is deliberate. The victim is drowsy, disoriented, and emotionally reactive. The caller ID is spoofed to show Tommy's name. The AI-cloned voice sounds exactly like Tommy -- panicked, desperate, scared.",
+    "STEP 1 - THE SETUP: Scammers research the family on social media BEFORE calling. They learn grandchildren's names, locations, and activities. A Facebook post about a grandson studying out of state gives them everything they need for a convincing story.",
+    "STEP 2 - THE LATE-NIGHT CALL: The late-night timing is deliberate. The victim is drowsy, disoriented, and emotionally reactive. The caller ID is spoofed to show the grandson's name. The AI-cloned voice sounds exactly like him -- panicked, desperate, scared.",
     "STEP 3 - THE CRISIS: 'Arrested for assault, facing felony charges, need bail tonight.' Every detail is designed to trigger maximum fear and urgency. The sympathetic detail (it was not his fault, the other person started it) makes the victim want to help MORE.",
-    "STEP 4 - THE AUTHORITY HANDOFF: 'Detective Whitmore' takes over -- calm, professional, authoritative. He CONFIRMS the crisis (adding credibility) and provides a 'solution' (wire $12,000). The contrast between panicked grandchild and calm detective makes it feel completely real.",
-    "STEP 5 - THE SECRECY DEMAND: 'Do not call anyone.' This is the KEY to the entire scam. One verification call to another family member would destroy it instantly. The scammer frames secrecy as protecting Tommy's legal case -- but it is actually protecting the SCAM.",
+    "STEP 4 - THE AUTHORITY HANDOFF: A fake 'detective' takes over -- calm, professional, authoritative. He CONFIRMS the crisis (adding credibility) and provides a 'solution' (wire thousands immediately). The contrast between panicked grandchild and calm detective makes it feel completely real.",
+    "STEP 5 - THE SECRECY DEMAND: 'Do not call anyone.' This is the KEY to the entire scam. One verification call to another family member would destroy it instantly. The scammer frames secrecy as protecting the grandson's legal case -- but it is actually protecting the SCAM.",
     "STEP 6 - IRREVERSIBLE PAYMENT: Wire transfer via Western Union at 3 AM. Once sent, the money cannot be recovered. The clerk cannot stop it. The bank cannot reverse it. The FBI may never find it. This is why the payment method matters so much.",
     "THE DEFENSE - FAMILY CODE WORD: 'What is our family code word?' This single question defeats the entire scam. The AI can clone a voice, but it cannot know a secret word your family chose together. No code word = hang up. Practice this with your family TODAY."
   ],
@@ -445,7 +450,12 @@ const LESSONS_DATA = [
     answer: "RED FLAGS: (1) 2:30 AM call -- designed to catch victim drowsy and emotional. (2) Caller does not say their name -- waits for grandparent to guess ('It is me!'). (3) Extreme emotional manipulation -- crying, pregnant woman, hospital, felony. (4) 'Do NOT tell Mom or Dad' -- secrecy demand to prevent verification. (5) 'Right now' -- extreme urgency to prevent thinking. (6) Google Play gift cards -- NO lawyer, court, or hospital accepts gift cards as payment. This alone is a 100% guaranteed scam indicator. (7) 'You are the only person I can trust' -- isolation tactic. (8) Buying $8,000 in gift cards at Walmart at 3 AM is something no legitimate situation would ever require. CORRECT RESPONSE: 'What is our family code word?' If they cannot answer, hang up and call your real grandchild directly."
   },
   difficulty: "beginner",
-  prereqs: [2, 3]
+  prereqs: [2, 3],
+  ebookCta: {
+    text: 'Want the full Grandparent Scam defense playbook with role-play scripts?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 },
 // Lesson 5: Deepfake Video Calls
 {
@@ -506,7 +516,7 @@ const LESSONS_DATA = [
     }
   ],
   whatIs: "A deepfake video call uses artificial intelligence to generate a real-time video of someone's face and voice during a live call. Unlike older pre-recorded deepfakes, modern versions respond to your conversation in real time -- the fake person reacts to what you say, answers your questions, and shows natural-looking facial expressions. This makes it nearly impossible to tell you're talking to AI instead of a real person.",
-  realWorld: "David Martinez video-called his daughter Rosa every Sunday. One Tuesday, he received an unexpected video call showing Rosa's face. 'She' asked him to invest $25,000 in a special retirement plan her company was offering. He could see her face, hear her voice, watch her expressions. He transferred the money. When he texted the real Rosa for confirmation, she had no idea what he was talking about. She hadn't called him that day. The 'Rosa' on the video call was an AI deepfake. David lost $25,000 and couldn't get it back.",
+  realWorld: "A father video-called his daughter every Sunday. One weekday, he received an unexpected video call showing her face. 'She' asked him to invest a large sum in a special retirement plan her company was offering. He could see her face, hear her voice, watch her expressions. He transferred the money. When he texted his real daughter for confirmation, she had no idea what he was talking about. She hadn't called him that day. The person on the video call was an AI deepfake. He lost tens of thousands and couldn't get it back. The full case study is in the book.",
   code: "DEEPFAKE VIDEO CALL PROTECTION CHECKLIST\n=========================================\n\nBEFORE any video call involving money:\n[ ] Is this call at an unusual time? (Red flag)\n[ ] Is the request urgent with a tight deadline? (Red flag)\n[ ] Are they asking for money or account access? (Red flag)\n\nDURING a suspicious video call:\n[ ] Watch lip sync -- do lips match audio perfectly?\n[ ] Count blinks -- about 17/minute is normal\n[ ] Ask them to turn their head quickly\n[ ] Ask an unexpected personal question\n[ ] Request the family code word\n[ ] Look for background inconsistencies\n\nIF money is requested on ANY video call:\n[ ] Say: 'I need to call you back to confirm'\n[ ] HANG UP immediately\n[ ] Wait 5 minutes\n[ ] Call back on a KNOWN number (from your paper list)\n[ ] Verify the request with the REAL person\n[ ] If they confirm -- great, proceed carefully\n[ ] If they don't know what you're talking about -- SCAM\n\nNEVER do during a video call:\n[X] Transfer money during the first call\n[X] Share bank account details\n[X] Provide passwords or PINs\n[X] Click links they send in chat",
   funFact: "A single deepfake video call in 2023 resulted in a $25 million loss when a finance worker was fooled by AI-generated versions of his CFO, CEO, and colleagues -- all on the same call. Every person on screen was fake. If it can fool a financial professional with corporate IT resources, it can fool anyone.",
   quiz: [
@@ -581,7 +591,7 @@ const LESSONS_DATA = [
     "IF money is requested on ANY video call -- This is your absolute red line. No exceptions, no matter how real they look.",
     "Say 'I need to call you back' -- This one sentence defeats the entire scam. A real person will understand. A scammer will push back with urgency.",
     "HANG UP and call back on a KNOWN number -- Use the physical phone number list posted by the phone. Never call a number the caller gives you.",
-    "NEVER transfer money during the first call -- This rule alone would have saved David Martinez his $25,000."
+    "NEVER transfer money during the first call -- This rule alone would have saved a deepfake victim his money."
   ],
   bugChallenge: {
     code: "Your father gets a video call from your sister. She says: 'Dad, my car broke down and I'm stranded. I need $2,000 wired to this mechanic's account right now. My phone is about to die so I can't call back. Please just send it -- I'll pay you back tomorrow. The mechanic's account number is 4839201...'",
@@ -589,7 +599,12 @@ const LESSONS_DATA = [
     answer: "Red flags: (1) Urgency -- 'right now.' (2) Preventing callback -- 'phone is about to die so I can't call back.' (3) Wire transfer to unknown account -- untraceable. (4) Emotional pressure -- stranded and helpless. (5) Promise of repayment to make it seem small. The correct response: 'I love you, but I'm going to hang up and call your real phone number to verify this. If your phone dies, I'll call your husband/friend/workplace.'"
   },
   difficulty: "intermediate",
-  prereqs: [3]
+  prereqs: [3],
+  brandingCta: {
+    title: 'Deepfake Detection for Your Business?',
+    message: 'Teamz Lab develops <strong>real-time deepfake detection tools</strong> for video conferencing, customer verification, and fraud prevention. Protect your organization before a deepfake call happens to you. Or get the complete family protection guide: <a href="https://www.amazon.com/dp/B0F2PJ1MG4" target="_blank">Protecting Aging Parents on Amazon</a>.',
+    cta: 'Build Deepfake Detection'
+  }
 },
 // Lesson 6: Fake Government Alerts
 {
@@ -630,7 +645,7 @@ const LESSONS_DATA = [
     },
     {
       t: "The Transfer Trap",
-      d: "Scammers often 'transfer' the victim to a second fake agent or 'fraud specialist' to add layers of perceived legitimacy. Patricia was transferred from 'Agent Kevin Chen' to 'fraud specialist Linda Torres' -- both were scammers. Each layer extracts more information and deepens the victim's compliance.",
+      d: "Scammers often 'transfer' the victim to a second fake agent or 'fraud specialist' to add layers of perceived legitimacy. One victim was transferred from a first 'agent' to a 'fraud specialist' -- both were scammers. Each layer extracts more information and deepens the victim's compliance.",
       code: "Pattern: First agent gets your SSN and identity info. Second agent asks for bank accounts and investment details. Third agent may ask you to 'freeze' accounts by transferring money to a 'safe' account. Each transfer feels like escalation through a real bureaucracy, but it's all the same scam operation."
     },
     {
@@ -650,7 +665,7 @@ const LESSONS_DATA = [
     }
   ],
   whatIs: "A government impersonation scam is when criminals pretend to be from the IRS, Social Security Administration, Medicare, or other federal agencies. They use caller ID spoofing to make their call appear to come from the real agency's phone number. They use fear tactics -- threatening arrest, account suspension, or loss of benefits -- to pressure victims into providing personal information or sending money. These scams combine authority, fear, urgency, and spoofed legitimacy to override critical thinking.",
-  realWorld: "Patricia, 71 years old and on Medicare, received a call from what appeared to be her local Social Security office. 'Agent Kevin Chen' told her that her Social Security number was being used fraudulently in three states. Panicked, Patricia provided her SSN, date of birth, mother's maiden name, bank account numbers, and investment details to two different 'agents.' She was told her accounts would be 'frozen for protection' for 48 hours. By the time she called her actual bank, $87,000 had been drained from her savings. The Social Security Administration had never called her.",
+  realWorld: "A 71-year-old woman on Medicare received a call from what appeared to be her local Social Security office. A fake 'agent' told her that her Social Security number was being used fraudulently in three states. Panicked, she provided her SSN, date of birth, mother's maiden name, bank account numbers, and investment details to two different 'agents.' She was told her accounts would be 'frozen for protection' for 48 hours. By the time she called her actual bank, tens of thousands had been drained from her savings. The Social Security Administration had never called her.",
   code: "GOVERNMENT IMPERSONATION SCAM DEFENSE CARD\n=============================================\n(Print this and post it by your phone)\n\nTHE GOLDEN RULE:\nReal government agencies NEVER call demanding payment.\nRepeat: NEVER. Not the IRS. Not Social Security. Not Medicare.\n\nIF SOMEONE CALLS CLAIMING TO BE FROM GOVERNMENT:\n1. DO NOT give any information (SSN, Medicare #, bank info)\n2. DO NOT stay on the line\n3. HANG UP immediately\n4. WAIT 5 minutes (to clear any call forwarding)\n5. CALL the agency yourself using these REAL numbers:\n\n   IRS:             1-800-829-1040\n   Social Security:  1-800-772-1213\n   Medicare:         1-800-633-4227\n\n6. TELL your family about the call (no shame!)\n7. REPORT it: ic3.gov (FBI) | reportfraud.ftc.gov (FTC)\n\nIT IS ALWAYS A SCAM IF THEY:\n- Threaten arrest or prosecution\n- Demand gift cards, wire transfer, or crypto\n- Ask you to 'verify' your SSN or Medicare number\n- Say 'Don't hang up' or 'Don't tell anyone'\n- Get angry when you ask questions\n- Say 'Your account will be suspended today'\n\nREMEMBER: Hanging up on a scammer is SMART, not rude.",
   funFact: "The Social Security Administration is the most frequently impersonated federal agency in the United States, receiving reports of thousands of victims per day. Government impersonation scams resulted in over 330,000 complaints in 2025 alone -- a 25% increase over the previous year -- with AI tools supercharging the scale and convincingness of these operations.",
   quiz: [
@@ -695,7 +710,7 @@ const LESSONS_DATA = [
       ans: 2
     },
     {
-      q: "Why did Patricia give her personal information to the scammer?",
+      q: "Why did the victim give her personal information to the scammer?",
       opts: [
         "She was confused about her medications",
         "She thought cooperating with government authorities was the right thing to do",
@@ -749,7 +764,7 @@ const LESSONS_DATA = [
     {
       t: "Phase 1: The Grooming (2-8 Weeks)",
       d: "A scammer creates a fake profile using stolen photos of an attractive person. They match with your parent on dating sites or social media. They gather intelligence: Where do they live? Are they widowed? What are their interests? How much money might they have? Then they become exactly the person your parent wants -- thoughtful, adventurous, philosophical, whatever the target desires.",
-      code: "How it starts: A friend request from 'James Wilson, 68, retired military, Colorado.' Kind face, profile says he values 'honesty, loyalty, and companionship.' Within an hour of accepting: 'Hello Helen, you have a warm smile. I'd love to get to know you better.' He remembered details she mentioned. He asked follow-up questions. He seemed genuinely interested."
+      code: "How it starts: A friend request from a man claiming to be 68, retired military, living in Colorado. Kind face, profile says he values 'honesty, loyalty, and companionship.' Within an hour of accepting: 'Hello, you have a warm smile. I'd love to get to know you better.' He remembered details she mentioned. He asked follow-up questions. He seemed genuinely interested."
     },
     {
       t: "AI Chatbots Have Supercharged the Scam",
@@ -764,7 +779,7 @@ const LESSONS_DATA = [
     {
       t: "Phase 3: The Crisis / Pig Butchering",
       d: "After the emotional bond is strong, the scammer introduces a financial 'crisis.' Common versions: stuck overseas and credit cards don't work, medical emergency, business needs investment, special cryptocurrency opportunity. The first request is small -- maybe $5,000. Then $10,000. Then $15,000. Each time with reassurance: 'I'll pay you back.' This is the 'fattening' phase.",
-      code: "The ask progression: Request 1: '$5,000 to cover contract costs -- I'll repay within 30 days plus 50% interest.' Request 2 (one week later): '$10,000 -- the first payment didn't process.' Request 3: '$15,000 -- I need to show capital to close the deal.' Total lost by Helen: $87,000 into a cryptocurrency account that was emptied and untraceable."
+      code: "The ask progression: Request 1: 'A few thousand to cover contract costs -- I'll repay within 30 days plus 50% interest.' Request 2 (one week later): 'More money -- the first payment didn't process.' Request 3: 'Even more -- I need to show capital to close the deal.' Total lost: tens of thousands into a cryptocurrency account that was emptied and untraceable."
     },
     {
       t: "The Cryptocurrency Trap",
@@ -779,7 +794,7 @@ const LESSONS_DATA = [
     {
       t: "Why Seniors Are Especially Vulnerable",
       d: "Five factors: (1) Profound loneliness after losing a spouse. (2) Awareness of mortality creates urgency to find connection. (3) Shame about online dating prevents telling family. (4) Greater trust and generosity toward people in need. (5) Less familiarity with online deception tactics compared to younger generations.",
-      code: "Helen's words when she finally told her son: 'Because I was happy. And I didn't want to hear that it was wrong. I wanted to believe it was real. And I was so, so lonely.' Loneliness is the vulnerability. The scammer weaponizes the victim's capacity for love against them."
+      code: "A victim's words when she finally told her son: 'Because I was happy. And I didn't want to hear that it was wrong. I wanted to believe it was real. And I was so, so lonely.' Loneliness is the vulnerability. The scammer weaponizes the victim's capacity for love against them."
     },
     {
       t: "How to Protect Without Shaming",
@@ -789,11 +804,11 @@ const LESSONS_DATA = [
     {
       t: "Reverse Image Search Is Your Secret Weapon",
       d: "Romance scammers steal photos from other people's profiles. A reverse image search on Google Images can instantly reveal if a profile photo belongs to someone else. Show your parent how to upload a photo and search for it -- it takes 30 seconds and can expose a scammer immediately.",
-      code: "How to do it: Go to images.google.com. Click the camera icon. Upload the suspicious profile photo (or paste the image URL). Google will show you everywhere that photo appears online. If 'James Wilson, retired military officer' is actually a stock photo model from Brazil, you'll know instantly."
+      code: "How to do it: Go to images.google.com. Click the camera icon. Upload the suspicious profile photo (or paste the image URL). Google will show you everywhere that photo appears online. If that 'retired military officer' is actually a stock photo model from Brazil, you'll know instantly."
     }
   ],
   whatIs: "A romance scam is a long-term fraud where a criminal builds a fake romantic relationship with a victim over weeks or months, then uses that emotional bond to extract money. 'Pig butchering' refers to the strategy of gradually fattening the victim with love, trust, and emotional investment before the financial 'slaughter.' AI chatbots now allow scammers to maintain thousands of these fake relationships simultaneously, each one personalized and emotionally convincing. Victims lose not just money but also dignity, hope, and faith in human connection.",
-  realWorld: "Helen, a 76-year-old widow, accepted a Facebook friend request from 'James Wilson' -- supposedly a 68-year-old retired military officer. Over five weeks of daily messages, he became her confidant, her hope, her love. He remembered every detail she shared. He said all the right things. Then he asked her to help with cryptocurrency payments for a work contract in Singapore. First $5,000. Then $10,000. Then $15,000. By the time his stories started contradicting each other and his promised repayments never came, Helen had sent $87,000 into a cryptocurrency account that was emptied and untraceable. 'James' disappeared. His photos were stolen from strangers. Everything was a lie.",
+  realWorld: "A 76-year-old widow accepted a Facebook friend request from a man claiming to be a retired military officer. Over weeks of daily messages, he became her confidant, her hope, her love. He remembered every detail she shared. He said all the right things. Then he asked her to help with cryptocurrency payments for a work contract overseas. The amounts started small and grew. By the time his stories started contradicting each other and his promised repayments never came, she had sent tens of thousands into a cryptocurrency account that was emptied and untraceable. The man disappeared. His photos were stolen from strangers. Everything was a lie. The book contains the full detailed case study.",
   code: "ROMANCE SCAM WARNING SIGNS CHECKLIST\n=====================================\n\nTHE RELATIONSHIP RED FLAGS:\n[ ] You've never video called (excuses: camera broken, bad connection)\n[ ] They said 'I love you' within the first 2-3 weeks\n[ ] Their story has changed or has inconsistencies\n[ ] Their photos look professional (like model shots)\n[ ] They agree with everything you say (mirror effect)\n[ ] They won't make concrete plans to meet in person\n[ ] They ask detailed questions about your finances\n[ ] They claim to be wealthy but always need money\n\nTHE MONEY RED FLAGS:\n[ ] Any request for money, no matter how small\n[ ] They ask you to set up a cryptocurrency account\n[ ] They suggest gift cards as a payment method\n[ ] They promise to repay with interest (too good to be true)\n[ ] They say 'just this once' but it keeps happening\n[ ] The amounts keep getting larger over time\n[ ] Money goes to accounts you've never heard of\n\nVERIFICATION STEPS:\n[ ] Reverse image search their profile photo (images.google.com)\n[ ] Google their name + the details they've shared\n[ ] Ask for a live video call (not pre-recorded)\n[ ] Ask to meet in person in a public place\n[ ] Tell a family member about the relationship\n[ ] NEVER send money without family verification\n\nIF YOU'VE ALREADY SENT MONEY:\n[ ] Stop all contact immediately\n[ ] Contact your bank about potential recovery\n[ ] Report to FBI: ic3.gov\n[ ] Report to FTC: reportfraud.ftc.gov\n[ ] Tell a family member (no shame -- this is emotional abuse)\n[ ] Seek emotional support -- this is a form of grief",
   funFact: "One in ten adults over 50 has had someone online ask them for money in a romantic context. The FTC reports $3 billion in romance scam losses in 2024-2025, but the real number is likely $15-30 billion because most victims never report out of shame. AI chatbots can now manage thousands of simultaneous fake romances, each one customized to the victim's emotional needs.",
   quiz: [
@@ -838,10 +853,10 @@ const LESSONS_DATA = [
       ans: 2
     },
     {
-      q: "Why did Helen wait three months to tell her children about the scam?",
+      q: "Why did the victim wait three months to tell her children about the scam?",
       opts: [
         "She forgot about it",
-        "She was still hoping James would repay her",
+        "She was still hoping the scammer would repay her",
         "She was too ashamed and didn't want to hear she'd been foolish",
         "She didn't lose enough money to worry about"
       ],
@@ -879,7 +894,12 @@ const LESSONS_DATA = [
     answer: "Red flags: (1) Can't video call -- classic excuse. (2) 'Loves everything I love' -- mirror effect, too-perfect match. (3) 'Most special woman he's ever met' -- love-bombing after only 6 weeks. (4) Working overseas in a conflict zone -- common story to explain why he can't meet in person. (5) Foreign accounts 'frozen' -- manufactured financial crisis. (6) Asking for money after 6 weeks. (7) Wants help setting up a bank account -- setting up the money pipeline. (8) Promises repayment 'next month.' This is a textbook romance scam. Do a reverse image search on his photos immediately."
   },
   difficulty: "intermediate",
-  prereqs: [3]
+  prereqs: [3],
+  ebookCta: {
+    text: 'Want the complete romance scam warning signs checklist with real case studies?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 },
 // Lesson 8: Tech Support Scams
 {
@@ -915,7 +935,7 @@ const LESSONS_DATA = [
     },
     {
       t: "The Money Extraction",
-      d: "After the 'diagnosis,' the scammer sells a fake protection plan ($299-$599) or directly accesses banking apps through the remote connection. Margaret paid $450 for a 'one-year protection plan.' Some victims watch as the scammer controls their mouse, logs into their bank, and transfers thousands of dollars.",
+      d: "After the 'diagnosis,' the scammer sells a fake protection plan ($299-$599) or directly accesses banking apps through the remote connection. One victim paid hundreds for a 'one-year protection plan.' Some victims watch as the scammer controls their mouse, logs into their bank, and transfers thousands of dollars.",
       code: "Escalation pattern: Step 1 -- Pay $450 for 'virus removal.' Step 2 (weeks later) -- 'Your protection plan is expiring, renew for $599.' Step 3 -- 'We detected new threats, you need our premium plan for $1,200.' Step 4 -- Direct bank access during a 'support session.' Some victims are scammed repeatedly by the same operation."
     },
     {
@@ -935,12 +955,12 @@ const LESSONS_DATA = [
     },
     {
       t: "The Conversation That Saves Thousands",
-      d: "Have a specific conversation using the Margaret example. Explain that pop-ups are not real warnings, that Microsoft never calls, and that the correct response to any computer 'emergency' is to close the browser and call you. Test the procedure a few weeks later: 'If you got a pop-up about a virus, what would you do?'",
+      d: "Have a specific conversation using the example from this lesson. Explain that pop-ups are not real warnings, that Microsoft never calls, and that the correct response to any computer 'emergency' is to close the browser and call you. Test the procedure a few weeks later: 'If you got a pop-up about a virus, what would you do?'",
       code: "Test script (use after a few weeks): 'Hey Mom/Dad, quick question -- if a big red warning popped up on your computer saying you have a virus and to call a number, what would you do?' Correct answer: 'Close the browser and call you.' If they hesitate or say 'call the number,' have the conversation again."
     }
   ],
   whatIs: "A tech support scam is when criminals create fake virus warnings (pop-ups on your computer screen or unsolicited phone calls) claiming to be from Microsoft, Apple, or another tech company. They convince the victim to install remote access software that gives the scammer full control of the computer. From there, they either sell fake 'protection plans' for hundreds of dollars or directly access bank accounts through the remote connection. Seniors are the primary target because they're more likely to trust authority figures, less familiar with how computers actually work, and often have more savings available.",
-  realWorld: "Margaret was checking email and looking up a recipe when a massive red pop-up appeared: 'WARNING! Your computer has been infected! Call Microsoft immediately!' The pop-up wouldn't close. Panicked, she called the number. A professional-sounding 'technician' had her install AnyDesk remote access software. He moved her mouse, clicked through folders, showed her fake 'scan results.' Two hours later, she'd paid $450 for a fake 'protection plan' with her credit card. Three weeks later, her credit card company called about suspicious activity in another state -- the scammer had stolen her card information during the remote session.",
+  realWorld: "A grandmother was checking email and looking up a recipe when a massive red pop-up appeared: 'WARNING! Your computer has been infected! Call Microsoft immediately!' The pop-up would not close. Panicked, she called the number. A professional-sounding 'technician' had her install remote access software. He moved her mouse, clicked through folders, showed her fake 'scan results.' She paid hundreds for a fake 'protection plan' with her credit card. Weeks later, her credit card company called about suspicious activity -- the scammer had stolen her card information during the remote session.",
   code: "TECH SUPPORT SCAM DEFENSE PLAN\n===============================\n(Post this near your parent's computer)\n\nIF A POP-UP APPEARS SAYING 'VIRUS' OR 'WARNING':\n1. DO NOT call any phone number shown on screen\n2. DO NOT click anything in the pop-up\n3. Press Ctrl+W to close the browser tab\n   (or Cmd+W on Mac)\n4. If that doesn't work, press Ctrl+Alt+Delete\n   and select 'Task Manager' then close the browser\n   (or Cmd+Option+Escape on Mac, then Force Quit)\n5. If NOTHING works, hold the power button for\n   10 seconds to shut down the computer\n6. Call [your child's name] at [phone number]\n\nIF SOMEONE CALLS ABOUT YOUR COMPUTER:\n1. Microsoft and Apple NEVER call you about viruses\n2. HANG UP immediately\n3. It doesn't matter how real they sound\n4. Call [your child's name] if concerned\n\nNEVER ALLOW REMOTE ACCESS:\n- Don't install AnyDesk, TeamViewer, or similar\n  unless [your child's name] specifically asked you to\n- If a 'technician' asks to 'see your screen' -- STOP\n- No legitimate company needs remote access\n  to warn you about a virus\n\nBUILT-IN PROTECTION (already on your computer):\n- Windows Defender (Windows) or built-in security (Mac)\n  is already protecting you\n- You do NOT need to buy additional virus protection\n- Updates install automatically -- that's normal",
   funFact: "While seniors make up about 20% of the population, they account for over 58% of all financial losses from tech support scams. Many victims are scammed multiple times by the same operation because they believe the initial 'service' was legitimate. The average loss per incident is $600-$1,200, but cumulative losses from repeat scams can reach tens of thousands of dollars.",
   quiz: [
@@ -1025,7 +1045,12 @@ const LESSONS_DATA = [
     answer: "Every step was a scam: (1) Microsoft never calls unsolicited. (2) AnyDesk gave full computer control to the scammer. (3) '47,000 infected files' was a fake display using normal system tools. (4) The $299 'protection plan' is fake. (5) The credit card is now compromised. (6) HE'S STILL CONNECTED RIGHT NOW. EMERGENCY RESPONSE: Tell Dad to immediately unplug the computer from the internet (pull the ethernet cable or turn off WiFi). Call the credit card company to freeze the card. Change all passwords from a DIFFERENT device. Take the computer to a real IT professional for malware removal."
   },
   difficulty: "beginner",
-  prereqs: [2]
+  prereqs: [2],
+  brandingCta: {
+    title: 'Train Your Team to Spot Tech Support Scams',
+    message: 'Teamz Lab creates <strong>interactive anti-fraud training programs</strong> for customer support teams, financial advisors, and IT departments. Turn your staff into your first line of defense against social engineering. Or get the complete family protection guide: <a href="https://www.amazon.com/dp/B0F2PJ1MG4" target="_blank">Protecting Aging Parents on Amazon</a>.',
+    cta: 'Get Corporate Training'
+  }
 },
 {
   "id": 9,
@@ -1036,7 +1061,7 @@ const LESSONS_DATA = [
     {
       "t": "Phishing Is the #1 Way Passwords Are Stolen",
       "d": "Phishing accounts for 90% of all data breaches according to Verizon's 2024 Data Breach Report. Americans lose over $3.1 billion annually to phishing scams (FBI data). Unlike elaborate scams that require weeks of relationship-building, phishing works through a brutally simple mechanism: look like a trusted company, create urgency, and direct people to enter credentials on a fake site. Most victims don't realize they've been compromised for several weeks.",
-      "code": "REAL CASE: Robert saw an email from 'Amazon' about a canceled order #374-8392891. He clicked the link, saw what looked exactly like Amazon.com with his email pre-filled, and entered his password plus credit card info. Two days later: $1,847 in fraudulent purchases from China. It took 6 weeks, multiple phone calls, and a police report to clean up."
+      "code": "REAL CASE: A man saw an email from 'Amazon' about a canceled order. He clicked the link, saw what looked exactly like Amazon.com with his email pre-filled, and entered his password plus credit card info. Days later: hundreds in fraudulent purchases. It took weeks, multiple phone calls, and a police report to clean up."
     },
     {
       "t": "The Package Delivery Scam",
@@ -1051,7 +1076,7 @@ const LESSONS_DATA = [
     {
       "t": "AI Has Made Phishing Emails Perfect",
       "d": "For years, poor grammar and spelling were reliable ways to spot phishing. That no longer works. Scammers now use AI language models to generate emails that are grammatically perfect, match the company's exact tone and style, use appropriate technical terminology, reference real products and services, and include correct corporate department names. Your parent cannot rely on 'looks professional' or 'no spelling errors' as signals that an email is legitimate.",
-      "code": "OLD PHISHING (easy to spot):\n'Dear Valued Customer, Your bank need you verify account or it will be permanent suspended. Click here now for avoid this.'\n\nAI-GENERATED PHISHING (nearly impossible to spot):\n'Dear Margaret, We noticed a sign-in attempt from an unrecognized device in Portland, OR on March 12. For your security, we've temporarily limited access to your account. Please verify your identity to restore full access. Reference: #SEC-2024-4821. -- Bank of America Security Team'"
+      "code": "OLD PHISHING (easy to spot):\n'Dear Valued Customer, Your bank need you verify account or it will be permanent suspended. Click here now for avoid this.'\n\nAI-GENERATED PHISHING (nearly impossible to spot):\n'Dear [Your Name], We noticed a sign-in attempt from an unrecognized device in Portland, OR on March 12. For your security, we've temporarily limited access to your account. Please verify your identity to restore full access. Reference: #SEC-2024-4821. -- Bank of America Security Team'"
     },
     {
       "t": "The 4 Stages of Every Phishing Attack",
@@ -1071,7 +1096,7 @@ const LESSONS_DATA = [
     {
       "t": "How to Spot Phishing: The 3 Checks",
       "d": "Check 1 -- The sender's email address: Hover over the sender's name to see the real address. Real Amazon emails come from @amazon.com, not @amazon-support-verify.com. Check 2 -- Hover over links before clicking: The actual URL appears in a tooltip or the bottom corner of the browser. If it doesn't match the company's real domain, it's phishing. Check 3 -- Watch for urgency language: 'Act now,' 'Verify immediately,' 'Your account will be suspended.' Real companies address you by name and reference specific account details, not vague 'unusual activity.'",
-      "code": "THE 3-CHECK PHISHING TEST:\n\n□ CHECK 1: Sender address\n  Hover over sender name → see real email\n  Real: orders@amazon.com\n  Fake: support@amaz0n-verify.com\n\n□ CHECK 2: Link destination\n  Hover over link → see real URL at bottom of browser\n  Real: https://www.amazon.com/orders\n  Fake: https://amazon-order-verify.com/login\n\n□ CHECK 3: Urgency pressure\n  Real: 'Hi Margaret, here is your order summary'\n  Fake: 'URGENT: Verify immediately or account suspended'\n\nIF ANY CHECK FAILS → Do NOT click. Go to the site directly."
+      "code": "THE 3-CHECK PHISHING TEST:\n\n□ CHECK 1: Sender address\n  Hover over sender name → see real email\n  Real: orders@amazon.com\n  Fake: support@amaz0n-verify.com\n\n□ CHECK 2: Link destination\n  Hover over link → see real URL at bottom of browser\n  Real: https://www.amazon.com/orders\n  Fake: https://amazon-order-verify.com/login\n\n□ CHECK 3: Urgency pressure\n  Real: 'Hi [Your Name], here is your order summary'\n  Fake: 'URGENT: Verify immediately or account suspended'\n\nIF ANY CHECK FAILS → Do NOT click. Go to the site directly."
     },
     {
       "t": "The 'Go Direct' Rule Is Your Best Defense",
@@ -1085,7 +1110,7 @@ const LESSONS_DATA = [
     }
   ],
   "whatIs": "Phishing is the practice of sending fraudulent emails, text messages, or creating fake websites that impersonate trusted companies to trick people into revealing passwords, credit card numbers, Social Security numbers, and other sensitive information. The term comes from 'fishing' -- scammers cast a wide net of fake messages hoping enough people will 'bite.' It is the single most common method of stealing personal information online, and AI has made phishing emails nearly indistinguishable from real corporate communications.",
-  "realWorld": "Robert had used Amazon for fifteen years. One Saturday morning, he received an email about a canceled order. The link took him to a site that looked exactly like Amazon -- same logos, same layout, his email pre-filled at the top. He entered his password and credit card information. Two days later, his bank called: $1,847 in fraudulent purchases from China. The scammer had also logged into his real Amazon account and changed delivery addresses. It took Robert six weeks, multiple phone calls, and a police report to sort out the mess. All because he clicked one link instead of going to amazon.com directly.",
+  "realWorld": "A longtime Amazon customer received an email about a canceled order. The link took him to a site that looked exactly like Amazon -- same logos, same layout, his email pre-filled at the top. He entered his password and credit card information. Days later, his bank called about fraudulent purchases. The scammer had also logged into his real Amazon account and changed delivery addresses. It took weeks, multiple phone calls, and a police report to sort out the mess. All because he clicked one link instead of going to amazon.com directly.",
   "code": "COMPLETE ANTI-PHISHING SETUP CHECKLIST FOR YOUR PARENT\n=====================================================\n\nEMAIL PROTECTIONS:\n□ Enable spam/phishing filters\n  - Gmail: Settings > Filters > enable spam detection\n  - Outlook: Settings > Junk Email > set to 'Standard' or 'Strict'\n  - Yahoo: Settings > Security and Privacy > enable protections\n\n□ Set up email rules to flag suspicious keywords:\n  - 'verify your account'\n  - 'confirm your identity'\n  - 'account suspended'\n  - 'unusual activity detected'\n\nBROWSER PROTECTIONS:\n□ Bookmark key websites (bank, Amazon, PayPal, email)\n□ Show them how to hover over links to see real URLs\n□ Show them how to check sender email addresses\n\nACCOUNT PROTECTIONS:\n□ Enable email/text alerts for account changes\n□ Turn on two-factor authentication where available\n□ Use unique passwords for every important account\n\nFAMILY AGREEMENT:\n□ Parent will NEVER click links in suspicious emails\n□ Parent will ALWAYS go to websites directly\n□ Parent will forward suspicious emails to you before acting\n□ Parent knows: 'Legitimate companies never ask for passwords via email'",
   "funFact": "Phishing emails are sent by the billions. In a single year, an estimated 3.4 billion phishing emails are sent worldwide every day. That means for every legitimate email your parent receives, there are scammers casting lines hoping someone will bite. The good news? The 'go direct' rule -- never clicking links in emails and always visiting websites directly -- stops virtually all of them cold.",
   "quiz": [
@@ -1175,7 +1200,7 @@ const LESSONS_DATA = [
     {
       "t": "The Most Emotionally Devastating Scam",
       "d": "The fake emergency scam (also called the 'grandparent scam') exploits the deepest feelings parents and grandparents have: the instinct to protect and save their children. Average loss per victim is $3,000-$5,000, but some victims lose $50,000 or more. An estimated $1 billion is lost annually to grandparent scams in the US alone. Victims often feel deep shame and embarrassment, delaying reporting to family or law enforcement. Some victims are targeted repeatedly by the same scam operation.",
-      "code": "REAL CASE: Dorothy got a call at 6:47 PM on a Wednesday. 'Hi, Mom? I got arrested... car accident in Chicago... need $2,500 bail... don't tell anyone.' She was trembling. 15 minutes later, a 'bail officer' called and walked her through a wire transfer. By the time she called her grandson's mother the next morning -- the money was gone. Her grandson Chris had been home the entire time."
+      "code": "REAL CASE: A grandmother got a call one evening. 'Hi, Mom? I got arrested... car accident... need bail money... don't tell anyone.' She was trembling. Minutes later, a 'bail officer' called and walked her through a wire transfer. By the time she called her grandson's mother the next morning -- the money was gone. Her grandson had been home the entire time."
     },
     {
       "t": "How the Brain Hijack Works",
@@ -1219,7 +1244,7 @@ const LESSONS_DATA = [
     }
   ],
   "whatIs": "The fake emergency scam (also called the 'grandparent scam' or 'family emergency scam') is a scheme where a scammer calls claiming to be a family member -- typically a grandchild -- in urgent legal or medical trouble, demanding immediate money via wire transfer. It exploits the deepest parental instinct: the drive to protect and save your child. The scam works by activating the brain's fear response, shutting down rational thinking, and isolating the victim from anyone who could disprove the story. An estimated $1 billion is lost annually to this scam in the US.",
-  "realWorld": "Dorothy was making dinner when her phone rang at 6:47 PM. A panicked young voice said 'Mom, I got arrested -- car accident in Chicago -- I need $2,500 bail -- don't tell anyone.' Dorothy was trembling. Her only thought: 'My grandson is in jail. He needs help.' Fifteen minutes later, a man calling himself a bail officer walked her through a wire transfer. By the time she called her grandson's mother the next morning, the money was gone. Chris had been home the entire evening. The voice wasn't even close to his -- but Dorothy's brain, flooded with stress hormones, couldn't tell the difference.",
+  "realWorld": "A grandmother was making dinner when her phone rang one evening. A panicked young voice said 'I got arrested -- car accident -- I need bail money -- don't tell anyone.' She was trembling. Her only thought: 'My grandson is in jail. He needs help.' Minutes later, a man calling himself a bail officer walked her through a wire transfer. By the time she called her grandson's mother the next morning, the money was gone. Her grandson had been home the entire evening. The voice was not even close to his -- but her brain, flooded with stress hormones, could not tell the difference.",
   "code": "COMPLETE FAKE EMERGENCY DEFENSE PLAN\n====================================\n\nBEFORE A SCAM CALL EVER HAPPENS:\n□ Establish family safe word (see Lesson 11)\n□ Discuss the Emergency Action Plan with all family\n□ Practice with role-play scenarios\n□ Agree: NOBODY sends money without verification\n□ Agree: Real emergencies never require secrecy\n□ Create no-shame environment for reporting\n\nDURING A SUSPICIOUS CALL:\n□ Ask for the family safe word\n□ If no safe word → Hang up immediately\n□ Call the 'victim' on YOUR saved phone number\n□ If no answer → Call their parents\n□ NEVER send money via wire transfer to 'bail officers'\n□ NEVER keep emergency calls secret from family\n\nIF MONEY WAS ALREADY SENT:\n□ Contact wire service immediately (money may be stoppable)\n□ Contact bank and credit card companies\n□ File report: FBI IC3 (ic3.gov)\n□ File report: FTC (reportfraud.ftc.gov)\n□ Report phone number to FCC\n□ Monitor accounts for identity theft\n□ Consider credit freeze with all 3 bureaus\n\nRED FLAGS THAT IT'S A SCAM:\n✗ 'Don't tell anyone'\n✗ Money needed via wire transfer or gift cards\n✗ Can't call the person back at their real number\n✗ 'Bail officer' or 'lawyer' handles payment\n✗ Extreme urgency -- 'must be today'",
   "funFact": "Scammers often work in call centers and make hundreds of these calls per day. They don't need to fool everyone -- they just need to fool a small percentage. If a scammer calls 200 grandparents per day and even 2% send money, that's 4 payouts averaging $3,000 each -- $12,000 per day from a single caller. The emotional devastation to those 4 families is immeasurable, but to the scammer, it's just a numbers game.",
   "quiz": [
@@ -1298,7 +1323,12 @@ const LESSONS_DATA = [
     "answer": "At least 7 red flags: (1) Demanded secrecy -- 'don't tell you or Dad.' Real emergencies don't require hiding from family. (2) Wire transfer via Western Union -- real bail isn't paid this way. (3) Extreme urgency -- 'bail officer will call in 5 minutes' pressures fast action. (4) Caller knew family names but couldn't provide a safe word. (5) 'Lieutenant Harris' handling bail payments -- real police don't call family for wire transfers. (6) Jake is supposedly in Denver but the call came from 'Unknown' -- a real person in custody would call from a jail phone with a collect call. (7) The instruction to go to Walgreens to send money -- legitimate legal processes involve courthouses, not retail stores. Mom did the right thing by calling you first."
   },
   "difficulty": "intermediate",
-  "prereqs": [4]
+  "prereqs": [4],
+  "ebookCta": {
+    "text": "Want the complete Emergency Action Plan with printable cards and role-play scripts?",
+    "url": "https://www.amazon.com/dp/B0F2PJ1MG4",
+    "buttonText": "Get the Book on Amazon"
+  }
 },
 {
   "id": 11,
@@ -1309,7 +1339,7 @@ const LESSONS_DATA = [
     {
       "t": "The Single Most Effective Defense Against Elder Fraud",
       "d": "A family safe word is a secret code that only your family knows. When any family member calls claiming to be in trouble and needing money, the first question is: 'What's our family word?' If they can't provide it, you hang up immediately. The FBI, AARP, the National Center on Aging, and the Better Business Bureau all recommend the family safe word as the single most effective defense against elder fraud. It requires zero technical knowledge, takes seconds to verify, and is immune to AI voice cloning.",
-      "code": "REAL CASE: When Helen's phone rang, she saw 'Dad' on caller ID -- but her father had passed away 2 years ago. She played along: 'Dad?' The voice said: 'I'm in an accident, I need $1,500 right now.' Helen asked calmly: 'What's our safe word?' Long pause. Then: 'Uh... your mom will call you back.' Line went dead. Helen texted her siblings: 'Got hit with the scam again. Safe word saved the day.'"
+      "code": "REAL CASE: When a woman's phone rang, she saw 'Dad' on caller ID -- but her father had passed away 2 years ago. She played along: 'Dad?' The voice said: 'I'm in an accident, I need money right now.' She asked calmly: 'What's our safe word?' Long pause. Then: 'Uh... your mom will call you back.' Line went dead. She texted her siblings: 'Got hit with the scam again. Safe word saved the day.'"
     },
     {
       "t": "Why It Works Against Every Impersonation Technique",
@@ -1332,28 +1362,18 @@ const LESSONS_DATA = [
       "code": "THE CONVERSATION SCRIPT:\n\n'I want to talk about keeping us all safe. There's a\nscam where someone calls pretending to be one of us,\nsaying they're in trouble and need money urgently.\n\nThe best way to stop it is a family safe word -- a\nsecret code only we know. If any of us gets a call\nabout a family emergency, we ask: What's our word?\n\nIf they can't answer → it's a scam → hang up.\nIf they CAN answer → it's really family → help them.\n\nLet's pick a word that:\n- None of us has ever posted online\n- Isn't connected to birthdays or pet names\n- We can all remember\n- Is unique to our family\n\nAny suggestions? The sillier, the better!'"
     },
     {
-      "t": "Never Share It Digitally",
-      "d": "Never text the safe word. Never email it. Never post it online. Never discuss it in text messages or social media. Text messages and emails can be hacked. If a scammer gets access to your parent's email or text history, they could find the word. Social media accounts can be compromised. The only copies that should exist are the memorized word and a physical written copy stored securely. Write it down in a home safe, wallet (labeled something innocuous like 'insurance information'), or a notebook in a drawer -- not on the refrigerator or anywhere obvious.",
-      "code": "SAFE WORD STORAGE RULES:\n\n✓ SAFE:\n  - Memorized by all family members\n  - Written on paper in a home safe or lockbox\n  - In wallet, labeled as something innocuous\n  - In a notebook kept in a private drawer\n\n✗ NEVER:\n  - Texted to anyone (texts can be hacked)\n  - Emailed to anyone (email can be compromised)\n  - Posted on social media or group chats\n  - Written on the refrigerator or in plain sight\n  - Stored in a phone's notes app (phones get stolen)\n  - Shared in a family WhatsApp or Facebook group\n\nIF YOU SUSPECT THE WORD WAS COMPROMISED:\n  → Change it immediately via in-person/phone conversation\n  → Notify all family members verbally\n  → Destroy old written copies"
-    },
-    {
       "t": "Making It Automatic Through Practice",
       "d": "For the safe word to work, it needs to become automatic. Your parent shouldn't have to think about whether to ask -- asking should be their immediate response to any emergency call. After establishing the word, practice: call your parent from a different number, pretend to be a grandchild in trouble, and see if they ask for the word. Do this a few times so the response becomes muscle memory. Set periodic reminders every 6 months: 'We still remember our family word, right?' This keeps it fresh.",
       "code": "PRACTICE SCHEDULE:\n\nWEEK 1:\n□ Family meeting to choose the safe word\n□ Everyone memorizes it\n□ Write it down and store securely\n\nWEEK 2:\n□ First practice call from a different number\n□ Role-play: 'Grandma, I'm in trouble...'\n□ Did they ask for the word? If not, remind and retry\n\nMONTH 2:\n□ Surprise practice call (no warning)\n□ How quickly did they ask for the word?\n\nEVERY 6 MONTHS:\n□ 'Do we still remember our family word?'\n□ Quick practice scenario\n□ Consider updating the word annually\n\nGOAL: Asking for the safe word becomes as automatic\nas looking both ways before crossing the street."
     },
     {
-      "t": "Handling Large and Extended Families",
-      "d": "For most families, one universal safe word works well -- everyone knows the same word. For large extended families, each parent-child group might have a separate word: Sarah and parents share 'Blue telescope,' Michael and parents share 'Orange Thursday.' When someone calls claiming to be Sarah, the parent asks for Sarah's specific word. Some families use a variation: 'Ask me something only I would know about [specific shared memory].' This is less foolproof but adds flexibility.",
-      "code": "OPTIONS FOR LARGE FAMILIES:\n\nOPTION 1: Universal Word (Simplest)\n  Everyone knows: 'Marmalade sandwich'\n  Pro: Simple, hard to forget\n  Con: More people know it = slightly higher risk\n\nOPTION 2: Individual Words (More Secure)\n  Sarah + Parents: 'Blue telescope'\n  Michael + Parents: 'Orange Thursday'\n  Jennifer + Parents: 'Green bananas'\n  Pro: If one word leaks, others are safe\n  Con: Parents must remember multiple words\n\nOPTION 3: Tiered System\n  Immediate family: One shared word\n  Extended family: Second shared word\n  Pro: Balances security and simplicity\n  Con: Slightly more complex\n\nRECOMMENDATION: Start with Option 1.\nUpgrade to Option 2 only if needed."
-    },
-    {
-      "t": "Teaching Children and Grandchildren",
-      "d": "If you have grandchildren or teenagers in the family, they need to understand the safe word system too. They should know what the family word is, that if they're ever in real trouble and call family, they should provide the word to prove it's them, that if they get a call pretending to be family they should ask for the word, and that the word must never be shared with friends or posted on social media. Making the system multigenerational ensures protection works in both directions.",
-      "code": "TEACHING KIDS AND TEENS:\n\n'Hey [name], our family has a secret code word.\nIt's like a password, but for phone calls.\n\nIf you're EVER in real trouble and call Grandma\nfor help, she's going to ask you for the word.\nJust say it, and she'll know it's really you\nand help you right away.\n\nBut here's the important part:\n- NEVER tell friends the word\n- NEVER post it anywhere online\n- NEVER write it in texts or DMs\n- If someone asks you for it who isn't family, say no\n\nThe word only works if it stays secret.\nIt's our family's superpower against scammers.'"
+      "t": "For Large Families, Teens, and Beyond",
+      "d": "Large extended families may use individual words per parent-child group for extra security. Teenagers and grandchildren need to understand the system too -- they should know to provide the word if they ever call in a real emergency, and to never share it online. The book covers detailed strategies for multi-generational families, tiered systems, and teaching children.",
+      "code": "Tip: Start with one universal family word. Upgrade to individual words per child only if your family is large or security needs increase. The book covers all options with setup guides."
     }
   ],
   "whatIs": "A family safe word is a secret code known only to your immediate family, used to verify identity during emergency phone calls. When any family member calls claiming to be in trouble and needing money, the first question asked is 'What's our family word?' If they provide the correct word, you know it's really them and can help. If they can't, you hang up immediately -- it's a scam. The FBI, AARP, the National Center on Aging, and the Better Business Bureau all recommend it as the single most effective defense against impersonation scams targeting older adults.",
-  "realWorld": "Helen's phone showed 'Dad' on the caller ID, but her father had been gone for two years -- definitely a spoofed number. She played along. The caller said he'd been in an accident and needed $1,500 urgently. Helen's heart rate didn't increase at all. She was ready. 'Of course, Dad. But first, what's our safe word?' Long pause. Then: 'Uh... your mom will call you back.' Line went dead. Helen didn't feel scared or sad. She felt relieved. Her family had set up the safe word three years ago, and it had just saved her thousands of dollars in a single phone call.",
+  "realWorld": "A woman's phone showed 'Dad' on the caller ID, but her father had been gone for two years -- definitely a spoofed number. She played along. The caller said he had been in an accident and needed money urgently. Her heart rate did not increase at all. She was ready. 'Of course, Dad. But first, what is our safe word?' Long pause. Then: 'Uh... your mom will call you back.' Line went dead. She did not feel scared or sad. She felt relieved. Her family had set up the safe word years ago, and it had just saved her thousands of dollars in a single phone call.",
   "code": "COMPLETE FAMILY SAFE WORD SETUP GUIDE\n=====================================\n\nSTEP 1: GATHER THE FAMILY\n□ Schedule in-person meeting or video call\n□ Include all adult family members\n□ Include teenagers and older grandchildren\n□ DO NOT discuss the word via text or email\n\nSTEP 2: CHOOSE THE WORD\n□ Brainstorm random, silly combinations\n□ Avoid: birthdays, pet names, addresses, anything online\n□ Good: 'Polka dot penguin,' 'Peanut Thursday'\n□ Everyone agrees on one word\n□ Make it fun -- the sillier, the more memorable\n\nSTEP 3: STORE IT SAFELY\n□ Everyone memorizes the word\n□ Write ONE physical copy per household\n□ Store in safe, lockbox, or hidden notebook\n□ Label it something innocuous, not 'Safe Word'\n□ NEVER text, email, or post it anywhere\n\nSTEP 4: PRACTICE\n□ Role-play within the first week\n□ Call parent from a different number\n□ Pretend to be grandchild in trouble\n□ Verify they ask for the word automatically\n□ Surprise practice call in month 2\n\nSTEP 5: MAINTAIN\n□ Review every 6 months: 'Remember our word?'\n□ Update the word annually\n□ If compromised → change immediately\n□ New family members → teach in person only\n\nTHE GOLDEN RULE:\nNo safe word = No money. No exceptions. Ever.",
   "funFact": "The concept of safe words has been used by intelligence agencies and military organizations for centuries. During World War II, Allied soldiers used challenge-and-response codes to identify friendly troops in the dark -- 'Flash' and the correct response 'Thunder' on D-Day. Your family safe word uses the exact same principle: a shared secret that proves identity when you can't rely on sight or sound alone. You're essentially giving your family military-grade identity verification for free.",
   "quiz": [
@@ -1431,7 +1451,12 @@ const LESSONS_DATA = [
     "answer": "At least 6 critical mistakes: (1) The dog's name 'Biscuit' is a terrible safe word -- pet names are easily found on social media and by scammers doing research. (2) David texted the word in a group chat -- texts can be hacked, creating a digital record. (3) The daughter's Instagram post doesn't reveal the word but tells scammers the family uses the system, and her account could be a target for finding the word. (4) Writing 'SAFE WORD' on a sticky note on the refrigerator makes it visible to anyone who enters the home -- delivery people, repair workers, visitors. (5) Never practicing means Maria won't remember to ask for it under stress. (6) Never changing it means a compromised word stays compromised forever. The fix: Choose a random word like 'Bicycle mountain,' share it only in person, store it hidden with an innocuous label, practice regularly, and update every 6-12 months."
   },
   "difficulty": "beginner",
-  "prereqs": [4, 10]
+  "prereqs": [4, 10],
+  "ebookCta": {
+    "text": "Want the complete Family Safe Word setup guide with practice schedules?",
+    "url": "https://www.amazon.com/dp/B0F2PJ1MG4",
+    "buttonText": "Get the Book on Amazon"
+  }
 },
 {
   "id": 12,
@@ -1445,9 +1470,9 @@ const LESSONS_DATA = [
       "code": "THE VERIFY FIRST PRINCIPLE:\n\nINCOMING CALL (Attacker controls everything):\n- Caller ID → Can be spoofed\n- Voice → Can be cloned by AI\n- Story → Completely fabricated\n- Urgency → Manufactured to rush you\n- 'Don't hang up' → Keeps you under control\n\nOUTGOING CALL (You control everything):\n- Phone number → From your contacts or credit card\n- Connection → Goes to the REAL organization\n- Conversation → With REAL representatives\n- Verification → They can confirm or deny the story\n\nRULE: NEVER act on incoming. ALWAYS verify outgoing."
     },
     {
-      "t": "Real Case: James Saves Himself With One Decision",
-      "d": "James received a call from his bank -- caller ID showed his bank's name. A professional woman said fraudulent activity was detected on his credit card. She transferred him to 'the fraud department.' A man asked him to verify his PIN and last four digits of his Social Security number. James was about to comply when he remembered the Verify First Rule. He said 'I'm going to hang up and call my bank directly.' The caller objected -- 'Sir, that will delay the process.' James hung up, found his bank's number on the back of his credit card, and called. His real bank confirmed: there was no fraud, no investigation. The call was a scam.",
-      "code": "JAMES'S EXPERIENCE:\n\nTHE SCAM CALL:\n1. Caller ID showed his bank's name (spoofed)\n2. Woman knew his account number (from data breach)\n3. 'Transferred' to 'fraud department' (just another scammer)\n4. Asked for PIN + last 4 of SSN\n\nTHE MOMENT THAT SAVED HIM:\nJames: 'I'm going to hang up and call my bank directly.'\nScammer: 'Sir, that will delay the process--'\nJames: [Hangs up]\n\nTHE VERIFICATION:\n- Found bank number on back of credit card\n- Called the real bank\n- Bank confirmed: NO fraud, NO investigation\n- The entire call was a scam\n\nTIME TO VERIFY: 3 minutes\nMONEY SAVED: Potentially thousands"
+      "t": "Real Case: One Decision Saved Thousands",
+      "d": "A man received a call from his bank -- caller ID showed his bank's name. A professional woman said fraudulent activity was detected on his credit card. She transferred him to 'the fraud department.' A man asked him to verify his PIN and last four digits of his Social Security number. He was about to comply when he remembered the Verify First Rule. He said 'I am going to hang up and call my bank directly.' The caller objected -- 'Sir, that will delay the process.' He hung up, found his bank's number on the back of his credit card, and called. His real bank confirmed: there was no fraud, no investigation. The call was a scam.",
+      "code": "A REAL EXPERIENCE:\n\nTHE SCAM CALL:\n1. Caller ID showed his bank's name (spoofed)\n2. Woman knew his account number (from data breach)\n3. 'Transferred' to 'fraud department' (just another scammer)\n4. Asked for PIN + last 4 of SSN\n\nTHE MOMENT THAT SAVED HIM:\n'I'm going to hang up and call my bank directly.'\nScammer: 'Sir, that will delay the process--'\n[Hangs up]\n\nTHE VERIFICATION:\n- Found bank number on back of credit card\n- Called the real bank\n- Bank confirmed: NO fraud, NO investigation\n- The entire call was a scam\n\nTIME TO VERIFY: 3 minutes\nMONEY SAVED: Potentially thousands"
     },
     {
       "t": "Why Scammers Fight So Hard to Prevent Verification",
@@ -1465,33 +1490,18 @@ const LESSONS_DATA = [
       "code": "EMAIL VERIFICATION PROTOCOL:\n\n1. DO NOT click any links in the email\n2. Open a NEW browser tab\n3. Type the company's URL directly:\n   - amazon.com (not the link in the email)\n   - chase.com (not the link in the email)\n   - paypal.com (not the link in the email)\n4. Log in to your real account\n5. Check for any alerts or issues\n6. If no issue exists → it was phishing\n\nTEXT VERIFICATION PROTOCOL:\n\n1. DO NOT click any links in the text\n2. Go to the company's website directly:\n   - usps.com for package texts\n   - Your bank's app for bank texts\n3. Or call the company's official number\n4. Verify if the issue is real\n5. If no issue exists → it was a scam text"
     },
     {
-      "t": "The 5-Second Rule: Breaking the Scammer's Spell",
-      "d": "Scammers depend on fast emotional decisions. The human brain can shift from emotional to rational thinking in about 5 seconds if given a moment to pause. Teach your parents: when anything creates urgency and asks for action, pause for 5 seconds. During those 5 seconds: take a breath, recognize that you're feeling pressure, ask yourself 'Is this urgent or is this MADE urgent?', and decide if verification is needed. If something is a legitimate emergency, 5 more seconds won't hurt. But that pause is often enough to break the scammer's spell.",
-      "code": "THE 5-SECOND RULE:\n\nWhen you feel URGENCY or PRESSURE:\n\n   1... Take a breath\n   2... Notice: 'I'm feeling pressured'\n   3... Ask: 'Is this REAL urgency or FAKE urgency?'\n   4... Ask: 'What happens if I take 5 more minutes?'\n   5... Decide: 'I will verify before I act'\n\nREAL URGENCY vs. FAKE URGENCY:\n\nFake: 'Your account will be locked in 24 hours!'\nReal: If it's real, it'll still show when you log in.\n\nFake: 'Send money NOW or your grandchild stays in jail!'\nReal: Real bail takes hours, not minutes.\n\nFake: 'Stay on the line or lose your place!'\nReal: Real companies have case numbers for callbacks.\n\n5 SECONDS OF PAUSE = Thousands of dollars saved."
-    },
-    {
       "t": "What Legitimate Companies Actually Do",
       "d": "Real banks will NOT call unsolicited asking for PINs, passwords, or SSNs. They won't ask you to transfer money to 'verify' your account. Fraud alerts show up when you log in. They provide case numbers and are fine with you calling back. Real tech companies (Microsoft, Apple, Amazon) never cold-call about problems and never ask for remote access. Real government agencies don't demand payment via gift cards or wire transfer, don't threaten immediate arrest, and handle issues through official mail. Any caller who violates these norms is a scammer.",
       "code": "WHAT REAL COMPANIES DO vs. WHAT SCAMMERS DO:\n\n                    REAL COMPANY          SCAMMER\nCalls you?          Rarely, with context  Unsolicited, urgent\nAsks for PIN?       Never by phone        Always\nAsks for SSN?       Never by phone        Always\nPayment method?     Normal billing        Gift cards, wire, crypto\nIf you hang up?     'No problem, call us' 'Don't hang up!'\nCase number?        Always provided       Excuses or fake one\nTimeframe?          'Take your time'      'Must be NOW'\nVerification?       'We encourage it'     'That will delay things'\nThreats?            Never                 'Account locked/arrested'\n\nIF THE CALLER MATCHES THE 'SCAMMER' COLUMN:\nHang up. Call the real number. Verify."
     },
     {
-      "t": "Handling Pushback When You Say 'I'll Call Back'",
-      "d": "When you tell a caller you're going to verify, scammers push back hard. Common objections and responses: 'You'll lose your place in line' -- 'That's okay, I prefer to verify directly.' Then hang up. 'Your account will be locked' -- 'Then it will still be there when I call back. Goodbye.' Then hang up. 'The line isn't secure if you call back' -- 'I trust my bank's phone number more than this call. Goodbye.' Then hang up. Your parent doesn't need to debate or explain. They can simply say 'Thank you' and hang up. They owe the caller nothing.",
-      "code": "RESPONSES TO SCAMMER PUSHBACK:\n\nSCAMMER: 'If you hang up, you'll lose your place.'\nYOU: 'That's okay. I prefer to verify directly.' [HANG UP]\n\nSCAMMER: 'Your account will be locked!'\nYOU: 'Then it will still show when I call back.' [HANG UP]\n\nSCAMMER: 'Calling back isn't secure.'\nYOU: 'I trust my bank's real number.' [HANG UP]\n\nSCAMMER: 'I'm from Microsoft and need remote access.'\nYOU: 'Microsoft doesn't make unsolicited calls.' [HANG UP]\n\nSCAMMER: 'We've already verified most of your info...'\nYOU: 'Thank you for your time. Goodbye.' [HANG UP]\n\nKEY PRINCIPLE:\nYou do NOT need to explain, debate, or justify.\n'Thank you. I'll verify independently. Goodbye.'\nThat's all. Then hang up."
-    },
-    {
-      "t": "The Phone Reference Card",
-      "d": "Help your parent create a small card to keep by their phone with real phone numbers and the verification reminder. Include: your phone number, their bank's customer service (from their credit card), their credit card company, Apple/Microsoft/Amazon official support numbers, Social Security Administration, IRS, and a reminder: 'When in doubt, hang up and call back using a number I know is real.' This card removes the biggest barrier to verification -- not knowing what number to call back on.",
-      "code": "PHONE REFERENCE CARD (Print and place by phone):\n\n═══════════════════════════════════\n   WHEN IN DOUBT: HANG UP & CALL BACK\n═══════════════════════════════════\n\nMy child: [Your number]\nBank: [Number from credit card]\nCredit Card: [Number from card]\nMedicare: 1-800-633-4227\nSocial Security: 1-800-772-1213\nIRS: 1-800-829-1040\nApple: 1-800-275-2273\nMicrosoft: 1-800-642-7676\nAmazon: 1-888-280-4331\n\nRULE: Never use a number given by a caller.\nAlways use numbers from THIS card or from\nthe back of my credit card.\n\nIF UNSURE: Call [Your name] at [Your number]\nbefore doing ANYTHING.\n═══════════════════════════════════"
-    },
-    {
-      "t": "Make It a Habit, Not a One-Time Lesson",
-      "d": "Don't just explain the Verify First Rule once. Make it automatic through practice and repetition. Have the conversation: 'If your bank calls about suspicious activity, what do you do?' Practice with role-play calls. Remove guilt by explaining that legitimate companies fully support verification. Address specific scenarios: incoming call from 'your bank,' email from 'Amazon,' text from 'USPS.' Bookmark important websites. Set up official account alerts. Give explicit permission: 'I'd rather you be cautious and miss a real call than lose money to a scammer.' Practice monthly.",
-      "code": "MAKING VERIFY FIRST AUTOMATIC:\n\nWEEK 1: The Conversation\n□ Explain the rule using James's story\n□ Walk through examples together\n□ Create the phone reference card\n□ Bookmark important websites\n\nWEEK 2: First Practice\n□ Call parent pretending to be their bank\n□ See if they hang up and call back\n□ If not → gentle reminder and retry\n\nMONTHLY: Quick Check-In\n□ 'What would you do if your bank called?'\n□ Quick scenario practice\n□ 'What would you do if Amazon emailed?'\n\nTHE PERMISSION STATEMENT:\n'Mom/Dad, if anyone calls asking you to act\nurgently, I WANT you to hang up and call me\nor the official number. Being cautious is\nNEVER wrong. I'd rather you verify 100 real\ncalls than fall for 1 fake one.'"
+      "t": "Practice, Reference Cards, and Pushback",
+      "d": "Help your parent create a phone reference card with real numbers (bank, Medicare, SSA, your number). Practice verification scenarios regularly. When scammers push back ('You will lose your place!'), your parent should simply say 'Thank you, goodbye' and hang up. They owe the caller nothing. The book includes a printable reference card template and detailed practice schedules.",
+      "code": "Key principle: You do NOT need to explain, debate, or justify hanging up. 'Thank you. I will verify independently. Goodbye.' That is all."
     }
   ],
   "whatIs": "The Verify First Rule states: Never take action based on an incoming call, email, or text message. Always hang up and contact the person or organization directly using a phone number or website you already have and trust. It works because an attacker controls the incoming communication (spoofed caller ID, fake email, manufactured urgency), but they cannot control what happens when you hang up and call a real number yourself. This single rule, applied consistently, stops approximately 95% of all phone and email scams.",
-  "realWorld": "James received a call from what appeared to be his bank. The caller knew his account number and said there was fraudulent activity. He was 'transferred' to a 'fraud investigator' who asked for his PIN and the last four digits of his SSN. James was about to give the information when he remembered: hang up and call back. He said 'I'm going to call my bank directly.' The caller objected. James hung up, found the real number on the back of his credit card, called it, and learned there was no fraud, no investigation -- the entire thing was a scam. Three minutes of verification saved him from potential financial catastrophe.",
+  "realWorld": "A man received a call from what appeared to be his bank. The caller knew his account number and said there was fraudulent activity. He was 'transferred' to a 'fraud investigator' who asked for his PIN and the last four digits of his SSN. He was about to give the information when he remembered: hang up and call back. He said 'I am going to call my bank directly.' The caller objected. He hung up, found the real number on the back of his credit card, called it, and learned there was no fraud, no investigation -- the entire thing was a scam. Three minutes of verification saved him from potential financial catastrophe.",
   "code": "THE COMPLETE VERIFY FIRST SYSTEM\n================================\n\nFOR PHONE CALLS:\n1. Someone calls claiming to be your bank/company/family?\n2. Say: 'Thank you. I'll call you back to verify.'\n3. HANG UP (ignore protests -- you owe them nothing)\n4. Find the REAL number:\n   □ Back of your credit card (banks)\n   □ Official website (type URL yourself)\n   □ Your phone contacts (family)\n   □ The reference card by your phone\n5. Call the REAL number\n6. Ask: 'Did your company just call me about [issue]?'\n7. Act only on what the REAL representative says\n\nFOR EMAILS:\n1. Suspicious email from a company?\n2. DO NOT click any links in the email\n3. Open a new browser tab\n4. Type the company's URL directly (or use bookmark)\n5. Log in to your actual account\n6. Check for alerts or issues\n7. If no issue → delete the email (it was phishing)\n\nFOR TEXT MESSAGES:\n1. Text about a package/account/payment?\n2. DO NOT click any links in the text\n3. Go to the company's website or app directly\n4. Or call their official number\n5. Check if the issue is real\n6. If not → delete the text (it was a scam)\n\nTHE 5-SECOND RULE:\nWhen pressured → Pause 5 seconds → Breathe →\nAsk 'Real urgency or fake?' → Then verify.\n\nNO LEGITIMATE COMPANY WILL EVER PUNISH YOU\nFOR TAKING 3 MINUTES TO VERIFY.",
   "funFact": "Caller ID spoofing is so advanced that scammers can make any phone number appear on your screen -- even your own bank's real number, your grandchild's cell phone, or 911. In 2023, the FCC reported that spoofed robocalls accounted for over 50 billion calls in the US alone. This means the phone number you see on your screen is essentially meaningless as a trust signal. The ONLY reliable way to know who you're talking to is to hang up and call them yourself on a number you already trust.",
   "quiz": [
@@ -1585,14 +1595,9 @@ const LESSONS_DATA = [
       code: "Tip: Each scam call that reaches your parent is an opportunity for the scammer. Reducing volume is the first line of defense."
     },
     {
-      t: "Silence Unknown Callers (iPhone)",
-      d: "This single built-in feature is the most effective spam blocker on iPhone. When enabled, calls from people not in your parent's contacts go straight to voicemail without ringing. Legitimate callers leave a message; scammers waste their time.",
-      code: "Step: Settings > Phone > Silence Unknown Callers > Toggle ON (green). Takes 10 seconds."
-    },
-    {
-      t: "Block Unknown Callers (Android)",
-      d: "Android phones offer similar protection through their Phone app settings. Look for 'Caller ID & spam' or 'Block numbers' in the Phone app's three-dot menu. Toggle spam protection ON to silence calls from numbers not in contacts.",
-      code: "Step: Phone app > Menu (three dots) > Settings > Caller ID & spam > Toggle Spam Protection ON."
+      t: "Silence Unknown Callers (iPhone & Android)",
+      d: "This single built-in feature is the most effective spam blocker. When enabled, calls from people not in your parent's contacts go straight to voicemail without ringing. Legitimate callers leave a message; scammers waste their time. Works on both iPhone and Android.",
+      code: "iPhone: Settings > Phone > Silence Unknown Callers > ON. Android: Phone app > Menu > Settings > Caller ID & spam > ON. Takes 10 seconds."
     },
     {
       t: "Set Up VIP Favorites",
@@ -1610,34 +1615,19 @@ const LESSONS_DATA = [
       code: "iPhone: Settings > [Name] > Password & Security > Two-Factor Authentication > ON. Android: Settings > Google > Manage Account > Security > 2-Step Verification > Enable."
     },
     {
-      t: "Set Up Do Not Disturb for Nighttime",
-      d: "Configure Focus or Do Not Disturb mode to allow only Favorites calls during sleeping hours (e.g., 9 PM to 8 AM). This stops the late-night panic calls that scammers love -- when your parent is groggy and disoriented.",
-      code: "iPhone: Settings > Focus > create 'Sleep' focus > Allow calls from Favorites only > Set schedule 9 PM - 8 AM."
-    },
-    {
-      t: "Enable Location Sharing (Find My)",
-      d: "Turn on Find My iPhone or Find My Device on Android so you can locate your parent's phone if lost or stolen. Share location with you for peace of mind in emergencies. This also helps if a scammer convinces them to go somewhere.",
-      code: "iPhone: Settings > [Name] > Find My > Find My iPhone > ON > Share My Location > ON. Add yourself as trusted person."
-    },
-    {
-      t: "Set Up Medical ID",
-      d: "While configuring the phone, set up Medical ID with blood type, allergies, medications, and emergency contacts visible on the lock screen. Not scam-related, but critical safety that takes 5 minutes while you're already in settings.",
-      code: "iPhone: Health app > Medical ID > Edit > Add info > Enable 'Show on Lock Screen'. Android: Create emergency contact with medical info in notes."
-    },
-    {
       t: "Test Everything Before You Leave",
       d: "After setup, test: call from your number (should ring), have someone call from unknown number (should go to voicemail), verify your parent knows how to check voicemail. Document what you configured and leave written instructions.",
       code: "Checklist: (1) Your call rings through. (2) Unknown call goes to voicemail. (3) Parent can check voicemail. (4) Written summary left with parent."
     },
     {
-      t: "Patricia's 30-Minute Transformation",
-      d: "Patricia received 8-10 spam calls daily and was afraid to use her phone. Her daughter Sarah spent 30 minutes enabling Silence Unknown Callers and installing Truecaller. Two weeks later: maybe one spam call total. Patricia said, 'I feel like I have my phone back.'",
+      t: "Additional Steps in the Book",
+      d: "The book covers additional phone hardening steps including Do Not Disturb scheduling, Find My / location sharing, Medical ID setup, and more. These take an extra 15 minutes but provide comprehensive protection.",
       code: "Remember: 30 minutes of setup = months of peace. Schedule a date to do this together. Bring coffee."
     }
   ],
   whatIs: "Phone lockdown is the process of configuring your parent's smartphone settings, installing call-blocking apps, and setting up VIP contacts so that scam calls never ring through while legitimate calls always do. It transforms the phone from a source of anxiety into a protected communication tool.",
-  realWorld: "Patricia was getting 8-10 spam calls per day and was exhausted from the stress. Her daughter spent 30 minutes enabling 'Silence Unknown Callers,' installing Truecaller, and setting up Favorites. Two weeks later, Patricia had received maybe one spam call. For the cost of 30 minutes and one free app, her phone went from a source of constant anxiety to a tool she enjoyed using again.",
-  code: "PHONE LOCKDOWN CHECKLIST\n========================\n\nStep 1: Silence Unknown Callers\n  iPhone: Settings > Phone > Silence Unknown Callers > ON\n  Android: Phone app > Menu > Settings > Block Unknown Callers > ON\n\nStep 2: Set Up Favorites (3-5 people)\n  iPhone: Phone > Favorites > + Add > Select person > Call\n  Android: Contacts > Select person > Tap star icon\n\nStep 3: Install Call-Blocking App\n  Search App Store/Play Store for 'Truecaller'\n  Install > Grant permissions > Enable blocking\n\nStep 4: Enable Two-Factor Authentication\n  iPhone: Settings > [Name] > Password & Security > 2FA > ON\n  Android: Settings > Google > Account > Security > 2-Step > ON\n\nStep 5: Set Up Do Not Disturb (nighttime)\n  iPhone: Settings > Focus > Sleep > Favorites only > Schedule\n  Android: Settings > Sound > Do Not Disturb > Favorites > Schedule\n\nStep 6: Enable Find My / Location Sharing\n  iPhone: Settings > [Name] > Find My > ON > Share Location\n  Android: Settings > Google > Security > Find My Device > ON\n\nStep 7: Set Up Medical ID\n  iPhone: Health app > Medical ID > Edit > Fill in > Show on Lock Screen\n  Android: Create emergency contact with medical info\n\nStep 8: Test Everything\n  [ ] Call from your phone -- rings through\n  [ ] Call from unknown number -- goes to voicemail\n  [ ] Parent can check voicemail\n  [ ] Written summary left with parent\n\nStep 9: Check In After One Week\n  [ ] Are important calls coming through?\n  [ ] Are spam calls reduced?\n  [ ] Any adjustments needed?",
+  realWorld: "A grandmother was getting 8-10 spam calls per day and was exhausted from the stress. Her daughter spent 30 minutes enabling 'Silence Unknown Callers,' installing Truecaller, and setting up Favorites. Two weeks later, she had received maybe one spam call. For the cost of 30 minutes and one free app, her phone went from a source of constant anxiety to a tool she enjoyed using again.",
+  code: "PHONE LOCKDOWN — KEY STEPS\n========================\n\n1. Silence Unknown Callers (Settings > Phone > Silence Unknown Callers)\n2. Set Up Favorites (3-5 trusted contacts)\n3. Install Call-Blocking App (e.g., Truecaller)\n\n... plus 6 more steps including 2FA, Do Not Disturb,\nFind My, Medical ID setup, and testing.\n\nGet the complete step-by-step checklist with screenshots in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "A missed voicemail from a real caller is a small inconvenience. A scam call that gets through could cost thousands of dollars. When in doubt, let it go to voicemail -- if it matters, they will leave a message.",
   quiz: [
     {
@@ -1717,7 +1707,12 @@ const LESSONS_DATA = [
     answer: "The Favorites list is empty! Without adding family members to Favorites, ALL calls go to voicemail -- including yours. You must add 3-5 key people (yourself, siblings, close friends) to the Favorites list BEFORE enabling Silence Unknown Callers, or your parent will miss every important call."
   },
   difficulty: "beginner",
-  prereqs: [12]
+  prereqs: [12],
+  ebookCta: {
+    text: 'Want step-by-step phone lockdown with screenshots for iPhone AND Android?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 },
 {
   id: 14,
@@ -1731,8 +1726,8 @@ const LESSONS_DATA = [
       code: "Rule: Protect email FIRST. Everything else depends on it. A hacked email = hacked everything."
     },
     {
-      t: "Tom's Costly Mistake",
-      d: "Tom, 72, clicked a fake PayPal email and entered his password on a phishing site. Within days, the scammer used his email to reset passwords on his Amazon, bank, and investment accounts. It took weeks to recover and caused lasting anxiety.",
+      t: "A Costly Mistake",
+      d: "A 72-year-old man clicked a fake PayPal email and entered his password on a phishing site. Within days, the scammer used his email to reset passwords on his Amazon, bank, and investment accounts. It took weeks to recover and caused lasting anxiety.",
       code: "Lesson: One phishing click gave the scammer the master key. Two-factor authentication would have stopped the takeover cold."
     },
     {
@@ -1746,11 +1741,6 @@ const LESSONS_DATA = [
       code: "Password rules: 12+ characters, mix of types, no dictionary words, no personal info, UNIQUE to email (never reused elsewhere)."
     },
     {
-      t: "Set Up a Password Manager",
-      d: "A password manager stores all passwords securely so your parent doesn't need to remember them. Chrome and Firefox have built-in managers that save and autofill passwords. For more security, Bitwarden is a free dedicated option.",
-      code: "Quick setup: When logging into any site, click 'Save' when Chrome/Firefox offers to remember the password. To view saved passwords: Chrome Settings > Passwords. Firefox Settings > Privacy & Security > Passwords."
-    },
-    {
       t: "Install an Ad Blocker",
       d: "Malicious ads are one of the most common ways scammers reach people online. uBlock Origin is free, works on Chrome and Firefox, and eliminates most scam pop-ups before they appear. It also makes browsing faster.",
       code: "Step: Open Chrome > go to chrome.google.com/webstore > search 'uBlock Origin' (by Raymond Hill) > Add to Chrome > Add Extension. Done."
@@ -1761,29 +1751,14 @@ const LESSONS_DATA = [
       code: "Must-bookmark: Bank website, email login, Medicare.gov, Social Security site, Amazon. To bookmark in Chrome: navigate to site > click star icon > Save to Bookmarks Bar."
     },
     {
-      t: "Safe Email Practices",
-      d: "Three rules that prevent most email-based attacks: (1) Never click links in emails about accounts or money -- go directly to the website instead. (2) Never download attachments from unknown senders. (3) Never call phone numbers shown in suspicious emails -- look up the real number yourself.",
-      code: "Phishing red flags: Generic greetings ('Dear Customer'), requests for passwords, urgent language ('Act now!'), mismatched links, spelling errors."
-    },
-    {
-      t: "Keep Everything Updated",
-      d: "Operating system and browser updates include critical security patches. Enable automatic updates on Windows (Settings > Update & Security) and Mac (System Preferences > Software Update). Verify Chrome and Firefox auto-update too.",
-      code: "Windows: Settings > Update & Security > Automatic updates ON. Mac: System Preferences > Software Update > Automatic ON. Browsers update themselves -- just don't ignore restart prompts."
-    },
-    {
-      t: "Built-In Antivirus Is Enough",
-      d: "Your parent does NOT need expensive antivirus software. Windows Defender (already installed on Windows) and XProtect (built into Mac) are sufficient for most users and are free. Paid antivirus often causes more problems than it solves for older adults.",
-      code: "Tip: If someone calls saying 'your computer has a virus' and wants to sell antivirus software or remote access, it is 100% a scam. Windows Defender and Mac XProtect handle it."
-    },
-    {
-      t: "Create a 'Trust and Verify' Culture",
-      d: "Tell your parent: 'If you get any email asking you to click something or verify information, send it to me first. I will never be annoyed by this. It takes me 30 seconds to verify, and it could save you thousands of dollars.'",
-      code: "Script: 'I'd rather you ask me about a hundred suspicious emails than for a real scammer to get through even once.'"
+      t: "Updates, Antivirus, and Safe Email Habits",
+      d: "Enable automatic OS updates, keep browsers current, and know that built-in antivirus (Windows Defender, Mac XProtect) is sufficient -- no paid software needed. Three email rules: never click links about money, never download unknown attachments, never call numbers from suspicious emails. Tell your parent: 'Forward suspicious emails to me first.' The book covers detailed setup for every platform.",
+      code: "Tip: If someone calls saying 'your computer has a virus,' it is 100% a scam. Windows Defender and Mac XProtect handle real threats for free."
     }
   ],
   whatIs: "Computer and email security is the process of hardening your parent's digital life by enabling two-factor authentication on email (the master key to all other accounts), setting up a password manager, installing an ad blocker, creating bookmarks for important sites, and establishing safe email habits that prevent phishing attacks.",
-  realWorld: "Tom, a 72-year-old confident computer user, clicked a fake PayPal email and entered his password. The scammer used his email access to reset passwords on his Amazon, bank, and investment accounts within days. It took weeks to recover. If Tom had two-factor authentication enabled, the scammer would have been stopped at the door -- even with the stolen password, they couldn't log in without the verification code sent to Tom's phone.",
-  code: "COMPUTER & EMAIL SECURITY CHECKLIST\n====================================\n\nPRIORITY 1: EMAIL SECURITY (Do This First!)\n  [ ] Enable Two-Factor Authentication\n      Gmail: myaccount.google.com > Security > 2-Step Verification\n      Outlook: account.microsoft.com > Security > Two-step verification\n      Yahoo: account.yahoo.com > Account security > Two-step verification\n  [ ] Create strong unique email password (12+ chars, mixed types)\n  [ ] Write down recovery options in secure location\n\nPRIORITY 2: BROWSER SECURITY\n  [ ] Install uBlock Origin (Chrome Web Store or Firefox Add-ons)\n  [ ] Verify pop-up blocking is enabled\n      Chrome: Settings > Privacy and security > Pop-ups > Blocked\n      Firefox: Settings > Privacy & Security > Block pop-up windows\n  [ ] Create bookmarks for: bank, email, Medicare, SSA, Amazon\n  [ ] Verify browser auto-updates are enabled\n\nPRIORITY 3: EMAIL BEST PRACTICES\n  [ ] Explain: never click links in emails about accounts or money\n  [ ] Teach: go to websites via bookmarks, not email links\n  [ ] Rule: never download attachments from unknown senders\n  [ ] Rule: never call numbers shown in suspicious emails\n\nPRIORITY 4: COMPUTER SECURITY\n  [ ] Enable automatic OS updates\n      Windows: Settings > Update & Security > Automatic ON\n      Mac: System Preferences > Software Update > Automatic ON\n  [ ] Verify built-in antivirus is active (no paid software needed)\n  [ ] Ensure computer login is password-protected\n\nPRIORITY 5: PASSWORD MANAGEMENT\n  [ ] Enable Chrome/Firefox built-in password manager\n  [ ] Help create strong unique passwords for important accounts\n  [ ] Test that passwords save and autofill correctly\n  [ ] Optional: Set up Bitwarden for advanced management\n\nONGOING (Every 3 Months):\n  [ ] Verify 2FA still enabled on email\n  [ ] Confirm auto-updates are still on\n  [ ] Check ad blocker and pop-up blocker working\n  [ ] Practice: send a sample phishing email and review response",
+  realWorld: "A 72-year-old confident computer user clicked a fake PayPal email and entered his password. The scammer used his email access to reset passwords on his Amazon, bank, and investment accounts within days. It took weeks to recover. If he had two-factor authentication enabled, the scammer would have been stopped at the door -- even with the stolen password, they could not log in without the verification code sent to his phone.",
+  code: "COMPUTER & EMAIL SECURITY — KEY STEPS\n====================================\n\n1. Enable Two-Factor Authentication on Email (the master key)\n2. Install uBlock Origin ad blocker in the browser\n3. Bookmark important sites (bank, email, Medicare, Amazon)\n4. Enable automatic OS and browser updates\n5. Set up browser's built-in password manager\n\n... plus detailed instructions for Gmail, Outlook, Yahoo,\nChrome, Firefox, Windows, and Mac — with a quarterly\nmaintenance checklist.\n\nGet the complete checklist with step-by-step instructions in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "Chrome and Firefox's built-in password managers are free and eliminate the #1 security risk for older adults: reusing the same password on every site. With a password manager, each account gets a unique strong password -- so if one site is breached, the others stay protected.",
   quiz: [
     {
@@ -1864,7 +1839,12 @@ const LESSONS_DATA = [
     answer: "Six critical mistakes: (1) Password uses personal info (pet name) making it guessable. (2) Same password reused on every account -- one breach compromises everything. (3) Two-factor authentication not enabled -- the single most important protection is missing. (4) No ad blocker means malicious pop-ups can reach him. (5) No bookmarks means he searches for his bank each time, risking fake search results. (6) Auto-updates disabled leaves security holes unpatched. Bonus: He's paying $89/year for Norton when Windows Defender is free and sufficient."
   },
   difficulty: "beginner",
-  prereqs: [13]
+  prereqs: [13],
+  brandingCta: {
+    title: 'Enterprise Security Hardening for Your Organization?',
+    message: 'Teamz Lab provides <strong>comprehensive security audits</strong> and setup services — email security, 2FA rollout, password management, and employee training at scale. Protect your entire team, not just one computer. Or get the complete family protection guide: <a href="https://www.amazon.com/dp/B0F2PJ1MG4" target="_blank">Protecting Aging Parents on Amazon</a>.',
+    cta: 'Get a Security Audit'
+  }
 },
 {
   id: 15,
@@ -1878,14 +1858,9 @@ const LESSONS_DATA = [
       code: "Test: Visit your parent's profile logged out. Everything you can see, scammers can see. Take a screenshot and show them."
     },
     {
-      t: "Margaret's Voice-Clone Nightmare",
-      d: "Margaret posted family videos publicly on Facebook. A scammer downloaded a 3-second clip of her grandson James singing, cloned his voice with free AI tools, and called posing as James claiming he was arrested in Mexico and needed $2,500. The voice was perfect. Margaret was reaching for her credit card when her daughter called back to verify.",
-      code: "Key detail: The scammer didn't hack anything. Margaret gave them everything -- the voice clip, the grandson's name, even the Mexico trip -- all from public Facebook posts."
-    },
-    {
-      t: "Voice Cloning Needs Only 3 Seconds",
-      d: "Microsoft's Vall-E needs just 3 seconds of audio to clone a voice. Tools like Eleven Labs offer free voice cloning. Descript and Play.ht are legitimate software being used by criminals. A birthday video, a holiday greeting, or a clip of reading to grandkids provides enough audio.",
-      code: "Warning: These tools are on regular app stores, not the dark web. They're getting better monthly. Soon, cloned voices will be completely indistinguishable from real ones."
+      t: "A Voice-Clone Nightmare",
+      d: "A grandmother posted family videos publicly on Facebook. A scammer downloaded a short clip of her grandson singing, cloned his voice with free AI tools, and called posing as the grandson claiming he was in trouble overseas and needed money. The voice was perfect. She was reaching for her credit card when her daughter called back to verify.",
+      code: "Key detail: The scammer did not hack anything. The grandmother gave them everything -- the voice clip, names, even travel plans -- all from public Facebook posts."
     },
     {
       t: "What Scammers Harvest: The Full List",
@@ -1903,34 +1878,19 @@ const LESSONS_DATA = [
       code: "Step: Facebook > Settings > Personal Information > Phone Number > Set to 'Only Me'. Repeat for: email, birthday, address, workplace."
     },
     {
-      t: "Disable Facial Recognition and Location",
-      d: "Turn off Facebook's facial recognition (Settings > Face Recognition > OFF) to prevent automatic tagging that connects your parent to other accounts. Disable location services for the Facebook app so posts don't reveal real-time whereabouts.",
-      code: "Step: Facebook Settings > Face Recognition > OFF. Phone Settings > Location > Facebook > Never (or 'While Using')."
-    },
-    {
-      t: "Review and Clean Old Posts",
-      d: "Spend an hour scrolling through old posts with your parent. Look for anything revealing: home address, phone number, daily schedule, vacation plans, grandchildren's names and schools, financial information. Delete or restrict to friends-only.",
-      code: "Look for: Photos of house exterior/interior, school pickup posts, vacation check-ins, birthday posts with ages, new car photos, jewelry or renovation photos."
-    },
-    {
       t: "The Facebook Quiz Trap",
       d: "Those fun quizzes ('What was your first car?', 'Your childhood phone number?') are data harvesting operations. They collect answers to common security questions. Explain clearly: 'These quizzes are collecting the answers to your bank's security questions. Never answer them.'",
       code: "Rule: If a Facebook quiz asks about your past (first pet, first car, maiden name, childhood street), it is harvesting security question answers. Never participate."
     },
     {
-      t: "Create a Family Verification Group Chat",
-      d: "Set up a private family group chat on WhatsApp, iMessage, or Messenger. Tell your parent: 'If anyone contacts you asking for money urgently -- arrest, accident, medical emergency -- DON'T send anything. Message this group first. We verify together.'",
-      code: "Script: 'Many of us have gotten these calls. We catch them together. When scammers know a family verifies together, they move on to easier targets.'"
-    },
-    {
       t: "Platforms Are Not Protecting Your Parents",
-      d: "Facebook was fined $5 billion by the FTC for privacy violations -- the largest fine ever imposed. They paid it and continued. Default settings favor sharing because sharing equals engagement equals advertising revenue. Privacy settings exist but are buried. You must actively configure them.",
+      d: "Facebook was fined $5 billion by the FTC for privacy violations -- the largest fine ever imposed. Default settings favor sharing because sharing equals engagement equals advertising revenue. Privacy settings exist but are buried. You must actively configure them. Also consider setting up a family verification group chat.",
       code: "Remember: Your mother is fighting against a $100 billion company's psychology team designed to make oversharing feel natural. Help her by setting the defaults correctly."
     }
   ],
   whatIs: "Social media safety is the process of auditing and locking down your parent's social media profiles to stop scammers from harvesting personal data, voice samples, family information, and security question answers. It includes changing privacy settings, removing public personal data, disabling facial recognition, and establishing family verification protocols.",
-  realWorld: "Margaret loved sharing family photos on Facebook -- birthdays, holidays, a video of her grandson singing. A scammer downloaded a 3-second video clip, used free AI voice-cloning tools to recreate the grandson's voice, and called Margaret pretending to be her grandson in trouble in Mexico. The voice was perfect because the scammer also knew names, relationships, and travel plans -- all from Margaret's public posts. She was seconds from wiring $2,500 when her daughter called to verify. The scammer never hacked anyone; Margaret had given them everything they needed on Facebook.",
-  code: "SOCIAL MEDIA SAFETY CHECKLIST\n==============================\n\nSTEP 1: PROFILE AUDIT (Do first!)\n  [ ] Visit parent's profile while logged out\n  [ ] Screenshot what strangers can see\n  [ ] Show parent: 'This is what scammers see'\n\nSTEP 2: LOCK DOWN PRIVACY\n  [ ] Facebook > Settings > Privacy\n      > 'Who can see your future posts?' > Friends\n      > 'Limit past posts' > Apply to all\n  [ ] Remove phone number (Settings > Personal Info > Only Me)\n  [ ] Hide email, birthday, address from public view\n  [ ] Disable facial recognition (Settings > Face Recognition > OFF)\n  [ ] Disable location for Facebook app (Phone Settings > Location)\n\nSTEP 3: REVIEW OLD CONTENT\n  [ ] Scroll through old posts together (budget 1 hour)\n  [ ] Delete/restrict posts showing:\n      - Home address or exterior\n      - Daily schedule or routines\n      - Vacation plans or check-ins\n      - Grandchildren's names and schools\n      - Financial info (new car, renovations, jewelry)\n  [ ] Review tagged photos -- untag from revealing ones\n  [ ] Disable video autoplay (Settings > Videos > Autoplay OFF)\n\nSTEP 4: VOICE & VIDEO PROTECTION\n  [ ] Remove or restrict public videos with voice audio\n  [ ] Explain voice cloning: '3 seconds of audio is enough'\n  [ ] Establish rule: never trust a voice on the phone alone\n  [ ] Review: 'Hang up and call back on a known number'\n\nSTEP 5: QUIZ AND GAME SAFETY\n  [ ] Explain Facebook quiz data harvesting\n  [ ] Rule: never answer quizzes about personal history\n  [ ] Block quiz/game apps (Settings > Apps and Websites > Remove)\n\nSTEP 6: FAMILY VERIFICATION PROTOCOL\n  [ ] Create private family group chat\n  [ ] Rule: 'If anyone asks for money urgently, message group first'\n  [ ] Review family safe word\n\nQUARTERLY CHECK-IN:\n  [ ] Review privacy settings (platforms change them)\n  [ ] Check for new public posts or tags\n  [ ] Remind about quiz/game dangers",
+  realWorld: "A grandmother loved sharing family photos on Facebook -- birthdays, holidays, a video of her grandson singing. A scammer downloaded a short video clip, used free AI voice-cloning tools to recreate the grandson's voice, and called pretending to be the grandson in trouble overseas. The voice was perfect because the scammer also knew names, relationships, and travel plans -- all from public posts. She was seconds from wiring thousands when her daughter called to verify. The scammer never hacked anyone; the grandmother had given them everything they needed on Facebook.",
+  code: "SOCIAL MEDIA SAFETY — KEY STEPS\n==============================\n\n1. Profile Audit: Visit parent's profile logged out and screenshot what strangers see\n2. Lock Down Privacy: Set all posts to 'Friends Only' and remove phone number\n3. Remove Voice/Video Clips: Delete public videos (3 seconds is enough for voice cloning)\n4. Stop Facebook Quizzes: They harvest security question answers\n\n... plus detailed steps for reviewing old content, voice protection,\nfamily verification protocol, and a quarterly check-in schedule.\n\nGet the complete social media lockdown guide in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "In 2023, the FTC fined Meta (Facebook's parent company) $5 billion for privacy violations -- the largest fine ever imposed on any company. Facebook paid it and barely changed anything, because the advertising revenue from user sharing is worth far more than the fine.",
   quiz: [
     {
@@ -2009,7 +1969,12 @@ const LESSONS_DATA = [
     answer: "Four critical gaps: (1) Old posts from before the privacy change are still public -- she needs to use 'Limit Past Posts' to apply Friends Only retroactively. (2) Public videos from 2019 contain voice audio that can be cloned with just 3 seconds of clear speech. (3) Facial recognition is still enabled, allowing automatic tagging and identity linking. (4) She completed three Facebook quizzes that harvested her security question answers -- first car, childhood street, and childhood friend are all common bank security questions now in scammers' hands."
   },
   difficulty: "intermediate",
-  prereqs: [14]
+  prereqs: [14],
+  ebookCta: {
+    text: 'Want the complete social media lockdown guide with step-by-step screenshots?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 },
 {
   id: 16,
@@ -2018,14 +1983,9 @@ const LESSONS_DATA = [
   analogy: "Think of your parent's bank account like a castle. Right now, anyone who fools the guard at the gate (your parent's judgment) gets full access to the treasury. We're adding five layers of defense: an alarm system (transaction alerts), a weight limit on the drawbridge (spending limits), a second gatekeeper who calls you (trusted contact), a wall around new construction (credit freeze), and a rule that the king must appear in person for large withdrawals (in-person requirement).",
   points: [
     {
-      t: "David's $8,400 iTunes Card Disaster",
-      d: "David, a retired accountant, received an IRS impersonation call. The scammer had his Social Security number. In a panic, David drove to Best Buy and bought $8,400 in iTunes gift cards, reading the codes over the phone. The money was gone in seconds -- converted instantly to untraceable cash. A $2,000 daily limit, transaction alerts, or a trusted contact would have stopped this.",
-      code: "Key lesson: David was smart with money for 40 years. Panic overrode his judgment. Safeguards work when judgment fails."
-    },
-    {
-      t: "How Scammers Move Money",
-      d: "Wire transfers leave the account in minutes and are irreversible after 24 hours. Gift card codes are redeemed instantly and converted to cryptocurrency in 5 minutes -- completely untraceable. Crypto scams use fake dashboards showing 'growing' investments. Once money enters these channels, it is gone forever.",
-      code: "Rule: No legitimate business EVER asks for payment in gift cards. Not the IRS. Not your bank. Not the police. Not a grandchild in trouble. Gift card payment request = 100% scam."
+      t: "A Gift Card Disaster",
+      d: "A retired accountant received an IRS impersonation call. The scammer had his Social Security number. In a panic, he drove to a store and bought thousands in gift cards, reading the codes over the phone. The money was gone in seconds -- converted instantly to untraceable cash. A daily spending limit, transaction alerts, or a trusted contact would have stopped this.",
+      code: "Key lesson: He was smart with money for decades. Panic overrode his judgment. Safeguards work when judgment fails."
     },
     {
       t: "Safeguard 1: Transaction Alerts",
@@ -2034,7 +1994,7 @@ const LESSONS_DATA = [
     },
     {
       t: "Safeguard 2: Daily Spending Limits",
-      d: "Set daily caps on transfers, withdrawals, and spending. If David had a $2,000 daily transfer limit, the bank would have denied the $8,400 iTunes purchase. Yes, it adds friction for legitimate large transactions -- but friction is exactly what stops scammers.",
+      d: "Set daily caps on transfers, withdrawals, and spending. If the victim had a daily transfer limit, the bank would have denied the large gift card purchase. Yes, it adds friction for legitimate large transactions -- but friction is exactly what stops scammers.",
       code: "Recommended limits: ATM withdrawals: $500/day. Bill pay/transfers: $1,000/day. Debit card: $2,000/day. Adjust based on actual needs. For larger amounts, call bank for one-time increase."
     },
     {
@@ -2053,29 +2013,14 @@ const LESSONS_DATA = [
       code: "Call bank: 'Can we require in-person verification for wire transfers over $5,000?' Even if no formal policy exists, the bank can flag the account for extra scrutiny."
     },
     {
-      t: "The Gift Card Conversation",
-      d: "Gift cards are the #1 payment method scammers demand because the codes are instant, untraceable, and irreversible. Have an explicit conversation: 'No legitimate organization will EVER ask you to pay with gift cards. If anyone asks you to buy gift cards and read them codes, hang up immediately and call me.'",
-      code: "Visit a store with your parent. Show them the gift card aisle. Say: 'These are real products, but scammers trick people into buying them as payment. Once you read the code to someone, the money is gone forever. The store can't help. The bank can't help.'"
-    },
-    {
-      t: "The Multi-Layered Defense",
-      d: "Each safeguard alone can be overcome. Together, they are nearly impenetrable. Layer 1: Alerts (early warning). Layer 2: Limits (blocks large transfers). Layer 3: Trusted contact (bank calls you). Layer 4: Credit freeze (blocks new accounts). Layer 5: In-person requirement (adds time to reconsider). A sophisticated scammer might beat one layer -- but all five? They move on.",
+      t: "The Multi-Layered Defense and Maintenance",
+      d: "Each safeguard alone can be overcome. Together, they are nearly impenetrable. All five layers working together make scammers move on to easier targets. Also critical: have the gift card conversation ('No legitimate organization EVER asks for gift card payment'), post emergency numbers on the fridge, and review bank safeguards quarterly. The book covers detailed scripts and maintenance schedules.",
       code: "Think of it like home security: a lock alone can be picked, but a lock + alarm + camera + motion lights + dog makes burglars go next door."
-    },
-    {
-      t: "Post the Emergency Numbers",
-      d: "Put a card on the refrigerator with: the bank's fraud hotline, your phone number as trusted contact, and instructions: 'If ANYONE asks you to send money or buy gift cards, call [your name] FIRST.' Make it easy for your parent to ask for help before it's too late.",
-      code: "Fridge card: 'Bank Fraud Line: [number]. Trusted Contact: [your name] [your number]. Rule: NEVER send money or buy gift cards without calling me first.'"
-    },
-    {
-      t: "Quarterly Review",
-      d: "Banks change policies and staff changes. What was set up perfectly in January might be reset by April. Set a calendar reminder every 3 months to call the bank and verify: alerts still active, limits still set, trusted contact still on file, credit freeze still in place.",
-      code: "Calendar reminder: 'Check Mom/Dad's bank safeguards' every 3 months. Call bank with parent. Verify all 5 safeguards. Get written confirmation."
     }
   ],
   whatIs: "Money safeguards are a five-layer defense system that makes it physically difficult for scammers to move your parent's money, even if they succeed in deceiving them. The layers are: transaction alerts (real-time awareness), daily spending limits (blocks large transfers), trusted contacts (bank calls you to verify), credit freezes (blocks new accounts), and in-person wire requirements (adds friction and time to reconsider).",
-  realWorld: "David, a retired accountant with 40 years of financial expertise, was tricked by an IRS impersonation caller who had his Social Security number. In a panic, he drove to Best Buy and bought $8,400 in iTunes gift cards, reading the codes to the scammer. The money was instantly gone and untraceable. But here's what could have stopped this: a $2,000 daily limit would have blocked the purchase, transaction alerts would have sent a text with the amount in writing (breaking the panic), and a trusted contact at the bank would have triggered a verification call to his son Robert.",
-  code: "MONEY SAFEGUARDS SETUP GUIDE\n==============================\n\nCALL YOUR PARENT'S BANK (with parent present)\n\nSAFEGUARD 1: TRANSACTION ALERTS\n  Request:\n  [ ] Alert for any transaction over $100\n  [ ] Alert for ANY wire transfer (any amount)\n  [ ] Alert for any new payee added to bill pay\n  [ ] Daily balance text message each morning\n  Stat: Seniors with alerts are 70% less likely to fall for scams (AARP)\n\nSAFEGUARD 2: DAILY SPENDING LIMITS\n  Request:\n  [ ] ATM withdrawal limit: $500/day\n  [ ] Bill pay/transfer limit: $1,000/day\n  [ ] Debit card transaction limit: $2,000/day\n  Adjust based on parent's actual spending patterns.\n  For legitimate large transactions: call bank for one-time increase.\n\nSAFEGUARD 3: TRUSTED CONTACT\n  Setup:\n  [ ] Parent authorizes you as trusted contact\n  [ ] Provide your phone number and email\n  [ ] Set a verification code word\n  [ ] Get written confirmation from the bank\n  Note: You CANNOT access the account. Bank only calls you to verify.\n\nSAFEGUARD 4: CREDIT FREEZE (All 3 bureaus!)\n  [ ] Equifax: 1-800-525-6285 or equifax.com/personal/credit-report-services/credit-freeze\n  [ ] Experian: 1-888-397-3742 or experian.com/freeze/center.html\n  [ ] TransUnion: 1-800-680-7289 or transunion.com/credit-freeze\n  Save the PIN for each. Cost: FREE.\n  To unfreeze temporarily for new credit: call with PIN.\n\nSAFEGUARD 5: IN-PERSON WIRE REQUIREMENT\n  [ ] Ask bank: 'Can we require in-person ID verification for wires over $5,000?'\n  [ ] If no formal policy, request account flag for extra scrutiny\n\nAFTER SETUP:\n  [ ] Get written confirmation of all settings\n  [ ] Post fridge card: Bank fraud line + your number + 'Call me first'\n  [ ] Explain each safeguard to parent\n  [ ] Set quarterly calendar reminder to verify all safeguards",
+  realWorld: "A retired accountant with decades of financial expertise was tricked by an IRS impersonation caller who had his Social Security number. In a panic, he drove to a store and bought thousands of dollars in gift cards, reading the codes to the scammer. The money was instantly gone and untraceable. But here is what could have stopped this: a daily spending limit would have blocked the purchase, transaction alerts would have sent a text with the amount in writing (breaking the panic), and a trusted contact at the bank would have triggered a verification call to his son.",
+  code: "MONEY SAFEGUARDS — KEY STEPS\n==============================\n\n1. Set Up Transaction Alerts (over $100, all wire transfers)\n2. Set Daily Spending Limits (ATM, transfers, debit)\n3. Add Yourself as Trusted Contact at the bank\n4. Place Credit Freeze with all 3 bureaus (FREE)\n5. Request In-Person Verification for large wire transfers\n\n... plus specific dollar amounts to request, credit bureau\nphone numbers, scripts for calling the bank, and a quarterly\nverification schedule.\n\nGet the complete money safeguards guide with bank call scripts in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "According to AARP, seniors who have transaction alerts set up are 70% less likely to fall for scams. Not because they're smarter -- but because seeing '$8,400 transaction at Best Buy' in a text message breaks through the panic fog that scammers create.",
   quiz: [
     {
@@ -2157,7 +2102,12 @@ const LESSONS_DATA = [
     answer: "Five critical weaknesses: (1) Alert threshold of $500 is too high -- David's scam started with an $8,400 purchase, but many scams start smaller. Set to $100. (2) $5,000 daily limit defeats the purpose -- most scam transactions are $2,000-$10,000. Lower to $1,000-$2,000 based on actual needs. (3) Only Equifax is frozen -- scammers can try Experian or TransUnion to open new accounts. Freeze all three. (4) Gift card rule was never discussed -- this is the #1 payment method scammers demand. Have the explicit conversation. (5) No quarterly review means settings may lapse without anyone noticing."
   },
   difficulty: "intermediate",
-  prereqs: [12]
+  prereqs: [12],
+  brandingCta: {
+    title: 'Financial Fraud Prevention for Banks & Institutions',
+    message: 'Teamz Lab builds <strong>AI-powered transaction monitoring</strong> and fraud alert systems for banks and financial institutions. Stop fraudulent transfers before they happen — protect your customers at scale. Or get the complete family protection guide: <a href="https://www.amazon.com/dp/B0F2PJ1MG4" target="_blank">Protecting Aging Parents on Amazon</a>.',
+    cta: 'Build Fraud Prevention Tools'
+  }
 },
 // Lessons 17-20: Protecting Aging Parents from AI Scams
 // Monthly Check-Ins, Crisis Response, Emotional Recovery, and the Family Safety Checklist
@@ -2179,11 +2129,6 @@ const LESSONS_DATA = [
       code: "Tip: Frame it as connection: 'I want to see you monthly. We'll just chat and make sure everything's working okay with your tech.'"
     },
     {
-      t: "Safety in Openness — Why Shame Kills Reporting",
-      d: "Many seniors don't report scam attempts because they feel ashamed. 'I should have known better.' But if check-ins are regular and judgment-free, they're more likely to mention something suspicious because they know you won't judge them. You're just checking in.",
-      code: "Script: 'You're doing great. If anything ever feels weird, just call me. Even if it's nothing. Even if you think I'm busy. Seriously.'"
-    },
-    {
       t: "Section 1 — Review Recent Calls (5 Minutes)",
       d: "Ask: 'Any strange or unexpected calls this month? Anyone claiming to be from the bank, IRS, or Social Security? Anyone asking for money or personal information?' Review the call log together if they're comfortable. Flag unknown numbers that were answered.",
       code: "Key question: 'Did they call you, or did you call them?' If they called your parent, it's almost always a scam attempt."
@@ -2196,37 +2141,22 @@ const LESSONS_DATA = [
     {
       t: "Section 3 — Review Banking and Charges (5 Minutes)",
       d: "Ask about unrecognized credit card or bank charges. Watch for subscriptions they don't remember signing up for — these add up: $9.99 here, $14.99 there. Seniors often don't notice small recurring charges. Review statements together and flag anything suspicious.",
-      code: "Real case: Linda's daughter found an unauthorized 'Adobe Creative' subscription during a routine check-in. They called the credit card company, reversed it, and closed the compromised card."
+      code: "Real case: A daughter found an unauthorized 'Adobe Creative' subscription on her mother's account during a routine check-in. They called the credit card company, reversed it, and closed the compromised card."
     },
     {
-      t: "Section 4 — Social Media and Online Activity (5 Minutes)",
-      d: "Ask: 'Anyone trying to be your friend on Facebook who you don't know? Any messages from people claiming to need help or money? Anyone asking for your password or personal info?' This is also a good time to review privacy settings together.",
-      code: "Tip: Friend requests from strangers are one of the most common entry points for romance scams and social engineering attacks targeting seniors."
+      t: "Section 4 — Social Media, Tech, and Safe Word (10 Minutes)",
+      d: "Review social media for suspicious friend requests, check tech updates and passwords, and confirm the family safe word. AI voice cloning makes safe word verification more critical than ever. Also a good time to offer tech help without demanding to take over.",
+      code: "Script: 'Our safe word is [WORD]. If anyone who sounds like me calls asking for money and cannot say this word, it is not me. Hang up and call me directly.'"
     },
     {
-      t: "Section 5 — Tech Updates and Passwords (5 Minutes)",
-      d: "Ask: 'Have you updated your phone recently? Do you need help with anything tech-wise? Any passwords you're worried about?' Remind them about security updates. Offer to help — don't demand to take over.",
-      code: "Action: If it's been more than a month since their last phone/computer update, help them install security patches during the visit."
-    },
-    {
-      t: "Section 6 — Confirm the Family Safe Word (2 Minutes)",
-      d: "Remind them: 'Remember our family safe word? If anyone calls claiming to be me or your grandchildren, ask them the safe word. If they can't answer, hang up. And call me back right after.' AI voice cloning makes this more critical than ever.",
-      code: "Script: 'Our safe word is [WORD]. If anyone who sounds like me calls asking for money and can't say this word, it's not me. Hang up and call me directly.'"
-    },
-    {
-      t: "The Response Framework — When You Find Something",
-      d: "When you discover a suspicious incident: (1) Don't panic or blame — 'Good catch. I'm glad we found it.' (2) Normalize it — 'This is SO common. Even tech people fall for these.' (3) Explain clearly what happened. (4) Take action together. (5) Prevent future incidents — 'Next time, just call me first.'",
-      code: "Never say: 'Mom, you should have known better.' Always say: 'Good catch thinking about this. This looks suspicious and I'm glad we found it.'"
-    },
-    {
-      t: "The Sibling Group Chat — Distribute the Responsibility",
-      d: "If you have siblings, create a monthly group check-in. Each sibling reports: 'Anyone contact Mom suspicious?' This distributes responsibility and shows your parent that the whole family is watching out for them. Your parent sees: multiple people care, multiple people are paying attention.",
-      code: "Example exchange: 'Hey everyone, it's tech Sunday. Mom got a text from Amazon saying her account was suspended. Wasn't legit.' 'Good catch. I got the same thing last week. Definitely a scam.'"
+      t: "When You Find Something — and Sharing the Load",
+      d: "When you discover a suspicious incident, respond with encouragement ('Good catch'), normalize it, and take action together. If you have siblings, create a group chat to distribute check-in responsibility. The book includes detailed response frameworks and sibling coordination templates.",
+      code: "Never say: 'Mom, you should have known better.' Always say: 'Good catch. This looks suspicious and I am glad we found it.'"
     }
   ],
   whatIs: "The Monthly Family Tech Check-In is a scheduled 30-minute conversation — over coffee, during a visit, or on a video call — where you casually review your parent's recent calls, texts, emails, bank statements, and online activity to catch scam attempts early. It's not an interrogation; it's connection with a safety net built in.",
-  realWorld: "Susan and her siblings started 'Tech Sunday' — the first Sunday of every month. Over 11 months, their casual check-ins caught a bank impersonation call (Month 4), an unauthorized subscription charge (Month 8), and an Amazon phishing attempt (Month 11). Nothing catastrophic happened because the routine caught every threat early. Their mother Linda felt comfortable mentioning suspicious events because the tone was always supportive, never judgmental.",
-  code: "MONTHLY TECH CHECK-IN TEMPLATE\n=========================================\n\nBEFORE THE CHECK-IN:\n[ ] Pick a consistent day (1st Sunday, 2nd Wednesday, etc.)\n[ ] Set a recurring calendar reminder\n[ ] Keep it to 30 minutes — part of a normal visit\n[ ] Bring coffee or food — make it social, not formal\n\nDURING THE CHECK-IN (30 MINUTES):\n\n1. CALLS (5 min)\n   [ ] Any strange or unexpected calls?\n   [ ] Anyone claiming to be bank, IRS, Social Security?\n   [ ] Review call log together — flag unknowns\n\n2. TEXTS & EMAILS (5 min)\n   [ ] Any suspicious texts or emails?\n   [ ] Any links clicked or downloads?\n   [ ] Check spam folder together\n\n3. BANKING (5 min)\n   [ ] Any charges you don't recognize?\n   [ ] Any subscriptions you didn't sign up for?\n   [ ] Review recent statements together\n\n4. SOCIAL MEDIA (5 min)\n   [ ] Any friend requests from strangers?\n   [ ] Any messages asking for money or info?\n   [ ] Review privacy settings if needed\n\n5. TECH & PASSWORDS (5 min)\n   [ ] Phone/computer updated recently?\n   [ ] Any passwords need changing?\n   [ ] Help with any tech issues?\n\n6. SAFE WORD (2 min)\n   [ ] Confirm they remember the family safe word\n   [ ] Remind: ask for it if anyone claims to be family\n\nCLOSING:\n   [ ] 'You're doing great. Call me anytime.'\n\nAFTER THE CHECK-IN:\n[ ] Make notes of what you found\n[ ] Track their account list, concerns, patterns\n[ ] Share findings with siblings if applicable\n[ ] Follow up on anything flagged next month",
+  realWorld: "A family started 'Tech Sunday' -- the first Sunday of every month. Over 11 months, their casual check-ins caught a bank impersonation call, an unauthorized subscription charge, and a phishing attempt. Nothing catastrophic happened because the routine caught every threat early. Their mother felt comfortable mentioning suspicious events because the tone was always supportive, never judgmental.",
+  code: "MONTHLY CHECK-IN — KEY AREAS\n=========================================\n\n1. Review Calls & Texts (any suspicious contacts?)\n2. Review Banking Statements (unrecognized charges?)\n3. Review Social Media (new friend requests from strangers?)\n4. Confirm Safe Word (do they still remember it?)\n5. Update Tech (phone/computer updates current?)\n\n... plus a detailed 30-minute template with time allocations,\npre-check preparation, conversation scripts, post-check\ndocumentation, and sibling coordination.\n\nGet the printable Monthly Check-In Template in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "Scammers specifically target isolated seniors — people who don't talk regularly with family. Research shows that seniors who have weekly or monthly family contact are significantly less likely to lose money to scams, because the communication pattern itself deters criminals. When scammers realize a family talks often, they move on to easier targets.",
   quiz: [
     {
@@ -2280,7 +2210,12 @@ const LESSONS_DATA = [
     answer: "The correct response is: 'Mom, let's call your bank right now using the number on the back of your card to verify that call was real. Scammers often already have your name and address from data breaches — that doesn't mean they're from the bank. We should also check your recent transactions for anything suspicious and consider getting a new account number since the old one may be compromised.'"
   },
   difficulty: "intermediate",
-  prereqs: [13, 14, 15, 16]
+  prereqs: [13, 14, 15, 16],
+  ebookCta: {
+    text: 'Want the printable Monthly Check-In Template with conversation scripts?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 },
 {
   id: 18,
@@ -2304,11 +2239,6 @@ const LESSONS_DATA = [
       code: "Say to the bank: 'My parent's account was compromised. I need to report an unauthorized wire transfer. It went through [X minutes ago]. I need you to try to reverse or freeze it before it clears.'"
     },
     {
-      t: "Step 4 — Call the Retailer If Gift Cards Were Involved",
-      d: "If gift cards were purchased (iTunes, Google Play, Amazon, Target, Best Buy), call the retailer's fraud line immediately. If the codes haven't been redeemed yet, retailers can sometimes deactivate them. Have the receipt or purchase confirmation number ready. Time is critical — scammers convert codes to cryptocurrency within hours.",
-      code: "Real case: Tom's mother Patricia bought $5,400 in gift cards for a 'Microsoft' scam. The codes were already redeemed. But a pending $10,000 wire transfer was stopped because Tom called the bank within 24 hours."
-    },
-    {
       t: "Step 5 — File a Police Report (First 2 Hours)",
       d: "Go to your local police station or file online. You need the police report number for: insurance claims, FBI IC3 filing, credit agency disputes, and identity theft protection. Some departments are slow — get the case number even if the full report takes days. Local reports also help law enforcement track scam patterns in your area.",
       code: "Tip: Many jurisdictions now have online fraud reporting. Search '[your city] online police report fraud' to find it."
@@ -2324,29 +2254,14 @@ const LESSONS_DATA = [
       code: "Save the confirmation numbers from each bureau. You'll need them to unfreeze credit later if your parent needs to open a legitimate account."
     },
     {
-      t: "Step 8 — Change All Compromised Passwords Immediately",
-      d: "If passwords were stolen, change them in this order: (1) Email first — it's the master account since password reset links go there. (2) Bank accounts. (3) Social media. (4) Everything else. Enable two-factor authentication on every account. Use strong passwords: 16+ characters, mix of upper, lower, numbers, symbols.",
+      t: "Steps 8-9 and Ongoing Recovery",
+      d: "Change all compromised passwords (email FIRST -- it is the master key), call the Elder Fraud Hotline (833-FRAUD-11), monitor statements weekly for 3-6 months, and document everything in a crisis folder. The book contains the complete step-by-step recovery timeline with specific hotline numbers, monitoring checklists, and documentation templates.",
       code: "Critical: If the scammer has email access, they can intercept password reset emails for every other account. Secure email FIRST, then change everything else."
-    },
-    {
-      t: "Step 9 — Call the National Elder Fraud Hotline (First Week)",
-      d: "Call 1-833-FRAUD-11 (1-833-372-8311). This hotline is specifically for elder fraud victims. They can walk you through recovery steps, connect you with victim advocacy organizations, provide recovery options you might not know about, and offer emotional support. Call even if you've completed all other steps.",
-      code: "The Elder Fraud Hotline staff have handled hundreds of cases. They know recovery paths, local resources, and legal options that aren't obvious to families handling this for the first time."
-    },
-    {
-      t: "Monitor Closely for 3-6 Months After",
-      d: "Check bank and credit card statements weekly for 3-6 months. Many scammers test stolen account numbers with small charges first ($1-5) before attempting larger fraud. Check credit reports at AnnualCreditReport.com for fraudulent accounts opened in your parent's name. Catching a $5 unauthorized charge beats catching a $5,000 one later.",
-      code: "Timeline: First 24 hours = damage control. Week 1 = follow up and document. Month 1 = first credit reports. Months 2-6 = close monitoring. Year 1 = ongoing vigilance."
-    },
-    {
-      t: "Document Everything in a Crisis Folder",
-      d: "Keep a folder (physical or digital) with: police report number, IC3 case number, FTC case number, bank fraud reports, credit bureau confirmation numbers, all correspondence from agencies, and a detailed timeline of what happened. You'll need this for insurance claims, disputes, and any potential recovery efforts.",
-      code: "Create this crisis folder NOW, before anything happens. Pre-fill it with: bank fraud line numbers, credit bureau numbers, links to IC3.gov and reportfraud.ftc.gov, and the Elder Fraud Hotline number."
     }
   ],
   whatIs: "This is your step-by-step crisis protocol for the first 24 hours after discovering your parent has been scammed. Scammer pipelines are designed for speed — once money moves via gift cards, cryptocurrency, or international wire transfers, it's essentially irreversible after a few hours. But there's a critical window (usually 2-24 hours) where banks can stop transfers, credit card companies can reverse charges, and gift card companies can deactivate codes. Acting immediately during this window is the difference between losing some money and losing everything.",
-  realWorld: "Tom discovered on Thursday morning that his mother Patricia had been scammed on Tuesday — a fake 'Microsoft' caller convinced her to buy $5,400 in gift cards and authorize a $10,000 wire transfer. The gift card codes were already redeemed and the $5,400 was gone. But the wire transfer hadn't processed yet — it was scheduled for Friday morning. Tom called the bank's fraud line immediately. They contacted Patricia to verify, she confirmed the wire was unauthorized, and they blocked it. Tom lost $5,400 but saved $10,000 by acting within 24 hours. Every hour mattered.",
-  code: "SCAM CRISIS PROTOCOL — PRINT AND KEEP READY\n================================================\n\nFIRST 30 MINUTES:\n[ ] Step 1: Stay calm. Say: 'This is NOT your fault.'\n[ ] Step 2: Write down: What scam? How much? When? How paid? What info shared?\n[ ] Step 3: If money moved in last 2 hours → CALL BANK FRAUD LINE NOW\n         (Number on BACK of their card — NOT a number the scammer gave)\n[ ] Step 4: If gift cards → CALL RETAILER FRAUD LINE NOW\n         (Apple: 800-275-2273 | Google: 888-986-7944 | Amazon: 888-280-4331)\n\nFIRST 2 HOURS:\n[ ] Step 5: File police report → Get the CASE NUMBER\n[ ] Step 6: Report to FBI IC3 → ic3.gov (10 min)\n[ ] Step 7: Report to FTC → reportfraud.ftc.gov (10 min)\n\nFIRST 24 HOURS:\n[ ] Step 8: If SSN compromised → Call all 3 credit bureaus:\n         Equifax:    800-525-6285\n         Experian:   888-397-3742\n         TransUnion: 800-680-7289\n         Request: Fraud Alert + Credit Freeze (both FREE)\n[ ] Step 9: Change ALL compromised passwords (email FIRST)\n[ ] Step 10: Enable 2-factor authentication on all accounts\n[ ] Step 11: If bank account numbers stolen → Consider new accounts\n[ ] Step 12: If Medicare/SS involved → Call SSA: 800-269-0271\n\nFIRST WEEK:\n[ ] Step 13: Call Elder Fraud Hotline: 833-FRAUD-11\n[ ] Step 14: Check credit reports: AnnualCreditReport.com\n[ ] Step 15: Monitor bank statements for small test charges\n[ ] Step 16: Save ALL documentation in one folder\n\nONGOING (3-6 MONTHS):\n[ ] Check bank/credit statements WEEKLY\n[ ] Monitor credit reports for new fraudulent accounts\n[ ] Follow up with agencies on filed reports",
+  realWorld: "A man discovered on Thursday morning that his mother had been scammed on Tuesday -- a fake 'Microsoft' caller convinced her to buy thousands in gift cards and authorize a large wire transfer. The gift card codes were already redeemed and that money was gone. But the wire transfer had not processed yet -- it was scheduled for the next day. He called the bank's fraud line immediately. They contacted his mother to verify, she confirmed the wire was unauthorized, and they blocked it. He lost the gift card money but saved the larger wire transfer by acting within 24 hours. Every hour mattered.",
+  code: "SCAM CRISIS PROTOCOL — KEY STEPS\n================================================\n\nFIRST 30 MINUTES:\n1. Stay calm. Say: 'This is NOT your fault.'\n2. Document: What scam? How much? When? What info shared?\n3. If money moved recently → CALL BANK FRAUD LINE NOW\n\nFIRST 24 HOURS:\n4. File police report and FBI IC3 report (ic3.gov)\n5. If SSN compromised → Credit freeze with all 3 bureaus\n\n... plus 11 more critical steps covering retailer fraud lines,\npassword changes, credit monitoring, the Elder Fraud Hotline,\nand a 3-6 month ongoing monitoring schedule.\n\nGet the complete printable Crisis Protocol in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "According to the FBI, money recovery in scam cases is possible in about 5-10% of cases — but only when victims act within hours, not days. For wire transfers caught within 2 hours, banks can sometimes freeze funds at the receiving end. For credit card fraud, chargebacks succeed more often. The single biggest factor in recovery is speed: how fast you report determines how much you can save.",
   quiz: [
     {
@@ -2402,7 +2317,12 @@ const LESSONS_DATA = [
     answer: "Waiting until Monday is a critical mistake. The 2-24 hour window for potentially reversing wire transfers has already passed after two days, but further damage can still be prevented RIGHT NOW. The correct response: Call the bank's fraud line immediately (they're open 24/7), file the police report today, report to IC3.gov and reportfraud.ftc.gov today, and if any personal information was shared (SSN, bank account numbers), lock down credit and change passwords tonight. Every hour of delay risks additional fraud."
   },
   difficulty: "advanced",
-  prereqs: [17]
+  prereqs: [17],
+  ebookCta: {
+    text: 'Want the complete printable Crisis Protocol with all emergency numbers and timelines?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 },
 {
   id: 19,
@@ -2421,11 +2341,6 @@ const LESSONS_DATA = [
       code: "The most dangerous shame: 'People will think I'm losing my mind.' This fear of being seen as cognitively declining can make seniors hide problems for months or years."
     },
     {
-      t: "Scam Trauma Mirrors PTSD Symptoms",
-      d: "Scam victims often develop symptoms consistent with PTSD: intrusive thoughts and flashbacks to the moment they realized they were tricked; hypervigilance where every phone call feels suspicious; avoidance of phones, email, and computers; emotional numbness or dysregulation; physical symptoms like insomnia, loss of appetite, and chest pain; and loss of trust in their own judgment even about things unrelated to the scam.",
-      code: "Key distinction: These are NOT signs of cognitive decline. These are signs of trauma. Like all trauma, they heal with time, support, and sometimes professional help."
-    },
-    {
       t: "Step 1 — Make It Safe to Tell You",
       d: "Your parent is terrified to tell you. They're waiting for judgment. They're preparing for anger. Instead, say: 'This is not your fault. These criminals fool smart people — lawyers, doctors, professors. Even FBI agents have fallen for scams. You are not stupid. I love you. We're going to fix this together.' Say this even if you're angry inside.",
       code: "Script: 'I know you were scammed. This is not your fault. Even cybersecurity experts get phished. You are not stupid. I love you. We're going to fix this together.'"
@@ -2433,7 +2348,7 @@ const LESSONS_DATA = [
     {
       t: "Step 2 — Normalize It With Real Stories",
       d: "Tell your parent about other people who've been scammed. A CEO lost $500,000 in a business email compromise. A retired FBI agent fell for a romance scam. 1 in 4 Americans have been targeted by scammers. The goal is to shift their self-narrative from 'I'm stupid' to 'This happened to a human being in a world with sophisticated criminals.'",
-      code: "Real case: Sarah told her mother Margaret: 'Mom, I was scammed three years ago. A fake dating profile. I lost $2,000. I didn't tell anyone for a year because I was so embarrassed.' Margaret responded: 'You? You're so smart about this stuff.' That moment began Margaret's healing."
+      code: "Real case: A daughter told her mother: 'Mom, I was scammed years ago. A fake dating profile. I lost money. I didn't tell anyone for a year because I was so embarrassed.' Her mother responded: 'You? You're so smart about this stuff.' That moment began the mother's healing."
     },
     {
       t: "Step 3 — Separate Their Identity From the Mistake",
@@ -2441,24 +2356,9 @@ const LESSONS_DATA = [
       code: "Reframe: 'You made a decision based on the information you had. The information was deliberately falsified by a professional criminal. That's not your fault — that's their crime.'"
     },
     {
-      t: "Step 4 — Acknowledge the Real Loss Without Minimizing",
-      d: "Don't say 'At least it wasn't more' or 'You're lucky you can afford it.' These feel dismissive. Instead: 'I know you lost money you worked hard for. That's real. That matters. I'm sad about that too. And I'm also just glad you're safe.' The money is gone. That's devastating. Acknowledging it helps them process rather than suppress.",
-      code: "Never minimize: 'It could have been worse' is not comforting. It tells your parent their pain doesn't matter to you."
-    },
-    {
-      t: "Step 5 — Invite Them Into the Solution",
-      d: "Your instinct might be to take over: change all their passwords, monitor their accounts, limit their independence. But removing their agency makes trauma worse. Instead: 'Here are some things we could do to protect you going forward. What do you think? What feels right to you?' Let them participate in recovery to restore their sense of competence and control.",
+      t: "Acknowledge, Invite, and Avoid the Six Deadly Responses",
+      d: "Acknowledge the real financial loss without minimizing ('It could have been worse' is NOT comforting). Invite them INTO the solution rather than taking over their life. Avoid the six deadly responses: punishing, minimizing, exposing to others, taking control, expecting quick recovery, and keeping it up in conversation. If symptoms persist beyond 2-3 weeks, suggest professional help. The book covers all six deadly responses in detail with alternative scripts.",
       code: "Principle: The scam took away their sense of control. Recovery means giving it back. Work WITH them, not FOR them."
-    },
-    {
-      t: "When to Suggest Professional Help",
-      d: "If your parent shows signs of depression, anxiety, or trauma beyond a few weeks — not leaving the house, not answering the phone, insomnia, crying unexpectedly, snapping at loved ones — suggest therapy. Specifically suggest a therapist experienced with elder trauma. AARP has referrals. Many therapists now do video calls, which is less intimidating.",
-      code: "Frame it positively: 'I think it would help to talk to someone trained in this. Not because anything is wrong with you. Because what you experienced was traumatic, and a professional can help you process it faster.'"
-    },
-    {
-      t: "What NOT to Do — The Six Deadly Responses",
-      d: "(1) Don't punish them emotionally — 'I told you so.' (2) Don't minimize the loss — 'It could have been worse.' (3) Don't expose them to others — don't call extended family and broadcast it. (4) Don't take control of their life — don't freeze their bank account without permission. (5) Don't expect quick recovery — emotional healing takes months. (6) Don't keep bringing it up — process your own feelings with a therapist or friend.",
-      code: "The choice you make — whether to shame or support — ripples through your relationship for years. Shame leads to hiding, isolation, and future vulnerability. Support leads to trust, openness, and prevention."
     },
     {
       t: "Taking Care of Yourself as the Caregiver",
@@ -2467,8 +2367,8 @@ const LESSONS_DATA = [
     }
   ],
   whatIs: "The Emotional Aftermath addresses what nobody talks about after a scam: the crushing shame, guilt, and trauma that can be more damaging than the financial loss itself. Less than 5% of elder fraud is reported because victims are too ashamed to tell anyone. Scam victims can develop PTSD-like symptoms — flashbacks, hypervigilance, avoidance, insomnia, and loss of confidence. How you respond to your parent's scam will determine whether they recover or spiral into isolation and depression.",
-  realWorld: "After Margaret lost $8,000 to a scammer, she stopped leaving the house. Not because she was physically hurt, but because she was ashamed. This was a woman who had been a teacher for 35 years, raised three children alone, traveled to 12 countries, and earned a master's degree — now she felt like a failure. She stopped answering the phone, stopped going to church, developed severe anxiety and insomnia. What finally helped was her daughter Sarah sharing her own scam story: 'Mom, I was scammed three years ago. A fake dating profile. I lost $2,000.' Margaret looked at her: 'You? You're so smart about this stuff.' That vulnerability broke through the shame. It took three more months, but Margaret started healing.",
-  code: "EMOTIONAL RECOVERY GUIDE FOR SCAM VICTIMS\n=============================================\n\nIMMEDIATELY AFTER DISCOVERY:\n[ ] Say: 'This is NOT your fault. We're fixing this together.'\n[ ] Do NOT say: 'How could you fall for that?'\n[ ] Do NOT say: 'I told you to be careful.'\n[ ] Let them cry, vent, or sit in silence — be present\n\nFIRST WEEK — NORMALIZE AND VALIDATE:\n[ ] Share stories of other smart people who were scammed\n[ ] Remind them: 'Even FBI agents have been scammed'\n[ ] Acknowledge the real financial loss — don't minimize\n[ ] Separate their identity from the event:\n    WRONG: 'You fell for a scam'\n    RIGHT: 'A criminal targeted you with a professional scheme'\n\nFIRST MONTH — REBUILD AGENCY:\n[ ] Invite them INTO the solution — don't decide for them\n[ ] Ask: 'What feels right to you? What should we do?'\n[ ] Let them participate in security improvements\n[ ] Resume monthly check-ins framed as love, not surveillance\n[ ] Watch for warning signs: isolation, insomnia, not eating,\n    refusing to use phone/computer, crying frequently\n\nIF SYMPTOMS PERSIST BEYOND 2-3 WEEKS:\n[ ] Suggest professional help (elder trauma therapist)\n[ ] Frame it as: 'I want you to heal faster, not because\n    something is wrong with you'\n[ ] AARP has therapist referrals for elder fraud victims\n[ ] Many therapists offer video calls (less intimidating)\n\nTHINGS TO NEVER DO:\n[ ] Never punish them with 'I told you so'\n[ ] Never broadcast it to extended family without permission\n[ ] Never take over their life or remove their independence\n[ ] Never expect them to 'get over it' quickly\n[ ] Never keep referencing the scam in conversation\n\nFOR YOURSELF (THE CAREGIVER):\n[ ] Your anger and frustration are valid\n[ ] Process YOUR feelings with a therapist or friend\n[ ] Don't dump your emotions on your parent\n[ ] You couldn't have prevented this — release the guilt",
+  realWorld: "After a grandmother lost thousands to a scammer, she stopped leaving the house. Not because she was physically hurt, but because she was ashamed. This was a woman who had been a teacher for decades, raised children on her own, and earned an advanced degree -- now she felt like a failure. She stopped answering the phone, stopped going to church, developed severe anxiety and insomnia. What finally helped was her daughter sharing her own scam story. That vulnerability broke through the shame. It took months, but she started healing. The full recovery story is detailed in the book.",
+  code: "EMOTIONAL RECOVERY — KEY PRINCIPLES\n=============================================\n\n1. Immediately: Say 'This is NOT your fault. We are fixing this together.'\n2. First Week: Normalize by sharing stories of smart people who were scammed\n3. First Month: Rebuild their agency — invite them into the solution\n4. Watch For: Isolation, insomnia, refusing to use technology\n5. Caregiver Self-Care: Process your own emotions separately\n\n... plus the complete emotional recovery timeline, the six things\nyou must NEVER say, when to suggest professional help, warning\nsigns checklist, and caregiver support resources.\n\nGet the complete Emotional Recovery Guide in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "Research shows that 1 in 4 Americans have been targeted by scammers, and the emotional impact of being scammed can last longer than the financial impact. Studies have found that scam victims experience shame, anxiety, and depression at rates comparable to victims of physical crime. Yet scam victims receive almost no emotional support compared to victims of other crimes — there are no 'scam victim support groups' in most communities.",
   quiz: [
     {
@@ -2541,24 +2441,9 @@ const LESSONS_DATA = [
       code: "Setup steps: iPhone → Settings → Phone → Silence Unknown Callers → ON. Android → Phone app → Settings → Caller ID & Spam → ON."
     },
     {
-      t: "Foundation — Secure Devices and Email",
-      d: "Install an ad blocker (uBlock Origin, free). Turn on automatic security updates. Set a strong lock screen password (not birthdate, 8+ characters). Bookmark frequently used sites (bank, Medicare, Social Security) so they never need to search and risk clicking phishing links. Enable 2FA on email — it's the 'master key' to every other account.",
-      code: "Critical: Email is your parent's master key — password resets for everything go to email. Secure it with a unique 12+ character password and 2-factor authentication."
-    },
-    {
       t: "Financial Protection — Bank Account Safeguards",
       d: "Call your parent's bank and request: transaction alerts for transfers over $100, daily spending limits, yourself as 'trusted contact' (bank calls you to verify unusual transactions), and in-person verification for wire transfers over a set amount. Get written confirmation of all changes.",
       code: "Call the bank this week and say: 'I'd like to set up transaction alerts, add myself as a trusted contact, and require in-person verification for wire transfers over $500.'"
-    },
-    {
-      t: "Financial Protection — Credit Freeze With All Three Bureaus",
-      d: "Place a credit freeze with all three bureaus to prevent scammers from opening new accounts: Equifax (800-525-6285), Experian (888-397-3742), TransUnion (800-680-7289). Save the confirmation numbers and PINs needed to unfreeze later. Check free credit reports annually at AnnualCreditReport.com — the government's official site.",
-      code: "A credit freeze is FREE, lasts until you unfreeze it, and prevents anyone from opening new credit accounts in your parent's name. There is no downside."
-    },
-    {
-      t: "Social Media Security Lockdown",
-      d: "Change profile to 'Friends Only' (not public). Remove phone number from public profile. Remove or hide posts revealing: address, schedule, vacation plans, grandchildren's names and photos, financial information. Disable facial recognition. Don't answer Facebook quizzes — 'What was your first car?' is asking for security question answers.",
-      code: "Facebook quiz danger: Questions like 'What was your first car?' and 'What street did you grow up on?' are the exact same questions banks use to verify identity. Never answer them publicly."
     },
     {
       t: "The Golden Rules — Post These on the Fridge",
@@ -2571,24 +2456,19 @@ const LESSONS_DATA = [
       code: "Critical window: Banks can sometimes reverse wire transfers if caught within 2-4 hours. After that, the money is typically gone forever."
     },
     {
-      t: "Crisis Protocol — First 24 Hours",
-      d: "File police report (get case number). Report to FBI IC3 at ic3.gov (10 minutes). Report to FTC at reportfraud.ftc.gov (10 minutes). If SSN compromised, call all three credit bureaus for fraud alert + credit freeze. Change all compromised passwords (email FIRST). Save all documentation.",
-      code: "Emergency numbers to post: Bank fraud (back of card), IC3.gov, reportfraud.ftc.gov, Elder Fraud Hotline: 833-FRAUD-11, SSA Fraud: 800-269-0271, Medicare: 800-633-4227."
-    },
-    {
       t: "Monthly Check-In Schedule — The Most Powerful Protection",
       d: "Pick a regular day (first Sunday, second Wednesday) and stick to it. 30 minutes, during a meal or visit. Casual and supportive tone. Ask about strange calls, suspicious texts, unrecognized charges, and social media friend requests. Review statements together. Confirm the family safe word. Document findings and follow up next month.",
       code: "The monthly check-in is the single most effective protection in this entire course. Schedule it THIS WEEK. Everything else is secondary."
     },
     {
-      t: "A Message for the Parent Reading This",
-      d: "You are not stupid — smart people get scammed. Scammers are trained professionals; it's their job. Your children love you and want to help, not judge. It's okay to be cautious, to ask questions, to not understand technology. When in doubt, hang up and call someone you trust. You've made thousands of good decisions in your life. One bad experience doesn't change who you are.",
-      code: "Reminder: You can trust yourself. Being careful is smart, not paranoid. And asking for help is strength, not weakness."
+      t: "Complete Checklist Available in the Book",
+      d: "This lesson covers the key items. The book contains the complete printable checklist with all sections filled in, including device security, email 2FA setup, credit freeze phone numbers, the full crisis protocol, and a message for your parent. Print it, hang it on the fridge, and keep a copy at your desk.",
+      code: "Remember: You can trust yourself. Being careful is smart, not paranoid. And asking for help is strength, not weakness."
     }
   ],
   whatIs: "The One-Page Family Safety Checklist condenses everything from this course into a printable, quick-reference document. It covers the foundation (safe word, device security, email protection), financial safeguards (bank alerts, credit freezes), the golden rules, the crisis protocol, and the monthly check-in schedule. Print it, hang it on the fridge, and have a copy at your desk. In an emergency, you won't remember every step — this checklist remembers for you.",
-  realWorld: "James had read the entire book. He had all the information, all the strategies. But when his mother called in a panic about a suspicious bank call, he froze. He couldn't remember the order of steps. Was it call the bank first or file a police report? Should he verify the caller or just hang up? He fumbled for an hour, doing things in the wrong order, forgetting steps, having to restart. If he'd had a simple checklist in front of him, the whole thing would have taken 20 minutes. This chapter exists for moments like that — when you don't have time to think, just to act.",
-  code: "THE FAMILY SAFETY CHECKLIST — PRINT THIS PAGE\n================================================\n\nFOUNDATION (Do These First):\n[ ] Family safe word created: _______________\n[ ] All family members know the safe word\n[ ] Call-blocking enabled on parent's phone\n[ ] Unknown callers silenced (go to voicemail)\n[ ] Ad blocker installed on computer\n[ ] Automatic security updates turned ON\n[ ] Strong lock screen password set (8+ chars)\n[ ] Email secured with 2-factor authentication\n[ ] Frequently used websites bookmarked\n\nFINANCIAL PROTECTION:\n[ ] Bank: Transaction alerts ON (transfers > $100)\n[ ] Bank: Daily spending limits set\n[ ] Bank: Trusted contact added (YOU)\n[ ] Bank: In-person required for wire transfers > $___\n[ ] Credit freeze: Equifax (800-525-6285)\n[ ] Credit freeze: Experian (888-397-3742)\n[ ] Credit freeze: TransUnion (800-680-7289)\n[ ] Annual credit report check: AnnualCreditReport.com\n\nSOCIAL MEDIA:\n[ ] Profile set to 'Friends Only'\n[ ] Phone number removed from public profile\n[ ] Old revealing posts hidden/removed\n[ ] Facial recognition disabled\n[ ] No Facebook quizzes (they steal security answers)\n\nTHE 7 GOLDEN RULES (Post on fridge in LARGE print):\n1. Urgent money request? HANG UP. Call me.\n2. Gift card payment? ALWAYS a scam.\n3. Asking for password/SSN by phone? ALWAYS a scam.\n4. Feels like pressure? Probably a scam.\n5. 'Let me call you back' = always okay.\n6. Call me anytime. You're never bothering me.\n7. Made a mistake? Tell me NOW. First 24 hours matter.\n\nEMERGENCY NUMBERS (Post next to phone):\n- Your number: _______________\n- Bank fraud line: _______________ (back of card)\n- FBI IC3: ic3.gov\n- FTC: reportfraud.ftc.gov\n- Elder Fraud Hotline: 833-FRAUD-11\n- SSA Fraud: 800-269-0271\n- Medicare Fraud: 800-633-4227\n- Equifax: 800-525-6285\n- Experian: 888-397-3742\n- TransUnion: 800-680-7289\n\nMONTHLY CHECK-IN:\n- Day: _______________ Time: _______________\n- Review: calls, texts, emails, bank charges, social media\n- Confirm safe word\n- Tone: casual, supportive, never judgmental\n\nIF SCAMMED — DO THIS IN ORDER:\n1. Stay calm. Say: 'Not your fault.'\n2. Write down: what, how much, when, what info shared\n3. Money moved < 2 hours ago? → CALL BANK NOW\n4. Gift cards? → CALL RETAILER NOW\n5. File police report → get case number\n6. Report: ic3.gov + reportfraud.ftc.gov\n7. SSN exposed? → Call all 3 credit bureaus\n8. Change passwords (EMAIL FIRST)\n9. Call Elder Fraud Hotline: 833-FRAUD-11\n\nPrint 2 copies. One for parent's fridge. One for your desk.",
+  realWorld: "A man had read the entire book. He had all the information, all the strategies. But when his mother called in a panic about a suspicious bank call, he froze. He could not remember the order of steps. Was it call the bank first or file a police report? Should he verify the caller or just hang up? He fumbled for an hour, doing things in the wrong order, forgetting steps, having to restart. If he had a simple checklist in front of him, the whole thing would have taken 20 minutes. This lesson exists for moments like that -- when you do not have time to think, just to act.",
+  code: "THE FAMILY SAFETY CHECKLIST — OVERVIEW\n================================================\n\nFOUNDATION:\n[ ] Family safe word created and shared\n[ ] Call-blocking and Silence Unknown Callers enabled\n[ ] Email secured with 2-factor authentication\n\nFINANCIAL PROTECTION:\n[ ] Bank transaction alerts and daily limits set\n[ ] Credit freeze with all 3 bureaus\n\nTHE 7 GOLDEN RULES:\n1. Urgent money request? HANG UP. Call me.\n2. Gift card payment? ALWAYS a scam.\n3. Asking for password/SSN by phone? ALWAYS a scam.\n4. Feels like pressure? Probably a scam.\n5. 'Let me call you back' = always okay.\n6. Call me anytime. You are never bothering me.\n7. Made a mistake? Tell me NOW. First 24 hours matter.\n\n... plus the complete printable checklist with fill-in blanks,\nemergency phone numbers, social media lockdown steps,\ncrisis protocol, and monthly check-in schedule.\n\nGet the full printable One-Page Family Safety Checklist in:\n'Protecting Aging Parents' by Teamz Lab — Available on Amazon\nhttps://www.amazon.com/dp/B0F2PJ1MG4",
   funFact: "The book's author notes that doing even 50% of the items on this checklist dramatically reduces your parent's scam risk. Doing 80% provides serious protection. And 100% creates a fortress. But the three most urgent actions — the ones that should happen THIS WEEK — are: (1) set up the monthly check-in, (2) create and teach the family safe word, and (3) post emergency numbers by your parent's phone.",
   quiz: [
     {
@@ -2643,6 +2523,11 @@ const LESSONS_DATA = [
     answer: "NEVER call back using a number the caller provided — scammers set up fake phone lines that sound like official organizations. The correct response: 'Great instinct not giving them anything! Do NOT call that number back. Instead, call Medicare directly at the official number: 1-800-MEDICARE (1-800-633-4227). It's on the checklist on your fridge. Medicare will NEVER call you to ask for your Social Security number. This was a scam attempt, and you caught it perfectly.'"
   },
   difficulty: "beginner",
-  prereqs: [18, 19]
+  prereqs: [18, 19],
+  ebookCta: {
+    text: 'Want the printable One-Page Family Safety Checklist from the book?',
+    url: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    buttonText: 'Get the Book on Amazon'
+  }
 }
 ];

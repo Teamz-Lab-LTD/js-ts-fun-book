@@ -59,5 +59,21 @@ const COURSE_CONFIG = {
   social: {
     hashtags: '#ProtectAgingParents #AIScams #ElderFraud #FamilySafety #TeamzLab',
     tweetTemplate: 'I am learning how to protect my aging parents from AI scams, voice clones, and deepfakes — free interactive course by Teamz Lab. No signup needed.'
+  },
+  branding: {
+    trustStrip: 'We help organizations fight AI-powered fraud with detection tools, training programs & security audits. <strong>This free course is how we give back.</strong>',
+    trustStripCta: 'Need AI safety consulting? Talk to us',
+    headerSubtitle: 'Protect Your Family in ~8 min/lesson — Free, Evidence-Based AI Safety Training | by',
+    ebookUrl: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    ebookTitle: 'Get the Full Book',
+    ebookSubtitle: 'Protecting Aging Parents — the complete guide on Amazon',
+    footerCtaTitle: 'Protect Your Organization from AI Fraud',
+    footerCtaDesc: 'Teamz Lab helps banks, telecom companies, elder care facilities, and financial advisors build <strong style="color:var(--heading)">AI-powered fraud detection</strong> systems and train teams to recognize evolving threats. We built this free course — imagine what we can build for your organization.',
+    services: [
+      { name: 'AI Scam Detection Systems', desc: 'Custom voice-clone & deepfake detection tools for banks, telecom, and elder care organizations' },
+      { name: 'Corporate Anti-Fraud Training', desc: 'Interactive AI safety workshops for employees, customer support teams, and financial advisors' },
+      { name: 'Elder Safety Audits', desc: 'Comprehensive digital security assessments for senior living facilities and family offices' },
+      { name: 'AI Safety Consulting', desc: 'Help your organization stay ahead of evolving AI-powered threats — policy, tools, and response plans' }
+    ]
   }
 };
