@@ -1,0 +1,91 @@
+const COURSE_CONFIG = {
+  title: 'Android Phone Health: Battery, Privacy, Performance & Security',
+  subtitle: 'Is your phone healthy, safe & fast? — <strong>25 practical lessons</strong> every Android user needs',
+  shortTitle: 'Android Phone Health',
+  org: 'Teamz Lab',
+  orgUrl: 'https://teamzlab.com',
+  orgFull: 'Teamz Lab LTD',
+  siteUrl: 'https://learn.teamzlab.com/',
+  canonicalUrl: 'https://learn.teamzlab.com/learn.html?course=android-phone-health',
+  ogImage: 'https://learn.teamzlab.com/og-android-phone-health.png',
+  description: 'Free interactive course with {lessonCount} lessons on Android phone health — check battery health, detect spyware without root, fix slow phone performance, stop battery drain, audit app permissions, test WiFi speed, check if your ISP is spying, measure power consumption in watts, and get AI-powered phone diagnostics. No signup required.',
+  keywords: 'how to check battery health on android, why is my phone so slow, is my phone hacked how to check, how to detect spyware on android without root, phone battery draining fast how to fix, which app is draining my battery android, how to check phone temperature android, is someone using my microphone, which apps are using my camera, how to check if phone has spyware, phone running slow fix android, how to speed up android phone, android phone overheating fix, how to check RAM usage android, how to free up storage android, wifi speed test on phone, is my ISP spying on me how to check, how to check signal strength android dBm, phone health check app free, phone diagnostics test android, how to check power consumption android, battery health percentage android, phone resale value checker, android security settings checklist, app permissions audit android, how to remove spyware android, phone privacy check free, fake GPS detection android, best phone health app 2026, AI phone diagnostics, DeviceGPT phone health, lock screen widget battery android, phone health score meaning, DNS hijacking check android, SSL interception test, deep packet inspection detection, certified phone report, device certificate android, phone health monitoring app free, android privacy scanner free, how to tell if phone is tapped, phone battery replacement when, android phone secrets tips tricks, best android security apps 2026, phone performance benchmark free',
+  topics: [
+    'The Wake-Up Call',
+    'Battery & Power',
+    'Performance & Speed',
+    'Privacy: Who\'s Watching?',
+    'Network & ISP',
+    'Lock Down Your Phone',
+    'Verify & Share'
+  ],
+  educationalLevel: 'All Levels — No Technical Background Needed',
+  disableTypingChallenge: true,
+  footerTagline: 'Your phone deserves a health check. Learn to protect it, speed it up, and understand what is really going on inside.',
+  thinkDeeperQ: 'Imagine you just noticed your phone is unusually hot, slow, or the battery dropped 30% in an hour. How would knowing about <strong>{title}</strong> help you diagnose the problem? What could you be missing right now?',
+  topicMap: {
+    'The Wake-Up Call': [1, 2, 3],
+    'Battery & Power': [4, 5, 6, 7],
+    'Performance & Speed': [8, 9, 10],
+    'Privacy: Who\'s Watching?': [11, 12, 13, 14, 15],
+    'Network & ISP': [16, 17, 18],
+    'Lock Down Your Phone': [19, 20, 21, 22],
+    'Verify & Share': [23, 24, 25]
+  },
+  conceptFlows: {
+    1: ['Your phone knows everything', 'Location, habits, conversations', 'Most people never check', 'One scan changes everything'],
+    2: ['Slow phone ignored', 'Battery dies fast', 'Privacy leaks unseen', 'Small problems become big ones'],
+    3: ['Battery score', 'Performance score', 'Privacy score', 'Overall health grade'],
+    4: ['Charge cycles count', 'Capacity degrades', 'Health percentage drops', 'Know when to replace'],
+    5: ['Screen brightness', 'Background apps', 'Location services', 'The real battery killers'],
+    6: ['Voltage times current', 'Watts per component', 'Camera vs display vs CPU', 'Measure what drains power'],
+    7: ['Check per-app usage', 'Background vs foreground', 'Hidden battery vampires', 'Kill the worst offenders'],
+    8: ['RAM full', 'Storage bloated', 'Background processes', 'The real reasons phones slow down'],
+    9: ['RAM is speed', 'CPU is power', 'Storage is space', 'Which one is your bottleneck'],
+    10: ['CPU under load', 'Thermal throttling', 'Battery swelling risk', 'When hot means danger'],
+    11: ['Apps request mic access', 'Background recording possible', 'Android shows indicators', 'How to catch them'],
+    12: ['Camera permissions granted', 'Apps can access silently', 'Green dot means active', 'Audit and revoke'],
+    13: ['Spyware hides well', 'No root needed to detect', 'Check for suspicious signs', 'Scanner apps help'],
+    14: ['GPS can be faked', 'Dating and game cheats', 'Security implications', 'How to detect spoofing'],
+    15: ['Always-on assistant myth', 'Ad targeting vs spying', 'What actually happens', 'How to verify yourself'],
+    16: ['Download vs upload', 'Latency matters', 'ISP promises vs reality', 'Test it yourself'],
+    17: ['DNS hijacking', 'SSL interception', 'Deep packet inspection', 'How to check your ISP'],
+    18: ['Signal bars mislead', 'dBm is the real metric', 'WiFi vs cellular', 'Find dead zones'],
+    19: ['Update everything', 'Review permissions', 'Enable 2FA', 'Lock screen security'],
+    20: ['List all permissions', 'Revoke unnecessary ones', 'Check regularly', 'Least privilege principle'],
+    21: ['Health at a glance', 'Battery and temperature', 'No app opening needed', 'Android 13+ widgets'],
+    22: ['Scan your phone', 'Share with AI', 'Get plain English answer', 'No technical knowledge needed'],
+    23: ['Full diagnostic scan', 'Generate certified report', 'Estimated resale value', 'Share with buyers'],
+    24: ['Signed reports', 'Verification codes', 'Tamper-proof', 'Trust through transparency'],
+    25: ['Weekly health check', 'Monthly permission audit', 'Quarterly deep scan', 'Your phone stays healthy']
+  },
+  srs: { boxes: 5, intervals: [0, 1, 3, 7, 14], reviewBatchSize: 10 },
+  xp: {
+    lessonComplete: 20,
+    quizPerfect: 30,
+    challengeComplete: 25,
+    bugSolved: 25,
+    flashcardMastered: 10,
+    reviewComplete: 15
+  },
+  social: {
+    hashtags: '#AndroidPhoneHealth #PhonePrivacy #BatteryHealth #DeviceGPT #PhoneSecurity #TeamzLab',
+    tweetTemplate: 'I just learned how to check my phone health, detect spyware, and fix battery drain — free interactive course by Teamz Lab. No signup needed.'
+  },
+  branding: {
+    trustStrip: 'We built DeviceGPT — the AI-powered phone health app trusted by thousands. <strong>This free course is how we give back.</strong>',
+    trustStripCta: 'Need AI diagnostic tools built? Talk to us',
+    headerSubtitle: 'Protect, Speed Up & Understand Your Phone in ~8 min/lesson — Free, Evidence-Based Training | by',
+    ebookUrl: 'https://play.google.com/store/apps/details?id=com.teamz.lab.debugger',
+    ebookTitle: 'Get the Free App',
+    ebookSubtitle: 'DeviceGPT — AI Phone Health Checker on Google Play',
+    footerCtaTitle: 'Need AI-Powered Diagnostic Tools for Your Business?',
+    footerCtaDesc: 'Teamz Lab builds <strong style="color:var(--heading)">AI-powered device monitoring, health diagnostics & security scanning</strong> tools for OEMs, telecom companies, and enterprise IT. We built DeviceGPT — imagine what we can build for your organization.',
+    services: [
+      { name: 'AI Device Diagnostics', desc: 'Custom phone/device health monitoring solutions for OEMs, carriers, and enterprise IT departments' },
+      { name: 'Privacy & Security Tools', desc: 'Spyware detection, mic/camera monitoring, and privacy audit tools for organizations' },
+      { name: 'Mobile App Development', desc: 'Production-grade Android & cross-platform apps with Kotlin, Jetpack Compose & Flutter' },
+      { name: 'AI Integration & Consulting', desc: 'Integrate AI explanations, diagnostics & automation into your existing products' }
+    ]
+  }
+};
