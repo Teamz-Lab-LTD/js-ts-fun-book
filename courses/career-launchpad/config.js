@@ -50,5 +50,21 @@ const COURSE_CONFIG = {
     bugFound: 40,
     flashcardReview: 10,
     streakBonus: 25
+  },
+  branding: {
+    trustStrip: 'We build production apps and train dev teams. <strong>This free course is how we give back.</strong>',
+    trustStripCta: 'Need developers? Talk to us',
+    headerSubtitle: 'Land Your Dream Dev Job — Free, Action-Packed Career Training | by',
+    ebookUrl: 'https://www.amazon.com/dp/B0GSHSVW9S',
+    ebookTitle: 'Get the Full Book',
+    ebookSubtitle: 'Hard to Replace by AI — the complete guide on Amazon',
+    footerCtaTitle: 'Need Senior Developers for Your Team?',
+    footerCtaDesc: 'Teamz Lab builds production mobile apps and provides <strong style="color:var(--heading)">team augmentation, code audits & AI integration</strong>. We built this free course — imagine what we can do for your team.',
+    services: [
+      { name: 'Team Augmentation', desc: 'Senior developers to embed in your team — architecture, code review & mentoring' },
+      { name: 'Mobile App Development', desc: 'Production-grade cross-platform iOS & Android apps with Flutter, Kotlin & Swift' },
+      { name: 'AI Integration & Consulting', desc: 'Integrate AI capabilities into your apps — chatbots, automation & intelligent features' },
+      { name: 'Code Audit & Optimization', desc: 'Performance profiling, architecture review, and codebase modernization' }
+    ]
   }
 };

@@ -64,7 +64,7 @@ const COURSE_CONFIG = {
     trustStrip: 'We help organizations fight AI-powered fraud with detection tools, training programs & security audits. <strong>This free course is how we give back.</strong>',
     trustStripCta: 'Need AI safety consulting? Talk to us',
     headerSubtitle: 'Protect Your Family in ~8 min/lesson — Free, Evidence-Based AI Safety Training | by',
-    ebookUrl: 'https://www.amazon.com/dp/B0F2PJ1MG4',
+    ebookUrl: 'https://www.amazon.com/dp/B0GSHN1XRH',
     ebookTitle: 'Get the Full Book',
     ebookSubtitle: 'Protecting Aging Parents — the complete guide on Amazon',
     footerCtaTitle: 'Protect Your Organization from AI Fraud',
