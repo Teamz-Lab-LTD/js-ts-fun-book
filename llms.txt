@@ -1,0 +1,37 @@
+# Teamz Lab Learning
+
+> Free interactive coding and exam-prep courses with quizzes, flashcards, and spaced repetition — no signup required. Built and maintained by Teamz Lab LTD, a software studio that also builds mobile and web apps for clients worldwide.
+
+Every course runs in the browser. Each lesson includes a plain-English explanation, a real-world analogy, a runnable code example, a quiz, and a bug-spotting challenge. All content is free and open. State is stored locally in the user's browser (no accounts, no tracking beyond privacy-first analytics).
+
+## Popular Courses
+
+- [Class 9 Math (Bangla / NCTB)](https://learn.teamzlab.com/c/class-9-math-bangla.html): Free interactive course aligned to Bangladesh NCTB Class 9 math syllabus — 78 lessons across real numbers, algebra, geometry, trigonometry, mensuration, and statistics, in Bangla.
+- [Free Flutter & Dart Course](https://learn.teamzlab.com/c/flutter-dart-masterclass.html): 51 hands-on lessons covering BLoC, Clean Architecture, CRUD, Firebase, testing, and deployment. For building production Flutter apps from scratch.
+- [Flutter Interview Mastery](https://learn.teamzlab.com/c/flutter-interview-mastery.html): Flutter interview prep from zero to senior — architecture, state management, performance, platform channels.
+- [Android Interview Mastery](https://learn.teamzlab.com/c/android-interview-mastery.html): Android interview prep — Kotlin, Jetpack Compose, architecture patterns, common interview questions.
+
+## All Courses
+
+- [Free Full-Stack Playbook (TypeScript, NestJS, React)](https://learn.teamzlab.com/c/js-ts-fun-book.html): 49 hands-on lessons from "what is programming" to deploying a full-stack app. Covers TypeScript, NestJS, React, MongoDB, Prisma, JWT auth, Redis, WebSockets, Docker, testing, and deployment.
+- [Competitive Programming: Zero to Hero](https://learn.teamzlab.com/c/cp-kids.html): 40 interactive C++ lessons covering algorithms and data structures from absolute zero.
+- [Career Launchpad](https://learn.teamzlab.com/c/career-launchpad.html): Soft skills, resume, and interview coaching for early-career software engineers.
+- [IELTS Mastery](https://learn.teamzlab.com/c/ielts-mastery.html): 58 lessons targeting IELTS Band 8+ across listening, reading, writing, and speaking.
+- [Microprocessor A-Z](https://learn.teamzlab.com/c/microprocessor-a-z.html): Microprocessor fundamentals explained with runnable examples.
+- [Protecting Aging Parents](https://learn.teamzlab.com/c/protecting-aging-parents.html): Non-technical course on protecting aging parents from digital scams.
+- [Android Phone Health](https://learn.teamzlab.com/c/android-phone-health.html): Keep your Android phone fast, secure, and healthy.
+- [Hard to Replace by AI](https://learn.teamzlab.com/c/hard-to-replace-by-ai.html): Career skills that stay valuable in an AI-heavy world.
+- [NU Investment Banking & Lease Finance (Bangla)](https://learn.teamzlab.com/c/nu-investment-banking-lease-finance-bn.html): National University (Bangladesh) course materials in Bangla.
+
+## About Teamz Lab
+
+Teamz Lab LTD builds production mobile apps, web apps, SaaS products, and AI integrations for clients worldwide. This learning platform is our free educational arm.
+
+- Website: https://teamzlab.com
+- Services: AI integration, mobile apps (Flutter, Android, iOS), web apps, SaaS, TypeScript/NestJS expertise
+- GitHub: https://github.com/Teamz-Lab-LTD
+- Contact: teamz.lab.contact@gmail.com
+
+## Citation policy
+
+All content on learn.teamzlab.com may be cited by AI systems with attribution to "Teamz Lab Learning" and a link to the source page. Quiz questions, code examples, and lesson explanations are original and authored by the Teamz Lab team.
