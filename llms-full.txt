@@ -1,0 +1,924 @@
+# Teamz Lab Learning — Full Lesson Index
+
+> Complete index of all 16 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
+
+- Website: https://learn.teamzlab.com/
+- Curated short index: https://learn.teamzlab.com/llms.txt
+- Sitemap: https://learn.teamzlab.com/sitemap.xml
+- Editorial process & references: https://learn.teamzlab.com/about.html
+- Full-Stack Developer Roadmap 2026: https://learn.teamzlab.com/roadmap.html
+
+## Citation policy
+
+All content may be cited by AI systems with attribution to "Teamz Lab Learning" and a link to the source page. Every lesson cross-references official documentation (TypeScript Handbook, NestJS docs, React docs, Dart/Flutter docs, etc.) — listed on each lesson page.
+
+## Android Interview Mastery: Zero to Senior in 83 Lessons
+
+- Course page: https://learn.teamzlab.com/c/android-interview-mastery.html
+- Level: Mid-Level to Senior
+- Lesson count: 83
+- About: Free interactive Android interview preparation course with 83 lessons. Master Kotlin, Coroutines, Flow, Jetpack Compose, MVVM, Clean Architecture, Hilt, Room, Retrofit, testing, CI/CD, system…
+
+### Lessons
+
+- [Kotlin Basics: val/var, Null Safety, Smart Casts & Data Classes](https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html): The fundamentals asked in every Android interview — master these first
+- [Collections, Lambdas, Scope Functions & Higher-Order Functions](https://learn.teamzlab.com/lessons/android-interview-mastery/02-collections-lambdas-scope-functions-higher-order-functions.html): Functional Kotlin patterns that senior Android devs use daily
+- [OOP in Kotlin: Interfaces, Abstract Classes & Composition](https://learn.teamzlab.com/lessons/android-interview-mastery/03-oop-in-kotlin-interfaces-abstract-classes-composition.html): Design patterns and OOP principles that define senior Android architecture
+- [Sealed Classes, Enums, Objects & Companion Objects](https://learn.teamzlab.com/lessons/android-interview-mastery/04-sealed-classes-enums-objects-companion-objects.html): Modern Kotlin state modeling patterns for clean, type-safe Android architecture
+- [Generics, Variance, Extension Functions & Inline/Reified](https://learn.teamzlab.com/lessons/android-interview-mastery/05-generics-variance-extension-functions-inlinereified.html): Advanced Kotlin type system mastery for senior-level interviews
+- [Exceptions, Result & Defensive Kotlin](https://learn.teamzlab.com/lessons/android-interview-mastery/06-exceptions-result-defensive-kotlin.html): Production-grade error handling patterns for robust Android apps
+- [Coroutines Fundamentals: suspend, Structured Concurrency & Dispatchers](https://learn.teamzlab.com/lessons/android-interview-mastery/07-coroutines-fundamentals-suspend-structured-concurrency.html): The #1 most asked Android interview topic — master coroutines cold
+- [Coroutine Cancellation, SupervisorScope & Exception Handling](https://learn.teamzlab.com/lessons/android-interview-mastery/08-coroutine-cancellation-supervisorscope-exception-handling.html): Advanced coroutine patterns that separate mid-level from senior Android developers
+- [Flow Fundamentals: Cold Streams, Operators & Collection](https://learn.teamzlab.com/lessons/android-interview-mastery/09-flow-fundamentals-cold-streams-operators-collection.html): Kotlin Flow — reactive streams for modern Android data pipelines
+- [StateFlow vs SharedFlow vs LiveData vs Channels](https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html): The hot stream comparison every senior Android developer must know
+- [Android Architecture Timeline: MVC, MVP, MVVM, MVI & Clean Architecture](https://learn.teamzlab.com/lessons/android-interview-mastery/11-android-architecture-timeline-mvc-mvp-mvvm-mvi-clean.html): Understanding the 'why' behind architectural choices — what every senior interview asks
+- [Android App Components: Activity, Fragment, Service, BroadcastReceiver & ContentProvider](https://learn.teamzlab.com/lessons/android-interview-mastery/12-android-app-components-activity-fragment-service.html): The 4 Android app components — fundamentals that every Android interview covers
+- [Activity & Fragment Lifecycle, Configuration Changes](https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html): Master the lifecycle — the most-asked Android interview topic of all time
+- [Intents, PendingIntents, Task Stack & Launch Modes](https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html): Navigate Android's multi-screen model — critical for deep linking and notification handling
+- [ViewModel, Lifecycle-Aware State & SavedStateHandle](https://learn.teamzlab.com/lessons/android-interview-mastery/15-viewmodel-lifecycle-aware-state-savedstatehandle.html): The architecture cornerstone — survive configuration changes and process death correctly
+- [LiveData Legacy Knowledge for Modern Interviews](https://learn.teamzlab.com/lessons/android-interview-mastery/16-livedata-legacy-knowledge-for-modern-interviews.html): Know LiveData deeply — then know exactly why StateFlow replaced it
+- [XML View System: Layouts, ConstraintLayout & RecyclerView](https://learn.teamzlab.com/lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html): Master traditional Views — still dominant in 80%+ of production codebases
+- [Jetpack Compose Fundamentals: Composable Functions, State & Recomposition](https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html): Android's modern declarative UI — the future of Android development
+- [Compose State: remember, rememberSaveable & State Hoisting](https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html): Master state ownership, survival across recomposition, and the unidirectional data flow pattern interviewers love
+- [Compose Side Effects: LaunchedEffect, SideEffect, DisposableEffect & derivedStateOf](https://learn.teamzlab.com/lessons/android-interview-mastery/20-compose-side-effects-launchedeffect-sideeffect.html): Control when and how effects run — the most commonly misused Compose APIs in senior interviews
+- [Compose Performance: Recomposition Traps, Keys & Stability](https://learn.teamzlab.com/lessons/android-interview-mastery/21-compose-performance-recomposition-traps-keys-stability.html): Know why Compose skips recomposition, when it fails to skip, and how to fix it — the difference between a smooth 60fps UI and a janky one
+- [Navigation in Android: Fragment Nav vs Compose Nav vs Deep Links](https://learn.teamzlab.com/lessons/android-interview-mastery/22-navigation-in-android-fragment-nav-vs-compose-nav-vs-deep.html): Understand the full navigation stack — back stack management, type-safe routes, deep links, and nested graphs
+- [Clean Architecture for Android](https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html): The architectural foundation that separates every senior Android developer from a junior — layers, dependency rules, and why it matters
+- [Repository Pattern, Use Cases & Dependency Inversion](https://learn.teamzlab.com/lessons/android-interview-mastery/24-repository-pattern-use-cases-dependency-inversion.html): Implement offline-first with Room + Retrofit behind a clean Repository, wire Use Cases into ViewModels with Hilt — the pattern in every…
+- [MVVM vs MVI vs Clean — Tradeoffs & Interview Answers](https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html): Compare architectures, show real tradeoffs, and answer 'why this architecture?' without dogma
+- [Dependency Injection: Manual DI vs Hilt vs Dagger](https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html): Why DI matters, how Hilt simplifies Dagger, and what every senior Android dev must know about scopes
+- [Retrofit, OkHttp, Interceptors, Token Refresh & Pagination](https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html): Production-grade networking: auth flows, retry logic, error mapping, and cursor/offset pagination patterns
+- [Room, SQLite, Migrations, Transactions & Relations](https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html): Production Room setup: CRUD, TypeConverters, migrations, relationships, reactive queries, and testing
+- [DataStore vs SharedPreferences vs Room — When to Choose](https://learn.teamzlab.com/lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html): Pick the right storage primitive for every use case — preferences, proto, or relational
+- [Offline-First Sync, Caching, Conflict Resolution](https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html): The senior Android differentiator: build apps that work perfectly without internet and sync reliably when connected
+- [Firebase on Android: Auth, FCM, Analytics, Crashlytics, Remote Config](https://learn.teamzlab.com/lessons/android-interview-mastery/31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html): Master Firebase's core pillars for production Android apps
+- [WorkManager, Background Tasks, Foreground Services & Alarm Limitations](https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html): Reliable background execution in the age of battery optimization
+- [Notifications, Channels, Push Flows, Deep Links & App Links](https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html): Drive users back into your app with precision and intent
+- [Android Permissions, Storage Changes & Privacy-Safe Handling](https://learn.teamzlab.com/lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html): Navigate the evolving Android permission landscape without breaking user trust
+- [Security: JWT, Secure Storage, Encryption & Biometrics](https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html): Build Android apps that protect user data at every layer
+- [Android Performance: ANR, Jank, Memory Leaks & Startup Time](https://learn.teamzlab.com/lessons/android-interview-mastery/36-android-performance-anr-jank-memory-leaks-startup-time.html): Diagnose and eliminate the performance issues that kill user retention
+- [Profiling & Debugging: Logcat, Android Studio Profiler, LeakCanary & StrictMode](https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html): Find and fix performance bugs before they find you in production
+- [Testing Strategy: Unit vs Instrumentation vs UI Tests](https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html): Know what to test, at which level, and why — before writing a single line of test code
+- [Unit Testing Kotlin: Classes, Use Cases & Repositories](https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html): Write fast, reliable JVM unit tests for your Kotlin business logic with JUnit5 and MockK
+- [ViewModel & Flow Testing: Coroutine Test Utilities](https://learn.teamzlab.com/lessons/android-interview-mastery/40-viewmodel-flow-testing-coroutine-test-utilities.html): Control virtual time and assert exact state sequences from ViewModels
+- [Room/Repository/Network Testing: Mocks vs Fakes](https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html): Test your data layer with confidence — in-memory databases, MockWebServer, and fake repositories
+- [Compose UI Testing Fundamentals](https://learn.teamzlab.com/lessons/android-interview-mastery/42-compose-ui-testing-fundamentals.html): Test your Jetpack Compose UI without an emulator — find, interact, and assert on composables
+- [Espresso Legacy Awareness & Instrumentation Basics](https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html): Master Espresso for XML-view codebases — still asked in every senior Android interview
+- [Modularization, Feature Modules & Build Tradeoffs](https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html): Architect large Android apps with clean module boundaries — the skill that separates seniors from juniors
+- [Gradle Basics, Dependencies, Build Variants & Product Flavors](https://learn.teamzlab.com/lessons/android-interview-mastery/45-gradle-basics-dependencies-build-variants-product-flavors.html): Control your entire build pipeline — version catalogs, flavors, and buildConfigField are daily senior tools
+- [Signing, Release Builds, Play Console & Versioning](https://learn.teamzlab.com/lessons/android-interview-mastery/46-signing-release-builds-play-console-versioning.html): Ship production-ready Android apps safely — signing, R8, Play tracks, and versioning done right
+- [CI/CD for Android: GitHub Actions, Fastlane & Bitrise](https://learn.teamzlab.com/lessons/android-interview-mastery/47-cicd-for-android-github-actions-fastlane-bitrise.html): Automate your entire Android delivery pipeline — the skill that makes you invaluable on any team
+- [Kotlin Flow vs Dart Stream vs Rx — Crossover Interview Advantage](https://learn.teamzlab.com/lessons/android-interview-mastery/48-kotlin-flow-vs-dart-stream-vs-rx-crossover-interview.html): Turn your Flutter experience into an Android interview superpower — async stream models compared
+- [Jetpack Compose vs Flutter — How to Answer Without Sounding Biased](https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html): A senior engineer's balanced take on declarative UI, state, navigation, and ecosystem fit
+- [Accessibility on Android: TalkBack, Semantics & Touch Targets](https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html): Build apps that work for every user — and pass accessibility audits in senior interviews
+- [Localization, RTL, Formatting & Resource Management](https://learn.teamzlab.com/lessons/android-interview-mastery/51-localization-rtl-formatting-resource-management.html): Internationalize your Android app the right way — strings, plurals, RTL, and locale-aware formatting
+- [Adaptive Android UI: Phones, Tablets, Foldables & Multi-Window](https://learn.teamzlab.com/lessons/android-interview-mastery/52-adaptive-android-ui-phones-tablets-foldables-multi-window.html): Design once, adapt everywhere — WindowSizeClass, canonical layouts, and foldable support
+- [Material Design 3, Theming, Dark Mode & Dynamic Color](https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html): Master Material You — from colorScheme to wallpaper-extracted dynamic color and custom theming architecture
+- [RecyclerView vs LazyColumn: Legacy vs Modern UI Tradeoffs](https://learn.teamzlab.com/lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html): Understand the internals of both, know when each is the right tool, and migrate confidently
+- [BroadcastReceiver, Services, Binder & Bound Services](https://learn.teamzlab.com/lessons/android-interview-mastery/55-broadcastreceiver-services-binder-bound-services.html): Android background components that every senior dev must know cold
+- [ContentProvider, FileProvider & URI Permissions](https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html): Secure data and file sharing between Android apps
+- [Native/Platform APIs: Camera, Bluetooth, NFC, Sensors & Maps](https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html): Discussing hardware APIs confidently in senior Android interviews
+- [System Design I: Offline-First Field App at Scale](https://learn.teamzlab.com/lessons/android-interview-mastery/58-system-design-i-offline-first-field-app-at-scale.html): Designing a field operations platform for 10,000+ workers in low-connectivity areas
+- [System Design II: School/Productivity App with Local DB & Sync](https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html): Architecting Hazira Khata — attendance, reports, offline-first, multi-role
+- [System Design III: Secure Auth/Payment/Claims Flow](https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html): Architecting a fintech claims and payment app — security, encrypted storage, and audit trails
+- [Production Debugging, Incident Response & Crash Triage](https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html): From alert to fix — the senior engineer's playbook for production fires
+- [CS Basics: Big-O, Memory, Threading & Networking](https://learn.teamzlab.com/lessons/android-interview-mastery/62-cs-basics-big-o-memory-threading-networking.html): The computer science fundamentals every senior mobile engineer must own
+- [DSA I: Arrays, Strings, HashMaps, Sets & Two Pointers](https://learn.teamzlab.com/lessons/android-interview-mastery/63-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html): The patterns that solve 60% of coding interview problems — mastered in Kotlin
+- [DSA II: Stack, Queue, Linked List, Binary Search & Heap](https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html): Linear and hierarchical structures that unlock a new class of interview problems
+- [DSA III: Trees, Graphs, BFS/DFS, Recursion & Intervals](https://learn.teamzlab.com/lessons/android-interview-mastery/65-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html): The hardest patterns — mastered through intuition, not memorization
+- [Android Interview Project Storytelling Foundations](https://learn.teamzlab.com/lessons/android-interview-mastery/66-android-interview-project-storytelling-foundations.html): Turn your real experience into compelling interview narratives that land senior roles
+- [Behavioral Foundations: W-STAR, Confidence & Concise Answers](https://learn.teamzlab.com/lessons/android-interview-mastery/67-behavioral-foundations-w-star-confidence-concise-answers.html): Master the storytelling framework that turns vague memories into compelling interview answers
+- [Leadership & Seniority: Mentoring, Ownership, Conflict & Ambiguity](https://learn.teamzlab.com/lessons/android-interview-mastery/68-leadership-seniority-mentoring-ownership-conflict-ambiguity.html): Demonstrate senior-level impact through stories of mentoring, cross-team influence, and navigating uncertainty
+- [Salary Negotiation, Remote Culture & Relocation](https://learn.teamzlab.com/lessons/android-interview-mastery/69-salary-negotiation-remote-culture-relocation.html): Research your market value, negotiate confidently, and navigate the realities of remote work and international relocation
+- [Full Android Technical Mock Pack](https://learn.teamzlab.com/lessons/android-interview-mastery/70-full-android-technical-mock-pack.html): Complete technical mock interview round with model answers and self-scoring rubric
+- [Full Architecture + System Design Mock Pack](https://learn.teamzlab.com/lessons/android-interview-mastery/71-full-architecture-system-design-mock-pack.html): Complete architecture and system design mock round with real-world scenarios and self-scoring rubric
+- [Full Behavioral + Mixed Senior Mobile Mock Pack](https://learn.teamzlab.com/lessons/android-interview-mastery/72-full-behavioral-mixed-senior-mobile-mock-pack.html): Complete behavioral mock, mixed technical-behavioral round, and final self-evaluation capstone
+- [Paging 3: PagingSource, RemoteMediator & Flow Integration](https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html): Master infinite scrolling with offline-first architecture using Paging 3
+- [Compose Animations: Transition, AnimatedVisibility & Motion](https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html): Create fluid, production-quality animations in Jetpack Compose
+- [Advanced Coroutines: callbackFlow, channelFlow & Custom Dispatchers](https://learn.teamzlab.com/lessons/android-interview-mastery/75-advanced-coroutines-callbackflow-channelflow-custom.html): Master coroutine internals for complex async patterns and concurrent data streams
+- [KSP vs KAPT, Code Generation & Serialization](https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html): Understand annotation processing, build performance, and serialization strategies in modern Android
+- [R8, ProGuard & Release Optimization](https://learn.teamzlab.com/lessons/android-interview-mastery/77-r8-proguard-release-optimization.html): Shrink, obfuscate, and optimize your APK for production without breaking your app
+- [Android 14/15 Platform Features & Migration](https://learn.teamzlab.com/lessons/android-interview-mastery/78-android-1415-platform-features-migration.html): Stay current with the latest platform requirements and APIs that interviewers expect you to know
+- [GraphQL with Apollo Kotlin](https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html): Schema-first API development with normalized caching and real-time subscriptions
+- [Baseline Profiles, Macrobenchmark & Startup Optimization](https://learn.teamzlab.com/lessons/android-interview-mastery/80-baseline-profiles-macrobenchmark-startup-optimization.html): Eliminate jank and slash startup time with AOT compilation hints and systematic benchmarking
+- [Screenshot Testing: Paparazzi, Roborazzi & Visual Regression](https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html): Catch pixel-level regressions before your users do — master every major Android screenshot testing framework
+- [AOSP & Android Platform Internals for App Developers](https://learn.teamzlab.com/lessons/android-interview-mastery/82-aosp-android-platform-internals-for-app-developers.html): Understand the layers beneath your app — the senior interview questions that separate framework users from platform-aware engineers
+- [Java Interop, Legacy Code & Kotlin Migration Strategy](https://learn.teamzlab.com/lessons/android-interview-mastery/83-java-interop-legacy-code-kotlin-migration-strategy.html): Bridge two worlds — master Java-Kotlin interop and lead migration of real-world codebases confidently
+
+## Android Phone Health: Battery, Privacy, Performance & Security
+
+- Course page: https://learn.teamzlab.com/c/android-phone-health.html
+- Level: All Levels — No Technical Background Needed
+- Lesson count: 25
+- About: Free interactive course with 25 lessons on Android phone health — check battery health, detect spyware without root, fix slow phone performance, stop battery drain, audit app permissions, test WiFi…
+
+### Lessons
+
+- [Why Your Phone Knows More About You Than You Think](https://learn.teamzlab.com/lessons/android-phone-health/01-why-your-phone-knows-more-about-you-than-you-think.html): The data your Android collects every single day — and why phone health matters more than you realize
+- [The Hidden Cost of Ignoring Phone Health](https://learn.teamzlab.com/lessons/android-phone-health/02-the-hidden-cost-of-ignoring-phone-health.html): What really happens when you skip phone maintenance — spoiler: it's worse than a dead battery
+- [How Phone Health Scores Actually Work](https://learn.teamzlab.com/lessons/android-phone-health/03-how-phone-health-scores-actually-work.html): Understanding the science behind phone health scoring — and what your number really means
+- [How to Check Battery Health on Android](https://learn.teamzlab.com/lessons/android-phone-health/04-how-to-check-battery-health-on-android.html): Everything you need to know about your battery's real condition — and when it's time to take action
+- [Why Your Battery Dies So Fast — The Real Culprits](https://learn.teamzlab.com/lessons/android-phone-health/05-why-your-battery-dies-so-fast-the-real-culprits.html): The actual reasons your battery drains faster than it should — and how to fix every single one
+- [Power Consumption Explained: What Drains Watts](https://learn.teamzlab.com/lessons/android-phone-health/06-power-consumption-explained-what-drains-watts.html): Understand voltage, current, and watts — and why some phone features gulp power like a sports car gulps gas
+- [Which Apps Are Killing Your Battery?](https://learn.teamzlab.com/lessons/android-phone-health/07-which-apps-are-killing-your-battery.html): Unmask the hidden battery vampires lurking on your phone — and learn how to stop them
+- [Why Is My Phone So Slow? The Truth](https://learn.teamzlab.com/lessons/android-phone-health/08-why-is-my-phone-so-slow-the-truth.html): The real reasons your phone feels sluggish — and how to make it fast again without buying a new one
+- [RAM, CPU & Storage — What Actually Matters](https://learn.teamzlab.com/lessons/android-phone-health/09-ram-cpu-storage-what-actually-matters.html): Finally understand these three specs in plain English — and learn which one is actually bottlenecking your phone
+- [Phone Temperature: When Hot Means Trouble](https://learn.teamzlab.com/lessons/android-phone-health/10-phone-temperature-when-hot-means-trouble.html): Learn the difference between warm and dangerously hot — and protect your phone from heat damage before it is too late
+- [Is Someone Using Your Microphone Right Now?](https://learn.teamzlab.com/lessons/android-phone-health/11-is-someone-using-your-microphone-right-now.html): How apps secretly access your mic, what Android's green dot means, and how to catch unauthorized recording in seconds
+- [Camera Access: Which Apps Are Watching?](https://learn.teamzlab.com/lessons/android-phone-health/12-camera-access-which-apps-are-watching.html): How apps silently access your camera, what Android reveals about camera spying, and how to shut it down in seconds
+- [How to Detect Spyware Without Root Access](https://learn.teamzlab.com/lessons/android-phone-health/13-how-to-detect-spyware-without-root-access.html): The warning signs of spyware, how it hides on your phone, and how to find it without any technical skills or root access
+- [Fake GPS & Location Spoofing Detection](https://learn.teamzlab.com/lessons/android-phone-health/14-fake-gps-location-spoofing-detection.html): What GPS spoofing is, why people fake their location, and how it can affect your privacy, safety, and the apps you use
+- [Is Your Phone Listening? Myths vs Reality](https://learn.teamzlab.com/lessons/android-phone-health/15-is-your-phone-listening-myths-vs-reality.html): The truth about whether your phone listens to your conversations for ads, what actually happens, and how to verify it yourself
+- [WiFi Speed Test: What Your ISP Won't Tell You](https://learn.teamzlab.com/lessons/android-phone-health/16-wifi-speed-test-what-your-isp-wont-tell-you.html): Discover your real internet speed and stop paying for promises
+- [Is Your ISP Spying on You? DNS & SSL Checks](https://learn.teamzlab.com/lessons/android-phone-health/17-is-your-isp-spying-on-you-dns-ssl-checks.html): What your internet provider can see and how to protect yourself
+- [Network Signal Strength: Why Bars Lie](https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html): Understanding the real numbers behind your WiFi and cellular connection
+- [The 10-Minute Android Security Checklist](https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html): Essential settings every Android user should enable right now
+- [App Permissions Audit: What You Should Revoke](https://learn.teamzlab.com/lessons/android-phone-health/20-app-permissions-audit-what-you-should-revoke.html): Take back control of what apps can access on your phone
+- [Lock Screen Widgets for Real-Time Monitoring](https://learn.teamzlab.com/lessons/android-phone-health/21-lock-screen-widgets-for-real-time-monitoring.html): See your phone's vital signs without even unlocking it
+- [How AI Explains Your Phone Health in Plain English](https://learn.teamzlab.com/lessons/android-phone-health/22-how-ai-explains-your-phone-health-in-plain-english.html): Let ChatGPT, Gemini, or Claude tell you exactly what your scan results mean
+- [Your Phone's Resale Value: Get a Certified Report](https://learn.teamzlab.com/lessons/android-phone-health/23-your-phones-resale-value-get-a-certified-report.html): Know exactly what your phone is worth before you sell or trade it in
+- [Verified Reports: Trust Through Transparency](https://learn.teamzlab.com/lessons/android-phone-health/24-verified-reports-trust-through-transparency.html): How digital verification makes phone condition reports trustworthy
+- [The Complete Phone Health Action Plan](https://learn.teamzlab.com/lessons/android-phone-health/25-the-complete-phone-health-action-plan.html): Your weekly, monthly, and quarterly routine for a phone that lasts
+
+## Career Launchpad: Land Your Dream Dev Job in 2026
+
+- Course page: https://learn.teamzlab.com/c/career-launchpad.html
+- Level: All Levels
+- Lesson count: 16
+- About: Free career preparation course for software developers. 15 lessons covering portfolio building, LeetCode strategy, mock interviews, resume optimization, LinkedIn presence, networking, salary…
+
+### Lessons
+
+- [GitHub Profile That Gets You Hired](https://learn.teamzlab.com/lessons/career-launchpad/01-github-profile-that-gets-you-hired.html): Turn your GitHub into a developer portfolio that recruiters actually read
+- [Building Portfolio Projects That Impress](https://learn.teamzlab.com/lessons/career-launchpad/02-building-portfolio-projects-that-impress.html): Stop building TODO apps — build projects that make hiring managers say 'we need this person'
+- [Open Source & Developer Visibility](https://learn.teamzlab.com/lessons/career-launchpad/03-open-source-developer-visibility.html): Get noticed by contributing to projects used by thousands of developers
+- [LeetCode Strategy: Pattern-Based Approach](https://learn.teamzlab.com/lessons/career-launchpad/04-leetcode-strategy-pattern-based-approach.html): Stop solving random problems — learn 15 patterns that cover 90% of coding interviews
+- [Top Interview Coding Patterns](https://learn.teamzlab.com/lessons/career-launchpad/05-top-interview-coding-patterns.html): Master the exact patterns that appear in 90% of technical interviews at top companies
+- [Live Coding Under Pressure](https://learn.teamzlab.com/lessons/career-launchpad/06-live-coding-under-pressure.html): Turn interview anxiety into a structured performance that impresses interviewers
+- [Technical Mock Interview Mastery](https://learn.teamzlab.com/lessons/career-launchpad/07-technical-mock-interview-mastery.html): Build interview confidence through deliberate practice with peers and platforms
+- [System Design Interview for Mobile Devs](https://learn.teamzlab.com/lessons/career-launchpad/08-system-design-interview-for-mobile-devs.html): Ace system design rounds by thinking like a mobile-first architect
+- [Behavioral Interview: Stories That Land Offers](https://learn.teamzlab.com/lessons/career-launchpad/09-behavioral-interview-stories-that-land-offers.html): Turn Your Experience Into Compelling Narratives
+- [Resume That Passes ATS & Impresses Humans](https://learn.teamzlab.com/lessons/career-launchpad/10-resume-that-passes-ats-impresses-humans.html): Your 6-Second First Impression
+- [LinkedIn Optimization for Developers](https://learn.teamzlab.com/lessons/career-launchpad/11-linkedin-optimization-for-developers.html): Turn Your Profile Into a Recruiter Magnet
+- [Cover Letters, Follow-ups & Referrals](https://learn.teamzlab.com/lessons/career-launchpad/12-cover-letters-follow-ups-referrals.html): The Hidden Channels That Actually Get You Hired
+- [Job Application Strategy: Volume + Quality](https://learn.teamzlab.com/lessons/career-launchpad/13-job-application-strategy-volume-quality.html): The System That Turns Searching Into Finding
+- [Networking, Recruiters & Developer Brand](https://learn.teamzlab.com/lessons/career-launchpad/14-networking-recruiters-developer-brand.html): Build a Reputation That Opens Doors
+- [Salary Negotiation & Accepting the Right Offer](https://learn.teamzlab.com/lessons/career-launchpad/15-salary-negotiation-accepting-the-right-offer.html): Turn an Offer Into the Compensation You Deserve
+- [AI-Assisted Development: Use AI Without Losing Your Edge](https://learn.teamzlab.com/lessons/career-launchpad/16-ai-assisted-development-use-ai-without-losing-your-edge.html): Master AI tools as a career accelerator — not a crutch that makes you unemployable
+
+## নবম শ্রেণির গণিত — শূন্য থেকে পরীক্ষায় ৯৫+
+
+- Course page: https://learn.teamzlab.com/c/class-9-math-bangla.html
+- Level: নবম শ্রেণি (দুর্বল ভিত্তি থেকে পরীক্ষায় ৯৫+)
+- Lesson count: 78
+- About: বাংলাদেশ NCTB নবম শ্রেণির গণিত ফ্রি ইন্টারেক্টিভ কোর্স। 78টি পাঠে বাস্তব সংখ্যা, বীজগণিত, জ্যামিতি, ত্রিকোণমিতি, পরিমিতি ও পরিসংখ্যান শিখুন। ধাপে ধাপে সমাধান, কুইজ, ফ্ল্যাশকার্ড ও স্পেসড রিপিটিশন —…
+
+### Lessons
+
+- [গণিত কেন শিখব?](https://learn.teamzlab.com/lessons/class-9-math-bangla/01-lesson.html): গণিত মানেই মাথা ধরা? নাহ্, চলো ভয় ভাঙাই!
+- [সংখ্যার জগৎ](https://learn.teamzlab.com/lessons/class-9-math-bangla/02-lesson.html): সংখ্যার ফ্যামিলি ট্রি — কে কার আত্মীয়!
+- [গাণিতিক ভাষা পড়া](https://learn.teamzlab.com/lessons/class-9-math-bangla/03-lesson.html): গণিতের নিজস্ব ইমোজি ভাষা — ক্র্যাক করো!
+- [বাস্তব সংখ্যা কী?](https://learn.teamzlab.com/lessons/class-9-math-bangla/04-lesson.html): মূলদ + অমূলদ = পুরো সংখ্যা পরিবার!
+- [মূলদ ও অমূলদ সংখ্যা](https://learn.teamzlab.com/lessons/class-9-math-bangla/05-lesson.html): ভগ্নাংশে ধরা যায়? মূলদ! না গেলে? অমূলদ!
+- [করণী ও সরলীকরণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/06-lesson.html): √ সাইন দেখলে ভয়? আজকে সেই ভয়ের বারোটা বাজাবো!
+- [বাস্তব সংখ্যা: অনুশীলন ও ভুল এড়ানো](https://learn.teamzlab.com/lessons/class-9-math-bangla/07-lesson.html): বাস্তব সংখ্যায় সবাই যেসব ভুল করে — তুমি করবে না!
+- [সেটের ধারণা ও প্রতীক](https://learn.teamzlab.com/lessons/class-9-math-bangla/08-lesson.html): গণিতের সবচেয়ে কুল অর্গানাইজার — সেট!
+- [সেটের প্রকারভেদ ও উপসেট](https://learn.teamzlab.com/lessons/class-9-math-bangla/09-lesson.html): খালি সেট থেকে অসীম সেট — সবার সাথে পরিচয়!
+- [সেট অপারেশন ও ভেনচিত্র](https://learn.teamzlab.com/lessons/class-9-math-bangla/10-lesson.html): ∪ ∩ − সব অপারেশন ভেনচিত্রে বুঝে ফেলো!
+- [ফাংশনের ধারণা](https://learn.teamzlab.com/lessons/class-9-math-bangla/11-lesson.html): ইনপুট দাও, আউটপুট নাও — ফাংশন মেশিন!
+- [সেট ও ফাংশন: মিশ্র অনুশীলন](https://learn.teamzlab.com/lessons/class-9-math-bangla/12-lesson.html): সেট + ফাংশন কম্বো — পরীক্ষায় যেভাবে আসে!
+- [বীজগণিতের ভিত্তি পুনরায়](https://learn.teamzlab.com/lessons/class-9-math-bangla/13-lesson.html): চলক, ধ্রুবক, রাশি — বীজগণিতের ABC!
+- [বর্গসূত্র: (a+b)² ও (a−b)²](https://learn.teamzlab.com/lessons/class-9-math-bangla/14-ab-ab.html): বর্গসূত্র — গণিতের সুপারহিরো ফর্মুলা!
+- [বর্গসূত্রের প্রয়োগ ও কৌশল](https://learn.teamzlab.com/lessons/class-9-math-bangla/15-lesson.html): বর্গসূত্র উল্টো দিক থেকে — পরীক্ষার সিক্রেট ওয়েপন!
+- [a² − b² = (a+b)(a−b)](https://learn.teamzlab.com/lessons/class-9-math-bangla/16-a-b-abab.html): a²−b² — দেখতে কঠিন, ভাঙতে পানির মতো সহজ!
+- [ঘনসূত্র: (a+b)³ ও (a−b)³](https://learn.teamzlab.com/lessons/class-9-math-bangla/17-ab-ab.html): ঘনসূত্র — 3D তে সম্প্রসারণ, ভয়ের কিছু নেই!
+- [ঘনসূত্রের প্রয়োগ: a³+b³ ও a³−b³](https://learn.teamzlab.com/lessons/class-9-math-bangla/18-ab-ab.html): a³+b³ আর a³−b³ — ঘনের যমজ সূত্র!
+- [উৎপাদকে বিশ্লেষণ: ধারণা ও কৌশল](https://learn.teamzlab.com/lessons/class-9-math-bangla/19-lesson.html): উৎপাদকে বিশ্লেষণ — গণিতের পাজল সলভিং!
+- [মধ্যপদ বিশ্লেষণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/20-lesson.html): মধ্যপদ বিশ্লেষণ — ax²+bx+c ভাঙার আর্ট!
+- [সূত্র ব্যবহার করে উৎপাদকে বিশ্লেষণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/21-lesson.html): বর্গ-ঘন সূত্র দিয়ে ফ্যাক্টরাইজ — সূত্র চিনলেই জিতবে!
+- [উৎপাদক উপপাদ্য (Factor Theorem)](https://learn.teamzlab.com/lessons/class-9-math-bangla/22-factor-theorem.html): f(a)=0 মানেই (x−a) একটা ফ্যাক্টর — জাদুর মতো!
+- [বীজগাণিতিক রাশি: বাস্তব সমস্যা ও পরীক্ষা কৌশল](https://learn.teamzlab.com/lessons/class-9-math-bangla/23-lesson.html): শাব্দিক সমস্যা + ভুল এড়ানোর হ্যাক — পরীক্ষা রেডি!
+- [সূচকের ধারণা ও মৌলিক নিয়ম](https://learn.teamzlab.com/lessons/class-9-math-bangla/24-lesson.html): সূচক — ছোট সংখ্যায় বড় পাওয়ার!
+- [শূন্য, ঋণাত্মক ও ভগ্নাংশ সূচক](https://learn.teamzlab.com/lessons/class-9-math-bangla/25-lesson.html): a⁰=1 কেন? a⁻ⁿ মানে কী? ভগ্নাংশ সূচকও!
+- [লগারিদম কী?](https://learn.teamzlab.com/lessons/class-9-math-bangla/26-lesson.html): লগ মানে 'কত ঘাত?' — সূচকের উল্টো গেম!
+- [লগারিদমের নিয়ম](https://learn.teamzlab.com/lessons/class-9-math-bangla/27-lesson.html): লগের তিন জাদু নিয়ম — গুণকে যোগ বানাও!
+- [ম্যান্টিসা ও বৈশিষ্ট্যাংশ](https://learn.teamzlab.com/lessons/class-9-math-bangla/28-lesson.html): সংখ্যার লগ বের করা — ম্যান্টিসা আর ক্যারেক্টারিস্টিক!
+- [সূচক ও লগারিদম: মিশ্র অনুশীলন](https://learn.teamzlab.com/lessons/class-9-math-bangla/29-lesson.html): সূচক ↔ লগ — দুই ভাষায় কথা বলো!
+- [সমীকরণ কী? ভিত্তি ঝালাই](https://learn.teamzlab.com/lessons/class-9-math-bangla/30-lesson.html): সমীকরণ vs অসমীকরণ vs অভেদ — কে কে?
+- [প্রথম ঘাতের সমীকরণ সমাধান](https://learn.teamzlab.com/lessons/class-9-math-bangla/31-lesson.html): x কে একলা করো — স্টেপ বাই স্টেপ!
+- [শাব্দিক সমস্যা থেকে সমীকরণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/32-lesson.html): বাংলা গল্প → গাণিতিক সমীকরণ — ট্রান্সলেশন আর্ট!
+- [দ্বিঘাত সমীকরণের ধারণা](https://learn.teamzlab.com/lessons/class-9-math-bangla/33-lesson.html): ax²+bx+c=0 — x² এলে খেলা বদলে যায়!
+- [উৎপাদক পদ্ধতিতে দ্বিঘাত সমীকরণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/34-lesson.html): ফ্যাক্টরাইজ করে x বের করো — ইজি রুট!
+- [সূত্র পদ্ধতি ও বিবেচক (Discriminant)](https://learn.teamzlab.com/lessons/class-9-math-bangla/35-discriminant.html): শ্রীধরাচার্যের সূত্র — সব দ্বিঘাতের মাস্টার কী!
+- [দ্বিঘাত সমীকরণ: বাস্তব সমস্যা](https://learn.teamzlab.com/lessons/class-9-math-bangla/36-lesson.html): ক্ষেত্রফল, বয়স, সংখ্যা — দ্বিঘাতে রিয়েল লাইফ!
+- [জ্যামিতির ভাষা ও ভিত্তি](https://learn.teamzlab.com/lessons/class-9-math-bangla/37-lesson.html): বিন্দু, রেখা, কোণ — জ্যামিতির অ আ ক খ!
+- [স্বতঃসিদ্ধ ও উপপাদ্য — পার্থক্য কী?](https://learn.teamzlab.com/lessons/class-9-math-bangla/38-lesson.html): কিছু মানতেই হবে, কিছু প্রমাণ করে দেখাতে হবে!
+- [রেখা ও কোণের উপপাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/39-lesson.html): সমান্তরাল রেখায় ছেদক পড়লে — কোণের মেলা!
+- [ত্রিভুজের মৌলিক উপপাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/40-lesson.html): ত্রিভুজের কোণ ১৮০° — কেন? প্রমাণ করো!
+- [জ্যামিতি প্রমাণ লেখার কৌশল](https://learn.teamzlab.com/lessons/class-9-math-bangla/41-lesson.html): প্রমাণ লেখা — জ্যামিতির গল্প বলার আর্ট!
+- [ত্রিভুজ অঙ্কন](https://learn.teamzlab.com/lessons/class-9-math-bangla/42-lesson.html): কম্পাস-রুলার দিয়ে ত্রিভুজ বানাও — হাতে-কলমে!
+- [চতুর্ভুজ অঙ্কন](https://learn.teamzlab.com/lessons/class-9-math-bangla/43-lesson.html): চতুর্ভুজ আঁকো — সামান্তরিক থেকে ট্রাপিজিয়াম!
+- [বৃত্তের পরিচয় ও মৌলিক ধারণা](https://learn.teamzlab.com/lessons/class-9-math-bangla/44-lesson.html): বৃত্ত — গণিতের সবচেয়ে পারফেক্ট আকৃতি!
+- [জ্যা ও কেন্দ্র সম্পর্কিত উপপাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/45-lesson.html): জ্যা আর কেন্দ্র — লম্ব টানলেই জ্যা অর্ধেক!
+- [কেন্দ্রীয় কোণ ও পরিধি কোণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/46-lesson.html): একই চাপে কেন্দ্রীয় কোণ = ২× পরিধি কোণ!
+- [চক্রীয় চতুর্ভুজ](https://learn.teamzlab.com/lessons/class-9-math-bangla/47-lesson.html): বৃত্তে বসা চতুর্ভুজ — বিপরীত কোণ = ১৮০°!
+- [স্পর্শক উপপাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/48-lesson.html): স্পর্শক — বৃত্তকে ছুঁয়ে চলে যায়!
+- [বৃত্ত সম্পাদ্য ও মিশ্র অনুশীলন](https://learn.teamzlab.com/lessons/class-9-math-bangla/49-lesson.html): বৃত্তের সব উপপাদ্য মিশিয়ে — ফাইনাল বস!
+- [ত্রিকোণমিতি কী? সমকোণী ত্রিভুজের ভাষা](https://learn.teamzlab.com/lessons/class-9-math-bangla/50-lesson.html): সমকোণী ত্রিভুজের তিন বাহু — কে কে?
+- [sin, cos, tan — অনুপাত বোঝা ও মনে রাখা](https://learn.teamzlab.com/lessons/class-9-math-bangla/51-sin-cos-tan.html): SOH CAH TOA — ছয় অনুপাত মনে রাখার জাদুমন্ত্র!
+- [পূরক কোণ ও বিশেষ কোণের মান](https://learn.teamzlab.com/lessons/class-9-math-bangla/52-lesson.html): 30°, 45°, 60° — এই তিন কোণের মান মুখস্থ রাখো!
+- [ত্রিকোণমিতিক অভেদ](https://learn.teamzlab.com/lessons/class-9-math-bangla/53-lesson.html): sin²θ + cos²θ = 1 — ত্রিকোণমিতির গোল্ডেন রুল!
+- [ত্রিকোণমিতি: মিশ্র সমস্যা ও কৌশল](https://learn.teamzlab.com/lessons/class-9-math-bangla/54-lesson.html): ত্রিকোণমিতির 'ফাইনাল বস' — সব মিশিয়ে সরলীকরণ!
+- [উন্নতি কোণ ও অবনতি কোণ](https://learn.teamzlab.com/lessons/class-9-math-bangla/55-lesson.html): উপরে তাকাও → উন্নতি কোণ, নিচে → অবনতি!
+- [উচ্চতা ও দূরত্ব: সমস্যা সমাধান](https://learn.teamzlab.com/lessons/class-9-math-bangla/56-lesson.html): গাছ, মিনার, ভবন — উচ্চতা বের করো ত্রিকোণমিতি দিয়ে!
+- [অনুপাত ও সমানুপাত — ধারণা ও নিয়ম](https://learn.teamzlab.com/lessons/class-9-math-bangla/57-lesson.html): a:b = c:d — আড়গুণ করলে সমান!
+- [ক্রমিক সমানুপাত](https://learn.teamzlab.com/lessons/class-9-math-bangla/58-lesson.html): a:b = b:c — মাঝেরটা দুই জায়গায়!
+- [অনুপাত: প্রয়োগমূলক সমস্যা](https://learn.teamzlab.com/lessons/class-9-math-bangla/59-lesson.html): ভাগ, মিশ্রণ, শতকরা — অনুপাতের রিয়েল ইউজ!
+- [সহসমীকরণ কী?](https://learn.teamzlab.com/lessons/class-9-math-bangla/60-lesson.html): দুই সমীকরণ, দুই অজানা — সমাধান একটাই!
+- [প্রতিস্থাপন ও নিরসন পদ্ধতি](https://learn.teamzlab.com/lessons/class-9-math-bangla/61-lesson.html): প্রতিস্থাপন vs নিরসন — কোনটা কখন, ঝটপট!
+- [সহসমীকরণ: বাস্তব সমস্যা](https://learn.teamzlab.com/lessons/class-9-math-bangla/62-lesson.html): বয়স, দাম, সংখ্যা — গল্প থেকে সমীকরণ জোড়া!
+- [সহসমীকরণের লেখচিত্র](https://learn.teamzlab.com/lessons/class-9-math-bangla/63-lesson.html): গ্রাফে দুই লাইন — কোথায় মিলল সেটাই উত্তর!
+- [গাণিতিক ধারা (Arithmetic Series)](https://learn.teamzlab.com/lessons/class-9-math-bangla/64-arithmetic-series.html): AP — সমান ধাপে এগিয়ে চলো!
+- [জ্যামিতিক ধারা (Geometric Series)](https://learn.teamzlab.com/lessons/class-9-math-bangla/65-geometric-series.html): GP — সমান হারে গুণ হতে থাকো!
+- [ধারা: মিশ্র সমস্যা ও সূত্র বাছাই](https://learn.teamzlab.com/lessons/class-9-math-bangla/66-lesson.html): AP না GP? — চেনার কৌশল ও মিশ্র সমস্যা!
+- [ত্রিভুজের অনুপাত জ্যামিতি](https://learn.teamzlab.com/lessons/class-9-math-bangla/67-lesson.html): সমানুপাতিক বাহু ভাগ — ত্রিভুজের ভিতরে রেখা!
+- [ত্রিভুজের সদৃশতা উপপাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/68-lesson.html): সদৃশ ত্রিভুজ — আকৃতি একই, সাইজ ভিন্ন!
+- [জ্যামিতিক প্রতিসমতা](https://learn.teamzlab.com/lessons/class-9-math-bangla/69-lesson.html): আয়নায় দেখো, ঘোরাও — প্রতিসাম্য!
+- [ক্ষেত্রফল সম্পর্কিত উপপাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/70-lesson.html): সমান বেস + সমান উচ্চতা = সমান ক্ষেত্রফল!
+- [ক্ষেত্রফল উপপাদ্যের প্রয়োগ ও সম্পাদ্য](https://learn.teamzlab.com/lessons/class-9-math-bangla/71-lesson.html): উপপাদ্য চেনো, চিত্র আঁকো, প্রমাণ করো!
+- [ত্রিভুজের ক্ষেত্রফল ও পরিমাপ](https://learn.teamzlab.com/lessons/class-9-math-bangla/72-lesson.html): ½×ভূমি×উচ্চতা — ত্রিভুজের ক্ষেত্রফলের ABC!
+- [চতুর্ভুজের ক্ষেত্রফল](https://learn.teamzlab.com/lessons/class-9-math-bangla/73-lesson.html): আয়তক্ষেত্র থেকে রম্বস — চতুর্ভুজের ক্ষেত্রফল!
+- [বৃত্তের ক্ষেত্রফল ও পরিধি](https://learn.teamzlab.com/lessons/class-9-math-bangla/74-lesson.html): πr² আর 2πr — বৃত্তের জাদু সংখ্যা π!
+- [ত্রিমাত্রিক আকৃতির পরিমিতি](https://learn.teamzlab.com/lessons/class-9-math-bangla/75-lesson.html): ঘনক, বেলন, গোলক, শঙ্কু — 3D জগতের পরিমিতি!
+- [তথ্য সংগ্রহ ও সারণি](https://learn.teamzlab.com/lessons/class-9-math-bangla/76-lesson.html): ডেটা জোগাড় আর টেবিলে সাজাও!
+- [কেন্দ্রীয় প্রবণতা: গড়, মধ্যক, প্রচুরক](https://learn.teamzlab.com/lessons/class-9-math-bangla/77-lesson.html): গড়, মধ্যক, প্রচুরক — তিন রাজা!
+- [পরিসংখ্যান: লেখচিত্র ও মিশ্র সমস্যা](https://learn.teamzlab.com/lessons/class-9-math-bangla/78-lesson.html): বার চার্ট, হিস্টোগ্রাম, পাই — ডেটার ছবি!
+
+## Clothing Business Masterclass
+
+- Course page: https://learn.teamzlab.com/c/clothing-business.html
+- Level: Beginner to Advanced
+- Lesson count: 30
+- About: Free clothing business course: 30 lessons to start, brand, manufacture & scale a clothing line. Quizzes, templates, checklists — no signup.
+
+### Lessons
+
+- [The Clothing Industry Landscape](https://learn.teamzlab.com/lessons/clothing-business/01-the-clothing-industry-landscape.html): Understanding the $1.7 Trillion Fashion World
+- [Types of Clothing Businesses](https://learn.teamzlab.com/lessons/clothing-business/02-types-of-clothing-businesses.html): Find Your Perfect Business Model
+- [The Entrepreneurial Mindset for Fashion](https://learn.teamzlab.com/lessons/clothing-business/03-the-entrepreneurial-mindset-for-fashion.html): Think Like a Fashion Founder
+- [Market Research & Customer Discovery](https://learn.teamzlab.com/lessons/clothing-business/04-market-research-customer-discovery.html): Know Your Customer Before You Sew a Stitch
+- [Finding Your Niche & Positioning](https://learn.teamzlab.com/lessons/clothing-business/05-finding-your-niche-positioning.html): Stand Out or Get Lost in the Rack
+- [Writing Your Clothing Business Plan](https://learn.teamzlab.com/lessons/clothing-business/06-writing-your-clothing-business-plan.html): Your Blueprint for Success
+- [Legal Setup & Intellectual Property](https://learn.teamzlab.com/lessons/clothing-business/07-legal-setup-intellectual-property.html): Protect Yourself and Your Designs
+- [Building Your Brand Identity](https://learn.teamzlab.com/lessons/clothing-business/08-building-your-brand-identity.html): More Than Just a Logo
+- [Packaging & Presentation](https://learn.teamzlab.com/lessons/clothing-business/09-packaging-presentation.html): The Unboxing Experience
+- [Designing Your First Collection](https://learn.teamzlab.com/lessons/clothing-business/10-designing-your-first-collection.html): From Sketch to Tech Pack
+- [Fabrics & Materials Sourcing](https://learn.teamzlab.com/lessons/clothing-business/11-fabrics-materials-sourcing.html): The Foundation of Every Garment
+- [Pattern Making & Sampling](https://learn.teamzlab.com/lessons/clothing-business/12-pattern-making-sampling.html): Turning Designs into Reality
+- [Finding & Working with Manufacturers](https://learn.teamzlab.com/lessons/clothing-business/13-finding-working-with-manufacturers.html): Your Production Partner
+- [Production & Quality Control](https://learn.teamzlab.com/lessons/clothing-business/14-production-quality-control.html): From Factory Floor to Your Customer
+- [Pricing Strategy & Cost Analysis](https://learn.teamzlab.com/lessons/clothing-business/15-pricing-strategy-cost-analysis.html): Price It Right or Go Broke
+- [Financial Management & Cash Flow](https://learn.teamzlab.com/lessons/clothing-business/16-financial-management-cash-flow.html): Follow the Money
+- [Inventory Management & Warehousing](https://learn.teamzlab.com/lessons/clothing-business/17-inventory-management-warehousing.html): Too Much Stock Kills, Too Little Loses Sales
+- [Setting Up Your Online Store](https://learn.teamzlab.com/lessons/clothing-business/18-setting-up-your-online-store.html): Your 24/7 Global Storefront
+- [Product Photography & Visual Content](https://learn.teamzlab.com/lessons/clothing-business/19-product-photography-visual-content.html): A Picture Sells a Thousand Garments
+- [E-commerce Optimization & Conversion](https://learn.teamzlab.com/lessons/clothing-business/20-e-commerce-optimization-conversion.html): Turning Browsers into Buyers
+- [Social Media Marketing for Fashion](https://learn.teamzlab.com/lessons/clothing-business/21-social-media-marketing-for-fashion.html): Build a Following That Buys
+- [Influencer Marketing & Collaborations](https://learn.teamzlab.com/lessons/clothing-business/22-influencer-marketing-collaborations.html): Leverage Other People's Audiences
+- [Paid Advertising & Email Marketing](https://learn.teamzlab.com/lessons/clothing-business/23-paid-advertising-email-marketing.html): Scale with Strategy
+- [Wholesale & B2B Sales](https://learn.teamzlab.com/lessons/clothing-business/24-wholesale-b2b-sales.html): Selling to Stores and Boutiques
+- [Physical Retail & Pop-Up Shops](https://learn.teamzlab.com/lessons/clothing-business/25-physical-retail-pop-up-shops.html): The In-Person Advantage
+- [Customer Service & Returns](https://learn.teamzlab.com/lessons/clothing-business/26-customer-service-returns.html): Turn Complaints into Loyalty
+- [Supply Chain & Shipping Logistics](https://learn.teamzlab.com/lessons/clothing-business/27-supply-chain-shipping-logistics.html): Get It There Fast and Cheap
+- [Sustainability & Ethical Fashion](https://learn.teamzlab.com/lessons/clothing-business/28-sustainability-ethical-fashion.html): Build a Brand That Does Good
+- [Scaling Your Clothing Brand](https://learn.teamzlab.com/lessons/clothing-business/29-scaling-your-clothing-brand.html): From Side Hustle to Real Business
+- [International Expansion & the Future](https://learn.teamzlab.com/lessons/clothing-business/30-international-expansion-the-future.html): Take Your Brand Global
+
+## Competitive Programming: Zero to Hero
+
+- Course page: https://learn.teamzlab.com/c/cp-kids.html
+- Level: Absolute Beginner to Advanced
+- Lesson count: 50
+- About: The world's easiest free competitive programming course. 50 interactive lessons — learn C++, STL, algorithms, data structures, sorting (bubble, selection, insertion, merge), searching, greedy,…
+
+### Lessons
+
+- [What is Competitive Programming?](https://learn.teamzlab.com/lessons/cp-kids/01-what-is-competitive-programming.html): Discover the world's most exciting brain sport — where coding meets competition!
+- [Setting Up Your Coding Playground](https://learn.teamzlab.com/lessons/cp-kids/02-setting-up-your-coding-playground.html): Get your tools ready — let us write and run your very first C++ program!
+- [How Online Judges and Contests Work](https://learn.teamzlab.com/lessons/cp-kids/03-how-online-judges-and-contests-work.html): Learn the rules of the game — how to read problems, submit solutions, and get that sweet AC!
+- [Variables — Your Code’s Memory Boxes](https://learn.teamzlab.com/lessons/cp-kids/04-variables-your-codes-memory-boxes.html): Learn how your program remembers things — meet the labeled jars of coding!
+- [Input and Output — Talking to Your Computer](https://learn.teamzlab.com/lessons/cp-kids/05-input-and-output-talking-to-your-computer.html): Master cin and cout — the walkie-talkies between you and your program!
+- [Math Operations — Your Code Calculator](https://learn.teamzlab.com/lessons/cp-kids/06-math-operations-your-code-calculator.html): Learn how to add, subtract, multiply, divide, and find remainders — the building blocks of every CP solution!
+- [Data Types Deep Dive — Choosing the Right Box](https://learn.teamzlab.com/lessons/cp-kids/07-data-types-deep-dive-choosing-the-right-box.html): Learn why picking the right data type matters — and how overflow can silently destroy your CP solutions!
+- [If-Else — Teaching Your Code to Make Decisions](https://learn.teamzlab.com/lessons/cp-kids/08-if-else-teaching-your-code-to-make-decisions.html): Give your code the power to think! Learn how to make it choose different paths based on conditions.
+- [Else-If Chains — Multiple Choices](https://learn.teamzlab.com/lessons/cp-kids/09-else-if-chains-multiple-choices.html): When life gives you more than two options, else-if chains and switch-case have you covered!
+- [Logical Operators — Combining Conditions](https://learn.teamzlab.com/lessons/cp-kids/10-logical-operators-combining-conditions.html): Learn to combine conditions with AND, OR, and NOT — the building blocks of powerful decision-making!
+- [While Loops — Repeat Until Done](https://learn.teamzlab.com/lessons/cp-kids/11-while-loops-repeat-until-done.html): Keep repeating as long as the condition is true
+- [For Loops — The Counter Loop](https://learn.teamzlab.com/lessons/cp-kids/12-for-loops-the-counter-loop.html): A compact loop with init, condition, and update all in one line
+- [Nested Loops — Loops Inside Loops](https://learn.teamzlab.com/lessons/cp-kids/13-nested-loops-loops-inside-loops.html): When one loop is not enough, put a loop inside a loop
+- [Arrays — A Row of Boxes](https://learn.teamzlab.com/lessons/cp-kids/14-arrays-a-row-of-boxes.html): Learn how to store many values in one variable using arrays — the most important data structure in CP!
+- [Array Operations — Working with Your List](https://learn.teamzlab.com/lessons/cp-kids/15-array-operations-working-with-your-list.html): Learn the essential array patterns: sum, average, and counting — skills you will use in every contest!
+- [Finding Min, Max, and Searching](https://learn.teamzlab.com/lessons/cp-kids/16-finding-min-max-and-searching.html): Learn to find the smallest, largest, and search for values — three skills every CP contestant needs!
+- [Characters and Strings](https://learn.teamzlab.com/lessons/cp-kids/17-characters-and-strings.html): Learn to work with letters and words — unlocking a whole new category of CP problems!
+- [String Problems in Contests](https://learn.teamzlab.com/lessons/cp-kids/18-string-problems-in-contests.html): Master the classic string patterns that show up in CP contests again and again!
+- [Functions — Your Helper Robots](https://learn.teamzlab.com/lessons/cp-kids/19-functions-your-helper-robots.html): Learn to create reusable blocks of code that make your programs cleaner and your CP solutions faster!
+- [Problem Solving with Functions](https://learn.teamzlab.com/lessons/cp-kids/20-problem-solving-with-functions.html): Learn to break big problems into small pieces using functions — the key to solving harder CP problems!
+- [GCD and LCM — Number Best Friends](https://learn.teamzlab.com/lessons/cp-kids/21-gcd-and-lcm-number-best-friends.html): Master the greatest common divisor and least common multiple — they show up EVERYWHERE in CP!
+- [Playing with Digits](https://learn.teamzlab.com/lessons/cp-kids/22-playing-with-digits.html): Extract, count, sum, and reverse digits — essential tricks for number-based problems!
+- [Powers and Modular Arithmetic](https://learn.teamzlab.com/lessons/cp-kids/23-powers-and-modular-arithmetic.html): Handle astronomically huge numbers like a pro
+- [Bubble Sort — The Swapping Dance](https://learn.teamzlab.com/lessons/cp-kids/24-bubble-sort-the-swapping-dance.html): The simplest sorting algorithm you will ever learn
+- [Binary Search — The Guessing Game](https://learn.teamzlab.com/lessons/cp-kids/25-binary-search-the-guessing-game.html): Find anything in a sorted collection blazingly fast
+- [Using sort() and Built-in Tools](https://learn.teamzlab.com/lessons/cp-kids/26-using-sort-and-built-in-tools.html): Let C++ do the heavy sorting for you
+- [Frequency Counting — Who Appears Most?](https://learn.teamzlab.com/lessons/cp-kids/27-frequency-counting-who-appears-most.html): Count how often each element appears like a pro
+- [Two Pointer Technique](https://learn.teamzlab.com/lessons/cp-kids/28-two-pointer-technique.html): Two markers working together to solve problems fast
+- [Prefix Sum — The Running Total](https://learn.teamzlab.com/lessons/cp-kids/29-prefix-sum-the-running-total.html): Answer range sum queries in the blink of an eye
+- [Greedy Algorithms — Always Pick the Best](https://learn.teamzlab.com/lessons/cp-kids/30-greedy-algorithms-always-pick-the-best.html): Make the best choice at every step and hope for the best
+- [More Greedy Problems](https://learn.teamzlab.com/lessons/cp-kids/31-more-greedy-problems.html): Practice the greedy mindset with classic problems
+- [Recursion — The Magic of Self-Calling Functions](https://learn.teamzlab.com/lessons/cp-kids/32-recursion-the-magic-of-self-calling-functions.html): When a function calls itself — and it actually works!
+- [More Recursion Adventures](https://learn.teamzlab.com/lessons/cp-kids/33-more-recursion-adventures.html): Fibonacci, powers, and the famous Tower of Hanoi!
+- [Stack — The Pancake Pile](https://learn.teamzlab.com/lessons/cp-kids/34-stack-the-pancake-pile.html): Last In, First Out — the data structure that undo buttons love!
+- [Queue — The Lunch Line](https://learn.teamzlab.com/lessons/cp-kids/35-queue-the-lunch-line.html): First In, First Out — fair and orderly, just like a real line!
+- [Reading Contest Problems Like a Pro](https://learn.teamzlab.com/lessons/cp-kids/36-reading-contest-problems-like-a-pro.html): The most important CP skill that nobody teaches!
+- [Solving Easy Contest Problems (A/B Problems)](https://learn.teamzlab.com/lessons/cp-kids/37-solving-easy-contest-problems-ab-problems.html): Your first real contest battles — let's win some problems!
+- [Debugging Like a Detective](https://learn.teamzlab.com/lessons/cp-kids/38-debugging-like-a-detective.html): Finding and fixing bugs — the skill that separates good from great!
+- [Time Complexity — Making Your Code Fast](https://learn.teamzlab.com/lessons/cp-kids/39-time-complexity-making-your-code-fast.html): Why some solutions pass and others get TLE — the secret is Big O!
+- [Your CP Journey — What's Next!](https://learn.teamzlab.com/lessons/cp-kids/40-your-cp-journey-whats-next.html): You've built the foundation — now let's talk about the skyscraper!
+- [Dynamic Programming — Remember and Reuse](https://learn.teamzlab.com/lessons/cp-kids/41-dynamic-programming-remember-and-reuse.html): Learn the most powerful problem-solving technique — solve it once, remember it forever!
+- [More DP Adventures — Coins and Stairs](https://learn.teamzlab.com/lessons/cp-kids/42-more-dp-adventures-coins-and-stairs.html): Master classic DP problems that appear in contests everywhere — stairs, coins, and more!
+- [Graphs — Connecting the Dots](https://learn.teamzlab.com/lessons/cp-kids/43-graphs-connecting-the-dots.html): Explore the data structure that models friendships, maps, networks, and so much more!
+- [BFS and DFS — Exploring Graphs Step by Step](https://learn.teamzlab.com/lessons/cp-kids/44-bfs-and-dfs-exploring-graphs-step-by-step.html): Master the two most important ways to explore a graph — level by level or deep into the unknown!
+- [Bit Manipulation — The Secret Language of Computers](https://learn.teamzlab.com/lessons/cp-kids/45-bit-manipulation-the-secret-language-of-computers.html): Learn how computers really think — in ones and zeros — and use it to solve problems at lightning speed!
+- [Sieve of Eratosthenes — Finding All Primes Fast](https://learn.teamzlab.com/lessons/cp-kids/46-sieve-of-eratosthenes-finding-all-primes-fast.html): Cross out the fakes, keep the real primes!
+- [Combinatorics — Counting Without Listing](https://learn.teamzlab.com/lessons/cp-kids/47-combinatorics-counting-without-listing.html): How many ways? Let's count smart, not hard!
+- [Practice Makes Champion — Your CP Toolkit](https://learn.teamzlab.com/lessons/cp-kids/48-practice-makes-champion-your-cp-toolkit.html): You've built an arsenal. Now let's master when to use each weapon!
+- [More Sorting — Selection, Insertion & Merge Sort](https://learn.teamzlab.com/lessons/cp-kids/49-more-sorting-selection-insertion-merge-sort.html): Master different ways to put things in order and learn when to use each one!
+- [C++ STL — Your Super Toolbox](https://learn.teamzlab.com/lessons/cp-kids/50-c-stl-your-super-toolbox.html): Unlock the full power of C++ Standard Template Library for competitive programming!
+
+## eBook Business Masterclass
+
+- Course page: https://learn.teamzlab.com/c/ebook-business.html
+- Level: Beginner to Advanced
+- Lesson count: 38
+- About: Free eBook business course: 38 lessons to create, market & sell digital products. Facebook Ads, funnels, pricing, scaling — no signup required.
+
+### Lessons
+
+- [The Digital Product Revolution — Why eBooks Are a Gold Mine](https://learn.teamzlab.com/lessons/ebook-business/01-the-digital-product-revolution-why-ebooks-are-a-gold-mine.html): The $28 Billion Opportunity Waiting for You
+- [Types of Digital Products You Can Sell](https://learn.teamzlab.com/lessons/ebook-business/02-types-of-digital-products-you-can-sell.html): eBooks, Templates, Printables, Courses & More
+- [Entrepreneurial Mindset for Digital Business](https://learn.teamzlab.com/lessons/ebook-business/03-entrepreneurial-mindset-for-digital-business.html): Think Like a Digital Product Mogul
+- [Setting Up Your Digital Workspace](https://learn.teamzlab.com/lessons/ebook-business/04-setting-up-your-digital-workspace.html): Your $0-$50 Startup Toolkit
+- [Market Research — Finding Hungry Audiences](https://learn.teamzlab.com/lessons/ebook-business/05-market-research-finding-hungry-audiences.html): Sell What People Already Want to Buy
+- [Niche Selection & Validation](https://learn.teamzlab.com/lessons/ebook-business/06-niche-selection-validation.html): Pick a Profitable Lane and Own It
+- [Creating Your Customer Avatar](https://learn.teamzlab.com/lessons/ebook-business/07-creating-your-customer-avatar.html): Know Your Buyer Better Than They Know Themselves
+- [Planning Your eBook — Outline & Structure](https://learn.teamzlab.com/lessons/ebook-business/08-planning-your-ebook-outline-structure.html): Blueprint Before You Build
+- [Writing Your eBook — AI Tools & Productivity](https://learn.teamzlab.com/lessons/ebook-business/09-writing-your-ebook-ai-tools-productivity.html): Write Faster, Write Better, Ship It
+- [Designing Your eBook — Canva & Beyond](https://learn.teamzlab.com/lessons/ebook-business/10-designing-your-ebook-canva-beyond.html): Covers That Sell and Layouts That Delight
+- [Editing, Proofreading & Quality Assurance](https://learn.teamzlab.com/lessons/ebook-business/11-editing-proofreading-quality-assurance.html): Polish Until It Shines
+- [eBook Formats, DRM & Distribution](https://learn.teamzlab.com/lessons/ebook-business/12-ebook-formats-drm-distribution.html): Get Your Book Everywhere
+- [Choosing Your Selling Platform](https://learn.teamzlab.com/lessons/ebook-business/13-choosing-your-selling-platform.html): Gumroad vs Shopify vs WooCommerce vs The Rest
+- [Setting Up Your Online Store](https://learn.teamzlab.com/lessons/ebook-business/14-setting-up-your-online-store.html): From Zero to Live Store in One Day
+- [Payment Gateways — Getting Paid Worldwide](https://learn.teamzlab.com/lessons/ebook-business/15-payment-gateways-getting-paid-worldwide.html): Accept Money from Anyone, Anywhere
+- [Product Pages That Convert](https://learn.teamzlab.com/lessons/ebook-business/16-product-pages-that-convert.html): Turn Visitors into Buyers
+- [Pricing Psychology](https://learn.teamzlab.com/lessons/ebook-business/17-pricing-psychology.html): The Science of Making People Say Yes
+- [Bundle Strategies, Upsells & Cross-sells](https://learn.teamzlab.com/lessons/ebook-business/18-bundle-strategies-upsells-cross-sells.html): Turn a $9 Sale into a $47 Sale
+- [Subscription & Membership Models](https://learn.teamzlab.com/lessons/ebook-business/19-subscription-membership-models.html): Get Paid Every Month, Not Just Once
+- [Building Your Brand](https://learn.teamzlab.com/lessons/ebook-business/20-building-your-brand.html): Be Remembered, Not Just Seen
+- [Content Marketing — Blog, YouTube & Social Media](https://learn.teamzlab.com/lessons/ebook-business/21-content-marketing-blog-youtube-social-media.html): Free Traffic That Compounds Over Time
+- [Email Marketing — Your Most Valuable Asset](https://learn.teamzlab.com/lessons/ebook-business/22-email-marketing-your-most-valuable-asset.html): The $42-for-Every-$1 Marketing Channel
+- [SEO for Digital Products](https://learn.teamzlab.com/lessons/ebook-business/23-seo-for-digital-products.html): Get Found While You Sleep
+- [Facebook Ads Fundamentals](https://learn.teamzlab.com/lessons/ebook-business/24-facebook-ads-fundamentals.html): Your First $5/Day Campaign
+- [Creating High-Converting Facebook Ads](https://learn.teamzlab.com/lessons/ebook-business/25-creating-high-converting-facebook-ads.html): Ads People Actually Click
+- [Facebook Ads Advanced — Retargeting & Scaling](https://learn.teamzlab.com/lessons/ebook-business/26-facebook-ads-advanced-retargeting-scaling.html): Turn Window Shoppers into Buyers
+- [Google Ads & YouTube Ads](https://learn.teamzlab.com/lessons/ebook-business/27-google-ads-youtube-ads.html): Capture People Already Searching
+- [TikTok & Instagram Ads](https://learn.teamzlab.com/lessons/ebook-business/28-tiktok-instagram-ads.html): Short-Form Video That Sells
+- [Sales Funnel Architecture](https://learn.teamzlab.com/lessons/ebook-business/29-sales-funnel-architecture.html): The Path from Stranger to Customer
+- [Landing Pages That Convert](https://learn.teamzlab.com/lessons/ebook-business/30-landing-pages-that-convert.html): One Page, One Goal, Maximum Sales
+- [Marketing Automation](https://learn.teamzlab.com/lessons/ebook-business/31-marketing-automation.html): Work Once, Sell Forever
+- [Analytics & KPIs — Tracking What Matters](https://learn.teamzlab.com/lessons/ebook-business/32-analytics-kpis-tracking-what-matters.html): If You Can't Measure It, You Can't Grow It
+- [Scaling from One Product to a Product Empire](https://learn.teamzlab.com/lessons/ebook-business/33-scaling-from-one-product-to-a-product-empire.html): From Side Hustle to Six Figures
+- [Affiliate Marketing — Others Sell for You](https://learn.teamzlab.com/lessons/ebook-business/34-affiliate-marketing-others-sell-for-you.html): Build a Sales Army Without Paying Salaries
+- [International Selling](https://learn.teamzlab.com/lessons/ebook-business/35-international-selling.html): Your eBook Has No Borders
+- [Legal Essentials](https://learn.teamzlab.com/lessons/ebook-business/36-legal-essentials.html): Protect Your Business and Your Content
+- [Case Studies — Successful eBook Businesses](https://learn.teamzlab.com/lessons/ebook-business/37-case-studies-successful-ebook-businesses.html): Real People, Real Numbers, Real Strategies
+- [Your 90-Day Action Plan](https://learn.teamzlab.com/lessons/ebook-business/38-your-90-day-action-plan.html): From Zero to First Sale in 90 Days
+
+## Free Flutter Course: Beginner to Professional
+
+- Course page: https://learn.teamzlab.com/c/flutter-dart-masterclass.html
+- Level: Absolute Beginner to Professional
+- Lesson count: 51
+- About: Free interactive Flutter & Dart course with 51 hands-on lessons. Learn mobile app development from scratch: Dart programming, widgets, BLoC state management, Clean Architecture, CRUD operations,…
+
+### Lessons
+
+- [What is Programming?](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/01-what-is-programming.html): Teaching Computers to Think
+- [Meet Flutter & Dart](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/02-meet-flutter-dart.html): One Code, Beautiful Apps Everywhere
+- [Setting Up Flutter](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/03-setting-up-flutter.html): Preparing Your Developer Toolkit
+- [Your First Flutter App](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/04-your-first-flutter-app.html): From Empty Screen to Running App
+- [Variables & Data Types](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/05-variables-data-types.html): Storing and Labeling Your Data
+- [Strings & Numbers](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/06-strings-numbers.html): Text Magic and Math Power
+- [Booleans & Conditions](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/07-booleans-conditions.html): Making Decisions in Code
+- [Lists & Collections](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/08-lists-collections.html): Organizing Groups of Data
+- [Loops & Iteration](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/09-loops-iteration.html): Repeating Actions Like a Pro
+- [Functions](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/10-functions.html): Reusable Blocks of Power
+- [Classes & Objects](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/11-classes-objects.html): Blueprints for Building Anything in Dart
+- [Constructors & Named Parameters](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html): Multiple Ways to Build Your Objects
+- [Inheritance & Mixins](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/13-inheritance-mixins.html): Sharing and Combining Abilities Across Classes
+- [Null Safety](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/14-null-safety.html): Eliminating the Billion-Dollar Mistake in Dart
+- [Async, Futures & Streams](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/15-async-futures-streams.html): Handling Things That Take Time in Dart
+- [Everything is a Widget](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/16-everything-is-a-widget.html): The Building Blocks of Every Flutter App
+- [StatelessWidget](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html): Simple Widgets That Never Change Their Mind
+- [StatefulWidget & setState](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html): Widgets That Remember and React
+- [MaterialApp & Scaffold](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/19-materialapp-scaffold.html): The Foundation Every Flutter App Stands On
+- [Text, Icons & Images](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/20-text-icons-images.html): The Visual Vocabulary of Flutter
+- [Buttons & User Interactions](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html): Making Your App Respond to Taps
+- [Row & Column Layout](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html): Horizontal and Vertical Arrangement
+- [Container, Padding & SizedBox](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html): Spacing, Sizing, and Decoration
+- [ListView & GridView](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/24-listview-gridview.html): Scrollable Lists and Grids
+- [Stack & Positioned](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/25-stack-positioned.html): Overlapping Widgets Like Layers
+- [Forms & Text Input](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/26-forms-text-input.html): Collecting User Data with Validation
+- [Building Custom Widgets](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/27-building-custom-widgets.html): Extract, Compose, and Reuse
+- [Design System & Theming](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html): Consistent Look with ThemeData and Custom Design Systems
+- [Navigation Basics](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html): Moving Between Screens with Navigator
+- [GoRouter](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/30-gorouter.html): Declarative Routing with Path Parameters and Redirects
+- [Passing Data Between Screens](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/31-passing-data-between-screens.html): Sending luggage on your route trips
+- [Understanding State](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/32-understanding-state.html): The memory that makes your app alive
+- [BLoC Pattern - Events & States](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html): The traffic controller for your app's brain
+- [flutter_bloc in Practice](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/34-flutter_bloc-in-practice.html): Wiring the BLoC brain to the Flutter body
+- [Advanced BLoC Patterns](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/35-advanced-bloc-patterns.html): Battle-tested patterns from the production trenches
+- [Clean Architecture Overview](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html): Building a skyscraper with a solid blueprint
+- [Domain Layer](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/37-domain-layer.html): Entities, Use Cases & the Repository Pattern
+- [Data Layer](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/38-data-layer.html): The bridge between your app and the outside world
+- [Presentation Layer](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/39-presentation-layer.html): Where your app meets the user's eyes
+- [GetIt Service Locator](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/40-getit-service-locator.html): The universal toolbox for your app's dependencies
+- [Injectable & Code Generation](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/41-injectable-code-generation.html): Auto-Wiring Your Dependencies
+- [REST APIs & CRUD](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/42-rest-apis-crud.html): Create, Read, Update & Delete with HTTP
+- [Dio HTTP Client](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/43-dio-http-client.html): Professional Networking for Flutter
+- [JSON Models & Serialization](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/44-json-models-serialization.html): Turning JSON into Dart Objects
+- [Hive Local Database](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/45-hive-local-database.html): Local CRUD — Create, Read, Update & Delete on Device
+- [Token & Auth Storage](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html): Keeping Users Logged In Securely
+- [Firebase Setup & Auth](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html): Adding Firebase to Your Flutter App
+- [Social Login](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/48-social-login.html): Sign In with Google & Apple
+- [Error Handling & Result Pattern](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/49-error-handling-result-pattern.html): Failing Gracefully Like a Pro
+- [Testing & Debugging](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/50-testing-debugging.html): Proving Your Code Works
+- [Config, Build & Release](https://learn.teamzlab.com/lessons/flutter-dart-masterclass/51-config-build-release.html): Shipping Your App to the World
+
+## Flutter Interview Mastery: Zero to Senior in 77 Lessons
+
+- Course page: https://learn.teamzlab.com/c/flutter-interview-mastery.html
+- Level: Mid-Level to Senior
+- Lesson count: 77
+- About: Free interactive Flutter interview preparation course with 77 lessons. Master Dart, BLoC, Clean Architecture, testing, platform channels, CI/CD, system design, DSA, and behavioral interviews. Built…
+
+### Lessons
+
+- [Dart Types, Null Safety & Variables](https://learn.teamzlab.com/lessons/flutter-interview-mastery/01-dart-types-null-safety-variables.html): The Foundation Every Interviewer Tests First
+- [Collections, Iterables & Equality](https://learn.teamzlab.com/lessons/flutter-interview-mastery/02-collections-iterables-equality.html): Data Structures That Show Up in Every Interview
+- [Futures, async/await & the Event Loop](https://learn.teamzlab.com/lessons/flutter-interview-mastery/03-futures-asyncawait-the-event-loop.html): The #1 Most-Asked Dart Interview Topic
+- [Streams, StreamController & Operators](https://learn.teamzlab.com/lessons/flutter-interview-mastery/04-streams-streamcontroller-operators.html): Real-time Data Flows — From Chat to Sensors
+- [Isolates, compute() & Concurrency](https://learn.teamzlab.com/lessons/flutter-interview-mastery/05-isolates-compute-concurrency.html): When Single-Threaded Isn't Enough
+- [Generics, Extensions, Mixins & Typedefs](https://learn.teamzlab.com/lessons/flutter-interview-mastery/06-generics-extensions-mixins-typedefs.html): Advanced Dart That Separates Mid from Senior
+- [Records, Patterns, Sealed Classes & Class Modifiers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/07-records-patterns-sealed-classes-class-modifiers.html): Modern Dart 3.x — The Features Interviewers Love to Ask
+- [Error Handling, Result Types & Defensive Coding](https://learn.teamzlab.com/lessons/flutter-interview-mastery/08-error-handling-result-types-defensive-coding.html): Production Apps Crash Less When You Handle Errors Right
+- [OOP, SOLID Principles & Composition](https://learn.teamzlab.com/lessons/flutter-interview-mastery/09-oop-solid-principles-composition.html): Architecture Interview Questions Start Here
+- [Widget Tree, Element Tree & Render Tree](https://learn.teamzlab.com/lessons/flutter-interview-mastery/10-widget-tree-element-tree-render-tree.html): The Three Trees That Power Every Flutter Frame
+- [Stateless vs Stateful Widget & Lifecycle](https://learn.teamzlab.com/lessons/flutter-interview-mastery/11-stateless-vs-stateful-widget-lifecycle.html): The Question Every Flutter Interview Starts With
+- [BuildContext, InheritedWidget, Keys & Rebuild Boundaries](https://learn.teamzlab.com/lessons/flutter-interview-mastery/12-buildcontext-inheritedwidget-keys-rebuild-boundaries.html): The Internal Plumbing Every Senior Must Explain
+- [Layout System, Constraints & Flex](https://learn.teamzlab.com/lessons/flutter-interview-mastery/13-layout-system-constraints-flex.html): Constraints Go Down, Sizes Go Up — Master This or Fight Flutter Forever
+- [Navigation: Navigator vs GoRouter, Deep Links & Route Guards](https://learn.teamzlab.com/lessons/flutter-interview-mastery/14-navigation-navigator-vs-gorouter-deep-links-route-guards.html): Every Senior Flutter Dev Gets Asked This — Answer With Confidence
+- [Forms, Validation, Focus & Controllers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html): Input Flows That Don't Frustrate Users — Senior-Level UX Patterns
+- [State Management Landscape](https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html): How to Answer 'How Do You Choose State Management?' in an Interview
+- [Cubit Fundamentals](https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html): The Simplest Step Up From setState — Master This Pattern First
+- [BLoC Fundamentals](https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html): Events In, States Out — The Pattern That Scales to Any Team
+- [Advanced BLoC Patterns](https://learn.teamzlab.com/lessons/flutter-interview-mastery/19-advanced-bloc-patterns.html): Patterns That Separate Junior From Senior BLoC Usage
+- [Clean Architecture Fundamentals for Flutter](https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html): The Answer That Gets You Hired at Senior Level
+- [Repository Pattern, Use Cases, DI & Boundaries](https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html): The Architecture Layer Every Senior Flutter Dev Must Master
+- [MVVM vs MVI vs Clean vs MVC — Tradeoffs](https://learn.teamzlab.com/lessons/flutter-interview-mastery/22-mvvm-vs-mvi-vs-clean-vs-mvc-tradeoffs.html): How to Answer 'Why Did You Choose This Architecture?' Without Being Dogmatic
+- [REST APIs with Dio, Interceptors, Token Refresh & Retries](https://learn.teamzlab.com/lessons/flutter-interview-mastery/23-rest-apis-with-dio-interceptors-token-refresh-retries.html): Production HTTP Client Patterns Every Senior Flutter Dev Uses Daily
+- [WebSockets, Socket.IO & Real-time Sync](https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html): Building Live Collaboration Features That Actually Work at Scale
+- [Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor](https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html): Choosing the Right Storage for the Right Job
+- [Offline-First Architecture & Sync](https://learn.teamzlab.com/lessons/flutter-interview-mastery/26-offline-first-architecture-sync.html): The Most Differentiating Skill for Senior Flutter Engineers
+- [Firebase Essentials: Auth, FCM, Crashlytics, Firestore](https://learn.teamzlab.com/lessons/flutter-interview-mastery/27-firebase-essentials-auth-fcm-crashlytics-firestore.html): Production Firebase Integration Every Flutter Dev Must Know
+- [Caching, Pagination, Lazy Loading & List Performance](https://learn.teamzlab.com/lessons/flutter-interview-mastery/28-caching-pagination-lazy-loading-list-performance.html): Building Lists That Scale to Tens of Thousands of Items
+- [Flutter Performance Profiling & DevTools](https://learn.teamzlab.com/lessons/flutter-interview-mastery/29-flutter-performance-profiling-devtools.html): Finding and Fixing Performance Problems Systematically
+- [Rendering, Jank, Impeller & Memory Optimization](https://learn.teamzlab.com/lessons/flutter-interview-mastery/30-rendering-jank-impeller-memory-optimization.html): Understanding Flutter's Rendering Pipeline at the Depth Interviewers Expect
+- [Testing Strategy: Unit vs Widget vs Integration](https://learn.teamzlab.com/lessons/flutter-interview-mastery/31-testing-strategy-unit-vs-widget-vs-integration.html): Building a testing philosophy from scratch — cost, coverage, and confidence
+- [Unit Testing Dart: Classes, Use Cases & Repositories](https://learn.teamzlab.com/lessons/flutter-interview-mastery/32-unit-testing-dart-classes-use-cases-repositories.html): Writing meaningful unit tests with mocks — testing what matters without hitting the network
+- [Testing BLoC/Cubit: Async State Sequences](https://learn.teamzlab.com/lessons/flutter-interview-mastery/33-testing-bloccubit-async-state-sequences.html): Verifying state transitions, error paths, and event-to-state mapping with bloc_test
+- [Widget Testing: UI Flows, Navigation & Forms](https://learn.teamzlab.com/lessons/flutter-interview-mastery/34-widget-testing-ui-flows-navigation-forms.html): Testing Flutter UI in a simulated environment — finders, pumps, and interaction simulation
+- [Integration Testing & E2E Flows](https://learn.teamzlab.com/lessons/flutter-interview-mastery/35-integration-testing-e2e-flows.html): Testing complete user journeys on real devices — the final layer of confidence
+- [Testability Patterns: Mocks, Fakes, Golden Tests & Coverage](https://learn.teamzlab.com/lessons/flutter-interview-mastery/36-testability-patterns-mocks-fakes-golden-tests-coverage.html): Writing code that is easy to test — the design and tooling decisions that separate senior engineers
+- [CI/CD Basics: Build Pipelines, Artifacts & Secrets](https://learn.teamzlab.com/lessons/flutter-interview-mastery/37-cicd-basics-build-pipelines-artifacts-secrets.html): Automating builds, tests, and deployments — from push to production without manual steps
+- [Flavors, Signing, Release Builds & Store Workflows](https://learn.teamzlab.com/lessons/flutter-interview-mastery/38-flavors-signing-release-builds-store-workflows.html): Managing dev/staging/prod environments, Android signing, and app store submission pipelines
+- [Platform Channels: Method Channels, Event Channels & Pigeon](https://learn.teamzlab.com/lessons/flutter-interview-mastery/39-platform-channels-method-channels-event-channels-pigeon.html): Bridging Flutter and native Android/iOS — calling platform APIs and streaming native data
+- [FFI & Native Library Binding](https://learn.teamzlab.com/lessons/flutter-interview-mastery/40-ffi-native-library-binding.html): Calling C/C++ libraries directly from Dart — maximum performance when platform channels are not enough
+- [Push Notifications, Background Work & Deep Links](https://learn.teamzlab.com/lessons/flutter-interview-mastery/41-push-notifications-background-work-deep-links.html): FCM, local notifications, WorkManager, deep links, and app lifecycle
+- [Android Fundamentals for Flutter Engineers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html): Activity lifecycle, Intents, Services, BroadcastReceivers — why Flutter devs must know this
+- [Kotlin Coroutines & Flow vs Dart Streams](https://learn.teamzlab.com/lessons/flutter-interview-mastery/43-kotlin-coroutines-flow-vs-dart-streams.html): Structured concurrency, suspend functions, Flow, StateFlow — and how they map to Dart
+- [Jetpack Compose vs Flutter — Tradeoffs & Interview Answers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/44-jetpack-compose-vs-flutter-tradeoffs-interview-answers.html): Declarative UI comparison, state management, navigation, and when to choose each
+- [Mobile Security: JWT, Secure Storage, Biometrics & Encryption](https://learn.teamzlab.com/lessons/flutter-interview-mastery/45-mobile-security-jwt-secure-storage-biometrics-encryption.html): JWT flow, flutter_secure_storage, biometric auth, certificate pinning, OWASP mobile top 10
+- [Accessibility: Semantics, Screen Readers & Focus](https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html): Semantics widget, TalkBack/VoiceOver testing, focus order, WCAG compliance in Flutter
+- [Internationalization & Localization](https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html): flutter_localizations, ARB files, intl package, RTL, plurals, dynamic locale switching
+- [Adaptive UI: Phone, Tablet, Foldables & Desktop](https://learn.teamzlab.com/lessons/flutter-interview-mastery/48-adaptive-ui-phone-tablet-foldables-desktop.html): LayoutBuilder, MediaQuery, adaptive breakpoints, master-detail, WindowSizeClass, foldables
+- [Flutter Web: Rendering, Constraints & SEO Limitations](https://learn.teamzlab.com/lessons/flutter-interview-mastery/49-flutter-web-rendering-constraints-seo-limitations.html): HTML vs CanvasKit vs Wasm rendering, SEO challenges, when Flutter Web is appropriate
+- [Flutter Web + Wasm: What, Why & Deployment](https://learn.teamzlab.com/lessons/flutter-interview-mastery/50-flutter-web-wasm-what-why-deployment.html): WebAssembly compilation, performance gains, current limitations, deployment workflow
+- [Desktop: macOS, Windows, Linux — Packaging & Inputs](https://learn.teamzlab.com/lessons/flutter-interview-mastery/51-desktop-macos-windows-linux-packaging-inputs.html): Shipping Flutter beyond mobile — menus, shortcuts, and native packaging
+- [GraphQL vs REST: When to Choose Which](https://learn.teamzlab.com/lessons/flutter-interview-mastery/52-graphql-vs-rest-when-to-choose-which.html): Understanding query languages, pagination strategies, and caching tradeoffs for senior interviews
+- [Firebase vs Supabase vs Custom Backend — Practical Comparison](https://learn.teamzlab.com/lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html): Choosing the right backend for your Flutter app — tradeoffs, pricing, and migration paths
+- [Monetization: IAP, Subscriptions, Ads & RevenueCat](https://learn.teamzlab.com/lessons/flutter-interview-mastery/54-monetization-iap-subscriptions-ads-revenuecat.html): Implementing in-app purchases, subscription lifecycles, and ad monetization the right way
+- [Logging, Observability, Analytics & Feature Flags](https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html): Monitoring production health, understanding user behaviour, and shipping safely with flags
+- [System Design I: Real-time Collaboration App](https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html): Designing a Tixio-style multi-workspace chat platform — architecture, WebSockets, offline queue, and scaling
+- [System Design II: Fintech Claims/Payment App](https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html): Designing a secure, compliant payment and claims processing system — auth, encryption, document handling, and error cascades
+- [System Design III: Offline-First Field App at Scale](https://learn.teamzlab.com/lessons/flutter-interview-mastery/58-system-design-iii-offline-first-field-app-at-scale.html): Designing for 10K+ field workers in low-connectivity — sync queues, conflict resolution, and battery optimisation
+- [Production Debugging, Incident Response & Root Cause Analysis](https://learn.teamzlab.com/lessons/flutter-interview-mastery/59-production-debugging-incident-response-root-cause-analysis.html): Triaging crashes, reading stack traces, memory leaks, rollback strategies, and post-mortems
+- [CS Basics: Big-O, Memory, Concurrency & Networking](https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html): Surviving senior interview CS theory questions — complexity, memory models, and HTTP fundamentals
+- [DSA I: Arrays, Strings, HashMaps, Sets & Two Pointers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/61-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html): Pattern recognition for array and string problems — brute force to optimized, with Dart implementations
+- [DSA II: Stack, Queue, Linked List, Binary Search & Heap](https://learn.teamzlab.com/lessons/flutter-interview-mastery/62-dsa-ii-stack-queue-linked-list-binary-search-heap.html): Linear data structures and search algorithms — patterns for undo systems, BFS, and top-K problems
+- [DSA III: Trees, Graphs, BFS/DFS, Recursion & Intervals](https://learn.teamzlab.com/lessons/flutter-interview-mastery/63-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html): The hardest interview patterns — tree traversal, graph search, recursion thinking, and interval merging
+- [Behavioral Foundations: W-STAR, Confidence & Concise Answers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/64-behavioral-foundations-w-star-confidence-concise-answers.html): The framework that makes every behavioral question answerable — with real project stories baked in
+- [Project Storytelling: Architecture Decisions, Tradeoffs & Impact](https://learn.teamzlab.com/lessons/flutter-interview-mastery/65-project-storytelling-architecture-decisions-tradeoffs-impact.html): Turning production experience into compelling interview narratives — architecture, tradeoffs, failure, and quantified impact
+- [Leadership & Seniority: Mentoring, Conflict, Deadlines & Product Thinking](https://learn.teamzlab.com/lessons/flutter-interview-mastery/66-leadership-seniority-mentoring-conflict-deadlines-product.html): Demonstrating senior-level behaviors — leading without a title, navigating disagreement, and thinking beyond code
+- [Salary Negotiation, Remote Culture & Relocation](https://learn.teamzlab.com/lessons/flutter-interview-mastery/67-salary-negotiation-remote-culture-relocation.html): Getting paid what you're worth — research, tactics, remote expectations, and international relocation reality
+- [Full Interview Simulation Pack: Technical + Architecture + Behavioral](https://learn.teamzlab.com/lessons/flutter-interview-mastery/68-full-interview-simulation-pack-technical-architecture.html): Complete mock interview sets with scoring rubrics — the capstone that makes you interview-ready
+- [Riverpod 2.x & Provider — The Other State Management](https://learn.teamzlab.com/lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html): Master Riverpod's compile-safe, testable state management — and know when to choose it over BLoC
+- [Code Generation: freezed, json_serializable & build_runner](https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html): Automate your model layer — immutable classes, JSON serialization, and unions with zero boilerplate
+- [Animations Deep Dive: Implicit, Explicit, Hero & CustomPainter](https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html): From simple fades to complex physics-based motion — master every animation layer in Flutter
+- [Memory Profiling, Leak Detection & DevTools Mastery](https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html): Find and fix memory leaks, decode the GC, and use DevTools like a performance surgeon
+- [Flutter Internals: How Rendering Actually Works](https://learn.teamzlab.com/lessons/flutter-interview-mastery/73-flutter-internals-how-rendering-actually-works.html): Master the Three Trees, Layout Protocol & Rendering Pipeline
+- [gRPC, Protobuf & Advanced API Patterns](https://learn.teamzlab.com/lessons/flutter-interview-mastery/74-grpc-protobuf-advanced-api-patterns.html): High-Performance Communication Beyond REST
+- [KMP vs Flutter — Strategic Comparison for Senior Engineers](https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html): Choose the Right Cross-Platform Strategy for Your Team
+- [Package Development, Publishing & Open Source Maintenance](https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html): Build, Publish & Maintain Packages Like a Pro
+- [API Integration Without AI: Proving Your Fundamentals in Interviews](https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html): The LinkedIn Post That Exposed 4-5 Year 'Senior' Devs Who Can't Call a REST API Without ChatGPT
+
+## Hard to Replace by AI: Stay Valuable in the Age of Automation
+
+- Course page: https://learn.teamzlab.com/c/hard-to-replace-by-ai.html
+- Level: All Levels — No Technical Background Needed
+- Lesson count: 18
+- About: Free interactive course with 18 lessons for non-tech professionals worried about AI job displacement. Learn the 7 irreplaceable skills AI cannot automate, build workplace visibility, and create a…
+
+### Lessons
+
+- [The Job That Disappeared Overnight](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/01-the-job-that-disappeared-overnight.html): Why Being Good at Your Job Is No Longer Enough
+- [What AI Can Actually Do (And What It Can't)](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/02-what-ai-can-actually-do-and-what-it-cant.html): Strategic Knowledge for Your Career
+- [The Jobs Most at Risk (And the Ones That Are Safe)](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/03-the-jobs-most-at-risk-and-the-ones-that-are-safe.html): Where Does Your Career Fall on the Spectrum?
+- [Emotional Intelligence -- The Skill No Algorithm Has](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/04-emotional-intelligence-the-skill-no-algorithm-has.html): Your Most Valuable Career Asset in the Age of AI
+- [Creative Problem-Solving -- Think Like a Human](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/05-creative-problem-solving-think-like-a-human.html): The Ability AI Cannot Replicate
+- [Communication That Connects](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/06-communication-that-connects.html): Writing, Speaking, and Persuading in the AI Age
+- [Adaptability — The Meta-Skill of 2026](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/07-adaptability-the-meta-skill-of-2026.html): Why the ability to learn anything beats the ability to know everything — and how to build your adaptation muscle
+- [Relationship Capital — Your Network Is Your Safety Net](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/08-relationship-capital-your-network-is-your-safety-net.html): Why who knows you matters more than what you know — and how to build genuine relationship capital before you need it
+- [Ethical Judgment — The Decisions Only Humans Should Make](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/09-ethical-judgment-the-decisions-only-humans-should-make.html): Why navigating moral gray areas is the ultimate AI-proof skill — and how to build your ethical reasoning muscle
+- [Physical Presence — The Untouchable Advantage](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/10-physical-presence-the-untouchable-advantage.html): Why jobs that require a human body in a human space are the hardest to automate — and how to leverage presence strategically
+- [Stop Being the Best-Kept Secret](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/11-stop-being-the-best-kept-secret.html): Why doing great work is not enough if nobody knows about it — and how to build strategic visibility without being annoying
+- [Become the Go-To Person for Something](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/12-become-the-go-to-person-for-something.html): Why the expert in one thing beats the generalist good at everything — and how to choose and build your specialization
+- [Learn to Speak AI (Even If You Are Not Technical)](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/13-learn-to-speak-ai-even-if-you-are-not-technical.html): Why AI literacy is the new professional baseline — and how to get fluent without writing a single line of code
+- [The 30-Day Career Audit](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/14-the-30-day-career-audit.html): A week-by-week action plan to assess your vulnerability, discover your strengths, and start building your irreplaceability
+- [Your AI Toolkit — Tools Every Non-Tech Worker Should Know](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/15-your-ai-toolkit-tools-every-non-tech-worker-should-know.html): A practical guide to the AI tools that make you more productive, more valuable, and harder to replace
+- [The Side Hustle Insurance Policy](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/16-the-side-hustle-insurance-policy.html): Why income diversification is your best protection against AI disruption — and how to build it from scratch
+- [When It Happens — What to Do If You Lose Your Job to AI](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/17-when-it-happens-what-to-do-if-you-lose-your-job-to-ai.html): A survival playbook for the first 48 hours, the first month, and the strategic pivot that follows
+- [You Are Not a Machine — And That Is Your Greatest Advantage](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/18-you-are-not-a-machine-and-that-is-your-greatest-advantage.html): Why becoming MORE human — not more efficient — is the winning career strategy in the age of AI
+
+## IELTS Mastery: Basic English to Band 8+ in 58 Lessons
+
+- Course page: https://learn.teamzlab.com/c/ielts-mastery.html
+- Level: Basic to Advanced
+- Lesson count: 58
+- About: Free interactive IELTS preparation course with 58 lessons. Master all four skills — Reading, Writing, Listening, and Speaking — from basic English grammar to Band 8+ strategies. Covers Academic &…
+
+### Lessons
+
+- [Parts of Speech: Nouns, Verbs, Adjectives & Adverbs](https://learn.teamzlab.com/lessons/ielts-mastery/01-parts-of-speech-nouns-verbs-adjectives-adverbs.html): The Four Pillars of Every English Sentence
+- [Sentence Structure: Simple to Compound-Complex](https://learn.teamzlab.com/lessons/ielts-mastery/02-sentence-structure-simple-to-compound-complex.html): Building Blocks of Clear, Sophisticated Writing
+- [Tenses Mastery: Past, Present, Future & Perfect](https://learn.teamzlab.com/lessons/ielts-mastery/03-tenses-mastery-past-present-future-perfect.html): Controlling Time in English Like a Pro
+- [Articles, Prepositions & Connectors](https://learn.teamzlab.com/lessons/ielts-mastery/04-articles-prepositions-connectors.html): The Small Words That Make a Big Difference
+- [Vocabulary Building: The Academic Word List](https://learn.teamzlab.com/lessons/ielts-mastery/05-vocabulary-building-the-academic-word-list.html): 570 Power Words That Unlock Band 7+
+- [Punctuation & Common Writing Errors](https://learn.teamzlab.com/lessons/ielts-mastery/06-punctuation-common-writing-errors.html): The Invisible Rules That Examiners Always Notice
+- [Subject-Verb Agreement & Common Grammar Mistakes](https://learn.teamzlab.com/lessons/ielts-mastery/07-subject-verb-agreement-common-grammar-mistakes.html): The Rules That Separate Band 6 from Band 7
+- [Register & Tone: Formal, Semi-Formal & Informal English](https://learn.teamzlab.com/lessons/ielts-mastery/08-register-tone-formal-semi-formal-informal-english.html): Speaking the Right Language for the Right Situation
+- [IELTS Exam Overview: Format, Scoring & Strategy](https://learn.teamzlab.com/lessons/ielts-mastery/09-ielts-exam-overview-format-scoring-strategy.html): Know the Battlefield Before You Enter It
+- [Band Descriptors Decoded: What Examiners Really Want](https://learn.teamzlab.com/lessons/ielts-mastery/10-band-descriptors-decoded-what-examiners-really-want.html): Reverse-Engineering the IELTS Scoring System
+- [Reading: Skimming & Scanning Techniques](https://learn.teamzlab.com/lessons/ielts-mastery/11-reading-skimming-scanning-techniques.html): Master the two essential speed-reading skills that unlock every IELTS Reading question type
+- [Reading: True/False/Not Given & Yes/No/Not Given](https://learn.teamzlab.com/lessons/ielts-mastery/12-reading-truefalsenot-given-yesnonot-given.html): Conquer the most confusing IELTS Reading question type with a clear logical framework
+- [Reading: Matching Headings & Matching Information](https://learn.teamzlab.com/lessons/ielts-mastery/13-reading-matching-headings-matching-information.html): Learn to identify main ideas and locate specific details across paragraphs
+- [Reading: Multiple Choice & Summary Completion](https://learn.teamzlab.com/lessons/ielts-mastery/14-reading-multiple-choice-summary-completion.html): Develop precision reading skills for two of the most detail-oriented IELTS question types
+- [Reading: Sentence Completion & Short Answer](https://learn.teamzlab.com/lessons/ielts-mastery/15-reading-sentence-completion-short-answer.html): Perfect the art of extracting precise information from the passage within strict word limits
+- [Reading: Diagram & Flow Chart Labeling](https://learn.teamzlab.com/lessons/ielts-mastery/16-reading-diagram-flow-chart-labeling.html): Master the visual question types that combine reading comprehension with spatial understanding
+- [Reading: Speed Reading & Time Management](https://learn.teamzlab.com/lessons/ielts-mastery/17-reading-speed-reading-time-management.html): Beat the clock — learn to complete 40 questions across 3 passages in exactly 60 minutes
+- [Reading: Band 7+ Strategies for Difficult Texts](https://learn.teamzlab.com/lessons/ielts-mastery/18-reading-band-7-strategies-for-difficult-texts.html): Advanced techniques to handle complex academic passages, dense vocabulary, and tricky question patterns
+- [Writing Task 1: Line, Bar & Pie Charts (Academic)](https://learn.teamzlab.com/lessons/ielts-mastery/19-writing-task-1-line-bar-pie-charts-academic.html): Learn to describe visual data clearly and accurately in 150+ words for IELTS Academic Writing Task 1
+- [Writing Task 1: Tables, Maps & Process Diagrams](https://learn.teamzlab.com/lessons/ielts-mastery/20-writing-task-1-tables-maps-process-diagrams.html): Master the three less common Task 1 visual types that many candidates find most challenging
+- [Writing Task 1: Comparing & Contrasting Data](https://learn.teamzlab.com/lessons/ielts-mastery/21-writing-task-1-comparing-contrasting-data.html): Mastering the Art of Data Comparison
+- [Writing Task 1 GT: Letter Writing (Formal, Semi-Formal, Informal)](https://learn.teamzlab.com/lessons/ielts-mastery/22-writing-task-1-gt-letter-writing-formal-semi-formal-informal.html): The Three Registers of GT Letter Writing
+- [Writing Task 1: Band 7+ Language & Structure](https://learn.teamzlab.com/lessons/ielts-mastery/23-writing-task-1-band-7-language-structure.html): Elevating Your Task 1 to Top-Band Quality
+- [Writing Task 2: Essay Types & Planning](https://learn.teamzlab.com/lessons/ielts-mastery/24-writing-task-2-essay-types-planning.html): Opinion, Discussion, Problem-Solution & Two-Part Questions
+- [Writing Task 2: Introduction & Thesis Writing](https://learn.teamzlab.com/lessons/ielts-mastery/25-writing-task-2-introduction-thesis-writing.html): The First Impression That Sets Your Band Score
+- [Writing Task 2: Body Paragraphs — Structure & Evidence](https://learn.teamzlab.com/lessons/ielts-mastery/26-writing-task-2-body-paragraphs-structure-evidence.html): Building Arguments That Convince Examiners
+- [Writing Task 2: Conclusion Mastery](https://learn.teamzlab.com/lessons/ielts-mastery/27-writing-task-2-conclusion-mastery.html): Ending Your Essay With Impact and Precision
+- [Writing Task 2: Coherence, Cohesion & Linking Words](https://learn.teamzlab.com/lessons/ielts-mastery/28-writing-task-2-coherence-cohesion-linking-words.html): Making Your Essay Flow Like Professional Writing
+- [Writing Task 2: Band 7+ Vocabulary & Grammar](https://learn.teamzlab.com/lessons/ielts-mastery/29-writing-task-2-band-7-vocabulary-grammar.html): The Language Toolkit for Top-Band Essays
+- [Listening: Section 1 & 2 Strategies](https://learn.teamzlab.com/lessons/ielts-mastery/30-listening-section-1-2-strategies.html): Social and Everyday Listening — Your First Points
+- [Listening: Section 3 & 4 Strategies](https://learn.teamzlab.com/lessons/ielts-mastery/31-listening-section-3-4-strategies.html): Academic Discussions & Lectures
+- [Listening: Form, Note & Table Completion](https://learn.teamzlab.com/lessons/ielts-mastery/32-listening-form-note-table-completion.html): Filling in the Gaps Accurately
+- [Listening: Multiple Choice & Matching](https://learn.teamzlab.com/lessons/ielts-mastery/33-listening-multiple-choice-matching.html): Eliminating Distractors Like a Pro
+- [Listening: Map & Diagram Labeling](https://learn.teamzlab.com/lessons/ielts-mastery/34-listening-map-diagram-labeling.html): Navigating Spaces with Your Ears
+- [Listening: Numbers, Spelling & Common Traps](https://learn.teamzlab.com/lessons/ielts-mastery/35-listening-numbers-spelling-common-traps.html): The Details That Make or Break Your Score
+- [Listening: Band 7+ Strategies](https://learn.teamzlab.com/lessons/ielts-mastery/36-listening-band-7-strategies.html): Speed, Accents & Practice Plan
+- [Speaking Part 1: Introduction & Familiar Topics](https://learn.teamzlab.com/lessons/ielts-mastery/37-speaking-part-1-introduction-familiar-topics.html): Making a Strong First Impression
+- [Speaking Part 2: The Cue Card](https://learn.teamzlab.com/lessons/ielts-mastery/38-speaking-part-2-the-cue-card.html): Delivering a 2-Minute Long Turn
+- [Speaking Part 3: Discussion & Abstract Topics](https://learn.teamzlab.com/lessons/ielts-mastery/39-speaking-part-3-discussion-abstract-topics.html): Thinking Deeper and Speaking Smarter
+- [Speaking: Fluency & Coherence Techniques](https://learn.teamzlab.com/lessons/ielts-mastery/40-speaking-fluency-coherence-techniques.html): Flowing Like a River, Not Stumbling Like a Rock
+- [Speaking: Vocabulary Range & Collocations](https://learn.teamzlab.com/lessons/ielts-mastery/41-speaking-vocabulary-range-collocations.html): Sound Natural, Score Higher
+- [Speaking: Grammar Range & Accuracy in Speech](https://learn.teamzlab.com/lessons/ielts-mastery/42-speaking-grammar-range-accuracy-in-speech.html): Complex Structures That Sound Natural
+- [Speaking: Pronunciation & Intonation](https://learn.teamzlab.com/lessons/ielts-mastery/43-speaking-pronunciation-intonation.html): Be Understood, Be Impressive
+- [Speaking: Band 7+ — Confidence, Examples & Opinions](https://learn.teamzlab.com/lessons/ielts-mastery/44-speaking-band-7-confidence-examples-opinions.html): Speak Like a Band 7+ Candidate
+- [Advanced Grammar: Conditionals, Passives, Inversions & Cleft Sentences](https://learn.teamzlab.com/lessons/ielts-mastery/45-advanced-grammar-conditionals-passives-inversions-cleft.html): The Grammar That Separates Band 7 from Band 8
+- [Advanced Vocabulary: Collocations, Idioms & Less Common Words for Band 8+](https://learn.teamzlab.com/lessons/ielts-mastery/46-advanced-vocabulary-collocations-idioms-less-common-words.html): The Lexical Range That Impresses Examiners
+- [Paraphrasing Mastery: The #1 IELTS Skill](https://learn.teamzlab.com/lessons/ielts-mastery/47-paraphrasing-mastery-the-1-ielts-skill.html): Say the Same Thing in a Different Way
+- [Critical Thinking: Analyzing & Building Arguments](https://learn.teamzlab.com/lessons/ielts-mastery/48-critical-thinking-analyzing-building-arguments.html): Think Like a Band 8 Candidate
+- [Common Mistakes That Kill Your Band Score](https://learn.teamzlab.com/lessons/ielts-mastery/49-common-mistakes-that-kill-your-band-score.html): The Errors Examiners See Every Day
+- [Academic Writing Style: Hedging, Nominalisation & Formality](https://learn.teamzlab.com/lessons/ielts-mastery/50-academic-writing-style-hedging-nominalisation-formality.html): Write Like a Scholar, Score Like a Band 8
+- [Study Plan: 30-Day, 60-Day & 90-Day IELTS Preparation](https://learn.teamzlab.com/lessons/ielts-mastery/51-study-plan-30-day-60-day-90-day-ielts-preparation.html): Your Roadmap to Band Success
+- [Reading Mock: Full Timed Practice & Review Strategy](https://learn.teamzlab.com/lessons/ielts-mastery/52-reading-mock-full-timed-practice-review-strategy.html): Simulate Real Reading Test Conditions
+- [Writing Mock: Task 1 & Task 2 Self-Assessment](https://learn.teamzlab.com/lessons/ielts-mastery/53-writing-mock-task-1-task-2-self-assessment.html): Grade Your Own Writing Like an Examiner
+- [Listening Mock: Full Test Simulation & Review](https://learn.teamzlab.com/lessons/ielts-mastery/54-listening-mock-full-test-simulation-review.html): Train Your Ears Under Real Pressure
+- [Speaking Mock: Record, Review & Improve Method](https://learn.teamzlab.com/lessons/ielts-mastery/55-speaking-mock-record-review-improve-method.html): Become Your Own Speaking Examiner
+- [Targeting Weak Areas: Plateau Breaking & Focused Practice](https://learn.teamzlab.com/lessons/ielts-mastery/56-targeting-weak-areas-plateau-breaking-focused-practice.html): When Progress Stalls, Strategy Prevails
+- [Test Day Mastery: Timing, Stress Management & Checklist](https://learn.teamzlab.com/lessons/ielts-mastery/57-test-day-mastery-timing-stress-management-checklist.html): Arrive Prepared, Stay Calm, Perform Your Best
+- [Post-Test: Remarking, Retake Strategy & Next Steps](https://learn.teamzlab.com/lessons/ielts-mastery/58-post-test-remarking-retake-strategy-next-steps.html): What to Do After You Get Your Score
+
+## Non-Coding IT Jobs Bootcamp
+
+- Course page: https://learn.teamzlab.com/c/it-jobs-bootcamp.html
+- Level: Beginner to Intermediate
+- Lesson count: 60
+- About: Free non-coding IT career course: 60 lessons covering IT support, helpdesk, system administrator, network, SOC analyst, cloud, M365, Entra, Azure, AWS, backup/DR, ITSM, bank IT officer and corporate…
+
+### Lessons
+
+- [The Non-Developer IT Map](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/01-the-non-developer-it-map.html): Where the real jobs, money, and confusion live
+- [How IT Hiring Really Works](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/02-how-it-hiring-really-works.html): Why strong candidates still get filtered out
+- [Mindset, Professionalism & Ethics](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/03-mindset-professionalism-ethics.html): Why trust matters more than noise in enterprise IT
+- [Hardware Essentials](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/04-hardware-essentials.html): What can fail before Windows even starts
+- [Boot Process & Firmware](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/05-boot-process-firmware.html): From power button to login screen
+- [File Systems & Storage Troubleshooting](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/06-file-systems-storage-troubleshooting.html): Why disks fail in visible patterns
+- [Windows Internals for Support](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/07-windows-internals-for-support.html): The minimum internals every junior must know
+- [macOS & Mixed-Endpoint Awareness](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/08-macos-mixed-endpoint-awareness.html): Enough Apple literacy to not freeze in an interview
+- [Accounts, Profiles & Permissions](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/09-accounts-profiles-permissions.html): Who the user is changes everything
+- [Networking Tools on Windows](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/10-networking-tools-on-windows.html): Fast triage from the command line
+- [Office / M365 User Issues](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/11-office-m365-user-issues.html): The everyday pain recruiters expect you to know
+- [Imaging, Onboarding & Offboarding](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/12-imaging-onboarding-offboarding.html): The lifecycle work every IT team must get right
+- [Remote Support & Ticket Hygiene](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/13-remote-support-ticket-hygiene.html): Support quality is part technical, part process
+- [What Active Directory Actually Does](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/14-what-active-directory-actually-does.html): Why AD is the backbone of most enterprises
+- [DNS, DHCP & Why AD Breaks When They Break](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/15-dns-dhcp-why-ad-breaks-when-they-break.html): The hidden dependencies behind logon failures
+- [OUs, Groups & Group Policy](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/16-ous-groups-group-policy.html): Central control without chaos
+- [Share vs NTFS & Access Troubleshooting](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/17-share-vs-ntfs-access-troubleshooting.html): Why ‘I have no access’ is never one-layer simple
+- [Patching, Replication & Time Sync](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/18-patching-replication-time-sync.html): Invisible operational hygiene of a domain
+- [Domain Joins & Login Failures](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/19-domain-joins-login-failures.html): Safe first actions under identity pressure
+- [OSI & TCP/IP Without Confusion](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/20-osi-tcpip-without-confusion.html): How to think in layers under pressure
+- [IP Addressing & Subnetting](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/21-ip-addressing-subnetting.html): The math that filters network candidates
+- [Switching, VLANs & Trunks](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/22-switching-vlans-trunks.html): One cable, many logical networks
+- [Routing, NAT & ACLs](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/23-routing-nat-acls.html): How traffic crosses boundaries
+- [DNS Deep Dive](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/24-dns-deep-dive.html): The service that breaks everything indirectly
+- [VPN, Wi-Fi & Branch Connectivity](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/25-vpn-wi-fi-branch-connectivity.html): Remote access and edge reality
+- [Packet Capture & Troubleshooting Flow](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/26-packet-capture-troubleshooting-flow.html): See the truth instead of guessing
+- [Linux Filesystem, Users & Permissions](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/27-linux-filesystem-users-permissions.html): Enough Linux to be useful on day one
+- [Linux Processes, Services & Logs](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/28-linux-processes-services-logs.html): Where Linux incidents become visible
+- [Packages, Cron & Routine Automation](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/29-packages-cron-routine-automation.html): Ops work is repetitive by design
+- [SSH, Hardening & Remote Access](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/30-ssh-hardening-remote-access.html): Remote admin without being reckless
+- [Basic Shell Scripting for Operators](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/31-basic-shell-scripting-for-operators.html): Small scripts, big leverage
+- [CIA Triad, Risk & Least Privilege](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/32-cia-triad-risk-least-privilege.html): Security language you must speak clearly
+- [Identity Security: MFA, SSO, IAM](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/33-identity-security-mfa-sso-iam.html): Why identity is the new perimeter
+- [Phishing, Malware & Ransomware — First 10 Minutes](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/34-phishing-malware-ransomware-first-10-minutes.html): What the first 10 minutes must look like
+- [SIEM, Alerts & SOC Triage](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/35-siem-alerts-soc-triage.html): How a junior analyst adds value
+- [Patching, Vulnerability Mgmt & Baselines](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/36-patching-vulnerability-mgmt-baselines.html): Prevention is boring but hireable
+- [Audit-Ready Security: Policies, Logs, Evidence](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/37-audit-ready-security-policies-logs-evidence.html): Controls, logs, and evidence — how regulated IT actually operates
+- [Cloud Fundamentals & Shared Responsibility](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/38-cloud-fundamentals-shared-responsibility.html): What moves to cloud and what still stays on you
+- [Azure Basics for Support Engineers](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/39-azure-basics-for-support-engineers.html): A practical first Azure map
+- [Microsoft 365 & Entra Basics](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/40-microsoft-365-entra-basics.html): The modern identity and productivity stack
+- [Intune & Endpoint Management Awareness](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/41-intune-endpoint-management-awareness.html): Managing devices at scale
+- [AWS Basics for Non-Developer IT](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/42-aws-basics-for-non-developer-it.html): Enough AWS to survive real interviews
+- [Virtualization 101](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/43-virtualization-101.html): One host, many systems
+- [VMware, Hyper-V & Proxmox Awareness](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/44-vmware-hyper-v-proxmox-awareness.html): Know the major platforms without overselling
+- [Backup Theory That Survives Audits](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/45-backup-theory-that-survives-audits.html): From copy to recoverability
+- [RPO, RTO & DR Drills](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/46-rpo-rto-dr-drills.html): Business language for technical people
+- [From Tabletop to Real Recovery](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/47-from-tabletop-to-real-recovery.html): How juniors contribute during outages
+- [SQL for Operators](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/48-sql-for-operators.html): Just enough database skill to support apps
+- [Database Services, Users & Backups](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/49-database-services-users-backups.html): Operational DBA-lite tasks
+- [Application Dependency Mapping](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/50-application-dependency-mapping.html): Apps fail in layers, not magic
+- [Monitoring & Alert Quality](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/51-monitoring-alert-quality.html): Know what to watch, not just what to install
+- [Month-End & Business-Critical Support](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/52-month-end-business-critical-support.html): Why timing changes severity
+- [Incident, Problem, Change & Release](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/53-incident-problem-change-release.html): The process spine of enterprise IT
+- [Ticket Quality, SLA & Shift Handover](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/54-ticket-quality-sla-shift-handover.html): What operations teams judge every day
+- [Banking IT Systems & Payment Rails](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/55-banking-it-systems-payment-rails.html): Enough domain knowledge to sound credible
+- [Branch Outage, ATM Outage & Audit Evidence](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/56-branch-outage-atm-outage-audit-evidence.html): Regulated incidents require controlled response
+- [Vendor Access, Privileged Access & Compliance Culture](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/57-vendor-access-privileged-access-compliance-culture.html): Trust, controls, and third parties
+- [Answering Technical Questions Without Sounding Robotic](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/58-answering-technical-questions-without-sounding-robotic.html): Structure beats over-talking
+- [Behavioral, STAR & Salary Discussion](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/59-behavioral-star-salary-discussion.html): Professionalism in the final round
+- [Resume, LinkedIn & 90-Day Job Search Plan](https://learn.teamzlab.com/lessons/it-jobs-bootcamp/60-resume-linkedin-90-day-job-search-plan.html): Turn training into interviews
+
+## Free Full-Stack Playbook
+
+- Course page: https://learn.teamzlab.com/c/js-ts-fun-book.html
+- Level: Beginner to Intermediate
+- Lesson count: 49
+- About: Free interactive, project-based playbook: learn TypeScript, NestJS, and React by building real apps. 49 hands-on lessons, quizzes, code playground — no signup required.
+
+### Lessons
+
+- [JavaScript vs TypeScript](https://learn.teamzlab.com/lessons/js-ts-fun-book/01-javascript-vs-typescript.html): Adding Superpowers to JS
+- [Developer Tooling](https://learn.teamzlab.com/lessons/js-ts-fun-book/02-developer-tooling.html): Work Smarter, Not Harder
+- [Variables, Types & Arrays](https://learn.teamzlab.com/lessons/js-ts-fun-book/03-variables-types-arrays.html): The Building Blocks of Data
+- [Objects & Interfaces](https://learn.teamzlab.com/lessons/js-ts-fun-book/04-objects-interfaces.html): Structuring Complex Data
+- [Functions & Arrow Functions](https://learn.teamzlab.com/lessons/js-ts-fun-book/05-functions-arrow-functions.html): Reusable Recipes of Code
+- [Modules & Imports](https://learn.teamzlab.com/lessons/js-ts-fun-book/06-modules-imports.html): Organizing Code Like a Pro
+- [Union Types & Type Narrowing](https://learn.teamzlab.com/lessons/js-ts-fun-book/07-union-types-type-narrowing.html): Being Flexible While Safe
+- [Classes & OOP](https://learn.teamzlab.com/lessons/js-ts-fun-book/08-classes-oop.html): Organizing Code Into Objects
+- [Async/Await & Promises](https://learn.teamzlab.com/lessons/js-ts-fun-book/09-asyncawait-promises.html): Handling Work That Takes Time
+- [Error Handling](https://learn.teamzlab.com/lessons/js-ts-fun-book/10-error-handling.html): Catching Problems Before They Crash
+- [React — The UI Wizard](https://learn.teamzlab.com/lessons/js-ts-fun-book/11-react-the-ui-wizard.html): Building Interfaces Like LEGO
+- [State Management & Data Fetching](https://learn.teamzlab.com/lessons/js-ts-fun-book/12-state-management-data-fetching.html): Making Your Frontend Talk to Your Backend
+- [The Frontend Tech Stack](https://learn.teamzlab.com/lessons/js-ts-fun-book/13-the-frontend-tech-stack.html): Meet Your Toolkit
+- [API Design & REST](https://learn.teamzlab.com/lessons/js-ts-fun-book/14-api-design-rest.html): Building Roads for Your Data
+- [Why NestJS?](https://learn.teamzlab.com/lessons/js-ts-fun-book/15-why-nestjs.html): Express Grew Up and Got Organized
+- [NestJS Architecture Patterns](https://learn.teamzlab.com/lessons/js-ts-fun-book/16-nestjs-architecture-patterns.html): Building Clean, Scalable Apps
+- [Validation & DTOs](https://learn.teamzlab.com/lessons/js-ts-fun-book/17-validation-dtos.html): Never Trust User Input
+- [MongoDB — The Flexible Database](https://learn.teamzlab.com/lessons/js-ts-fun-book/18-mongodb-the-flexible-database.html): Store Data Like JSON Files
+- [Prisma — Your Database Translator](https://learn.teamzlab.com/lessons/js-ts-fun-book/19-prisma-your-database-translator.html): Talk to Your Database in TypeScript
+- [Environment Variables & Configuration](https://learn.teamzlab.com/lessons/js-ts-fun-book/20-environment-variables-configuration.html): Different Settings for Different Worlds
+- [Authentication — JWT & Guards](https://learn.teamzlab.com/lessons/js-ts-fun-book/21-authentication-jwt-guards.html): Who Are You? Prove It!
+- [Generics & Utility Types](https://learn.teamzlab.com/lessons/js-ts-fun-book/22-generics-utility-types.html): Writing Code That Works With Any Type
+- [Redis — The Speed Demon](https://learn.teamzlab.com/lessons/js-ts-fun-book/23-redis-the-speed-demon.html): Super-Fast Temporary Storage
+- [Bull — The Job Queue Manager](https://learn.teamzlab.com/lessons/js-ts-fun-book/24-bull-the-job-queue-manager.html): Background Tasks Made Easy
+- [Email Services](https://learn.teamzlab.com/lessons/js-ts-fun-book/25-email-services.html): Sending Emails From Code
+- [Push Notifications with Firebase](https://learn.teamzlab.com/lessons/js-ts-fun-book/26-push-notifications-with-firebase.html): Ding! You Have a Message!
+- [AWS S3 — File Storage](https://learn.teamzlab.com/lessons/js-ts-fun-book/27-aws-s3-file-storage.html): Your Files in the Cloud
+- [WebSockets & Real-Time](https://learn.teamzlab.com/lessons/js-ts-fun-book/28-websockets-real-time.html): Live Updates Without Refreshing
+- [Testing — Trust Your Code](https://learn.teamzlab.com/lessons/js-ts-fun-book/29-testing-trust-your-code.html): Break Things Before Users Do
+- [Docker — Containers Explained](https://learn.teamzlab.com/lessons/js-ts-fun-book/30-docker-containers-explained.html): Ship Your App in a Box
+- [Git & Version Control](https://learn.teamzlab.com/lessons/js-ts-fun-book/31-git-version-control.html): A Time Machine for Your Code
+- [Deployment & DevOps](https://learn.teamzlab.com/lessons/js-ts-fun-book/32-deployment-devops.html): From Code to Production
+- [What is a Monorepo?](https://learn.teamzlab.com/lessons/js-ts-fun-book/33-what-is-a-monorepo.html): One Repo to Rule Them All
+- [React vs React Native](https://learn.teamzlab.com/lessons/js-ts-fun-book/34-react-vs-react-native.html): Web vs Mobile — Same Brain, Different Body
+- [Putting It All Together](https://learn.teamzlab.com/lessons/js-ts-fun-book/35-putting-it-all-together.html): The Full Picture
+- [Your Learning Path Forward](https://learn.teamzlab.com/lessons/js-ts-fun-book/36-your-learning-path-forward.html): What to Build Next
+- [What is Programming?](https://learn.teamzlab.com/lessons/js-ts-fun-book/37-what-is-programming.html): Your First Step into the Digital World
+- [Setup Your Toolkit](https://learn.teamzlab.com/lessons/js-ts-fun-book/38-setup-your-toolkit.html): Get Your Coding Workshop Ready
+- [How the Internet Works](https://learn.teamzlab.com/lessons/js-ts-fun-book/39-how-the-internet-works.html): The Web Explained Simply
+- [Build Your First Mini App](https://learn.teamzlab.com/lessons/js-ts-fun-book/40-build-your-first-mini-app.html): From Zero to Running Code
+- [NestJS Setup & First App](https://learn.teamzlab.com/lessons/js-ts-fun-book/41-nestjs-setup-first-app.html): From Zero to Running Server in 5 Minutes
+- [NestJS Controllers & Routing](https://learn.teamzlab.com/lessons/js-ts-fun-book/42-nestjs-controllers-routing.html): The Front Door of Your API
+- [NestJS Services & Dependency Injection](https://learn.teamzlab.com/lessons/js-ts-fun-book/43-nestjs-services-dependency-injection.html): The Brain Behind Every Controller
+- [NestJS Middleware & Interceptors](https://learn.teamzlab.com/lessons/js-ts-fun-book/44-nestjs-middleware-interceptors.html): Processing Requests Before and After
+- [NestJS Guards & Custom Decorators](https://learn.teamzlab.com/lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html): Security Checkpoints for Your API
+- [NestJS Exception Filters & Error Handling](https://learn.teamzlab.com/lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html): Catching Errors Like a Pro
+- [NestJS CRUD with Database](https://learn.teamzlab.com/lessons/js-ts-fun-book/47-nestjs-crud-with-database.html): Building a Complete REST API
+- [Build a Task Manager App](https://learn.teamzlab.com/lessons/js-ts-fun-book/48-build-a-task-manager-app.html): Your First Real Full-Stack Project
+- [Database Relationships](https://learn.teamzlab.com/lessons/js-ts-fun-book/49-database-relationships.html): How Data Connects to Data
+
+## Microprocessor A–Z
+
+- Course page: https://learn.teamzlab.com/c/microprocessor-a-z.html
+- Level: Beginner to Advanced
+- Lesson count: 48
+- About: Free interactive microprocessor course with 48 lessons covering 8086 architecture, assembly language, addressing modes, interrupts, memory and I/O interfacing, peripheral chips, and modern processor…
+
+### Lessons
+
+- [What is a Microprocessor?](https://learn.teamzlab.com/lessons/microprocessor-a-z/01-what-is-a-microprocessor.html): The tiny brain that runs everything electronic
+- [Microprocessor vs Microcontroller](https://learn.teamzlab.com/lessons/microprocessor-a-z/02-microprocessor-vs-microcontroller.html): General-purpose brain vs all-in-one specialist
+- [Number Systems: Binary, Decimal, Hex](https://learn.teamzlab.com/lessons/microprocessor-a-z/03-number-systems-binary-decimal-hex.html): Speaking the native language of digital circuits
+- [Digital Logic Foundations](https://learn.teamzlab.com/lessons/microprocessor-a-z/04-digital-logic-foundations.html): The gates that build everything from adders to processors
+- [Fetch-Decode-Execute Cycle](https://learn.teamzlab.com/lessons/microprocessor-a-z/05-fetch-decode-execute-cycle.html): The heartbeat of every processor — the three-step loop that runs millions of times per second
+- [Registers, ALU, and Buses](https://learn.teamzlab.com/lessons/microprocessor-a-z/06-registers-alu-and-buses.html): The three pillars of processor hardware — where data lives, how it's computed, and how it moves
+- [Clock, T-States, and Machine Cycles](https://learn.teamzlab.com/lessons/microprocessor-a-z/07-clock-t-states-and-machine-cycles.html): How time is measured inside a processor — the rhythm that synchronizes every operation
+- [Memory, Addressing, and I/O Concepts](https://learn.teamzlab.com/lessons/microprocessor-a-z/08-memory-addressing-and-io-concepts.html): How the CPU finds and accesses data — the memory map, addressing modes, and the I/O subsystem
+- [Why the 8086 Matters](https://learn.teamzlab.com/lessons/microprocessor-a-z/09-why-the-8086-matters.html): Meet the chip that launched the x86 dynasty — and why it is still the best way to learn processor design
+- [BIU and EU: The Dual-Engine Design](https://learn.teamzlab.com/lessons/microprocessor-a-z/10-biu-and-eu-the-dual-engine-design.html): How the 8086 fetches and executes at the same time — the birth of instruction pipelining
+- [8086 Register Set](https://learn.teamzlab.com/lessons/microprocessor-a-z/11-8086-register-set.html): The 8086's fourteen registers — your processor's fast scratchpad for data, addresses, and status
+- [Segmented Memory and Physical Address](https://learn.teamzlab.com/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html): How the 8086 combines segment and offset to address 1 MB of memory with 16-bit registers
+- [8086 Pins and Signals](https://learn.teamzlab.com/lessons/microprocessor-a-z/13-8086-pins-and-signals.html): Understanding the 40-pin DIP package and every signal that connects the 8086 to the outside world
+- [Minimum Mode vs Maximum Mode](https://learn.teamzlab.com/lessons/microprocessor-a-z/14-minimum-mode-vs-maximum-mode.html): How the MN/MX pin changes the entire system architecture — single processor vs multiprocessor
+- [Bus Timing, Ready Signal, and Wait States](https://learn.teamzlab.com/lessons/microprocessor-a-z/15-bus-timing-ready-signal-and-wait-states.html): How T-states compose a bus cycle and how slow devices stall the processor with wait states
+- [Reset, HOLD, HLDA, and Basic Control Signals](https://learn.teamzlab.com/lessons/microprocessor-a-z/16-reset-hold-hlda-and-basic-control-signals.html): How the 8086 starts up, shares the bus with DMA, and uses essential control pins
+- [8086 Addressing Modes](https://learn.teamzlab.com/lessons/microprocessor-a-z/17-8086-addressing-modes.html): Eight ways the 8086 finds its operands — from immediate values to complex memory calculations
+- [Data Sizes, Endianness, and Alignment](https://learn.teamzlab.com/lessons/microprocessor-a-z/18-data-sizes-endianness-and-alignment.html): How the 8086 stores bytes and words in memory — little-endian order and alignment effects
+- [ASCII, BCD, Signed, and Unsigned Data](https://learn.teamzlab.com/lessons/microprocessor-a-z/19-ascii-bcd-signed-and-unsigned-data.html): Same bits, different meanings — how the 8086 interprets binary patterns as text, decimal, or signed numbers
+- [Effective Address Calculation Practice](https://learn.teamzlab.com/lessons/microprocessor-a-z/20-effective-address-calculation-practice.html): Master the EA formulas by tracing through real examples with every addressing mode
+- [Data Transfer Instructions](https://learn.teamzlab.com/lessons/microprocessor-a-z/21-data-transfer-instructions.html): MOV, XCHG, LEA, PUSH, POP, XLAT, IN, OUT — moving data is the most common 8086 operation
+- [Arithmetic Instructions](https://learn.teamzlab.com/lessons/microprocessor-a-z/22-arithmetic-instructions.html): ADD, SUB, MUL, DIV, and their variants — the 8086 math toolkit
+- [Logical, Shift, and Rotate Instructions](https://learn.teamzlab.com/lessons/microprocessor-a-z/23-logical-shift-and-rotate-instructions.html): AND, OR, XOR, NOT, TEST, CMP plus shifts and rotates — bit manipulation mastery
+- [Flags Register and Condition Codes](https://learn.teamzlab.com/lessons/microprocessor-a-z/24-flags-register-and-condition-codes.html): CF, ZF, SF, OF, PF, AF, DF, IF, TF — the 9 flags that drive every decision the 8086 makes
+- [Jumps, Loops, and Conditional Branching](https://learn.teamzlab.com/lessons/microprocessor-a-z/25-jumps-loops-and-conditional-branching.html): Make the 8086 decide, repeat, and branch — turning linear code into smart programs
+- [Procedures, CALL, RET, and Modular Thinking](https://learn.teamzlab.com/lessons/microprocessor-a-z/26-procedures-call-ret-and-modular-thinking.html): Break programs into reusable procedures — the assembly version of functions
+- [String Instructions and REP Prefix](https://learn.teamzlab.com/lessons/microprocessor-a-z/27-string-instructions-and-rep-prefix.html): Process arrays and strings at hardware speed with the 8086's built-in bulk operations
+- [Assembler Directives, Labels, and Macros](https://learn.teamzlab.com/lessons/microprocessor-a-z/28-assembler-directives-labels-and-macros.html): Control how the assembler builds your program — directives are instructions to the tool, not the CPU
+- [emu8086/MASM Setup and Syntax Basics](https://learn.teamzlab.com/lessons/microprocessor-a-z/29-emu8086masm-setup-and-syntax-basics.html): Get your assembly toolkit running — write, assemble, and debug 8086 programs on a modern PC
+- [Your First 8086 Program](https://learn.teamzlab.com/lessons/microprocessor-a-z/30-your-first-8086-program.html): Write, understand, and run complete assembly programs — from Hello World to arithmetic
+- [Arrays, Tables, and Block Operations](https://learn.teamzlab.com/lessons/microprocessor-a-z/31-arrays-tables-and-block-operations.html): Organize data into arrays and tables, then process them efficiently with index registers
+- [Debugging Registers, Flags, and Memory](https://learn.teamzlab.com/lessons/microprocessor-a-z/32-debugging-registers-flags-and-memory.html): Find and fix bugs like a detective — single-step, inspect, and trace your 8086 programs
+- [Stack, PUSH/POP, and Stack Frames](https://learn.teamzlab.com/lessons/microprocessor-a-z/33-stack-pushpop-and-stack-frames.html): Master the hidden workhorse of every program — the stack that powers calls, returns, and local storage
+- [Interrupt Basics and the Interrupt Vector Table](https://learn.teamzlab.com/lessons/microprocessor-a-z/34-interrupt-basics-and-the-interrupt-vector-table.html): Understand how the 8086 responds to events — the interrupt system that connects software to hardware
+- [Hardware vs Software Interrupts](https://learn.teamzlab.com/lessons/microprocessor-a-z/35-hardware-vs-software-interrupts.html): Distinguish the two interrupt pathways — software INT n and hardware INTR/NMI — and how the CPU handles each
+- [DOS/BIOS Interrupts for Console I/O](https://learn.teamzlab.com/lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html): Put interrupts to work — use DOS and BIOS services for keyboard input, screen output, and program control
+- [Memory Interfacing with RAM and ROM](https://learn.teamzlab.com/lessons/microprocessor-a-z/37-memory-interfacing-with-ram-and-rom.html): Connecting the CPU to Its Storage
+- [I/O-Mapped vs Memory-Mapped I/O](https://learn.teamzlab.com/lessons/microprocessor-a-z/38-io-mapped-vs-memory-mapped-io.html): Two Ways to Talk to Peripherals
+- [8255 Programmable Peripheral Interface](https://learn.teamzlab.com/lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html): The Universal Parallel I/O Chip
+- [Interfacing Keyboard, LEDs, and Seven-Segment Displays](https://learn.teamzlab.com/lessons/microprocessor-a-z/40-interfacing-keyboard-leds-and-seven-segment-displays.html): Building Real Input/Output Hardware
+- [8253/8254 Timer and Counter Basics](https://learn.teamzlab.com/lessons/microprocessor-a-z/41-82538254-timer-and-counter-basics.html): Generating Precise Timing with Hardware
+- [8259 Programmable Interrupt Controller](https://learn.teamzlab.com/lessons/microprocessor-a-z/42-8259-programmable-interrupt-controller.html): Managing Hardware Interrupts with Priority
+- [8237 DMA Controller](https://learn.teamzlab.com/lessons/microprocessor-a-z/43-8237-dma-controller.html): Data Transfer Without CPU Overhead
+- [8251 USART and Serial Communication Basics](https://learn.teamzlab.com/lessons/microprocessor-a-z/44-8251-usart-and-serial-communication-basics.html): Talking One Bit at a Time
+- [From 8086 to 80386, Pentium, and x86 Thinking](https://learn.teamzlab.com/lessons/microprocessor-a-z/45-from-8086-to-80386-pentium-and-x86-thinking.html): The Evolution of a Processor Dynasty
+- [Where 8051 and ARM Fit in the Big Picture](https://learn.teamzlab.com/lessons/microprocessor-a-z/46-where-8051-and-arm-fit-in-the-big-picture.html): Microprocessors, Microcontrollers, and Modern Embedded Systems
+- [Designing a Small Microprocessor-Based System](https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html): Putting All the Pieces Together
+- [Capstone: Trace, Explain, and Present a Full Interfaced System](https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html): The Final Challenge — Master the Complete Picture
+
+## NU ইনভেস্টমেন্ট ব্যাংকিং ও লিজ ফাইন্যান্স মাস্টারি
+
+- Course page: https://learn.teamzlab.com/c/nu-investment-banking-lease-finance-bn.html
+- Level: Beginner to Exam Mastery
+- Lesson count: 46
+- About: NU Masters Finance & Banking-এর Investment Banking and Lease Finance (312401) পেপারের জন্য 46টি Bangla lesson, বাংলাদেশি উদাহরণ, শর্ট নোট, compare lessons, valuation basics, lease finance logic ও…
+
+### Lessons
+
+- [এই পেপারটা আসলে কী?](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/01-lesson.html): পুরো পেপারের মানচিত্র ও স্কোরিং স্ট্র্যাটেজি
+- [বিনিয়োগ ব্যাংকিংয়ের মৌলিক ধারণা](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/02-lesson.html): বিনিয়োগ ব্যাংকিং কী, কেন দরকার, কী কাজ করে
+- [ইনভেস্টমেন্ট ব্যাংক, মার্চেন্ট ব্যাংক ও কমার্শিয়াল ব্যাংকের পার্থক্য](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/03-lesson.html): তিন ধরনের ব্যাংকের কাজ, উদ্দেশ্য ও তুলনা
+- [লিজ ফাইন্যান্সের ধারণা ও ব্যবসায়িক প্রয়োজন](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/04-lesson.html): লিজ কী, কেন দরকার, ব্যবসায় কীভাবে কাজ করে
+- [ফাইন্যান্সিয়াল মার্কেট ও ক্যাপিটাল মার্কেটের গঠন](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/05-lesson.html): আর্থিক বাজারের প্রকারভেদ ও ক্যাপিটাল মার্কেটের কাঠামো
+- [রিটার্ন, রিস্ক ও অ্যাসেট অ্যালোকেশন সহজভাবে](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/06-lesson.html): বিনিয়োগে লাভ-ঝুঁকির সম্পর্ক ও সম্পদ বণ্টনের মূলনীতি
+- [সিকিউরিটি মার্কেট ইনস্ট্রুমেন্টস: শেয়ার, বন্ড, মিউচুয়াল ফান্ড](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/07-lesson.html): ক্যাপিটাল মার্কেটের প্রধান আর্থিক পণ্যগুলোর পরিচয়
+- [প্রাইমারি মার্কেট বনাম সেকেন্ডারি মার্কেট](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/08-lesson.html): নতুন ইস্যু বনাম পুরনো শেয়ারের কেনাবেচা — মূল পার্থক্য
+- [বাংলাদেশের ক্যাপিটাল মার্কেট প্রতিষ্ঠানসমূহের পরিচয়](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/09-lesson.html): BSEC, DSE, CSE, CDBL, ICB — কে কী কাজ করে
+- [ক্যাপিটাল ইস্যু ম্যানেজমেন্ট কীভাবে কাজ করে](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/10-lesson.html): কোম্পানি কীভাবে শেয়ার/বন্ড ইস্যু করে — পুরো প্রক্রিয়া
+- [প্রসপেক্টাস ও ইনফরমেশন মেমোরেন্ডাম](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/11-lesson.html): বিনিয়োগকারীদের জন্য তথ্য প্রকাশের আইনি দলিল
+- [IPO: Fixed Price বনাম Book Building](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/12-ipo-fixed-price-book-building.html): শেয়ারের দাম কীভাবে ঠিক হয় — দুটো পদ্ধতির তুলনা
+- [প্রাইভেট প্লেসমেন্ট, রাইটস ইস্যু ও পাবলিক ইস্যু](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/13-lesson.html): তিন ধরনের সিকিউরিটিজ ইস্যু পদ্ধতি ও তাদের পার্থক্য
+- [আন্ডাররাইটিং: ধারণা, প্রকার, গুরুত্ব](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/14-lesson.html): সিকিউরিটিজ বিক্রির গ্যারান্টি ব্যবস্থা
+- [এক্সাম আন্সার ক্লিনিক: ইস্যু ম্যানেজমেন্ট প্রশ্ন কীভাবে লিখবে](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/15-lesson.html): ইস্যু ম্যানেজমেন্ট বিষয়ক প্রশ্নে A+ উত্তর লেখার কৌশল
+- [মার্চেন্ট ব্যাংকিংয়ের ফাংশনস](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/16-lesson.html): মার্চেন্ট ব্যাংক কী কী কাজ করে — বাংলাদেশ প্রেক্ষাপটে বিস্তারিত
+- [ইস্যু ম্যানেজার, আন্ডাররাইটার, ব্রোকার, ডিলার — কে কী করে](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/17-lesson.html): চারটি মূল মার্কেট ইন্টারমিডিয়ারির ভূমিকা ও পার্থক্য
+- [BSEC, DSE, CSE, CDBL, ICB — কার ভূমিকা কী](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/18-bsec-dse-cse-cdbl-icb.html): বাংলাদেশের ক্যাপিটাল মার্কেটের পাঁচটি মূল প্রতিষ্ঠান বিস্তারিত
+- [ইনভেস্টর প্রোটেকশন, ইনসাইডার ট্রেডিং ও মার্কেট ডিসিপ্লিন](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/19-lesson.html): বিনিয়োগকারী সুরক্ষা, অভ্যন্তরীণ তথ্যে লেনদেন নিষেধ ও বাজার শৃঙ্খলা
+- [বাংলাদেশ কনটেক্সট কেস লেসন: IPO থেকে লিস্টিং পর্যন্ত](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/20-ipo.html): একটি বাংলাদেশি কোম্পানির IPO যাত্রা — ধাপে ধাপে বাস্তব চিত্র
+- [ডিলিং বনাম ব্রোকারিং](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/21-lesson.html): ডিলার ও ব্রোকারের মূল পার্থক্য — "ডি-ব্রো" মেমোরি হুক
+- [ডিলার রিস্ক ও ইনভেন্টরি ফাইন্যান্সিং](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/22-lesson.html): ডিলারের ঝুঁকি, ইনভেন্টরি ব্যবস্থাপনা ও অর্থায়ন কৌশল
+- [ব্রোকারেজ অ্যাবিউজ, কমপ্লায়েন্স ও সতর্কতা](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/23-lesson.html): ব্রোকারের অনৈতিক আচরণ, কমপ্লায়েন্স নীতি ও বিনিয়োগকারীর সতর্কতা
+- [সিকিউরিটি মার্কেট ইনডিকেটরস কীভাবে পড়বে](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/24-lesson.html): বাজার সূচক, ভলিউম, ব্রেডথ ও অন্যান্য নির্দেশক বোঝার গাইড
+- [পোর্টফোলিও ম্যানেজমেন্টের পরিচয়](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/25-lesson.html): পোর্টফোলিও কী, বৈচিত্র্যকরণ, উদ্দেশ্য ও ম্যানেজারের ভূমিকা
+- [Efficient Market ও Asset Pricing Basics](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/26-efficient-market-asset-pricing-basics.html): EMH-এর তিন রূপ, মূল্য নির্ধারণের মৌলিক যুক্তি
+- [Financial Statement Analysis for Investors](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/27-financial-statement-analysis-for-investors.html): ব্যালেন্স শিট, ইনকাম স্টেটমেন্ট পড়া ও বিনিয়োগ সিদ্ধান্তে মূল অনুপাত
+- [Economic Analysis: অর্থনীতি থেকে বিনিয়োগ সিদ্ধান্ত](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/28-economic-analysis.html): GDP, মূল্যস্ফীতি, সুদের হার ও রাজস্বনীতির প্রভাব
+- [Industry Analysis ও Company Analysis](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/29-industry-analysis-company-analysis.html): শিল্পের জীবনচক্র, প্রতিযোগিতামূলক শক্তি ও কোম্পানি মূল্যায়ন
+- [Technical Analysis: ধারণা, ব্যবহার, সীমাবদ্ধতা](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/30-technical-analysis.html): চার্ট প্যাটার্ন, সূচক, অনুমান ও Fundamental-এর সাথে তুলনা
+- [ভ্যালুয়েশন প্রসেসের ওভারভিউ](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/31-lesson.html): ভ্যালুয়েশন কী, অন্তর্নিহিত মূল্য, বাট্টা ও মূল্যায়ন পদ্ধতি
+- [Bond Fundamentals ও Yield Logic](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/32-bond-fundamentals-yield-logic.html): বন্ডের মৌলিক ধারণা, কুপন, অভিহিত মূল্য, ইল্ড ও মূল্য-ইল্ড বিপরীত সম্পর্ক
+- [Bond Valuation Step by Step](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/33-bond-valuation-step-by-step.html): ক্যাশ ফ্লো ডিসকাউন্টিং, বন্ডের মূল্য গণনা ও সংখ্যাসহ উদাহরণ
+- [Equity Valuation Basics for Exam Answers](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/34-equity-valuation-basics-for-exam-answers.html): DDM বেসিক্স, P/E অ্যাপ্রোচ ও পরীক্ষাবান্ধব ভ্যালুয়েশন
+- [লিজ ফাইন্যান্স: ধারণা, উদ্দেশ্য ও অর্থনৈতিক ভূমিকা](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/35-lesson.html): লিজ ফাইন্যান্স কী, কেন দরকার, অর্থনীতিতে কী ভূমিকা রাখে
+- [লিজের ধরনসমূহ](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/36-lesson.html): ফাইন্যান্স লিজ, অপারেটিং লিজ, সেল-অ্যান্ড-লিজব্যাক, লিভারেজড লিজ ও আরও প্রকার
+- [Finance Lease বনাম Operating Lease](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/37-finance-lease-operating-lease.html): ঝুঁকি, মালিকানা, হিসাব, মেয়াদ, উদাহরণ — বিস্তারিত তুলনা
+- [Lease বনাম Term Loan বনাম Hire Purchase](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/38-lease-term-loan-hire-purchase.html): তিনটি অর্থায়ন পদ্ধতির মালিকানা, পেমেন্ট, ঝুঁকি, ট্যাক্স ও নমনীয়তা তুলনা
+- [Lessee's Perspective: Lease Evaluation](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/39-lessees-perspective-lease-evaluation.html): লিজগ্রহীতা কীভাবে লিজ বনাম কেনার সিদ্ধান্ত নেয় — NPV পদ্ধতি ও worked example
+- [Lease Finance-এর সুবিধা, সীমাবদ্ধতা, accounting/tax angle](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/40-lease-finance-accountingtax-angle.html): লিজের সুবিধা-অসুবিধা, হিসাবরক্ষণ ও করের দিক বিশ্লেষণ
+- [Equipment Lease Financing ও Sale-and-Lease-Back](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/41-equipment-lease-financing-sale-and-lease-back.html): যন্ত্রপাতি লিজের বিস্তারিত প্রক্রিয়া ও সেল-অ্যান্ড-লিজব্যাকের ধারণা, সুবিধা ও BD উদাহরণ
+- [বাংলাদেশে লিজ ফাইন্যান্সের চর্চা ও NBFI উদাহরণ](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/42-nbfi.html): IDLC, LankaBangla, Premier Leasing — বাংলাদেশের NBFI ইকোসিস্টেম ও লিজ চর্চা
+- [Confusion Clinic: কোন পরিস্থিতিতে lease, loan, না hire purchase?](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/43-confusion-clinic-lease-loan-hire-purchase.html): সিদ্ধান্ত গ্রহণ কাঠামো — কখন লিজ, কখন ঋণ, কখন হায়ার পার্চেজ নেবে
+- [Short Note Mastery: ২৫টি জরুরি টপিক](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/44-short-note-mastery.html): পরীক্ষায় সংক্ষিপ্ত টীকায় A+ পেতে ২৫টি হাই-ইল্ড টপিকের রেডিমেড নোট
+- [Compare & Contrast Mastery: পরীক্ষার সেরা পার্থক্যগুলো](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/45-compare-contrast-mastery.html): সব গুরুত্বপূর্ণ তুলনামূলক আলোচনা এক জায়গায় — দ্রুত রিভিশন
+- [Final Exam Drill: বড় প্রশ্ন, কাঠামো, সময় ব্যবস্থাপনা](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/46-final-exam-drill.html): পরীক্ষার খাতায় কীভাবে লিখলে সবচেয়ে বেশি নম্বর পাবে
+
+## Protecting Aging Parents from AI Scams
+
+- Course page: https://learn.teamzlab.com/c/protecting-aging-parents.html
+- Level: All Levels — No Technical Background Needed
+- Lesson count: 20
+- About: Free interactive course with 20 lessons on protecting elderly parents from AI-powered scams — voice cloning, deepfakes, grandparent scams, romance fraud, phishing, tech support scams, and more.…
+
+### Lessons
+
+- [The Phone Call That Changed Everything](https://learn.teamzlab.com/lessons/protecting-aging-parents/01-the-phone-call-that-changed-everything.html): How a grandmother lost thousands to artificial intelligence -- and why it could happen to your parents tomorrow
+- [Why Your Parents Are Target Number One](https://learn.teamzlab.com/lessons/protecting-aging-parents/02-why-your-parents-are-target-number-one.html): The uncomfortable truth about why seniors are victims of 58% of elder fraud losses -- and what makes them vulnerable
+- [How AI Made Scammers Unstoppable](https://learn.teamzlab.com/lessons/protecting-aging-parents/03-how-ai-made-scammers-unstoppable.html): Understanding the technology that turned fraud from a cottage industry into an industrial-scale crime -- without needing a computer…
+- [The Grandparent Scam 2.0](https://learn.teamzlab.com/lessons/protecting-aging-parents/04-the-grandparent-scam-20.html): How the oldest scam on the internet became the deadliest -- and how to make your parents immune to it
+- [Deepfake Video Calls](https://learn.teamzlab.com/lessons/protecting-aging-parents/05-deepfake-video-calls.html): When you can't trust your own eyes -- how AI creates real-time video impersonations of loved ones
+- [Fake Government Alerts -- IRS, Medicare, Social Security](https://learn.teamzlab.com/lessons/protecting-aging-parents/06-fake-government-alerts-irs-medicare-social-security.html): How scammers impersonate federal agencies using authority, fear, and spoofed phone numbers to steal money and identities
+- [Romance Scams and Pig Butchering](https://learn.teamzlab.com/lessons/protecting-aging-parents/07-romance-scams-and-pig-butchering.html): How AI-powered scammers build fake relationships over weeks to drain savings -- and why lonely seniors are the perfect targets
+- [Tech Support Scams](https://learn.teamzlab.com/lessons/protecting-aging-parents/08-tech-support-scams.html): How fake virus warnings and phony support calls trick seniors into handing over computer access and thousands of dollars
+- [Phishing Texts, Emails, and Fake Websites](https://learn.teamzlab.com/lessons/protecting-aging-parents/09-phishing-texts-emails-and-fake-websites.html): The Everyday Scam That Tricks You Into Giving Away Passwords and Account Access
+- [The Fake Emergency](https://learn.teamzlab.com/lessons/protecting-aging-parents/10-the-fake-emergency.html): How Scammers Exploit Fear and Love to Manipulate Desperate Parents Into Sending Money
+- [The Family Safe Word](https://learn.teamzlab.com/lessons/protecting-aging-parents/11-the-family-safe-word.html): Your Most Powerful Weapon Against Impersonation Scams
+- [The Verify First Rule](https://learn.teamzlab.com/lessons/protecting-aging-parents/12-the-verify-first-rule.html): Hang Up, Call Back, Confirm -- The Universal Defense Against Every Phone and Email Scam
+- [Lock Down Their Phone](https://learn.teamzlab.com/lessons/protecting-aging-parents/13-lock-down-their-phone.html): Settings, apps, and call blockers that turn their phone from a liability into a fortress
+- [Secure Their Computer and Email](https://learn.teamzlab.com/lessons/protecting-aging-parents/14-secure-their-computer-and-email.html): Password managers, two-factor auth, and browser hardening to protect their digital master key
+- [Social Media Safety](https://learn.teamzlab.com/lessons/protecting-aging-parents/15-social-media-safety.html): Audit privacy settings, lock photo sharing, and remove voice samples before scammers harvest them
+- [Money Safeguards](https://learn.teamzlab.com/lessons/protecting-aging-parents/16-money-safeguards.html): Transaction alerts, spending limits, credit freezes, and trusted contacts that physically stop scammers
+- [The Monthly Family Tech Check-In](https://learn.teamzlab.com/lessons/protecting-aging-parents/17-the-monthly-family-tech-check-in.html): A simple 30-minute routine that catches scams before they escalate
+- [What to Do Immediately If They've Been Scammed](https://learn.teamzlab.com/lessons/protecting-aging-parents/18-what-to-do-immediately-if-theyve-been-scammed.html): The first 24 hours are critical — a step-by-step crisis protocol
+- [The Emotional Aftermath](https://learn.teamzlab.com/lessons/protecting-aging-parents/19-the-emotional-aftermath.html): Shame, guilt, and healing — the part nobody talks about
+- [The One-Page Family Safety Checklist](https://learn.teamzlab.com/lessons/protecting-aging-parents/20-the-one-page-family-safety-checklist.html): Everything you need, nothing you don't — print this and put it on the fridge
+
+---
+
+*Last updated: 2026-04-21 · 16 courses · 747 lessons.*
