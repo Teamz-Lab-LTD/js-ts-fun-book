@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firebase Setup &amp; Auth — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Firebase is Google&#39;s suite of cloud services for mobile apps. Firebase Auth handles user authentication (email, Google, Apple sign-in). Crashlytics captures…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/48-social-login.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firebase Setup &amp; Auth">
+<meta property="og:description" content="Firebase is Google&#39;s suite of cloud services for mobile apps. Firebase Auth handles user authentication (email, Google, Apple sign-in). Crashlytics captures…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Firebase Setup &amp; Auth">
+<meta name="twitter:description" content="Firebase is Google&#39;s suite of cloud services for mobile apps. Firebase Auth handles user authentication (email, Google, Apple sign-in). Crashlytics captures…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Firebase Setup & Auth",
+  "description": "Firebase is Google's suite of cloud services for mobile apps. Firebase Auth handles user authentication (email, Google, Apple sign-in). Crashlytics captures…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 47
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Firebase Setup & Auth",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Firebase Setup &amp; Auth</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 47 of 51</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Firebase Setup &amp; Auth</h1>
+<p class="lesson-subtitle">Adding Firebase to Your Flutter App</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Firebase is like renting a fully furnished office instead of building one from scratch. Need user accounts? Firebase Auth is the reception desk. Need crash reports? Crashlytics is the security camera. Need to change settings without redeploying? Remote Config is the intercom system. Google built and maintains the whole building -- you just move in and start working!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Firebase is Google&#39;s suite of cloud services for mobile apps. Firebase Auth handles user authentication (email, Google, Apple sign-in). Crashlytics captures and reports crashes. In team_mvp_kit, Firebase Auth is used for social logins -- the Firebase ID token is exchanged with the backend for app-specific access and refresh tokens.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>team_mvp_kit uses Firebase as a bridge for authentication. Users sign in with Google or Apple through Firebase Auth, then the app sends the Firebase ID token to the backend server. The backend verifies it and returns its own JWT tokens. Crashlytics catches every crash in production so the team can fix issues before users even report them.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What is Firebase?</strong> — Firebase is a suite of cloud services by Google. For Flutter apps, the most useful services are: Authentication (login/signup), Crashlytics (crash reporting), Remote Config (change app behavior without updates), Cloud Firestore (real-time database), and Cloud Messaging (push notifications). team_mvp_kit uses Auth and Crashlytics.</li>
+      <li><strong>Adding Firebase to Flutter</strong> — Use the FlutterFire CLI to configure Firebase automatically. Run &#39;flutterfire configure&#39; and it generates the firebase_options.dart file with your project&#39;s API keys and configuration for each platform (Android, iOS, web). This replaces the old manual google-services.json setup.</li>
+      <li><strong>Firebase Initialization</strong> — Initialize Firebase in main() before runApp(). This must happen before any Firebase service is used. In team_mvp_kit, Firebase init is part of the dependency injection setup to ensure correct initialization order.</li>
+      <li><strong>Firebase Authentication Basics</strong> — FirebaseAuth provides methods for creating accounts, signing in, signing out, and listening to auth state changes. It supports email/password, Google, Apple, phone number, and anonymous sign-in. team_mvp_kit uses Firebase Auth primarily for social logins and backend token exchange.</li>
+      <li><strong>Auth State Listener</strong> — FirebaseAuth provides an authStateChanges() stream that emits whenever the user signs in or out. Use this to reactively update your UI or routing. When the stream emits null, the user is signed out. When it emits a User, they are signed in.</li>
+      <li><strong>Getting Firebase ID Token</strong> — After signing in with Firebase, get the ID token to send to your backend server. The backend verifies this token with Firebase Admin SDK to confirm the user&#39;s identity. This is how team_mvp_kit bridges Firebase Auth with its own backend API.</li>
+      <li><strong>Crashlytics Setup</strong> — Firebase Crashlytics automatically captures and reports app crashes. Initialize it after Firebase and enable it in main(). Uncaught Flutter errors and Dart errors are automatically sent. You can also log custom errors and add user context for better debugging.</li>
+      <li><strong>Custom Crashlytics Logging</strong> — Add custom keys, log messages, and record non-fatal errors to Crashlytics for better debugging. Set the user ID so you can filter crashes by user. team_mvp_kit sets the user ID after login and logs important state changes.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:firebase_core/firebase_core.dart&#39;;
+import &#39;package:firebase_auth/firebase_auth.dart&#39;;
+import &#39;package:firebase_crashlytics/firebase_crashlytics.dart&#39;;
+import &#39;firebase_options.dart&#39;;
+
+// 1. App initialization with Firebase
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Setup Crashlytics error handlers
+  FlutterError.onError =
+      FirebaseCrashlytics.instance.recordFlutterError;
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack);
+    return true;
+  };
+
+  await configureDependencies();
+  runApp(const MyApp());
+}
+
+// 2. FirebaseAuthService wraps Firebase Auth (team_mvp_kit)
+@lazySingleton
+class FirebaseAuthService {
+  final FirebaseAuth _auth;
+  FirebaseAuthService(this._auth);
+
+  // Current user
+  User? get currentUser =&gt; _auth.currentUser;
+  bool get isSignedIn =&gt; currentUser != null;
+
+  // Auth state stream
+  Stream&lt;User?&gt; get authStateChanges =&gt;
+      _auth.authStateChanges();
+
+  // Email/password sign up
+  Future&lt;UserCredential&gt; signUpWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    return _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  // Email/password sign in
+  Future&lt;UserCredential&gt; signInWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    return _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  // Get ID token for backend exchange
+  Future&lt;String?&gt; getIdToken() async {
+    return currentUser?.getIdToken();
+  }
+
+  // Sign out
+  Future&lt;void&gt; signOut() async {
+    await _auth.signOut();
+  }
+}
+
+// 3. Module to register FirebaseAuth instance
+@module
+abstract class FirebaseModule {
+  @singleton
+  FirebaseAuth get firebaseAuth =&gt; FirebaseAuth.instance;
+
+  @singleton
+  FirebaseCrashlytics get crashlytics =&gt;
+      FirebaseCrashlytics.instance;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import firebase_core for initialization</li>
+      <li><span class="walk-num">2.</span> Import firebase_auth for authentication</li>
+      <li><span class="walk-num">3.</span> Import firebase_crashlytics for crash reporting</li>
+      <li><span class="walk-num">4.</span> Import the generated Firebase config for this project</li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> Comment: App initialization with all Firebase services</li>
+      <li><span class="walk-num">7.</span> Main function marked as async for await calls</li>
+      <li><span class="walk-num">8.</span> Ensure Flutter is ready before async operations</li>
+      <li><span class="walk-num">9.</span> </li>
+      <li><span class="walk-num">10.</span> Comment: Initialize Firebase with platform-specific config</li>
+      <li><span class="walk-num">11.</span> Call Firebase.initializeApp with the generated options</li>
+      <li><span class="walk-num">12.</span> DefaultFirebaseOptions.currentPlatform picks Android/iOS/web config</li>
+      <li><span class="walk-num">13.</span> Closing the Firebase.initializeApp call</li>
+      <li><span class="walk-num">14.</span> </li>
+      <li><span class="walk-num">15.</span> Comment: Set up Crashlytics to catch all errors</li>
+      <li><span class="walk-num">16.</span> Assign Flutter framework errors to Crashlytics recorder</li>
+      <li><span class="walk-num">17.</span> Closing the FlutterError.onError assignment</li>
+      <li><span class="walk-num">18.</span> </li>
+      <li><span class="walk-num">19.</span> Set up platform error handler for async Dart errors</li>
+      <li><span class="walk-num">20.</span> Record the error and stack trace to Crashlytics</li>
+      <li><span class="walk-num">21.</span> Return true to mark the error as handled</li>
+      <li><span class="walk-num">22.</span> Closing the PlatformDispatcher setup</li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> Initialize dependency injection (after Firebase is ready)</li>
+      <li><span class="walk-num">25.</span> Start the app</li>
+      <li><span class="walk-num">26.</span> Closing main</li>
+      <li><span class="walk-num">27.</span> </li>
+      <li><span class="walk-num">28.</span> Comment: FirebaseAuthService wraps FirebaseAuth</li>
+      <li><span class="walk-num">29.</span> @lazySingleton for DI registration</li>
+      <li><span class="walk-num">30.</span> Class declaration</li>
+      <li><span class="walk-num">31.</span> Private FirebaseAuth instance (injected)</li>
+      <li><span class="walk-num">32.</span> Constructor receives FirebaseAuth</li>
+      <li><span class="walk-num">33.</span> </li>
+      <li><span class="walk-num">34.</span> Comment: Current user access</li>
+      <li><span class="walk-num">35.</span> Getter returns the currently signed-in user or null</li>
+      <li><span class="walk-num">36.</span> Getter checks if a user is signed in</li>
+      <li><span class="walk-num">37.</span> </li>
+      <li><span class="walk-num">38.</span> Comment: Auth state stream for reactive listening</li>
+      <li><span class="walk-num">39.</span> Returns the authStateChanges stream from FirebaseAuth</li>
+      <li><span class="walk-num">40.</span> Closing the getter</li>
+      <li><span class="walk-num">41.</span> </li>
+      <li><span class="walk-num">42.</span> Comment: Email/password registration</li>
+      <li><span class="walk-num">43.</span> signUpWithEmail method with required email and password</li>
+      <li><span class="walk-num">44.</span> Calls FirebaseAuth createUserWithEmailAndPassword</li>
+      <li><span class="walk-num">45.</span> Passes email and password</li>
+      <li><span class="walk-num">46.</span> Closing the method</li>
+      <li><span class="walk-num">47.</span> </li>
+      <li><span class="walk-num">48.</span> Comment: Email/password sign in</li>
+      <li><span class="walk-num">49.</span> signInWithEmail method with required email and password</li>
+      <li><span class="walk-num">50.</span> Calls FirebaseAuth signInWithEmailAndPassword</li>
+      <li><span class="walk-num">51.</span> Passes email and password</li>
+      <li><span class="walk-num">52.</span> Closing the method</li>
+      <li><span class="walk-num">53.</span> </li>
+      <li><span class="walk-num">54.</span> Comment: Get Firebase ID token for backend exchange</li>
+      <li><span class="walk-num">55.</span> getIdToken returns the current user&#39;s ID token</li>
+      <li><span class="walk-num">56.</span> Calls getIdToken on the current user (null-safe)</li>
+      <li><span class="walk-num">57.</span> Closing the method</li>
+      <li><span class="walk-num">58.</span> </li>
+      <li><span class="walk-num">59.</span> Comment: Sign out</li>
+      <li><span class="walk-num">60.</span> signOut method clears the Firebase session</li>
+      <li><span class="walk-num">61.</span> Calls signOut on FirebaseAuth instance</li>
+      <li><span class="walk-num">62.</span> Closing signOut and FirebaseAuthService</li>
+      <li><span class="walk-num">63.</span> </li>
+      <li><span class="walk-num">64.</span> Comment: Module to provide Firebase instances to DI</li>
+      <li><span class="walk-num">65.</span> @module annotation for third-party dependencies</li>
+      <li><span class="walk-num">66.</span> Abstract class for the module</li>
+      <li><span class="walk-num">67.</span> @singleton provides one FirebaseAuth instance</li>
+      <li><span class="walk-num">68.</span> Returns FirebaseAuth.instance</li>
+      <li><span class="walk-num">69.</span> </li>
+      <li><span class="walk-num">70.</span> @singleton provides one Crashlytics instance</li>
+      <li><span class="walk-num">71.</span> Returns FirebaseCrashlytics.instance</li>
+      <li><span class="walk-num">72.</span> Closing the module</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>void main() {
+  runApp(const MyApp());
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about the order of operations and async requirements...</div></details><details><summary>Show answer</summary><div class="answer">Three bugs: 1) main() is not async and Firebase.initializeApp is not awaited. 2) Firebase.initializeApp is called AFTER runApp -- it must be before. 3) WidgetsFlutterBinding.ensureInitialized() is missing, which is required before any async operations in main(). Fix: add async, add WidgetsFlutterBinding.ensureInitialized(), await Firebase.initializeApp() BEFORE runApp().</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are opening a lemonade stand. Instead of building your own cash register, security cameras, and customer list from scratch, you rent them all from a big company called Firebase. Their cash register (Auth) remembers who your customers are. Their security camera (Crashlytics) tells you if anything breaks. And you can change your menu board (Remote Config) without rebuilding the whole stand!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Firebase was originally a real-time chat service called Envolve, founded in 2011. The developers noticed people were using their chat infrastructure to sync app data instead of chatting, so they pivoted to become a backend-as-a-service. Google acquired Firebase in 2014 and it now powers over 3 million apps worldwide!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Set up Firebase in a Flutter project: run flutterfire configure, initialize Firebase in main(), set up Crashlytics error handlers, and create a simple email/password sign-up and sign-in flow. Display the user&#39;s UID after signing in.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://firebase.flutter.dev/docs/overview" target="_blank" rel="noopener noreferrer">FlutterFire Overview</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/auth/overview" target="_blank" rel="noopener noreferrer">Firebase Auth for Flutter</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/crashlytics/overview" target="_blank" rel="noopener noreferrer">Firebase Crashlytics for Flutter</a> <span class="res-source">(FlutterFire)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./46-token-auth-storage.html" rel="prev">← Token &amp; Auth Storage</a>
+  <a class="nav-next" href="./48-social-login.html" rel="next">Social Login →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NestJS Guards &amp; Custom Decorators — Full-Stack Playbook | Teamz Lab</title>
+<meta name="description" content="Guards are NestJS classes that decide whether a request should be handled or rejected. They implement the CanActivate interface and are used for…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/44-nestjs-middleware-interceptors.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="NestJS Guards &amp; Custom Decorators">
+<meta property="og:description" content="Guards are NestJS classes that decide whether a request should be handled or rejected. They implement the CanActivate interface and are used for…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NestJS Guards &amp; Custom Decorators">
+<meta name="twitter:description" content="Guards are NestJS classes that decide whether a request should be handled or rejected. They implement the CanActivate interface and are used for…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "NestJS Guards & Custom Decorators",
+  "description": "Guards are NestJS classes that decide whether a request should be handled or rejected. They implement the CanActivate interface and are used for…",
+  "url": "https://learn.teamzlab.com/lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Full-Stack Playbook",
+    "url": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 45
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Full-Stack Playbook",
+      "item": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "NestJS Guards & Custom Decorators",
+      "item": "https://learn.teamzlab.com/lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/js-ts-fun-book.html">Full-Stack Playbook</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/js-ts-fun-book.html">Full-Stack Playbook</a> / <span aria-current="page">NestJS Guards &amp; Custom Decorators</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 45 of 49</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">NestJS Guards &amp; Custom Decorators</h1>
+<p class="lesson-subtitle">Security Checkpoints for Your API</p>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=45">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Guards are like passport control at an international border. The officer (Guard) checks your passport (JWT token) and visa stamp (role). Diplomats go through the fast lane (admin routes), citizens enter freely (authenticated routes), and travelers without a visa get denied entry. Custom decorators are like visa stamps — small annotations that carry big authorization decisions.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Guards are NestJS classes that decide whether a request should be handled or rejected. They implement the CanActivate interface and are used for authentication (verify identity) and authorization (check permissions). Custom decorators create reusable metadata tags and parameter extractors.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every secure API needs guards. Firebase uses them for authentication, Stripe for API key validation, GitHub for OAuth scopes. Role-based access control (RBAC) is standard in enterprise apps — guards make it declarative and clean.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What are Guards?</strong> — Guards implement CanActivate and return true (allow) or false (deny). They run AFTER middleware but BEFORE interceptors and pipes. Perfect for authentication and authorization — they decide if a request should proceed based on conditions like valid tokens or user roles.</li>
+      <li><strong>AuthGuard — JWT Authentication</strong> — The most common guard: verify the JWT token from the Authorization header. Extract the user, attach it to the request, and let the handler access it. If the token is invalid or missing, throw UnauthorizedException (401). One guard protects your entire API.</li>
+      <li><strong>RolesGuard — Authorization</strong> — After authentication (who are you?), authorization checks permissions (what can you do?). RolesGuard reads @Roles(&#39;admin&#39;) metadata from the route and compares it with the user&#39;s role. Admins can delete, users can only read. Separate concerns = clean code.</li>
+      <li><strong>Applying Guards</strong> — Three levels: @UseGuards(AuthGuard) on a single route, on a controller (all routes), or globally via app.useGlobalGuards(). Global is best for auth — protect everything by default, then whitelist public routes with a @Public() decorator.</li>
+      <li><strong>@SetMetadata() &amp; Reflector</strong> — Guards read metadata set by decorators. @SetMetadata(&#39;roles&#39;, [&#39;admin&#39;]) attaches data to a route. Inside the guard, Reflector reads it: reflector.get(&#39;roles&#39;, context.getHandler()). This is how @Roles() and @Public() work under the hood.</li>
+      <li><strong>Custom @CurrentUser() Decorator</strong> — Create a parameter decorator that extracts the logged-in user from the request: `createParamDecorator((data, ctx) =&gt; ctx.switchToHttp().getRequest().user)`. Now use @CurrentUser() in any controller instead of repeating request extraction logic everywhere.</li>
+      <li><strong>Custom @Public() Decorator</strong> — Mark routes that skip authentication: `const Public = () =&gt; SetMetadata(&#39;isPublic&#39;, true)`. In your AuthGuard, check this metadata — if isPublic is true, return true without checking the token. Login and register routes need this!</li>
+      <li><strong>Combining Guards</strong> — Stack multiple guards: @UseGuards(AuthGuard, RolesGuard). They run in order — if AuthGuard fails, RolesGuard never runs. This creates a security pipeline: first verify identity, then check permissions. Clean separation of authentication and authorization.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. JWT Auth Guard — verify tokens
+import {
+  Injectable, CanActivate, ExecutionContext,
+  UnauthorizedException,
+} from &#39;@nestjs/common&#39;;
+import { Reflector } from &#39;@nestjs/core&#39;;
+import { JwtService } from &#39;@nestjs/jwt&#39;;
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(
+    private jwtService: JwtService,
+    private reflector: Reflector,
+  ) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    // Check if route is marked @Public()
+    const isPublic = this.reflector.get&lt;boolean&gt;(
+      &#39;isPublic&#39;, context.getHandler(),
+    );
+    if (isPublic) return true;
+
+    const request = context.switchToHttp().getRequest();
+    const token = request.headers.authorization?.split(&#39; &#39;)[1];
+
+    if (!token) {
+      throw new UnauthorizedException(&#39;No token provided&#39;);
+    }
+
+    try {
+      const payload = this.jwtService.verify(token);
+      request.user = payload; // Attach user to request
+      return true;
+    } catch {
+      throw new UnauthorizedException(&#39;Invalid token&#39;);
+    }
+  }
+}
+
+// 2. Roles Guard — check permissions
+@Injectable()
+export class RolesGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const requiredRoles = this.reflector.get&lt;string[]&gt;(
+      &#39;roles&#39;, context.getHandler(),
+    );
+    if (!requiredRoles) return true; // No roles required
+
+    const { user } = context.switchToHttp().getRequest();
+    if (!user) return false; // No authenticated user
+    return requiredRoles.includes(user.role);
+  }
+}
+
+// 3. Custom Decorators
+import { SetMetadata, createParamDecorator } from &#39;@nestjs/common&#39;;
+
+// @Public() — skip auth for this route
+export const Public = () =&gt; SetMetadata(&#39;isPublic&#39;, true);
+
+// @Roles(&#39;admin&#39;, &#39;editor&#39;) — require specific roles
+export const Roles = (...roles: string[]) =&gt;
+  SetMetadata(&#39;roles&#39;, roles);
+
+// @CurrentUser() — extract user from request
+export const CurrentUser = createParamDecorator(
+  (data: string, ctx: ExecutionContext) =&gt; {
+    const request = ctx.switchToHttp().getRequest();
+    const user = request.user;
+    return data ? user?.[data] : user;
+  },
+);
+
+// Usage in controller
+@Controller(&#39;users&#39;)
+@UseGuards(AuthGuard, RolesGuard)
+export class UsersController {
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
+
+  @Get(&#39;profile&#39;)
+  getProfile(@CurrentUser() user: any) {
+    return user; // Clean! No req.user digging
+  }
+
+  @Delete(&#39;:id&#39;)
+  @Roles(&#39;admin&#39;)
+  remove(@Param(&#39;id&#39;) id: string) {
+    return this.usersService.remove(id);
+  }
+
+  @Post(&#39;login&#39;)
+  @Public()  // Skip auth for login!
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto);
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> 1. JWT Auth Guard — verify tokens</li>
+      <li><span class="walk-num">2.</span> Import Guard interfaces and exceptions</li>
+      <li><span class="walk-num">3.</span> </li>
+      <li><span class="walk-num">4.</span> </li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> Import Reflector to read metadata</li>
+      <li><span class="walk-num">7.</span> Import JwtService to verify tokens</li>
+      <li><span class="walk-num">8.</span> </li>
+      <li><span class="walk-num">9.</span> Injectable guard class</li>
+      <li><span class="walk-num">10.</span> Constructor with injected dependencies</li>
+      <li><span class="walk-num">11.</span> JwtService for token verification</li>
+      <li><span class="walk-num">12.</span> Reflector for reading decorator metadata</li>
+      <li><span class="walk-num">13.</span> Close constructor</li>
+      <li><span class="walk-num">14.</span> </li>
+      <li><span class="walk-num">15.</span> The canActivate method — returns boolean</li>
+      <li><span class="walk-num">16.</span> Check if route is marked @Public()</li>
+      <li><span class="walk-num">17.</span> Read &#39;isPublic&#39; metadata from the handler</li>
+      <li><span class="walk-num">18.</span> Close reflector call</li>
+      <li><span class="walk-num">19.</span> If public, allow without checking token</li>
+      <li><span class="walk-num">20.</span> </li>
+      <li><span class="walk-num">21.</span> Get the raw HTTP request</li>
+      <li><span class="walk-num">22.</span> Extract token from &#39;Bearer &#39; header</li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> If no token, throw 401</li>
+      <li><span class="walk-num">25.</span> Throw UnauthorizedException</li>
+      <li><span class="walk-num">26.</span> Close if</li>
+      <li><span class="walk-num">27.</span> </li>
+      <li><span class="walk-num">28.</span> Try to verify the token</li>
+      <li><span class="walk-num">29.</span> Decode and verify the JWT payload</li>
+      <li><span class="walk-num">30.</span> Attach user data to the request object</li>
+      <li><span class="walk-num">31.</span> Allow the request to proceed</li>
+      <li><span class="walk-num">32.</span> If verification fails...</li>
+      <li><span class="walk-num">33.</span> Throw invalid token error</li>
+      <li><span class="walk-num">34.</span> Close try/catch</li>
+      <li><span class="walk-num">35.</span> Close canActivate</li>
+      <li><span class="walk-num">36.</span> Close class</li>
+      <li><span class="walk-num">37.</span> </li>
+      <li><span class="walk-num">38.</span> 2. Roles Guard — check permissions</li>
+      <li><span class="walk-num">39.</span> Injectable guard class</li>
+      <li><span class="walk-num">40.</span> Constructor with Reflector</li>
+      <li><span class="walk-num">41.</span> </li>
+      <li><span class="walk-num">42.</span> canActivate checks permissions</li>
+      <li><span class="walk-num">43.</span> Read required roles from metadata</li>
+      <li><span class="walk-num">44.</span> Get &#39;roles&#39; array from the handler</li>
+      <li><span class="walk-num">45.</span> Close reflector call</li>
+      <li><span class="walk-num">46.</span> If no roles required, allow all</li>
+      <li><span class="walk-num">47.</span> </li>
+      <li><span class="walk-num">48.</span> Extract user from request</li>
+      <li><span class="walk-num">49.</span> Check if user&#39;s role is in the required list</li>
+      <li><span class="walk-num">50.</span> Close canActivate</li>
+      <li><span class="walk-num">51.</span> Close class</li>
+      <li><span class="walk-num">52.</span> </li>
+      <li><span class="walk-num">53.</span> 3. Custom Decorators</li>
+      <li><span class="walk-num">54.</span> Import decorator creators</li>
+      <li><span class="walk-num">55.</span> </li>
+      <li><span class="walk-num">56.</span> @Public() — sets isPublic metadata to true</li>
+      <li><span class="walk-num">57.</span> </li>
+      <li><span class="walk-num">58.</span> @Roles() — sets required roles metadata</li>
+      <li><span class="walk-num">59.</span> Accept any number of role strings</li>
+      <li><span class="walk-num">60.</span> </li>
+      <li><span class="walk-num">61.</span> @CurrentUser() — extract user from request</li>
+      <li><span class="walk-num">62.</span> createParamDecorator factory</li>
+      <li><span class="walk-num">63.</span> Get the HTTP request from context</li>
+      <li><span class="walk-num">64.</span> Get the user attached by AuthGuard</li>
+      <li><span class="walk-num">65.</span> If &#39;data&#39; specified, return user[data], else full user</li>
+      <li><span class="walk-num">66.</span> Close decorator</li>
+      <li><span class="walk-num">67.</span> </li>
+      <li><span class="walk-num">68.</span> Usage in controller</li>
+      <li><span class="walk-num">69.</span> Controller with base route</li>
+      <li><span class="walk-num">70.</span> Apply both guards to all routes</li>
+      <li><span class="walk-num">71.</span> Exporting the controller class</li>
+      <li><span class="walk-num">72.</span> GET /users/profile</li>
+      <li><span class="walk-num">73.</span> Use @CurrentUser() — clean extraction!</li>
+      <li><span class="walk-num">74.</span> Return the user object directly</li>
+      <li><span class="walk-num">75.</span> Close method</li>
+      <li><span class="walk-num">76.</span> </li>
+      <li><span class="walk-num">77.</span> DELETE /users/:id — admin only</li>
+      <li><span class="walk-num">78.</span> Require &#39;admin&#39; role</li>
+      <li><span class="walk-num">79.</span> Extract the ID parameter</li>
+      <li><span class="walk-num">80.</span> Delete the user</li>
+      <li><span class="walk-num">81.</span> Close method</li>
+      <li><span class="walk-num">82.</span> </li>
+      <li><span class="walk-num">83.</span> POST /users/login — public access</li>
+      <li><span class="walk-num">84.</span> @Public() skips authentication</li>
+      <li><span class="walk-num">85.</span> Extract login credentials from body</li>
+      <li><span class="walk-num">86.</span> Delegate to auth service</li>
+      <li><span class="walk-num">87.</span> Close method</li>
+      <li><span class="walk-num">88.</span> Close class</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Injectable()
+export class RolesGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const roles = this.reflector.get&lt;string[]&gt;(
+      &#39;roles&#39;, context.getClass(),
+    );
+    if (!roles) return true;
+    const { user } = context.switchToHttp().getRequest();
+    return roles.includes(user.role);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Where should the Reflector read the roles metadata from — the class or the handler?</div></details><details><summary>Show answer</summary><div class="answer">The Reflector is reading from context.getClass() but @Roles() is set on individual methods (handlers), not the class. Fix: use context.getHandler() to read method-level metadata. Or use reflector.getAllAndOverride() to check both handler AND class metadata for maximum flexibility.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Guards are like the password on your phone. Before you can use any app (route), you need to unlock it (authenticate). Some apps need extra permission — like your parents&#39; approval to download games (role check). Custom decorators are like name tags at a party — they tell everyone who you are without you having to repeat yourself!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The decorator pattern (@) comes from Python, was adopted by TypeScript via a TC39 proposal, and is now fundamental to Angular, NestJS, and MobX. NestJS uses over 60 built-in decorators — probably more than any other Node.js framework!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a complete auth system: 1) AuthGuard that verifies JWT tokens, 2) RolesGuard that checks user roles, 3) @Public() decorator for login/register, 4) @CurrentUser() decorator to extract the user, 5) @Roles(&#39;admin&#39;) decorator. Apply AuthGuard globally and test all scenarios!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.nestjs.com/guards" target="_blank" rel="noopener noreferrer">NestJS Guards</a> <span class="res-source">(NestJS Official)</span></li>
+      <li><a href="https://docs.nestjs.com/custom-decorators" target="_blank" rel="noopener noreferrer">NestJS Custom Decorators</a> <span class="res-source">(NestJS Official)</span></li>
+      <li><a href="https://docs.nestjs.com/custom-decorators#param-decorators" target="_blank" rel="noopener noreferrer">NestJS Custom Route Decorators</a> <span class="res-source">(NestJS Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=45">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./44-nestjs-middleware-interceptors.html" rel="prev">← NestJS Middleware &amp; Interceptors</a>
+  <a class="nav-next" href="./46-nestjs-exception-filters-error-handling.html" rel="next">NestJS Exception Filters &amp; Error… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/js-ts-fun-book.html">← Back to course: Full-Stack Playbook</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

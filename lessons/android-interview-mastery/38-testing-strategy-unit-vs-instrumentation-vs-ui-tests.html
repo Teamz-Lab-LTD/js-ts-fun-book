@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testing Strategy: Unit vs Instrumentation vs UI Tests… | Teamz Lab</title>
+<meta name="description" content="Testing strategy defines which types of tests you write, how many of each, and in what order — before writing any test code. The Android testing pyramid…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Testing Strategy: Unit vs Instrumentation vs UI Tests">
+<meta property="og:description" content="Testing strategy defines which types of tests you write, how many of each, and in what order — before writing any test code. The Android testing pyramid…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Testing Strategy: Unit vs Instrumentation vs UI Tests">
+<meta name="twitter:description" content="Testing strategy defines which types of tests you write, how many of each, and in what order — before writing any test code. The Android testing pyramid…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Testing Strategy: Unit vs Instrumentation vs UI Tests",
+  "description": "Testing strategy defines which types of tests you write, how many of each, and in what order — before writing any test code. The Android testing pyramid…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 38
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Testing Strategy: Unit vs Instrumentation vs UI Tests",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Testing Strategy: Unit vs Instrumentation vs UI Tests</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 38 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Testing Strategy: Unit vs Instrumentation vs UI Tests</h1>
+<p class="lesson-subtitle">Know what to test, at which level, and why — before writing a single line of test code</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=38">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">The testing pyramid is like quality control in a car factory. Unit tests are like checking each bolt individually at the workbench — fast, cheap, done thousands of times a day. Instrumentation tests are like testing the assembled engine on a test bench — slower, more realistic. UI tests are like a full test drive on a track — the most realistic but you can only do a few before the day ends.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Testing strategy defines which types of tests you write, how many of each, and in what order — before writing any test code. The Android testing pyramid guides you to invest heavily in fast, cheap unit tests, moderately in integration tests, and minimally in slow UI tests. Understanding the cost-benefit of each level and the difference between test doubles (mock, fake, stub) lets you build a test suite that actually catches bugs without becoming a maintenance burden.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>When building a school management app from scratch, the team had zero tests. Rather than starting with UI tests (the most obvious choice for &#39;does the app look right&#39;), the lead engineer prioritized unit tests for the grade calculation engine, attendance rule logic, and report card generation — the core business rules. These caught 12 bugs in the first week without running the app once. UI tests were added only for the parent-facing grade report flow and the admin login — the two journeys where bugs would cause the most damage.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Android testing pyramid</strong> — The recommended distribution: ~70% unit tests (fast, no device needed), ~20% integration/instrumentation tests (moderate speed, may need device or Robolectric), ~10% end-to-end UI tests (slow, require emulator or physical device). Invert this pyramid and your test suite becomes slow, brittle, and expensive to maintain.</li>
+      <li><strong>Unit tests — what they are</strong> — Unit tests run on the JVM (no Android framework). They test a single class or function in isolation. Dependencies are replaced with test doubles. Run in milliseconds. The default location is src/test/java. Use JUnit, MockK, Truth. No Activity, no Context, no Room database — pure Kotlin/Java logic only.</li>
+      <li><strong>Instrumentation tests — what they are</strong> — Instrumentation tests run on a real Android device or emulator. They have access to the full Android framework — Context, databases, file system, system services. Located in src/androidTest/java. Run with AndroidJUnitRunner. Much slower (30s–5min per test run). Use sparingly for things that genuinely require the device.</li>
+      <li><strong>UI tests with Compose Testing or Espresso</strong> — UI tests drive the app&#39;s interface — find elements, click them, type text, assert visible state. Espresso for View-based UI, Compose Testing API for Jetpack Compose. These are instrumentation tests (need a device). Very brittle — UI changes break tests. Reserve for critical user journeys only.</li>
+      <li><strong>Robolectric — the middle ground</strong> — Robolectric is a framework that simulates the Android runtime on the JVM without a device. Allows testing code that uses Android APIs (Context, SharedPreferences, etc.) faster than instrumentation tests. Not perfect — some APIs are stubbed or behave differently. Good for ViewModel, Repository tests that need lightweight Android context.</li>
+      <li><strong>Cost vs benefit of each level</strong> — Unit tests: lowest cost, highest ROI — run in &lt;1s, catch 80% of bugs, easy to debug. Integration tests: medium cost — run in seconds to minutes, catch wiring bugs. UI tests: highest cost — run in minutes, most brittle, catch only the most obvious UI regressions. Always maximize unit test coverage first before investing in higher-level tests.</li>
+      <li><strong>What to test first in a new project</strong> — Priority order: (1) Business logic in use cases / domain layer — these encode the core rules of your product. (2) ViewModel state transitions. (3) Repository data fetching and caching logic. (4) Edge cases: null inputs, empty states, error states. UI tests last and only for mission-critical flows like login, checkout, or payment.</li>
+      <li><strong>Test doubles: mock vs fake vs stub</strong> — Stub: returns hardcoded values, no verification. Mock: you verify exactly which methods were called (MockK, Mockito). Fake: a working lightweight implementation (e.g., an in-memory List-based repository instead of a real Room database). Fakes are more maintainable and realistic; mocks are faster to write but can lead to over-specification of implementation details.</li>
+      <li><strong>Fragile test smell — over-mocking</strong> — Tests that mock every dependency and verify every method call become coupled to implementation rather than behavior. When you refactor (e.g., rename a method), 50 tests break even though the behavior is correct. Prefer testing observable output (returned values, emitted Flow items, UI state) over verifying internal method calls.</li>
+      <li><strong>Testing philosophy — test behavior, not implementation</strong> — A good test answers: &#39;Does this class do what it is supposed to do?&#39; not &#39;Does this class call method X in exactly this order?&#39; Write tests from the user&#39;s perspective of the class. This makes tests resilient to refactoring and actually useful as regression protection.</li>
+      <li><strong>Code testability and design</strong> — Hard-to-test code is a design smell. If you cannot unit test a class without spinning up a database, the class has too many responsibilities. Dependency injection (Hilt/Koin) makes classes testable by allowing dependencies to be swapped. Pure functions with no side effects are trivially testable. Design for testability from day one.</li>
+      <li><strong>Testing in CI/CD pipelines</strong> — Unit tests run on every commit in CI (fast, &lt;2 min for large projects). Instrumentation and UI tests run on PRs or nightly (slow, require emulator). Firebase Test Lab and AWS Device Farm provide real device testing at scale. A failing unit test blocks a merge; a failing UI test triggers investigation.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Project structure — where tests live
+//
+// src/
+//   main/java/com/schoolapp/       ← Production code
+//   test/java/com/schoolapp/       ← Unit tests (JVM only, fast)
+//   androidTest/java/com/schoolapp/ ← Instrumentation tests (device required)
+
+// ---- UNIT TEST example (src/test/) ----
+// Tests pure Kotlin business logic — no Android dependencies
+class GradeCalculatorTest {
+
+    private val calculator = GradeCalculator()  // Real instance, no mocks needed
+
+    @Test
+    fun `passing score returns PASS grade`() {
+        val result = calculator.evaluate(score = 75, maxScore = 100, passMark = 60)
+        assertThat(result.grade).isEqualTo(Grade.PASS)
+        assertThat(result.percentage).isEqualTo(75.0)
+    }
+
+    @Test
+    fun `score below pass mark returns FAIL grade`() {
+        val result = calculator.evaluate(score = 45, maxScore = 100, passMark = 60)
+        assertThat(result.grade).isEqualTo(Grade.FAIL)
+    }
+
+    @Test
+    fun `zero max score throws IllegalArgumentException`() {
+        assertThrows&lt;IllegalArgumentException&gt; {
+            calculator.evaluate(score = 0, maxScore = 0, passMark = 60)
+        }
+    }
+}
+
+// ---- Test doubles: Stub, Mock, Fake ----
+
+// STUB — returns hardcoded value, no verification
+class StubStudentRepository : StudentRepository {
+    override suspend fun getStudent(id: String) = Student(&quot;1&quot;, &quot;Alice&quot;, grade = 10)
+    override suspend fun saveStudent(student: Student) { /* no-op */ }
+}
+
+// FAKE — real working implementation backed by in-memory storage
+class FakeStudentRepository : StudentRepository {
+    private val storage = mutableMapOf&lt;String, Student&gt;()
+
+    override suspend fun getStudent(id: String) = storage[id]
+        ?: throw NotFoundException(&quot;Student $id not found&quot;)
+
+    override suspend fun saveStudent(student: Student) {
+        storage[student.id] = student
+    }
+}
+
+// MOCK — created by MockK, allows call verification
+// val mockRepo = mockk&lt;StudentRepository&gt;()
+// every { mockRepo.getStudent(&quot;1&quot;) } returns Student(&quot;1&quot;, &quot;Alice&quot;, 10)
+// coVerify { mockRepo.getStudent(&quot;1&quot;) }   ← verifies the call happened</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> src/test/java is for unit tests — Gradle runs these on the JVM with no Android device, so they run in milliseconds.</li>
+      <li><span class="walk-num">2.</span> src/androidTest/java is for instrumentation tests — these require a connected device or emulator and take much longer to run.</li>
+      <li><span class="walk-num">3.</span> GradeCalculatorTest instantiates the real GradeCalculator — no mocks needed for pure logic classes with no external dependencies.</li>
+      <li><span class="walk-num">4.</span> Each @Test method tests exactly one behavior with a descriptive backtick string name — &#39;passing score returns PASS grade&#39; reads like a specification.</li>
+      <li><span class="walk-num">5.</span> assertThrows verifies that the class correctly validates its inputs and fails fast with a meaningful error.</li>
+      <li><span class="walk-num">6.</span> StubStudentRepository always returns the same hardcoded Student — useful when you only care about the system under test and not the repository behavior.</li>
+      <li><span class="walk-num">7.</span> FakeStudentRepository uses a mutableMapOf as in-memory storage — it behaves like a real repository (throws on missing keys) without needing Room or SQLite.</li>
+      <li><span class="walk-num">8.</span> The MOCK approach uses MockK&#39;s every { } to define return values and coVerify { } to assert that specific calls happened — useful when testing that side effects occur.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// A developer wrote these tests for a payment processing use case.
+// Identify what is wrong with the testing approach.
+
+class ProcessPaymentUseCaseTest {
+
+    @Test
+    fun testProcessPayment() {
+        // Bug 1 — test setup
+        val mockRepo = mockk&lt;PaymentRepository&gt;()
+        val mockNotifier = mockk&lt;NotificationService&gt;()
+        val mockLogger = mockk&lt;AuditLogger&gt;()
+        val mockValidator = mockk&lt;PaymentValidator&gt;()
+        val mockFormatter = mockk&lt;CurrencyFormatter&gt;()
+        val useCase = ProcessPaymentUseCase(
+            mockRepo, mockNotifier, mockLogger, mockValidator, mockFormatter
+        )
+
+        every { mockValidator.validate(any()) } returns true
+        every { mockFormatter.format(any()) } returns &quot;$100.00&quot;
+        every { mockRepo.save(any()) } returns Unit
+        every { mockNotifier.send(any()) } returns Unit
+        every { mockLogger.log(any()) } returns Unit
+
+        // Bug 2 — test body
+        useCase.process(Payment(amount = 100.0, currency = &quot;USD&quot;))
+
+        // Bug 3 — assertions
+        coVerify { mockValidator.validate(any()) }
+        coVerify { mockFormatter.format(100.0) }
+        coVerify { mockRepo.save(any()) }
+        coVerify { mockNotifier.send(any()) }
+        coVerify { mockLogger.log(any()) }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at what is being asserted (method calls vs behavior), how many mocks are used, and what the test name tells you about what is being verified.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: The test mocks ALL dependencies — PaymentRepository, NotificationService, AuditLogger, PaymentValidator, AND CurrencyFormatter. This is a sign of over-mocking. If a class genuinely needs 5 mocked dependencies to function, the class itself may have too many responsibilities (violating Single Responsibility Principle). Consider using a Fake for the repository and only mocking the services where call verification matters. Alternatively, create a test data builder that sets up common state. Bug 2: useCase.process() is called with no assertion about its return value or observable effect. If process() returns a Result or emits a Flow item (the actual payment result — success or failure), the test is not checking the output that matters to the user. A payment test should verify &#39;did the payment succeed?&#39; not just &#39;did a bunch of methods get called?&#39; Bug 3: ALL assertions are coVerify checks — the test verifies that 5 internal methods were called. This is pure implementation testing, not behavior testing. If you refactor ProcessPaymentUseCase to combine validation and formatting into one step (calling a single validateAndFormat() method), all these tests break even if the payment logic is identical. Fix: assert on the USE CASE&#39;S OUTPUT — the returned PaymentResult, emitted Flow state, or thrown exception. Only use coVerify for side effects that genuinely matter (like &#39;did we send the notification?&#39;) not for internal implementation steps. The test name &#39;testProcessPayment&#39; is also too generic — rename it to &#39;successful payment with valid amount returns PaymentResult.Success&#39; to document behavior.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Testing is like checking your homework before you hand it in. Unit tests are checking one math problem at a time — very fast. Instrumentation tests are like checking your whole homework page — takes longer. UI tests are like having your teacher watch you do your homework in real time — the most realistic but you can only do it sometimes. The smart student checks each problem first (unit tests) before worrying about the whole page.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Google&#39;s internal study of their own Android codebases found that teams with &gt;60% unit test coverage shipped features 2x faster than teams with &lt;20% coverage — not because writing tests is fast, but because debugging production issues and manually verifying regressions takes far more time than the tests saved.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Map out a testing strategy for a SaaS mobile app with these features: user authentication, subscription management, dashboard with charts, offline data sync, and push notifications. For each feature, decide: (a) what would you unit test, (b) what would you integration/instrumentation test, (c) what UI journey (if any) deserves an end-to-end test. Write out your reasoning for each decision.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/training/testing/fundamentals" target="_blank" rel="noopener noreferrer">Android Testing Fundamentals</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/training/testing/fundamentals/test-doubles" target="_blank" rel="noopener noreferrer">Test Doubles in Android</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://robolectric.org/" target="_blank" rel="noopener noreferrer">Robolectric Documentation</a> <span class="res-source">(Robolectric)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/testing" target="_blank" rel="noopener noreferrer">Testing on Android (Guide)</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=38">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./37-profiling-debugging-logcat-android-studio-profiler.html" rel="prev">← Profiling &amp; Debugging: Logcat, Android…</a>
+  <a class="nav-next" href="./39-unit-testing-kotlin-classes-use-cases-repositories.html" rel="next">Unit Testing Kotlin: Classes, Use… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

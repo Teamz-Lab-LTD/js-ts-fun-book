@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jetpack Compose vs Flutter — How to Answer Without… | Teamz Lab</title>
+<meta name="description" content="Jetpack Compose is Google&#39;s native Android declarative UI toolkit built in Kotlin. Flutter is Google&#39;s cross-platform UI SDK built in Dart. Both use a…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/48-kotlin-flow-vs-dart-stream-vs-rx-crossover-interview.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetpack Compose vs Flutter — How to Answer Without Sounding Biased">
+<meta property="og:description" content="Jetpack Compose is Google&#39;s native Android declarative UI toolkit built in Kotlin. Flutter is Google&#39;s cross-platform UI SDK built in Dart. Both use a…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jetpack Compose vs Flutter — How to Answer Without Sounding Biased">
+<meta name="twitter:description" content="Jetpack Compose is Google&#39;s native Android declarative UI toolkit built in Kotlin. Flutter is Google&#39;s cross-platform UI SDK built in Dart. Both use a…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Jetpack Compose vs Flutter — How to Answer Without Sounding Biased",
+  "description": "Jetpack Compose is Google's native Android declarative UI toolkit built in Kotlin. Flutter is Google's cross-platform UI SDK built in Dart. Both use a…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 49
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Jetpack Compose vs Flutter — How to Answer Without Sounding Biased",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Jetpack Compose vs Flutter — How to Answer Without Sounding Biased</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 49 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Jetpack Compose vs Flutter — How to Answer Without Sounding Biased</h1>
+<p class="lesson-subtitle">A senior engineer&#39;s balanced take on declarative UI, state, navigation, and ecosystem fit</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=49">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Asking &#39;Compose or Flutter?&#39; is like asking whether a Toyota built in Japan or Germany is better. Both are excellent cars. The smart answer is: it depends on the road, the team, and how far you need to go.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Jetpack Compose is Google&#39;s native Android declarative UI toolkit built in Kotlin. Flutter is Google&#39;s cross-platform UI SDK built in Dart. Both use a reactive, widget/composable-based model, but they differ fundamentally in rendering strategy, ecosystem integration, and target platforms.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Google&#39;s own apps — Google Pay, Maps, and Messages — use Jetpack Compose. eBay&#39;s mobile app, Alibaba&#39;s Xianyu, and BMW&#39;s companion app use Flutter. Neither choice is &#39;wrong&#39; at scale; the decision is architectural, not tribal.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Declarative UI — same idea, different DNA</strong> — Both Compose and Flutter use a declarative model where UI is a function of state. Compose builds on Kotlin and integrates natively with the Android SDK. Flutter builds its own widget tree in Dart and bypasses native UI components entirely, rendering through Skia/Impeller.</li>
+      <li><strong>State — remember vs StatefulWidget/BLoC</strong> — Compose uses remember{} and rememberSaveable{} for local state, and ViewModel + StateFlow/MutableState for screen-level state. Flutter uses StatefulWidget with setState() for local state, and BLoC, Riverpod, or Provider for structured state management — architecturally equivalent roles.</li>
+      <li><strong>Navigation — NavHost vs Navigator 2.0 / GoRouter</strong> — Compose Navigation uses NavController and NavHost with typed routes. Flutter Navigator 2.0 is powerful but verbose; GoRouter (now officially recommended by the Flutter team) provides a declarative URL-based API close in spirit to Compose Navigation.</li>
+      <li><strong>Theming — MaterialTheme in both, but different depths</strong> — Compose uses MaterialTheme with colorScheme, typography, and shapes — fully composable and type-safe. Flutter&#39;s ThemeData is a large flat object. Material 3 is supported in both but more naturally expressed in Compose because the Kotlin type system maps to M3 color roles precisely.</li>
+      <li><strong>Performance — two different rendering models</strong> — Flutter skips native views and renders everything on its own GPU canvas, giving pixel-perfect consistency across platforms. Compose uses native Android Views under the hood (via Canvas/RenderNode) which integrates seamlessly with accessibility, IME, and system gestures. Neither is universally faster — profile before claiming.</li>
+      <li><strong>Interoperability — native or cross-platform?</strong> — Compose interops with Views (AndroidView, ComposeView), Camera2, Maps SDK, and all Jetpack libraries out of the box. Flutter communicates with native Android/iOS code via Platform Channels, which adds serialization overhead for anything beyond basic calls.</li>
+      <li><strong>Ecosystem — Jetpack vs pub.dev</strong> — Compose inherits the entire Jetpack ecosystem (Room, WorkManager, CameraX, Health Connect) with zero friction. Flutter&#39;s pub.dev packages vary widely in quality and maintenance; platform-specific features often require writing native plugins.</li>
+      <li><strong>Hiring &amp; team fit</strong> — Compose requires Kotlin expertise — a stronger hire bar for Android. Flutter requires Dart, which is easy to learn but less common. If a team already has strong Android engineers, Compose is faster to adopt. A cross-platform startup targeting Android + iOS with one team often picks Flutter.</li>
+      <li><strong>When to pick Compose</strong> — Single-platform Android app, needs deep OS integration (biometrics, NFC, health data), team is Kotlin-fluent, app must follow Android platform conventions (edge-to-edge, predictive back, Material You).</li>
+      <li><strong>When to pick Flutter</strong> — True cross-platform (Android + iOS, optionally web/desktop), pixel-perfect custom UI that must look identical on all platforms, startup with a small team, game-like or highly animated interfaces.</li>
+      <li><strong>The interview answer template</strong> — State: &#39;Both are excellent declarative UI frameworks. I prefer Compose for native Android because [reason]. I&#39;d choose Flutter when [cross-platform scenario]. The decision should be driven by team skills, platform needs, and long-term maintainability — not trend.&#39; This shows maturity.</li>
+      <li><strong>2026 landscape</strong> — Compose is now the default Android UI recommendation from Google, with Compose Multiplatform (JetBrains) extending it to iOS/desktop. Flutter continues to grow, especially in emerging markets and fintech (Google Pay, Alibaba Xianyu). Both are production-grade.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ── Jetpack Compose — simple counter screen ──────────────────
+@Composable
+fun CounterScreen(viewModel: CounterViewModel = viewModel()) {
+    val count by viewModel.count.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = &quot;Count: $count&quot;,
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Spacer(Modifier.height(16.dp))
+        Button(onClick = { viewModel.increment() }) {
+            Text(&quot;Increment&quot;)
+        }
+    }
+}
+
+class CounterViewModel : ViewModel() {
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow&lt;Int&gt; = _count.asStateFlow()
+
+    fun increment() { _count.update { it + 1 } }
+}
+
+// ── Flutter equivalent ────────────────────────────────────────
+// class CounterScreen extends StatefulWidget { ... }
+// class _CounterScreenState extends State&lt;CounterScreen&gt; {
+//   int _count = 0;
+//   void _increment() =&gt; setState(() =&gt; _count++);
+//
+//   Widget build(BuildContext context) =&gt; Column(children: [
+//     Text(&#39;Count: $_count&#39;),
+//     ElevatedButton(onPressed: _increment, child: Text(&#39;Increment&#39;)),
+//   ]);
+// }
+//
+// With BLoC:
+// BlocBuilder&lt;CounterBloc, CounterState&gt;(
+//   builder: (context, state) =&gt; Text(&#39;Count: ${state.count}&#39;),
+// )</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> CounterScreen is a @Composable function — it describes UI as a function of state, not imperative commands</li>
+      <li><span class="walk-num">2.</span> viewModel() retrieves or creates a CounterViewModel scoped to the current NavBackStackEntry, surviving rotation</li>
+      <li><span class="walk-num">3.</span> collectAsStateWithLifecycle() converts StateFlow into Compose State, pausing collection when the app is in the background — battery-safe</li>
+      <li><span class="walk-num">4.</span> Column with fillMaxSize, verticalArrangement, and horizontalAlignment replaces XML LinearLayout + gravity attributes</li>
+      <li><span class="walk-num">5.</span> MaterialTheme.typography.headlineMedium is a Material 3 type role — guaranteed contrast and scale across the design system</li>
+      <li><span class="walk-num">6.</span> Button&#39;s onClick lambda calls viewModel.increment(), keeping business logic out of the composable</li>
+      <li><span class="walk-num">7.</span> CounterViewModel extends ViewModel — survives configuration changes automatically via ViewModelStore</li>
+      <li><span class="walk-num">8.</span> MutableStateFlow(0) holds the current count; asStateFlow() exposes a read-only StateFlow to the UI</li>
+      <li><span class="walk-num">9.</span> update{} is atomic and thread-safe — correct even if increment() is called from a background thread</li>
+      <li><span class="walk-num">10.</span> The Flutter equivalent in comments shows setState() for local state and BlocBuilder for BLoC — structurally identical roles but different APIs</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Composable
+fun ProductListScreen() {
+    var products by remember { mutableStateOf(emptyList&lt;Product&gt;()) }
+
+    LaunchedEffect(Unit) {
+        products = fetchProductsFromNetwork() // suspend fun
+    }
+
+    LazyColumn {
+        items(products) { product -&gt;
+            Text(product.name)
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about what happens to &#39;products&#39; when the user rotates the device. Is remember enough here?</div></details><details><summary>Show answer</summary><div class="answer">The bug is that remember{} does not survive configuration changes (screen rotation, locale change). When the device rotates, the composable is recomposed from scratch, remember{} starts with emptyList() again, and LaunchedEffect re-fires, causing a redundant network call and a visible blank flash. Fix: move the state and network call into a ViewModel. Use a MutableStateFlow&lt;List&lt;Product&gt;&gt; in the ViewModel and collect it with collectAsStateWithLifecycle() in the composable. The ViewModel survives rotation; the network call is only made once.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Compose is like building with Lego made specifically for your bedroom floor — it fits perfectly and works with all your other Lego sets. Flutter is like bringing a special Lego kit that works in any room of any house, but you need an adapter to use your other bedroom Lego with it.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Compose&#39;s compiler plugin transforms @Composable functions into a call graph that the Compose runtime can skip (recompose) selectively. Flutter&#39;s widget rebuild works similarly but must diff the entire subtree. Both arrived at the same performance insight independently.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a minimal two-screen app in Compose (a list screen and a detail screen) using NavController. Then sketch in comments how the equivalent GoRouter setup would look in Flutter. Identify two architectural differences between the two navigation approaches.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/jetpack/compose" target="_blank" rel="noopener noreferrer">Jetpack Compose — Official Docs</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://docs.flutter.dev" target="_blank" rel="noopener noreferrer">Flutter — Official Docs</a> <span class="res-source">(flutter.dev)</span></li>
+      <li><a href="https://pub.dev/packages/go_router" target="_blank" rel="noopener noreferrer">GoRouter for Flutter</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://www.jetbrains.com/lp/compose-multiplatform/" target="_blank" rel="noopener noreferrer">Compose Multiplatform</a> <span class="res-source">(JetBrains)</span></li>
+      <li><a href="https://android-developers.googleblog.com/" target="_blank" rel="noopener noreferrer">Compose vs Flutter — Android Developers Blog</a> <span class="res-source">(Google)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=49">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./48-kotlin-flow-vs-dart-stream-vs-rx-crossover-interview.html" rel="prev">← Kotlin Flow vs Dart Stream vs Rx…</a>
+  <a class="nav-next" href="./50-accessibility-on-android-talkback-semantics-touch-targets.html" rel="next">Accessibility on Android: TalkBack… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

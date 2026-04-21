@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clean Architecture for Android — Android Interview… | Teamz Lab</title>
+<meta name="description" content="Clean Architecture organizes Android apps into three concentric layers: Presentation (UI/ViewModel), Domain (entities, use cases, repository interfaces…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/22-navigation-in-android-fragment-nav-vs-compose-nav-vs-deep.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/24-repository-pattern-use-cases-dependency-inversion.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clean Architecture for Android">
+<meta property="og:description" content="Clean Architecture organizes Android apps into three concentric layers: Presentation (UI/ViewModel), Domain (entities, use cases, repository interfaces…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Clean Architecture for Android">
+<meta name="twitter:description" content="Clean Architecture organizes Android apps into three concentric layers: Presentation (UI/ViewModel), Domain (entities, use cases, repository interfaces…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Clean Architecture for Android",
+  "description": "Clean Architecture organizes Android apps into three concentric layers: Presentation (UI/ViewModel), Domain (entities, use cases, repository interfaces…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 23
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clean Architecture for Android",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Clean Architecture for Android</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 23 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Clean Architecture for Android</h1>
+<p class="lesson-subtitle">The architectural foundation that separates every senior Android developer from a junior — layers, dependency rules, and why it matters</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=23">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Clean Architecture is like a hospital. The doctors (Domain layer) make medical decisions using universal medical knowledge — they don&#39;t care if the patient record is on paper, a computer, or a tablet. The nurses (Data layer) handle where records come from and store them. The reception desk (Presentation layer) deals with patients (users) and routes their needs to the right doctor. Crucially, doctors never walk to reception — communication only flows inward.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Clean Architecture organizes Android apps into three concentric layers: Presentation (UI/ViewModel), Domain (entities, use cases, repository interfaces — pure Kotlin), and Data (repository implementations, DTOs, Room entities, Retrofit services). The Dependency Rule mandates that all dependencies point inward toward the Domain. Mappers translate between layer-specific models at boundaries. This structure makes the business logic testable without Android, and makes each layer independently changeable.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A school management app has a GetStudentAttendanceUseCase in the Domain layer that returns Flow&gt;. The AttendanceRepository interface is defined in Domain. The AttendanceRepositoryImpl in Data decides whether to fetch from Firebase (online) or Room (offline), mapping FirebaseAttendance DTOs and AttendanceEntity Room objects to the domain AttendanceRecord. The AttendanceViewModel calls the use case — it has zero knowledge of Firebase or Room. Swapping Firebase for a REST API touches only the Data layer.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The three layers</strong> — Presentation (UI + ViewModel), Domain (business logic — use cases + entities), Data (repositories + remote/local data sources). Each layer has a specific responsibility. Dependencies point INWARD only — Presentation depends on Domain, Data depends on Domain, Domain depends on nothing.</li>
+      <li><strong>The Dependency Rule</strong> — Source code dependencies must point inward toward higher-level policies. The Domain layer must have zero knowledge of Android, Retrofit, Room, or Compose. It is pure Kotlin. This makes it independently testable with plain JUnit — no Robolectric, no instrumented tests required.</li>
+      <li><strong>Domain entities vs data models</strong> — Entities are the core business objects defined in the Domain layer (data class Order, data class User). They represent business concepts, not database schemas or API shapes. Data models (network DTOs, Room entities) live in the Data layer and are mapped to/from Domain entities. Never leak ORM annotations into Domain.</li>
+      <li><strong>Use Cases (Interactors)</strong> — A Use Case encapsulates a single business action: class GetActiveOrdersUseCase(private val repo: OrderRepository) { operator fun invoke(): Flow&gt; = repo.getActiveOrders() }. ViewModels call use cases — not repositories directly. Each use case has one job, making it unit-testable in isolation.</li>
+      <li><strong>Repository interface in Domain</strong> — interface OrderRepository is defined in the Domain layer. It declares what data operations the domain needs, in domain terms (Order entities, not DTOs). The concrete implementation (OrderRepositoryImpl) lives in the Data layer and is never imported by the Domain or Presentation layers.</li>
+      <li><strong>Mapper pattern</strong> — Mappers convert between layers: OrderDto.toDomain(): Order, OrderEntity.toDomain(): Order, Order.toEntity(): OrderEntity. Each layer converts to its own model at the boundary. This isolates model changes — a backend API field rename only touches OrderDto and its mapper, not the Domain or UI code.</li>
+      <li><strong>Package structure by layer</strong> — Organize packages by feature + layer: com.app.feature.order.presentation (ViewModel, composables), com.app.feature.order.domain (entities, use cases, repository interface), com.app.feature.order.data (DTOs, Room entities, repo impl, API service). Horizontal slicing by layer is an anti-pattern for large apps — vertical feature slicing is preferred.</li>
+      <li><strong>Why ViewModels call Use Cases, not Repositories</strong> — ViewModel calling repositories directly couples the Presentation layer to Data concepts (DTOs, Room DAOs). Use cases provide a stable API surface — the ViewModel does not change if the data source changes from REST to GraphQL. Use cases also compose — GetDashboardUseCase can call multiple repository operations.</li>
+      <li><strong>Testing at each layer</strong> — Domain: pure JUnit unit tests — no mocks for Android (no Android SDK dependency). Use fake repository implementations instead of mocks for use case tests. Data: integration tests with Room in-memory DB and MockWebServer for Retrofit. Presentation: ViewModel unit tests with fake use cases, UI tests with ComposeTestRule.</li>
+      <li><strong>The Dependency Inversion Principle (DIP)</strong> — High-level modules (Domain) should not depend on low-level modules (Data). Both should depend on abstractions. The OrderRepository interface in Domain is the abstraction — Domain defines it, Data implements it, DI provides the binding. This is implemented via Hilt @Binds in the Data module.</li>
+      <li><strong>Common violations in real codebases</strong> — Domain entity with @Entity annotation (Room leaked in), ViewModel importing Retrofit Response directly, Use case returning a DTO instead of a domain entity, Repository impl in the same module as Domain entities. These shortcuts accumulate into unmaintainable spaghetti at scale.</li>
+      <li><strong>Multi-module support</strong> — Clean Architecture maps naturally to Gradle modules: :feature:order:domain, :feature:order:data, :feature:order:presentation. Compile-time enforcement of the dependency rule — :domain module has no Android dependency (apply plugin: &#39;kotlin&#39;), :presentation cannot import :data directly. Enforced by Gradle, not just convention.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ===== DOMAIN LAYER — pure Kotlin, zero Android imports =====
+// com.schoolapp.attendance.domain.model
+data class AttendanceRecord(
+    val studentId: String,
+    val date: LocalDate,
+    val status: AttendanceStatus,
+    val recordedBy: String
+)
+
+enum class AttendanceStatus { PRESENT, ABSENT, LATE }
+
+// com.schoolapp.attendance.domain.repository
+interface AttendanceRepository {
+    fun getAttendanceForClass(classId: String, date: LocalDate): Flow&lt;List&lt;AttendanceRecord&gt;&gt;
+    suspend fun markAttendance(record: AttendanceRecord): Result&lt;Unit&gt;
+}
+
+// com.schoolapp.attendance.domain.usecase
+class GetClassAttendanceUseCase @Inject constructor(
+    private val repository: AttendanceRepository
+) {
+    operator fun invoke(classId: String, date: LocalDate): Flow&lt;List&lt;AttendanceRecord&gt;&gt; =
+        repository.getAttendanceForClass(classId, date)
+}
+
+class MarkAttendanceUseCase @Inject constructor(
+    private val repository: AttendanceRepository
+) {
+    suspend operator fun invoke(record: AttendanceRecord): Result&lt;Unit&gt; =
+        repository.markAttendance(record)
+}
+
+// ===== DATA LAYER — knows about Room, Firebase, Retrofit =====
+// com.schoolapp.attendance.data.remote.dto
+data class AttendanceDto(
+    @SerialName(&quot;student_id&quot;) val studentId: String,
+    @SerialName(&quot;date&quot;) val date: String,
+    @SerialName(&quot;status&quot;) val status: String,
+    @SerialName(&quot;recorded_by&quot;) val recordedBy: String
+)
+
+// com.schoolapp.attendance.data.local.entity
+@Entity(tableName = &quot;attendance&quot;)
+data class AttendanceEntity(
+    @PrimaryKey val id: String,
+    val studentId: String,
+    val date: String,
+    val status: String,
+    val recordedBy: String
+)
+
+// com.schoolapp.attendance.data.mapper
+fun AttendanceDto.toDomain(): AttendanceRecord = AttendanceRecord(
+    studentId = studentId,
+    date = LocalDate.parse(date),
+    status = AttendanceStatus.valueOf(status.uppercase()),
+    recordedBy = recordedBy
+)
+
+fun AttendanceEntity.toDomain(): AttendanceRecord = AttendanceRecord(
+    studentId = studentId,
+    date = LocalDate.parse(date),
+    status = AttendanceStatus.valueOf(status.uppercase()),
+    recordedBy = recordedBy
+)
+
+fun AttendanceRecord.toEntity(id: String): AttendanceEntity = AttendanceEntity(
+    id = id,
+    studentId = studentId,
+    date = date.toString(),
+    status = status.name,
+    recordedBy = recordedBy
+)
+
+// com.schoolapp.attendance.data.repository
+class AttendanceRepositoryImpl @Inject constructor(
+    private val remoteDataSource: AttendanceRemoteDataSource,
+    private val localDataSource: AttendanceLocalDataSource
+) : AttendanceRepository {
+
+    override fun getAttendanceForClass(
+        classId: String, date: LocalDate
+    ): Flow&lt;List&lt;AttendanceRecord&gt;&gt; =
+        localDataSource.observeAttendance(classId, date.toString())
+            .map { entities -&gt; entities.map { it.toDomain() } }
+
+    override suspend fun markAttendance(record: AttendanceRecord): Result&lt;Unit&gt; = runCatching {
+        val entity = record.toEntity(id = UUID.randomUUID().toString())
+        localDataSource.insert(entity)
+        remoteDataSource.sync(entity)
+    }
+}
+
+// ===== PRESENTATION LAYER =====
+// com.schoolapp.attendance.presentation
+@HiltViewModel
+class AttendanceViewModel @Inject constructor(
+    private val getClassAttendance: GetClassAttendanceUseCase,   // Domain use cases only
+    private val markAttendance: MarkAttendanceUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(AttendanceUiState())
+    val uiState: StateFlow&lt;AttendanceUiState&gt; = _uiState.asStateFlow()
+
+    fun loadAttendance(classId: String, date: LocalDate) {
+        viewModelScope.launch {
+            getClassAttendance(classId, date)
+                .collect { records -&gt;
+                    _uiState.update { it.copy(records = records.toImmutableList()) }
+                }
+        }
+    }
+}
+
+// ===== DI BINDING — Data module =====
+@Module @InstallIn(SingletonComponent::class)
+abstract class AttendanceModule {
+    @Binds @Singleton
+    abstract fun bindAttendanceRepository(
+        impl: AttendanceRepositoryImpl
+    ): AttendanceRepository  // Domain interface ← Data impl
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> AttendanceRecord is a pure Kotlin data class in the Domain layer — no @Entity, no @SerialName, no Android imports — it represents the business concept of an attendance record</li>
+      <li><span class="walk-num">2.</span> AttendanceRepository interface is defined in Domain — it speaks in domain terms (AttendanceRecord, LocalDate) not in data terms (AttendanceEntity, String dates)</li>
+      <li><span class="walk-num">3.</span> GetClassAttendanceUseCase takes the interface (not the impl) via constructor injection — it cannot see Room or Firebase even if it wanted to</li>
+      <li><span class="walk-num">4.</span> AttendanceDto in the Data layer mirrors the API response shape with @SerialName annotations — totally separate from the domain entity</li>
+      <li><span class="walk-num">5.</span> AttendanceEntity in the Data layer has @Entity for Room — this annotation never escapes the Data layer</li>
+      <li><span class="walk-num">6.</span> toDomain() extension functions are the mappers — they live in the Data layer and convert outward to Domain. Domain never has toDtoOrToEntity functions</li>
+      <li><span class="walk-num">7.</span> AttendanceRepositoryImpl implements the Domain interface — it decides the offline-first logic (Room as source, remote for sync) entirely within the Data layer</li>
+      <li><span class="walk-num">8.</span> AttendanceViewModel only imports from the Domain layer — GetClassAttendanceUseCase and MarkAttendanceUseCase. Zero data layer imports</li>
+      <li><span class="walk-num">9.</span> @Binds in the Hilt module tells Hilt: when Domain asks for AttendanceRepository, inject AttendanceRepositoryImpl — this is the inversion of control that makes the Dependency Rule work at runtime</li>
+      <li><span class="walk-num">10.</span> Multi-module enforcement: :feature:attendance:domain module has no Android SDK plugin — if a developer accidentally imports Room, the Gradle build fails</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Domain layer — com.app.orders.domain
+import androidx.room.Entity  // Bug 1
+import retrofit2.Response     // Bug 2
+
+@Entity(tableName = &quot;orders&quot;)  // Bug 3
+data class Order(
+    val id: String,
+    val total: Double,
+    val status: String
+)
+
+class GetOrdersUseCase @Inject constructor(
+    private val repository: OrderRepositoryImpl  // Bug 4
+) {
+    suspend fun execute(): Response&lt;List&lt;Order&gt;&gt; =  // Bug 5
+        repository.fetchOrders()
+}
+
+// Presentation layer — ViewModel
+class OrderViewModel @Inject constructor(
+    private val repository: OrderRepositoryImpl  // Bug 6
+) : ViewModel() {
+    fun load() {
+        viewModelScope.launch {
+            val result = repository.fetchOrders()  // Bug 7
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Count the layer violations, leaked dependencies, and wrong return types.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1 &amp; 2: Domain layer imports androidx.room and retrofit2 — both are framework/data-layer dependencies. Domain must be pure Kotlin with zero Android/framework imports. Bug 3: @Entity on a Domain entity leaks Room into Domain — the Order class is now a Room entity, coupling Domain to the Data layer&#39;s persistence technology. Fix: Create a separate OrderEntity in the Data layer with @Entity, and keep Order in Domain clean. Bug 4: GetOrdersUseCase depends on OrderRepositoryImpl (the concrete class) instead of OrderRepository (the interface). This defeats the Dependency Inversion Principle — Domain should only know the interface it defines, never the concrete implementation in the Data layer. Bug 5: Use case returns Response&lt;List&lt;Order&gt;&gt; — Response&lt;T&gt; is a Retrofit type, leaking Data layer concerns into Domain. Use cases should return domain-native types like Result&lt;List&lt;Order&gt;&gt; or Flow&lt;List&lt;Order&gt;&gt;. Bug 6: ViewModel injects OrderRepositoryImpl directly instead of calling use cases. This couples Presentation to Data. Fix: Inject GetOrdersUseCase instead. Bug 7: Calling repository.fetchOrders() directly from ViewModel skips the use case layer entirely — business logic that should be in the use case (validation, transformation, caching policy) is bypassed or duplicated in the ViewModel.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Think of Clean Architecture like a sandwich shop. The inside of the sandwich (Domain) is the most important part — it&#39;s pure food, it doesn&#39;t care what kind of wrapper it comes in. The wrapper (Data) knows where the ingredients come from — the fridge (Room), the delivery truck (API). The cashier (Presentation/ViewModel) takes your order and communicates it inward. Crucially, the filling never knows about the cashier or the packaging — it&#39;s just food. That&#39;s why you can change the wrapper (swap API for GraphQL) without touching the filling.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Clean Architecture was introduced by Robert C. Martin (Uncle Bob) in 2012, but the principles trace back to Ivar Jacobson&#39;s Use Case Driven Design from the early 1990s and even earlier to David Parnas&#39; information hiding principle from 1972. The Android community adopted it around 2017-2018 as apps grew complex enough that the God Activity and MVC patterns became unmaintainable. Now, Google&#39;s official Architecture Guide directly recommends it.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the Clean Architecture structure for a &#39;Task Management&#39; feature: GetPendingTasksUseCase, CompleteTaskUseCase, SyncTasksUseCase. Define the Task domain entity, TaskRepository interface, TaskDto (API), TaskEntity (Room), and all mappers. Implement TaskRepositoryImpl with offline-first logic (return Room flow, sync with API on background). Write unit tests for CompleteTaskUseCase using a FakeTaskRepository. No Android imports in Domain or tests.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/topic/architecture" target="_blank" rel="noopener noreferrer">Guide to App Architecture — Android Official</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://proandroiddev.com/kotlin-clean-architecture-1ad42fcd97fa" target="_blank" rel="noopener noreferrer">Clean Architecture on Android — ProAndroidDev</a> <span class="res-source">(ProAndroidDev)</span></li>
+      <li><a href="https://github.com/android/nowinandroid" target="_blank" rel="noopener noreferrer">Now in Android — Architecture Case Study</a> <span class="res-source">(Google GitHub)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=Mr8YKDh3li4" target="_blank" rel="noopener noreferrer">Android Architecture: Clean Architecture Deep Dive</a> <span class="res-source">(YouTube / PhilippLackner)</span></li>
+      <li><a href="https://developer.android.com/training/dependency-injection/hilt-android" target="_blank" rel="noopener noreferrer">Dependency Injection with Hilt</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=23">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./22-navigation-in-android-fragment-nav-vs-compose-nav-vs-deep.html" rel="prev">← Navigation in Android: Fragment Nav vs…</a>
+  <a class="nav-next" href="./24-repository-pattern-use-cases-dependency-inversion.html" rel="next">Repository Pattern, Use Cases &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

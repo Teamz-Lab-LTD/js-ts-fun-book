@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Persistence: SharedPreferences vs Hive vs SQLite… | Teamz Lab</title>
+<meta name="description" content="Flutter provides multiple local persistence options: SharedPreferences (simple key-value), Hive (fast NoSQL), SQLite via sqflite/Floor (relational with…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/26-offline-first-architecture-sync.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor">
+<meta property="og:description" content="Flutter provides multiple local persistence options: SharedPreferences (simple key-value), Hive (fast NoSQL), SQLite via sqflite/Floor (relational with…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor">
+<meta name="twitter:description" content="Flutter provides multiple local persistence options: SharedPreferences (simple key-value), Hive (fast NoSQL), SQLite via sqflite/Floor (relational with…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor",
+  "description": "Flutter provides multiple local persistence options: SharedPreferences (simple key-value), Hive (fast NoSQL), SQLite via sqflite/Floor (relational with…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 25
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 25 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Local Persistence: SharedPreferences vs Hive vs SQLite vs Floor</h1>
+<p class="lesson-subtitle">Choosing the Right Storage for the Right Job</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=25">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Local storage options are like different filing systems. SharedPreferences is a sticky-note pad — great for &#39;dark mode on&#39;, terrible for thousands of records. Hive is a fast filing cabinet with typed drawers — structured but not relational. SQLite is a filing room with cross-reference cards between folders — slow to set up, powerful for complex queries. Floor is SQLite with a librarian who organizes everything for you via code generation.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter provides multiple local persistence options: SharedPreferences (simple key-value), Hive (fast NoSQL), SQLite via sqflite/Floor (relational with SQL), and flutter_secure_storage (encrypted secrets). Choosing the right tool depends on data structure complexity, query requirements, performance needs, and sensitivity.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In an offline-first field survey app: flutter_secure_storage stores the user&#39;s auth token. SharedPreferences stores the user&#39;s app settings (locale, last sync time). Hive caches the list of survey templates downloaded from the server. Floor stores the actual survey responses with complex relational structure (survey → questions → answers) that needs SQL querying for reporting.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>SharedPreferences — Simple Key-Value</strong> — SharedPreferences stores primitive values (String, int, double, bool, List) as key-value pairs using platform-native storage (NSUserDefaults on iOS, SharedPreferences on Android). Synchronous-feeling async API. Best for: user settings, theme, language, onboarding flags, last-used values. Terrible for: collections, structured data, anything with queries.</li>
+      <li><strong>Hive — Fast NoSQL</strong> — Hive stores Dart objects in binary format. Extremely fast (O(1) reads). Supports custom objects via TypeAdapters (code-generated). No SQL, no relations — it&#39;s a key-value store for complex objects. Great for: offline caching, user data, feature flags, settings more complex than SharedPreferences. Hive boxes are lazy-loaded — open only what you need.</li>
+      <li><strong>SQLite — Full Relational DB</strong> — SQLite is a full relational database embedded in every mobile device. Supports SQL queries, JOINs, transactions, complex filtering, indexing. The sqflite package provides raw SQL access. Best for: complex relational data, reporting, filtering, sorting at the database level. Drawbacks: verbose SQL strings, no type safety, manual migration management.</li>
+      <li><strong>Floor — Type-Safe SQLite ORM</strong> — Floor (inspired by Android Room) generates SQLite code from Dart annotations. Define entities (@Entity), DAOs (@Dao), and the database (@Database). Build runner generates the implementation. Best for: relational data that needs type safety and tested query infrastructure. Preferred over raw sqflite in production for complex schemas.</li>
+      <li><strong>Isar — The Modern Alternative</strong> — Isar is a newer NoSQL database (successor to Hive): faster than Hive, supports indexes and filtering, works with Isar Inspector (visual DB browser during development). Async by default with full ACID transactions. Growing adoption as a sqflite replacement for structured data without the relational complexity.</li>
+      <li><strong>Performance Characteristics</strong> — SharedPreferences: slowest for bulk data (writes XML/plist files). Hive: fastest for key-value reads (memory-mapped binary). SQLite: fast for indexed queries, slow for full table scans on large tables. The benchmark matters for offline-first apps loading large datasets on startup — choose Hive or Isar for read-heavy caching, SQLite/Floor for relational data.</li>
+      <li><strong>Migration Strategies</strong> — SharedPreferences: version keys (settings_v2). Hive: TypeAdapter versioning with @HiveField(index) — add fields at the end, never reorder. SQLite/Floor: database version number with migration callbacks. Floor: @migration class with SQL ALTER TABLE. Missing migrations are the #1 cause of production crashes on app updates.</li>
+      <li><strong>Encrypted Storage</strong> — For sensitive data (tokens, PII, medical records): flutter_secure_storage (iOS Keychain, Android Keystore) for small secrets. encrypted_shared_preferences for encrypted key-value. SQLCipher for encrypted SQLite databases. Hive supports encryption with HiveCipher — AES-CBC with a password. Never store tokens in plain SharedPreferences or Hive without encryption.</li>
+      <li><strong>Local Database as Single Source of Truth</strong> — In offline-first architecture, the local database IS the source of truth. The UI reads from DB, not from API responses directly. The sync layer writes API responses to DB, and the DB layer notifies the UI via streams. This pattern (popularized by SQLDelight on Android) is what makes apps feel snappy and work offline.</li>
+      <li><strong>When to Use Multiple Storage Solutions</strong> — Production apps commonly use multiple storage layers: flutter_secure_storage for tokens, SharedPreferences for simple settings, Hive for API response cache, SQLite/Floor for complex offline data. Each tool for its strength. The Repository pattern abstracts this so the domain layer never knows which storage is used.</li>
+      <li><strong>Testing Local Storage</strong> — Use in-memory implementations for unit tests: Hive with Hive.init(tempDir) in setUp(). Floor with an in-memory database (openDatabase(&#39;:memory:&#39;)). SharedPreferences with SharedPreferences.setMockInitialValues({}). Never test business logic against real platform storage in unit tests.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === SharedPreferences — Simple Settings ===
+import &#39;package:shared_preferences/shared_preferences.dart&#39;;
+
+class AppSettings {
+  static const _themeKey = &#39;theme_dark&#39;;
+  static const _localeKey = &#39;locale&#39;;
+  static const _onboardedKey = &#39;onboarding_v2_complete&#39;; // Version your keys!
+
+  final SharedPreferences _prefs;
+  const AppSettings(this._prefs);
+
+  bool get isDarkMode =&gt; _prefs.getBool(_themeKey) ?? true;
+  Future&lt;void&gt; setDarkMode(bool value) =&gt; _prefs.setBool(_themeKey, value);
+
+  String get locale =&gt; _prefs.getString(_localeKey) ?? &#39;en&#39;;
+  Future&lt;void&gt; setLocale(String locale) =&gt; _prefs.setString(_localeKey, locale);
+
+  bool get isOnboarded =&gt; _prefs.getBool(_onboardedKey) ?? false;
+  Future&lt;void&gt; markOnboarded() =&gt; _prefs.setBool(_onboardedKey, true);
+}
+
+// === Hive — Fast NoSQL for Cached Objects ===
+import &#39;package:hive_flutter/hive_flutter.dart&#39;;
+
+// 1. Define a type-safe adapter
+@HiveType(typeId: 1)
+class CachedSurveyTemplate extends HiveObject {
+  @HiveField(0) late String id;
+  @HiveField(1) late String title;
+  @HiveField(2) late List&lt;String&gt; questionIds;
+  @HiveField(3) late DateTime cachedAt;
+  // RULE: add new fields at the END, never reorder existing ones!
+  @HiveField(4) String? version; // Added in v2 — safe to add
+}
+
+// 2. Setup in main()
+Future&lt;void&gt; setupHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(CachedSurveyTemplateAdapter());
+}
+
+// 3. Repository using Hive
+class SurveyTemplateCache {
+  static const _boxName = &#39;survey_templates&#39;;
+  late Box&lt;CachedSurveyTemplate&gt; _box;
+
+  Future&lt;void&gt; init() async =&gt; _box = await Hive.openBox(_boxName);
+
+  Future&lt;void&gt; saveTemplates(List&lt;CachedSurveyTemplate&gt; templates) async {
+    await _box.putAll({for (var t in templates) t.id: t});
+  }
+
+  List&lt;CachedSurveyTemplate&gt; getAll() =&gt; _box.values.toList();
+
+  CachedSurveyTemplate? getById(String id) =&gt; _box.get(id);
+
+  bool isStale(String id, Duration maxAge) {
+    final cached = _box.get(id);
+    if (cached == null) return true;
+    return DateTime.now().difference(cached.cachedAt) &gt; maxAge;
+  }
+}
+
+// === Floor — Type-Safe SQLite ORM ===
+import &#39;package:floor/floor.dart&#39;;
+
+// 1. Entity
+@Entity(tableName: &#39;survey_responses&#39;)
+class SurveyResponseEntity {
+  @PrimaryKey(autoGenerate: false)
+  final String id;
+  final String surveyId;
+  final String questionId;
+  final String answer;
+  final int createdAtMs;
+  final bool isSynced;
+
+  const SurveyResponseEntity({
+    required this.id,
+    required this.surveyId,
+    required this.questionId,
+    required this.answer,
+    required this.createdAtMs,
+    this.isSynced = false,
+  });
+}
+
+// 2. DAO
+@dao
+abstract class SurveyResponseDao {
+  @Query(&#39;SELECT * FROM survey_responses WHERE survey_id = :surveyId ORDER BY created_at_ms ASC&#39;)
+  Future&lt;List&lt;SurveyResponseEntity&gt;&gt; getResponsesForSurvey(String surveyId);
+
+  @Query(&#39;SELECT * FROM survey_responses WHERE is_synced = 0&#39;)
+  Future&lt;List&lt;SurveyResponseEntity&gt;&gt; getUnsyncedResponses();
+
+  @Insert(onConflict: OnConflictStrategy.replace)
+  Future&lt;void&gt; insertResponse(SurveyResponseEntity response);
+
+  @Query(&#39;UPDATE survey_responses SET is_synced = 1 WHERE id = :id&#39;)
+  Future&lt;void&gt; markSynced(String id);
+
+  @transaction
+  Future&lt;void&gt; saveResponsesBatch(List&lt;SurveyResponseEntity&gt; responses) async {
+    for (final r in responses) await insertResponse(r);
+  }
+}
+
+// 3. Database with Migration
+@Database(version: 2, entities: [SurveyResponseEntity])
+abstract class AppDatabase extends FloorDatabase {
+  SurveyResponseDao get surveyResponseDao;
+
+  static final migration1to2 = Migration(1, 2, (database) async {
+    await database.execute(&#39;ALTER TABLE survey_responses ADD COLUMN is_synced INTEGER NOT NULL DEFAULT 0&#39;);
+  });
+}
+
+// 4. Initialize with migration
+Future&lt;AppDatabase&gt; buildDatabase() async {
+  return await $FloorAppDatabase
+      .databaseBuilder(&#39;app_database.db&#39;)
+      .addMigrations([AppDatabase.migration1to2])
+      .build();
+}
+
+// === flutter_secure_storage — Encrypted Secrets ===
+import &#39;package:flutter_secure_storage/flutter_secure_storage.dart&#39;;
+
+class SecureTokenStorage {
+  final FlutterSecureStorage _storage;
+  static const _accessTokenKey = &#39;access_token&#39;;
+  static const _refreshTokenKey = &#39;refresh_token&#39;;
+
+  const SecureTokenStorage(this._storage);
+
+  Future&lt;void&gt; saveTokens({required String access, required String refresh}) async {
+    await Future.wait([
+      _storage.write(key: _accessTokenKey, value: access),
+      _storage.write(key: _refreshTokenKey, value: refresh),
+    ]);
+  }
+
+  Future&lt;String?&gt; getAccessToken() =&gt; _storage.read(key: _accessTokenKey);
+  Future&lt;String?&gt; getRefreshToken() =&gt; _storage.read(key: _refreshTokenKey);
+  Future&lt;void&gt; clearTokens() =&gt; _storage.deleteAll();
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> AppSettings wraps SharedPreferences with typed getters/setters — no raw key strings in calling code</li>
+      <li><span class="walk-num">2.</span> Version your SharedPreferences keys (_onboardedKey = &#39;onboarding_v2_complete&#39;) to allow resets on schema changes</li>
+      <li><span class="walk-num">3.</span> @HiveType(typeId: 1) registers this class with Hive&#39;s type system — typeId must be globally unique</li>
+      <li><span class="walk-num">4.</span> @HiveField indices map binary positions to Dart fields — never reorder, always add at the end</li>
+      <li><span class="walk-num">5.</span> The Hive Box is typed — getById() returns CachedSurveyTemplate?, not dynamic</li>
+      <li><span class="walk-num">6.</span> isStale() encapsulates cache freshness logic in the repository layer, not the ViewModel</li>
+      <li><span class="walk-num">7.</span> @Entity maps the Dart class to a SQLite table — Floor generates the CREATE TABLE SQL</li>
+      <li><span class="walk-num">8.</span> getUnsyncedResponses() is the key query for the sync engine — finds all responses pending upload</li>
+      <li><span class="walk-num">9.</span> @transaction ensures batch inserts are atomic — either all succeed or all roll back</li>
+      <li><span class="walk-num">10.</span> Migration from v1 to v2 adds a column with a default value — safe for existing users</li>
+      <li><span class="walk-num">11.</span> saveTokens() uses Future.wait for parallel writes — both tokens written simultaneously</li>
+      <li><span class="walk-num">12.</span> clearTokens() deletes ALL secure storage — used on logout to leave no credentials on device</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@HiveType(typeId: 0)
+class UserSettings extends HiveObject {
+  @HiveField(2) late String theme;
+  @HiveField(0) late String locale;
+  @HiveField(1) late bool notificationsEnabled;
+}
+
+// v2 — adding a new field
+@HiveType(typeId: 0)
+class UserSettings extends HiveObject {
+  @HiveField(0) late String locale;
+  @HiveField(1) late bool notificationsEnabled;
+  @HiveField(2) late String theme;
+  @HiveField(3) late String? displayName; // new field
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">The indices changed between v1 and v2. What happens to existing stored data?</div></details><details><summary>Show answer</summary><div class="answer">In v1, @HiveField(2) is &#39;theme&#39;. In v2, @HiveField(2) is still &#39;theme&#39; — OK. But the index ORDER in the source code changed (0,1,2 vs 2,0,1 in v1). Hive uses the numeric index value, not the declaration order, so this is actually safe IF the numeric values map to the same fields. However, this is a code readability and maintenance trap — always declare fields in index order to avoid confusion. The real risk: if a developer swapped indices (e.g., changed @HiveField(0) from &#39;locale&#39; to &#39;theme&#39;), existing stored data would silently assign the old &#39;locale&#39; bytes to the &#39;theme&#39; field, corrupting all user settings. Always add new fields at the next available index, never change existing field-to-index mappings.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Storing data locally is like choosing where to keep notes at school. Sticky notes on your desk (SharedPreferences) — great for &#39;homework due Friday&#39;, terrible for a whole textbook. A fast binder with tabs (Hive) — good for structured notes, but you can&#39;t easily cross-reference between sections. A library with an index system (SQLite) — slow to set up, but you can find any book by author, topic, or year. Floor is SQLite but the librarian builds the index for you automatically.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">SQLite is the most widely deployed database engine in the world — more deployments than all other databases combined. It&#39;s used in every iOS and Android device, every Chrome browser, every Firefox installation, and most aircraft. The Flutter app you ship stores data in the same database engine used by the space station.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the storage strategy for an offline-first field survey app with 3 user roles, survey templates, and survey responses. Specify: (1) what goes in flutter_secure_storage, (2) what goes in SharedPreferences, (3) what goes in Hive, (4) what goes in Floor, and (5) the migration strategy for adding a &#39;gps_coordinates&#39; field to survey responses in v2.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://pub.dev/packages/shared_preferences" target="_blank" rel="noopener noreferrer">SharedPreferences Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://docs.hivedb.dev/" target="_blank" rel="noopener noreferrer">Hive Documentation</a> <span class="res-source">(Hive Docs)</span></li>
+      <li><a href="https://pub.dev/packages/floor" target="_blank" rel="noopener noreferrer">Floor Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://pub.dev/packages/flutter_secure_storage" target="_blank" rel="noopener noreferrer">flutter_secure_storage</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://isar.dev/" target="_blank" rel="noopener noreferrer">Isar Database</a> <span class="res-source">(Isar Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=25">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./24-websockets-socketio-real-time-sync.html" rel="prev">← WebSockets, Socket.IO &amp; Real-time Sync</a>
+  <a class="nav-next" href="./26-offline-first-architecture-sync.html" rel="next">Offline-First Architecture &amp; Sync →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

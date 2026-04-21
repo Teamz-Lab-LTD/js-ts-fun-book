@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>emu8086/MASM Setup and Syntax Basics — Microprocessor… | Teamz Lab</title>
+<meta name="description" content="emu8086 is a free integrated development environment that emulates the 8086 microprocessor, letting you write, assemble, and debug assembly programs on a…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/29-emu8086masm-setup-and-syntax-basics.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/28-assembler-directives-labels-and-macros.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/30-your-first-8086-program.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="emu8086/MASM Setup and Syntax Basics">
+<meta property="og:description" content="emu8086 is a free integrated development environment that emulates the 8086 microprocessor, letting you write, assemble, and debug assembly programs on a…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/29-emu8086masm-setup-and-syntax-basics.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="emu8086/MASM Setup and Syntax Basics">
+<meta name="twitter:description" content="emu8086 is a free integrated development environment that emulates the 8086 microprocessor, letting you write, assemble, and debug assembly programs on a…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "emu8086/MASM Setup and Syntax Basics",
+  "description": "emu8086 is a free integrated development environment that emulates the 8086 microprocessor, letting you write, assemble, and debug assembly programs on a…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/29-emu8086masm-setup-and-syntax-basics.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 29
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "emu8086/MASM Setup and Syntax Basics",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/29-emu8086masm-setup-and-syntax-basics.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">emu8086/MASM Setup and Syntax Basics</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 29 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">emu8086/MASM Setup and Syntax Basics</h1>
+<p class="lesson-subtitle">Get your assembly toolkit running — write, assemble, and debug 8086 programs on a modern PC</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=29">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">emu8086 is like a flight simulator for microprocessors. A real 8086 chip is expensive and hard to wire up, just like a real airplane. The simulator gives you all the instruments (registers, flags, memory view) on screen, lets you practice (write and run code), and even lets you crash safely (bugs do not fry hardware). MASM is the control tower that translates your flight plan (source code) into actual flight commands (machine code).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>emu8086 is a free integrated development environment that emulates the 8086 microprocessor, letting you write, assemble, and debug assembly programs on a modern PC. MASM (Microsoft Macro Assembler) syntax is the Intel-style assembly language it uses, featuring simplified segment directives (.MODEL, .STACK, .DATA, .CODE) that organize programs into logical sections. Together, they provide a complete hands-on platform for learning 8086 assembly.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every microprocessor course in universities uses either emu8086, TASM (Turbo Assembler), or DOSBox+MASM for lab work. Industry professionals use the same MASM syntax when writing inline assembly in C/C++ for performance-critical code, boot loaders, or driver ISRs. Understanding the toolchain is essential for debugging embedded systems and reverse engineering.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What is emu8086?</strong> — emu8086 is a free 8086 microprocessor emulator and assembler. It provides a complete simulated 8086 environment: CPU registers, memory, I/O ports, a screen, and a keyboard — all on your modern Windows PC. It assembles, runs, and debugs 8086 code in one integrated tool.</li>
+      <li><strong>MASM Syntax Overview</strong> — MASM (Microsoft Macro Assembler) uses Intel syntax: destination comes first. It supports simplified segment directives (.MODEL, .DATA, .CODE), rich macro language, and typed data definitions. emu8086 uses MASM-compatible syntax.</li>
+      <li><strong>.MODEL Directive</strong> — .MODEL specifies the memory model. SMALL means one code segment and one data segment (max 64KB each) — sufficient for most 8086 learning programs. Other models: TINY (COM, one segment for everything), MEDIUM, COMPACT, LARGE.</li>
+      <li><strong>.STACK Directive</strong> — .STACK allocates space for the stack segment. The parameter specifies the size in bytes. 100h (256 bytes) is typical for small programs. The linker sets SS:SP to the top of this area.</li>
+      <li><strong>.DATA Directive</strong> — .DATA begins the data segment where you define variables using DB, DW, DD. The assembler groups all .DATA definitions into one segment. You must load DS with the data segment address at runtime (MOV AX, @DATA / MOV DS, AX).</li>
+      <li><strong>.CODE Directive and Entry Point</strong> — .CODE begins the code segment containing executable instructions. The PROC with the name matching the END directive is the entry point. END MAIN tells the linker that execution starts at the MAIN label.</li>
+      <li><strong>@DATA Symbol</strong> — @DATA is an assembler symbol that represents the segment address of the .DATA segment. You cannot MOV directly into DS (segment registers cannot be loaded with immediate values), so you use AX as an intermediary: MOV AX, @DATA / MOV DS, AX.</li>
+      <li><strong>Assembling and Linking (EXE)</strong> — The assembly process has two phases: (1) Assembling: MASM converts .ASM source to .OBJ object file. (2) Linking: LINK combines .OBJ files into an .EXE executable. In emu8086, both happen with one click of the &#39;compile&#39; button.</li>
+      <li><strong>COM vs EXE Format</strong> — COM files are simpler: one segment for everything, max 64KB, starts at offset 100h (after PSP). EXE files support multiple segments, larger programs, and have a header with relocation info. For learning, COM is easier; for real programs, EXE is more flexible.</li>
+      <li><strong>emu8086 User Interface</strong> — The emu8086 UI shows: source editor (write code), register panel (AX, BX, CX, DX, SI, DI, BP, SP, IP, flags), memory viewer (hex dump), stack viewer, variables list, and an emulated screen. The toolbar has: compile, run, single-step, and stop.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Complete emu8086 EXE template
+; This is the standard skeleton for every program
+.MODEL SMALL
+.STACK 100h
+
+.DATA
+  greeting DB &#39;Welcome to emu8086!&#39;, 0Dh, 0Ah, &#39;$&#39;
+  name_buf DB 20 DUP(&#39;$&#39;)
+  prompt   DB &#39;Enter your name: $&#39;
+
+.CODE
+MAIN PROC
+  ; Step 1: Initialize data segment
+  MOV AX, @DATA
+  MOV DS, AX
+
+  ; Step 2: Print the greeting
+  MOV AH, 09h
+  LEA DX, greeting
+  INT 21h
+
+  ; Step 3: Print prompt
+  MOV AH, 09h
+  LEA DX, prompt
+  INT 21h
+
+  ; Step 4: Read a string (simplified — read chars)
+  LEA SI, name_buf
+  MOV CX, 19        ; max 19 characters
+read_loop:
+  MOV AH, 01h       ; DOS: read char with echo
+  INT 21h
+  CMP AL, 0Dh       ; Enter key?
+  JE  done_read
+  MOV [SI], AL
+  INC SI
+  LOOP read_loop
+
+done_read:
+  ; Step 5: New line
+  MOV AH, 02h
+  MOV DL, 0Dh
+  INT 21h
+  MOV DL, 0Ah
+  INT 21h
+
+  ; Step 6: Print back the name
+  MOV AH, 09h
+  LEA DX, name_buf
+  INT 21h
+
+  ; Step 7: Exit to DOS
+  MOV AH, 4Ch
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> .MODEL SMALL / .STACK 100h — tell the assembler we want a small-model EXE with a 256-byte stack</li>
+      <li><span class="walk-num">2.</span> .DATA section — define three strings: a greeting, an input buffer (20 bytes filled with &#39;$&#39; as terminator), and a prompt</li>
+      <li><span class="walk-num">3.</span> MOV AX, @DATA / MOV DS, AX — essential setup: the CPU does not automatically set DS, so we manually point it to our data segment</li>
+      <li><span class="walk-num">4.</span> MOV AH, 09h / LEA DX, greeting / INT 21h — DOS function 09h prints a &#39;$&#39;-terminated string at DS:DX</li>
+      <li><span class="walk-num">5.</span> The read_loop uses DOS function 01h to read one character at a time, storing each in the buffer and advancing SI</li>
+      <li><span class="walk-num">6.</span> CMP AL, 0Dh / JE done_read — when the user presses Enter (carriage return = 0Dh), we stop reading</li>
+      <li><span class="walk-num">7.</span> After reading, we print CR+LF (0Dh, 0Ah) to move to a new line on the screen</li>
+      <li><span class="walk-num">8.</span> MOV AH, 09h / LEA DX, name_buf — print back the name. It works because we prefilled the buffer with &#39;$&#39; terminators</li>
+      <li><span class="walk-num">9.</span> MOV AH, 4Ch / INT 21h — standard DOS exit. Function 4Ch terminates the program and returns control to the DOS prompt</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>.MODEL SMALL
+.STACK 100h
+.DATA
+  msg DB &#39;Test$&#39;
+.CODE
+MAIN PROC
+  MOV AH, 09h
+  LEA DX, msg
+  INT 21h
+  MOV AH, 4Ch
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><details><summary>Need a hint?</summary><div class="hint">The program compiles fine but prints garbage instead of &#39;Test&#39;. What is missing before accessing data?</div></details><details><summary>Show answer</summary><div class="answer">DS is never initialized. Without MOV AX, @DATA / MOV DS, AX, the DS register points to whatever default value DOS set (usually the PSP), not the .DATA segment. LEA DX, msg calculates the offset correctly, but DS:DX points to the wrong segment. Add the two-line DS initialization at the start of MAIN PROC.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you want to learn to drive a race car. Instead of buying a real car (an actual 8086 chip and circuit board), you use a video game racing simulator (emu8086). The simulator has a steering wheel, pedals, and a dashboard (registers, memory, flags) that work just like the real thing. You can practice, crash, and try again without any risk. The instruction manual that tells you the rules of the road is MASM syntax.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">MASM has been around since 1981 — it was one of the first products Microsoft sold alongside MS-DOS. Despite being over 40 years old, Microsoft still ships a version of MASM (ml64.exe) with every copy of Visual Studio. The MASM syntax and directives you learn today work almost identically in modern x64 assembly programming.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Set up emu8086 on your computer (or use an online 8086 emulator). Write a .COM program (using ORG 100h) that prints your name and the current lesson number. Then convert it to an .EXE program (using .MODEL SMALL) and verify both produce the same output.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://emu8086-microprocessor-emulator.en.softonic.com/" target="_blank" rel="noopener noreferrer">emu8086 Download</a> <span class="res-source">(Softonic)</span></li>
+      <li><a href="https://learn.microsoft.com/en-us/cpp/assembler/masm/masm-for-x64-ml64-exe" target="_blank" rel="noopener noreferrer">MASM Getting Started Guide</a> <span class="res-source">(Microsoft Docs)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=dMBorbGPaEQ" target="_blank" rel="noopener noreferrer">emu8086 Installation and First Program</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://en.wikipedia.org/wiki/COM_file" target="_blank" rel="noopener noreferrer">COM vs EXE File Format</a> <span class="res-source">(Wikipedia)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=29">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./28-assembler-directives-labels-and-macros.html" rel="prev">← Assembler Directives, Labels, and Macros</a>
+  <a class="nav-next" href="./30-your-first-8086-program.html" rel="next">Your First 8086 Program →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

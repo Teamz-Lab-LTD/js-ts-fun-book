@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOS/BIOS Interrupts for Console I/O — Microprocessor A–Z | Teamz Lab</title>
+<meta name="description" content="DOS interrupts (INT 21h) and BIOS interrupts (INT 10h, INT 16h) provide ready-made services for console I/O without needing to program hardware directly.…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/35-hardware-vs-software-interrupts.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/37-memory-interfacing-with-ram-and-rom.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOS/BIOS Interrupts for Console I/O">
+<meta property="og:description" content="DOS interrupts (INT 21h) and BIOS interrupts (INT 10h, INT 16h) provide ready-made services for console I/O without needing to program hardware directly.…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DOS/BIOS Interrupts for Console I/O">
+<meta name="twitter:description" content="DOS interrupts (INT 21h) and BIOS interrupts (INT 10h, INT 16h) provide ready-made services for console I/O without needing to program hardware directly.…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "DOS/BIOS Interrupts for Console I/O",
+  "description": "DOS interrupts (INT 21h) and BIOS interrupts (INT 10h, INT 16h) provide ready-made services for console I/O without needing to program hardware directly.…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 36
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DOS/BIOS Interrupts for Console I/O",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">DOS/BIOS Interrupts for Console I/O</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 36 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">DOS/BIOS Interrupts for Console I/O</h1>
+<p class="lesson-subtitle">Put interrupts to work — use DOS and BIOS services for keyboard input, screen output, and program control</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=36">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">DOS and BIOS interrupts are like a restaurant menu. INT 21h is the main menu (DOS services) — you pick a dish number (function in AH) and the kitchen prepares it. INT 10h is the dessert menu (BIOS video). INT 16h is the drink menu (BIOS keyboard). You do not need to know how the kitchen works (hardware details) — you just tell the waiter (CPU) your order (AH = function number) and get the result in a register.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>DOS interrupts (INT 21h) and BIOS interrupts (INT 10h, INT 16h) provide ready-made services for console I/O without needing to program hardware directly. INT 21h functions handle character input (01h, 08h), string input (0Ah), character output (02h), string output (09h), and program exit (4Ch). INT 10h provides video control (cursor, colors, modes). INT 16h provides keyboard access. These are the system API of the 8086 DOS environment.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every DOS program — from WordPerfect to early games like DOOM — used these interrupts for I/O. BIOS interrupts are still used in modern PC boot sequences (UEFI calls are the successor). Understanding these services teaches you how system calls work: user programs request OS services through a controlled interrupt interface, which is exactly how Linux (INT 80h / SYSCALL) and Windows (INT 2Eh / SYSENTER) work today.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>INT 21h — DOS Services Overview</strong> — INT 21h is the primary DOS interrupt with over 80 functions. The function number goes in AH. Common console functions: 01h (read char with echo), 02h (write char), 08h (read char no echo), 09h (write string), 0Ah (buffered input), 4Ch (exit).</li>
+      <li><strong>Function 01h — Read Character with Echo</strong> — Waits for a keypress, echoes the character to the screen, and returns its ASCII code in AL. If the user presses an extended key (arrow, function key), AL returns 0 and a second call returns the scan code.</li>
+      <li><strong>Function 02h — Write Character</strong> — Displays the character in DL at the current cursor position. The cursor advances one position. For newlines, print both CR (0Dh) and LF (0Ah). This is the simplest output function — one character at a time.</li>
+      <li><strong>Function 09h — Write String</strong> — Prints a &#39;$&#39;-terminated string at DS:DX. Faster than printing character by character. The &#39;$&#39; is not printed — it just marks the end. This is the most common way to display text in 8086 DOS programs.</li>
+      <li><strong>Function 08h — Read Character Without Echo</strong> — Like function 01h but does NOT display the typed character. Useful for password input, menu selection, or &#39;Press any key&#39; prompts where you do not want the key shown on screen.</li>
+      <li><strong>Function 0Ah — Buffered String Input</strong> — Reads an entire line (until Enter) into a buffer. The buffer must start with max-length byte, then an empty byte for actual-length (DOS fills it). Characters follow. More practical than single-character input for names, commands, etc.</li>
+      <li><strong>Function 4Ch — Exit with Return Code</strong> — Terminates the program and returns control to DOS. AL holds the return code (0 = success). Batch files can check this with IF ERRORLEVEL. Always use 4Ch for clean exit — older methods (INT 20h, RET) have limitations.</li>
+      <li><strong>INT 10h — BIOS Video Services</strong> — INT 10h provides low-level video control through the BIOS, bypassing DOS. Function 00h sets video mode, 02h sets cursor position, 06h scrolls screen, 09h writes character with attribute, 0Eh writes in teletype mode. Gives you color and cursor control.</li>
+      <li><strong>INT 16h — BIOS Keyboard Services</strong> — INT 16h accesses the keyboard at the BIOS level. Function 00h waits for a key (returns ASCII in AL, scan code in AH). Function 01h checks if a key is available without waiting (ZF=0 if key ready). Lower level than DOS INT 21h keyboard functions.</li>
+      <li><strong>INT 10h Function 0Eh — Teletype Output</strong> — Writes a character at the current cursor position and advances the cursor automatically. Handles CR, LF, BS, and BEL control characters. Simpler than the DOS function 02h because it works without DOS — useful in boot code.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Program: Interactive menu with colored output
+; Demonstrates INT 21h and INT 10h together
+.MODEL SMALL
+.STACK 100h
+.DATA
+  menu   DB 0Dh, 0Ah
+         DB &#39;=== 8086 I/O Demo ===&#39;, 0Dh, 0Ah
+         DB &#39;1. Say Hello&#39;, 0Dh, 0Ah
+         DB &#39;2. Echo input&#39;, 0Dh, 0Ah
+         DB &#39;3. Colored text&#39;, 0Dh, 0Ah
+         DB &#39;4. Exit&#39;, 0Dh, 0Ah
+         DB &#39;Choice: $&#39;
+  hello  DB 0Dh, 0Ah, &#39;Hello, 8086 World!&#39;, 0Dh, 0Ah, &#39;$&#39;
+  echo_p DB 0Dh, 0Ah, &#39;Type a char: $&#39;
+  echo_r DB 0Dh, 0Ah, &#39;You typed: $&#39;
+  color_msg DB &#39;COLORFUL!&#39;, 0
+  bye    DB 0Dh, 0Ah, &#39;Goodbye!&#39;, 0Dh, 0Ah, &#39;$&#39;
+
+.CODE
+MAIN PROC
+  MOV AX, @DATA
+  MOV DS, AX
+
+menu_loop:
+  ; Display menu
+  MOV AH, 09h
+  LEA DX, menu
+  INT 21h
+
+  ; Read choice (no echo)
+  MOV AH, 08h
+  INT 21h
+
+  CMP AL, &#39;1&#39;
+  JE opt_hello
+  CMP AL, &#39;2&#39;
+  JE opt_echo
+  CMP AL, &#39;3&#39;
+  JE opt_color
+  CMP AL, &#39;4&#39;
+  JE opt_exit
+  JMP menu_loop       ; invalid — show menu again
+
+opt_hello:
+  MOV AH, 09h
+  LEA DX, hello
+  INT 21h
+  JMP menu_loop
+
+opt_echo:
+  MOV AH, 09h
+  LEA DX, echo_p
+  INT 21h
+
+  MOV AH, 01h         ; read with echo
+  INT 21h              ; AL = typed character
+  PUSH AX
+
+  MOV AH, 09h
+  LEA DX, echo_r
+  INT 21h
+
+  POP AX
+  MOV DL, AL
+  MOV AH, 02h
+  INT 21h              ; display the character again
+  JMP menu_loop
+
+opt_color:
+  ; Set cursor to row 12, col 30
+  MOV AH, 02h
+  MOV BH, 0
+  MOV DH, 12           ; row
+  MOV DL, 30           ; column
+  INT 10h
+
+  ; Print each char in different color
+  LEA SI, color_msg
+  MOV BL, 09h          ; starting color (bright blue)
+print_color:
+  LODSB
+  CMP AL, 0
+  JE color_done
+  MOV AH, 09h          ; BIOS write char + attrib
+  MOV BH, 0
+  MOV CX, 1
+  INT 10h
+
+  ; Advance cursor manually
+  PUSH AX
+  MOV AH, 03h          ; get cursor position
+  MOV BH, 0
+  INT 10h              ; DH=row, DL=col
+  INC DL               ; move right
+  MOV AH, 02h          ; set cursor position
+  INT 10h
+  POP AX
+
+  INC BL               ; next color
+  JMP print_color
+color_done:
+  JMP menu_loop
+
+opt_exit:
+  MOV AH, 09h
+  LEA DX, bye
+  INT 21h
+  MOV AX, 4C00h
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> menu_loop: — the program loops back here after each menu option, creating an interactive menu-driven application</li>
+      <li><span class="walk-num">2.</span> MOV AH, 08h / INT 21h — read choice without echo, so the typed digit is not shown (cleaner UI)</li>
+      <li><span class="walk-num">3.</span> CMP AL, &#39;1&#39; through &#39;4&#39; — dispatch based on the ASCII code of the keypress. JE jumps to the matching handler</li>
+      <li><span class="walk-num">4.</span> opt_echo: reads a character with function 01h (echo), then prints it again with function 02h. PUSH/POP AX preserves it across the DOS print call</li>
+      <li><span class="walk-num">5.</span> INT 10h AH=02h — BIOS service to set the cursor position. DH=row, DL=column, BH=page. This positions our colored text</li>
+      <li><span class="walk-num">6.</span> INT 10h AH=09h — BIOS write character with attribute. BL = color attribute (foreground + background), CX = repeat count. Unlike DOS, this does NOT advance the cursor</li>
+      <li><span class="walk-num">7.</span> INT 10h AH=03h — get current cursor position so we can manually advance DL by 1 to move right after each colored character</li>
+      <li><span class="walk-num">8.</span> INC BL — cycles through colors for each letter, creating a rainbow effect. BL wraps through 16 foreground colors</li>
+      <li><span class="walk-num">9.</span> LODSB / CMP AL, 0 — the color_msg string is null-terminated (not &#39;$&#39;) because we print character by character through BIOS, not DOS</li>
+      <li><span class="walk-num">10.</span> MOV AX, 4C00h / INT 21h — clean exit with return code 0. AH=4Ch (function), AL=00h (return code), combined into one MOV</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>.DATA
+  buf DB 10, 0, 10 DUP(0)
+  msg DB &#39;You said: $&#39;
+.CODE
+  MOV AH, 0Ah
+  LEA DX, buf
+  INT 21h
+  MOV AH, 09h
+  LEA DX, buf+2
+  INT 21h</code></pre><details><summary>Need a hint?</summary><div class="hint">What terminator does function 0Ah put at the end of input? What does function 09h need?</div></details><details><summary>Show answer</summary><div class="answer">Bug: Function 0Ah terminates input with CR (0Dh), not &#39;$&#39;. When function 09h tries to print the buffer, it does not find &#39;$&#39; and prints garbage past the input until it randomly hits a &#39;$&#39; in memory. Fix: after INT 21h (0Ah), find the end of input using the count in buf[1], and place a &#39;$&#39; after the last character: MOV BL, buf[1] / XOR BH, BH / MOV buf[BX+2], &#39;$&#39;.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you want to talk to people in a big building. INT 21h is the reception desk — you say &#39;I want service number 9&#39; (AH=09h, print a message) and the receptionist does it. INT 10h is the building maintenance office — they control the lights and signs (screen). INT 16h is the mailroom — they check if you have any letters (keyboard input). You do not need to know how the plumbing works (hardware) — you just ask the right office (interrupt) for the right service (function number).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">DOS function 09h uses &#39;$&#39; as a string terminator because CP/M (the operating system DOS was based on) used &#39;$&#39;. This meant you could never print a literal &#39;$&#39; using function 09h. The workaround was to use function 02h to print &#39;$&#39; as a single character. This quirk survived through the entire DOS era — an example of backward compatibility trumping good design.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete text-mode application that: (1) clears the screen using INT 10h function 06h, (2) draws a border made of box-drawing characters (like frame using +-|), (3) accepts a name via INT 21h function 0Ah, (4) displays a personalized greeting in a specific color using INT 10h function 09h, and (5) waits for a keypress then exits. Make the greeting centered on the screen.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://en.wikipedia.org/wiki/DOS_API" target="_blank" rel="noopener noreferrer">DOS INT 21h Function List</a> <span class="res-source">(Wikipedia)</span></li>
+      <li><a href="https://en.wikipedia.org/wiki/BIOS_interrupt_call" target="_blank" rel="noopener noreferrer">BIOS Interrupt Calls</a> <span class="res-source">(Wikipedia)</span></li>
+      <li><a href="https://www.ctyme.com/rbrown.htm" target="_blank" rel="noopener noreferrer">Ralph Brown&#39;s Interrupt List</a> <span class="res-source">(CTYME)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=2VF_wPkiBJY" target="_blank" rel="noopener noreferrer">DOS and BIOS Interrupts Tutorial</a> <span class="res-source">(YouTube)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=36">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./35-hardware-vs-software-interrupts.html" rel="prev">← Hardware vs Software Interrupts</a>
+  <a class="nav-next" href="./37-memory-interfacing-with-ram-and-rom.html" rel="next">Memory Interfacing with RAM and ROM →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

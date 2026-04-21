@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications, Channels, Push Flows, Deep Links &amp; App… | Teamz Lab</title>
+<meta name="description" content="Notifications re-engage users when the app is not in focus. Channels give users granular control over notification categories. Deep links and App Links…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notifications, Channels, Push Flows, Deep Links &amp; App Links">
+<meta property="og:description" content="Notifications re-engage users when the app is not in focus. Channels give users granular control over notification categories. Deep links and App Links…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Notifications, Channels, Push Flows, Deep Links &amp; App Links">
+<meta name="twitter:description" content="Notifications re-engage users when the app is not in focus. Channels give users granular control over notification categories. Deep links and App Links…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Notifications, Channels, Push Flows, Deep Links & App Links",
+  "description": "Notifications re-engage users when the app is not in focus. Channels give users granular control over notification categories. Deep links and App Links…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 33
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Notifications, Channels, Push Flows, Deep Links & App Links",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Notifications, Channels, Push Flows, Deep Links &amp; App Links</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 33 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Notifications, Channels, Push Flows, Deep Links &amp; App Links</h1>
+<p class="lesson-subtitle">Drive users back into your app with precision and intent</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A NotificationChannel is like a radio station — you create it once (Classic Rock, News, Sports), and users tune in or tune out per channel from their settings. Each notification is a broadcast on that station. Deep links are like street addresses — anyone can navigate to your specific screen if they know the address. App Links are verified addresses — they come with an official deed (Digital Asset Links) proving you own the building.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Notifications re-engage users when the app is not in focus. Channels give users granular control over notification categories. Deep links and App Links route external URLs directly to specific screens within your app, enabling seamless flows from push notifications, emails, marketing campaigns, and shared content.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In Hazira Khata school management app, three notification channels were created: Attendance Alerts (HIGH importance), Fee Reminders (DEFAULT), and General Announcements (LOW). FCM data messages built notifications with deep link PendingIntents to the specific student&#39;s profile. App Links on the school&#39;s domain meant clicking a shared attendance report URL opened the app directly without a browser detour.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>NotificationChannel (Android 8+)</strong> — Channels must be created before posting any notification. createNotificationChannel() is idempotent — safe to call on every app start. Each channel has its own importance level, sound, vibration, and can be controlled by the user independently in Settings.</li>
+      <li><strong>Notification importance levels</strong> — IMPORTANCE_HIGH (heads-up, sound), IMPORTANCE_DEFAULT (sound, no heads-up), IMPORTANCE_LOW (no sound), IMPORTANCE_MIN (silent, no status bar icon). Set at channel creation — users can lower but not raise importance. Choose conservatively to preserve user trust.</li>
+      <li><strong>NotificationCompat.Builder</strong> — Always use NotificationCompat (not Notification.Builder) for backward compatibility. Key fields: setSmallIcon (required), setContentTitle, setContentText, setContentIntent (PendingIntent for tap), setAutoCancel(true) (dismiss on tap), setStyle for expanded layouts (BigTextStyle, InboxStyle, MessagingStyle).</li>
+      <li><strong>PendingIntent for notification tap</strong> — The PendingIntent opens the correct screen when the user taps the notification. Use TaskStackBuilder to build a proper back stack so the user doesn&#39;t get stranded on the target screen with no back navigation.</li>
+      <li><strong>FCM notification vs data messages</strong> — Notification messages: system handles display when app is background/killed (no code needed). Data messages: always delivered to onMessageReceived(). A combined message behaves as a notification message when backgrounded. For maximum control, use data-only messages and build notifications yourself.</li>
+      <li><strong>Deep links with custom scheme</strong> — myapp://product/123 — define an intent filter with action.VIEW, category.DEFAULT, category.BROWSABLE, and data scheme=&#39;myapp&#39;. Handle in Activity via intent.data URI parsing. Works from any app, email, SMS, but browsers may warn users about unknown schemes.</li>
+      <li><strong>App Links (HTTP/HTTPS verified)</strong> — https://teamzlab.com/product/123 — same as deep links but with the autoVerify=&#39;true&#39; attribute on the intent filter. Android verifies ownership by fetching /.well-known/assetlinks.json from your domain. Verified links open directly in your app with no disambiguation dialog.</li>
+      <li><strong>assetlinks.json</strong> — Must be hosted at https://yourdomain.com/.well-known/assetlinks.json. Contains your app&#39;s package name and SHA-256 signing certificate fingerprint. Get fingerprint via: keytool -list -v -keystore release.jks. Must be served with Content-Type: application/json.</li>
+      <li><strong>Handling deep link in Activity</strong> — In onCreate() and onNewIntent(): val uri = intent.data ?: return. Parse uri.pathSegments to extract parameters. For Jetpack Navigation, use NavController.handleDeepLink(intent) or define deepLinks in the nav graph XML.</li>
+      <li><strong>NavDeepLink in Compose/Navigation</strong> — In the nav graph: deepLinks = listOf(navDeepLink { uriPattern = &quot;https://teamzlab.com/product/{id}&quot; }). The {id} is automatically extracted as a NavArgument. Use NavController.navigate(deepLinkUri) programmatically from notification PendingIntent.</li>
+      <li><strong>Notification POST_NOTIFICATIONS permission (Android 13+)</strong> — Android 13 (API 33) requires POST_NOTIFICATIONS permission — it&#39;s a runtime permission like CAMERA. Request it with ActivityResultContracts.RequestPermission(). Without it, no notifications are shown for your app. In Hazira Khata school app, this was a critical onboarding step.</li>
+      <li><strong>Deep link intent flags</strong> — When launching an Activity from a notification deep link, use FLAG_ACTIVITY_SINGLE_TOP to avoid stacking duplicate Activities. Combine with TaskStackBuilder for correct back navigation. FLAG_ACTIVITY_CLEAR_TOP removes all instances above the target in the back stack.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. Create notification channels on app start (idempotent)
+fun createNotificationChannels(context: Context) {
+    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+        val channels = listOf(
+            NotificationChannel(
+                &quot;attendance_alerts&quot;,
+                &quot;Attendance Alerts&quot;,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply { description = &quot;Real-time attendance notifications&quot; },
+
+            NotificationChannel(
+                &quot;fee_reminders&quot;,
+                &quot;Fee Reminders&quot;,
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply { description = &quot;Monthly fee reminders&quot; }
+        )
+        val nm = context.getSystemService(NotificationManager::class.java)
+        channels.forEach { nm.createNotificationChannel(it) }
+    }
+}
+
+// 2. Build notification with deep link PendingIntent
+fun showAttendanceNotification(context: Context, studentId: String, name: String) {
+    // Build back stack: Home -&gt; StudentDetail
+    val stackBuilder = TaskStackBuilder.create(context).apply {
+        addNextIntentWithParentStack(
+            Intent(context, StudentDetailActivity::class.java).apply {
+                data = Uri.parse(&quot;https://hazirakhata.com/student/$studentId&quot;)
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+        )
+    }
+    val pendingIntent = stackBuilder.getPendingIntent(
+        0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    val notification = NotificationCompat.Builder(context, &quot;attendance_alerts&quot;)
+        .setSmallIcon(R.drawable.ic_attendance)
+        .setContentTitle(&quot;Attendance Marked&quot;)
+        .setContentText(&quot;$name marked absent today&quot;)
+        .setStyle(NotificationCompat.BigTextStyle()
+            .bigText(&quot;$name was marked absent at 9:15 AM. Tap to view full report.&quot;))
+        .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .build()
+
+    NotificationManagerCompat.from(context)
+        .notify(studentId.hashCode(), notification)
+}
+
+// 3. App Links intent filter in AndroidManifest.xml
+/*
+&lt;activity android:name=&quot;.StudentDetailActivity&quot;&gt;
+    &lt;intent-filter android:autoVerify=&quot;true&quot;&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot;/&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot;/&gt;
+        &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot;/&gt;
+        &lt;data android:scheme=&quot;https&quot;
+              android:host=&quot;hazirakhata.com&quot;
+              android:pathPrefix=&quot;/student/&quot;/&gt;
+    &lt;/intent-filter&gt;
+&lt;/activity&gt;
+*/
+
+// 4. Handle deep link in Activity
+class StudentDetailActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleDeepLink(intent)
+    }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleDeepLink(intent)
+    }
+    private fun handleDeepLink(intent: Intent) {
+        val uri = intent.data ?: return
+        val studentId = uri.lastPathSegment ?: return
+        viewModel.loadStudent(studentId)
+    }
+}
+
+// 5. Request POST_NOTIFICATIONS on Android 13+
+val requestPermission = registerForActivityResult(
+    ActivityResultContracts.RequestPermission()
+) { granted -&gt;
+    if (!granted) showPermissionRationale()
+}
+
+if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.TIRAMISU) {
+    requestPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> createNotificationChannel() is idempotent — calling it multiple times with the same ID does nothing, so calling it in Application.onCreate() every launch is safe and recommended.</li>
+      <li><span class="walk-num">2.</span> IMPORTANCE_HIGH enables heads-up notifications (pop-up banner) and sound — use only for time-sensitive, user-requested alerts to avoid channel importance being degraded by the user.</li>
+      <li><span class="walk-num">3.</span> TaskStackBuilder.addNextIntentWithParentStack() reads the parentActivityName from the manifest to build the correct back stack automatically.</li>
+      <li><span class="walk-num">4.</span> PendingIntent.FLAG_IMMUTABLE is required on Android 12+ — always combine with FLAG_UPDATE_CURRENT so the PendingIntent&#39;s extras are updated if re-created.</li>
+      <li><span class="walk-num">5.</span> NotificationCompat.Builder uses the channel ID string — if the channel doesn&#39;t exist on Android 8+, the notification is silently dropped.</li>
+      <li><span class="walk-num">6.</span> BigTextStyle.bigText() shows expanded text when the user pulls down the notification — the regular contentText shows in the collapsed state.</li>
+      <li><span class="walk-num">7.</span> setAutoCancel(true) dismisses the notification when tapped — without this, the notification remains in the tray after the user taps it.</li>
+      <li><span class="walk-num">8.</span> android:autoVerify=&#39;true&#39; in the intent filter triggers Android&#39;s automatic domain verification — without it, the link shows a disambiguation dialog.</li>
+      <li><span class="walk-num">9.</span> handleDeepLink() is called from both onCreate() and onNewIntent() — onCreate handles cold start, onNewIntent handles warm start (Activity already in back stack).</li>
+      <li><span class="walk-num">10.</span> uri.lastPathSegment extracts the last path component — for /student/123 it returns &#39;123&#39;. For complex URLs use uri.getQueryParameter(key) for query params.</li>
+      <li><span class="walk-num">11.</span> Build.VERSION.SDK_INT &gt;= TIRAMISU check prevents requesting POST_NOTIFICATIONS on older Android versions where the permission doesn&#39;t exist.</li>
+      <li><span class="walk-num">12.</span> NotificationManagerCompat.from(context).notify(id, notification) — using studentId.hashCode() as the notification ID groups updates for the same student.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>fun showOrderNotification(context: Context, orderId: String) {
+    // Bug 1 — channel not created before posting
+    val notification = NotificationCompat.Builder(context, &quot;order_updates&quot;)
+        .setContentTitle(&quot;Order Shipped!&quot;)
+        .setContentText(&quot;Your order #$orderId is on the way&quot;)
+        // Bug 2 — missing small icon
+        .setContentIntent(
+            PendingIntent.getActivity(
+                context, 0,
+                Intent(context, OrderActivity::class.java).apply {
+                    putExtra(&quot;order_id&quot;, orderId)
+                },
+                0  // Bug 3
+            )
+        )
+        .build()
+
+    NotificationManagerCompat.from(context).notify(1, notification)  // Bug 4
+}
+
+// AndroidManifest.xml
+/*
+&lt;activity android:name=&quot;.ProductActivity&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot;/&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot;/&gt;
+        &lt;data android:scheme=&quot;https&quot;
+              android:host=&quot;myapp.com&quot;
+              android:pathPrefix=&quot;/product/&quot;/&gt;
+    &lt;/intent-filter&gt;  Bug 5
+&lt;/activity&gt;
+*/</code></pre><details><summary>Need a hint?</summary><div class="hint">Check channel creation timing, required notification fields, PendingIntent flags, notification ID collision, and App Links intent filter completeness.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: The notification channel &#39;order_updates&#39; is never created before posting — on Android 8+ this silently drops the notification. Fix: call NotificationManagerCompat.createNotificationChannel() or NotificationManager.createNotificationChannel() at app startup (Application.onCreate) before any notification is posted. Bug 2: setSmallIcon() is missing — this is a required field. A notification without a small icon will throw an exception on some Android versions and will never display. Fix: add .setSmallIcon(R.drawable.ic_order) to the builder. Bug 3: PendingIntent flags are 0 — on Android 12+ this throws IllegalArgumentException because PendingIntents must specify FLAG_IMMUTABLE or FLAG_MUTABLE. Fix: use PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE. Bug 4: All order notifications use the same hardcoded ID (1) — if two orders ship simultaneously, the second notification silently replaces the first. Fix: use orderId.hashCode() as the notification ID to give each order a unique notification. Bug 5: The intent filter for App Links is missing android:autoVerify=&#39;true&#39; and is missing the BROWSABLE category — without autoVerify, Android never verifies domain ownership and shows a disambiguation dialog instead of opening the app directly. Fix: add android:autoVerify=&#39;true&#39; to the intent-filter element and add &lt;category android:name=&#39;android.intent.category.BROWSABLE&#39;/&gt; inside the filter.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">A notification channel is like a TV channel — your app creates a &#39;Sports&#39; channel and a &#39;News&#39; channel. Users can mute the News channel in their TV settings but keep Sports on. Deep links are like shortcuts — someone texts you &#39;go to room 42&#39; and you know exactly where to go. App Links are like a VIP pass — the app has officially proven it owns that web address, so your phone skips asking and just opens the app.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Android verifies App Links by making an HTTP request to your domain&#39;s /.well-known/assetlinks.json file — not during app install, but asynchronously in the background. If the verification fails (404, wrong certificate, HTTP instead of HTTPS), Android falls back silently to showing the disambiguation dialog. You can check verification status with: adb shell pm get-app-links --user cur com.yourpackage</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a production notification system: (1) Create three channels with appropriate importance levels: ORDER_UPDATES (HIGH), PROMOTIONS (LOW), SYSTEM_ALERTS (DEFAULT); (2) A function that builds a notification for an order update with a BigTextStyle expanded view, two action buttons (&#39;Track Order&#39; and &#39;Contact Support&#39;), each with their own deep link PendingIntent, and correct TaskStackBuilder back stack; (3) Handle the deep link in an Activity supporting both cold start (onCreate) and warm start (onNewIntent); (4) Write the assetlinks.json content for your domain; (5) Request POST_NOTIFICATIONS on Android 13+ with rationale shown on denial.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/develop/ui/views/notifications/channels" target="_blank" rel="noopener noreferrer">Create and Manage Notification Channels</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/training/app-links/verify-android-applinks" target="_blank" rel="noopener noreferrer">Android App Links — Verification Guide</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/training/app-links/deep-linking" target="_blank" rel="noopener noreferrer">Create Deep Links to App Content</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://firebase.google.com/docs/cloud-messaging/concept-options" target="_blank" rel="noopener noreferrer">FCM Message Types</a> <span class="res-source">(Firebase Docs)</span></li>
+      <li><a href="https://developer.android.com/develop/ui/views/notifications/notification-permission" target="_blank" rel="noopener noreferrer">Notification Permission (POST_NOTIFICATIONS) Best Practices</a> <span class="res-source">(Android Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./32-workmanager-background-tasks-foreground-services-alarm.html" rel="prev">← WorkManager, Background Tasks…</a>
+  <a class="nav-next" href="./34-android-permissions-storage-changes-privacy-safe-handling.html" rel="next">Android Permissions, Storage Changes &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Permissions Audit: What You Should Revoke… | Teamz Lab</title>
+<meta name="description" content="An app permissions audit is the process of reviewing and revoking unnecessary permissions that apps have on your phone. Every Android app can request access…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-phone-health/20-app-permissions-audit-what-you-should-revoke.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-phone-health/21-lock-screen-widgets-for-real-time-monitoring.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="App Permissions Audit: What You Should Revoke">
+<meta property="og:description" content="An app permissions audit is the process of reviewing and revoking unnecessary permissions that apps have on your phone. Every Android app can request access…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-phone-health/20-app-permissions-audit-what-you-should-revoke.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="App Permissions Audit: What You Should Revoke">
+<meta name="twitter:description" content="An app permissions audit is the process of reviewing and revoking unnecessary permissions that apps have on your phone. Every Android app can request access…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "App Permissions Audit: What You Should Revoke",
+  "description": "An app permissions audit is the process of reviewing and revoking unnecessary permissions that apps have on your phone. Every Android app can request access…",
+  "url": "https://learn.teamzlab.com/lessons/android-phone-health/20-app-permissions-audit-what-you-should-revoke.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Phone Health: Battery, Privacy, Performance & Security",
+    "url": "https://learn.teamzlab.com/c/android-phone-health.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 20
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Phone Health",
+      "item": "https://learn.teamzlab.com/c/android-phone-health.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "App Permissions Audit: What You Should Revoke",
+      "item": "https://learn.teamzlab.com/lessons/android-phone-health/20-app-permissions-audit-what-you-should-revoke.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-phone-health.html">Android Phone Health</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-phone-health.html">Android Phone Health</a> / <span aria-current="page">App Permissions Audit: What You Should Revoke</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 20 of 25</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">App Permissions Audit: What You Should Revoke</h1>
+<p class="lesson-subtitle">Take back control of what apps can access on your phone</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=20">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">App permissions are like giving out keys to your house. When you install a flashlight app and it asks for access to your contacts, camera, microphone, and location — that is like a plumber asking for keys to your bedroom, your car, and your diary. They only need access to the pipes! Most people hand out these &#39;keys&#39; without thinking, and forget they ever did. A permissions audit is like going through all your spare keys and taking back the ones you should never have given out.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>An app permissions audit is the process of reviewing and revoking unnecessary permissions that apps have on your phone. Every Android app can request access to sensitive features like your camera, microphone, location, contacts, and files. Many apps request far more permissions than they actually need — either due to lazy development or intentional data collection. Auditing permissions means checking each app&#39;s access, revoking what is unnecessary, and applying the &#39;least privilege principle&#39; so apps only have the minimum access needed to function.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Sofia downloaded a popular photo editing app that requested camera, microphone, contacts, location, phone, and storage permissions. She granted everything without reading. Months later, she noticed unusual targeted ads matching conversations she had at home. Using DeviceGPT, she discovered the photo app had microphone access and had been running background processes. She revoked all permissions except camera and storage — the only ones the app actually needed. The app continued working perfectly. She then audited her entire phone and found 12 apps with microphone access, 18 with location access, and 8 with contacts access that did not need any of it.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Dangerous Permissions</strong> — Android groups permissions by danger level. &#39;Normal&#39; permissions (like internet access) are granted automatically. But &#39;dangerous&#39; permissions require your approval because they access personal data. The most sensitive are: Camera, Microphone, Location, Contacts, Phone, SMS, Storage, and Body Sensors. A 2024 study found the average Android user has granted 75+ dangerous permissions across all their apps.</li>
+      <li><strong>Which Apps Have What Access</strong> — You can see every permission granted to every app on your phone right now. Most people are shocked when they check. That game you downloaded 2 years ago? It might still have camera and microphone access. The weather app? It might be tracking your location 24/7. A 2023 study found that 45% of flashlight apps requested location data they absolutely did not need.</li>
+      <li><strong>The Least Privilege Principle</strong> — In security, the &#39;least privilege principle&#39; means giving only the minimum access needed to function. A calculator needs zero special permissions. A camera app needs camera access but not your contacts. A maps app needs location but not your microphone. If an app stops working after revoking a permission, you can always grant it back — but most apps work fine without permissions they should not have had.</li>
+      <li><strong>Location Permission: The Big Three Options</strong> — Android gives you fine-grained control over location access. &#39;While using the app&#39; is the safest for most apps — Maps gets your location only when it is open. &#39;All the time&#39; should be reserved for very few apps (like Find My Device). &#39;Precise vs Approximate&#39; is another key choice — a weather app only needs your city, not your exact street address.</li>
+      <li><strong>Background Activity: The Silent Data Thief</strong> — Some apps run in the background and continue accessing permissions even when you are not using them. A 2024 report found that the average Android phone has 30-40 apps running background processes at any given time. Background location tracking is the most concerning — some apps collect your location hundreds of times per day without you ever opening them.</li>
+      <li><strong>Clipboard Access: The Hidden Risk</strong> — When you copy a password or credit card number, it sits on your clipboard. Android 12+ shows a notification when an app reads your clipboard, but older versions do not. Some apps were caught reading clipboard contents every few seconds — including passwords, addresses, and private messages you copied. TikTok was famously caught doing this in 2020.</li>
+      <li><strong>Nearby Devices &amp; Bluetooth Permissions</strong> — Android 12+ introduced the &#39;Nearby Devices&#39; permission. Apps that request Bluetooth access can scan for and connect to nearby devices — which can reveal your location, the devices you own, and even your daily patterns. A Bluetooth beacon at a store entrance can track how often you visit. Only grant Nearby Devices permission to apps that genuinely need to connect to other devices.</li>
+      <li><strong>Permission Groups Explained</strong> — Android organizes permissions into groups. Granting one permission in a group used to grant all permissions in that group. Modern Android versions are more granular, but it is still important to understand groups. For example, the Phone group includes making calls, reading call logs, and reading your phone number. Granting &#39;Phone&#39; access may give more access than you expect.</li>
+      <li><strong>How to Do a Full Permission Audit</strong> — A permission audit means reviewing every app&#39;s permissions and revoking what is unnecessary. Start with the most sensitive permissions (camera, microphone, location) and check which apps have access. Then go app by app for your most-used apps and review all their permissions. Do this once a month — it takes about 5 minutes after the first time.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>╔══════════════════════════════════════╗
+║   🔐 APP PERMISSION AUDIT GUIDE 🔐  ║
+╠══════════════════════════════════════╣
+║                                      ║
+║  PHASE 1: CRITICAL PERMISSIONS       ║
+║  Settings → Privacy → Permission Mgr ║
+║                                      ║
+║  □ Camera: _____ apps have access    ║
+║    Keep for: Camera, video call apps ║
+║    Revoke from: Everything else      ║
+║                                      ║
+║  □ Microphone: _____ apps            ║
+║    Keep for: Voice/video call apps   ║
+║    Revoke from: Everything else      ║
+║                                      ║
+║  □ Location: _____ apps              ║
+║    &#39;All the time&#39;: Minimize this!    ║
+║    Switch most to: While Using       ║
+║    Switch to: Approximate (not exact)║
+║                                      ║
+║  PHASE 2: HIGH RISK PERMISSIONS      ║
+║  □ Contacts: _____ apps              ║
+║    Need: Phone, messaging apps       ║
+║    Revoke: Games, utilities, etc.    ║
+║                                      ║
+║  □ Phone: _____ apps                 ║
+║    Need: Phone/dialer apps only      ║
+║                                      ║
+║  □ SMS: _____ apps                   ║
+║    Need: Messaging, 2FA apps only    ║
+║                                      ║
+║  □ Storage/Files: _____ apps         ║
+║    Need: File managers, editors      ║
+║    Revoke: Apps that don&#39;t save files║
+║                                      ║
+║  PHASE 3: CLEANUP                    ║
+║  □ Enable auto-revoke for all apps   ║
+║  □ Delete apps you haven&#39;t used      ║
+║    in 3+ months                      ║
+║  □ Run DeviceGPT permission scan     ║
+║  □ Set monthly reminder to re-audit  ║
+║                                      ║
+║  TOTAL PERMISSIONS REVOKED: _____    ║
+╚══════════════════════════════════════╝</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The audit guide is split into three phases by priority. Phase 1 handles the most dangerous permissions — camera, microphone, and location — because these directly enable surveillance and tracking.</li>
+      <li><span class="walk-num">2.</span> For each permission category, the guide asks you to count how many apps have access. This counting step is intentionally eye-opening — most people are shocked to find 15+ apps with location access when only 3-4 actually need it.</li>
+      <li><span class="walk-num">3.</span> The &#39;Keep for / Revoke from&#39; guidance applies the least privilege principle practically. Instead of memorizing rules, you just ask: does a flashlight need my contacts? Does a game need my microphone? If the answer is no, revoke.</li>
+      <li><span class="walk-num">4.</span> Phase 2 covers permissions that are less immediately alarming but still sensitive. Contacts access lets apps upload your entire address book. Phone access lets apps see your call history. Storage access lets apps read all your files.</li>
+      <li><span class="walk-num">5.</span> Phase 3&#39;s auto-revoke feature is the best set-and-forget security tool in Android. Once enabled, apps you forget about automatically lose their permissions — no monthly audit needed for abandoned apps.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>I did a permissions audit and revoked
+everything from all my apps.
+
+Now my camera app can&#39;t take photos,
+my maps app doesn&#39;t know my location,
+and my phone app can&#39;t make calls.
+
+I went too far. But I&#39;m scared to
+give permissions back because of
+privacy. What should I do?</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about the &#39;least privilege principle&#39; — it is about minimum NEEDED access, not zero access.</div></details><details><summary>Show answer</summary><div class="answer">The least privilege principle means giving the minimum access needed, not zero access. Your camera app genuinely needs camera and storage permissions — that is its core function. Maps needs location (set to &#39;While Using&#39; and &#39;Approximate&#39;). Your phone app needs Phone permission to make calls. The key is granting ONLY what each app needs for its core function and nothing extra. Go back and grant essential permissions to essential apps, but keep the unnecessary ones revoked. A camera app needs camera access — that is not surveillance, that is the app doing its job.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine every app on your phone is a person who comes to your house. When you install the app, they knock on the door and ask &#39;Can I use your camera? Can I listen to your conversations? Can I look through your address book? Can I follow you everywhere you go?&#39; Most people just say &#39;yes yes yes&#39; to make the asking stop. But you would never let a real person do all that in your house! A permissions audit is going through your house and saying &#39;Wait, why does the pizza delivery guy have a key to my bedroom? Why is the mailman looking through my photo albums?&#39; Take back those keys!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">In 2024, researchers at a university tested 1,000 popular Android apps and found that 71% requested at least one permission they did not need to function. The worst offender was a simple calculator app that requested access to the camera, microphone, contacts, location, SMS, and phone call logs — all completely unnecessary for adding numbers. When confronted, the developer admitted the permissions were used to collect data sold to advertising companies, earning more money from data than from the app itself.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Open Settings → Privacy → Permission Manager right now. Check these three categories: Camera, Microphone, and Location. Write down how many apps have access to each. Now go through each list and revoke access from any app that does not genuinely need it. A good rule: if you cannot explain in one sentence WHY that app needs that permission, revoke it. Count how many permissions you revoked total — most people revoke 10-20 on their first audit! Share your number.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://support.google.com/googleplay/answer/6270602" target="_blank" rel="noopener noreferrer">Android App Permissions Explained</a> <span class="res-source">(Google)</span></li>
+      <li><a href="https://www.wired.com/story/how-to-manage-android-app-permissions/" target="_blank" rel="noopener noreferrer">How to Manage App Permissions</a> <span class="res-source">(Wired)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Android Permissions Deep Dive</a> <span class="res-source">(YouTube)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=20">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./19-the-10-minute-android-security-checklist.html" rel="prev">← The 10-Minute Android Security Checklist</a>
+  <a class="nav-next" href="./21-lock-screen-widgets-for-real-time-monitoring.html" rel="next">Lock Screen Widgets for Real-Time… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-phone-health.html">← Back to course: Android Phone Health</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

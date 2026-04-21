@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StateFlow vs SharedFlow vs LiveData vs Channels… | Teamz Lab</title>
+<meta name="description" content="StateFlow, SharedFlow, LiveData, and Channel are all tools for observable state and event streaming in Android. StateFlow is the current industry standard…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/09-flow-fundamentals-cold-streams-operators-collection.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/11-android-architecture-timeline-mvc-mvp-mvvm-mvi-clean.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="StateFlow vs SharedFlow vs LiveData vs Channels">
+<meta property="og:description" content="StateFlow, SharedFlow, LiveData, and Channel are all tools for observable state and event streaming in Android. StateFlow is the current industry standard…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="StateFlow vs SharedFlow vs LiveData vs Channels">
+<meta name="twitter:description" content="StateFlow, SharedFlow, LiveData, and Channel are all tools for observable state and event streaming in Android. StateFlow is the current industry standard…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "StateFlow vs SharedFlow vs LiveData vs Channels",
+  "description": "StateFlow, SharedFlow, LiveData, and Channel are all tools for observable state and event streaming in Android. StateFlow is the current industry standard…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 10
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "StateFlow vs SharedFlow vs LiveData vs Channels",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">StateFlow vs SharedFlow vs LiveData vs Channels</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 10 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">StateFlow vs SharedFlow vs LiveData vs Channels</h1>
+<p class="lesson-subtitle">The hot stream comparison every senior Android developer must know</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=10">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">StateFlow is a scoreboard — it always shows the CURRENT score, new fans who arrive can immediately see it, and it always has a value. SharedFlow is a radio broadcast — you get only what&#39;s broadcast after you tune in. LiveData is a bulletin board only readable inside the building (lifecycle-aware). Channel is a one-way pipe — one sender, one receiver, one delivery.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>StateFlow, SharedFlow, LiveData, and Channel are all tools for observable state and event streaming in Android. StateFlow is the current industry standard for UI state. SharedFlow handles broadcast events. LiveData is legacy but still common in older codebases. Channels are for point-to-point messaging. Knowing when to use each and being able to migrate between them is a core senior Android interview topic.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a real-time SaaS collaboration app: DocumentViewModel exposes val uiState: StateFlow for screen state. val navigationEvents: SharedFlow handles one-shot navigation with replay=0. The room database query uses stateIn(WhileSubscribed(5000)) to avoid restarting on rotation. Legacy screens still using LiveData are migrated using asFlow() and asLiveData() bridge extensions.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>StateFlow — hot, always has value</strong> — StateFlow(initialValue) is a hot observable that always holds a current value. New collectors receive the current value immediately on subscription. Replay = 1 (always). Requires an initial value. Conflates — if no one is collecting, intermediate values are dropped and only the latest is kept.</li>
+      <li><strong>MutableStateFlow vs StateFlow</strong> — _uiState = MutableStateFlow(Loading) — mutable, write from ViewModel. val uiState: StateFlow = _uiState.asStateFlow() — read-only, exposed to UI. This is the standard ViewModel backing property pattern. The underscore prefix convention signals the mutable version is private.</li>
+      <li><strong>SharedFlow — hot, configurable</strong> — MutableSharedFlow(replay = 0, extraBufferCapacity = 64) is a hot flow with configurable replay and buffer. replay = 0 means new collectors miss past events. replay = 1 behaves like StateFlow without requiring an initial value. Use for events, not state.</li>
+      <li><strong>StateFlow vs SharedFlow key differences</strong> — StateFlow: requires initial value, always has current value, conflates (drops intermediate), equality-based emission (won&#39;t re-emit same value). SharedFlow: no initial value required, configurable replay, configurable buffer, always emits every value even if unchanged.</li>
+      <li><strong>LiveData — lifecycle-aware, legacy</strong> — LiveData is lifecycle-aware — only delivers updates when the observer is in STARTED/RESUMED state. Tied to Android lifecycle. No initial value required (starts null). Cannot use suspend functions natively. In 2025+, LiveData is considered legacy — prefer StateFlow + repeatOnLifecycle.</li>
+      <li><strong>Why StateFlow replaced LiveData</strong> — StateFlow: Kotlin-first, works with Flow operators, testable without Android framework, works in non-UI layers, requires explicit lifecycle handling (repeatOnLifecycle). LiveData: Java-compatible, auto lifecycle-aware but requires Android context everywhere, harder to test, no operator support.</li>
+      <li><strong>Channel — point-to-point, once delivery</strong> — Channel is a non-broadcast queue — each value is consumed by EXACTLY one receiver. send()/receive() are suspend functions. Multiple collectors cannot all receive the same value. Use for producer-consumer patterns, not UI state. Channel is the foundation of channelFlow and actor patterns.</li>
+      <li><strong>One-shot events: the classic problem</strong> — Navigation events, snackbar messages, and dialogs are one-time — they must not re-trigger on screen rotation. StateFlow conflates and re-emits current value on collection restart. Solutions: SharedFlow(replay=0), Channel, or UiEvent sealed class in StateFlow that gets cleared after consumption.</li>
+      <li><strong>Migrating LiveData to StateFlow</strong> — Replace LiveData with StateFlow. Replace postValue/setValue with _flow.value = or _flow.update { }. Replace observe() with repeatOnLifecycle + collect. Replace observeAsState() in Compose with collectAsStateWithLifecycle() (Lifecycle-Compose library).</li>
+      <li><strong>stateIn() and shareIn() operators</strong> — flow.stateIn(scope, SharingStarted, initialValue) converts cold Flow to StateFlow. flow.shareIn(scope, SharingStarted) converts to SharedFlow. SharingStarted.WhileSubscribed(5000) stops the upstream after 5s with no subscribers — saves resources during config change.</li>
+      <li><strong>update {} function on MutableStateFlow</strong> — _state.update { currentState -&gt; currentState.copy(isLoading = false) } — atomically updates StateFlow using the current value. Thread-safe; avoids race conditions vs _state.value = _state.value.copy(...) which can lose updates under concurrency.</li>
+      <li><strong>Backpressure handling</strong> — If producers emit faster than consumers collect: StateFlow silently drops intermediate values (conflation). SharedFlow with buffer: stores items in buffer up to extraBufferCapacity, then suspends or drops based on onBufferOverflow strategy. Channel: suspends sender by default (SUSPEND strategy).</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Standard ViewModel pattern — StateFlow for UI state
+class DocumentViewModel(
+    private val repo: DocumentRepository
+) : ViewModel() {
+
+    // Private mutable, public read-only — standard pattern
+    private val _uiState = MutableStateFlow&lt;DocumentUiState&gt;(DocumentUiState.Loading)
+    val uiState: StateFlow&lt;DocumentUiState&gt; = _uiState.asStateFlow()
+
+    // One-shot events — SharedFlow with replay=0
+    private val _events = MutableSharedFlow&lt;DocumentEvent&gt;(
+        replay = 0,
+        extraBufferCapacity = 16,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val events: SharedFlow&lt;DocumentEvent&gt; = _events.asSharedFlow()
+
+    // StateFlow backed by Room Flow — stops upstream 5s after no subscribers
+    val documents: StateFlow&lt;List&lt;Document&gt;&gt; =
+        repo.getAllDocuments()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList()
+            )
+
+    // Thread-safe state update
+    fun onDocumentSaved(doc: Document) {
+        _uiState.update { currentState -&gt;
+            when (currentState) {
+                is DocumentUiState.Success -&gt; currentState.copy(
+                    documents = currentState.documents + doc,
+                    lastSaved = System.currentTimeMillis()
+                )
+                else -&gt; currentState
+            }
+        }
+    }
+
+    // Emit one-shot navigation event
+    fun onShareClicked(docId: String) {
+        viewModelScope.launch {
+            _events.emit(DocumentEvent.NavigateToShare(docId))
+        }
+    }
+}
+
+// UI layer — collect with repeatOnLifecycle
+class DocumentFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.uiState.collect { renderState(it) } }
+                launch { viewModel.events.collect { handleEvent(it) } }
+            }
+        }
+    }
+}
+
+// Compose — collectAsStateWithLifecycle (preferred over collectAsState)
+@Composable
+fun DocumentScreen(viewModel: DocumentViewModel) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    // ...
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> private val _uiState = MutableStateFlow(Loading) — underscore prefix signals mutable/private; class maintains single source of truth</li>
+      <li><span class="walk-num">2.</span> val uiState = _uiState.asStateFlow() — read-only wrapper; UI can only read, not write state</li>
+      <li><span class="walk-num">3.</span> MutableSharedFlow(replay=0, extraBufferCapacity=16) — replay=0: new collectors miss past events; buffer: prevents suspension on slow collectors</li>
+      <li><span class="walk-num">4.</span> BufferOverflow.DROP_OLDEST — if buffer fills (16 events), oldest undelivered event is dropped; prevents backpressure blocking</li>
+      <li><span class="walk-num">5.</span> repo.getAllDocuments().stateIn(viewModelScope, WhileSubscribed(5_000), emptyList()) — Room flow → hot StateFlow; stops 5s after no UI</li>
+      <li><span class="walk-num">6.</span> _uiState.update { currentState -&gt; } — atomic read-modify-write; safe under concurrent updates from multiple coroutines</li>
+      <li><span class="walk-num">7.</span> currentState.copy(documents = ... + doc) — data class copy for immutable state update; original state unchanged</li>
+      <li><span class="walk-num">8.</span> _events.emit(NavigateToShare(docId)) — must be in coroutine; suspends if buffer full (with SUSPEND strategy)</li>
+      <li><span class="walk-num">9.</span> repeatOnLifecycle(STARTED) { launch{ uiState.collect } launch{ events.collect } } — both collections restart on STARTED, stop on STOPPED</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class NotificationViewModel : ViewModel() {
+    val notifications = MutableStateFlow&lt;List&lt;Notification&gt;&gt;(emptyList())
+
+    // For showing one-time snackbar messages
+    val snackbarMessage = MutableStateFlow&lt;String?&gt;(null)
+
+    fun showMessage(msg: String) {
+        snackbarMessage.value = msg
+    }
+}
+
+// In Fragment:
+lifecycleScope.launch {
+    viewModel.snackbarMessage.collect { message -&gt;
+        if (message != null) showSnackbar(message)
+        // After showing, never resets!
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Using StateFlow for one-time events causes re-showing the snackbar on rotation. StateFlow replays current value on new subscription.</div></details><details><summary>Show answer</summary><div class="answer">Bug: StateFlow(null) replays the current value to every new collector — on screen rotation, the snackbar will show again because the state still holds the message. Fix option 1: Use SharedFlow(replay=0) for events — new collectors miss past events. Fix option 2: After showing the snackbar, reset the state: viewModel.clearMessage() which sets snackbarMessage.value = null. Fix option 3 (best): Use a sealed class UiEvent that wraps one-time events, model them in UiState, and clear them after consumption using update { it.copy(pendingEvent = null) }.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">StateFlow is like a parking meter display — it always shows the CURRENT time remaining, and anyone who looks at it right now sees the current value. SharedFlow is like a radio station — you only hear songs that play AFTER you tune in. LiveData is like a school PA system that only broadcasts to classrooms when the teacher is actually in the room. Channel is like passing a note to exactly one person — they get it, no one else does.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The debate between Channel and SharedFlow for one-shot events (like navigation) is one of the most discussed topics in the Android community. Google&#39;s official stance (2022+) is to use SharedFlow(replay=0) for events, or model events as part of UiState and clear them after consumption — never use Channel for UI events because it has no lifecycle awareness.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the complete reactive state layer for a document collaboration ViewModel. Include: 1) StateFlow for screen state using the private/public backing property pattern. 2) SharedFlow for navigation/snackbar events with replay=0 and a buffer of 32. 3) val collaborators: StateFlow&gt; backed by a Room Flow using stateIn with WhileSubscribed(5000). 4) A thread-safe addCollaborator() function using update{}. 5) An onError() that emits both a UiState update AND a one-time snackbar event. Show the Fragment/Composable collection code.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/kotlin/flow/stateflow-and-sharedflow" target="_blank" rel="noopener noreferrer">StateFlow and SharedFlow</a> <span class="res-source">(developer.android.com)</span></li>
+      <li><a href="https://developer.android.com/codelabs/advanced-kotlin-coroutines" target="_blank" rel="noopener noreferrer">Migrating from LiveData to StateFlow</a> <span class="res-source">(developer.android.com)</span></li>
+      <li><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/" target="_blank" rel="noopener noreferrer">StateFlow API Reference</a> <span class="res-source">(kotlinlang.org)</span></li>
+      <li><a href="https://developer.android.com/reference/kotlin/androidx/lifecycle/compose/package-summary" target="_blank" rel="noopener noreferrer">collectAsStateWithLifecycle</a> <span class="res-source">(developer.android.com)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=10">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./09-flow-fundamentals-cold-streams-operators-collection.html" rel="prev">← Flow Fundamentals: Cold Streams…</a>
+  <a class="nav-next" href="./11-android-architecture-timeline-mvc-mvp-mvvm-mvi-clean.html" rel="next">Android Architecture Timeline: MVC… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

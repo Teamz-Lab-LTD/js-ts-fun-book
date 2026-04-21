@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compose State: remember, rememberSaveable &amp; State… | Teamz Lab</title>
+<meta name="description" content="State in Jetpack Compose is the single source of truth that drives the UI. remember holds state across recompositions within the composable&#39;s lifetime.…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/20-compose-side-effects-launchedeffect-sideeffect.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Compose State: remember, rememberSaveable &amp; State Hoisting">
+<meta property="og:description" content="State in Jetpack Compose is the single source of truth that drives the UI. remember holds state across recompositions within the composable&#39;s lifetime.…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Compose State: remember, rememberSaveable &amp; State Hoisting">
+<meta name="twitter:description" content="State in Jetpack Compose is the single source of truth that drives the UI. remember holds state across recompositions within the composable&#39;s lifetime.…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Compose State: remember, rememberSaveable & State Hoisting",
+  "description": "State in Jetpack Compose is the single source of truth that drives the UI. remember holds state across recompositions within the composable's lifetime.…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 19
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Compose State: remember, rememberSaveable & State Hoisting",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Compose State: remember, rememberSaveable &amp; State Hoisting</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 19 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Compose State: remember, rememberSaveable &amp; State Hoisting</h1>
+<p class="lesson-subtitle">Master state ownership, survival across recomposition, and the unidirectional data flow pattern interviewers love</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=19">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">remember is like a whiteboard in a meeting room — it holds info while the meeting is ongoing, but get wiped when everyone leaves. rememberSaveable is like taking a photo of the whiteboard before leaving — the info survives even if the room is cleared. State hoisting is like the meeting chair collecting all decisions and redistributing them — one source of truth, everyone else just listens.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>State in Jetpack Compose is the single source of truth that drives the UI. remember holds state across recompositions within the composable&#39;s lifetime. rememberSaveable additionally survives configuration changes and process death via bundle serialization. State hoisting extracts state ownership upward, enabling unidirectional data flow where state flows down as parameters and events flow up as lambda callbacks — making composables stateless, testable, and reusable.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a school management app, a GradeEntryScreen holds a text field for each student&#39;s score. The text field value is remembered locally with rememberSaveable (survives rotation mid-entry). Once the teacher taps Submit, the data flows up via an onSubmit lambda to the ViewModel which owns the canonical list of grades in a StateFlow. The composable is stateless — it receives the list and callbacks. Rotating the device or backgrounding the app does not lose the in-progress entry.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What remember does</strong> — remember { } stores an object in the composition tree across recompositions. When the composable is removed from the tree (e.g. navigated away), the remembered value is discarded. It is purely in-memory, scoped to the composable&#39;s lifetime in the tree.</li>
+      <li><strong>rememberSaveable for process death</strong> — rememberSaveable { } survives configuration changes AND process death by serializing to the SavedStateHandle-backed Bundle. Uses Saver interface internally. Ideal for transient UI state like scroll position, text input, toggle state that should not reset on rotation.</li>
+      <li><strong>Custom Saver with rememberSaveable</strong> — For non-primitive types, implement Saver or use listSaver / mapSaver helpers. Example: rememberSaveable(stateSaver = ColorSaver) { mutableStateOf(Color.Red) }. Interviewers ask this when dealing with complex UI state that must survive rotation.</li>
+      <li><strong>State hoisting definition</strong> — State hoisting moves state up from a composable to its caller, replacing the internal state with a value: T + onValueChange: (T) -&gt; Unit pair. The composable becomes stateless and therefore reusable, testable, and previewable.</li>
+      <li><strong>Unidirectional Data Flow (UDF)</strong> — State flows DOWN the tree (parent to child), events flow UP (child calls lambdas). No child should ever mutate shared state directly. This mirrors MVI architecture and makes UI deterministic — the same state always produces the same UI.</li>
+      <li><strong>Stateful vs Stateless composables</strong> — Stateful composables own their state (convenient but hard to test/preview). Stateless composables receive state and event callbacks (testable, reusable). Best practice: have a thin stateful wrapper that connects to the ViewModel, and pass hoisted state into a stateless inner composable.</li>
+      <li><strong>ViewModel as state owner</strong> — For screen-level state that survives navigation and configuration changes, own state in ViewModel using StateFlow or mutableStateOf inside ViewModel. The composable collects it via collectAsStateWithLifecycle() — never owns it. This is the correct pattern for production apps.</li>
+      <li><strong>When to use remember vs ViewModel</strong> — Use remember for ephemeral, local UI state (is dropdown expanded?, current animation target). Use ViewModel for business-relevant state (user data, list items, loading/error). If losing the state on rotation would be annoying to the user, put it in ViewModel or rememberSaveable.</li>
+      <li><strong>mutableStateOf vs MutableStateFlow</strong> — mutableStateOf is Compose-specific — it integrates directly with the snapshot system and triggers recomposition automatically. MutableStateFlow is coroutines-based — it works in ViewModel without Compose dependency. Convert to Compose state via .collectAsStateWithLifecycle() at the composable boundary.</li>
+      <li><strong>State delegation with by</strong> — var text by remember { mutableStateOf(&#39;&#39;) } uses Kotlin property delegation. It unpacks to getValue/setValue operators so you read text directly instead of text.value. Makes code cleaner — but type is String not MutableState so you cannot pass it as a MutableState reference.</li>
+      <li><strong>Derived state anti-pattern</strong> — Avoid computing expensive values inline in the composable body — they run on every recomposition. Use derivedStateOf { } to memoize computations that depend on other state, so the derived value only recomputes when its inputs change, not on every recomposition cycle.</li>
+      <li><strong>Interview signal: state hoisting boundary</strong> — Senior interviews ask: &#39;how far up should you hoist state?&#39; Answer: hoist to the lowest common ancestor that needs it. Hoisting too high causes unnecessary recomposition of unrelated composables. Hoisting too low prevents sharing. The ViewModel boundary is the natural ceiling for screen-level state.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// --- State hoisting: stateless TextField ---
+@Composable
+fun ScoreTextField(
+    score: String,                    // state flows DOWN
+    onScoreChange: (String) -&gt; Unit,  // events flow UP
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = score,
+        onValueChange = onScoreChange,
+        label = { Text(&quot;Score&quot;) },
+        modifier = modifier
+    )
+}
+
+// --- Stateful wrapper using rememberSaveable ---
+@Composable
+fun ScoreEntryCard(studentId: String, onSubmit: (String, String) -&gt; Unit) {
+    // Survives rotation — teacher doesn&#39;t lose their in-progress entry
+    var score by rememberSaveable { mutableStateOf(&quot;&quot;) }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        ScoreTextField(score = score, onScoreChange = { score = it })
+        Button(onClick = { onSubmit(studentId, score) }) {
+            Text(&quot;Submit&quot;)
+        }
+    }
+}
+
+// --- ViewModel owns screen-level state ---
+class GradeViewModel(private val submitGradeUseCase: SubmitGradeUseCase) : ViewModel() {
+    private val _uiState = MutableStateFlow(GradeUiState())
+    val uiState: StateFlow&lt;GradeUiState&gt; = _uiState.asStateFlow()
+
+    fun submitGrade(studentId: String, score: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isSubmitting = true) }
+            submitGradeUseCase(studentId, score)
+                .onSuccess { _uiState.update { it.copy(isSubmitting = false, submitted = true) } }
+                .onFailure { e -&gt; _uiState.update { it.copy(isSubmitting = false, error = e.message) } }
+        }
+    }
+}
+
+// --- Screen composable: collects from ViewModel ---
+@Composable
+fun GradeScreen(
+    viewModel: GradeViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    GradeScreenContent(
+        uiState = uiState,
+        onSubmit = viewModel::submitGrade
+    )
+}
+
+// --- Custom Saver example ---
+data class FilterState(val query: String, val sortAsc: Boolean)
+
+val FilterStateSaver: Saver&lt;FilterState, *&gt; = listSaver(
+    save = { listOf(it.query, it.sortAsc) },
+    restore = { FilterState(it[0] as String, it[1] as Boolean) }
+)
+
+@Composable
+fun FilterBar() {
+    var filter by rememberSaveable(stateSaver = FilterStateSaver) {
+        mutableStateOf(FilterState(&quot;&quot;, true))
+    }
+    // filter survives rotation and process death
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ScoreTextField receives &#39;score: String&#39; (the current value) and &#39;onScoreChange: (String) -&gt; Unit&#39; (the event callback) — it owns NO state, purely renders what it&#39;s given</li>
+      <li><span class="walk-num">2.</span> ScoreEntryCard is the stateful wrapper — it owns &#39;score&#39; via rememberSaveable so rotating the device mid-entry does not wipe the teacher&#39;s in-progress work</li>
+      <li><span class="walk-num">3.</span> When ScoreTextField&#39;s value changes, it calls onScoreChange which updates &#39;score&#39; in ScoreEntryCard — event flows up, new state flows back down on recomposition</li>
+      <li><span class="walk-num">4.</span> onSubmit is a lambda passed down from the screen — ScoreEntryCard does not know about ViewModels or coroutines, it just fires the callback</li>
+      <li><span class="walk-num">5.</span> GradeViewModel holds &#39;_uiState: MutableStateFlow&#39; as the single source of truth for the entire screen</li>
+      <li><span class="walk-num">6.</span> submitGrade() updates isSubmitting to true immediately for UI feedback, calls the use case, then updates state based on success or failure</li>
+      <li><span class="walk-num">7.</span> GradeScreen is the composable that bridges ViewModel and UI — it collects uiState with collectAsStateWithLifecycle() (stops collecting when screen is backgrounded)</li>
+      <li><span class="walk-num">8.</span> GradeScreenContent is fully stateless — receives uiState and onSubmit — it&#39;s what you write unit tests against</li>
+      <li><span class="walk-num">9.</span> FilterStateSaver demonstrates listSaver — save converts FilterState to a List, restore reconstructs it from the List</li>
+      <li><span class="walk-num">10.</span> rememberSaveable(stateSaver = FilterStateSaver) hooks the custom saver into the bundle serialization mechanism</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Composable
+fun CounterScreen() {
+    var count = remember { 0 }  // Bug 1
+
+    Column {
+        Text(&quot;Count: ${count}&quot;)
+        Button(onClick = { count++ }) {  // Bug 2
+            Text(&quot;Increment&quot;)
+        }
+    }
+}
+
+@Composable
+fun SearchBar(viewModel: SearchViewModel = hiltViewModel()) {
+    var query by remember { mutableStateOf(&quot;&quot;) }  // Bug 3
+
+    TextField(
+        value = query,
+        onValueChange = {
+            query = it
+            viewModel.search(it)
+        }
+    )
+}
+
+@Composable
+fun ParentScreen() {
+    ChildWidget(
+        onAction = { value -&gt;
+            // Bug 4: parent tries to read child&#39;s internal state
+        }
+    )
+}
+
+@Composable
+fun ChildWidget(onAction: (String) -&gt; Unit) {
+    var internalState by remember { mutableStateOf(&quot;&quot;) }
+    Button(onClick = { onAction(internalState) }) {
+        Text(&quot;Do Action&quot;)
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at state type, mutability, survival across rotation, and whether state hoisting boundaries are correct.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: &#39;var count = remember { 0 }&#39; — remember wraps the MutableState but &#39;count&#39; is typed as Int not MutableState&lt;Int&gt;. Changing count++ does NOT trigger recomposition because Compose is not observing a plain Int. Fix: var count by remember { mutableStateOf(0) } (delegation) or val count = remember { mutableStateOf(0) } then count.value++. Bug 2: Follows from Bug 1 — if count were correctly a MutableState, count++ would work with delegation. But with the broken code in Bug 1 it just mutates a local variable. Bug 3: The search query is in remember — if the user rotates the device while typing a long search query, it is lost. Fix: var query by rememberSaveable { mutableStateOf(&#39;&#39;) }. Bug 4: This is actually a correct pattern (not a bug) — the parent receives the value via the onAction callback, which IS the correct state hoisting / event-flowing-up approach. The comment implies a misunderstanding. The child correctly owns its internal state and surfaces it via a callback. No fix needed — this IS the UDF pattern.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re drawing a picture. remember is like drawing on a whiteboard — great while you&#39;re working, but erased when class ends. rememberSaveable is like drawing in a notebook — even if class is cancelled and rescheduled, your drawing is still there. State hoisting means the teacher (parent) holds the master copy of the drawing and lets you (child) look at it and suggest changes — but only the teacher can actually change it. That way everyone always sees the same picture.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">rememberSaveable internally hooks into the Android SavedStateRegistry — the same mechanism that onSaveInstanceState() uses. This means Compose state saved with rememberSaveable lands in the same bundle as traditional View-based saved state, making hybrid Compose+View apps work seamlessly.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a multi-step form with 3 screens (PersonalInfo, ContactInfo, Review). Each step&#39;s entered data must survive rotation. The Review screen displays all collected data. Implement state hoisting so individual field composables are fully stateless. The ViewModel owns the final submission state. Use rememberSaveable with a custom Saver for a data class holding all form fields.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/jetpack/compose/state" target="_blank" rel="noopener noreferrer">State and Jetpack Compose — Official Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/jetpack/compose/rememberSaveable" target="_blank" rel="noopener noreferrer">rememberSaveable and Saver</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/jetpack/compose/state-hoisting" target="_blank" rel="noopener noreferrer">State Hoisting in Jetpack Compose</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=rmv2ug-wW4U" target="_blank" rel="noopener noreferrer">Advanced State in Compose — Google I/O</a> <span class="res-source">(YouTube / Google)</span></li>
+      <li><a href="https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-compose" target="_blank" rel="noopener noreferrer">ViewModel and State in Compose</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=19">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./18-jetpack-compose-fundamentals-composable-functions-state.html" rel="prev">← Jetpack Compose Fundamentals…</a>
+  <a class="nav-next" href="./20-compose-side-effects-launchedeffect-sideeffect.html" rel="next">Compose Side Effects: LaunchedEffect… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

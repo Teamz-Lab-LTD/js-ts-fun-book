@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paging 3: PagingSource, RemoteMediator &amp; Flow… | Teamz Lab</title>
+<meta name="description" content="Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/72-full-behavioral-mixed-senior-mobile-mock-pack.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paging 3: PagingSource, RemoteMediator &amp; Flow Integration">
+<meta property="og:description" content="Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Paging 3: PagingSource, RemoteMediator &amp; Flow Integration">
+<meta name="twitter:description" content="Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Paging 3: PagingSource, RemoteMediator & Flow Integration",
+  "description": "Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 73
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Paging 3: PagingSource, RemoteMediator & Flow Integration",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Paging 3: PagingSource, RemoteMediator &amp; Flow Integration</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 73 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Paging 3: PagingSource, RemoteMediator &amp; Flow Integration</h1>
+<p class="lesson-subtitle">Master infinite scrolling with offline-first architecture using Paging 3</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=73">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Paging 3 is like a librarian who fetches books shelf by shelf instead of dumping the entire library on your desk. The PagingSource is the librarian&#39;s catalog, RemoteMediator is the inter-library loan system that also stocks your local shelves, and Flow is the conveyor belt delivering books to your reading table exactly when you need them.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator for network-plus-database offline-first patterns, and Flow for reactive data delivery to both RecyclerView (via PagingDataAdapter) and Compose (via LazyPagingItems), with built-in error handling, retry, and transformation support.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every production app with a feed, search results, or message list uses pagination. Instagram uses cursor-based paging for its feed, Slack pages message history with RemoteMediator-style caching, and Twitter&#39;s timeline relies on keyset pagination. Paging 3 is the standard approach in Android for all these patterns, handling the complex state management of multi-source, bidirectional loading.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>PagingSource &amp; LoadResult</strong> — PagingSource defines how to load pages of data. You override the `load()` suspend function and return either `LoadResult.Page(data, prevKey, nextKey)` on success or `LoadResult.Error(throwable)` on failure. The Key is typically an Int (page number) or String (cursor). PagingSource is single-shot — a new instance is created for each refresh via PagingSourceFactory.</li>
+      <li><strong>PagingConfig Tuning</strong> — PagingConfig controls loading behavior: `pageSize` sets items per page (typically 20-30), `prefetchDistance` triggers loading when the user is N items from the end (default: pageSize), `initialLoadSize` sets the first load size (default: 3 * pageSize), `maxSize` caps items in memory (must be &gt;= pageSize + 2 * prefetchDistance), and `enablePlaceholders` shows null placeholders for unloaded items.</li>
+      <li><strong>RemoteMediator for Offline-First</strong> — RemoteMediator bridges network and local database. Its `load(loadType, state)` method handles REFRESH, PREPEND, and APPEND actions. It fetches from the API, saves to Room, and returns `MediatorResult.Success(endOfPaginationReached)` or `MediatorResult.Error(e)`. The PagingSource then reads exclusively from the database, achieving true offline-first paging.</li>
+      <li><strong>Pager &amp; Flow&gt;</strong> — The Pager class takes PagingConfig and a PagingSourceFactory (plus optional RemoteMediator) and exposes `flow: Flow&gt;`. This Flow emits new PagingData snapshots whenever invalidation occurs. You collect this in ViewModel and pass it to UI. PagingData is opaque — you cannot inspect its contents directly, only transform it via `.map()`, `.filter()`, `.insertSeparators()`.</li>
+      <li><strong>PagingDataAdapter &amp; DiffUtil</strong> — In RecyclerView, use PagingDataAdapter which extends RecyclerView.Adapter with built-in DiffUtil support. You provide a DiffUtil.ItemCallback and call `adapter.submitData(lifecycle, pagingData)` from the Activity/Fragment. The adapter handles loading states, placeholders, and efficient diffing automatically.</li>
+      <li><strong>LazyPagingItems in Compose</strong> — In Jetpack Compose, collect PagingData with `flow.collectAsLazyPagingItems()`. This returns LazyPagingItems which integrates with LazyColumn via `items(lazyPagingItems)`. Access items with `lazyPagingItems[index]` which triggers loading. Check `loadState.refresh`, `loadState.append`, and `loadState.prepend` for loading/error states.</li>
+      <li><strong>LoadState &amp; CombinedLoadStates</strong> — CombinedLoadStates provides `refresh`, `prepend`, `append` each as LoadState (Loading, NotLoading, or Error). The `source` and `mediator` properties distinguish local vs remote states. Use `loadState.refresh is LoadState.Loading` for initial loading indicators and `loadState.append is LoadState.Error` for retry footers.</li>
+      <li><strong>PagingData Transformations</strong> — Transform PagingData using `.map {}` for item transformation, `.filter {}` to exclude items, `.insertSeparators { before, after -&gt; }` for headers/date separators, and `.insertHeaderItem()` / `.insertFooterItem()` for static items. All transformations are applied lazily and maintain paging behavior.</li>
+      <li><strong>Error Handling &amp; Retry</strong> — Implement retry by exposing `adapter.retry()` in XML or checking `lazyPagingItems.loadState` in Compose. For RemoteMediator errors, the system automatically retries on the next user scroll. Use `flow.cachedIn(viewModelScope)` to survive configuration changes and prevent redundant loads.</li>
+      <li><strong>Invalidation &amp; Refresh</strong> — Call `pagingSource.invalidate()` to trigger a fresh load — typically from Room&#39;s InvalidationTracker when data changes. For manual refresh, use `adapter.refresh()` or re-collect the Pager flow. RemoteMediator&#39;s REFRESH loadType handles pull-to-refresh scenarios by clearing and re-fetching.</li>
+      <li><strong>Testing PagingSource</strong> — Test PagingSource by calling `load()` directly with `LoadParams.Refresh(key, loadSize, placeholders)` and asserting the LoadResult. Use `TestPager(PagingConfig, pagingSourceFactory)` for integration tests that simulate real paging behavior. For snapshot testing, use `AsyncPagingDataDiffer` to collect PagingData into a list.</li>
+      <li><strong>Performance &amp; Memory</strong> — Paging 3 manages memory via `maxSize` eviction. Use `cachedIn(scope)` to share PagingData across collectors. Avoid transforming PagingData outside the paging pipeline (e.g., `.toList()`) as it defeats lazy loading. Profile with Android Studio&#39;s Memory Profiler to verify items are evicted correctly.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === PagingSource Implementation ===
+class ArticlePagingSource(
+    private val api: ArticleApi,
+    private val query: String
+) : PagingSource&lt;Int, Article&gt;() {
+
+    override suspend fun load(
+        params: LoadParams&lt;Int&gt;
+    ): LoadResult&lt;Int, Article&gt; {
+        val page = params.key ?: 1
+        return try {
+            val response = api.searchArticles(
+                query = query,
+                page = page,
+                pageSize = params.loadSize
+            )
+            LoadResult.Page(
+                data = response.articles,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (response.articles.isEmpty()) null else page + 1
+            )
+        } catch (e: IOException) {
+            LoadResult.Error(e)
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState&lt;Int, Article&gt;): Int? {
+        return state.anchorPosition?.let { anchor -&gt;
+            state.closestPageToPosition(anchor)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchor)?.nextKey?.minus(1)
+        }
+    }
+}
+
+// === RemoteMediator Implementation ===
+@OptIn(ExperimentalPagingApi::class)
+class ArticleRemoteMediator(
+    private val api: ArticleApi,
+    private val db: AppDatabase
+) : RemoteMediator&lt;Int, ArticleEntity&gt;() {
+
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState&lt;Int, ArticleEntity&gt;
+    ): MediatorResult {
+        val page = when (loadType) {
+            LoadType.REFRESH -&gt; 1
+            LoadType.PREPEND -&gt; return MediatorResult.Success(
+                endOfPaginationReached = true
+            )
+            LoadType.APPEND -&gt; {
+                val remoteKey = db.remoteKeyDao().getKey(&quot;articles&quot;)
+                remoteKey?.nextPage
+                    ?: return MediatorResult.Success(
+                        endOfPaginationReached = true
+                    )
+            }
+        }
+
+        return try {
+            val response = api.getArticles(
+                page = page,
+                pageSize = state.config.pageSize
+            )
+
+            db.withTransaction {
+                if (loadType == LoadType.REFRESH) {
+                    db.articleDao().clearAll()
+                    db.remoteKeyDao().deleteKey(&quot;articles&quot;)
+                }
+                db.remoteKeyDao().insertKey(
+                    RemoteKey(&quot;articles&quot;, nextPage = page + 1)
+                )
+                db.articleDao().insertAll(
+                    response.articles.map { it.toEntity() }
+                )
+            }
+
+            MediatorResult.Success(
+                endOfPaginationReached = response.articles.isEmpty()
+            )
+        } catch (e: Exception) {
+            MediatorResult.Error(e)
+        }
+    }
+}
+
+// === ViewModel ===
+class ArticleViewModel(
+    private val api: ArticleApi,
+    private val db: AppDatabase
+) : ViewModel() {
+
+    @OptIn(ExperimentalPagingApi::class)
+    val articles: Flow&lt;PagingData&lt;Article&gt;&gt; = Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            prefetchDistance = 5,
+            initialLoadSize = 40,
+            maxSize = 200
+        ),
+        remoteMediator = ArticleRemoteMediator(api, db),
+        pagingSourceFactory = { db.articleDao().pagingSource() }
+    ).flow
+        .map { pagingData -&gt;
+            pagingData.map { entity -&gt; entity.toDomain() }
+        }
+        .cachedIn(viewModelScope)
+}
+
+// === Compose UI ===
+@Composable
+fun ArticleList(viewModel: ArticleViewModel) {
+    val lazyPagingItems = viewModel.articles
+        .collectAsLazyPagingItems()
+
+    LazyColumn {
+        items(
+            count = lazyPagingItems.itemCount,
+            key = lazyPagingItems.itemKey { it.id }
+        ) { index -&gt;
+            val article = lazyPagingItems[index]
+            if (article != null) {
+                ArticleCard(article = article)
+            } else {
+                ArticlePlaceholder()
+            }
+        }
+
+        // Append loading indicator
+        when (lazyPagingItems.loadState.append) {
+            is LoadState.Loading -&gt; {
+                item { LoadingFooter() }
+            }
+            is LoadState.Error -&gt; {
+                item {
+                    ErrorFooter(
+                        onRetry = { lazyPagingItems.retry() }
+                    )
+                }
+            }
+            else -&gt; {}
+        }
+    }
+
+    // Refresh state
+    if (lazyPagingItems.loadState.refresh is LoadState.Loading) {
+        FullScreenLoading()
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ArticlePagingSource extends PagingSource — Int is the page key type, Article is the data type.</li>
+      <li><span class="walk-num">2.</span> load() receives LoadParams containing the key (page number) and loadSize. We default to page 1 if key is null (initial load).</li>
+      <li><span class="walk-num">3.</span> On success, LoadResult.Page wraps the data with navigation keys. prevKey is null for page 1 (no previous), nextKey is null when data is empty (end reached).</li>
+      <li><span class="walk-num">4.</span> getRefreshKey() determines which page to load on invalidation, using anchorPosition to find the closest page.</li>
+      <li><span class="walk-num">5.</span> ArticleRemoteMediator handles LoadType.REFRESH (pull-to-refresh), PREPEND (load earlier), and APPEND (load more).</li>
+      <li><span class="walk-num">6.</span> PREPEND returns Success with endOfPaginationReached=true since our feed only goes forward.</li>
+      <li><span class="walk-num">7.</span> APPEND reads the next page number from a RemoteKey stored in Room. No key means we&#39;ve reached the end.</li>
+      <li><span class="walk-num">8.</span> db.withTransaction ensures clearing old data and inserting new data + remote keys happens atomically.</li>
+      <li><span class="walk-num">9.</span> The ViewModel creates a Pager with PagingConfig, RemoteMediator, and a PagingSourceFactory from Room&#39;s DAO.</li>
+      <li><span class="walk-num">10.</span> The flow is mapped to convert entities to domain models and cachedIn(viewModelScope) for configuration change survival.</li>
+      <li><span class="walk-num">11.</span> In Compose, collectAsLazyPagingItems() bridges Flow to LazyColumn-compatible items.</li>
+      <li><span class="walk-num">12.</span> loadState.append and loadState.refresh are checked to show loading indicators and error/retry UI.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class UserPagingSource(
+    private val api: UserApi
+) : PagingSource&lt;Int, User&gt;() {
+
+    override suspend fun load(
+        params: LoadParams&lt;Int&gt;
+    ): LoadResult&lt;Int, User&gt; {
+        val page = params.key ?: 0
+        val response = api.getUsers(page, params.loadSize)
+        return LoadResult.Page(
+            data = response.users,
+            prevKey = page - 1,
+            nextKey = page + 1
+        )
+    }
+
+    override fun getRefreshKey(
+        state: PagingState&lt;Int, User&gt;
+    ): Int? = null
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">What happens when prevKey is 0 - 1 = -1 on the first page? And what if the API returns an empty list?</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) prevKey should be `if (page == 0) null else page - 1` to prevent loading page -1. (2) nextKey should be `if (response.users.isEmpty()) null else page + 1` to signal end of pagination. Also missing try-catch for network errors — load() should catch exceptions and return LoadResult.Error(e).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a really long picture book with 10,000 pages. You can&#39;t carry the whole book at once — it&#39;s too heavy! So instead, a helper brings you 20 pages at a time. When you&#39;re almost done reading those, they run and grab the next 20. If the internet goes out (like the helper getting lost), you can still read the pages they already brought because they made copies and put them in your desk drawer (that&#39;s the database). That&#39;s Paging 3 — a smart helper that brings you just enough data, saves copies locally, and keeps the pages coming smoothly!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Before Paging 3, Android had Paging 1 and 2 which used LiveData and required a DataSource.Factory pattern. Paging 3 was a complete rewrite with Kotlin coroutines and Flow at its core, and the RemoteMediator concept was inspired by the Boundary Callback pattern but made dramatically simpler. Google&#39;s own apps like Google News and Play Store use similar paging architectures handling millions of items.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete offline-first paging setup for a GitHub repository search. Implement: (1) A GithubPagingSource that uses cursor-based pagination with the GitHub API, (2) A RemoteMediator that caches results in Room with remote keys, (3) A ViewModel that exposes Flow&gt; with .insertSeparators() to add star-count headers (e.g., &#39;1000+ stars&#39;, &#39;500+ stars&#39;), (4) A Compose UI with LazyColumn showing loading, error, and retry states. Handle the GitHub API rate limit (403) gracefully by showing a countdown timer.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/topic/libraries/architecture/paging/v3-overview" target="_blank" rel="noopener noreferrer">Paging 3 Official Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/codelabs/android-paging" target="_blank" rel="noopener noreferrer">Android Paging Codelab</a> <span class="res-source">(Google Codelabs)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=Pw-jhS-ucYA" target="_blank" rel="noopener noreferrer">Paging 3 - Getting to the first page</a> <span class="res-source">(Android Developers YouTube)</span></li>
+      <li><a href="https://proandroiddev.com/paging-3-with-remote-mediator-caching-bb52f39f1199" target="_blank" rel="noopener noreferrer">Paging 3 with RemoteMediator</a> <span class="res-source">(ProAndroidDev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=73">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./72-full-behavioral-mixed-senior-mobile-mock-pack.html" rel="prev">← Full Behavioral + Mixed Senior Mobile…</a>
+  <a class="nav-next" href="./74-compose-animations-transition-animatedvisibility-motion.html" rel="next">Compose Animations: Transition… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System &amp; Theming — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Design system and theming in Flutter means using ThemeData to define your app&#39;s visual language: ColorScheme for colors, TextTheme for typography, component…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/27-building-custom-widgets.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design System &amp; Theming">
+<meta property="og:description" content="Design system and theming in Flutter means using ThemeData to define your app&#39;s visual language: ColorScheme for colors, TextTheme for typography, component…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Design System &amp; Theming">
+<meta name="twitter:description" content="Design system and theming in Flutter means using ThemeData to define your app&#39;s visual language: ColorScheme for colors, TextTheme for typography, component…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Design System & Theming",
+  "description": "Design system and theming in Flutter means using ThemeData to define your app's visual language: ColorScheme for colors, TextTheme for typography, component…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 28
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Design System & Theming",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Design System &amp; Theming</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 28 of 51</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Design System &amp; Theming</h1>
+<p class="lesson-subtitle">Consistent Look with ThemeData and Custom Design Systems</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=28">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A design system is like a fashion brand&#39;s style guide. Just like Gucci has specific colors, fonts, and patterns that make everything look &#39;Gucci&#39;, your app&#39;s design system defines the exact colors, text styles, spacing, and component looks that make everything feel unified. ThemeData is Flutter&#39;s built-in style guide, and you can extend it with your own BaseDesignSystem class for complete control.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Design system and theming in Flutter means using ThemeData to define your app&#39;s visual language: ColorScheme for colors, TextTheme for typography, component themes for widgets, and ThemeExtension for custom properties. Dark mode support comes from defining both theme and darkTheme. Advanced projects like team_mvp_kit use a custom BaseDesignSystem class to centralize all design tokens.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, a BaseDesignSystem abstract class defines all visual constants. Concrete implementations (LightDesignSystem, DarkDesignSystem) provide theme-specific values. The toThemeData() method generates the ThemeData passed to MaterialApp. Every widget reads from Theme.of(context) instead of hardcoding values, making theme changes instant and global.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>ThemeData Basics</strong> — ThemeData is Flutter&#39;s built-in theming object. It defines colors, text styles, button themes, input decoration themes, and more for your entire app. Pass it to MaterialApp&#39;s theme property and every widget in your app automatically uses these defaults. Change one value in ThemeData and it updates everywhere.</li>
+      <li><strong>ColorScheme</strong> — ColorScheme is the modern way to define colors in Flutter. It replaces the old primarySwatch approach. ColorScheme defines primary, secondary, surface, background, error, and their &#39;on&#39; variants (text color on top of each). Use ColorScheme.fromSeed() for automatic palette generation from a single color.</li>
+      <li><strong>TextTheme</strong> — TextTheme defines a consistent set of text styles for your app: displayLarge, headlineMedium, titleSmall, bodyLarge, labelMedium, etc. Define them once in ThemeData and use them everywhere via Theme.of(context).textTheme. This ensures consistent typography across all screens.</li>
+      <li><strong>Dark Mode Support</strong> — Support dark mode by defining both a theme and darkTheme in MaterialApp. Set themeMode to ThemeMode.system to follow the device setting, ThemeMode.light to force light, or ThemeMode.dark to force dark. ColorScheme.fromSeed with Brightness.dark auto-generates dark color variants.</li>
+      <li><strong>Component Themes</strong> — ThemeData lets you theme individual component types: ElevatedButtonThemeData, InputDecorationTheme, CardTheme, AppBarTheme, etc. Set these once and all instances of that widget type inherit the styling. This eliminates repetitive style: ElevatedButton.styleFrom(...) on every button.</li>
+      <li><strong>Custom Design System Class</strong> — For advanced projects, create a custom design system class that extends ThemeData with app-specific tokens. In team_mvp_kit, BaseDesignSystem defines spacing constants, custom colors, animation durations, and component-specific styles. Access it via a static method or dependency injection.</li>
+      <li><strong>Theme Extensions</strong> — Flutter 3+ supports ThemeExtension for adding custom properties to ThemeData. Define a class that extends ThemeExtension, add your custom fields, implement copyWith and lerp, then register it with ThemeData.extensions. Access it via Theme.of(context).extension().</li>
+      <li><strong>Accessing Theme in Widgets</strong> — Use Theme.of(context) to access the current ThemeData anywhere in the widget tree. It returns ThemeData for colors, text styles, and component themes. Use context.watch or listen for reactive theme changes. Always prefer theme values over hardcoded colors for consistency and dark mode support.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+// Custom design system for team_mvp_kit
+class AppTheme {
+  static ThemeData light() {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFF6750A4),
+      brightness: Brightness.light,
+    );
+
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: colorScheme,
+      textTheme: _textTheme,
+      appBarTheme: AppBarTheme(
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(double.infinity, 48),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        filled: true,
+        fillColor: colorScheme.surfaceContainerHighest
+            .withOpacity(0.3),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+      ),
+      cardTheme: CardTheme(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: colorScheme.outlineVariant,
+          ),
+        ),
+      ),
+      extensions: const [
+        AppSpacing(),
+        AppDurations(),
+      ],
+    );
+  }
+
+  static ThemeData dark() {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFF6750A4),
+      brightness: Brightness.dark,
+    );
+
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: colorScheme,
+      textTheme: _textTheme,
+      // Same component themes with dark colors...
+    );
+  }
+
+  static const _textTheme = TextTheme(
+    headlineLarge: TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      letterSpacing: -0.5,
+    ),
+    titleLarge: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 16,
+      height: 1.5,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 14,
+      height: 1.5,
+    ),
+    labelLarge: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.5,
+    ),
+  );
+}
+
+class AppSpacing extends ThemeExtension&lt;AppSpacing&gt; {
+  final double xs;
+  final double sm;
+  final double md;
+  final double lg;
+  final double xl;
+
+  const AppSpacing({
+    this.xs = 4,
+    this.sm = 8,
+    this.md = 16,
+    this.lg = 24,
+    this.xl = 32,
+  });
+
+  @override
+  AppSpacing copyWith({
+    double? xs, double? sm, double? md,
+    double? lg, double? xl,
+  }) {
+    return AppSpacing(
+      xs: xs ?? this.xs, sm: sm ?? this.sm,
+      md: md ?? this.md, lg: lg ?? this.lg,
+      xl: xl ?? this.xl,
+    );
+  }
+
+  @override
+  AppSpacing lerp(AppSpacing? other, double t) =&gt; this;
+}
+
+class AppDurations extends ThemeExtension&lt;AppDurations&gt; {
+  final Duration fast;
+  final Duration normal;
+
+  const AppDurations({
+    this.fast = const Duration(milliseconds: 200),
+    this.normal = const Duration(milliseconds: 350),
+  });
+
+  @override
+  AppDurations copyWith({Duration? fast, Duration? normal}) {
+    return AppDurations(
+      fast: fast ?? this.fast,
+      normal: normal ?? this.normal,
+    );
+  }
+
+  @override
+  AppDurations lerp(AppDurations? other, double t) =&gt; this;
+}
+
+// Usage in MaterialApp:
+// MaterialApp(
+//   theme: AppTheme.light(),
+//   darkTheme: AppTheme.dark(),
+//   themeMode: ThemeMode.system,
+// )</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import the Material package</li>
+      <li><span class="walk-num">2.</span> </li>
+      <li><span class="walk-num">3.</span> Define AppTheme class with static factory methods</li>
+      <li><span class="walk-num">4.</span> Static light() method creates the light theme</li>
+      <li><span class="walk-num">5.</span> Generate a ColorScheme from a seed color (purple)</li>
+      <li><span class="walk-num">6.</span> Set brightness to light</li>
+      <li><span class="walk-num">7.</span> </li>
+      <li><span class="walk-num">8.</span> Build the ThemeData object</li>
+      <li><span class="walk-num">9.</span> Enable Material Design 3</li>
+      <li><span class="walk-num">10.</span> Apply the generated color scheme</li>
+      <li><span class="walk-num">11.</span> Apply custom text theme (defined below)</li>
+      <li><span class="walk-num">12.</span> AppBar theme: surface background, no elevation, centered title</li>
+      <li><span class="walk-num">13.</span> </li>
+      <li><span class="walk-num">14.</span> </li>
+      <li><span class="walk-num">15.</span> </li>
+      <li><span class="walk-num">16.</span> </li>
+      <li><span class="walk-num">17.</span> Elevated button theme: full width, 48px height, rounded corners</li>
+      <li><span class="walk-num">18.</span> </li>
+      <li><span class="walk-num">19.</span> </li>
+      <li><span class="walk-num">20.</span> </li>
+      <li><span class="walk-num">21.</span> </li>
+      <li><span class="walk-num">22.</span> </li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> </li>
+      <li><span class="walk-num">25.</span> </li>
+      <li><span class="walk-num">26.</span> Input decoration theme: rounded borders, filled background</li>
+      <li><span class="walk-num">27.</span> </li>
+      <li><span class="walk-num">28.</span> </li>
+      <li><span class="walk-num">29.</span> </li>
+      <li><span class="walk-num">30.</span> </li>
+      <li><span class="walk-num">31.</span> </li>
+      <li><span class="walk-num">32.</span> </li>
+      <li><span class="walk-num">33.</span> Card theme: no elevation, rounded with border outline</li>
+      <li><span class="walk-num">34.</span> </li>
+      <li><span class="walk-num">35.</span> </li>
+      <li><span class="walk-num">36.</span> </li>
+      <li><span class="walk-num">37.</span> </li>
+      <li><span class="walk-num">38.</span> </li>
+      <li><span class="walk-num">39.</span> Register custom ThemeExtension classes</li>
+      <li><span class="walk-num">40.</span> AppSpacing for consistent spacing values</li>
+      <li><span class="walk-num">41.</span> AppDurations for animation timing</li>
+      <li><span class="walk-num">42.</span> </li>
+      <li><span class="walk-num">43.</span> </li>
+      <li><span class="walk-num">44.</span> </li>
+      <li><span class="walk-num">45.</span> Static dark() method creates the dark theme</li>
+      <li><span class="walk-num">46.</span> Same seed color but Brightness.dark for dark palette</li>
+      <li><span class="walk-num">47.</span> </li>
+      <li><span class="walk-num">48.</span> ThemeData with dark color scheme</li>
+      <li><span class="walk-num">49.</span> Same text theme works for both modes</li>
+      <li><span class="walk-num">50.</span> </li>
+      <li><span class="walk-num">51.</span> </li>
+      <li><span class="walk-num">52.</span> Static text theme shared between light and dark</li>
+      <li><span class="walk-num">53.</span> headlineLarge: 28px bold with tight letter spacing</li>
+      <li><span class="walk-num">54.</span> </li>
+      <li><span class="walk-num">55.</span> </li>
+      <li><span class="walk-num">56.</span> </li>
+      <li><span class="walk-num">57.</span> titleLarge: 20px semi-bold</li>
+      <li><span class="walk-num">58.</span> </li>
+      <li><span class="walk-num">59.</span> </li>
+      <li><span class="walk-num">60.</span> bodyLarge: 16px with 1.5 line height</li>
+      <li><span class="walk-num">61.</span> </li>
+      <li><span class="walk-num">62.</span> </li>
+      <li><span class="walk-num">63.</span> bodyMedium: 14px with 1.5 line height</li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> </li>
+      <li><span class="walk-num">66.</span> labelLarge: 14px semi-bold with wide letter spacing</li>
+      <li><span class="walk-num">67.</span> </li>
+      <li><span class="walk-num">68.</span> </li>
+      <li><span class="walk-num">69.</span> </li>
+      <li><span class="walk-num">70.</span> </li>
+      <li><span class="walk-num">71.</span> AppSpacing ThemeExtension with spacing scale</li>
+      <li><span class="walk-num">72.</span> Define xs through xl spacing values as doubles</li>
+      <li><span class="walk-num">73.</span> </li>
+      <li><span class="walk-num">74.</span> Default values: 4, 8, 16, 24, 32</li>
+      <li><span class="walk-num">75.</span> </li>
+      <li><span class="walk-num">76.</span> </li>
+      <li><span class="walk-num">77.</span> </li>
+      <li><span class="walk-num">78.</span> copyWith for creating modified copies</li>
+      <li><span class="walk-num">79.</span> </li>
+      <li><span class="walk-num">80.</span> </li>
+      <li><span class="walk-num">81.</span> </li>
+      <li><span class="walk-num">82.</span> lerp returns this (spacing does not animate)</li>
+      <li><span class="walk-num">83.</span> </li>
+      <li><span class="walk-num">84.</span> AppDurations ThemeExtension for animations</li>
+      <li><span class="walk-num">85.</span> fast and normal duration values</li>
+      <li><span class="walk-num">86.</span> </li>
+      <li><span class="walk-num">87.</span> Default: 200ms fast, 350ms normal</li>
+      <li><span class="walk-num">88.</span> </li>
+      <li><span class="walk-num">89.</span> copyWith for modified copies</li>
+      <li><span class="walk-num">90.</span> </li>
+      <li><span class="walk-num">91.</span> </li>
+      <li><span class="walk-num">92.</span> </li>
+      <li><span class="walk-num">93.</span> lerp returns this (durations do not interpolate)</li>
+      <li><span class="walk-num">94.</span> </li>
+      <li><span class="walk-num">95.</span> </li>
+      <li><span class="walk-num">96.</span> Usage example in MaterialApp</li>
+      <li><span class="walk-num">97.</span> Apply light and dark themes</li>
+      <li><span class="walk-num">98.</span> Follow system theme mode</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>Widget build(BuildContext context) {
+  return Container(
+    color: Colors.white,
+    child: Text(
+      &#39;Hello&#39;,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 24,
+      ),
+    ),
+  );
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">This widget hardcodes colors. What happens in dark mode?</div></details><details><summary>Show answer</summary><div class="answer">Hardcoded Colors.white background and Colors.black text will not adapt to dark mode. In dark mode, the white container will clash with the dark theme. Fix: use Theme.of(context).colorScheme.surface for the background and Theme.of(context).textTheme.headlineSmall for the text style, so colors automatically adapt to the current theme.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are the boss of a crayon factory. Instead of letting every artist pick random colors, you create an official crayon box with exactly the colors your brand uses: &#39;Brand Blue&#39; for important things, &#39;Soft Grey&#39; for backgrounds, and &#39;Alert Red&#39; for warnings. ThemeData is your official crayon box. Every artist (widget) grabs colors from the same box, so all the drawings look like they belong together. Dark mode is like making a second crayon box with darker versions of the same colors for drawing at night!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Material Design 3 (Material You) can generate an entire color palette from a single seed color. ColorScheme.fromSeed uses the HCT (Hue, Chroma, Tone) color space to create harmonious primary, secondary, tertiary, and neutral color tones — the same algorithm that powers Android 12+ dynamic theming from your wallpaper!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Create a complete AppTheme class with light() and dark() static methods. Define a ColorScheme.fromSeed, a custom TextTheme with at least 4 styles, component themes for ElevatedButton, Card, and InputDecoration, and a ThemeExtension for custom spacing values. Apply it to a MaterialApp with themeMode: ThemeMode.system and build a sample screen that uses only theme values (no hardcoded colors).</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/cookbook/design/themes" target="_blank" rel="noopener noreferrer">Use Themes to Share Colors and Font Styles</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/material/ThemeData-class.html" target="_blank" rel="noopener noreferrer">ThemeData Class</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://docs.flutter.dev/ui/design/material" target="_blank" rel="noopener noreferrer">Material 3 in Flutter</a> <span class="res-source">(Flutter Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=28">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./27-building-custom-widgets.html" rel="prev">← Building Custom Widgets</a>
+  <a class="nav-next" href="./29-navigation-basics.html" rel="next">Navigation Basics →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

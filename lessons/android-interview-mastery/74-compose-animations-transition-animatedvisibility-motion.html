@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compose Animations: Transition, AnimatedVisibility &amp;… | Teamz Lab</title>
+<meta name="description" content="Compose Animations is a comprehensive animation system built into Jetpack Compose that provides declarative, state-driven animation APIs. From simple value…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/75-advanced-coroutines-callbackflow-channelflow-custom.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Compose Animations: Transition, AnimatedVisibility &amp; Motion">
+<meta property="og:description" content="Compose Animations is a comprehensive animation system built into Jetpack Compose that provides declarative, state-driven animation APIs. From simple value…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Compose Animations: Transition, AnimatedVisibility &amp; Motion">
+<meta name="twitter:description" content="Compose Animations is a comprehensive animation system built into Jetpack Compose that provides declarative, state-driven animation APIs. From simple value…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Compose Animations: Transition, AnimatedVisibility & Motion",
+  "description": "Compose Animations is a comprehensive animation system built into Jetpack Compose that provides declarative, state-driven animation APIs. From simple value…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 74
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Compose Animations: Transition, AnimatedVisibility & Motion",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Compose Animations: Transition, AnimatedVisibility &amp; Motion</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 74 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Compose Animations: Transition, AnimatedVisibility &amp; Motion</h1>
+<p class="lesson-subtitle">Create fluid, production-quality animations in Jetpack Compose</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=74">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Compose animations are like a movie director&#39;s toolkit. animate*AsState is the simple camera pan — point A to point B, done. AnimatedVisibility is the stage curtain rising and falling. updateTransition is orchestrating multiple actors moving in sync during a scene change. And InfiniteTransition is the looping background music that never stops. MotionLayout is your stunt coordinator — handling complex, choreographed sequences that would be impossible to direct manually.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Compose Animations is a comprehensive animation system built into Jetpack Compose that provides declarative, state-driven animation APIs. From simple value animations (animate*AsState) to complex choreographed transitions (updateTransition, MotionLayout), it handles enter/exit animations (AnimatedVisibility), content swaps (AnimatedContent), infinite loops (InfiniteTransition), and gesture-driven motion (Animatable), all designed to be interruptible, composable, and performant.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every polished app uses animations extensively. WhatsApp uses AnimatedVisibility-style animations for message reactions appearing. Instagram uses gesture-driven animations for story swiping and double-tap hearts. Twitter/X uses AnimatedContent for the like counter incrementing. Spotify uses InfiniteTransition for its equalizer bars. Google Maps uses MotionLayout-style coordinated transitions for its bottom sheet expanding into full screen.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>animate*AsState Fundamentals</strong> — The simplest animation API. Functions like `animateDpAsState`, `animateColorAsState`, `animateFloatAsState`, and `animateIntAsState` animate between values automatically when the target changes. They return a State that recomposes smoothly. Customize with `animationSpec` parameter: `tween(durationMillis, easing)`, `spring(dampingRatio, stiffness)`, `keyframes {}`, or `snap()`.</li>
+      <li><strong>AnimatedVisibility</strong> — Wraps content that appears/disappears with enter/exit transitions. EnterTransition combinators: `fadeIn() + slideInVertically() + expandVertically()`. ExitTransition: `fadeOut() + slideOutHorizontally() + shrinkVertically()`. Use `MutableTransitionState(false)` for initial animation on first composition. Each child can override with `Modifier.animateEnterExit()` for individual control.</li>
+      <li><strong>AnimatedContent &amp; ContentTransform</strong> — Animates between different composable content based on a target state. Uses `transitionSpec` returning `ContentTransform` created by combining `EnterTransition togetherWith ExitTransition`. The `using SizeTransform(clip = true)` controls how the container resizes. Use `targetState` in the content lambda for type-safe state-driven UI swaps like number counters or page transitions.</li>
+      <li><strong>updateTransition &amp; Multi-property Animation</strong> — `updateTransition(targetState)` creates a Transition object that coordinates multiple animated properties simultaneously. Use `transition.animateDp {}`, `transition.animateColor {}`, etc. with labels for inspection. All child animations are synchronized — they start, update, and complete together. MutableTransitionState enables observing `isIdle`, `currentState`, and `targetState`.</li>
+      <li><strong>Crossfade &amp; AnimatedNavHost</strong> — Crossfade is a simplified AnimatedContent that only does fade transitions between states. Ideal for tab switching or simple content swaps. For Navigation Compose, use `AnimatedNavHost` from accompanist (now integrated into navigation-compose) which provides `enterTransition`, `exitTransition`, `popEnterTransition`, and `popExitTransition` per route.</li>
+      <li><strong>InfiniteTransition</strong> — `rememberInfiniteTransition()` creates animations that loop forever — perfect for loading indicators, pulsing effects, or rotating icons. Use `infiniteTransition.animateFloat(initialValue, targetValue, animationSpec = infiniteRepeatable(tween(), RepeatMode.Reverse))`. RepeatMode.Restart snaps back; RepeatMode.Reverse ping-pongs smoothly.</li>
+      <li><strong>AnimationSpec Deep Dive</strong> — `spring()` is physics-based with DampingRatioNoBouncy/LowBouncy/MediumBouncy/HighBouncy and stiffness levels. `tween()` uses duration + easing (FastOutSlowInEasing, LinearEasing, etc.). `keyframes {}` defines values at specific times for complex curves. `repeatable()` wraps any spec with iteration count. `snap()` jumps instantly with optional delay.</li>
+      <li><strong>Gesture-Driven Animations</strong> — Combine `Modifier.pointerInput {}` or `Modifier.draggable {}` with `Animatable` for gesture-driven motion. `Animatable` supports `animateTo()`, `snapTo()`, and crucially `stop()` for interrupting animations mid-flight. Use `animateDecay()` with `splineBasedDecay()` for fling physics. `AnchoredDraggable` (replacing `SwipeableState`) handles swipe-to-dismiss and bottom sheet snapping.</li>
+      <li><strong>Modifier.graphicsLayer for Performance</strong> — Use `Modifier.graphicsLayer { }` for GPU-accelerated transforms: `translationX/Y`, `scaleX/Y`, `rotationZ`, `alpha`. These don&#39;t trigger recomposition or relayout — only redraw. Combine with `animateFloatAsState` for smooth, performant animations. For shared element transitions, `Modifier.sharedElement()` in Navigation Compose handles cross-screen hero animations.</li>
+      <li><strong>MotionLayout in Compose</strong> — MotionLayout from ConstraintLayout Compose enables complex, coordinated animations between two constraint sets. Define `start` and `end` ConstraintSets, animate `progress` from 0f to 1f. Supports custom properties, arcs, stagger, and keyframes. Ideal for collapsing toolbars, coordinated reveal animations, and complex layout transitions that would be impractical with standard Compose animation APIs.</li>
+      <li><strong>Animation Testing &amp; Inspection</strong> — Use `createComposeRule()` with `mainClock.autoAdvance = false` to control animation timing. `advanceTimeBy(millis)` steps through animations frame by frame. Compose Animation Preview in Android Studio visualizes transitions. Add `label` parameters to animated values for identification in the Animation Inspector. Test final states with `waitForIdle()` after advancing time.</li>
+      <li><strong>Performance Best Practices</strong> — Defer reads with `Modifier.graphicsLayer { }` lambda to skip recomposition. Use `derivedStateOf {}` to prevent unnecessary recompositions from rapid animation value changes. Prefer `Animatable` over `animate*AsState` when you need interruption handling. Profile with Layout Inspector&#39;s recomposition counter — animations should only trigger redraws, not recompositions.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === animate*AsState basics ===
+@Composable
+fun ExpandableCard(title: String, content: String) {
+    var expanded by remember { mutableStateOf(false) }
+
+    val elevation by animateDpAsState(
+        targetValue = if (expanded) 8.dp else 2.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = &quot;cardElevation&quot;
+    )
+
+    val backgroundColor by animateColorAsState(
+        targetValue = if (expanded)
+            MaterialTheme.colorScheme.primaryContainer
+        else
+            MaterialTheme.colorScheme.surface,
+        animationSpec = tween(300),
+        label = &quot;cardColor&quot;
+    )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded },
+        elevation = CardDefaults.cardElevation(elevation),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+
+            AnimatedVisibility(
+                visible = expanded,
+                enter = fadeIn(tween(300)) +
+                    expandVertically(
+                        animationSpec = spring(
+                            stiffness = Spring.StiffnessLow
+                        )
+                    ),
+                exit = fadeOut(tween(200)) +
+                    shrinkVertically()
+            ) {
+                Text(
+                    text = content,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+// === AnimatedContent with number counter ===
+@Composable
+fun AnimatedCounter(count: Int) {
+    AnimatedContent(
+        targetState = count,
+        transitionSpec = {
+            if (targetState &gt; initialState) {
+                slideInVertically { height -&gt; height } +
+                    fadeIn() togetherWith
+                    slideOutVertically { height -&gt; -height } +
+                    fadeOut()
+            } else {
+                slideInVertically { height -&gt; -height } +
+                    fadeIn() togetherWith
+                    slideOutVertically { height -&gt; height } +
+                    fadeOut()
+            }.using(SizeTransform(clip = false))
+        },
+        label = &quot;counter&quot;
+    ) { targetCount -&gt;
+        Text(
+            text = &quot;$targetCount&quot;,
+            style = MaterialTheme.typography.displayLarge
+        )
+    }
+}
+
+// === updateTransition for coordinated animation ===
+enum class BoxState { Collapsed, Expanded }
+
+@Composable
+fun TransitionBox() {
+    var currentState by remember {
+        mutableStateOf(BoxState.Collapsed)
+    }
+    val transition = updateTransition(
+        targetState = currentState,
+        label = &quot;boxTransition&quot;
+    )
+
+    val size by transition.animateDp(
+        transitionSpec = {
+            if (targetState == BoxState.Expanded) {
+                spring(stiffness = Spring.StiffnessLow)
+            } else {
+                spring(stiffness = Spring.StiffnessMedium)
+            }
+        },
+        label = &quot;size&quot;
+    ) { state -&gt;
+        when (state) {
+            BoxState.Collapsed -&gt; 64.dp
+            BoxState.Expanded -&gt; 200.dp
+        }
+    }
+
+    val cornerRadius by transition.animateDp(
+        label = &quot;corner&quot;
+    ) { state -&gt;
+        when (state) {
+            BoxState.Collapsed -&gt; 32.dp
+            BoxState.Expanded -&gt; 16.dp
+        }
+    }
+
+    val color by transition.animateColor(
+        label = &quot;color&quot;
+    ) { state -&gt;
+        when (state) {
+            BoxState.Collapsed -&gt; Color(0xFF6200EE)
+            BoxState.Expanded -&gt; Color(0xFF03DAC5)
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .size(size)
+            .clip(RoundedCornerShape(cornerRadius))
+            .background(color)
+            .clickable {
+                currentState = if (currentState == BoxState.Collapsed)
+                    BoxState.Expanded else BoxState.Collapsed
+            }
+    )
+}
+
+// === InfiniteTransition for loading ===
+@Composable
+fun PulsingDot() {
+    val infiniteTransition = rememberInfiniteTransition(
+        label = &quot;pulse&quot;
+    )
+
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 0.8f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 600,
+                easing = FastOutSlowInEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = &quot;scale&quot;
+    )
+
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 0.4f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = &quot;alpha&quot;
+    )
+
+    Box(
+        modifier = Modifier
+            .size(24.dp)
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+                this.alpha = alpha
+            }
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.primary)
+    )
+}
+
+// === Gesture-driven animation with Animatable ===
+@Composable
+fun SwipeToDismissCard(
+    onDismiss: () -&gt; Unit,
+    content: @Composable () -&gt; Unit
+) {
+    val offsetX = remember { Animatable(0f) }
+    val scope = rememberCoroutineScope()
+
+    Box(
+        modifier = Modifier
+            .offset {
+                IntOffset(offsetX.value.roundToInt(), 0)
+            }
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures(
+                    onDragEnd = {
+                        scope.launch {
+                            if (abs(offsetX.value) &gt; size.width / 3) {
+                                val target = if (offsetX.value &gt; 0)
+                                    size.width.toFloat()
+                                else
+                                    -size.width.toFloat()
+                                offsetX.animateTo(
+                                    targetValue = target,
+                                    animationSpec = tween(300)
+                                )
+                                onDismiss()
+                            } else {
+                                offsetX.animateTo(
+                                    targetValue = 0f,
+                                    animationSpec = spring(
+                                        dampingRatio = Spring
+                                            .DampingRatioMediumBouncy
+                                    )
+                                )
+                            }
+                        }
+                    }
+                ) { _, dragAmount -&gt;
+                    scope.launch {
+                        offsetX.snapTo(
+                            offsetX.value + dragAmount
+                        )
+                    }
+                }
+            }
+    ) {
+        content()
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ExpandableCard uses animateDpAsState for elevation and animateColorAsState for background — both animate automatically when &#39;expanded&#39; state changes.</li>
+      <li><span class="walk-num">2.</span> The spring spec with DampingRatioMediumBouncy creates a playful bounce effect on the elevation change.</li>
+      <li><span class="walk-num">3.</span> AnimatedVisibility wraps the content text — fadeIn + expandVertically creates a smooth reveal from top.</li>
+      <li><span class="walk-num">4.</span> AnimatedCounter uses AnimatedContent where the transitionSpec checks direction (up vs down) to slide numbers appropriately.</li>
+      <li><span class="walk-num">5.</span> slideInVertically { height -&gt; height } slides in from the bottom (positive = below viewport), while { -height } slides from top.</li>
+      <li><span class="walk-num">6.</span> togetherWith combines enter and exit into a ContentTransform. SizeTransform(clip = false) allows content to overflow during transition.</li>
+      <li><span class="walk-num">7.</span> TransitionBox uses updateTransition to coordinate size, cornerRadius, and color — all animate in sync when BoxState changes.</li>
+      <li><span class="walk-num">8.</span> Each transition.animate* call can have its own transitionSpec, allowing different physics per property while staying synchronized.</li>
+      <li><span class="walk-num">9.</span> PulsingDot uses rememberInfiniteTransition with RepeatMode.Reverse for smooth scale and alpha oscillation.</li>
+      <li><span class="walk-num">10.</span> graphicsLayer is used for scale and alpha — these are render-only changes that don&#39;t trigger recomposition.</li>
+      <li><span class="walk-num">11.</span> SwipeToDismissCard uses Animatable for offsetX, enabling snapTo() during drag and animateTo() on release.</li>
+      <li><span class="walk-num">12.</span> The drag threshold (size.width / 3) determines whether to dismiss or spring back — spring creates a natural bounce-back feel.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Composable
+fun FadeToggle(visible: Boolean, content: @Composable () -&gt; Unit) {
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = tween(500),
+        label = &quot;alpha&quot;
+    )
+
+    Box(modifier = Modifier.alpha(alpha)) {
+        content()
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">When alpha reaches 0, is the content actually removed from the composition? What about click handlers and accessibility?</div></details><details><summary>Show answer</summary><div class="answer">The content is still composed and in the layout tree even when alpha = 0. It remains clickable and accessible to screen readers. Use AnimatedVisibility instead, which actually removes content from the composition tree when the exit animation completes. If you must use alpha, add `.then(if (alpha == 0f) Modifier.size(0.dp) else Modifier)` or better yet use `AnimatedVisibility(visible = visible, enter = fadeIn(tween(500)), exit = fadeOut(tween(500))) { content() }`.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a magic coloring book. When you say &#39;make the box big,&#39; it doesn&#39;t just jump to being big — it smoothly grows like a balloon being inflated (that&#39;s animate*AsState). When you say &#39;show the hidden picture,&#39; it fades in like a ghost appearing (AnimatedVisibility). When you say &#39;change the picture,&#39; the old one slides away and the new one slides in like a sliding door (AnimatedContent). And some pictures keep wiggling forever like a waving flag (InfiniteTransition). The magic book always makes changes look smooth and pretty!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Compose animation system was designed by the same team that built Android&#39;s original Property Animation framework (ObjectAnimator), but they took the opposite approach. Instead of imperatively starting animations, Compose animations are declarative — you describe the target state, and the framework figures out how to get there. The spring() animation is the default because physics-based animations feel more natural and handle interruptions gracefully, unlike duration-based animations that can feel jarring when redirected mid-flight.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build an animated task management card that demonstrates multiple animation techniques: (1) The card uses AnimatedVisibility to reveal a description and action buttons when tapped, (2) A priority indicator dot pulses using InfiniteTransition when the task is high priority, (3) Implement swipe-to-complete using Animatable with gesture detection that reveals a green checkmark underneath, (4) When the task status changes (todo -&gt; in-progress -&gt; done), use AnimatedContent with a sliding ContentTransform to swap the status badge, (5) Add updateTransition to coordinate the background color, border width, and icon rotation when toggling a &#39;starred&#39; state. Ensure all animations use graphicsLayer where appropriate for performance.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/develop/ui/compose/animation/introduction" target="_blank" rel="noopener noreferrer">Compose Animation Official Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/codelabs/jetpack-compose-animation" target="_blank" rel="noopener noreferrer">Animating Elements in Jetpack Compose</a> <span class="res-source">(Google Codelabs)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=Z_T1bVjhMLk" target="_blank" rel="noopener noreferrer">Compose Animation Deep Dive</a> <span class="res-source">(Android Developers YouTube)</span></li>
+      <li><a href="https://proandroiddev.com/a-visual-guide-to-jetpack-compose-animation-2b1685de26a4" target="_blank" rel="noopener noreferrer">A Visual Guide to Compose Animations</a> <span class="res-source">(ProAndroidDev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=74">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./73-paging-3-pagingsource-remotemediator-flow-integration.html" rel="prev">← Paging 3: PagingSource, RemoteMediator…</a>
+  <a class="nav-next" href="./75-advanced-coroutines-callbackflow-channelflow-custom.html" rel="next">Advanced Coroutines: callbackFlow… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

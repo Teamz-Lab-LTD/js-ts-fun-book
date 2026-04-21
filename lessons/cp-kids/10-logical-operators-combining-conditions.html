@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logical Operators — Combining Conditions — CP Zero to… | Teamz Lab</title>
+<meta name="description" content="Logical operators let you combine multiple conditions into one. AND (&amp;&amp;) requires all conditions to be true. OR (||) requires at least one to be true. NOT…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/10-logical-operators-combining-conditions.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/09-else-if-chains-multiple-choices.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/11-while-loops-repeat-until-done.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logical Operators — Combining Conditions">
+<meta property="og:description" content="Logical operators let you combine multiple conditions into one. AND (&amp;&amp;) requires all conditions to be true. OR (||) requires at least one to be true. NOT…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/cp-kids/10-logical-operators-combining-conditions.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Logical Operators — Combining Conditions">
+<meta name="twitter:description" content="Logical operators let you combine multiple conditions into one. AND (&amp;&amp;) requires all conditions to be true. OR (||) requires at least one to be true. NOT…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Logical Operators — Combining Conditions",
+  "description": "Logical operators let you combine multiple conditions into one. AND (&&) requires all conditions to be true. OR (||) requires at least one to be true. NOT…",
+  "url": "https://learn.teamzlab.com/lessons/cp-kids/10-logical-operators-combining-conditions.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Competitive Programming: Zero to Hero",
+    "url": "https://learn.teamzlab.com/c/cp-kids.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 10
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "CP Zero to Hero",
+      "item": "https://learn.teamzlab.com/c/cp-kids.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Logical Operators — Combining Conditions",
+      "item": "https://learn.teamzlab.com/lessons/cp-kids/10-logical-operators-combining-conditions.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/cp-kids.html">CP Zero to Hero</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/cp-kids.html">CP Zero to Hero</a> / <span aria-current="page">Logical Operators — Combining Conditions</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 10 of 50</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Logical Operators — Combining Conditions</h1>
+<p class="lesson-subtitle">Learn to combine conditions with AND, OR, and NOT — the building blocks of powerful decision-making!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=10">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Logical operators are like rules at a fancy party. AND (&amp;&amp;) means you need BOTH a ticket AND an ID to enter — missing either one and you are turned away. OR (||) means you need a ticket OR be on the VIP list — having either one is enough. NOT (!) flips things — if the door says &#39;NOT members only,&#39; then non-members CAN enter. These three little operators let you build any rule you can imagine!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Logical operators let you combine multiple conditions into one. AND (&amp;&amp;) requires all conditions to be true. OR (||) requires at least one to be true. NOT (!) flips true to false and vice versa. Together, they let you express any complex condition your program needs.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Logical operators power everything with rules. Email filters: if (from == boss &amp;&amp; subject contains &#39;urgent&#39;), mark as important. Search engines: &#39;cats AND dogs&#39; finds pages with both words, &#39;cats OR dogs&#39; finds pages with either. In CP, you combine conditions to check ranges, validate input, and handle edge cases — they appear in virtually every problem.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>&amp;&amp; (AND) — Both Must Be True</strong> — The &amp;&amp; operator returns true ONLY if BOTH sides are true. true &amp;&amp; true = true. true &amp;&amp; false = false. false &amp;&amp; true = false. false &amp;&amp; false = false. Example: if (age &gt;= 18 &amp;&amp; hasLicense) — you can drive only if you are 18+ AND have a license. Both conditions must pass!</li>
+      <li><strong>|| (OR) — At Least One Must Be True</strong> — The || operator returns true if AT LEAST ONE side is true. true || true = true. true || false = true. false || true = true. false || false = false. Only when BOTH are false does || give false. Example: if (isWeekend || isHoliday) — you get a day off if it is a weekend OR a holiday (or both!).</li>
+      <li><strong>! (NOT) — Flip True to False</strong> — The ! operator flips a boolean value. !true = false. !false = true. Example: if (!gameOver) means &#39;if the game is NOT over.&#39; You can also use it with comparisons: !(a == b) is the same as (a != b). The NOT operator is like flipping a light switch.</li>
+      <li><strong>Short-Circuit Evaluation — C++ Is Lazy!</strong> — C++ is clever (lazy) about evaluating conditions. For &amp;&amp;, if the LEFT side is false, it does not even check the right side — because the result is false no matter what. For ||, if the LEFT side is true, it skips the right side. This is called &#39;short-circuit evaluation.&#39; It is not just efficient — it can prevent crashes! Example: if (n != 0 &amp;&amp; 100/n &gt; 5) is safe because if n is 0, the division never happens.</li>
+      <li><strong>Combining Multiple Operators</strong> — You can chain logical operators: if (a &gt; 0 &amp;&amp; a = 18 &amp;&amp; hasTicket) || isVIP) — adults with tickets or VIPs can enter. Use parentheses to make the order clear!</li>
+      <li><strong>Operator Precedence — ! Before &amp;&amp; Before ||</strong> — Without parentheses: ! is evaluated first, then &amp;&amp;, then ||. So &#39;true || false &amp;&amp; false&#39; means &#39;true || (false &amp;&amp; false)&#39; = &#39;true || false&#39; = true. This can be confusing! ALWAYS use parentheses when mixing &amp;&amp; and || to make your intention crystal clear. Your future self will thank you.</li>
+      <li><strong>CP Pattern — Range Checking</strong> — A super common CP pattern is checking if a value is in a range: if (x &gt;= L &amp;&amp; x = 0 &amp;&amp; x = 0 &amp;&amp; y &lt; m). This is essential for grid problems.</li>
+      <li><strong>Truth Tables — The Complete Reference</strong> — A truth table shows all possible results. For AND: T&amp;&amp;T=T, T&amp;&amp;F=F, F&amp;&amp;T=F, F&amp;&amp;F=F. For OR: T||T=T, T||F=T, F||T=T, F||F=F. For NOT: !T=F, !F=T. Once you memorize these, logical operators become second nature. Think of AND as strict (both must agree) and OR as lenient (one is enough).</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int age;
+    bool hasTicket, isVIP;
+
+    cin &gt;&gt; age;
+    cin &gt;&gt; hasTicket &gt;&gt; isVIP;  // 1 for true, 0 for false
+
+    // AND: both conditions required
+    if (age &gt;= 18 &amp;&amp; hasTicket) {
+        cout &lt;&lt; &quot;Welcome! You may enter.\n&quot;;
+    }
+
+    // OR: either condition is enough
+    if (hasTicket || isVIP) {
+        cout &lt;&lt; &quot;You have access to the show.\n&quot;;
+    }
+
+    // NOT: flip a condition
+    if (!isVIP) {
+        cout &lt;&lt; &quot;You are not a VIP.\n&quot;;
+    }
+
+    // Combined: adults with ticket OR any VIP
+    if ((age &gt;= 18 &amp;&amp; hasTicket) || isVIP) {
+        cout &lt;&lt; &quot;Backstage pass granted!\n&quot;;
+    }
+
+    // CP classic: check if number is in range [1, 100]
+    int n;
+    cin &gt;&gt; n;
+    if (n &gt;= 1 &amp;&amp; n &lt;= 100) {
+        cout &lt;&lt; &quot;In range\n&quot;;
+    } else {
+        cout &lt;&lt; &quot;Out of range\n&quot;;
+    }
+
+    // Short-circuit: safe division check
+    int divisor;
+    cin &gt;&gt; divisor;
+    if (divisor != 0 &amp;&amp; 100 / divisor &gt; 10) {
+        cout &lt;&lt; &quot;Big ratio!\n&quot;;
+    }
+
+    // Check if a year is a leap year
+    int year;
+    cin &gt;&gt; year;
+    if ((year % 4 == 0 &amp;&amp; year % 100 != 0) || (year % 400 == 0)) {
+        cout &lt;&lt; year &lt;&lt; &quot; is a leap year\n&quot;;
+    } else {
+        cout &lt;&lt; year &lt;&lt; &quot; is not a leap year\n&quot;;
+    }
+
+    return 0;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> cin &gt;&gt; age; cin &gt;&gt; hasTicket &gt;&gt; isVIP; — we read the age as an integer, then two boolean values (0 or 1) for ticket and VIP status.</li>
+      <li><span class="walk-num">2.</span> if (age &gt;= 18 &amp;&amp; hasTicket) — the &amp;&amp; (AND) operator. Both conditions must be true: the person must be 18 or older AND have a ticket. If either is false, the whole condition is false.</li>
+      <li><span class="walk-num">3.</span> if (hasTicket || isVIP) — the || (OR) operator. At least ONE condition must be true. Having a ticket works, being a VIP works, having both also works. Only fails if you have neither.</li>
+      <li><span class="walk-num">4.</span> if (!isVIP) — the ! (NOT) operator flips the value. If isVIP is true, !isVIP is false (so the message does not print). If isVIP is false, !isVIP is true (message prints).</li>
+      <li><span class="walk-num">5.</span> if ((age &gt;= 18 &amp;&amp; hasTicket) || isVIP) — we mix AND and OR with parentheses. The parentheses make it clear: (adults with tickets) OR (VIPs of any age). Without parentheses, the meaning could change!</li>
+      <li><span class="walk-num">6.</span> if (n &gt;= 1 &amp;&amp; n &lt;= 100) — the classic range check pattern. n must be at least 1 AND at most 100. This is how you check if a value is within bounds.</li>
+      <li><span class="walk-num">7.</span> if (divisor != 0 &amp;&amp; 100 / divisor &gt; 10) — short-circuit evaluation in action! If divisor IS 0, the left side (divisor != 0) is false, so C++ never evaluates the right side (100/divisor). This prevents a division-by-zero crash!</li>
+      <li><span class="walk-num">8.</span> if ((year % 4 == 0 &amp;&amp; year % 100 != 0) || (year % 400 == 0)) — the famous leap year formula. A year is a leap year if it is divisible by 4 but NOT by 100, unless it IS divisible by 400. The parentheses group the conditions perfectly.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int x;
+    cin &gt;&gt; x;
+    // Check if x is between 10 and 20
+    if (10 &lt;= x &lt;= 20) {
+        cout &lt;&lt; &quot;In range\n&quot;;
+    } else {
+        cout &lt;&lt; &quot;Out of range\n&quot;;
+    }
+    return 0;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">C++ does not understand math-style chained comparisons like 10 &lt;= x &lt;= 20. What does C++ actually do with this expression? Think about what (10 &lt;= x) evaluates to, and then what THAT result &lt;= 20 means.</div></details><details><summary>Show answer</summary><div class="answer">The bug is that &#39;10 &lt;= x &lt;= 20&#39; does NOT work like math! C++ evaluates it left to right: first (10 &lt;= x) gives true (1) or false (0), then it compares THAT 0 or 1 with 20. Since 0 &lt;= 20 and 1 &lt;= 20 are both true, this condition is ALWAYS true for any x! The fix: use &#39;(x &gt;= 10 &amp;&amp; x &lt;= 20)&#39; — two separate comparisons joined with AND.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you want cookies from the cookie jar. Mom says: &#39;You can have a cookie IF you ate your vegetables AND finished your homework.&#39; That is the AND rule — you need BOTH! But Dad says: &#39;You can have a cookie IF you ate your vegetables OR cleaned your room.&#39; That is the OR rule — either one works! And NOT is like when someone says &#39;Do NOT touch the jar&#39; — it flips the rule to the opposite.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">George Boole, a self-taught English mathematician from the 1800s, invented the logic system that AND, OR, and NOT are based on. He called it &#39;Boolean algebra.&#39; He had no idea that 100 years later, his math would become the foundation of EVERY computer chip ever made! Every transistor in your computer is basically doing AND, OR, and NOT operations billions of times per second. The &#39;bool&#39; data type in C++ is named after him!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a leap year checker! A year is a leap year if: (divisible by 4 AND NOT divisible by 100) OR (divisible by 400). Read a year and print &#39;Leap&#39; or &#39;Not Leap&#39;. Test: 2024 (Leap), 1900 (Not Leap), 2000 (Leap), 2023 (Not Leap).</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://codeforces.com/problemset/problem/263/A" target="_blank" rel="noopener noreferrer">Codeforces — Beautiful Matrix</a> <span class="res-source">(Codeforces)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=HtESinh0HTY" target="_blank" rel="noopener noreferrer">Logical Operators in C++ — Full Guide</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://cp-algorithms.com/" target="_blank" rel="noopener noreferrer">CP-Algorithms — Boolean Logic Basics</a> <span class="res-source">(CP-Algorithms)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=10">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./09-else-if-chains-multiple-choices.html" rel="prev">← Else-If Chains — Multiple Choices</a>
+  <a class="nav-next" href="./11-while-loops-repeat-until-done.html" rel="next">While Loops — Repeat Until Done →</a>
+</nav>
+
+<a class="back-to-course" href="/c/cp-kids.html">← Back to course: CP Zero to Hero</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

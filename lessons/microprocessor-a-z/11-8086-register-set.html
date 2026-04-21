@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8086 Register Set — Microprocessor A–Z | Teamz Lab</title>
+<meta name="description" content="The 8086 has fourteen 16-bit registers organized into four groups. Four general-purpose registers (AX, BX, CX, DX) handle data and arithmetic, with each…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/11-8086-register-set.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/10-biu-and-eu-the-dual-engine-design.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="8086 Register Set">
+<meta property="og:description" content="The 8086 has fourteen 16-bit registers organized into four groups. Four general-purpose registers (AX, BX, CX, DX) handle data and arithmetic, with each…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/11-8086-register-set.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="8086 Register Set">
+<meta name="twitter:description" content="The 8086 has fourteen 16-bit registers organized into four groups. Four general-purpose registers (AX, BX, CX, DX) handle data and arithmetic, with each…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "8086 Register Set",
+  "description": "The 8086 has fourteen 16-bit registers organized into four groups. Four general-purpose registers (AX, BX, CX, DX) handle data and arithmetic, with each…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/11-8086-register-set.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 11
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "8086 Register Set",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/11-8086-register-set.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">8086 Register Set</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 11 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">8086 Register Set</h1>
+<p class="lesson-subtitle">The 8086&#39;s fourteen registers — your processor&#39;s fast scratchpad for data, addresses, and status</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=11">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of registers as the pockets in a chef&#39;s apron. The chef (EU) keeps the most-used ingredients in these pockets for instant access, instead of walking to the pantry (memory) every time. AX through DX are like four big pockets for ingredients (data). SP and BP are like the left hand managing a stack of plates. SI and DI are fingers pointing at recipe cards (arrays). CS, DS, SS, ES are labels on different pantry shelves (memory segments). The Flags register is a checklist clipped to the apron — did the last recipe overflow? Was the result zero?</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The 8086 has fourteen 16-bit registers organized into four groups. Four general-purpose registers (AX, BX, CX, DX) handle data and arithmetic, with each splittable into two 8-bit halves. Two pointer registers (SP, BP) manage the stack. Two index registers (SI, DI) support array and string operations. Four segment registers (CS, DS, SS, ES) define 64 KB windows into the 1 MB address space. The Flags register holds status and control bits. The Instruction Pointer (IP) tracks the next instruction to execute. Together, these 14 registers form the complete programmer-visible state of the 8086.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every x86-64 register you use today is a direct extension of the original 8086 registers. EAX (32-bit) and RAX (64-bit) are extensions of AX. When you debug C code and see variables stored in EAX, ESP, or EDI, you are looking at the grandchildren of the 8086 registers. Compilers still respect the implicit roles: ECX for loop counters, EAX for return values, ESP for the stack pointer — conventions that trace directly back to the 8086.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>General-Purpose Registers: AX (Accumulator)</strong> — AX is the primary accumulator for arithmetic and I/O. Many instructions implicitly use AX: MUL/DIV use AX for operands and results, IN/OUT transfer data through AL/AX, and string operations like LODSW load into AX. It is split into AH (high byte) and AL (low byte), each independently accessible.</li>
+      <li><strong>General-Purpose Registers: BX (Base)</strong> — BX serves as a base address register for memory access. It is the only general-purpose register that can be used in base-addressing modes like [BX], [BX+SI], and [BX+DI]. It also works as a general data register for arithmetic. Splits into BH and BL.</li>
+      <li><strong>General-Purpose Registers: CX (Counter)</strong> — CX is the designated counter register. LOOP, LOOPZ, and LOOPNZ decrement CX and branch based on its value. REP prefixes for string operations use CX as the repeat count. Shift and rotate instructions use CL for variable shift counts. Splits into CH and CL.</li>
+      <li><strong>General-Purpose Registers: DX (Data)</strong> — DX extends AX for 32-bit operations. MUL produces a 32-bit result in DX:AX. DIV takes a 32-bit dividend from DX:AX. DX also holds the port number for IN/OUT instructions when the port address exceeds 8 bits. Splits into DH and DL.</li>
+      <li><strong>Pointer Registers: SP and BP</strong> — SP (Stack Pointer) always points to the top of the stack in the SS segment. PUSH decrements SP, POP increments it. You should rarely modify SP directly. BP (Base Pointer) is used to access parameters and local variables in stack frames. BP defaults to the SS segment, making it ideal for procedure stack access.</li>
+      <li><strong>Index Registers: SI and DI</strong> — SI (Source Index) and DI (Destination Index) are used for indexed memory access and string operations. LODSB reads from DS:SI, STOSB writes to ES:DI, MOVSB copies from DS:SI to ES:DI. Both auto-increment or auto-decrement based on the Direction Flag.</li>
+      <li><strong>Segment Registers: CS, DS, SS, ES</strong> — CS (Code Segment) points to the current code — IP is an offset within CS. DS (Data Segment) is the default for most data access. SS (Stack Segment) is used with SP and BP. ES (Extra Segment) is used by string destination operations and as an auxiliary data segment. Each defines a 64 KB window into the 1 MB address space.</li>
+      <li><strong>The Flags Register (Status and Control)</strong> — The 16-bit Flags register contains 9 active flags. Six status flags are set by ALU operations: CF (Carry), ZF (Zero), SF (Sign), OF (Overflow), PF (Parity), AF (Auxiliary Carry). Three control flags are set by the programmer: DF (Direction for strings), IF (Interrupt enable), TF (Trap for single-step debugging).</li>
+      <li><strong>Register Encoding in Machine Code</strong> — Each register has a 3-bit code used in instruction encoding: AX=000, CX=001, DX=010, BX=011, SP=100, BP=101, SI=110, DI=111. The REG field and R/M field in the ModR/M byte use these codes. Understanding this helps when debugging raw machine code.</li>
+      <li><strong>IP — The Instruction Pointer</strong> — IP (Instruction Pointer) holds the offset of the next instruction to execute within the CS segment. You cannot read or write IP directly with MOV. It is modified indirectly by JMP, CALL, RET, INT, and IRET. The BIU uses CS:IP to fetch the next instruction bytes.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Demonstrate all four register groups
+.MODEL SMALL
+.STACK 100h
+.DATA
+  nums  DW 10, 20, 30, 40, 50
+  count DW 5
+  sum   DW 0
+
+.CODE
+MAIN PROC
+  MOV AX, @DATA     ; setup segment register (DS)
+  MOV DS, AX
+
+  ; General-purpose registers
+  XOR AX, AX        ; AX = accumulator = 0
+  MOV CX, [count]   ; CX = counter = 5
+  LEA BX, nums      ; BX = base address of array
+
+  ; Index register
+  XOR SI, SI         ; SI = index = 0
+
+  ; Loop using CX counter and SI index
+add_loop:
+  ADD AX, [BX+SI]   ; AX += nums[SI] (base+index)
+  ADD SI, 2          ; next word (2 bytes)
+  LOOP add_loop      ; CX-- and loop if CX != 0
+
+  MOV [sum], AX      ; store result to memory
+
+  ; Pointer registers demonstrated
+  PUSH AX            ; SP decremented, AX on stack
+  MOV BP, SP         ; BP = stack frame pointer
+  MOV DX, [BP]       ; DX = value at top of stack
+  POP AX             ; restore AX, SP incremented
+
+  MOV AH, 4Ch
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> MOV AX, @DATA / MOV DS, AX — loads the data segment address into DS via AX. This is a segment register setup using a general-purpose register as intermediary</li>
+      <li><span class="walk-num">2.</span> XOR AX, AX — zeroes AX by XOR-ing it with itself. Faster and shorter than MOV AX, 0. AX will be our sum accumulator</li>
+      <li><span class="walk-num">3.</span> MOV CX, [count] — loads 5 into CX from memory. CX will serve its role as the loop counter for the LOOP instruction</li>
+      <li><span class="walk-num">4.</span> LEA BX, nums — loads the offset address of the nums array into BX. BX serves its role as the base register for array addressing</li>
+      <li><span class="walk-num">5.</span> XOR SI, SI — zeroes SI. It will be our index offset into the array, incrementing by 2 each iteration (word-sized elements)</li>
+      <li><span class="walk-num">6.</span> ADD AX, [BX+SI] — base+index addressing. The physical address is DS*16 + BX + SI. Adds the word at that address to AX</li>
+      <li><span class="walk-num">7.</span> ADD SI, 2 — advances SI by 2 bytes (one word) to point to the next array element</li>
+      <li><span class="walk-num">8.</span> LOOP add_loop — decrements CX, jumps back if CX != 0. After 5 iterations, AX = 10+20+30+40+50 = 150</li>
+      <li><span class="walk-num">9.</span> PUSH AX / MOV BP, SP / MOV DX, [BP] / POP AX — demonstrates pointer registers: PUSH modifies SP, BP accesses the stack frame, POP restores SP</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>MOV CX, 5
+MOV SI, 0
+MOV AX, 0
+add_loop:
+  ADD AX, [SI]     ; read array element
+  ADD SI, 2
+  LOOP add_loop</code></pre><details><summary>Need a hint?</summary><div class="hint">SI is being used as the only address. What segment and base address is being used? Where is the array actually located?</div></details><details><summary>Show answer</summary><div class="answer">The code uses [SI] without a base register, so it reads from DS:SI starting at offset 0 — which is NOT where the array is stored. It should be ADD AX, [BX+SI] where BX holds the array&#39;s offset, or use a direct reference like ADD AX, nums[SI]. Without the base address, the code reads arbitrary data from the beginning of the data segment.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Your brain has quick-access thoughts — like remembering your phone number or your name. You do not have to look them up; they are just there. Registers are like that for the CPU — tiny super-fast storage slots right inside the processor. AX is the main &#39;thinking&#39; register (it does most math), CX counts things (like fingers), BX points to stuff (like your index finger pointing at a list), and SP keeps track of a pile of papers (the stack). The CPU can use registers instantly but has to go on a field trip to use memory.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 8086&#39;s register names are not arbitrary letters. AX stands for Accumulator, BX for Base, CX for Counter, DX for Data, SP for Stack Pointer, BP for Base Pointer, SI for Source Index, DI for Destination Index. Intel engineers named them by function because they wanted assembly programmers to immediately know each register&#39;s primary purpose. These names survived for 45+ years.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write an 8086 assembly program that uses all four general-purpose registers (AX, BX, CX, DX) simultaneously. The program should: load an array base address into BX, use CX as a loop counter of 5, accumulate a sum in AX, and store the final result using DX as an intermediate. Also demonstrate accessing AH and AL separately to split a 16-bit result into high and low bytes.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.geeksforgeeks.org/register-organization-of-8086/" target="_blank" rel="noopener noreferrer">8086 Register Organization</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://en.wikibooks.org/wiki/X86_Assembly/X86_Architecture#Registers" target="_blank" rel="noopener noreferrer">x86 Registers Explained</a> <span class="res-source">(Wikibooks)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=Lk5_lyByBHE" target="_blank" rel="noopener noreferrer">8086 Register Set and Functions</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://emu8086-microprocessor-emulator.en.softonic.com/" target="_blank" rel="noopener noreferrer">emu8086 — Practice with Registers</a> <span class="res-source">(Softonic)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=11">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./10-biu-and-eu-the-dual-engine-design.html" rel="prev">← BIU and EU: The Dual-Engine Design</a>
+  <a class="nav-next" href="./12-segmented-memory-and-physical-address.html" rel="next">Segmented Memory and Physical Address →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

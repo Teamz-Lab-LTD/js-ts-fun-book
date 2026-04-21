@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WiFi Speed Test: What Your ISP Won&#39;t Tell You… | Teamz Lab</title>
+<meta name="description" content="A WiFi speed test measures how fast data travels between your device and the internet. It checks three things: download speed (how fast you receive data)…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-phone-health/16-wifi-speed-test-what-your-isp-wont-tell-you.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-phone-health/15-is-your-phone-listening-myths-vs-reality.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-phone-health/17-is-your-isp-spying-on-you-dns-ssl-checks.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="WiFi Speed Test: What Your ISP Won&#39;t Tell You">
+<meta property="og:description" content="A WiFi speed test measures how fast data travels between your device and the internet. It checks three things: download speed (how fast you receive data)…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-phone-health/16-wifi-speed-test-what-your-isp-wont-tell-you.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WiFi Speed Test: What Your ISP Won&#39;t Tell You">
+<meta name="twitter:description" content="A WiFi speed test measures how fast data travels between your device and the internet. It checks three things: download speed (how fast you receive data)…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "WiFi Speed Test: What Your ISP Won't Tell You",
+  "description": "A WiFi speed test measures how fast data travels between your device and the internet. It checks three things: download speed (how fast you receive data)…",
+  "url": "https://learn.teamzlab.com/lessons/android-phone-health/16-wifi-speed-test-what-your-isp-wont-tell-you.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Phone Health: Battery, Privacy, Performance & Security",
+    "url": "https://learn.teamzlab.com/c/android-phone-health.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 16
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Phone Health",
+      "item": "https://learn.teamzlab.com/c/android-phone-health.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "WiFi Speed Test: What Your ISP Won't Tell You",
+      "item": "https://learn.teamzlab.com/lessons/android-phone-health/16-wifi-speed-test-what-your-isp-wont-tell-you.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-phone-health.html">Android Phone Health</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-phone-health.html">Android Phone Health</a> / <span aria-current="page">WiFi Speed Test: What Your ISP Won&#39;t Tell You</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 16 of 25</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">WiFi Speed Test: What Your ISP Won&#39;t Tell You</h1>
+<p class="lesson-subtitle">Discover your real internet speed and stop paying for promises</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=16">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Your ISP is like a pizza delivery place that promises &#39;30 minutes or less&#39; but measures from when the driver leaves, not when you order. WiFi speed tests reveal the ACTUAL delivery time — from your device to the internet and back. Most people are getting a medium pizza when they&#39;re paying for a large.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>A WiFi speed test measures how fast data travels between your device and the internet. It checks three things: download speed (how fast you receive data), upload speed (how fast you send data), and latency/ping (how quickly the connection responds). Think of it as a health checkup for your internet connection — it reveals whether your ISP is actually delivering what you pay for.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Maria was paying $80/month for a 200 Mbps internet plan but her video calls kept freezing and Netflix buffered constantly. She ran speed tests at different times using DeviceGPT and discovered she was only getting 45 Mbps during evening hours. Armed with a week of documented test results, she called her ISP. They sent a technician who found a damaged cable outside her building. After the fix, she consistently got 180+ Mbps — and the ISP credited her $40 for the month of poor service.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Download vs Upload Speed</strong> — Download speed is how fast you receive data (watching videos, loading pages). Upload speed is how fast you send data (posting photos, video calls). Most ISPs give you way more download than upload — like a highway with 4 lanes going one way but only 1 lane going back.</li>
+      <li><strong>What Is Latency (Ping)?</strong> — Latency is the delay between sending a request and getting a response — measured in milliseconds (ms). Low ping means snappy browsing. High ping means everything feels sluggish. You can have fast download speed but terrible latency, like a sports car stuck at every red light.</li>
+      <li><strong>ISP Advertised vs Actual Speed</strong> — ISPs advertise &#39;up to&#39; speeds — meaning the maximum under perfect lab conditions. A 2023 FCC report found that most ISPs deliver only 70-80% of advertised speeds during peak hours. That 100 Mbps plan? You might actually get 60-75 Mbps when everyone in your neighborhood is online.</li>
+      <li><strong>How WiFi Speed Tests Work</strong> — A speed test sends chunks of data to a nearby server and measures how fast it travels. It tests download, upload, and ping separately. But here is the catch — your result depends on which server you test against, your device condition, and how many people are using your WiFi at that moment.</li>
+      <li><strong>What Slows Down Your WiFi</strong> — Many things can reduce your actual WiFi speed. Distance from router, walls and floors, other devices on the network, neighboring WiFi networks causing interference, and even your phone&#39;s age. A 2024 study showed that moving just 15 feet from your router can cut speed by 30-50%.</li>
+      <li><strong>What Good Speeds Look Like</strong> — The speed you need depends on what you do. For basic browsing and social media, 10-25 Mbps is fine. For HD streaming on multiple devices, you want 50-100 Mbps. For a household of 4+ people all streaming and gaming, 200+ Mbps keeps things smooth. Anything above 300 Mbps is overkill for most families.</li>
+      <li><strong>Testing at the Right Time</strong> — Running one speed test at 2 AM and thinking you are all set is like checking traffic at midnight and assuming roads are always empty. Test during peak hours (7-11 PM) when your neighbors are also streaming. Run at least 3 tests at different times to get a realistic picture.</li>
+      <li><strong>WiFi Bands: 2.4 GHz vs 5 GHz</strong> — Your router likely broadcasts two WiFi networks — 2.4 GHz and 5 GHz. The 5 GHz band is faster but has shorter range. The 2.4 GHz band is slower but reaches further through walls. Many people connect to 2.4 GHz without realizing they could get double the speed by switching to 5 GHz when they are close to the router.</li>
+      <li><strong>When to Call Your ISP</strong> — If your speed tests consistently show less than 50% of what you are paying for during multiple tests at different times, you have a case. Document your results with screenshots, dates, and times. ISPs have internal tools that show your line quality — ask them to run a line test. Many people get free upgrades just by asking.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>╔══════════════════════════════════════╗
+║    📶 WiFi SPEED TEST GUIDE 📶      ║
+╠══════════════════════════════════════╣
+║                                      ║
+║  BEFORE TESTING:                     ║
+║  □ Close all apps and tabs           ║
+║  □ Disconnect other devices if       ║
+║    possible (or note how many)       ║
+║  □ Note which WiFi band you are on   ║
+║  □ Note your distance from router    ║
+║                                      ║
+║  RUN THE TEST:                       ║
+║  □ Use DeviceGPT speed test          ║
+║  □ Wait for full results             ║
+║  □ Screenshot the results            ║
+║                                      ║
+║  RECORD YOUR RESULTS:                ║
+║  ┌─────────────────────────────┐     ║
+║  │ Date: _____ Time: _____    │     ║
+║  │ Download: _____ Mbps       │     ║
+║  │ Upload:   _____ Mbps       │     ║
+║  │ Ping:     _____ ms         │     ║
+║  │ Location: _____ (room)     │     ║
+║  │ Devices connected: _____   │     ║
+║  └─────────────────────────────┘     ║
+║                                      ║
+║  COMPARE TO YOUR PLAN:               ║
+║  Your ISP plan: _____ Mbps           ║
+║  Your actual:   _____ Mbps           ║
+║  You are getting ____% of plan       ║
+║                                      ║
+║  ✓ 80-100% = Great                   ║
+║  ⚠ 50-80%  = Acceptable             ║
+║  ✗ Below 50% = Call your ISP         ║
+╚══════════════════════════════════════╝</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The speed test guide starts with preparation — closing apps ensures nothing else is eating your bandwidth during the test, giving you accurate results.</li>
+      <li><span class="walk-num">2.</span> Recording your WiFi band (2.4 GHz vs 5 GHz) and distance from router matters because these dramatically affect results. A test on 5 GHz next to the router will be very different from 2.4 GHz across the house.</li>
+      <li><span class="walk-num">3.</span> The results recording template captures all the variables — date, time, speeds, ping, location, and connected devices — so you can compare tests fairly and spot patterns.</li>
+      <li><span class="walk-num">4.</span> Comparing your actual speed to your ISP plan percentage is the key insight. This single number tells you whether you are getting fair value for what you pay.</li>
+      <li><span class="walk-num">5.</span> The rating scale (80-100% great, 50-80% acceptable, below 50% call ISP) gives you a clear action threshold. Below 50% consistently means something is wrong and your ISP should fix it.</li>
+      <li><span class="walk-num">6.</span> Running multiple tests over several days builds an evidence-based case. A single slow test could be a fluke, but consistent underperformance across days is a legitimate complaint.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>My WiFi speed test shows 95 Mbps
+download and I&#39;m paying for a
+100 Mbps plan. But Netflix still
+buffers constantly on my TV in
+the bedroom.
+
+I tested while sitting next to
+my router in the living room.
+
+What&#39;s the problem?</code></pre><details><summary>Need a hint?</summary><div class="hint">Where did you run the speed test versus where are you actually using Netflix?</div></details><details><summary>Show answer</summary><div class="answer">You tested next to the router but watch Netflix in the bedroom. WiFi speed drops significantly with distance and walls. You need to test from the bedroom where you actually use Netflix — the speed there could be much lower. Solutions: move the router closer, get a WiFi extender or mesh system, or use a wired ethernet connection for the TV.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your internet is a water pipe coming into your house. The ISP promised you a big fat pipe, but is the water actually flowing that fast? A speed test is like putting a bucket under the pipe and timing how fast it fills up. Download speed is water coming IN, upload speed is water going OUT, and ping is how fast the water company responds when you turn the tap. Sometimes the pipe is great but your sprinkler (WiFi) is leaky — that is why testing from different rooms matters!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The world record for fastest home internet speed was set in Japan in 2023 at 319 Terabits per second — that is fast enough to download every movie ever made in about 1 second. Meanwhile, the global average home internet speed is only about 90 Mbps. And roughly 37% of people worldwide do not even have internet access at all.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Run three WiFi speed tests right now: one standing next to your router, one from your usual spot (couch, bed, desk), and one from the farthest room. Write down the download speed, upload speed, and ping for each. Then calculate what percentage of your ISP plan speed you are actually getting. If it is below 50%, you have a reason to call your ISP!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.fcc.gov/consumers/guides/broadband-speed-guide" target="_blank" rel="noopener noreferrer">FCC Broadband Speed Guide</a> <span class="res-source">(FCC)</span></li>
+      <li><a href="https://www.tomsguide.com/how-to/how-to-improve-wi-fi-speed" target="_blank" rel="noopener noreferrer">How to Improve Your WiFi Speed</a> <span class="res-source">(Tom&#39;s Guide)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">WiFi Speed Explained Simply</a> <span class="res-source">(YouTube)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=16">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./15-is-your-phone-listening-myths-vs-reality.html" rel="prev">← Is Your Phone Listening? Myths vs…</a>
+  <a class="nav-next" href="./17-is-your-isp-spying-on-you-dns-ssl-checks.html" rel="next">Is Your ISP Spying on You? DNS &amp; SSL… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-phone-health.html">← Back to course: Android Phone Health</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

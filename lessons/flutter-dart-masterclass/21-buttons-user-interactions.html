@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buttons &amp; User Interactions — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Buttons and interaction widgets are how users communicate with your app. Flutter provides several button types (ElevatedButton, TextButton, IconButton…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/20-text-icons-images.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buttons &amp; User Interactions">
+<meta property="og:description" content="Buttons and interaction widgets are how users communicate with your app. Flutter provides several button types (ElevatedButton, TextButton, IconButton…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Buttons &amp; User Interactions">
+<meta name="twitter:description" content="Buttons and interaction widgets are how users communicate with your app. Flutter provides several button types (ElevatedButton, TextButton, IconButton…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Buttons & User Interactions",
+  "description": "Buttons and interaction widgets are how users communicate with your app. Flutter provides several button types (ElevatedButton, TextButton, IconButton…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 21
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Buttons & User Interactions",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Buttons &amp; User Interactions</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 21 of 51</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Buttons &amp; User Interactions</h1>
+<p class="lesson-subtitle">Making Your App Respond to Taps</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=21">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Buttons are like doorbells — they sit there looking pretty, but the magic happens when someone presses them. The doorbell (button) triggers an action (the ring), and different doorbells (ElevatedButton, TextButton, IconButton) look different but all do the same job: respond to a press!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Buttons and interaction widgets are how users communicate with your app. Flutter provides several button types (ElevatedButton, TextButton, IconButton, OutlinedButton, FloatingActionButton) for different visual emphasis levels, plus GestureDetector and InkWell for making any widget respond to touch gestures.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every app screen has buttons. The team_mvp_kit project uses styled ElevatedButtons for primary actions, TextButtons for navigation links, and GestureDetector for custom interactive cards. Choosing the right button type creates clear visual hierarchy that guides users through your app.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>ElevatedButton</strong> — ElevatedButton is the most common button in Flutter. It has a raised, filled appearance with a shadow that gives it depth. Use it for primary actions like &#39;Submit&#39;, &#39;Save&#39;, or &#39;Continue&#39;. It takes an onPressed callback that fires when tapped and a child widget for its label.</li>
+      <li><strong>TextButton</strong> — TextButton is a flat button with no elevation or background — just text. Use it for less important actions like &#39;Cancel&#39;, &#39;Skip&#39;, or &#39;Learn More&#39;. It blends into the UI without drawing too much attention, making it perfect for secondary actions alongside an ElevatedButton.</li>
+      <li><strong>IconButton</strong> — IconButton displays an icon that responds to taps. It has a circular ink splash effect when pressed. Use it for toolbar actions like back arrows, favorites, share, or delete. It takes an icon property for the Icon widget and onPressed for the callback.</li>
+      <li><strong>onPressed Callback</strong> — The onPressed property is a function that runs when the user taps the button. If you set onPressed to null, the button becomes disabled — it greys out and ignores taps. This is how you prevent users from submitting a form before filling it out.</li>
+      <li><strong>GestureDetector</strong> — GestureDetector wraps any widget to detect gestures: taps, double taps, long presses, drags, and swipes. Unlike buttons, it has no visual feedback by default — you control the look entirely. Use it to make images, containers, or custom widgets tappable.</li>
+      <li><strong>InkWell for Material Ripple</strong> — InkWell is like GestureDetector but adds the Material Design ripple animation when tapped. It must be inside a Material widget to show the ripple effect properly. Use InkWell when you want tap detection with visual feedback on custom widgets.</li>
+      <li><strong>Button Styling</strong> — Use styleFrom() or ButtonStyle to customize button appearance: background color, text color, padding, shape, elevation, and size. The style property accepts a ButtonStyle object, and the static styleFrom() method provides a convenient shorthand.</li>
+      <li><strong>OutlinedButton</strong> — OutlinedButton has a transparent background with a visible border. It sits between ElevatedButton (high emphasis) and TextButton (low emphasis) in visual hierarchy. Use it for secondary actions that still need some visual weight, like &#39;Add to Cart&#39; next to a &#39;Buy Now&#39; ElevatedButton.</li>
+      <li><strong>FloatingActionButton</strong> — FloatingActionButton (FAB) is a circular button that floats above the UI, typically placed at the bottom-right of a Scaffold. It represents the primary action of a screen — like composing a new email in Gmail or adding a new item in a to-do app.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+class InteractionDemo extends StatefulWidget {
+  const InteractionDemo({super.key});
+
+  @override
+  State&lt;InteractionDemo&gt; createState() =&gt; _InteractionDemoState();
+}
+
+class _InteractionDemoState extends State&lt;InteractionDemo&gt; {
+  int _counter = 0;
+  bool _isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(&#39;Buttons Demo&#39;),
+        actions: [
+          IconButton(
+            icon: Icon(
+              _isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: _isFavorite ? Colors.red : null,
+            ),
+            onPressed: () {
+              setState(() {
+                _isFavorite = !_isFavorite;
+              });
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(&#39;Counter: $_counter&#39;,
+                style: Theme.of(context).textTheme.headlineMedium),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () =&gt; setState(() =&gt; _counter++),
+              child: const Text(&#39;Increment&#39;),
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton(
+              onPressed: () =&gt; setState(() =&gt; _counter--),
+              child: const Text(&#39;Decrement&#39;),
+            ),
+            const SizedBox(height: 12),
+            TextButton(
+              onPressed: () =&gt; setState(() =&gt; _counter = 0),
+              child: const Text(&#39;Reset&#39;),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =&gt; setState(() =&gt; _counter += 10),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import the Material Design package for all widgets</li>
+      <li><span class="walk-num">2.</span> </li>
+      <li><span class="walk-num">3.</span> Define InteractionDemo as a StatefulWidget since buttons will change state</li>
+      <li><span class="walk-num">4.</span> Pass the key to the parent constructor</li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> Create the mutable State class</li>
+      <li><span class="walk-num">7.</span> Declare a counter variable starting at 0</li>
+      <li><span class="walk-num">8.</span> Declare a boolean to track favorite status</li>
+      <li><span class="walk-num">9.</span> </li>
+      <li><span class="walk-num">10.</span> The build method returns our UI</li>
+      <li><span class="walk-num">11.</span> Return a Scaffold for the page structure</li>
+      <li><span class="walk-num">12.</span> AppBar with a title at the top</li>
+      <li><span class="walk-num">13.</span> The actions list puts widgets on the right side of the AppBar</li>
+      <li><span class="walk-num">14.</span> IconButton toggles between filled and outlined heart icon</li>
+      <li><span class="walk-num">15.</span> Color the heart red when favorited, default otherwise</li>
+      <li><span class="walk-num">16.</span> </li>
+      <li><span class="walk-num">17.</span> When the heart IconButton is pressed...</li>
+      <li><span class="walk-num">18.</span> setState triggers a rebuild with the toggled favorite value</li>
+      <li><span class="walk-num">19.</span> </li>
+      <li><span class="walk-num">20.</span> </li>
+      <li><span class="walk-num">21.</span> </li>
+      <li><span class="walk-num">22.</span> The body is centered on screen</li>
+      <li><span class="walk-num">23.</span> Column arranges children vertically</li>
+      <li><span class="walk-num">24.</span> Center everything along the main axis</li>
+      <li><span class="walk-num">25.</span> </li>
+      <li><span class="walk-num">26.</span> Display the counter value using string interpolation</li>
+      <li><span class="walk-num">27.</span> Style it using the theme&#39;s headlineMedium text style</li>
+      <li><span class="walk-num">28.</span> Add 24 pixels of vertical space</li>
+      <li><span class="walk-num">29.</span> ElevatedButton (primary action) increments the counter</li>
+      <li><span class="walk-num">30.</span> setState with arrow function for concise increment</li>
+      <li><span class="walk-num">31.</span> Label says &#39;Increment&#39;</li>
+      <li><span class="walk-num">32.</span> Add 12 pixels of space</li>
+      <li><span class="walk-num">33.</span> OutlinedButton (secondary action) decrements the counter</li>
+      <li><span class="walk-num">34.</span> setState decrements the counter</li>
+      <li><span class="walk-num">35.</span> Label says &#39;Decrement&#39;</li>
+      <li><span class="walk-num">36.</span> Add 12 pixels of space</li>
+      <li><span class="walk-num">37.</span> TextButton (tertiary action) resets the counter</li>
+      <li><span class="walk-num">38.</span> setState resets counter to 0</li>
+      <li><span class="walk-num">39.</span> Label says &#39;Reset&#39;</li>
+      <li><span class="walk-num">40.</span> </li>
+      <li><span class="walk-num">41.</span> </li>
+      <li><span class="walk-num">42.</span> </li>
+      <li><span class="walk-num">43.</span> FloatingActionButton floats at bottom-right</li>
+      <li><span class="walk-num">44.</span> Pressing it adds 10 to the counter at once</li>
+      <li><span class="walk-num">45.</span> Plus icon inside the FAB</li>
+      <li><span class="walk-num">46.</span> </li>
+      <li><span class="walk-num">47.</span> </li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>ElevatedButton(
+  onPressed: print(&#39;Button pressed!&#39;),
+  child: Text(&#39;Press Me&#39;),
+)</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at what onPressed expects versus what you are passing...</div></details><details><summary>Show answer</summary><div class="answer">onPressed expects a function (VoidCallback), but print(&#39;Button pressed!&#39;) calls print immediately and passes its return value (void) to onPressed. Fix: wrap it in an anonymous function: onPressed: () { print(&#39;Button pressed!&#39;); } or onPressed: () =&gt; print(&#39;Button pressed!&#39;)</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you built a toy robot with buttons on its chest. The big red button (ElevatedButton) makes it walk forward — it sticks out so you notice it first. The small flat label (TextButton) makes it stop — not as attention-grabbing. The round picture button (IconButton) makes it wave. And if you poke the robot anywhere on its belly (GestureDetector), it giggles! Each button looks different but they all do the same thing: wait for you to press them, then do something cool.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Flutter buttons went through a major redesign in Flutter 2.0. The old RaisedButton, FlatButton, and OutlineButton were deprecated in favor of ElevatedButton, TextButton, and OutlinedButton with a much more flexible styling system called ButtonStyle!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a screen with four buttons: an ElevatedButton that shows a SnackBar, a TextButton that toggles text between &#39;ON&#39; and &#39;OFF&#39;, an IconButton that toggles between a filled and outlined heart icon, and a GestureDetector that changes a Container&#39;s color on tap. Style each button differently using styleFrom().</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/ui/widgets/material#buttons" target="_blank" rel="noopener noreferrer">Buttons - Flutter Widget Catalog</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/widgets/GestureDetector-class.html" target="_blank" rel="noopener noreferrer">GestureDetector Class</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/material/ElevatedButton-class.html" target="_blank" rel="noopener noreferrer">ElevatedButton Class</a> <span class="res-source">(Flutter API)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=21">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./20-text-icons-images.html" rel="prev">← Text, Icons &amp; Images</a>
+  <a class="nav-next" href="./22-row-column-layout.html" rel="next">Row &amp; Column Layout →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

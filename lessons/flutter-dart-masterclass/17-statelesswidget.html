@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatelessWidget — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="A StatelessWidget is a widget that describes part of the UI based solely on its configuration (constructor parameters) and the BuildContext. It has no…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/16-everything-is-a-widget.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="StatelessWidget">
+<meta property="og:description" content="A StatelessWidget is a widget that describes part of the UI based solely on its configuration (constructor parameters) and the BuildContext. It has no…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="StatelessWidget">
+<meta name="twitter:description" content="A StatelessWidget is a widget that describes part of the UI based solely on its configuration (constructor parameters) and the BuildContext. It has no…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "StatelessWidget",
+  "description": "A StatelessWidget is a widget that describes part of the UI based solely on its configuration (constructor parameters) and the BuildContext. It has no…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 17
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "StatelessWidget",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">StatelessWidget</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 17 of 51</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">StatelessWidget</h1>
+<p class="lesson-subtitle">Simple Widgets That Never Change Their Mind</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=17">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A StatelessWidget is like a printed poster on a wall. Once it is printed, the content does not change. If you want different text, you print a new poster and replace the old one. A StatelessWidget describes UI based only on the data it receives through its constructor -- it has no internal memory. In team_mvp_kit, many UI components like labels, icons, cards, and display widgets are stateless because they just render whatever data is passed to them.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>A StatelessWidget is a widget that describes part of the UI based solely on its configuration (constructor parameters) and the BuildContext. It has no mutable state -- once created, it cannot change itself. When the parent provides new data, Flutter creates a new instance and calls build again. StatelessWidgets are the workhorse of Flutter apps: simple, predictable, and efficient. They are easy to test because given the same inputs, they always produce the same output.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, many custom widgets are stateless. Display components like UserAvatar, ErrorMessage, LoadingIndicator, and EmptyState are StatelessWidgets because they just render data they receive. Even screens that show dynamic data can be StatelessWidgets when paired with BlocBuilder -- the BLoC owns the state, and the widget just renders whatever state it receives. This separation of concerns is a key benefit of Clean Architecture: widgets stay simple and testable.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Defining a StatelessWidget</strong> — Extend StatelessWidget and override the build method. The build method returns a widget tree. StatelessWidgets are the simplest and most common widget type in Flutter.</li>
+      <li><strong>Accepting Data via Constructor</strong> — Pass data into a StatelessWidget through its constructor. All properties should be final because the widget is immutable. The parent widget controls what data flows in.</li>
+      <li><strong>The const Constructor Advantage</strong> — Marking a widget constructor as const tells Flutter that identical widgets with the same parameters are the same object. Flutter can skip rebuilding const widgets entirely, which is a major performance optimization.</li>
+      <li><strong>When to Use StatelessWidget</strong> — Use StatelessWidget when the UI depends only on the constructor parameters and the BuildContext. If the widget needs to change over time based on user interaction or data updates, use StatefulWidget instead.</li>
+      <li><strong>Composing Larger Widgets</strong> — Build complex UIs by composing multiple StatelessWidgets together. Each small widget handles one concern, making code readable, testable, and reusable.</li>
+      <li><strong>Using BuildContext</strong> — The BuildContext gives you access to the widget&#39;s position in the tree. Use it to read theme data, screen size, localization, and to navigate. Never store context in a variable outside of build.</li>
+      <li><strong>Callback Parameters</strong> — StatelessWidgets can accept function callbacks to communicate with parent widgets. The child widget calls the callback when something happens, and the parent decides what to do.</li>
+      <li><strong>StatelessWidget Lifecycle</strong> — A StatelessWidget has a simple lifecycle: it is created, build is called, and it displays on screen. When the parent rebuilds with new data, a new instance is created and build runs again. There are no lifecycle hooks like initState.</li>
+      <li><strong>Stateless in team_mvp_kit</strong> — In Clean Architecture, presentation layer widgets are often stateless because BLoC handles the state. BlocBuilder wraps stateless-like rendering: it rebuilds when BLoC state changes, but the widget itself holds no state.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+class UserProfileCard extends StatelessWidget {
+  final String name;
+  final String email;
+  final String? avatarUrl;
+  final VoidCallback? onTap;
+
+  const UserProfileCard({
+    super.key,
+    required this.name,
+    required this.email,
+    this.avatarUrl,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      elevation: 2,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 28,
+                backgroundImage: avatarUrl != null
+                    ? NetworkImage(avatarUrl!)
+                    : null,
+                child: avatarUrl == null
+                    ? Text(
+                        name[0].toUpperCase(),
+                        style: theme.textTheme.titleLarge,
+                      )
+                    : null,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: theme.textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      email,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (onTap != null)
+                const Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import the Flutter material library</li>
+      <li><span class="walk-num">2.</span> Define UserProfileCard extending StatelessWidget</li>
+      <li><span class="walk-num">3.</span> Declare final String name -- the user&#39;s display name, required</li>
+      <li><span class="walk-num">4.</span> Declare final String email -- the user&#39;s email, required</li>
+      <li><span class="walk-num">5.</span> Declare final String? avatarUrl -- optional avatar image URL</li>
+      <li><span class="walk-num">6.</span> Declare final VoidCallback? onTap -- optional tap handler for navigation</li>
+      <li><span class="walk-num">7.</span> Const constructor with super.key and named parameters</li>
+      <li><span class="walk-num">8.</span> Override the build method, receiving BuildContext</li>
+      <li><span class="walk-num">9.</span> Get the current theme for consistent styling</li>
+      <li><span class="walk-num">10.</span> Return a Card widget with elevation for a shadow effect</li>
+      <li><span class="walk-num">11.</span> Wrap content in InkWell for a tap ripple effect, only active if onTap is provided</li>
+      <li><span class="walk-num">12.</span> Set borderRadius on InkWell to match the card&#39;s rounded corners</li>
+      <li><span class="walk-num">13.</span> Add Padding of 16 pixels on all sides</li>
+      <li><span class="walk-num">14.</span> Use a Row to lay out avatar, text, and chevron horizontally</li>
+      <li><span class="walk-num">15.</span> Create a CircleAvatar with radius 28 for the profile picture</li>
+      <li><span class="walk-num">16.</span> If avatarUrl is not null, use NetworkImage to load the avatar</li>
+      <li><span class="walk-num">17.</span> If avatarUrl is null, show the first letter of the name as fallback</li>
+      <li><span class="walk-num">18.</span> Add a SizedBox with width 16 for spacing between avatar and text</li>
+      <li><span class="walk-num">19.</span> Wrap the text Column in Expanded so it takes remaining horizontal space</li>
+      <li><span class="walk-num">20.</span> Set crossAxisAlignment to start so text aligns left</li>
+      <li><span class="walk-num">21.</span> Display the name with titleMedium text style</li>
+      <li><span class="walk-num">22.</span> Add a small SizedBox for vertical spacing between name and email</li>
+      <li><span class="walk-num">23.</span> Display email with bodyMedium style in a muted color</li>
+      <li><span class="walk-num">24.</span> Conditionally show a chevron_right icon only if onTap is provided</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class NameTag extends StatelessWidget {
+  String name;
+
+  NameTag({required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    name = name.toUpperCase();
+    return Text(name);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">StatelessWidget properties should be immutable. What two things violate this rule?</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) name is not final -- StatelessWidget properties must be final because widgets are immutable. (2) The build method tries to modify name with name = name.toUpperCase(), but you should never mutate widget properties. Fix: make name final and compute the uppercase version in a local variable: final display = name.toUpperCase(); then use display in Text.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine a name tag at a party. Someone writes your name on it and sticks it to your shirt. The name tag does not think or change on its own -- it just shows whatever was written on it. If you want a different name, you need a whole new name tag. That is a StatelessWidget. It gets information when it is created (your name), shows it (the text on the tag), and that is it. If the information needs to change, the old name tag is tossed and a new one is made. Simple, right?</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Flutter team at Google recommends that about 80% of your custom widgets should be StatelessWidgets. When you use state management solutions like BLoC, Provider, or Riverpod, even screens with dynamic data are rendered by stateless widgets that subscribe to external state. The fewer StatefulWidgets you have, the easier your app is to debug and test.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a reusable StatelessWidget called InfoCard that takes: title (String), description (String), icon (IconData), and an optional onTap (VoidCallback?). It should display as a Card with a ListTile-like layout: icon on the left, title and description stacked on the right, and a chevron arrow on the right if onTap is provided. Use Theme.of(context) for styling. Then create a screen that shows three InfoCard widgets in a Column.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html" target="_blank" rel="noopener noreferrer">StatelessWidget Class</a> <span class="res-source">(api.flutter.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/development/ui/layout" target="_blank" rel="noopener noreferrer">Flutter Layouts</a> <span class="res-source">(docs.flutter.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/get-started/codelab" target="_blank" rel="noopener noreferrer">Your First Flutter App</a> <span class="res-source">(docs.flutter.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=17">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./16-everything-is-a-widget.html" rel="prev">← Everything is a Widget</a>
+  <a class="nav-next" href="./18-statefulwidget-setstate.html" rel="next">StatefulWidget &amp; setState →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

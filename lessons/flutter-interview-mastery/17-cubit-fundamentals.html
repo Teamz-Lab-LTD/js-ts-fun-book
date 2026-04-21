@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cubit Fundamentals — Flutter Interview Mastery | Teamz Lab</title>
+<meta name="description" content="Cubit is a lightweight state management class from the BLoC library. It simplifies BLoC by replacing Events with direct method calls. Methods call emit() to…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cubit Fundamentals">
+<meta property="og:description" content="Cubit is a lightweight state management class from the BLoC library. It simplifies BLoC by replacing Events with direct method calls. Methods call emit() to…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cubit Fundamentals">
+<meta name="twitter:description" content="Cubit is a lightweight state management class from the BLoC library. It simplifies BLoC by replacing Events with direct method calls. Methods call emit() to…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Cubit Fundamentals",
+  "description": "Cubit is a lightweight state management class from the BLoC library. It simplifies BLoC by replacing Events with direct method calls. Methods call emit() to…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 17
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Cubit Fundamentals",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Cubit Fundamentals</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 17 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Cubit Fundamentals</h1>
+<p class="lesson-subtitle">The Simplest Step Up From setState — Master This Pattern First</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=17">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A Cubit is like a vending machine. You press a button (call a method), the machine processes your request, and dispenses a product (emits a new state). You don&#39;t need to know how the vending machine works internally — you just know the inputs (methods) and outputs (states). And crucially, the machine always tells you exactly what&#39;s inside it right now (current state).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Cubit is a lightweight state management class from the BLoC library. It simplifies BLoC by replacing Events with direct method calls. Methods call emit() to produce new immutable states. The UI subscribes via BlocBuilder. Equatable ensures state comparison works correctly, preventing unnecessary rebuilds.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a school management platform, the attendance marking feature uses an AttendanceCubit with methods: loadStudents(), markPresent(studentId), markAbsent(studentId), submitAttendance(). States: AttendanceInitial, AttendanceLoading, AttendanceLoaded(students), AttendanceSubmitting, AttendanceSubmitted. Simple enough for Cubit — no complex event transformations needed.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What Is a Cubit?</strong> — Cubit is a simplified BLoC without the Event class. Instead of defining events, you call methods directly on the Cubit. Methods call emit() to produce new states. The UI listens via BlocBuilder or BlocListener. Cubit is perfect for features with simple, direct operations where explicit event modeling adds unnecessary boilerplate.</li>
+      <li><strong>Cubit vs BLoC: When to Choose</strong> — Cubit: simpler features, direct method calls, less boilerplate, easier to read for small features. BLoC: complex features where you want explicit event modeling for auditability (every action is traceable in BlocObserver), event transformation (debouncing, throttling), or complex side effects. A BLoC can be converted to Cubit and back easily.</li>
+      <li><strong>emit() — The Core Operation</strong> — emit(newState) pushes a new state to all listeners. States are compared with == before emitting — if the new state equals the current state, emit is a no-op (no rebuild). This is why Equatable matters: without it, two identical state objects won&#39;t be equal (object identity), causing unnecessary rebuilds.</li>
+      <li><strong>Equatable for State Comparison</strong> — Equatable overrides == and hashCode based on props. class UserLoaded extends Equatable { final User user; const UserLoaded(this.user); @override List get props =&gt; [user]; }. Now UserLoaded(user1) == UserLoaded(user1) returns true — Cubit won&#39;t re-emit and won&#39;t rebuild the UI.</li>
+      <li><strong>Immutable States Pattern</strong> — Every state class should be immutable: final fields, const constructor where possible. Never mutate state directly — always emit a new state object. For states with many fields, use copyWith(). This enables time-travel debugging, state history, and trivial test assertions.</li>
+      <li><strong>State Design — Sealed Classes</strong> — Use sealed classes for exhaustive state handling. sealed class UserState {} + subclasses (Initial, Loading, Loaded, Error). In the UI, switch (state) { case UserInitial() =&gt; ..., case UserLoading() =&gt; ..., } gives compile-time exhaustiveness — compiler warns if you miss a state.</li>
+      <li><strong>BlocProvider and BlocBuilder</strong> — BlocProvider creates and provides the Cubit. BlocBuilder rebuilds when state changes. BlocBuilder has buildWhen: if you return false, the widget skips this rebuild. Use buildWhen to prevent rebuilds for state changes your widget doesn&#39;t care about.</li>
+      <li><strong>Cubit Lifecycle: onCreate and onClose</strong> — override onCreate() to run logic when Cubit is first created (load initial data). override onClose() to clean up resources (cancel subscriptions). BlocObserver.onCreate/onClose give global visibility into all Cubit/BLoC lifecycles — useful for debugging and analytics.</li>
+      <li><strong>Testing Cubits — Pure and Simple</strong> — Cubit testing: instantiate directly (no widget needed), call methods, check state list with blocTest or manual assertion. blocTest(&#39;description&#39;, build: () =&gt; MyCubit(), act: (c) =&gt; c.someMethod(), expect: () =&gt; [StateA(), StateB()]). No widget pumping, no async complications.</li>
+      <li><strong>Common Cubit Patterns</strong> — Counter cubit: increment/decrement methods. Auth cubit: login/logout/checkSession methods. Form cubit: updateField, submit, reset methods. Theme cubit: toggle method. Pagination cubit: loadNext, refresh methods. For each: start simple with Cubit, upgrade to BLoC only when you need event transformation or explicit event logging.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Cubit Fundamentals
+
+import &#39;package:bloc/bloc.dart&#39;;
+import &#39;package:equatable/equatable.dart&#39;;
+
+// ============================================================
+// 1. STATE DESIGN — Sealed + Equatable
+// ============================================================
+
+sealed class AttendanceState extends Equatable {
+  const AttendanceState();
+
+  @override
+  List&lt;Object?&gt; get props =&gt; []; // Default: no props to compare
+}
+
+class AttendanceInitial extends AttendanceState {
+  const AttendanceInitial();
+}
+
+class AttendanceLoading extends AttendanceState {
+  const AttendanceLoading();
+}
+
+class AttendanceLoaded extends AttendanceState {
+  final List&lt;Student&gt; students;
+  final Map&lt;String, bool&gt; attendance; // studentId → isPresent
+
+  const AttendanceLoaded({
+    required this.students,
+    required this.attendance,
+  });
+
+  @override
+  List&lt;Object&gt; get props =&gt; [students, attendance];
+
+  // copyWith: create new state with modified fields
+  AttendanceLoaded copyWith({
+    List&lt;Student&gt;? students,
+    Map&lt;String, bool&gt;? attendance,
+  }) {
+    return AttendanceLoaded(
+      students: students ?? this.students,
+      attendance: attendance ?? this.attendance,
+    );
+  }
+}
+
+class AttendanceSubmitting extends AttendanceState {
+  const AttendanceSubmitting();
+}
+
+class AttendanceSubmitted extends AttendanceState {
+  final int presentCount;
+  const AttendanceSubmitted(this.presentCount);
+
+  @override
+  List&lt;Object&gt; get props =&gt; [presentCount];
+}
+
+class AttendanceError extends AttendanceState {
+  final String message;
+  const AttendanceError(this.message);
+
+  @override
+  List&lt;Object&gt; get props =&gt; [message];
+}
+
+// ============================================================
+// 2. THE CUBIT
+// ============================================================
+
+class AttendanceCubit extends Cubit&lt;AttendanceState&gt; {
+  final AttendanceRepository _repository;
+
+  // Initial state passed to super constructor
+  AttendanceCubit({required AttendanceRepository repository})
+      : _repository = repository,
+        super(const AttendanceInitial());
+
+  // Called when Cubit is created — load initial data
+  @override
+  Future&lt;void&gt; onCreate(BlocBase bloc) async {
+    super.onCreate(bloc);
+    await loadStudents();
+  }
+
+  // Direct method — no Event class needed
+  Future&lt;void&gt; loadStudents() async {
+    emit(const AttendanceLoading()); // Immediate feedback
+
+    try {
+      final students = await _repository.getStudents();
+      final initialAttendance = {
+        for (final s in students) s.id: false
+      };
+      emit(AttendanceLoaded(
+        students: students,
+        attendance: initialAttendance,
+      ));
+    } catch (e) {
+      emit(AttendanceError(&#39;Failed to load students: $e&#39;));
+    }
+  }
+
+  // Update one student&#39;s attendance — immutable state update
+  void markAttendance(String studentId, bool isPresent) {
+    final current = state;
+    if (current is! AttendanceLoaded) return;
+
+    // Create new map — don&#39;t mutate the existing one
+    final newAttendance = Map&lt;String, bool&gt;.from(current.attendance)
+      ..[studentId] = isPresent;
+
+    // emit only if changed — Equatable handles the comparison
+    emit(current.copyWith(attendance: newAttendance));
+  }
+
+  Future&lt;void&gt; submitAttendance() async {
+    final current = state;
+    if (current is! AttendanceLoaded) return;
+
+    emit(const AttendanceSubmitting());
+
+    try {
+      await _repository.submitAttendance(current.attendance);
+      final presentCount =
+          current.attendance.values.where((v) =&gt; v).length;
+      emit(AttendanceSubmitted(presentCount));
+    } catch (e) {
+      // On error, restore the loaded state so user can retry
+      emit(AttendanceError(&#39;Submission failed: $e&#39;));
+    }
+  }
+
+  // Resources cleanup
+  @override
+  Future&lt;void&gt; close() async {
+    // Cancel any subscriptions, timers here
+    return super.close();
+  }
+}
+
+// ============================================================
+// 3. UI — BlocBuilder
+// ============================================================
+
+import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_bloc/flutter_bloc.dart&#39;;
+
+class AttendanceScreen extends StatelessWidget {
+  const AttendanceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =&gt; AttendanceCubit(
+        repository: context.read&lt;AttendanceRepository&gt;(),
+      ),
+      child: const _AttendanceView(),
+    );
+  }
+}
+
+class _AttendanceView extends StatelessWidget {
+  const _AttendanceView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Attendance&#39;)),
+      body: BlocBuilder&lt;AttendanceCubit, AttendanceState&gt;(
+        // buildWhen: skip rebuild if we don&#39;t need it
+        // buildWhen: (prev, curr) =&gt; curr is! AttendanceSubmitting,
+        builder: (context, state) {
+          return switch (state) {
+            AttendanceInitial() =&gt; const Center(child: Text(&#39;Loading...&#39;)),
+            AttendanceLoading() =&gt; const Center(child: CircularProgressIndicator()),
+            AttendanceLoaded(:final students, :final attendance) =&gt;
+              _StudentList(students: students, attendance: attendance),
+            AttendanceSubmitting() =&gt; const Center(child: CircularProgressIndicator()),
+            AttendanceSubmitted(:final presentCount) =&gt;
+              Center(child: Text(&#39;Submitted! $presentCount present&#39;)),
+            AttendanceError(:final message) =&gt;
+              Center(child: Text(&#39;Error: $message&#39;)),
+          };
+        },
+      ),
+      floatingActionButton: BlocBuilder&lt;AttendanceCubit, AttendanceState&gt;(
+        buildWhen: (prev, curr) =&gt;
+            prev is AttendanceLoaded || curr is AttendanceLoaded,
+        builder: (context, state) {
+          if (state is! AttendanceLoaded) return const SizedBox.shrink();
+          return FloatingActionButton.extended(
+            onPressed: () =&gt;
+                context.read&lt;AttendanceCubit&gt;().submitAttendance(),
+            label: const Text(&#39;Submit&#39;),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _StudentList extends StatelessWidget {
+  final List&lt;Student&gt; students;
+  final Map&lt;String, bool&gt; attendance;
+
+  const _StudentList({required this.students, required this.attendance});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: students.length,
+      itemBuilder: (context, index) {
+        final student = students[index];
+        final isPresent = attendance[student.id] ?? false;
+
+        return CheckboxListTile(
+          title: Text(student.name),
+          value: isPresent,
+          onChanged: (val) {
+            context.read&lt;AttendanceCubit&gt;().markAttendance(
+              student.id,
+              val ?? false,
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+// Placeholder types
+class Student {
+  final String id;
+  final String name;
+  Student({required this.id, required this.name});
+}
+
+abstract class AttendanceRepository {
+  Future&lt;List&lt;Student&gt;&gt; getStudents();
+  Future&lt;void&gt; submitAttendance(Map&lt;String, bool&gt; attendance);
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Sealed class AttendanceState — compiler ensures exhaustive switch handling</li>
+      <li><span class="walk-num">2.</span> Each state extends Equatable and defines props — equality based on data, not object identity</li>
+      <li><span class="walk-num">3.</span> AttendanceLoaded.copyWith() — creates new state with modified fields without mutating</li>
+      <li><span class="walk-num">4.</span> AttendanceCubit extends Cubit with super(initialState)</li>
+      <li><span class="walk-num">5.</span> loadStudents() emits Loading, then Loaded or Error — standard async pattern</li>
+      <li><span class="walk-num">6.</span> markAttendance() guards with &#39;is!&#39; check — safe state narrowing</li>
+      <li><span class="walk-num">7.</span> New Map from existing — immutable update pattern, never mutate the map in-place</li>
+      <li><span class="walk-num">8.</span> emit() skips if new state equals current (via Equatable) — prevents useless rebuilds</li>
+      <li><span class="walk-num">9.</span> BlocProvider creates Cubit scoped to the screen</li>
+      <li><span class="walk-num">10.</span> BlocBuilder switch exhaustively handles all states — sealed class enforces this</li>
+      <li><span class="walk-num">11.</span> buildWhen on FAB BlocBuilder — only rebuilds when AttendanceLoaded changes</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class ThemeCubit extends Cubit&lt;ThemeState&gt; {
+  ThemeCubit() : super(ThemeState(isDark: false));
+
+  void toggleTheme() {
+    state.isDark = !state.isDark;
+    emit(state);
+  }
+}
+
+class ThemeState {
+  bool isDark;
+  ThemeState({required this.isDark});
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">ThemeState is mutable. What happens when you toggle the theme?</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) state.isDark is mutated directly — this mutates the current state object BEFORE emitting. (2) emit(state) emits the SAME object reference — Cubit compares old and new state by reference/equality, finds them identical, and skips the rebuild. Fix: make ThemeState immutable (final isDark), extend Equatable, and emit a new instance: emit(ThemeState(isDark: !state.isDark)).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">A Cubit is like a scoreboard. You call methods on it — &#39;add 1 point to the red team&#39; — and it updates its score (emits a new state). Everyone watching the scoreboard (BlocBuilder) gets the update automatically. Equatable makes sure the scoreboard only flashes &#39;updated!&#39; when the score actually changes — not just because a new scoreboard object was created with the same numbers.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The name &#39;Cubit&#39; is a portmanteau of &#39;Cube&#39; and &#39;Bit&#39; — a nod to quantum computing concepts (qubits). Felix Angelov, the creator of the BLoC library, introduced Cubit in 2020 as a lighter alternative to BLoC for simpler use cases. Despite the quantum naming inspiration, Cubit is decidedly classical in its behavior.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a SearchCubit for a student search feature: state has a query string and a filtered list of students. searchStudents(query) method filters a hardcoded list. Write the states, Cubit, and a test using blocTest that verifies: initial state is empty, after searching &#39;Ali&#39; the state contains matching students.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://bloclibrary.dev/bloc-concepts/#cubit" target="_blank" rel="noopener noreferrer">Cubit Documentation</a> <span class="res-source">(bloclibrary.dev)</span></li>
+      <li><a href="https://bloclibrary.dev/" target="_blank" rel="noopener noreferrer">BLoC Library</a> <span class="res-source">(bloclibrary.dev)</span></li>
+      <li><a href="https://pub.dev/packages/equatable" target="_blank" rel="noopener noreferrer">Equatable Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://pub.dev/packages/flutter_bloc" target="_blank" rel="noopener noreferrer">flutter_bloc Package</a> <span class="res-source">(pub.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=17">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./16-state-management-landscape.html" rel="prev">← State Management Landscape</a>
+  <a class="nav-next" href="./18-bloc-fundamentals.html" rel="next">BLoC Fundamentals →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

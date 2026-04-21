@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatefulWidget &amp; setState — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/19-materialapp-scaffold.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="StatefulWidget &amp; setState">
+<meta property="og:description" content="A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="StatefulWidget &amp; setState">
+<meta name="twitter:description" content="A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "StatefulWidget & setState",
+  "description": "A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 18
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "StatefulWidget & setState",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">StatefulWidget &amp; setState</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 18 of 51</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">StatefulWidget &amp; setState</h1>
+<p class="lesson-subtitle">Widgets That Remember and React</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A StatefulWidget is like a whiteboard in a classroom. The board frame (the widget) stays the same, but the content written on it (the state) can be erased and rewritten anytime. When a teacher writes new information (setState), the students (Flutter framework) see the update and react. In team_mvp_kit, StatefulWidgets are used for local UI state like form inputs, animations, and tab selections -- while bigger state lives in BLoC.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State object (persists across rebuilds). The State object holds mutable variables and a build method. When you call setState(), Flutter marks the widget as dirty and schedules a rebuild. On the next frame, build() runs with the updated state, and Flutter efficiently patches the UI. StatefulWidgets are essential for any UI element that responds to user interaction.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, StatefulWidgets handle local UI concerns. A login form uses StatefulWidget to manage TextEditingControllers and toggle password visibility. A settings screen uses it for switch toggles. Animation controllers require StatefulWidget because they need initState for setup and dispose for cleanup. However, the project minimizes StatefulWidgets by moving most state into BLoC -- screens are often StatelessWidgets wrapping BlocBuilder, with only truly local state (like scroll position) in StatefulWidgets.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>StatefulWidget Structure</strong> — A StatefulWidget is split into two classes: the widget class (immutable, like a StatelessWidget) and a State class (mutable, holds the changing data). The widget creates its state via createState().</li>
+      <li><strong>setState: Triggering Rebuilds</strong> — Call setState to tell Flutter that state has changed and the UI needs to update. Pass a callback function that modifies the state variables. Flutter then calls build again with the new values.</li>
+      <li><strong>initState: One-Time Setup</strong> — Override initState to run code once when the state object is first created. Use it for initializing controllers, starting timers, or subscribing to streams. Always call super.initState() first.</li>
+      <li><strong>dispose: Cleanup</strong> — Override dispose to clean up resources when the widget is removed from the tree. Cancel timers, close streams, dispose controllers. Always call super.dispose() last. Forgetting dispose causes memory leaks.</li>
+      <li><strong>didUpdateWidget: Reacting to Parent Changes</strong> — Called when the parent widget rebuilds and passes new configuration. Compare old and new widget properties to decide if state needs updating. Use this instead of recreating the whole state.</li>
+      <li><strong>Accessing Widget Properties from State</strong> — Inside the State class, use widget.propertyName to access the StatefulWidget&#39;s constructor parameters. The widget property always points to the current widget instance.</li>
+      <li><strong>When to Use StatefulWidget</strong> — Use StatefulWidget for local, ephemeral UI state: toggle switches, form inputs, animations, scroll positions, tab indices. For app-wide or shared state, use BLoC, Provider, or other state management solutions.</li>
+      <li><strong>TextEditingController Example</strong> — A common use of StatefulWidget is managing text input. The TextEditingController holds the current text value and must be disposed when the widget is removed.</li>
+      <li><strong>setState Rules</strong> — Never call setState after dispose (check mounted first). Never call setState inside build. Keep the setState callback synchronous -- do async work before calling setState with the result. Minimize what changes inside setState for clarity.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+class TodoItem extends StatefulWidget {
+  final String title;
+  final bool initialCompleted;
+  final ValueChanged&lt;bool&gt; onToggle;
+
+  const TodoItem({
+    super.key,
+    required this.title,
+    this.initialCompleted = false,
+    required this.onToggle,
+  });
+
+  @override
+  State&lt;TodoItem&gt; createState() =&gt; _TodoItemState();
+}
+
+class _TodoItemState extends State&lt;TodoItem&gt;
+    with SingleTickerProviderStateMixin {
+  late bool _isCompleted;
+  late AnimationController _animController;
+  late Animation&lt;double&gt; _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _isCompleted = widget.initialCompleted;
+    _animController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _scaleAnimation = Tween&lt;double&gt;(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(parent: _animController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() {
+      _isCompleted = !_isCompleted;
+    });
+    widget.onToggle(_isCompleted);
+    _animController.forward().then((_) =&gt; _animController.reverse());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ScaleTransition(
+      scale: _scaleAnimation,
+      child: Card(
+        child: ListTile(
+          leading: Checkbox(
+            value: _isCompleted,
+            onChanged: (_) =&gt; _toggle(),
+          ),
+          title: Text(
+            widget.title,
+            style: TextStyle(
+              decoration: _isCompleted
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+              color: _isCompleted
+                  ? theme.colorScheme.onSurface.withOpacity(0.5)
+                  : theme.colorScheme.onSurface,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import Flutter material library</li>
+      <li><span class="walk-num">2.</span> Define TodoItem as a StatefulWidget with title, initialCompleted, and onToggle callback</li>
+      <li><span class="walk-num">3.</span> Title is the todo text, initialCompleted is the starting state, onToggle notifies the parent</li>
+      <li><span class="walk-num">4.</span> Const constructor with named parameters</li>
+      <li><span class="walk-num">5.</span> createState returns _TodoItemState -- the mutable companion</li>
+      <li><span class="walk-num">6.</span> _TodoItemState uses SingleTickerProviderStateMixin for animation support</li>
+      <li><span class="walk-num">7.</span> Declare _isCompleted bool for the toggle state</li>
+      <li><span class="walk-num">8.</span> Declare AnimationController and Animation for the tap effect</li>
+      <li><span class="walk-num">9.</span> initState: call super first, then initialize state from widget.initialCompleted</li>
+      <li><span class="walk-num">10.</span> Create the AnimationController with 200ms duration and vsync from the mixin</li>
+      <li><span class="walk-num">11.</span> Create a scale animation that shrinks to 95% and bounces back</li>
+      <li><span class="walk-num">12.</span> dispose: dispose the animation controller to prevent memory leaks, then call super</li>
+      <li><span class="walk-num">13.</span> _toggle method: call setState to flip _isCompleted</li>
+      <li><span class="walk-num">14.</span> Notify the parent via widget.onToggle callback with the new value</li>
+      <li><span class="walk-num">15.</span> Play the scale animation forward then reverse for a satisfying tap effect</li>
+      <li><span class="walk-num">16.</span> build method: get the current theme</li>
+      <li><span class="walk-num">17.</span> Return ScaleTransition wrapping the card for the animation</li>
+      <li><span class="walk-num">18.</span> Card contains a ListTile for clean list-item layout</li>
+      <li><span class="walk-num">19.</span> Leading Checkbox bound to _isCompleted, onChanged calls _toggle</li>
+      <li><span class="walk-num">20.</span> Title Text shows widget.title with strikethrough decoration when completed</li>
+      <li><span class="walk-num">21.</span> Completed text gets reduced opacity for a faded effect</li>
+      <li><span class="walk-num">22.</span> Non-completed text uses full surface color</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class ClickCounter extends StatefulWidget {
+  @override
+  State&lt;ClickCounter&gt; createState() =&gt; _ClickCounterState();
+}
+
+class _ClickCounterState extends State&lt;ClickCounter&gt; {
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        count++;
+        print(&#39;Count: $count&#39;);
+      },
+      child: Text(&#39;Tapped $count times&#39;),
+    );
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">The count is increasing (you can see it in the print statement) but the UI does not update. Why?</div></details><details><summary>Show answer</summary><div class="answer">The onPressed callback increments count directly without calling setState. Flutter does not know the state has changed, so it never rebuilds the widget. Fix: wrap the increment in setState(() { count++; }); so Flutter schedules a rebuild and the Text widget shows the new count.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Remember the whiteboard analogy? A StatelessWidget is a poster -- print it once and it stays the same forever. A StatefulWidget is a whiteboard. The frame (the widget class) stays on the wall, but the writing (the State class) can change. When you erase something and write new words (setState), everyone in the room sees the update. initState is like writing the first thing on the board when class starts. dispose is like erasing the board when class ends. You only use a whiteboard when you actually need to change what is written -- if the content never changes, just use a poster (StatelessWidget).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Flutter&#39;s State objects outlive their StatefulWidget instances. When a parent rebuilds and creates a new StatefulWidget, Flutter reuses the existing State object and just updates its widget reference. This is why the State class has a widget getter -- it always points to the latest widget. The State object only dies when the widget is removed from the tree entirely.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a StopWatch widget using StatefulWidget. It should have: (1) a text display showing elapsed seconds with one decimal place, (2) a Start/Stop toggle button, (3) a Reset button that appears only when the stopwatch is running or has a non-zero time. Use Timer.periodic in initState (started conditionally) and clean it up in dispose. Use setState to update the display every 100 milliseconds.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html" target="_blank" rel="noopener noreferrer">StatefulWidget Class</a> <span class="res-source">(api.flutter.dev)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/widgets/State-class.html" target="_blank" rel="noopener noreferrer">State Class Lifecycle</a> <span class="res-source">(api.flutter.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/development/ui/interactive" target="_blank" rel="noopener noreferrer">Adding Interactivity</a> <span class="res-source">(docs.flutter.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./17-statelesswidget.html" rel="prev">← StatelessWidget</a>
+  <a class="nav-next" href="./19-materialapp-scaffold.html" rel="next">MaterialApp &amp; Scaffold →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

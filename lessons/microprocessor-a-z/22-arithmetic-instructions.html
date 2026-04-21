@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arithmetic Instructions — Microprocessor A–Z | Teamz Lab</title>
+<meta name="description" content="The 8086 arithmetic instructions perform addition (ADD/ADC/INC), subtraction (SUB/SBB/DEC/NEG), multiplication (MUL/IMUL), and division (DIV/IDIV) on 8-bit…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/22-arithmetic-instructions.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/21-data-transfer-instructions.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/23-logical-shift-and-rotate-instructions.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arithmetic Instructions">
+<meta property="og:description" content="The 8086 arithmetic instructions perform addition (ADD/ADC/INC), subtraction (SUB/SBB/DEC/NEG), multiplication (MUL/IMUL), and division (DIV/IDIV) on 8-bit…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/22-arithmetic-instructions.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arithmetic Instructions">
+<meta name="twitter:description" content="The 8086 arithmetic instructions perform addition (ADD/ADC/INC), subtraction (SUB/SBB/DEC/NEG), multiplication (MUL/IMUL), and division (DIV/IDIV) on 8-bit…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Arithmetic Instructions",
+  "description": "The 8086 arithmetic instructions perform addition (ADD/ADC/INC), subtraction (SUB/SBB/DEC/NEG), multiplication (MUL/IMUL), and division (DIV/IDIV) on 8-bit…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/22-arithmetic-instructions.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 22
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Arithmetic Instructions",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/22-arithmetic-instructions.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Arithmetic Instructions</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 22 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Arithmetic Instructions</h1>
+<p class="lesson-subtitle">ADD, SUB, MUL, DIV, and their variants — the 8086 math toolkit</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=22">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Arithmetic instructions are like a calculator with some quirks. ADD/SUB are your basic +/- buttons. ADC/SBB are like adding/subtracting with a carry digit from the previous calculation — essential for multi-byte math. MUL/DIV are special: they always use fixed registers (AX, DX) like a calculator that only shows results on a specific screen.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The 8086 arithmetic instructions perform addition (ADD/ADC/INC), subtraction (SUB/SBB/DEC/NEG), multiplication (MUL/IMUL), and division (DIV/IDIV) on 8-bit or 16-bit operands. Multi-precision arithmetic uses ADC/SBB to propagate carry/borrow. Multiplication results are double-width (8-bit×8-bit=16-bit in AX, 16-bit×16-bit=32-bit in DX:AX). Division requires proper setup of the dividend (CWD/CBW for signed). All arithmetic instructions affect the flags register.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>These exact instructions form the backbone of all computation on x86 processors. When a C compiler generates code for &#39;a + b&#39;, it emits ADD. When it compiles &#39;x / y&#39; for signed integers, it emits CWD followed by IDIV. Multi-precision libraries (like OpenSSL&#39;s bignum) still use ADC chains for arbitrary-precision arithmetic. The divide-by-zero exception (INT 0) from DIV is the origin of the &#39;Divide Error&#39; crash message in DOS and early Windows.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>ADD — Addition</strong> — ADD adds the source to the destination and stores the result in the destination. Affects CF, ZF, SF, OF, PF, AF. Works with 8-bit or 16-bit operands. One operand must be a register (no memory-to-memory ADD).</li>
+      <li><strong>ADC — Add with Carry</strong> — ADC adds source + destination + CF (Carry Flag). Essential for multi-byte/multi-word addition where the carry from the lower part must propagate to the upper part. First ADD the low parts, then ADC the high parts.</li>
+      <li><strong>SUB and SBB — Subtraction</strong> — SUB subtracts source from destination. SBB subtracts source and borrow (CF) from destination. Like ADC, SBB is used for multi-word subtraction where the borrow propagates from the lower part to the upper.</li>
+      <li><strong>INC and DEC — Increment/Decrement</strong> — INC adds 1 to the operand. DEC subtracts 1. They affect ZF, SF, OF, PF, AF but NOT the Carry Flag (CF). This is important: INC/DEC preserve CF, which lets you use them in multi-precision loops without disturbing the carry chain.</li>
+      <li><strong>NEG — Negate (Two&#39;s Complement)</strong> — NEG computes the two&#39;s complement of the operand: result = 0 - operand. Effectively flips the sign of a signed number. Sets CF=1 unless the operand was 0. Affects all arithmetic flags.</li>
+      <li><strong>MUL — Unsigned Multiplication</strong> — MUL multiplies AL (8-bit) or AX (16-bit) by the source operand. For 8-bit: result in AX = AL × src. For 16-bit: result in DX:AX = AX × src. The source is always a register or memory, never immediate. Sets CF/OF if upper half is nonzero.</li>
+      <li><strong>IMUL — Signed Multiplication</strong> — IMUL is the signed version of MUL. It treats operands as signed 2&#39;s complement values. The result destination is the same: AX for 8-bit, DX:AX for 16-bit. CF/OF are set if the result cannot be represented in the lower half alone.</li>
+      <li><strong>DIV — Unsigned Division</strong> — DIV divides AX (8-bit divisor) or DX:AX (16-bit divisor) by the source. For 8-bit: AL=quotient, AH=remainder. For 16-bit: AX=quotient, DX=remainder. Division by zero or quotient overflow triggers INT 0 (divide error).</li>
+      <li><strong>IDIV — Signed Division</strong> — IDIV performs signed division. For 8-bit: AX / src -&gt; AL=quotient, AH=remainder. For 16-bit: DX:AX / src -&gt; AX=quotient, DX=remainder. The remainder has the same sign as the dividend. Use CBW or CWD to sign-extend before dividing.</li>
+      <li><strong>CBW and CWD — Sign Extension</strong> — CBW (Convert Byte to Word) sign-extends AL into AX. CWD (Convert Word to Doubleword) sign-extends AX into DX:AX. These are essential before IDIV — without sign extension, the upper half contains garbage and the division gives wrong results.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Arithmetic instruction showcase
+
+; === Addition ===
+MOV AX, 7FFFh      ; 32767 (max positive signed word)
+ADD AX, 0001h      ; AX = 8000h
+; CF=0 (no unsigned overflow: 32767+1=32768 OK)
+; OF=1 (signed overflow: 32767+1 = -32768 WRONG!)
+
+; === 32-bit Addition using ADC ===
+; Add 0001FFFFh + 00000002h
+MOV AX, 0FFFFh     ; Low word of first number
+MOV DX, 0001h      ; High word of first number
+ADD AX, 0002h      ; AX = 0001h, CF = 1 (carry!)
+ADC DX, 0000h      ; DX = 0001h + 0 + 1 = 0002h
+; DX:AX = 0002:0001h = 00020001h (correct!)
+
+; === Subtraction ===
+MOV AX, 0000h
+SUB AX, 0001h      ; AX = FFFFh, CF=1 (borrow)
+; Unsigned: 0-1 = 65535 (wrapped)
+; Signed: 0-1 = -1 (correct)
+
+; === Unsigned multiply ===
+MOV AL, 200         ; AL = C8h (200)
+MOV BL, 100         ; BL = 64h (100)
+MUL BL              ; AX = 200 × 100 = 20000
+                    ; AX = 4E20h, CF=OF=1 (result &gt; 255)
+
+; === Signed multiply ===
+MOV AX, -500        ; AX = FE0Ch
+MOV BX, 30          ; BX = 001Eh
+IMUL BX             ; DX:AX = -500 × 30 = -15000
+                    ; DX:AX = FFFFC568h
+
+; === Unsigned divide ===
+MOV DX, 0           ; Clear high word
+MOV AX, 1000        ; Dividend = 1000
+MOV BX, 7           ; Divisor = 7
+DIV BX              ; AX = 142 (quotient)
+                    ; DX = 6 (remainder)
+
+; === Signed divide (with sign extension!) ===
+MOV AX, -1000       ; AX = FC18h
+CWD                 ; DX = FFFFh (sign extend)
+MOV BX, 7
+IDIV BX             ; AX = -142, DX = -6</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ADD AX, 0001h with AX=7FFFh — unsigned result 8000h is fine (CF=0), but signed result wraps from +32767 to -32768 (OF=1). The flags tell you which interpretation overflowed.</li>
+      <li><span class="walk-num">2.</span> ADD AX, 0002h with AX=FFFFh gives 0001h with CF=1 — this carry is crucial because ADC DX,0000h picks it up, correctly incrementing DX from 0001h to 0002h.</li>
+      <li><span class="walk-num">3.</span> SUB AX, 0001h with AX=0000h gives FFFFh with CF=1 (borrow). As unsigned, 0-1 wrapped to 65535. As signed, this is simply -1.</li>
+      <li><span class="walk-num">4.</span> MUL BL with AL=200, BL=100: unsigned multiply 200×100=20000, stored in AX=4E20h. CF and OF are set because the result does not fit in AL alone (AH is nonzero).</li>
+      <li><span class="walk-num">5.</span> IMUL BX with AX=-500, BX=30: signed multiply gives -15000. DX:AX holds the 32-bit signed result FFFFC568h.</li>
+      <li><span class="walk-num">6.</span> DIV BX — before dividing, we clear DX to 0 because DIV uses DX:AX as the 32-bit dividend. Forgetting to clear DX is a common bug that causes divide overflow.</li>
+      <li><span class="walk-num">7.</span> CWD before IDIV — sign-extends AX=-1000 (FC18h) into DX=FFFFh. Without this, DX would be 0 from the earlier DIV, making the dividend wrong for signed division.</li>
+      <li><span class="walk-num">8.</span> IDIV gives AX=-142 (quotient) and DX=-6 (remainder). The remainder has the same sign as the dividend, which is the 8086&#39;s convention.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; Goal: Divide signed value -200 by 7
+MOV AX, -200       ; AX = FF38h (-200)
+MOV BX, 7          ; BX = 7
+DIV BX             ; Divide!
+; Expected: quotient = -28, remainder = -4
+; But the program crashes with a divide error!</code></pre><details><summary>Need a hint?</summary><div class="hint">DIV is for unsigned division. And what value is in DX?</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) DIV is unsigned division, not signed — it treats DX:AX as a large unsigned number. For signed division, use IDIV. (2) DX is not set up properly. DIV uses DX:AX as a 32-bit unsigned dividend, but DX contains whatever garbage was left from previous operations. Even if we fix to IDIV, we need CWD first to sign-extend AX into DX. Fix: MOV AX, -200 / CWD / MOV BX, 7 / IDIV BX. Now AX=-28 (quotient) and DX=-4 (remainder).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">ADD is like putting two groups of marbles together and counting the total. SUB is like taking some marbles away. If you have too many marbles to fit in one jar (overflow), you need a second jar — that is why MUL puts big results in TWO registers. DIV is like splitting marbles into equal groups: the groups go in one register (quotient), and the leftover marbles go in another (remainder). ADC is like saying &#39;oh, there was one extra marble from last time — add that too!&#39;</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 8086 MUL instruction takes between 70-118 clock cycles for a 16-bit multiply — that is almost 25 microseconds at 5 MHz! By comparison, a modern x86 processor does a 64-bit multiply in 3-4 clock cycles (about 1 nanosecond at 4 GHz). That is roughly a 25,000x improvement in multiply speed over 45 years of processor evolution.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write an 8086 routine that: (1) Adds two 32-bit unsigned numbers stored in DX:AX and CX:BX using ADD/ADC, (2) Multiplies a 16-bit unsigned number in AX by 10 without using MUL (hint: use shifts and ADD), (3) Divides a signed 32-bit number in DX:AX by a signed 16-bit number in BX, storing quotient and remainder separately, (4) Computes the absolute value of a signed number in AX (handle the edge case of -32768).</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.geeksforgeeks.org/arithmetic-instructions-8086-microprocessor/" target="_blank" rel="noopener noreferrer">8086 Arithmetic Instructions</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=JZBI7jqZI5s" target="_blank" rel="noopener noreferrer">ADD, SUB, MUL, DIV in 8086</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_8086_instruction_sets.htm" target="_blank" rel="noopener noreferrer">8086 Multiply and Divide</a> <span class="res-source">(TutorialsPoint)</span></li>
+      <li><a href="https://www.felixcloutier.com/x86/" target="_blank" rel="noopener noreferrer">x86 Instruction Reference</a> <span class="res-source">(x86 Reference)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=22">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./21-data-transfer-instructions.html" rel="prev">← Data Transfer Instructions</a>
+  <a class="nav-next" href="./23-logical-shift-and-rotate-instructions.html" rel="next">Logical, Shift, and Rotate Instructions →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

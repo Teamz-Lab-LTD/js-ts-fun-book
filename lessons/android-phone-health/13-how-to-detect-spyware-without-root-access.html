@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Detect Spyware Without Root Access — Android… | Teamz Lab</title>
+<meta name="description" content="Spyware is malicious software that secretly installs itself on your phone and monitors everything you do -- reading messages, recording calls, tracking your…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-phone-health/13-how-to-detect-spyware-without-root-access.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-phone-health/12-camera-access-which-apps-are-watching.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-phone-health/14-fake-gps-location-spoofing-detection.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Detect Spyware Without Root Access">
+<meta property="og:description" content="Spyware is malicious software that secretly installs itself on your phone and monitors everything you do -- reading messages, recording calls, tracking your…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-phone-health/13-how-to-detect-spyware-without-root-access.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Detect Spyware Without Root Access">
+<meta name="twitter:description" content="Spyware is malicious software that secretly installs itself on your phone and monitors everything you do -- reading messages, recording calls, tracking your…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "How to Detect Spyware Without Root Access",
+  "description": "Spyware is malicious software that secretly installs itself on your phone and monitors everything you do -- reading messages, recording calls, tracking your…",
+  "url": "https://learn.teamzlab.com/lessons/android-phone-health/13-how-to-detect-spyware-without-root-access.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Phone Health: Battery, Privacy, Performance & Security",
+    "url": "https://learn.teamzlab.com/c/android-phone-health.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 13
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Phone Health",
+      "item": "https://learn.teamzlab.com/c/android-phone-health.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How to Detect Spyware Without Root Access",
+      "item": "https://learn.teamzlab.com/lessons/android-phone-health/13-how-to-detect-spyware-without-root-access.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-phone-health.html">Android Phone Health</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-phone-health.html">Android Phone Health</a> / <span aria-current="page">How to Detect Spyware Without Root Access</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 13 of 25</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">How to Detect Spyware Without Root Access</h1>
+<p class="lesson-subtitle">The warning signs of spyware, how it hides on your phone, and how to find it without any technical skills or root access</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=13">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine someone put a hidden camera in every room of your house, a GPS tracker on your car, a wiretap on your phone, and a copy machine on your mailbox -- all invisible to you. That is what spyware does to your phone. It sees everything you type, everywhere you go, every call you make, and every photo you take. The good news? Just like a hidden camera that uses electricity and creates heat, spyware leaves detectable traces -- unusual battery drain, data usage spikes, and performance slowdowns. You do not need to rip open the walls. You just need to know what signs to look for.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Spyware is malicious software that secretly installs itself on your phone and monitors everything you do -- reading messages, recording calls, tracking your location, logging your passwords, and sending all of this data to someone else. It can be installed by a jealous partner, a suspicious employer, a hacker, or even through a malicious app download. Detecting spyware does not require technical expertise or root access. Android&#39;s built-in tools for battery monitoring, data usage tracking, app management, and permission auditing can reveal most spyware, and Google Play Protect provides automated scanning.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In 2023, the Coalition Against Stalkerware reported that stalkerware (a type of spyware used in domestic abuse) was found on over 50,000 devices worldwide through their partner organizations alone. One case involved a woman who noticed her phone was constantly warm, the battery drained by early afternoon, and her data usage had tripled. She did not know what spyware was, but she knew something was wrong. A domestic abuse hotline walked her through checking Settings &gt; Apps, where she found an app called &#39;System Health&#39; that she had never installed. Her ex-partner had installed it during a brief moment with her unlocked phone. After removing the app, the battery and data issues stopped immediately.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What Spyware Actually Does to Your Phone</strong> — Spyware is software that secretly monitors your phone activity and sends the data to someone else. It can read your text messages, record your calls, track your GPS location, capture your passwords, access your photos, and even activate your camera and microphone remotely. A 2024 Norton report found that stalkerware (spyware used by domestic abusers) installations increased 63% from 2020 to 2024.</li>
+      <li><strong>Sign #1: Your Battery Drains Unusually Fast</strong> — Spyware runs constantly in the background, processing data, recording audio, tracking GPS, and uploading information to remote servers. All of this consumes significant battery power. If your phone used to last until evening and now dies by 2 PM with the same usage habits, spyware could be one explanation. A 2023 Kaspersky study found that spyware-infected phones showed 20-40% faster battery drain than clean devices.</li>
+      <li><strong>Sign #2: Unexplained Data Usage Spikes</strong> — Spyware needs to send your stolen data somewhere. Recorded calls, photos, GPS logs, and screenshots are uploaded to remote servers, consuming mobile data. If your monthly data usage suddenly jumps by 500MB-2GB without any change in your habits, spyware could be transmitting your information. Check Settings &gt; Network &gt; Data Usage to see per-app consumption.</li>
+      <li><strong>Sign #3: Your Phone Runs Hot and Slow</strong> — Spyware uses CPU power to record, encrypt, and transmit data. This makes your processor work harder, which generates heat and slows down normal operations. If your phone feels warm when you are not using it, or if apps that used to run smoothly now stutter and lag, background spyware activity could be the cause.</li>
+      <li><strong>Sign #4: Strange Apps You Did Not Install</strong> — Some spyware installs itself as an app with a generic or misleading name like &#39;System Service,&#39; &#39;Phone Manager,&#39; or &#39;Battery Optimizer.&#39; Go to Settings &gt; Apps and scroll through every installed app. If you see an app you do not recognize and did not install, search its name online. According to Avast&#39;s 2024 threat report, 75% of mobile spyware disguises itself as a utility or system app.</li>
+      <li><strong>Sign #5: Unusual Phone Behavior</strong> — Spyware can cause your phone to behave strangely -- the screen lights up by itself, the phone restarts randomly, you hear clicks or static during calls, or text messages appear as read when you never opened them. A 2023 ESET Mobile Threat Report documented that 89% of spyware-infected devices showed at least two of these behavioral anomalies.</li>
+      <li><strong>How to Check Without Root Access</strong> — You do NOT need root access (which voids your warranty and weakens security) to detect most spyware. Android&#39;s built-in tools -- Battery Usage, Data Usage, App List, Permission Manager, and Privacy Dashboard -- reveal most spyware activity. Combine these with a reputable anti-malware scan from Google Play Protect (built into every Android phone) for comprehensive detection.</li>
+      <li><strong>Google Play Protect: Your Built-In Scanner</strong> — Every Android phone has Google Play Protect built in. It automatically scans your device for potentially harmful apps, including spyware. To run a manual scan: Open Google Play Store &gt; Tap your profile icon &gt; Play Protect &gt; Scan. Google reports that Play Protect scans over 125 billion apps per day across all Android devices and blocks over 1.5 million malicious app installations daily.</li>
+      <li><strong>The Nuclear Option: Factory Reset</strong> — If you have strong evidence of spyware and cannot identify the specific app, a factory reset removes everything -- including spyware. Back up your photos and important data to Google Drive first, then go to Settings &gt; System &gt; Reset &gt; Factory Reset. After the reset, only reinstall apps from the Google Play Store and do NOT restore from a backup that might contain the spyware.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>COMPLETE SPYWARE DETECTION CHECKLIST
+=====================================
+
+PHASE 1 -- CHECK THE SYMPTOMS:
+  [ ] Battery draining 20-40% faster than normal?
+  [ ] Data usage spiked unexpectedly?
+  [ ] Phone warm/hot when idle?
+  [ ] Phone slower than usual?
+  [ ] Screen lights up randomly?
+  [ ] Strange sounds during calls?
+  If 2+ checked --&gt; proceed to Phase 2
+
+PHASE 2 -- INVESTIGATE APPS:
+  Settings &gt; Apps &gt; All Apps
+  [ ] Any apps you do NOT recognize?
+  [ ] Any apps with generic names like
+      &#39;System Service&#39; or &#39;Phone Manager&#39;?
+  [ ] Google any suspicious app names
+  [ ] Check install date -- did it appear
+      recently without your knowledge?
+
+PHASE 3 -- AUDIT PERMISSIONS:
+  Settings &gt; Privacy &gt; Permission Manager
+  [ ] Unknown apps with Location access?
+  [ ] Unknown apps with Microphone access?
+  [ ] Unknown apps with Camera access?
+  [ ] Unknown apps with SMS access?
+  [ ] Any app with ALL sensitive permissions?
+
+PHASE 4 -- RUN SECURITY SCANS:
+  [ ] Google Play Protect scan (built-in)
+  [ ] DeviceGPT spyware detection scan
+  [ ] DeviceGPT screen recorder detection
+  [ ] DeviceGPT keylogger detection
+  [ ] Check USB debugging status (should be OFF)
+  [ ] Check for Device Admin apps:
+      Settings &gt; Security &gt; Device Admin Apps
+      (spyware often hides here)
+
+PHASE 5 -- TAKE ACTION:
+  Suspicious app found --&gt; Uninstall it
+  Cannot uninstall --&gt; Check Device Admin list
+  Still cannot remove --&gt; Factory reset
+  Domestic abuse concern --&gt; Call hotline first</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> PHASE 1 -- CHECK THE SYMPTOMS: Spyware leaves physical traces on your phone. Battery drain, data spikes, heat, and slowness are like footprints from an intruder. No single symptom confirms spyware (an old battery drains fast too), but multiple symptoms together raise the alarm significantly.</li>
+      <li><span class="walk-num">2.</span> PHASE 2 -- INVESTIGATE APPS: Go through every installed app and question anything you do not recognize. Spyware disguises itself with boring names like &#39;System Service&#39; so you ignore it. Check the install date -- if an app appeared on a date when someone had physical access to your phone, that is very suspicious.</li>
+      <li><span class="walk-num">3.</span> PHASE 3 -- AUDIT PERMISSIONS: Spyware needs extensive permissions to spy on you -- location, microphone, camera, SMS, contacts, and storage. Any single app with ALL of these permissions that is not a well-known app is a major red flag. Use Permission Manager to see which apps have what access.</li>
+      <li><span class="walk-num">4.</span> PHASE 4 -- RUN SECURITY SCANS: Google Play Protect is built into every Android phone and can detect known spyware. DeviceGPT provides additional spyware detection, screen recorder detection, and keylogger detection scanning. Also check USB debugging status (should be OFF) and Device Admin Apps -- spyware often registers as a device administrator to prevent easy uninstallation.</li>
+      <li><span class="walk-num">5.</span> PHASE 5 -- TAKE ACTION: If you find spyware, uninstall it. If it resists uninstallation, remove its device admin privileges first, then uninstall. If you cannot remove it at all, a factory reset will eliminate everything. IMPORTANT: If spyware is related to domestic abuse, contact a safety hotline BEFORE removing it -- removing it may alert the abuser.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>Your friend says: &#39;My ex-boyfriend set up my new phone for me last month. Ever since then, my battery dies by 2 PM, my phone is always warm, and my data usage doubled. I also noticed an app called System Health Monitor that I do not remember installing. I tried to uninstall it but it says Cannot uninstall -- this app is a device administrator. My ex keeps showing up at places I go to, and he seems to know about private conversations I had with friends.&#39;</code></pre><details><summary>Need a hint?</summary><div class="hint">Connect the dots between the ex setting up the phone, the symptoms, the uninstallable app with admin privileges, and the ex&#39;s behavior.</div></details><details><summary>Show answer</summary><div class="answer">This is a textbook case of stalkerware installed by an ex-partner. The signs: (1) Ex had physical access to set up the phone -- 2 minutes is enough to install spyware. (2) Battery drain, heat, and data spikes are classic spyware symptoms. (3) &#39;System Health Monitor&#39; is a common spyware disguise name. (4) &#39;Cannot uninstall -- device administrator&#39; means the spyware gave itself admin privileges to resist removal. (5) Ex knowing her locations and conversations confirms active surveillance. CRITICAL: She should contact the National Domestic Violence Hotline (1-800-799-7233) BEFORE removing the spyware, as removing it may alert the abuser and escalate danger. A safety professional can guide her through secure removal and safety planning.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine a sneaky invisible person followed you everywhere -- reading your diary, listening to your phone calls, taking pictures of everything you do, and telling someone else all about it. That is what spyware does on your phone. But even invisible spies leave clues! They make your phone tired (battery dies fast), hungry (uses lots of internet data), and warm (gets hot). If your phone shows these signs, you can look for the spy in your app list, kick them out, and lock the door behind them.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The commercial spyware industry is worth over $12 billion globally as of 2024, according to the Atlantic Council&#39;s Digital Forensic Research Lab. Companies like NSO Group (makers of Pegasus spyware) sell tools to governments that can compromise any phone with zero user interaction. While Pegasus targets high-profile individuals, consumer-grade stalkerware apps are available to anyone for as little as $30 per month -- and they are disturbingly easy to install on someone&#39;s unlocked phone in under 2 minutes.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Do this RIGHT NOW: (1) Go to Settings &gt; Apps and scroll through your entire app list. Write down any app you do not recognize. (2) Google the name of each unfamiliar app. (3) Go to Settings &gt; Security &gt; Device Admin Apps and check if any unknown app has device administrator access -- spyware often hides here. (4) Open the Google Play Store &gt; Profile &gt; Play Protect and run a full scan. (5) Check Settings &gt; Network &gt; Data Usage and note if any unfamiliar app is using significant data.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://stopstalkerware.org/" target="_blank" rel="noopener noreferrer">Coalition Against Stalkerware</a> <span class="res-source">(Coalition Against Stalkerware)</span></li>
+      <li><a href="https://www.kaspersky.com/resource-center/threats/how-to-detect-spyware" target="_blank" rel="noopener noreferrer">How to Find and Remove Spyware on Android</a> <span class="res-source">(Kaspersky)</span></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.teamz.lab.debugger" target="_blank" rel="noopener noreferrer">DeviceGPT Spyware Scanner on Google Play</a> <span class="res-source">(Teamz Lab)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=13">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./12-camera-access-which-apps-are-watching.html" rel="prev">← Camera Access: Which Apps Are Watching?</a>
+  <a class="nav-next" href="./14-fake-gps-location-spoofing-detection.html" rel="next">Fake GPS &amp; Location Spoofing Detection →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-phone-health.html">← Back to course: Android Phone Health</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

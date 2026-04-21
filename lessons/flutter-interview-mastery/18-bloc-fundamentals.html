@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLoC Fundamentals — Flutter Interview Mastery | Teamz Lab</title>
+<meta name="description" content="BLoC (Business Logic Component) is a pattern and library that separates business logic from UI via unidirectional data flow: Events are dispatched to the…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/19-advanced-bloc-patterns.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="BLoC Fundamentals">
+<meta property="og:description" content="BLoC (Business Logic Component) is a pattern and library that separates business logic from UI via unidirectional data flow: Events are dispatched to the…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BLoC Fundamentals">
+<meta name="twitter:description" content="BLoC (Business Logic Component) is a pattern and library that separates business logic from UI via unidirectional data flow: Events are dispatched to the…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "BLoC Fundamentals",
+  "description": "BLoC (Business Logic Component) is a pattern and library that separates business logic from UI via unidirectional data flow: Events are dispatched to the…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 18
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "BLoC Fundamentals",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">BLoC Fundamentals</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 18 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">BLoC Fundamentals</h1>
+<p class="lesson-subtitle">Events In, States Out — The Pattern That Scales to Any Team</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">BLoC is like a company&#39;s formal request system. An employee submits a Request Form (Event) to the department. The department (BLoC) processes it, updates the company database (state), and posts the result on the notice board (Stream). Everyone looking at the notice board (BlocBuilder) sees the latest update. The department keeps a log of every request and result (BlocObserver) — perfect for audits.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>BLoC (Business Logic Component) is a pattern and library that separates business logic from UI via unidirectional data flow: Events are dispatched to the BLoC, processed by on handlers, and new States are emitted to the UI. BlocObserver provides global visibility into every transition. This auditability and testability make BLoC the standard for complex Flutter features.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a fintech app, the payment feature uses PaymentBloc with events: InitiatePayment, ConfirmPayment, CancelPayment. States: PaymentIdle, PaymentLoading, PaymentConfirmationRequired(details), PaymentSuccess(receipt), PaymentFailed(reason). BlocObserver logs every transition to analytics. BlocListener navigates to a receipt screen on PaymentSuccess. This explicit audit trail satisfies financial compliance requirements.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>BLoC vs Cubit — The Distinction</strong> — BLoC adds a formal Event class on top of Cubit. Events are dispatched with bloc.add(SomeEvent()). Each event type is handled by on((event, emit) =&gt; ...). The explicit event model makes it easier to: add event-specific logging, transform events (debounce, throttle), and review every action the user took in BlocObserver.</li>
+      <li><strong>Event Classes — The Inputs</strong> — Events describe what happened: LoadTransactions, FilterByDate, SubmitPayment, RefreshData. They are immutable value objects. Extend Equatable if you want to deduplicate identical events. Use sealed classes for exhaustive handling: sealed class TransactionEvent {} with subclasses. Each event carries its own data as fields.</li>
+      <li><strong>on Handler — The Modern API</strong> — Since BLoC 7.2+, use on((event, emit) → ...) in the constructor. This replaces the old mapEventToState generator. Advantages: type-safe (the handler only sees events of that type), supports async via async/await, each event type has its own handler method for clarity.</li>
+      <li><strong>The Emitter — Thread-Safe emit()</strong> — The Emitter passed to on handlers is not the same as Cubit&#39;s emit(). It&#39;s thread-safe: multiple concurrent events won&#39;t produce race conditions in the state. emit.forEach() processes a stream and emits states for each element. emit.onEach() listens without transforming.</li>
+      <li><strong>Side Effects — BlocListener</strong> — BlocListener reacts to state changes for SIDE EFFECTS: show dialogs, navigate, display snackbars. Never put side effects in BlocBuilder. BlocListener: fires once per state change. BlocConsumer = BlocBuilder + BlocListener in one widget. BlocSelector: rebuilds only when a specific field in the state changes.</li>
+      <li><strong>BlocObserver — Global Visibility</strong> — Override BlocObserver and register with Bloc.observer = MyObserver() in main(). Override: onCreate, onEvent, onTransition, onError, onClose. Every BLoC/Cubit in the app routes through here. Use for: Firebase Analytics events, Sentry error reporting, debug logging. Interview: How do you track every user action in Flutter? BlocObserver.</li>
+      <li><strong>Transition — The Audit Trail</strong> — A Transition contains: currentState, event, nextState. In BlocObserver.onTransition, log these to analytics or debug output. This is unachievable with simple setState or ChangeNotifier — they don&#39;t record what triggered the change. This traceability is why senior devs choose BLoC for complex features.</li>
+      <li><strong>Error Handling in BLoC</strong> — In on handlers, wrap with try/catch. emit the error state. In BlocObserver.onError, log to Crashlytics. The BLoC pattern keeps error handling centralized and visible. Never swallow errors silently — always emit an error state so the UI can show appropriate feedback.</li>
+      <li><strong>EventTransformer — Debounce, Throttle, Sequential</strong> — on(handler, transformer: eventTransformer) controls how events are processed. droppable(): ignore new events while one is processing (prevent duplicate submissions). restartable(): cancel previous and start new (search as you type). sequential(): queue events. debounce/throttle from bloc_concurrency package.</li>
+      <li><strong>Full BLoC Implementation Pattern</strong> — Standard structure: (1) sealed event classes with data, (2) sealed state classes with Equatable, (3) BLoC with on&lt;&gt; handlers for each event, (4) repository injected via constructor, (5) BlocProvider scoped to feature, (6) BlocBuilder + BlocListener in UI, (7) blocTest for each event handler.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// BLoC Fundamentals — Full Implementation
+
+import &#39;package:bloc/bloc.dart&#39;;
+import &#39;package:equatable/equatable.dart&#39;;
+import &#39;package:bloc_concurrency/bloc_concurrency.dart&#39;;
+
+// ============================================================
+// 1. EVENTS — What the user / system does
+// ============================================================
+
+sealed class PaymentEvent extends Equatable {
+  const PaymentEvent();
+
+  @override
+  List&lt;Object?&gt; get props =&gt; [];
+}
+
+class InitiatePayment extends PaymentEvent {
+  final String recipientId;
+  final double amount;
+  final String note;
+
+  const InitiatePayment({
+    required this.recipientId,
+    required this.amount,
+    required this.note,
+  });
+
+  @override
+  List&lt;Object&gt; get props =&gt; [recipientId, amount, note];
+}
+
+class ConfirmPayment extends PaymentEvent {
+  const ConfirmPayment();
+}
+
+class CancelPayment extends PaymentEvent {
+  const CancelPayment();
+}
+
+// ============================================================
+// 2. STATES — What the UI should render
+// ============================================================
+
+sealed class PaymentState extends Equatable {
+  const PaymentState();
+
+  @override
+  List&lt;Object?&gt; get props =&gt; [];
+}
+
+class PaymentIdle extends PaymentState {
+  const PaymentIdle();
+}
+
+class PaymentLoading extends PaymentState {
+  const PaymentLoading();
+}
+
+class PaymentConfirmationRequired extends PaymentState {
+  final String recipientName;
+  final double amount;
+  final double fee;
+
+  const PaymentConfirmationRequired({
+    required this.recipientName,
+    required this.amount,
+    required this.fee,
+  });
+
+  @override
+  List&lt;Object&gt; get props =&gt; [recipientName, amount, fee];
+
+  double get total =&gt; amount + fee;
+}
+
+class PaymentProcessing extends PaymentState {
+  const PaymentProcessing();
+}
+
+class PaymentSuccess extends PaymentState {
+  final String transactionId;
+  final DateTime timestamp;
+
+  const PaymentSuccess({
+    required this.transactionId,
+    required this.timestamp,
+  });
+
+  @override
+  List&lt;Object&gt; get props =&gt; [transactionId, timestamp];
+}
+
+class PaymentFailed extends PaymentState {
+  final String reason;
+  final bool isRetryable;
+
+  const PaymentFailed({required this.reason, required this.isRetryable});
+
+  @override
+  List&lt;Object&gt; get props =&gt; [reason, isRetryable];
+}
+
+// ============================================================
+// 3. THE BLoC
+// ============================================================
+
+class PaymentBloc extends Bloc&lt;PaymentEvent, PaymentState&gt; {
+  final PaymentRepository _repository;
+
+  PaymentBloc({required PaymentRepository repository})
+      : _repository = repository,
+        super(const PaymentIdle()) {
+
+    // Register handlers for each event type
+    // droppable(): ignore new events while processing (prevent double-submit)
+    on&lt;InitiatePayment&gt;(
+      _onInitiatePayment,
+      transformer: droppable(),
+    );
+
+    on&lt;ConfirmPayment&gt;(
+      _onConfirmPayment,
+      transformer: droppable(), // Prevent double-tap confirm
+    );
+
+    on&lt;CancelPayment&gt;(_onCancelPayment);
+  }
+
+  Future&lt;void&gt; _onInitiatePayment(
+    InitiatePayment event,
+    Emitter&lt;PaymentState&gt; emit,
+  ) async {
+    emit(const PaymentLoading());
+
+    try {
+      final details = await _repository.fetchPaymentDetails(
+        recipientId: event.recipientId,
+        amount: event.amount,
+      );
+
+      emit(PaymentConfirmationRequired(
+        recipientName: details.recipientName,
+        amount: event.amount,
+        fee: details.calculatedFee,
+      ));
+    } on InsufficientFundsException {
+      emit(const PaymentFailed(
+        reason: &#39;Insufficient funds&#39;,
+        isRetryable: false,
+      ));
+    } catch (e) {
+      emit(PaymentFailed(
+        reason: &#39;Unable to prepare payment: $e&#39;,
+        isRetryable: true,
+      ));
+    }
+  }
+
+  Future&lt;void&gt; _onConfirmPayment(
+    ConfirmPayment event,
+    Emitter&lt;PaymentState&gt; emit,
+  ) async {
+    final current = state;
+    if (current is! PaymentConfirmationRequired) return;
+
+    emit(const PaymentProcessing());
+
+    try {
+      final result = await _repository.executePayment(
+        amount: current.amount,
+        fee: current.fee,
+      );
+
+      emit(PaymentSuccess(
+        transactionId: result.transactionId,
+        timestamp: result.timestamp,
+      ));
+    } catch (e) {
+      emit(PaymentFailed(
+        reason: &#39;Payment failed: $e&#39;,
+        isRetryable: true,
+      ));
+    }
+  }
+
+  void _onCancelPayment(
+    CancelPayment event,
+    Emitter&lt;PaymentState&gt; emit,
+  ) {
+    emit(const PaymentIdle());
+  }
+}
+
+// ============================================================
+// 4. BlocObserver — Global audit trail
+// ============================================================
+
+class AppBlocObserver extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    debugPrint(&#39;[BLoC] ${bloc.runtimeType} received $event&#39;);
+    // FirebaseAnalytics.logEvent(name: &#39;bloc_event&#39;, parameters: {
+    //   &#39;bloc&#39;: bloc.runtimeType.toString(),
+    //   &#39;event&#39;: event.runtimeType.toString(),
+    // });
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    debugPrint(&#39;[BLoC] Transition: ${transition.currentState} → ${transition.nextState}&#39;);
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    // Crashlytics.recordError(error, stackTrace);
+    debugPrint(&#39;[BLoC] Error in ${bloc.runtimeType}: $error&#39;);
+  }
+}
+
+// Register in main():
+// void main() {
+//   Bloc.observer = AppBlocObserver();
+//   runApp(const MyApp());
+// }
+
+// ============================================================
+// 5. UI — BlocBuilder + BlocListener (via BlocConsumer)
+// ============================================================
+
+import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter_bloc/flutter_bloc.dart&#39;;
+
+class PaymentScreen extends StatelessWidget {
+  const PaymentScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =&gt; PaymentBloc(
+        repository: context.read&lt;PaymentRepository&gt;(),
+      ),
+      child: const _PaymentView(),
+    );
+  }
+}
+
+class _PaymentView extends StatelessWidget {
+  const _PaymentView();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer&lt;PaymentBloc, PaymentState&gt;(
+      // listener: side effects — navigate, show snackbar, dialog
+      listener: (context, state) {
+        switch (state) {
+          case PaymentSuccess(:final transactionId):
+            // Navigate to receipt screen
+            Navigator.of(context).pushReplacementNamed(
+              &#39;/receipt&#39;,
+              arguments: transactionId,
+            );
+          case PaymentFailed(:final reason, :final isRetryable):
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(reason)),
+            );
+          default:
+            break;
+        }
+      },
+      // builder: UI rendering based on state
+      builder: (context, state) {
+        return switch (state) {
+          PaymentIdle() =&gt; _PaymentForm(),
+          PaymentLoading() || PaymentProcessing() =&gt;
+              const Center(child: CircularProgressIndicator()),
+          PaymentConfirmationRequired(:final recipientName, :final total) =&gt;
+              _ConfirmationCard(
+                recipientName: recipientName,
+                total: total,
+                onConfirm: () =&gt;
+                    context.read&lt;PaymentBloc&gt;().add(const ConfirmPayment()),
+                onCancel: () =&gt;
+                    context.read&lt;PaymentBloc&gt;().add(const CancelPayment()),
+              ),
+          PaymentSuccess() || PaymentFailed() =&gt;
+              const SizedBox.shrink(), // Handled by listener
+        };
+      },
+    );
+  }
+}
+
+// Placeholder types
+abstract class PaymentRepository {
+  Future&lt;PaymentDetails&gt; fetchPaymentDetails({required String recipientId, required double amount});
+  Future&lt;PaymentResult&gt; executePayment({required double amount, required double fee});
+}
+class PaymentDetails { final String recipientName; final double calculatedFee; PaymentDetails({required this.recipientName, required this.calculatedFee}); }
+class PaymentResult { final String transactionId; final DateTime timestamp; PaymentResult({required this.transactionId, required this.timestamp}); }
+class InsufficientFundsException implements Exception {}
+class _PaymentForm extends StatelessWidget { @override Widget build(BuildContext context) =&gt; const Text(&#39;Form&#39;); }
+class _ConfirmationCard extends StatelessWidget {
+  final String recipientName; final double total;
+  final VoidCallback onConfirm; final VoidCallback onCancel;
+  const _ConfirmationCard({required this.recipientName, required this.total, required this.onConfirm, required this.onCancel});
+  @override Widget build(BuildContext context) =&gt; const Text(&#39;Confirmation&#39;);
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Sealed PaymentEvent — all events are documented in one place</li>
+      <li><span class="walk-num">2.</span> InitiatePayment carries its data as final fields — immutable event</li>
+      <li><span class="walk-num">3.</span> Sealed PaymentState with Equatable — exhaustive, comparable states</li>
+      <li><span class="walk-num">4.</span> PaymentBloc constructor: register handlers with on</li>
+      <li><span class="walk-num">5.</span> droppable() transformer on InitiatePayment — no double submissions</li>
+      <li><span class="walk-num">6.</span> _onInitiatePayment: emit Loading, fetch details, emit Confirmation or Error</li>
+      <li><span class="walk-num">7.</span> Specific catch for InsufficientFundsException — typed error handling</li>
+      <li><span class="walk-num">8.</span> _onConfirmPayment: guard with &#39;is!&#39; check before proceeding</li>
+      <li><span class="walk-num">9.</span> AppBlocObserver.onTransition: logs currentState → event → nextState audit trail</li>
+      <li><span class="walk-num">10.</span> BlocConsumer combines listener (side effects) and builder (UI) in one widget</li>
+      <li><span class="walk-num">11.</span> Listener handles navigation and snackbars — NOT in builder</li>
+      <li><span class="walk-num">12.</span> Builder switch handles every state — sealed ensures compiler checks exhaustiveness</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class LoginBloc extends Bloc&lt;LoginEvent, LoginState&gt; {
+  LoginBloc() : super(LoginInitial()) {
+    on&lt;LoginSubmitted&gt;((event, emit) async {
+      emit(LoginLoading());
+      final user = await authService.login(event.email, event.password);
+      emit(LoginSuccess(user));
+    });
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">What happens if the login API throws an exception?</div></details><details><summary>Show answer</summary><div class="answer">The exception is unhandled — it will propagate and crash, or be silently caught by BLoC&#39;s error handler without emitting an error state. The UI stays in LoginLoading forever. Fix: wrap in try/catch, emit LoginFailure(message) in the catch block so the UI can show an error and the user can retry. Also register error via BlocObserver for Crashlytics logging.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">BLoC is like a company suggestion box system. You write your request on a form (Event) and drop it in the box. The department (BLoC) reads it, does the work, and posts the result on the wall (State). Everyone reading the wall (BlocBuilder) sees the latest status. The manager (BlocObserver) secretly reads every form AND every posted result — keeping a full log. BlocListener is the department secretary who takes special actions (makes phone calls, sends emails) when certain results are posted.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The BLoC pattern was introduced by Felix Angelov at Google I/O 2018 as a way to use reactive streams (RxDart) to separate business logic from UI. The original implementation used Streams and Sinks directly. The modern BLoC library (now in the flutter/packages organization) replaced Streams with a much simpler API while keeping the same architectural principles. Over 50,000 apps on the Play Store use BLoC.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a SearchBloc for a fintech transaction search: events SearchQueryChanged(query), ClearSearch. States: SearchIdle, SearchLoading, SearchResults(transactions), SearchError. Use the restartable() transformer on SearchQueryChanged so each new keystroke cancels the previous search. Write blocTest for: empty query returns idle, valid query returns results, failed API returns error.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://bloclibrary.dev/bloc-concepts/" target="_blank" rel="noopener noreferrer">BLoC Core Concepts</a> <span class="res-source">(bloclibrary.dev)</span></li>
+      <li><a href="https://pub.dev/packages/bloc_concurrency" target="_blank" rel="noopener noreferrer">bloc_concurrency Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://bloclibrary.dev/flutter-bloc-concepts/" target="_blank" rel="noopener noreferrer">flutter_bloc Widgets</a> <span class="res-source">(bloclibrary.dev)</span></li>
+      <li><a href="https://bloclibrary.dev/testing/" target="_blank" rel="noopener noreferrer">BLoC Testing</a> <span class="res-source">(bloclibrary.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./17-cubit-fundamentals.html" rel="prev">← Cubit Fundamentals</a>
+  <a class="nav-next" href="./19-advanced-bloc-patterns.html" rel="next">Advanced BLoC Patterns →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

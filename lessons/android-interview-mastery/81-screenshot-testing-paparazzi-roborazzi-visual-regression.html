@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screenshot Testing: Paparazzi, Roborazzi &amp; Visual… | Teamz Lab</title>
+<meta name="description" content="Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/80-baseline-profiles-macrobenchmark-startup-optimization.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/82-aosp-android-platform-internals-for-app-developers.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Screenshot Testing: Paparazzi, Roborazzi &amp; Visual Regression">
+<meta property="og:description" content="Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Screenshot Testing: Paparazzi, Roborazzi &amp; Visual Regression">
+<meta name="twitter:description" content="Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Screenshot Testing: Paparazzi, Roborazzi & Visual Regression",
+  "description": "Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 81
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Screenshot Testing: Paparazzi, Roborazzi & Visual Regression",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Screenshot Testing: Paparazzi, Roborazzi &amp; Visual Regression</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 81 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Screenshot Testing: Paparazzi, Roborazzi &amp; Visual Regression</h1>
+<p class="lesson-subtitle">Catch pixel-level regressions before your users do — master every major Android screenshot testing framework</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=81">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Screenshot testing is like a museum curator who photographs every painting in exact lighting conditions. If someone accidentally bumps a frame or a cleaning crew leaves a smudge, comparing today&#39;s photo against the original instantly reveals the change — no human needs to walk through every gallery room each day.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved versions as golden baselines, and compare future renders against those baselines to detect unintended visual changes. On Android, frameworks like Paparazzi (JVM-based, no emulator), Roborazzi (Robolectric-based), and Dropshots (device-based) automate this process, enabling teams to catch broken layouts, wrong colors, missing icons, and theme inconsistencies before they ship to users.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>At Cash App, Paparazzi was created because their design system team needed to validate hundreds of UI components across themes and screen sizes without maintaining a fleet of emulators. Companies like Dropbox, Square, and Google use screenshot testing to enforce design consistency across feature teams — when any PR changes a shared component, the screenshot tests immediately show which screens are affected. In large-scale apps with 50+ contributors, screenshot testing is the primary defense against &#39;it looked fine on my machine&#39; visual bugs.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Why Screenshot Testing Matters</strong> — Traditional unit and integration tests validate logic but miss visual regressions — a wrong color, broken padding, overlapping text, or theme inconsistency. Screenshot tests capture rendered UI as images and compare them against approved baselines (golden images), catching visual bugs that functional tests completely ignore.</li>
+      <li><strong>Paparazzi by Cash App — JVM-Based Speed</strong> — Paparazzi runs entirely on the JVM with no emulator or device required. It uses LayoutLib (the same renderer Android Studio uses for previews) to inflate Views and Compose UI, then captures them as PNG files. This makes it extremely fast — a suite of 500 screenshot tests can run in under 60 seconds. You record golden images with `./gradlew recordPaparazziDebug` and verify with `./gradlew verifyPaparazziDebug`.</li>
+      <li><strong>Paparazzi DeviceConfig &amp; Multi-Config Testing</strong> — Paparazzi supports DeviceConfig presets (PIXEL_5, NEXUS_5, etc.) and lets you parameterize tests across screen sizes, font scales, dark/light themes, and locales including RTL. A single test class with @RunWith(TestParameterInjector::class) can generate dozens of golden images covering your entire device matrix without a single emulator boot.</li>
+      <li><strong>Roborazzi — Robolectric-Powered Screenshots</strong> — Roborazzi leverages Robolectric&#39;s native graphics mode (@GraphicsMode(GraphicsMode.Mode.NATIVE)) to render real Android UI on the JVM. It supports three modes: `record` (save new baselines), `compare` (generate diff images highlighting changes), and `verify` (fail if differences exceed threshold). Use `captureRoboImage()` on any View, Composable, or even ActivityScenario.</li>
+      <li><strong>Dropshots by Dropbox</strong> — Dropshots provides a simpler API focused on tolerance-based comparison. It runs on real devices/emulators via instrumentation tests but offers a Gradle plugin that manages golden image storage and comparison. Its key feature is configurable pixel tolerance — you set a percentage threshold (e.g., 0.1%) below which differences are treated as acceptable anti-aliasing noise rather than real regressions.</li>
+      <li><strong>Compose Preview Screenshot Testing (2025+)</strong> — Google&#39;s official Compose Preview Screenshot Testing lets you annotate @Preview composables and automatically generate screenshot tests from them. Combined with ComposablePreviewScanner and AndroidUiTestingUtils by Sergio Sastre, you can scan all @Preview functions in your codebase and generate parameterized screenshot tests for each — turning your preview catalog into a visual regression suite with near-zero boilerplate.</li>
+      <li><strong>Golden Image Management &amp; Git Strategy</strong> — Golden images (baselines) are typically stored in the repo under a dedicated directory (e.g., `src/test/snapshots`). When UI intentionally changes, you re-record baselines and commit the updated PNGs. Best practice: use Git LFS for large image sets, require screenshot diff review in PRs, and keep golden images organized by test class name and device config for easy navigation.</li>
+      <li><strong>CI/CD Integration Patterns</strong> — In CI pipelines, screenshot tests run in `verify` mode — comparing current renders against committed baselines. Failed tests produce diff images showing exactly what changed. Advanced setups upload diff artifacts to PR comments (using Danger, GitHub Actions artifacts, or custom bots) so reviewers see visual changes inline. JVM-based tools (Paparazzi, Roborazzi) are CI-friendly since they need no emulator.</li>
+      <li><strong>Tolerance, Thresholds &amp; Anti-Aliasing</strong> — Pixel-perfect comparison is often too strict — different JVM versions, rendering engines, or OS updates cause sub-pixel anti-aliasing differences. Most frameworks support tolerance thresholds: Paparazzi uses a max-percent-difference, Roborazzi supports custom comparators with pixel tolerance, and Dropshots has built-in percentage-based thresholds. A common sweet spot is 0.05-0.5% tolerance to catch real bugs while ignoring rendering noise.</li>
+      <li><strong>Multi-Configuration Matrix Testing</strong> — Production apps must look correct in dark mode, light mode, RTL layouts, large font accessibility settings, and various screen densities. Screenshot testing frameworks support parameterized runs across all these configurations. A single Composable can be tested in 8+ configurations automatically — dark+LTR, dark+RTL, light+LTR, light+RTL, each at normal and large font scale — creating a comprehensive visual safety net.</li>
+      <li><strong>Framework Comparison: Choosing the Right Tool</strong> — Paparazzi: JVM-only, fastest, great Compose support, Cash App maintained. Roborazzi: JVM via Robolectric, supports Activities/Fragments, good diff visualization. Dropshots: device-based, simple API, tolerance-focused. Android Testify: device-based, mature, good for legacy View code. Shot by Pedrovgs: device-based, widely used. For new Compose-first projects, Paparazzi or Roborazzi are the top choices; for legacy View-heavy apps needing real device rendering, Dropshots or Testify.</li>
+      <li><strong>AI-Assisted &amp; Emerging Trends</strong> — Emerging tools use ML to distinguish meaningful visual changes from noise (anti-aliasing, shadow rounding). Services like Percy and Applitools (cross-platform) offer AI-powered visual comparison. In the Android ecosystem, expect tighter Compose Preview integration, IDE-inline diff previews, and smarter tolerance algorithms that understand semantic UI regions rather than raw pixel comparison.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ============================================
+// 1. PAPARAZZI SETUP — build.gradle.kts (module)
+// ============================================
+plugins {
+    id(&quot;app.cash.paparazzi&quot;) version &quot;1.3.4&quot;
+}
+
+// ============================================
+// 2. PAPARAZZI TEST — Compose Component
+// ============================================
+class PaymentCardScreenshotTest {
+
+    @get:Rule
+    val paparazzi = Paparazzi(
+        deviceConfig = DeviceConfig.PIXEL_5,
+        theme = &quot;android:Theme.Material3.DayNight&quot;,
+        renderingMode = SessionParams.RenderingMode.NORMAL,
+        maxPercentDifference = 0.1 // 0.1% tolerance
+    )
+
+    @Test
+    fun paymentCard_defaultState() {
+        paparazzi.snapshot {
+            MyAppTheme(darkTheme = false) {
+                PaymentCard(
+                    amount = &quot;$42.00&quot;,
+                    recipient = &quot;Jane Doe&quot;,
+                    status = PaymentStatus.COMPLETED
+                )
+            }
+        }
+    }
+
+    @Test
+    fun paymentCard_darkMode() {
+        paparazzi.snapshot {
+            MyAppTheme(darkTheme = true) {
+                PaymentCard(
+                    amount = &quot;$42.00&quot;,
+                    recipient = &quot;Jane Doe&quot;,
+                    status = PaymentStatus.PENDING
+                )
+            }
+        }
+    }
+}
+
+// ============================================
+// 3. PARAMETERIZED MULTI-CONFIG TEST
+// ============================================
+@RunWith(TestParameterInjector::class)
+class DesignSystemScreenshotTest(
+    @TestParameter val darkMode: Boolean,
+    @TestParameter val isRtl: Boolean,
+    @TestParameter val fontScale: FontScale
+) {
+    enum class FontScale(val value: Float) {
+        NORMAL(1.0f), LARGE(1.3f), HUGE(1.5f)
+    }
+
+    @get:Rule
+    val paparazzi = Paparazzi(
+        deviceConfig = DeviceConfig.PIXEL_5.copy(
+            fontScale = fontScale.value,
+            layoutDirection = if (isRtl)
+                LayoutDirection.RTL else LayoutDirection.LTR
+        )
+    )
+
+    @Test
+    fun primaryButton_allConfigs() {
+        paparazzi.snapshot {
+            MyAppTheme(darkTheme = darkMode) {
+                PrimaryButton(
+                    text = &quot;Submit Payment&quot;,
+                    onClick = {}
+                )
+            }
+        }
+    }
+    // Generates 12 screenshots:
+    // 2 themes x 2 directions x 3 font scales
+}
+
+// ============================================
+// 4. ROBORAZZI — Robolectric Screenshot Test
+// ============================================
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [33])
+class ProfileScreenRoborazziTest {
+
+    @get:Rule
+    val composeRule = createComposeRule()
+
+    @Test
+    fun profileScreen_loaded() {
+        composeRule.setContent {
+            MyAppTheme {
+                ProfileScreen(
+                    user = User(&quot;Alex&quot;, &quot;alex@dev.com&quot;),
+                    isEditing = false
+                )
+            }
+        }
+        composeRule.onRoot()
+            .captureRoboImage(
+                filePath = &quot;src/test/snapshots/profile_loaded.png&quot;,
+                roborazziOptions = RoborazziOptions(
+                    compareOptions = CompareOptions(
+                        changeThreshold = 0.01 // 1% threshold
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun profileScreen_editMode_diff() {
+        composeRule.setContent {
+            MyAppTheme {
+                ProfileScreen(
+                    user = User(&quot;Alex&quot;, &quot;alex@dev.com&quot;),
+                    isEditing = true
+                )
+            }
+        }
+        // In compare mode, generates a 3-panel diff:
+        // [baseline] [actual] [highlighted diff]
+        composeRule.onRoot()
+            .captureRoboImage(&quot;src/test/snapshots/profile_edit.png&quot;)
+    }
+}
+
+// ============================================
+// 5. COMPOSE PREVIEW SCREENSHOT TESTING
+// ============================================
+// In your UI module — define previews as usual
+@Preview(name = &quot;Light&quot;)
+@Preview(name = &quot;Dark&quot;, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun OrderSummaryPreview() {
+    MyAppTheme {
+        OrderSummary(
+            items = listOf(&quot;Burger&quot;, &quot;Fries&quot;),
+            total = &quot;$12.99&quot;
+        )
+    }
+}
+
+// In your test module — auto-scan and test all previews
+@RunWith(TestParameterInjector::class)
+class ComposePreviewTests(
+    @TestParameter(valuesProvider = PreviewProvider::class)
+    val preview: ComposablePreview&lt;AndroidPreviewInfo&gt;
+) {
+    @get:Rule
+    val paparazzi = Paparazzi()
+
+    class PreviewProvider : TestParameter.TestParameterValuesProvider {
+        override fun provideValues(): List&lt;ComposablePreview&lt;AndroidPreviewInfo&gt;&gt; =
+            AndroidComposablePreviewScanner()
+                .scanPackageTrees(&quot;com.myapp.ui&quot;)
+                .getPreviews()
+    }
+
+    @Test
+    fun previewScreenshot() {
+        paparazzi.snapshot {
+            preview()
+        }
+    }
+}
+
+// ============================================
+// 6. CI WORKFLOW — GitHub Actions
+// ============================================
+// .github/workflows/screenshot-tests.yml
+//
+// name: Screenshot Tests
+// on:
+//   pull_request:
+//     paths: [&#39;app/src/**&#39;, &#39;design-system/**&#39;]
+//
+// jobs:
+//   verify-screenshots:
+//     runs-on: ubuntu-latest
+//     steps:
+//       - uses: actions/checkout@v4
+//         with:
+//           lfs: true  # golden images in Git LFS
+//
+//       - uses: actions/setup-java@v4
+//         with:
+//           java-version: &#39;17&#39;
+//           distribution: &#39;temurin&#39;
+//
+//       - name: Verify Paparazzi Screenshots
+//         run: ./gradlew verifyPaparazziDebug
+//
+//       - name: Upload diff artifacts on failure
+//         if: failure()
+//         uses: actions/upload-artifact@v4
+//         with:
+//           name: screenshot-diffs
+//           path: &#39;**/build/paparazzi/failures/&#39;
+//
+//       - name: Comment PR with diff images
+//         if: failure()
+//         uses: marocchino/sticky-pull-request-comment@v2
+//         with:
+//           message: |
+//             Screenshot tests failed!
+//             Download diff artifacts to see changes.</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> We start with the Gradle plugin declaration `id(&quot;app.cash.paparazzi&quot;)` which adds the Paparazzi framework to our module — this gives us the Paparazzi test rule and the record/verify Gradle tasks.</li>
+      <li><span class="walk-num">2.</span> The `PaymentCardScreenshotTest` class demonstrates basic Paparazzi usage. The `@get:Rule val paparazzi = Paparazzi(...)` creates a JUnit rule that handles the LayoutLib rendering engine lifecycle — no emulator needed.</li>
+      <li><span class="walk-num">3.</span> In the Paparazzi constructor, `DeviceConfig.PIXEL_5` sets the virtual screen dimensions, density, and form factor. `maxPercentDifference = 0.1` means up to 0.1% pixel difference is tolerated before a test fails.</li>
+      <li><span class="walk-num">4.</span> The `paparazzi.snapshot { ... }` block takes a Composable lambda. Paparazzi renders this Composable using Android&#39;s LayoutLib (the same engine Android Studio uses for previews) and saves it as a PNG file.</li>
+      <li><span class="walk-num">5.</span> The `DesignSystemScreenshotTest` uses `@RunWith(TestParameterInjector::class)` with `@TestParameter` annotations to create a cartesian product of all parameter combinations — 2 themes x 2 directions x 3 font scales = 12 test runs from one test method.</li>
+      <li><span class="walk-num">6.</span> The `DeviceConfig.PIXEL_5.copy(fontScale = ..., layoutDirection = ...)` call creates a modified device configuration for each parameter combination, letting us test accessibility and RTL scenarios without any emulator setup.</li>
+      <li><span class="walk-num">7.</span> In the Roborazzi test, `@GraphicsMode(GraphicsMode.Mode.NATIVE)` tells Robolectric to use native graphics rendering instead of shadow implementations — this is essential for accurate screenshot capture.</li>
+      <li><span class="walk-num">8.</span> The `captureRoboImage()` extension function captures the current state of a Compose node or View and saves it to the specified file path. The `RoborazziOptions` configure comparison behavior including the change threshold.</li>
+      <li><span class="walk-num">9.</span> The Compose Preview Screenshot Testing section shows how `AndroidComposablePreviewScanner().scanPackageTrees(&quot;com.myapp.ui&quot;)` automatically discovers all @Preview composables in the given package, converting your existing preview catalog into a screenshot test suite.</li>
+      <li><span class="walk-num">10.</span> The CI workflow runs `verifyPaparazziDebug` which compares current renders against committed golden images. On failure, the `upload-artifact` step preserves diff images (showing baseline, actual, and highlighted differences) for developer review.</li>
+      <li><span class="walk-num">11.</span> The `lfs: true` option in the checkout step ensures Git LFS files (golden images) are downloaded — without this, CI would have only LFS pointer files and all screenshot comparisons would fail.</li>
+      <li><span class="walk-num">12.</span> The sticky PR comment step provides immediate visual feedback to developers when screenshots change, eliminating the need to manually download and inspect diff artifacts for every failed test.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [33])
+class HomeScreenScreenshotTest {
+
+    @get:Rule
+    val composeRule = createComposeRule()
+
+    @Test
+    fun homeScreen_defaultState() {
+        composeRule.setContent {
+            MyAppTheme {
+                HomeScreen(viewModel = HomeViewModel())
+            }
+        }
+        composeRule.onRoot()
+            .captureRoboImage(&quot;snapshots/home_default.png&quot;)
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Roborazzi requires a specific annotation to enable native graphics rendering on Robolectric. Without it, the screenshot will be blank or use shadow rendering that produces incorrect output.</div></details><details><summary>Show answer</summary><div class="answer">The test is missing `@GraphicsMode(GraphicsMode.Mode.NATIVE)` annotation on the class. Without this annotation, Robolectric uses its default shadow-based rendering which does not support real graphics capture. Add `@GraphicsMode(GraphicsMode.Mode.NATIVE)` above the class declaration for Roborazzi to produce accurate screenshots.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you draw a really nice picture and take a photo of it. The next day, your little brother adds a tiny scribble in the corner. You compare today&#39;s photo with yesterday&#39;s photo and instantly spot the scribble! Screenshot testing does the same thing for app screens — it takes photos of your app&#39;s pages, saves them, and whenever someone changes the code, it takes new photos and compares them to find anything that looks different. If something changed on purpose, you say &#39;that&#39;s fine, save the new photo.&#39; If it changed by accident, you caught a bug!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Paparazzi was named after the relentless photographers who chase celebrities — because like paparazzi, the tool relentlessly captures every visual detail of your UI! Cash App&#39;s team reported that after adopting Paparazzi, they caught over 200 visual regressions in their first quarter that had previously slipped through code review. The Android screenshot testing ecosystem has grown so fast that by 2025, there were more than 7 competing frameworks — leading to the community joke that &#39;choosing a screenshot testing library is harder than the actual testing.&#39;</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Set up a complete screenshot testing suite using Paparazzi for a design system module: (1) Add the Paparazzi Gradle plugin to a module. (2) Write a parameterized screenshot test for a Button composable that covers light/dark theme and normal/large font scale (4 configs). (3) Record the golden images locally. (4) Intentionally change the button&#39;s padding by 2dp and run verify to see the diff. (5) Write a GitHub Actions workflow that runs screenshot verification on PRs and uploads diff artifacts on failure. (6) Bonus: Integrate ComposablePreviewScanner to auto-generate screenshot tests from all @Preview functions in your module.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://github.com/cashapp/paparazzi" target="_blank" rel="noopener noreferrer">Paparazzi GitHub — Official Repository &amp; Documentation</a> <span class="res-source">(Cash App / GitHub)</span></li>
+      <li><a href="https://github.com/takahirom/roborazzi" target="_blank" rel="noopener noreferrer">Roborazzi GitHub — Robolectric Screenshot Testing</a> <span class="res-source">(takahirom / GitHub)</span></li>
+      <li><a href="https://developer.android.com/studio/preview/compose-screenshot-testing" target="_blank" rel="noopener noreferrer">Screenshot Testing Compose UI — Android Developers Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://www.droidcon.com/2024/11/22/snapshot-testing-on-android/" target="_blank" rel="noopener noreferrer">Snapshot Testing on Android — Droidcon Talk</a> <span class="res-source">(Droidcon)</span></li>
+      <li><a href="https://sergiosastre.hashnode.dev/an-introduction-to-android-screenshot-testing" target="_blank" rel="noopener noreferrer">Android Screenshot Testing Comparison — Sergio Sastre</a> <span class="res-source">(Hashnode)</span></li>
+      <li><a href="https://github.com/dropbox/dropshots" target="_blank" rel="noopener noreferrer">Dropshots GitHub — Dropbox Screenshot Testing</a> <span class="res-source">(Dropbox / GitHub)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=81">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./80-baseline-profiles-macrobenchmark-startup-optimization.html" rel="prev">← Baseline Profiles, Macrobenchmark &amp;…</a>
+  <a class="nav-next" href="./82-aosp-android-platform-internals-for-app-developers.html" rel="next">AOSP &amp; Android Platform Internals for… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

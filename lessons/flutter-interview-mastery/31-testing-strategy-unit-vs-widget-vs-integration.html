@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testing Strategy: Unit vs Widget vs Integration… | Teamz Lab</title>
+<meta name="description" content="A testing strategy defines which types of tests to write, how many of each, and in what order. The pyramid model (many unit, some widget, few integration)…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/31-testing-strategy-unit-vs-widget-vs-integration.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/30-rendering-jank-impeller-memory-optimization.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/32-unit-testing-dart-classes-use-cases-repositories.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Testing Strategy: Unit vs Widget vs Integration">
+<meta property="og:description" content="A testing strategy defines which types of tests to write, how many of each, and in what order. The pyramid model (many unit, some widget, few integration)…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/31-testing-strategy-unit-vs-widget-vs-integration.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Testing Strategy: Unit vs Widget vs Integration">
+<meta name="twitter:description" content="A testing strategy defines which types of tests to write, how many of each, and in what order. The pyramid model (many unit, some widget, few integration)…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Testing Strategy: Unit vs Widget vs Integration",
+  "description": "A testing strategy defines which types of tests to write, how many of each, and in what order. The pyramid model (many unit, some widget, few integration)…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/31-testing-strategy-unit-vs-widget-vs-integration.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 31
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Testing Strategy: Unit vs Widget vs Integration",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/31-testing-strategy-unit-vs-widget-vs-integration.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Testing Strategy: Unit vs Widget vs Integration</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 31 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Testing Strategy: Unit vs Widget vs Integration</h1>
+<p class="lesson-subtitle">Building a testing philosophy from scratch — cost, coverage, and confidence</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=31">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of tests like security checks at an airport. Unit tests are the X-ray scanner — fast, catches most issues. Widget tests are the body scanner — slower but catches more. Integration tests are the full manual pat-down — thorough but you can&#39;t do it for every passenger. Smart airports use all three at the right gates.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>A testing strategy defines which types of tests to write, how many of each, and in what order. The pyramid model (many unit, some widget, few integration) optimises for fast feedback and low maintenance cost while still catching the bugs that matter.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>On a fintech claims app handling BankID JWT auth and refund processing, the team wrote unit tests for every use case, widget tests for the claim submission form, and one integration test for the full login-to-submit flow. This caught a JWT expiry edge case in CI before it reached the QA environment.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Why test at all?</strong> — Tests are executable documentation that prevent regressions. On a real-time SaaS chat app, a refactoring of the message model broke 6 screens silently — tests would have caught it in seconds, not days.</li>
+      <li><strong>The testing pyramid</strong> — Unit tests form the wide base (fast, cheap, many), widget tests form the middle (moderate speed/cost), integration tests sit at the top (slow, expensive, few). Invert this pyramid and your CI takes 45 minutes instead of 4.</li>
+      <li><strong>Unit tests: pure logic</strong> — Test Dart classes, use cases, repositories, and state machines in isolation. No Flutter framework, no device, runs on the host machine in milliseconds. Best ROI for business logic.</li>
+      <li><strong>Widget tests: UI behaviour</strong> — Test individual widgets and small subtrees with WidgetTester. Runs in a simulated Flutter environment — no real device needed. Catches layout errors, missing providers, and navigation mistakes.</li>
+      <li><strong>Integration tests: full flows</strong> — Run on a real device or emulator. Test complete user journeys — login → dashboard → submit claim → logout. Slowest, most brittle, but the only way to catch platform-specific bugs.</li>
+      <li><strong>What to test FIRST</strong> — Start with the code that changes most and costs most when broken: use cases, repositories, BLoC/Cubit state transitions. These give 80% of the value at 20% of the effort.</li>
+      <li><strong>Test cost vs confidence</strong> — Unit: 1x cost, catches logic bugs. Widget: 3x cost, catches UI wiring bugs. Integration: 10x cost, catches flow and platform bugs. Always ask: what is the cheapest test that gives me enough confidence?</li>
+      <li><strong>Testing in production apps</strong> — On an offline-first survey app, unit tests on the sync engine caught a data-loss bug before release. The test took 2 hours to write and saved a day of production debugging and a potential client complaint.</li>
+      <li><strong>Regression safety net</strong> — Every bug you fix should get a test. This is the minimum viable testing practice. It costs 15 minutes and prevents the same bug from returning in every future sprint.</li>
+      <li><strong>Coverage is a vanity metric alone</strong> — 100% line coverage does not mean 100% correctness. A test that calls every line but asserts nothing is worthless. Coverage is useful as a lower bound — below 60% on business logic is a red flag in interviews.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// pubspec.yaml dev_dependencies
+// test: ^1.24.0
+// flutter_test: sdk: flutter
+// bloc_test: ^9.1.0
+// mocktail: ^1.0.0
+
+// Unit test — pure Dart, no Flutter
+import &#39;package:test/test.dart&#39;;
+import &#39;package:my_app/domain/use_cases/calculate_refund.dart&#39;;
+
+void main() {
+  group(&#39;CalculateRefundUseCase&#39;, () {
+    late CalculateRefundUseCase useCase;
+
+    setUp(() {
+      useCase = CalculateRefundUseCase();
+    });
+
+    test(&#39;returns full refund when claim is within 24h&#39;, () {
+      final result = useCase.execute(
+        claimAmount: 100.0,
+        hoursSincePurchase: 12,
+      );
+      expect(result, equals(100.0));
+    });
+
+    test(&#39;returns 50% refund when claim is 24–72h&#39;, () {
+      final result = useCase.execute(
+        claimAmount: 100.0,
+        hoursSincePurchase: 48,
+      );
+      expect(result, equals(50.0));
+    });
+
+    test(&#39;returns zero refund after 72h&#39;, () {
+      final result = useCase.execute(
+        claimAmount: 100.0,
+        hoursSincePurchase: 96,
+      );
+      expect(result, equals(0.0));
+    });
+  });
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> group(&#39;CalculateRefundUseCase&#39;) — organises related tests under a named suite, shown in test output</li>
+      <li><span class="walk-num">2.</span> setUp(() { useCase = CalculateRefundUseCase(); }) — creates a fresh instance before each test, preventing state leakage between tests</li>
+      <li><span class="walk-num">3.</span> test(&#39;returns full refund when claim is within 24h&#39;) — names the exact scenario; a good test name IS the documentation</li>
+      <li><span class="walk-num">4.</span> useCase.execute(claimAmount: 100.0, hoursSincePurchase: 12) — calls the real production code with controlled inputs</li>
+      <li><span class="walk-num">5.</span> expect(result, equals(100.0)) — asserts the exact expected output; if this fails, CI blocks the merge</li>
+      <li><span class="walk-num">6.</span> Three separate test cases cover three branches of the refund logic — this is boundary value testing, a key interview concept</li>
+      <li><span class="walk-num">7.</span> No Flutter imports needed — this runs on the Dart VM in milliseconds, with no simulator overhead</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>void main() {
+  group(&#39;RefundTests&#39;, () {
+    test(&#39;full refund test&#39;, () {
+      final uc = CalculateRefundUseCase();
+      final result = uc.execute(claimAmount: 200.0, hoursSincePurchase: 6);
+      expect(result, equals(100.0));
+    });
+  });
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">The test will fail — but not because the production code is wrong. Look at the assertion value.</div></details><details><summary>Show answer</summary><div class="answer">Bug: The test asserts equals(100.0) but the input claimAmount is 200.0 and hoursSincePurchase is 6 (within 24h), so the correct full refund should be 200.0. The assertion is wrong — this is a false-failing test, which is as dangerous as no test because it erodes trust in the test suite. Fix: expect(result, equals(200.0)).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Tests are like a checklist before a flight. Unit tests check each individual part — engine, wheels, wings — one at a time, very fast. Widget tests check that the dashboard lights up correctly. Integration tests do a full taxi run. You do lots of part checks, some dashboard checks, and only a few full taxi runs — otherwise you would never take off.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Google&#39;s internal research found that code with tests is 50% less likely to have production incidents. The Flutter framework itself has over 30,000 tests — roughly 1 test per 2 lines of production code.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Audit a feature you have built: identify one piece of business logic, one UI component, and one user flow. Write down which test type applies to each and justify the cost vs confidence tradeoff.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/testing/overview" target="_blank" rel="noopener noreferrer">Flutter Testing Overview</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://pub.dev/packages/test" target="_blank" rel="noopener noreferrer">test package — Dart</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html" target="_blank" rel="noopener noreferrer">flutter_test library</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank" rel="noopener noreferrer">The Practical Test Pyramid</a> <span class="res-source">(Martin Fowler)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=31">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./30-rendering-jank-impeller-memory-optimization.html" rel="prev">← Rendering, Jank, Impeller &amp; Memory…</a>
+  <a class="nav-next" href="./32-unit-testing-dart-classes-use-cases-repositories.html" rel="next">Unit Testing Dart: Classes, Use Cases… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

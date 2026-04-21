@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room/Repository/Network Testing: Mocks vs Fakes… | Teamz Lab</title>
+<meta name="description" content="Data layer testing covers DAOs (with in-memory Room), network clients (with MockWebServer), and repositories (with fakes or mocks). In-memory Room databases…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/40-viewmodel-flow-testing-coroutine-test-utilities.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/42-compose-ui-testing-fundamentals.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Room/Repository/Network Testing: Mocks vs Fakes">
+<meta property="og:description" content="Data layer testing covers DAOs (with in-memory Room), network clients (with MockWebServer), and repositories (with fakes or mocks). In-memory Room databases…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Room/Repository/Network Testing: Mocks vs Fakes">
+<meta name="twitter:description" content="Data layer testing covers DAOs (with in-memory Room), network clients (with MockWebServer), and repositories (with fakes or mocks). In-memory Room databases…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Room/Repository/Network Testing: Mocks vs Fakes",
+  "description": "Data layer testing covers DAOs (with in-memory Room), network clients (with MockWebServer), and repositories (with fakes or mocks). In-memory Room databases…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 41
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Room/Repository/Network Testing: Mocks vs Fakes",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Room/Repository/Network Testing: Mocks vs Fakes</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 41 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Room/Repository/Network Testing: Mocks vs Fakes</h1>
+<p class="lesson-subtitle">Test your data layer with confidence — in-memory databases, MockWebServer, and fake repositories</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=41">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Testing your data layer is like testing a restaurant kitchen without real customers. MockWebServer is the fake food supplier — you control exactly what they deliver (good fish, spoiled fish, delayed delivery). An in-memory Room database is a temporary kitchen that resets after every service — same equipment, zero cleanup headaches. Fake repositories are the chef&#39;s training kitchen — looks and feels real but nothing actually leaves the building.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Data layer testing covers DAOs (with in-memory Room), network clients (with MockWebServer), and repositories (with fakes or mocks). In-memory Room databases provide a real SQLite engine with zero setup and instant reset. MockWebServer provides a real HTTP server on localhost, making Retrofit tests fully deterministic without network access. Fake repositories simulate real caching and state behavior without a database. Together these tools let you test your entire data layer — including offline-first sync, error handling, and JSON contracts — reliably and fast.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>An enterprise field operations app had an offline-first sync that was breaking intermittently in production: sometimes the app showed stale data after syncing. The bug was in the repository: it updated the in-memory cache before saving to the local database, so if the app crashed mid-sync, the cache showed new data but Room still had old data. An integration test with in-memory Room + MockWebServer caught this by crashing the repository mid-sync and verifying that the database and cache were consistent. The fix — writing to Room first, then updating the cache from the Room Flow — was verified by the test and eliminated the intermittent stale data reports.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Testing Room with in-memory database</strong> — Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build() creates a fully functional Room database backed by SQLite in memory — no files, resets on close. Use @get:Rule val instantTaskExecutorRule = InstantTaskExecutorRule() for LiveData and provide a test coroutine context. In-memory DB is faster than disk and perfectly isolates tests.</li>
+      <li><strong>DAO unit tests — the right approach</strong> — Test DAOs directly against the in-memory database: insert a record, query it, assert correctness. Test insert+query, update+query, delete+query cycles. Test Flow emissions from DAO queries: insert data, collect the Flow, assert the emission. These are technically instrumentation tests (need Context) but run fast on Robolectric.</li>
+      <li><strong>MockWebServer for Retrofit testing</strong> — OkHttp&#39;s MockWebServer lets you run a real HTTP server locally in tests. enqueue(MockResponse().setBody(jsonString)) pre-loads responses. Your Retrofit client makes real HTTP calls to localhost:PORT. Assert on the request (path, headers, body) AND the response parsing. No network needed, fully deterministic.</li>
+      <li><strong>Testing JSON parsing and API contracts</strong> — MockWebServer tests verify two things: (1) your Retrofit/Moshi/Gson correctly parses the API response JSON into your data models, and (2) your API service sends the correct request (right path, right headers, right body). This catches contract violations before they reach production.</li>
+      <li><strong>Fake vs Mock repository — when to use each</strong> — Use a Fake repository (real in-memory implementation) when: the repository has complex state that matters to the test (e.g., pagination, caching). Use a Mock repository when: you only need the repository to return a specific value and do not care about its internal state. Fakes make tests more realistic; Mocks are faster to set up.</li>
+      <li><strong>Testing offline-first sync logic</strong> — An offline-first repository fetches from the local database first, then updates from the network and saves to the local database. Test this by: (1) pre-populate the fake local DB, (2) enqueue a MockWebServer response, (3) call the repository, (4) assert the Flow emitted first from local DB, then updated with network data. This sequence tests the entire offline-first contract.</li>
+      <li><strong>Integration test patterns — @MediumTest</strong> — Integration tests that test multiple layers together (e.g., DAO + Repository) are annotated with @MediumTest (conceptual categorization). They verify the wiring between components. Keep them focused: test one integration point per test, not the entire app stack. Use Room in-memory + MockWebServer for the most realistic integration tests.</li>
+      <li><strong>Testing error scenarios at the data layer</strong> — Test: network timeout (MockWebServer sets no response, OkHttp times out), HTTP 4xx/5xx responses (MockWebServer.enqueue(MockResponse().setResponseCode(500))), malformed JSON (causes parsing exception), database constraint violations (duplicate primary key insert). Error tests at the data layer prevent cascading failures in ViewModels and use cases.</li>
+      <li><strong>Test isolation — each test is independent</strong> — Every test should start with a clean state: close and recreate the in-memory database in @BeforeEach, use a new MockWebServer instance per test (or clear enqueued responses), clear the fake repository&#39;s storage. Non-isolated tests produce order-dependent failures — the most mysterious kind of test failure.</li>
+      <li><strong>Testing Room migrations</strong> — Room migration tests verify that your database schema can migrate from version N to N+1 without losing data. Use MigrationTestHelper from androidx.room:room-testing. Create the DB at version N, insert test data, run the migration, verify the data is still present and schema is correct. Critical for apps that have been in production — a bad migration deletes user data.</li>
+      <li><strong>Verifying request content with MockWebServer</strong> — val request = server.takeRequest() gives you the RecordedRequest — check request.path, request.method, request.body.readUtf8() to verify your API client sends the correct payload. For a fintech transfer API, verify the exact JSON body including amount precision and currency code — wrong request format = rejected transaction.</li>
+      <li><strong>Using TestCoroutineDispatcher with Room and Retrofit</strong> — Room Flow emissions and Retrofit calls are async. Wrap in runTest, use advanceUntilIdle() for Room queries that return Flow, and use standard await patterns for one-shot suspend functions. Room with in-memory + coroutines works cleanly in runTest as long as the database is created with allowMainThreadQueries() for simple tests.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// In-memory Room database test (instrumentation test with Robolectric or emulator)
+@RunWith(AndroidJUnit4::class)
+class WorkOrderDaoTest {
+
+    private lateinit var db: AppDatabase
+    private lateinit var dao: WorkOrderDao
+
+    @Before
+    fun setUp() {
+        val context = ApplicationProvider.getApplicationContext&lt;Context&gt;()
+        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries()   // OK for tests only
+            .build()
+        dao = db.workOrderDao()
+    }
+
+    @After
+    fun tearDown() {
+        db.close()  // releases in-memory database, resets all state
+    }
+
+    @Test
+    fun insertAndQueryWorkOrder() = runTest {
+        val order = WorkOrder(id = &quot;w1&quot;, title = &quot;Fix Elevator&quot;, status = &quot;OPEN&quot;)
+        dao.insert(order)
+
+        val retrieved = dao.getById(&quot;w1&quot;)
+        assertThat(retrieved?.title).isEqualTo(&quot;Fix Elevator&quot;)
+        assertThat(retrieved?.status).isEqualTo(&quot;OPEN&quot;)
+    }
+
+    @Test
+    fun updateWorkOrderStatus() = runTest {
+        dao.insert(WorkOrder(id = &quot;w1&quot;, title = &quot;Fix Elevator&quot;, status = &quot;OPEN&quot;))
+        dao.updateStatus(&quot;w1&quot;, &quot;COMPLETED&quot;)
+        assertThat(dao.getById(&quot;w1&quot;)?.status).isEqualTo(&quot;COMPLETED&quot;)
+    }
+
+    @Test
+    fun workOrderFlow_emitsOnInsert() = runTest {
+        dao.getAllOrdersFlow().test {
+            assertThat(awaitItem()).isEmpty()         // initial empty state
+
+            dao.insert(WorkOrder(&quot;w1&quot;, &quot;Fix Elevator&quot;, &quot;OPEN&quot;))
+            assertThat(awaitItem()).hasSize(1)         // emits after insert
+
+            dao.insert(WorkOrder(&quot;w2&quot;, &quot;Replace HVAC&quot;, &quot;OPEN&quot;))
+            assertThat(awaitItem()).hasSize(2)         // emits after second insert
+            cancel()
+        }
+    }
+}
+
+// MockWebServer for Retrofit testing
+class WorkOrderApiTest {
+
+    private lateinit var server: MockWebServer
+    private lateinit var api: WorkOrderApi
+
+    @Before
+    fun setUp() {
+        server = MockWebServer()
+        server.start()
+        api = Retrofit.Builder()
+            .baseUrl(server.url(&quot;/&quot;))        // points to local MockWebServer
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(WorkOrderApi::class.java)
+    }
+
+    @After
+    fun tearDown() {
+        server.shutdown()
+    }
+
+    @Test
+    fun `fetchOrders parses response correctly`() = runTest {
+        val json = &quot;&quot;&quot;
+            [{&quot;id&quot;:&quot;w1&quot;,&quot;title&quot;:&quot;Fix Elevator&quot;,&quot;status&quot;:&quot;OPEN&quot;},
+             {&quot;id&quot;:&quot;w2&quot;,&quot;title&quot;:&quot;Replace HVAC&quot;,&quot;status&quot;:&quot;OPEN&quot;}]
+        &quot;&quot;&quot;.trimIndent()
+        server.enqueue(MockResponse().setBody(json).setResponseCode(200))
+
+        val orders = api.fetchOrders()
+
+        assertThat(orders).hasSize(2)
+        assertThat(orders[0].id).isEqualTo(&quot;w1&quot;)
+        assertThat(orders[1].title).isEqualTo(&quot;Replace HVAC&quot;)
+
+        // Verify the request was correct
+        val request = server.takeRequest()
+        assertThat(request.path).isEqualTo(&quot;/orders&quot;)
+        assertThat(request.method).isEqualTo(&quot;GET&quot;)
+    }
+
+    @Test
+    fun `fetchOrders throws on 500 response`() = runTest {
+        server.enqueue(MockResponse().setResponseCode(500))
+
+        assertThrows&lt;HttpException&gt; {
+            api.fetchOrders()
+        }
+    }
+
+    @Test
+    fun `createOrder sends correct request body`() = runTest {
+        server.enqueue(MockResponse().setBody(&quot;&quot;&quot;{&quot;id&quot;:&quot;w3&quot;,&quot;title&quot;:&quot;New Order&quot;,&quot;status&quot;:&quot;OPEN&quot;}&quot;&quot;&quot;))
+
+        api.createOrder(CreateOrderRequest(title = &quot;New Order&quot;, priority = &quot;HIGH&quot;))
+
+        val request = server.takeRequest()
+        assertThat(request.method).isEqualTo(&quot;POST&quot;)
+        assertThat(request.path).isEqualTo(&quot;/orders&quot;)
+        val body = request.body.readUtf8()
+        assertThat(body).contains(&quot;&quot;title&quot;:&quot;New Order&quot;&quot;)
+        assertThat(body).contains(&quot;&quot;priority&quot;:&quot;HIGH&quot;&quot;)
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Room.inMemoryDatabaseBuilder() creates a real SQLite database in RAM — all Room features (queries, transactions, Flow) work identically to a file database.</li>
+      <li><span class="walk-num">2.</span> allowMainThreadQueries() is acceptable in tests — it removes the Room restriction that prevents running queries on the main thread, simplifying test code.</li>
+      <li><span class="walk-num">3.</span> db.close() in @After is critical — it releases the in-memory SQLite engine and discards all data, ensuring the next test starts completely fresh.</li>
+      <li><span class="walk-num">4.</span> dao.getAllOrdersFlow().test { } from Turbine collects Flow emissions from the DAO — Room automatically emits a new list every time the underlying table changes.</li>
+      <li><span class="walk-num">5.</span> awaitItem() after dao.insert() works because Room&#39;s Flow support watches the table and emits on every write — Turbine suspends until that emission arrives.</li>
+      <li><span class="walk-num">6.</span> MockWebServer.start() binds to a random available port on localhost — server.url(&#39;/&#39;) returns the base URL including the port, which you pass to Retrofit.</li>
+      <li><span class="walk-num">7.</span> server.enqueue() pre-loads responses in a FIFO queue — the first HTTP request gets the first enqueued response, the second request gets the second, and so on.</li>
+      <li><span class="walk-num">8.</span> server.takeRequest() dequeues the RecordedRequest for the last HTTP call — use it after making the API call to inspect what your Retrofit client actually sent.</li>
+      <li><span class="walk-num">9.</span> assertThat(request.body.readUtf8()).contains() verifies the JSON request body — catches bugs where a field is missing or has the wrong key name.</li>
+      <li><span class="walk-num">10.</span> server.shutdown() in @After stops the local HTTP server — failing to shut down leaks server threads, causing test suites to hang or subsequent tests to fail with port conflicts.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class StudentRepositoryIntegrationTest {
+
+    private lateinit var db: AppDatabase
+    private lateinit var server: MockWebServer
+    private lateinit var repository: StudentRepository
+
+    // Bug 1
+    @Before
+    fun setUp() {
+        server = MockWebServer()
+        // server.start() missing
+
+        val api = Retrofit.Builder()
+            .baseUrl(&quot;https://api.schoolapp.com/&quot;)   // Bug 2
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(StudentApi::class.java)
+
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            AppDatabase::class.java
+        ).build()  // Bug 3 — missing allowMainThreadQueries() for test simplicity
+
+        repository = StudentRepositoryImpl(api, db.studentDao())
+    }
+
+    @After
+    fun tearDown() {
+        db.close()
+        // Bug 4 — server.shutdown() missing
+    }
+
+    @Test
+    fun `fetchStudents returns local data first then network data`() = runTest {
+        // Pre-populate local DB
+        db.studentDao().insert(Student(&quot;s1&quot;, &quot;Alice&quot;, gradeLevel = 10))
+
+        server.enqueue(
+            MockResponse()
+                .setBody(&quot;&quot;&quot;[{&quot;id&quot;:&quot;s1&quot;,&quot;name&quot;:&quot;Alice Updated&quot;,&quot;gradeLevel&quot;:10}]&quot;&quot;&quot;)
+                .setResponseCode(200)
+        )
+
+        repository.getStudents().test {
+            val localFirst = awaitItem()
+            assertThat(localFirst).hasSize(1)
+            assertThat(localFirst[0].name).isEqualTo(&quot;Alice&quot;)
+
+            // Bug 5
+            val networkUpdated = awaitItem()
+            assertThat(networkUpdated[0].name).isEqualTo(&quot;Alice Updated&quot;)
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Check the server setup, Retrofit base URL, Room query thread, server shutdown, and Turbine test block closure.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: server.start() is missing after creating the MockWebServer instance. Without server.start(), the MockWebServer is not bound to any port and is not listening for connections. When Retrofit tries to connect, it will fail with a ConnectException. Fix: add server.start() in setUp() before creating the Retrofit instance. Bug 2: The Retrofit baseUrl is hardcoded to &#39;https://api.schoolapp.com/&#39; instead of server.url(&#39;/&#39;) (which returns the MockWebServer&#39;s localhost URL). This means Retrofit makes real network calls to the production API during tests — non-deterministic, requires network access, and could accidentally modify production data if the test makes POST/PUT calls. Fix: change to .baseUrl(server.url(&#39;/&#39;)) after server.start(). Bug 3: Room.inMemoryDatabaseBuilder() without allowMainThreadQueries() means any DAO call on the main test thread will throw an IllegalStateException (&#39;Cannot access database on the main thread&#39;). Since tests typically run on the main thread, this will cause the test to crash immediately. Fix: add .allowMainThreadQueries() to the builder chain for test simplicity, or configure a TestCoroutineDispatcher for the DAO calls. Bug 4: server.shutdown() is missing from @After. This leaves the MockWebServer&#39;s background thread running after the test completes, leaking resources. In test suites with many tests, this accumulates leaked threads and can cause port conflicts or OOM. Fix: add server.shutdown() after db.close() in tearDown(). Bug 5: The Turbine test { } block is never closed — cancel() is missing at the end. For a Flow that never completes (like a Room Flow), Turbine will wait indefinitely after the last awaitItem() for more emissions, causing the test to hang until the Turbine timeout (default 1 second) triggers a test failure with a confusing &#39;No more events&#39; or timeout error. Fix: add cancel() as the last statement inside the test { } block to signal that you are done collecting.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Testing your database is like practicing cooking in a pop-up kitchen — everything works the same as the real kitchen but when you are done, everything disappears and the next chef starts fresh. MockWebServer is like a pretend food supplier you completely control — you tell them to send you fresh fish, rotten fish, or nothing at all, and you see how your recipe handles each situation.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">MockWebServer is part of OkHttp and was originally built by Square for testing their own Square Point-of-Sale and Cash App payment infrastructure. It has since become the standard for Retrofit testing across the Android ecosystem. The library processes real HTTP/1.1 and HTTP/2 traffic — meaning your tests catch real networking bugs like incorrect Content-Type headers, missing authentication tokens, and malformed JSON that only surface in actual HTTP calls.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete integration test for an offline-first SchoolRepository that: (a) fetches student records from a local Room database first, (b) then fetches from a REST API via Retrofit, (c) saves the network response to Room, and (d) emits both the local-first and network-updated data via a Flow. Use in-memory Room, MockWebServer, and Turbine. Test the happy path AND the scenario where the network call fails (local data should still be served).</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/training/data-storage/room/testing-db" target="_blank" rel="noopener noreferrer">Test your Room database (Android)</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://github.com/square/okhttp/tree/master/mockwebserver" target="_blank" rel="noopener noreferrer">MockWebServer — OkHttp</a> <span class="res-source">(Square)</span></li>
+      <li><a href="https://developer.android.com/training/data-storage/room/migrating-db-versions#test" target="_blank" rel="noopener noreferrer">Room Migration Testing</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://github.com/cashapp/turbine" target="_blank" rel="noopener noreferrer">Turbine Flow Testing</a> <span class="res-source">(Cash App)</span></li>
+      <li><a href="https://developer.android.com/training/testing/integration-testing" target="_blank" rel="noopener noreferrer">Android Integration Testing Guide</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=41">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./40-viewmodel-flow-testing-coroutine-test-utilities.html" rel="prev">← ViewModel &amp; Flow Testing: Coroutine…</a>
+  <a class="nav-next" href="./42-compose-ui-testing-fundamentals.html" rel="next">Compose UI Testing Fundamentals →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>More Recursion Adventures — CP Zero to Hero | Teamz Lab</title>
+<meta name="description" content="This lesson explores more recursion patterns: Fibonacci sequences, power calculations, and the famous Tower of Hanoi puzzle. You&#39;ll see when recursion is…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/33-more-recursion-adventures.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/32-recursion-the-magic-of-self-calling-functions.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/34-stack-the-pancake-pile.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="More Recursion Adventures">
+<meta property="og:description" content="This lesson explores more recursion patterns: Fibonacci sequences, power calculations, and the famous Tower of Hanoi puzzle. You&#39;ll see when recursion is…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/cp-kids/33-more-recursion-adventures.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="More Recursion Adventures">
+<meta name="twitter:description" content="This lesson explores more recursion patterns: Fibonacci sequences, power calculations, and the famous Tower of Hanoi puzzle. You&#39;ll see when recursion is…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "More Recursion Adventures",
+  "description": "This lesson explores more recursion patterns: Fibonacci sequences, power calculations, and the famous Tower of Hanoi puzzle. You'll see when recursion is…",
+  "url": "https://learn.teamzlab.com/lessons/cp-kids/33-more-recursion-adventures.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Competitive Programming: Zero to Hero",
+    "url": "https://learn.teamzlab.com/c/cp-kids.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 33
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "CP Zero to Hero",
+      "item": "https://learn.teamzlab.com/c/cp-kids.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "More Recursion Adventures",
+      "item": "https://learn.teamzlab.com/lessons/cp-kids/33-more-recursion-adventures.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/cp-kids.html">CP Zero to Hero</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/cp-kids.html">CP Zero to Hero</a> / <span aria-current="page">More Recursion Adventures</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 33 of 50</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">More Recursion Adventures</h1>
+<p class="lesson-subtitle">Fibonacci, powers, and the famous Tower of Hanoi!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">More recursion is like a mirror facing another mirror — you see infinite reflections stretching into the distance. Each reflection is a copy of the original, just a little smaller. But unlike real mirrors, in programming we CHOOSE when to stop looking deeper. That&#39;s the beauty of recursion with a base case!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>This lesson explores more recursion patterns: Fibonacci sequences, power calculations, and the famous Tower of Hanoi puzzle. You&#39;ll see when recursion is elegant and clean, when it can be slow, and learn the first hints of how to make it faster. These patterns appear everywhere in competitive programming!</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Fibonacci numbers appear in nature — the spiral of sunflower seeds, the branching of trees, and the shell of a nautilus all follow Fibonacci patterns. The Tower of Hanoi was invented in 1883 and is used to teach recursion worldwide. Fast power calculation is used in cryptography to keep your online passwords safe!</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Fibonacci with Recursion</strong> — The Fibonacci sequence is: 0, 1, 1, 2, 3, 5, 8, 13, 21... Each number is the sum of the two before it. With recursion: fib(n) = fib(n-1) + fib(n-2). Base cases: fib(0) = 0 and fib(1) = 1. It&#39;s beautiful but can be slow for big numbers!</li>
+      <li><strong>Why Recursive Fibonacci is Slow</strong> — Recursive Fibonacci recalculates the same values many times. fib(5) calls fib(4) and fib(3). But fib(4) also calls fib(3). So fib(3) is calculated TWICE! For fib(40), millions of repeated calculations happen. This is why we sometimes need smarter approaches.</li>
+      <li><strong>Power with Recursion</strong> — To calculate base^exp: power(2, 5) = 2 × power(2, 4) = 2 × 2 × power(2, 3)... Base case: power(base, 0) = 1 (anything to the power 0 is 1). This is clean and elegant — each call reduces the exponent by 1.</li>
+      <li><strong>Fast Power (Divide and Conquer)</strong> — There&#39;s a faster way! If exp is even: power(base, exp) = power(base, exp/2) × power(base, exp/2). If exp is odd: base × power(base, exp-1). This cuts the work in half each time! power(2, 8) only needs 4 calls instead of 8.</li>
+      <li><strong>Tower of Hanoi</strong> — A classic puzzle: Move n disks from peg A to peg C, using peg B as helper. Rules: only move one disk at a time, never put a bigger disk on a smaller one. The recursive solution: move n-1 disks to helper, move the biggest disk to target, then move n-1 disks from helper to target.</li>
+      <li><strong>Counting with Recursion</strong> — You can count things recursively too. How many digits does a number have? countDigits(n) = 1 + countDigits(n/10). Base case: if n &lt; 10, it has 1 digit. countDigits(1234) = 1 + countDigits(123) = 1 + 1 + countDigits(12) = 1 + 1 + 1 + countDigits(1) = 4.</li>
+      <li><strong>Printing Patterns with Recursion</strong> — Recursion can print cool patterns. Print numbers 1 to n: first call printUp(n-1) to print 1 to n-1, then print n. Print numbers n to 1: first print n, then call printDown(n-1). The order of the recursive call and the print statement matters!</li>
+      <li><strong>When to Use Recursion vs Loops</strong> — Use recursion when the problem naturally breaks into smaller versions of itself (trees, divide and conquer, backtracking). Use loops when you&#39;re just counting or iterating through a list. In competitive programming, recursion is essential for many advanced algorithms.</li>
+      <li><strong>Memoization Preview</strong> — The fix for slow recursive Fibonacci is called &#39;memoization&#39; — saving results so you don&#39;t recalculate them. Store fib(n) in an array the first time you calculate it. Next time you need it, just look it up! This turns slow recursion into fast recursion. You&#39;ll master this in dynamic programming!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// Fibonacci (simple recursive)
+int fib(int n) {
+    if (n &lt;= 0) return 0;  // Base case 1
+    if (n == 1) return 1;  // Base case 2
+    return fib(n - 1) + fib(n - 2);  // Two recursive calls!
+}
+
+// Fast power using recursion
+long long fastPow(long long base, int exp) {
+    if (exp == 0) return 1;  // Base case
+    if (exp % 2 == 0) {
+        long long half = fastPow(base, exp / 2);
+        return half * half;  // Even: square the half
+    }
+    return base * fastPow(base, exp - 1);  // Odd: reduce by 1
+}
+
+// Tower of Hanoi
+void hanoi(int n, char from, char to, char helper) {
+    if (n == 0) return;  // Base case: no disks to move
+    hanoi(n - 1, from, helper, to);  // Move n-1 to helper
+    cout &lt;&lt; &quot;Move disk &quot; &lt;&lt; n &lt;&lt; &quot; from &quot; &lt;&lt; from &lt;&lt; &quot; to &quot; &lt;&lt; to &lt;&lt; &quot;\n&quot;;
+    hanoi(n - 1, helper, to, from);  // Move n-1 from helper to target
+}
+
+int main() {
+    // Fibonacci
+    cout &lt;&lt; &quot;Fibonacci sequence: &quot;;
+    for (int i = 0; i &lt; 10; i++) cout &lt;&lt; fib(i) &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; &quot;\n&quot;;  // 0 1 1 2 3 5 8 13 21 34
+    
+    // Fast power
+    cout &lt;&lt; &quot;2^10 = &quot; &lt;&lt; fastPow(2, 10) &lt;&lt; &quot;\n&quot;;  // 1024
+    
+    // Tower of Hanoi with 3 disks
+    cout &lt;&lt; &quot;Tower of Hanoi (3 disks):\n&quot;;
+    hanoi(3, &#39;A&#39;, &#39;C&#39;, &#39;B&#39;);
+    return 0;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> #include  and using namespace std; — our standard setup for competitive programming.</li>
+      <li><span class="walk-num">2.</span> int fib(int n) — the Fibonacci function takes a number n and returns the nth Fibonacci number.</li>
+      <li><span class="walk-num">3.</span> if (n &lt;= 0) return 0; if (n == 1) return 1; — TWO base cases! Fibonacci needs two because each call depends on TWO previous values. fib(0)=0 and fib(1)=1 are the starting points.</li>
+      <li><span class="walk-num">4.</span> return fib(n-1) + fib(n-2); — the recursive case calls fib TWICE: once for n-1 and once for n-2. This is what makes it slow for large n — it branches into two calls each time!</li>
+      <li><span class="walk-num">5.</span> long long fastPow(long long base, int exp) — fast power uses long long because powers can get very large very quickly.</li>
+      <li><span class="walk-num">6.</span> if (exp == 0) return 1; — base case: anything to the power 0 is 1.</li>
+      <li><span class="walk-num">7.</span> if (exp % 2 == 0) — if the exponent is even, we can be clever: calculate the half-power once and square it. This is much faster than multiplying one at a time!</li>
+      <li><span class="walk-num">8.</span> long long half = fastPow(base, exp/2); return half * half; — we only make ONE recursive call and then square the result. This halves the work each time!</li>
+      <li><span class="walk-num">9.</span> void hanoi(int n, char from, char to, char helper) — the Tower of Hanoi function takes: how many disks, which peg they&#39;re on, which peg to move to, and which peg to use as a helper.</li>
+      <li><span class="walk-num">10.</span> The hanoi function: move n-1 disks to helper, move the biggest disk to target, then move n-1 disks from helper to target. It&#39;s beautifully simple once you trust the recursion!</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int fib(int n) {
+    if (n == 1) return 1;
+    return fib(n - 1) + fib(n - 2);
+}
+
+int main() {
+    cout &lt;&lt; fib(6) &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Fibonacci needs TWO base cases. What happens when the recursion reaches fib(0)?</div></details><details><summary>Show answer</summary><div class="answer">The bug is a missing base case! The function only has a base case for n==1, but Fibonacci calls fib(n-2), which eventually reaches fib(0). With no base case for 0, fib(0) calls fib(-1) and fib(-2), leading to infinite recursion and a crash. The fix is to add &#39;if (n &lt;= 0) return 0;&#39; before the n==1 check. Fibonacci needs TWO base cases: fib(0)=0 and fib(1)=1.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a pile of different-sized plates and three tables. You need to move all plates from Table A to Table C, but you can only move one plate at a time, and you can NEVER put a bigger plate on top of a smaller plate. The trick is: first move all the small plates out of the way to Table B, then move the biggest plate to Table C, then move the small plates from Table B to Table C. And to move the small plates? You do the same trick again! That&#39;s recursion — the same trick, over and over, with smaller groups.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Tower of Hanoi legend says monks in a temple are moving 64 golden disks between 3 diamond pegs. When they finish, the world will end! At 1 move per second, it would take about 585 BILLION years — roughly 42 times the age of the universe. So we&#39;re safe! The minimum moves needed for n disks is 2^n - 1.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a recursive function countDigits(n) that returns how many digits a positive number has. For example, countDigits(1234) should return 4, and countDigits(7) should return 1. Hint: the base case is when n &lt; 10 (single digit), and the recursive case divides n by 10. Then use it to find how many digits are in 1000000 (one million)!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=zg-ddPbzcKM" target="_blank" rel="noopener noreferrer">Fibonacci Sequence Explained</a> <span class="res-source">(Numberphile)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/c-program-for-tower-of-hanoi/" target="_blank" rel="noopener noreferrer">Tower of Hanoi — Step by Step</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://cses.fi/problemset/" target="_blank" rel="noopener noreferrer">Recursion Problems on CSES</a> <span class="res-source">(CSES Problem Set)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./32-recursion-the-magic-of-self-calling-functions.html" rel="prev">← Recursion — The Magic of Self-Calling…</a>
+  <a class="nav-next" href="./34-stack-the-pancake-pile.html" rel="next">Stack — The Pancake Pile →</a>
+</nav>
+
+<a class="back-to-course" href="/c/cp-kids.html">← Back to course: CP Zero to Hero</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

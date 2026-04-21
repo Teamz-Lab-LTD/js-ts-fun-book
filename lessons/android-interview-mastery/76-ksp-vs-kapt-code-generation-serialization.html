@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSP vs KAPT, Code Generation &amp; Serialization — Android… | Teamz Lab</title>
+<meta name="description" content="This lesson covers the annotation processing and serialization landscape in modern Android development. KAPT processes Kotlin via Java stubs (slow), while…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/75-advanced-coroutines-callbackflow-channelflow-custom.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/77-r8-proguard-release-optimization.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="KSP vs KAPT, Code Generation &amp; Serialization">
+<meta property="og:description" content="This lesson covers the annotation processing and serialization landscape in modern Android development. KAPT processes Kotlin via Java stubs (slow), while…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KSP vs KAPT, Code Generation &amp; Serialization">
+<meta name="twitter:description" content="This lesson covers the annotation processing and serialization landscape in modern Android development. KAPT processes Kotlin via Java stubs (slow), while…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "KSP vs KAPT, Code Generation & Serialization",
+  "description": "This lesson covers the annotation processing and serialization landscape in modern Android development. KAPT processes Kotlin via Java stubs (slow), while…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 76
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "KSP vs KAPT, Code Generation & Serialization",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">KSP vs KAPT, Code Generation &amp; Serialization</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 76 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">KSP vs KAPT, Code Generation &amp; Serialization</h1>
+<p class="lesson-subtitle">Understand annotation processing, build performance, and serialization strategies in modern Android</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=76">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">KAPT is like translating a Kotlin book to Japanese by first translating it to English (Java stubs), then to Japanese — slow and lossy. KSP is like having a translator who reads Kotlin directly — 2x faster and understands all the nuances. kotlinx.serialization is like having the author write the translation guide into the original book at print time (compile-time), while Gson is like hiring a translator who reads the book at runtime using a magnifying glass (reflection) — functional but slower and fragile.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>This lesson covers the annotation processing and serialization landscape in modern Android development. KAPT processes Kotlin via Java stubs (slow), while KSP processes Kotlin symbols directly (2x faster). For serialization, Gson uses runtime reflection, Moshi offers Kotlin-aware codegen, and kotlinx.serialization uses a compiler plugin for zero-reflection, compile-time serialization. Understanding these tools and their tradeoffs is essential for build performance, runtime performance, and architecture decisions.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every production Android app uses annotation processing (Room, Hilt, Moshi/serialization) and JSON serialization (API responses). Companies like Uber and Airbnb reported 20-30% build time improvements migrating from KAPT to KSP across hundreds of modules. Square created Moshi specifically because Gson&#39;s lack of Kotlin null-safety caused production crashes. Netflix uses kotlinx.serialization in their Kotlin Multiplatform SDK that powers Android, iOS, and TV apps with shared serialization logic.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>KAPT Mechanics</strong> — KAPT (Kotlin Annotation Processing Tool) works by generating Java stubs from Kotlin code, then running standard Java annotation processors (javax.annotation.processing) against those stubs. This stub generation is expensive — it requires a full Kotlin compilation pass before annotation processing even begins. KAPT processes Java&#39;s Element API and cannot access Kotlin-specific features like inline classes, sealed hierarchies, or default parameter values directly.</li>
+      <li><strong>KSP Architecture</strong> — KSP (Kotlin Symbol Processing) operates directly on Kotlin&#39;s compiler symbols without generating Java stubs. It provides a Kotlin-native API (KSNode, KSClassDeclaration, KSFunctionDeclaration) that understands all Kotlin features: suspend functions, value classes, sealed interfaces, type aliases, and multiplatform expect/actual. KSP runs as a compiler plugin, making it fundamentally faster than KAPT.</li>
+      <li><strong>KSP vs KAPT Performance</strong> — KSP is typically 2x faster than KAPT because it eliminates the stub generation phase. In benchmarks: a project with Room + Hilt + Moshi saw build times drop from 45s to 28s after migrating to KSP. KSP also supports incremental processing out of the box, whereas KAPT&#39;s incremental support is limited and often disabled. Memory usage is also lower since no Java stubs are generated.</li>
+      <li><strong>Migration from KAPT to KSP</strong> — Migration steps: (1) Replace `id &#39;kotlin-kapt&#39;` with `id &#39;com.google.devtools.ksp&#39;` in plugins block. (2) Change `kapt &#39;lib:compiler&#39;` to `ksp &#39;lib:compiler&#39;` in dependencies. (3) Replace `@JvmStatic` workarounds needed for KAPT. Not all libraries support KSP yet — check each library. Room, Hilt (via dagger-hilt-compiler), Moshi, and Glide all support KSP. You can run KAPT and KSP side-by-side during migration.</li>
+      <li><strong>kotlinx.serialization</strong> — kotlinx.serialization is a Kotlin-first serialization framework using a compiler plugin (not annotation processing). Annotate classes with `@Serializable` and the compiler generates serializers at compile time — no reflection. Supports JSON (kotlinx.serialization.json), Protobuf, CBOR, Properties. Handles Kotlin features natively: default values, nullable types, sealed classes, inline classes. Use `Json.encodeToString()` and `Json.decodeFromString()`.</li>
+      <li><strong>Gson vs Moshi vs kotlinx.serialization</strong> — Gson: Java-based, uses reflection, no Kotlin null-safety (can create objects with null non-nullable fields), largest community. Moshi: Kotlin-aware with codegen option (KSP), respects nullability, supports adapters. kotlinx.serialization: compile-time, no reflection, smallest APK impact, handles all Kotlin types, multiplatform. For new projects, kotlinx.serialization is recommended. For existing Gson projects, Moshi is the easiest migration path.</li>
+      <li><strong>Custom KSP Processor Basics</strong> — Create a KSP processor by implementing SymbolProcessorProvider and SymbolProcessor. Override `process(resolver: Resolver)` to find annotated symbols via `resolver.getSymbolsWithAnnotation()`. Generate code using `CodeGenerator.createNewFile()` with Dependencies for incremental processing. Return unprocessed symbols (deferred) from process() for multi-round processing. Package as a separate module with META-INF/services registration.</li>
+      <li><strong>kotlinx.serialization Advanced Features</strong> — Custom serializers: implement KSerializer with descriptor, serialize(), and deserialize(). `@Contextual` enables runtime serializer registration via SerializersModule. `@SerialName` customizes JSON key names. `Json { ignoreUnknownKeys = true; coerceInputValues = true; encodeDefaults = false }` configures parsing behavior. Polymorphic serialization handles sealed hierarchies with `classDiscriminator`.</li>
+      <li><strong>Room, Hilt, Moshi with KSP</strong> — Room KSP: use `ksp &#39;androidx.room:room-compiler:version&#39;` — generates DAO implementations and schema validation. Hilt KSP: use `ksp &#39;com.google.dagger:hilt-compiler:version&#39;` — generates dependency injection code. Moshi KSP: use `ksp &#39;com.squareup.moshi:moshi-kotlin-codegen:version&#39;` — generates JsonAdapter factories. All three see significant build time improvements with KSP over KAPT.</li>
+      <li><strong>Build Configuration &amp; Debugging</strong> — Configure KSP arguments via `ksp { arg(&#39;key&#39;, &#39;value&#39;) }` in build.gradle. Room&#39;s schema export: `arg(&#39;room.schemaLocation&#39;, &#39;$projectDir/schemas&#39;)`. View generated code in `build/generated/ksp/`. For KAPT, generated code is in `build/generated/source/kapt/`. Use `./gradlew kspDebugKotlin --info` for detailed processing logs. Enable KSP&#39;s incremental processing with `ksp.incremental=true` in gradle.properties.</li>
+      <li><strong>Serialization Performance Comparison</strong> — Benchmarks on a typical Android data class: kotlinx.serialization JSON is 2-3x faster than Gson for both serialization and deserialization. Moshi with codegen is comparable to kotlinx.serialization. Gson with reflection is the slowest. For large lists (1000+ items), the difference is dramatic. kotlinx.serialization also has the smallest APK impact since no reflection library is bundled. Protobuf format is 3-5x faster than JSON for all libraries.</li>
+      <li><strong>Multiplatform Serialization</strong> — kotlinx.serialization is the only option that works across Kotlin Multiplatform (Android, iOS, JS, Desktop, Server). The same @Serializable data classes and Json configuration work on all platforms. This is a major advantage for KMP projects. Gson and Moshi are JVM-only. When planning a KMP migration, standardizing on kotlinx.serialization early avoids a painful serialization layer rewrite later.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === kotlinx.serialization Setup &amp; Usage ===
+// build.gradle.kts
+// plugins { kotlin(&quot;plugin.serialization&quot;) version &quot;1.9.22&quot; }
+// dependencies { implementation(&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3&quot;) }
+
+@Serializable
+data class ApiResponse&lt;T : @Serializable Any&gt;(
+    @SerialName(&quot;status_code&quot;)
+    val statusCode: Int,
+    val message: String,
+    val data: T,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+@Serializable
+data class User(
+    val id: Long,
+    val name: String,
+    val email: String,
+    @SerialName(&quot;avatar_url&quot;)
+    val avatarUrl: String? = null,
+    val role: UserRole = UserRole.MEMBER
+)
+
+@Serializable
+enum class UserRole {
+    @SerialName(&quot;admin&quot;) ADMIN,
+    @SerialName(&quot;member&quot;) MEMBER,
+    @SerialName(&quot;guest&quot;) GUEST
+}
+
+// Configured Json instance (reuse this!)
+val appJson = Json {
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+    encodeDefaults = false
+    prettyPrint = false
+    isLenient = false
+    explicitNulls = false
+}
+
+// Usage
+fun parseUser(jsonString: String): User {
+    return appJson.decodeFromString&lt;User&gt;(jsonString)
+}
+
+fun serializeUser(user: User): String {
+    return appJson.encodeToString(user)
+}
+
+// === Sealed Class Polymorphic Serialization ===
+@Serializable
+sealed interface NetworkResult&lt;out T&gt; {
+    @Serializable
+    @SerialName(&quot;success&quot;)
+    data class Success&lt;T : @Serializable Any&gt;(
+        val data: T
+    ) : NetworkResult&lt;T&gt;
+
+    @Serializable
+    @SerialName(&quot;error&quot;)
+    data class Error(
+        val code: Int,
+        val message: String
+    ) : NetworkResult&lt;Nothing&gt;
+}
+
+// === Custom Serializer ===
+object InstantSerializer : KSerializer&lt;Instant&gt; {
+    override val descriptor = PrimitiveSerialDescriptor(
+        &quot;Instant&quot;,
+        PrimitiveKind.LONG
+    )
+
+    override fun serialize(
+        encoder: Encoder,
+        value: Instant
+    ) {
+        encoder.encodeLong(value.toEpochMilliseconds())
+    }
+
+    override fun deserialize(decoder: Decoder): Instant {
+        return Instant.fromEpochMilliseconds(
+            decoder.decodeLong()
+        )
+    }
+}
+
+@Serializable
+data class Event(
+    val name: String,
+    @Serializable(with = InstantSerializer::class)
+    val createdAt: Instant
+)
+
+// === Retrofit + kotlinx.serialization ===
+val retrofit = Retrofit.Builder()
+    .baseUrl(&quot;https://api.example.com/&quot;)
+    .addConverterFactory(
+        appJson.asConverterFactory(
+            &quot;application/json&quot;.toMediaType()
+        )
+    )
+    .build()
+
+// === KSP Processor Example ===
+// In a separate :processor module
+class AutoFactoryProcessorProvider : SymbolProcessorProvider {
+    override fun create(
+        environment: SymbolProcessorEnvironment
+    ): SymbolProcessor = AutoFactoryProcessor(environment)
+}
+
+class AutoFactoryProcessor(
+    private val environment: SymbolProcessorEnvironment
+) : SymbolProcessor {
+
+    override fun process(
+        resolver: Resolver
+    ): List&lt;KSAnnotated&gt; {
+        val symbols = resolver.getSymbolsWithAnnotation(
+            &quot;com.example.AutoFactory&quot;
+        )
+
+        val unprocessed = mutableListOf&lt;KSAnnotated&gt;()
+
+        symbols.forEach { symbol -&gt;
+            if (symbol !is KSClassDeclaration) {
+                environment.logger.error(
+                    &quot;@AutoFactory must target a class&quot;,
+                    symbol
+                )
+                return@forEach
+            }
+
+            if (!symbol.validate()) {
+                unprocessed.add(symbol)
+                return@forEach
+            }
+
+            generateFactory(symbol)
+        }
+
+        return unprocessed
+    }
+
+    private fun generateFactory(
+        classDecl: KSClassDeclaration
+    ) {
+        val packageName = classDecl.packageName.asString()
+        val className = classDecl.simpleName.asString()
+        val factoryName = &quot;${className}Factory&quot;
+
+        val file = environment.codeGenerator.createNewFile(
+            dependencies = Dependencies(
+                aggregating = false,
+                classDecl.containingFile!!
+            ),
+            packageName = packageName,
+            fileName = factoryName
+        )
+
+        val constructor = classDecl
+            .primaryConstructor
+            ?: return
+
+        val params = constructor.parameters.joinToString(
+            separator = &quot;,
+    &quot;
+        ) { param -&gt;
+            val name = param.name?.asString() ?: return
+            val type = param.type.resolve()
+                .declaration.qualifiedName?.asString()
+            &quot;$name: $type&quot;
+        }
+
+        file.writer().use { writer -&gt;
+            writer.write(
+                &quot;&quot;&quot;
+                |package $packageName
+                |
+                |object $factoryName {
+                |    fun create(
+                |        $params
+                |    ): $className = $className(
+                |        ${constructor.parameters.joinToString {
+                    it.name?.asString() ?: &quot;&quot;
+                }}
+                |    )
+                |}
+                &quot;&quot;&quot;.trimMargin()
+            )
+        }
+    }
+}
+
+// === build.gradle.kts Migration Example ===
+// BEFORE (KAPT):
+// plugins { id(&quot;kotlin-kapt&quot;) }
+// dependencies {
+//     kapt(&quot;androidx.room:room-compiler:2.6.1&quot;)
+//     kapt(&quot;com.google.dagger:hilt-compiler:2.50&quot;)
+//     kapt(&quot;com.squareup.moshi:moshi-kotlin-codegen:1.15.0&quot;)
+// }
+
+// AFTER (KSP):
+// plugins { id(&quot;com.google.devtools.ksp&quot;) version &quot;1.9.22-1.0.17&quot; }
+// dependencies {
+//     ksp(&quot;androidx.room:room-compiler:2.6.1&quot;)
+//     ksp(&quot;com.google.dagger:hilt-compiler:2.50&quot;)
+//     ksp(&quot;com.squareup.moshi:moshi-kotlin-codegen:1.15.0&quot;)
+// }
+// Note: KSP version must match Kotlin version!
+
+// === Room KSP Configuration ===
+// ksp {
+//     arg(&quot;room.schemaLocation&quot;, &quot;$projectDir/schemas&quot;)
+//     arg(&quot;room.incremental&quot;, &quot;true&quot;)
+//     arg(&quot;room.generateKotlin&quot;, &quot;true&quot;)
+// }</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The @Serializable annotation triggers the kotlinx.serialization compiler plugin to generate a serializer for each class at compile time.</li>
+      <li><span class="walk-num">2.</span> @SerialName(&#39;status_code&#39;) maps the Kotlin property statusCode to the JSON key &#39;status_code&#39; — no runtime reflection needed.</li>
+      <li><span class="walk-num">3.</span> Default values (avatarUrl = null, role = MEMBER) are handled natively — Gson would ignore these and set null/first-enum.</li>
+      <li><span class="walk-num">4.</span> The appJson instance configures parsing behavior. ignoreUnknownKeys prevents crashes when the API adds new fields.</li>
+      <li><span class="walk-num">5.</span> explicitNulls = false omits null fields from serialized output, reducing payload size.</li>
+      <li><span class="walk-num">6.</span> Sealed interface NetworkResult with @SerialName on subtypes enables type-safe polymorphic JSON parsing with a discriminator.</li>
+      <li><span class="walk-num">7.</span> InstantSerializer demonstrates custom serialization — implementing KSerializer with descriptor, serialize, and deserialize.</li>
+      <li><span class="walk-num">8.</span> The KSP processor&#39;s SymbolProcessorProvider is the entry point, registered via META-INF/services.</li>
+      <li><span class="walk-num">9.</span> resolver.getSymbolsWithAnnotation() finds all @AutoFactory-annotated classes. validate() checks if the symbol is fully resolved.</li>
+      <li><span class="walk-num">10.</span> CodeGenerator.createNewFile with Dependencies enables incremental processing — KSP only re-processes changed files.</li>
+      <li><span class="walk-num">11.</span> The KAPT-to-KSP migration is a dependency-level change: swap &#39;kapt&#39; for &#39;ksp&#39; and update the plugin. Library APIs remain identical.</li>
+      <li><span class="walk-num">12.</span> Room KSP args like room.generateKotlin = true enable Kotlin code generation instead of Java, improving null-safety and readability.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Gson deserialization
+data class UserProfile(
+    val id: Long,
+    val name: String,
+    val email: String,
+    val bio: String = &quot;No bio provided&quot;
+)
+
+val json = &quot;&quot;&quot;{&quot;id&quot;: 1, &quot;name&quot;: &quot;Alice&quot;, &quot;email&quot;: null}&quot;&quot;&quot;
+val user = Gson().fromJson(json, UserProfile::class.java)
+println(user.email) // What happens here?
+println(user.bio)   // And here?</code></pre><details><summary>Need a hint?</summary><div class="hint">Gson uses reflection to create objects, bypassing Kotlin&#39;s constructor. What happens to non-nullable fields and default values?</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: user.email is null at runtime even though it&#39;s declared as non-nullable String. Gson uses Unsafe allocation (bypassing the constructor) and sets null directly via reflection. This will throw a NullPointerException when email is used in Kotlin code expecting non-null. Bug 2: user.bio is null, NOT &#39;No bio provided&#39; — Gson bypasses the Kotlin constructor so default parameter values are never applied. Fix: Use kotlinx.serialization (@Serializable) or Moshi with codegen, both of which respect Kotlin null-safety and default values.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you write a letter in Korean. KAPT is like a translator who first converts it to English, then reads the English to understand what you wrote — it takes twice as long and some Korean jokes get lost in translation. KSP is a translator who reads Korean directly — much faster and they get all the jokes! For serialization: Gson is like taking apart a LEGO set by looking at the finished model (slow, might miss pieces). kotlinx.serialization is like having the instruction booklet built right into the box — it knows exactly how to build and take apart the set because the instructions were printed at the factory.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The KSP project was born from frustration inside Google&#39;s own Android team. They were building Kotlin-first libraries (Room, Hilt) but had to maintain Java annotation processors that couldn&#39;t understand Kotlin features. When Room encountered a Kotlin data class with default parameter values, it simply couldn&#39;t see them through KAPT&#39;s Java stubs. KSP was initially an internal project before being open-sourced. The version numbering (e.g., 1.9.22-1.0.17) ties the KSP version to the exact Kotlin compiler version because KSP hooks directly into the compiler — a version mismatch crashes the build instantly.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete serialization benchmark and migration project: (1) Create identical data models (User, Post, Comment with nested objects and lists) with Gson annotations, Moshi annotations, and @Serializable, (2) Write a benchmark that measures serialization and deserialization times for 1000 objects with each library, (3) Create a custom KSP processor that generates a `toMap()` extension function for any class annotated with @Mappable — the processor should read all properties and generate a Map builder, (4) Demonstrate a Gson null-safety bug where a non-nullable Kotlin field receives null from JSON, and show how both Moshi and kotlinx.serialization handle it correctly, (5) Configure Room with KSP including schema export, and measure the build time difference between KAPT and KSP configurations.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://kotlinlang.org/docs/ksp-overview.html" target="_blank" rel="noopener noreferrer">KSP Official Documentation</a> <span class="res-source">(Kotlin Documentation)</span></li>
+      <li><a href="https://kotlinlang.org/docs/serialization.html" target="_blank" rel="noopener noreferrer">kotlinx.serialization Guide</a> <span class="res-source">(Kotlin Documentation)</span></li>
+      <li><a href="https://developer.android.com/build/migrate-to-ksp" target="_blank" rel="noopener noreferrer">Migrating from KAPT to KSP</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=bv-VyGM3HCY" target="_blank" rel="noopener noreferrer">KSP: Kotlin Symbol Processing</a> <span class="res-source">(Android Developers YouTube)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=76">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./75-advanced-coroutines-callbackflow-channelflow-custom.html" rel="prev">← Advanced Coroutines: callbackFlow…</a>
+  <a class="nav-next" href="./77-r8-proguard-release-optimization.html" rel="next">R8, ProGuard &amp; Release Optimization →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8086 Addressing Modes — Microprocessor A–Z | Teamz Lab</title>
+<meta name="description" content="Addressing modes define how the 8086 locates operands. The eight modes range from immediate (data in the instruction) and register (data in a register) to…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/17-8086-addressing-modes.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/16-reset-hold-hlda-and-basic-control-signals.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/18-data-sizes-endianness-and-alignment.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="8086 Addressing Modes">
+<meta property="og:description" content="Addressing modes define how the 8086 locates operands. The eight modes range from immediate (data in the instruction) and register (data in a register) to…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/17-8086-addressing-modes.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="8086 Addressing Modes">
+<meta name="twitter:description" content="Addressing modes define how the 8086 locates operands. The eight modes range from immediate (data in the instruction) and register (data in a register) to…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "8086 Addressing Modes",
+  "description": "Addressing modes define how the 8086 locates operands. The eight modes range from immediate (data in the instruction) and register (data in a register) to…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/17-8086-addressing-modes.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 17
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "8086 Addressing Modes",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/17-8086-addressing-modes.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">8086 Addressing Modes</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 17 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">8086 Addressing Modes</h1>
+<p class="lesson-subtitle">Eight ways the 8086 finds its operands — from immediate values to complex memory calculations</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=17">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Addressing modes are like different ways to find a book. Immediate mode: someone hands you the book directly. Register mode: you already have it on your desk. Direct mode: you are given the exact shelf number. Register indirect: you have a card that says which shelf to check. Based-indexed: you combine a section number plus a shelf offset to find it — the more complex the address, the more flexible your search.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Addressing modes define how the 8086 locates operands. The eight modes range from immediate (data in the instruction) and register (data in a register) to complex based-indexed with displacement (base register + index register + constant). Each mode computes an effective address (EA) that is combined with a segment register to form the 20-bit physical address.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Compilers choose addressing modes based on the data structure being accessed. A global variable uses direct addressing. A local variable on the stack uses BP-based addressing. Array traversal uses indexed addressing. A field in an array of structures uses based-indexed with displacement. Understanding these modes helps you read disassembled code and optimize assembly routines.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Immediate Addressing</strong> — The operand is a constant value embedded directly in the instruction. Fast because no memory access is needed to get the operand — the data is part of the instruction itself. Used for loading constants, initializing counters, and setting bit masks.</li>
+      <li><strong>Register Addressing</strong> — Both operands are in CPU registers. The fastest mode because no memory access is needed — the ALU works directly with register contents. Registers are AX, BX, CX, DX (16-bit) or AH, AL, BH, BL, CH, CL, DH, DL (8-bit).</li>
+      <li><strong>Direct Addressing</strong> — The instruction contains the exact memory offset address. The physical address is computed as DS × 10h + offset. Used when you know the fixed location of a variable at assembly time, like global variables or lookup tables.</li>
+      <li><strong>Register Indirect Addressing</strong> — The offset address is held in a register (BX, SI, or DI). The register acts as a pointer. Useful for traversing arrays and data structures where the address changes at runtime. Default segment is DS (or SS if BP is used).</li>
+      <li><strong>Based Addressing</strong> — The effective address is computed as base register (BX or BP) plus a displacement constant. BX-based uses DS as default segment; BP-based uses SS. Ideal for accessing fields within structures or stack frame variables.</li>
+      <li><strong>Indexed Addressing</strong> — The effective address is an index register (SI or DI) plus a displacement. Default segment is DS. Ideal for accessing elements of an array where the displacement is the array base and SI/DI is the element offset.</li>
+      <li><strong>Based-Indexed Addressing</strong> — Combines a base register (BX or BP) with an index register (SI or DI). Effective address = base + index. Useful for 2D arrays or accessing elements within an array of structures. Optionally includes a displacement.</li>
+      <li><strong>Segment Override Prefix</strong> — By default, data accesses use DS, stack accesses use SS, and code fetches use CS. You can override the default segment with a prefix: ES:, CS:, SS:, DS:. This lets you access data in any segment regardless of the addressing mode.</li>
+      <li><strong>Addressing Mode Summary and EA Formula</strong> — Each mode has an effective address formula: Immediate=none, Register=none, Direct=disp, Register Indirect=reg, Based=base+disp, Indexed=index+disp, Based-Indexed=base+index+disp. The physical address is always segment × 10h + EA.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Demonstrating all 8086 addressing modes
+
+; Setup segment
+MOV AX, 1000h
+MOV DS, AX        ; DS = 1000h
+
+; 1. Immediate
+MOV CX, 0064h     ; CX = 100 decimal
+
+; 2. Register
+MOV DX, CX        ; DX = CX = 0064h
+
+; 3. Direct
+MOV AX, [0200h]   ; AX = word at DS:0200h (PA=10200h)
+
+; 4. Register Indirect
+MOV BX, 0200h
+MOV AX, [BX]      ; AX = word at DS:BX = DS:0200h
+
+; 5. Based
+MOV AX, [BX+04h]  ; AX = word at DS:(BX+04h) = DS:0204h
+
+; 6. Indexed
+MOV SI, 0002h
+MOV AX, [SI+0200h] ; AX = word at DS:(SI+0200h) = DS:0202h
+
+; 7. Based-Indexed
+MOV AX, [BX+SI]    ; AX = word at DS:(BX+SI) = DS:0202h
+
+; 8. Based-Indexed with Displacement
+MOV AX, [BX+SI+10h] ; AX = word at DS:(BX+SI+10h) = DS:0212h
+
+; Segment override
+MOV AX, ES:[BX+SI]  ; Same EA, but uses ES instead of DS</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> MOV AX, 1000h / MOV DS, AX — loads DS with 1000h. We cannot MOV directly into a segment register, so we use AX as a bridge.</li>
+      <li><span class="walk-num">2.</span> MOV CX, 0064h — immediate addressing: the value 0064h (100 decimal) is encoded directly in the instruction bytes.</li>
+      <li><span class="walk-num">3.</span> MOV DX, CX — register addressing: both operands are in registers, no memory access needed, executes in minimum time.</li>
+      <li><span class="walk-num">4.</span> MOV AX, [0200h] — direct addressing: the offset 0200h is in the instruction. Physical address = 1000h×10h + 0200h = 10200h.</li>
+      <li><span class="walk-num">5.</span> MOV BX, 0200h / MOV AX, [BX] — register indirect: BX holds the offset. Same physical address as direct, but now we can change BX at runtime to access different locations.</li>
+      <li><span class="walk-num">6.</span> MOV AX, [BX+04h] — based addressing: EA = 0200h + 04h = 0204h. Physical = 10204h. Good for accessing a field at offset 4 in a structure pointed to by BX.</li>
+      <li><span class="walk-num">7.</span> MOV AX, [SI+0200h] — indexed addressing: EA = 0002h + 0200h = 0202h. Physical = 10202h. SI acts as an array index.</li>
+      <li><span class="walk-num">8.</span> MOV AX, [BX+SI] — based-indexed: EA = 0200h + 0002h = 0202h. BX could be row base, SI the column offset.</li>
+      <li><span class="walk-num">9.</span> MOV AX, [BX+SI+10h] — based-indexed with displacement: EA = 0200h + 0002h + 10h = 0212h. The most flexible mode.</li>
+      <li><span class="walk-num">10.</span> ES:[BX+SI] — segment override: same EA calculation but uses ES instead of the default DS. Useful for accessing data in the extra segment.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; Goal: Read byte from array at DS:2000h, index 5
+; DS = 1000h, array base = 2000h
+;
+MOV SI, 5           ; index = 5
+MOV AL, [SI+2000h]  ; Read array[5]
+;
+; Programmer expects PA = 1000h*10 + 2000h + 5 = 12005h
+; But the byte read is wrong!
+;
+; Separately, the programmer tries to access stack:
+MOV AX, [BP]        ; Read from stack
+; But BP = 0, and programmer expects DS:0000h</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about the default segment for BP. Also, is the index calculation correct for multi-byte elements?</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: If the array contains words (2-byte elements) rather than bytes, index 5 should be SI=5*2=10 (0Ah), not 5. MOV SI,5 accesses the 5th byte, not the 5th word. Fix: MOV SI, 000Ah for word arrays. Bug 2: MOV AX,[BP] uses SS as the default segment (not DS), so it reads from SS:0000h instead of DS:0000h. If SS and DS differ, this reads the wrong location. Fix: Use MOV AX, DS:[BP] to override the segment, or use BX instead of BP if you want DS as the default.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you need to find a toy. Immediate: someone just hands it to you. Register: it is already in your pocket. Direct: you are told &#39;shelf number 5.&#39; Register indirect: you look at a card that says a shelf number. Based: your friend says &#39;go to section B, then 3 shelves over.&#39; Indexed: &#39;go to the toy aisle, then 5 spots down.&#39; Based-indexed: &#39;section B, aisle 3, spot 5.&#39; More steps = more flexibility to find anything!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The based-indexed addressing mode with displacement was so flexible that it could encode a 2D array access in a single instruction — something many RISC architectures need multiple instructions to do. This &#39;CISC richness&#39; is one reason Intel&#39;s x86 survived while simpler architectures came and went.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Given DS=1000h, BX=0100h, SI=0020h, DI=0040h, BP=0200h, SS=2000h, calculate the effective address AND the 20-bit physical address for each: (a) MOV AX,[BX], (b) MOV AX,[BP+10h], (c) MOV AX,[BX+SI+08h], (d) MOV AX,ES:[DI+30h] where ES=3000h. Show all work.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.geeksforgeeks.org/addressing-modes-8086-microprocessor/" target="_blank" rel="noopener noreferrer">8086 Addressing Modes</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=nKJICQFNGhQ" target="_blank" rel="noopener noreferrer">All 8086 Addressing Modes Explained</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_8086_addressing_modes.htm" target="_blank" rel="noopener noreferrer">Addressing Modes with Examples</a> <span class="res-source">(TutorialsPoint)</span></li>
+      <li><a href="https://edge.edx.org/c4x/BITSPilani/EEE231/asset/8086_family_Users_Manual_1_.pdf" target="_blank" rel="noopener noreferrer">Intel 8086 Programmer&#39;s Reference</a> <span class="res-source">(Intel)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=17">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./16-reset-hold-hlda-and-basic-control-signals.html" rel="prev">← Reset, HOLD, HLDA, and Basic Control…</a>
+  <a class="nav-next" href="./18-data-sizes-endianness-and-alignment.html" rel="next">Data Sizes, Endianness, and Alignment →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

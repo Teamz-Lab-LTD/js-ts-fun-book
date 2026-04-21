@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animations Deep Dive: Implicit, Explicit, Hero &amp;… | Teamz Lab</title>
+<meta name="description" content="Flutter&#39;s animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Animations Deep Dive: Implicit, Explicit, Hero &amp; CustomPainter">
+<meta property="og:description" content="Flutter&#39;s animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Animations Deep Dive: Implicit, Explicit, Hero &amp; CustomPainter">
+<meta name="twitter:description" content="Flutter&#39;s animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Animations Deep Dive: Implicit, Explicit, Hero & CustomPainter",
+  "description": "Flutter's animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 71
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Animations Deep Dive: Implicit, Explicit, Hero & CustomPainter",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Animations Deep Dive: Implicit, Explicit, Hero &amp; CustomPainter</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 71 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Animations Deep Dive: Implicit, Explicit, Hero &amp; CustomPainter</h1>
+<p class="lesson-subtitle">From simple fades to complex physics-based motion — master every animation layer in Flutter</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=71">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Flutter animations are like a film production. Implicit animations are point-and-shoot cameras — you say &#39;go from A to B&#39; and the camera handles framing, timing, and transitions automatically. Explicit animations are a full film crew — you control the camera (AnimationController), the lens (Tween), and the motion style (Curve) individually. Hero animations are like a match cut in cinema — the same object seamlessly transitions between two scenes. CustomPainter is your VFX studio — you paint every pixel by hand on a Canvas.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter&#39;s animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven with full timing control), and custom painting (Canvas-level pixel drawing). Hero animations handle shared-element transitions between routes. Physics-based animations use real-world simulation for natural motion.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a production app, you&#39;d use implicit animations for theme changes and button states, explicit animations for onboarding carousels and loading indicators, Hero transitions for image galleries (thumbnail → fullscreen), staggered animations for list item entrances, and CustomPainter for custom charts or progress rings. The choice depends on complexity — always start with the simplest tier that achieves the desired effect.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The animation spectrum: implicit → explicit → custom</strong> — Flutter offers three animation tiers. Implicit: AnimatedContainer, AnimatedOpacity, AnimatedPositioned — you change a property and Flutter animates the transition automatically. Explicit: AnimationController + Tween + AnimatedBuilder — you control every aspect of timing, curves, and state. Custom: CustomPainter + Canvas — you draw frames manually for effects no widget can express. Interview rule of thumb: use the simplest tier that solves the problem. Using AnimationController for a color change is over-engineering; using AnimatedContainer for a staggered particle system is under-engineering.</li>
+      <li><strong>Implicit animations — AnimatedContainer, AnimatedOpacity, AnimatedSwitcher</strong> — AnimatedContainer: change any property (color, width, height, padding, decoration) and it animates the transition over a Duration with a Curve. No controller needed. AnimatedOpacity: animates opacity — great for fade in/out. AnimatedSwitcher: cross-fades between two child widgets with a transitionBuilder. Key requirement: the child&#39;s Key must change for AnimatedSwitcher to detect a swap. Common mistake: forgetting to set a key on the child — AnimatedSwitcher sees the same widget type and skips the animation.</li>
+      <li><strong>AnimationController — the explicit animation engine</strong> — AnimationController is a special Animation that generates values from 0.0 to 1.0 (by default) over a Duration. It requires a TickerProvider — use SingleTickerProviderStateMixin for one controller, TickerProviderStateMixin for multiple. Key methods: forward(), reverse(), repeat(), animateTo(), stop(), reset(). It produces values every frame (~60fps). Always dispose in dispose() to prevent memory leaks. The controller is the clock — it doesn&#39;t know about colors, sizes, or positions. That&#39;s the Tween&#39;s job.</li>
+      <li><strong>Tween and CurvedAnimation — mapping values and easing</strong> — Tween maps the controller&#39;s 0.0→1.0 to any range: `Tween(begin: 0, end: 300)`, `ColorTween(begin: Colors.red, end: Colors.blue)`, `Tween(begin: Offset(0, 1), end: Offset.zero)`. Chain with .animate(controller) or .animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut)). CurvedAnimation wraps a controller with an easing curve. Common curves: easeIn, easeOut, easeInOut, bounceOut, elasticIn. Custom curves: extend Curve and override transformInternal(t).</li>
+      <li><strong>AnimatedBuilder vs AnimatedWidget — rebuilding efficiently</strong> — AnimatedBuilder takes an Animation, a builder function, and an optional child. The child parameter is critical for performance — it&#39;s the part of the subtree that DOESN&#39;T change during animation. AnimatedBuilder rebuilds only the builder, not the child. AnimatedWidget is a base class that rebuilds when the animation ticks — cleaner for reusable animated widgets. Key difference: AnimatedBuilder is used inline in build(), AnimatedWidget is subclassed for reusable components. Both prevent rebuilding the entire widget tree on every frame.</li>
+      <li><strong>Hero transitions — shared element animations</strong> — Hero widget wraps a child with a tag. When navigating between routes where both have a Hero with the same tag, Flutter automatically animates the widget flying from source to destination. The flightShuttleBuilder callback customizes the in-flight widget. Common customizations: changing shape during flight (circle to rectangle), scaling, adding a drop shadow. Gotcha: Hero tags must be unique within a route. Gotcha: Hero doesn&#39;t work with dialogs or bottom sheets by default — use a custom PageRoute.</li>
+      <li><strong>Custom flightShuttleBuilder for advanced Hero transitions</strong> — The default Hero flight is a simple position+size animation. flightShuttleBuilder lets you control what the widget looks like mid-flight: `flightShuttleBuilder: (flightContext, animation, direction, fromContext, toContext) { return AnimatedBuilder(animation: animation, builder: (_, __) =&gt; Material(elevation: animation.value * 8, borderRadius: BorderRadius.circular(animation.value * 20), child: fromContext.widget)); }`. This enables: morphing shapes, adding elevation shadows during flight, rotating, and applying color transitions.</li>
+      <li><strong>Staggered animations and Intervals</strong> — Staggered animations sequence multiple animations on a single controller using Interval. Each Interval specifies a start and end fraction (0.0 to 1.0) of the total duration. Example: opacity fades in during 0.0→0.3, then slides up during 0.2→0.7, then scales during 0.5→1.0 — overlapping creates a fluid staggered effect. Implementation: create separate Tweens with CurvedAnimation using Interval as the curve: `CurvedAnimation(parent: controller, curve: const Interval(0.0, 0.3, curve: Curves.easeOut))`.</li>
+      <li><strong>CustomPainter and Canvas — pixel-level control</strong> — CustomPainter gives you direct Canvas access. Override paint(Canvas canvas, Size size) to draw: canvas.drawCircle(), drawRect(), drawPath(), drawLine(), drawArc(). Use Paint for style (color, strokeWidth, style). The shouldRepaint() method controls when the painter redraws — return true when animation values change. Wrap in RepaintBoundary for isolation. Combine with AnimationController: pass the animation value to the painter, call shouldRepaint based on value changes. CustomPainter handles: charts, graphs, custom progress indicators, particle effects, game rendering.</li>
+      <li><strong>Physics-based animations — SpringSimulation and beyond</strong> — Flutter&#39;s physics library provides realistic motion. SpringSimulation: `controller.animateWith(SpringSimulation(SpringDescription(mass: 1, stiffness: 100, damping: 10), 0, 1, velocity))` — the widget bounces to rest like a real spring. GravitySimulation: objects fall with acceleration. FrictionSimulation: objects decelerate like sliding on a surface. ClampingScrollSimulation: the default scroll physics. Physics animations feel natural because they respond to initial velocity and have no fixed duration — they complete when the simulation reaches equilibrium.</li>
+      <li><strong>Performance: avoiding animation jank</strong> — Rules for smooth 60fps animations: (1) Use the child parameter in AnimatedBuilder — don&#39;t rebuild static subtrees. (2) Avoid triggering layout during animation — animate transform or opacity, not width/height when possible. (3) RepaintBoundary around animated widgets isolates repaint regions. (4) For CustomPainter, cache Paint objects and complex Paths — don&#39;t recreate every frame. (5) Use addPostFrameCallback for one-time setup, not in build(). (6) Profile with DevTools Performance overlay — green = good, red = jank.</li>
+      <li><strong>AnimatedList and SliverAnimatedList — list item animations</strong> — AnimatedList auto-animates item insertions and removals. Insert: `animatedListKey.currentState.insertItem(index)`. Remove: `animatedListKey.currentState.removeItem(index, (context, animation) =&gt; SizeTransition(sizeFactor: animation, child: removedWidget))`. The animation parameter in the itemBuilder is 0.0→1.0 for insertions, 1.0→0.0 for removals. SliverAnimatedList is the sliver version for CustomScrollView. These widgets make list changes feel alive — items slide in, fade out, and compress instead of appearing/disappearing abruptly.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Complete animation examples — from implicit to physics-based
+
+import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter/physics.dart&#39;;
+import &#39;dart:math&#39; as math;
+
+// ===== 1. IMPLICIT ANIMATIONS =====
+
+class ImplicitDemo extends StatefulWidget {
+  const ImplicitDemo({super.key});
+  @override
+  State&lt;ImplicitDemo&gt; createState() =&gt; _ImplicitDemoState();
+}
+
+class _ImplicitDemoState extends State&lt;ImplicitDemo&gt; {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () =&gt; setState(() =&gt; _expanded = !_expanded),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+        width: _expanded ? 300 : 100,
+        height: _expanded ? 300 : 100,
+        decoration: BoxDecoration(
+          color: _expanded ? Colors.blue : Colors.red,
+          borderRadius: BorderRadius.circular(_expanded ? 24 : 60),
+        ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: _expanded
+              ? const Icon(Icons.close, key: ValueKey(&#39;close&#39;))
+              : const Icon(Icons.add, key: ValueKey(&#39;add&#39;)),
+        ),
+      ),
+    );
+  }
+}
+
+// ===== 2. EXPLICIT ANIMATION — Staggered =====
+
+class StaggeredAnimation extends StatefulWidget {
+  const StaggeredAnimation({super.key});
+  @override
+  State&lt;StaggeredAnimation&gt; createState() =&gt; _StaggeredAnimationState();
+}
+
+class _StaggeredAnimationState extends State&lt;StaggeredAnimation&gt;
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation&lt;double&gt; _opacity;
+  late final Animation&lt;Offset&gt; _slide;
+  late final Animation&lt;double&gt; _scale;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    // Staggered intervals — overlapping for fluid motion
+    _opacity = Tween&lt;double&gt;(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
+      ),
+    );
+
+    _slide = Tween&lt;Offset&gt;(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 0.7, curve: Curves.easeOut),
+      ),
+    );
+
+    _scale = Tween&lt;double&gt;(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 1.0, curve: Curves.elasticOut),
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // CRITICAL — prevents memory leak
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      // Static child — NOT rebuilt on every frame
+      child: const Card(child: Padding(
+        padding: EdgeInsets.all(24),
+        child: Text(&#39;Staggered!&#39;, style: TextStyle(fontSize: 24)),
+      )),
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacity.value,
+          child: SlideTransition(
+            position: _slide,
+            child: ScaleTransition(
+              scale: _scale,
+              child: child, // Reuses the static child
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ===== 3. HERO TRANSITION with custom shuttle =====
+
+class HeroSourceScreen extends StatelessWidget {
+  const HeroSourceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () =&gt; Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) =&gt; const HeroDestScreen()),
+      ),
+      child: Hero(
+        tag: &#39;profile-hero&#39;,
+        flightShuttleBuilder: (_, animation, __, fromCtx, ___) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (context, child) =&gt; Material(
+              elevation: animation.value * 12,
+              borderRadius: BorderRadius.circular(
+                60 - (animation.value * 48), // Circle → rounded rect
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Image.network(
+                &#39;https://example.com/avatar.jpg&#39;,
+                width: 60 + (animation.value * 240),
+                height: 60 + (animation.value * 240),
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        },
+        child: const CircleAvatar(radius: 30),
+      ),
+    );
+  }
+}
+
+class HeroDestScreen extends StatelessWidget {
+  const HeroDestScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: &#39;profile-hero&#39;,
+      child: Image.network(
+        &#39;https://example.com/avatar.jpg&#39;,
+        width: 300, height: 300, fit: BoxFit.cover,
+      ),
+    );
+  }
+}
+
+// ===== 4. CUSTOM PAINTER — Animated Ring =====
+
+class AnimatedRingPainter extends CustomPainter {
+  final double progress; // 0.0 → 1.0
+  final Color color;
+
+  AnimatedRingPainter({required this.progress, required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = math.min(size.width, size.height) / 2 - 10;
+
+    // Background ring
+    final bgPaint = Paint()
+      ..color = color.withOpacity(0.2)
+      ..strokeWidth = 8
+      ..style = PaintingStyle.stroke;
+    canvas.drawCircle(center, radius, bgPaint);
+
+    // Progress arc
+    final fgPaint = Paint()
+      ..color = color
+      ..strokeWidth = 8
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      -math.pi / 2,            // Start from top
+      2 * math.pi * progress,  // Sweep angle
+      false,
+      fgPaint,
+    );
+
+    // Center text
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: &#39;${(progress * 100).toInt()}%&#39;,
+        style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.bold),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    textPainter.paint(
+      canvas,
+      center - Offset(textPainter.width / 2, textPainter.height / 2),
+    );
+  }
+
+  @override
+  bool shouldRepaint(AnimatedRingPainter old) =&gt;
+      old.progress != progress || old.color != color;
+}
+
+// ===== 5. PHYSICS-BASED ANIMATION =====
+
+class SpringDemo extends StatefulWidget {
+  const SpringDemo({super.key});
+  @override
+  State&lt;SpringDemo&gt; createState() =&gt; _SpringDemoState();
+}
+
+class _SpringDemoState extends State&lt;SpringDemo&gt;
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+    _runSpring();
+  }
+
+  void _runSpring() {
+    const spring = SpringDescription(
+      mass: 1.0,
+      stiffness: 180.0,
+      damping: 12.0, // Underdamped → bouncy
+    );
+    final simulation = SpringSimulation(spring, 0, 1, -2); // velocity = -2
+    _controller.animateWith(simulation);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, _controller.value * 200 - 100),
+          child: child,
+        );
+      },
+      child: GestureDetector(
+        onTap: () {
+          _controller.reset();
+          _runSpring();
+        },
+        child: Container(
+          width: 80, height: 80,
+          decoration: const BoxDecoration(
+            color: Colors.orange,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ImplicitDemo: AnimatedContainer animates width, height, color, and borderRadius on tap — zero controllers, just setState</li>
+      <li><span class="walk-num">2.</span> AnimatedSwitcher cross-fades icons — ValueKey tells Flutter these are different widgets that need a transition</li>
+      <li><span class="walk-num">3.</span> StaggeredAnimation: single controller drives three Intervals — opacity (0-40%), slide (20-70%), scale (50-100%) overlap for fluid motion</li>
+      <li><span class="walk-num">4.</span> Each Interval maps a portion of the controller&#39;s 0.0→1.0 to its own 0.0→1.0 — outside the interval, the value is clamped</li>
+      <li><span class="walk-num">5.</span> AnimatedBuilder child parameter: the Card is built ONCE and reused every frame — only opacity/slide/scale wrapper rebuilds</li>
+      <li><span class="walk-num">6.</span> _controller.dispose() in dispose() — prevents the ticker from firing after the widget is removed, avoiding the &#39;setState on disposed&#39; error</li>
+      <li><span class="walk-num">7.</span> HeroSourceScreen: flightShuttleBuilder customizes the mid-flight widget — morphing from circle (radius 60) to rectangle during navigation</li>
+      <li><span class="walk-num">8.</span> AnimatedRingPainter: Canvas.drawArc with sweep angle based on progress — shouldRepaint compares progress values to avoid unnecessary redraws</li>
+      <li><span class="walk-num">9.</span> TextPainter renders the percentage text centered on the canvas — layout() must be called before paint()</li>
+      <li><span class="walk-num">10.</span> SpringSimulation: mass, stiffness, and damping control the bounce behavior — underdamped (low damping) creates visible oscillation</li>
+      <li><span class="walk-num">11.</span> _controller.animateWith(simulation): the controller follows the physics simulation instead of a linear duration — no fixed end time</li>
+      <li><span class="walk-num">12.</span> GestureDetector on the spring ball: reset + rerun creates a retrigger effect — interactive physics-based animation</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class FadeInWidget extends StatefulWidget {
+  const FadeInWidget({super.key});
+  @override
+  State&lt;FadeInWidget&gt; createState() =&gt; _FadeInWidgetState();
+}
+
+class _FadeInWidgetState extends State&lt;FadeInWidget&gt;
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation&lt;double&gt; _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _opacity = Tween&lt;double&gt;(begin: 0, end: 1).animate(_controller);
+    _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: _opacity.value,
+      child: const Text(&#39;Hello, World!&#39;),
+    );
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">The widget appears immediately at full opacity without any fade animation. The build method reads the animation value but doesn&#39;t know when it changes.</div></details><details><summary>Show answer</summary><div class="answer">Bug: The build() method reads _opacity.value once but never rebuilds when the animation ticks. There&#39;s no AnimatedBuilder or listener to trigger rebuilds. Fix: wrap the Opacity widget in an AnimatedBuilder: `AnimatedBuilder(animation: _opacity, builder: (context, child) =&gt; Opacity(opacity: _opacity.value, child: child), child: const Text(&#39;Hello, World!&#39;))`. Alternatively, use `_controller.addListener(() =&gt; setState(() {}))` in initState — but AnimatedBuilder is preferred as it&#39;s more efficient and self-documenting. Also: don&#39;t forget `_controller.dispose()` in dispose() — this example leaks the controller.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re playing with a toy car. Implicit animations are like pushing the car and it rolls smoothly by itself to where you pointed. Explicit animations are like a remote control car — you control the speed, direction, and when it starts and stops. CustomPainter is like drawing the car yourself with crayons, frame by frame, to make it look exactly how you want. Hero animations are like when a character walks through a doorway in a cartoon — the same character appears on both sides seamlessly.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Flutter team at Google measured that apps with well-crafted animations see 15-30% higher user engagement and retention compared to apps with abrupt transitions. Apple&#39;s Human Interface Guidelines and Google&#39;s Material Motion spec both codify this: motion isn&#39;t decoration, it&#39;s communication. A well-timed 300ms ease-out tells the user &#39;this action succeeded&#39; more clearly than any text label.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build an animated profile card that demonstrates all three animation tiers: (1) Use AnimatedContainer for the card background color change on tap. (2) Use an explicit AnimationController with staggered Intervals to animate the avatar (scale in at 0.0-0.4), name text (fade + slide at 0.2-0.6), and bio text (fade + slide at 0.4-0.8). (3) Use CustomPainter to draw an animated skill-level ring around the avatar. (4) Add a Hero transition so tapping the avatar navigates to a detail screen with the avatar flying to fullscreen. (5) Make the card bounce into view using SpringSimulation on first load.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/ui/animations" target="_blank" rel="noopener noreferrer">Flutter Animations Official Documentation</a> <span class="res-source">(docs.flutter.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/ui/animations/implicit-animations" target="_blank" rel="noopener noreferrer">Implicit Animations in Flutter</a> <span class="res-source">(docs.flutter.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/cookbook/navigation/hero-animations" target="_blank" rel="noopener noreferrer">Hero Animations — Flutter Cookbook</a> <span class="res-source">(docs.flutter.dev)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/rendering/CustomPainter-class.html" target="_blank" rel="noopener noreferrer">Flutter CustomPainter Guide</a> <span class="res-source">(api.flutter.dev)</span></li>
+      <li><a href="https://medium.com/flutter/animation-deep-dive-39d3ffea111f" target="_blank" rel="noopener noreferrer">Animation Deep Dive — Filip Hracek (Flutter)</a> <span class="res-source">(medium.com)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=71">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./70-code-generation-freezed-json_serializable-build_runner.html" rel="prev">← Code Generation: freezed…</a>
+  <a class="nav-next" href="./72-memory-profiling-leak-detection-devtools-mastery.html" rel="next">Memory Profiling, Leak Detection &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

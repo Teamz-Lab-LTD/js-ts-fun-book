@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 10-Minute Android Security Checklist — Android… | Teamz Lab</title>
+<meta name="description" content="An Android security checklist is a systematic review of your phone&#39;s security settings — the digital equivalent of locking your doors, setting the alarm…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-phone-health/20-app-permissions-audit-what-you-should-revoke.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="The 10-Minute Android Security Checklist">
+<meta property="og:description" content="An Android security checklist is a systematic review of your phone&#39;s security settings — the digital equivalent of locking your doors, setting the alarm…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The 10-Minute Android Security Checklist">
+<meta name="twitter:description" content="An Android security checklist is a systematic review of your phone&#39;s security settings — the digital equivalent of locking your doors, setting the alarm…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "The 10-Minute Android Security Checklist",
+  "description": "An Android security checklist is a systematic review of your phone's security settings — the digital equivalent of locking your doors, setting the alarm…",
+  "url": "https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Phone Health: Battery, Privacy, Performance & Security",
+    "url": "https://learn.teamzlab.com/c/android-phone-health.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 19
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Phone Health",
+      "item": "https://learn.teamzlab.com/c/android-phone-health.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "The 10-Minute Android Security Checklist",
+      "item": "https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-phone-health.html">Android Phone Health</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-phone-health.html">Android Phone Health</a> / <span aria-current="page">The 10-Minute Android Security Checklist</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 19 of 25</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">The 10-Minute Android Security Checklist</h1>
+<p class="lesson-subtitle">Essential settings every Android user should enable right now</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=19">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Securing your Android phone is like locking up your house before a vacation. You would not leave the front door unlocked, the windows open, and a spare key under the mat — but that is basically what most people do with their phones. This checklist is your pre-vacation security walk-through. Each setting takes about a minute to check, and together they form a solid defense that stops 95% of common attacks.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>An Android security checklist is a systematic review of your phone&#39;s security settings — the digital equivalent of locking your doors, setting the alarm, and checking the windows. Most Android phones ship with good security defaults, but many settings get changed over time or were never properly configured. This 10-minute checklist covers the settings that security experts unanimously agree are essential: screen lock, 2FA, updates, Play Protect, Find My Device, backups, app sources, lock screen privacy, and Google account security.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>James lost his phone at a concert. He had no screen lock, no Find My Device enabled, and no backup. Within 2 hours, someone used his phone to access his email, reset his bank password, and transferred $1,400 from his account. His photos, contacts, and messages were gone forever. His coworker Aisha lost her phone at the same concert. Because she had completed a security checklist — fingerprint lock, Find My Device on, full backup, and 2FA on all accounts — she remotely locked her phone within minutes, tracked it to a trash can where someone had dumped it, and recovered it. Even if she had not found it, she could have wiped it remotely and restored everything to a new phone from her backup.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Screen Lock: Your First Defense</strong> — Your screen lock is the front door of your phone. A 2024 Pew Research study found that 28% of smartphone users have no screen lock at all, and 15% use easily guessable patterns. A 6-digit PIN takes about 11 hours to crack by brute force. A 4-digit PIN takes about 7 minutes. Fingerprint or face unlock combined with a strong PIN is the gold standard.</li>
+      <li><strong>Two-Factor Authentication (2FA)</strong> — 2FA means needing two things to log in: your password PLUS a code sent to your phone or generated by an app. Even if someone steals your password, they cannot get in without the second factor. Google found that adding 2FA blocks 100% of automated attacks and 96% of phishing attacks. It takes 2 minutes to set up and could save you from a catastrophe.</li>
+      <li><strong>Software Updates: Not Just Annoying</strong> — Software updates patch security holes that hackers actively exploit. A 2024 report found that 60% of successful phone hacks used vulnerabilities that had been patched in updates the user had not installed. Every month Google releases security patches for Android. Delaying updates by even 30 days can leave you exposed to known, actively exploited vulnerabilities.</li>
+      <li><strong>Google Play Protect: Built-In Antivirus</strong> — Google Play Protect is Android&#39;s built-in security scanner. It checks apps before you download them AND continuously scans apps already on your phone. It scans over 125 billion apps per day across all Android devices. Make sure it is turned on — about 8% of users have it disabled, often because a malicious app told them to turn it off.</li>
+      <li><strong>Find My Device: Your Safety Net</strong> — Google&#39;s Find My Device lets you locate, lock, or erase your phone remotely if it is lost or stolen. It works even when your phone is offline (using nearby Bluetooth devices). Without it enabled, a lost phone means lost data, lost accounts, and potential identity theft. It takes 30 seconds to verify it is on and could save everything on your phone.</li>
+      <li><strong>Backup Settings: Your Insurance</strong> — A good backup means that even if your phone is stolen, broken, or wiped, you lose nothing important. Google backs up contacts, photos (via Google Photos), app data, call history, and device settings. A 2023 survey found that 43% of people have lost important data because they did not have backups. Check your backup status right now — it is free.</li>
+      <li><strong>App Installation Sources</strong> — Only install apps from Google Play Store. Sideloading apps (installing from unknown sources) bypasses all of Google&#39;s security checks. A 2024 Google report found that apps installed from outside the Play Store were 50 times more likely to contain malware. Make sure &#39;Install unknown apps&#39; is disabled for all your apps — especially your browser and file manager.</li>
+      <li><strong>Lock Screen Notifications: Hidden Leak</strong> — By default, your lock screen shows full notification content — messages, emails, verification codes — visible to anyone who picks up your phone. This is a surprisingly common data leak. Someone at a coffee shop can read your messages without ever unlocking your phone. Changing this to &#39;hide sensitive content&#39; takes 15 seconds and protects your privacy.</li>
+      <li><strong>Google Account Security Checkup</strong> — Your Google account is the master key to your Android phone. If it is compromised, everything falls: email, photos, drive files, saved passwords, purchase history. Google provides a free Security Checkup tool that reviews your account for issues. It checks for compromised passwords, suspicious sign-ins, and outdated recovery info. Run it once a month.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>╔══════════════════════════════════════╗
+║  🔒 10-MINUTE SECURITY CHECKLIST 🔒 ║
+╠══════════════════════════════════════╣
+║                                      ║
+║  MINUTE 1: SCREEN LOCK               ║
+║  □ Settings → Security → Screen Lock ║
+║  □ Set 6-digit PIN or password       ║
+║  □ Add fingerprint if available      ║
+║  □ Set auto-lock: 30 seconds         ║
+║                                      ║
+║  MINUTE 2-3: TWO-FACTOR AUTH         ║
+║  □ myaccount.google.com/security     ║
+║  □ Enable 2-Step Verification        ║
+║  □ Set up on bank apps too           ║
+║                                      ║
+║  MINUTE 4: SOFTWARE UPDATES          ║
+║  □ Settings → System → System Update ║
+║  □ Install all pending updates       ║
+║  □ Enable auto-update for apps       ║
+║                                      ║
+║  MINUTE 5: PLAY PROTECT              ║
+║  □ Play Store → Profile → Play       ║
+║    Protect → Verify it is ON         ║
+║                                      ║
+║  MINUTE 6: FIND MY DEVICE            ║
+║  □ Settings → Security → Find My     ║
+║    Device → Toggle ON                ║
+║  □ Test at google.com/android/find   ║
+║                                      ║
+║  MINUTE 7: BACKUPS                   ║
+║  □ Settings → System → Backup → ON  ║
+║  □ Google Photos → Backup → ON      ║
+║                                      ║
+║  MINUTE 8: APP SOURCES               ║
+║  □ Settings → Apps → Special Access  ║
+║  □ Install Unknown Apps → ALL OFF   ║
+║                                      ║
+║  MINUTE 9: LOCK SCREEN               ║
+║  □ Settings → Notifications          ║
+║  □ Hide sensitive lock screen content║
+║                                      ║
+║  MINUTE 10: GOOGLE CHECKUP           ║
+║  □ myaccount.google.com/             ║
+║    security-checkup                  ║
+║  □ Fix any flagged issues            ║
+║                                      ║
+║  BONUS: DEVELOPER SETTINGS CHECK     ║
+║  □ USB Debugging = OFF               ║
+║  □ Developer Mode = OFF (if unused)  ║
+║  □ SELinux = Enforcing (default)     ║
+║  □ DeviceGPT Zero Trust scan to      ║
+║    verify Device Integrity score     ║
+║                                      ║
+║  ✅ Done! Set calendar reminder      ║
+║     to recheck monthly               ║
+╚══════════════════════════════════════╝</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The checklist follows a priority order — screen lock comes first because it is the most fundamental protection and the most commonly missing. Without it, every other security measure is bypassed by simply picking up the phone.</li>
+      <li><span class="walk-num">2.</span> Two-Factor Authentication is second because it protects against the most damaging attack: account takeover. Losing your Google account means losing access to everything — email, photos, passwords, and all connected services.</li>
+      <li><span class="walk-num">3.</span> Software updates come next because they close known security holes. The emphasis on checking the security patch date (not just the Android version) is important — security patches ship monthly, separate from major version updates.</li>
+      <li><span class="walk-num">4.</span> The middle items (Play Protect, Find My Device, Backups) are safety nets. They do not prevent attacks directly but dramatically reduce the damage when something goes wrong.</li>
+      <li><span class="walk-num">5.</span> The final items (app sources, lock screen, Google Checkup) catch the sneaky attack vectors that most people overlook. Lock screen notification leaks are particularly underestimated — they bypass your screen lock entirely.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>I completed the security checklist:
+✓ Strong PIN (8 digits)
+✓ Fingerprint enabled
+✓ 2FA on Google account
+✓ All apps updated
+✓ Play Protect on
+✓ Find My Device on
+
+But I gave my Google password to my
+kid so they can download apps on
+their tablet. And I use the same
+password for my email and bank.
+
+Am I secure?</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about what happens when your password is shared AND reused.</div></details><details><summary>Show answer</summary><div class="answer">No! Two critical problems: First, sharing your Google password with anyone (even family) means 2FA codes get sent to YOUR phone but they have the password — and if they ever share it or get their device compromised, your account is exposed. Create a separate Google account for your kid instead. Second, reusing your password across email and bank means if ANY one service is breached, attackers try that password everywhere. Use unique passwords for every important account — a password manager makes this easy. Security settings mean nothing if the password itself is shared and reused.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Think of your phone like your bedroom. The screen lock is your bedroom door lock — without it, anyone can walk in. Two-Factor Authentication is like needing both a key AND a secret knock to get in. Updates are like fixing a broken window the moment you find it, before a burglar notices. Play Protect is your guard dog that sniffs every new toy you bring in to make sure it is safe. Find My Device is a GPS tracker on your diary, so if someone takes it you can find it or destroy it. And backups are like having a copy of everything in a safe at grandma&#39;s house — even if your room floods, your stuff is safe.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">In 2023, a security researcher found that the most common Android PIN is still &#39;1234&#39;, followed by &#39;0000&#39;, &#39;1111&#39;, and &#39;2580&#39; (a straight line down the keypad). Together, these four PINs account for about 20% of all PINs used. That means if someone finds your phone and tries just four guesses, they have a 1-in-5 chance of getting in. Meanwhile, a random 6-digit PIN has a 1-in-1,000,000 chance of being guessed. Simply adding two more digits multiplies your security by a thousand.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Set a timer for 10 minutes and complete the entire security checklist right now. Check off each item as you go. When you are done, open DeviceGPT and run a security audit to see if you missed anything. Take a screenshot of your security audit results and compare it to before. Most people find at least 3-4 settings they need to change. Bonus: help a family member or friend do the same checklist on their phone!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://safety.google/security/security-tips/" target="_blank" rel="noopener noreferrer">Google Safety Center: Security Tips</a> <span class="res-source">(Google)</span></li>
+      <li><a href="https://www.android.com/safety/" target="_blank" rel="noopener noreferrer">Android Security Best Practices</a> <span class="res-source">(Android.com)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Secure Your Android Phone in 10 Minutes</a> <span class="res-source">(YouTube)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=19">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./18-network-signal-strength-why-bars-lie.html" rel="prev">← Network Signal Strength: Why Bars Lie</a>
+  <a class="nav-next" href="./20-app-permissions-audit-what-you-should-revoke.html" rel="next">App Permissions Audit: What You Should… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-phone-health.html">← Back to course: Android Phone Health</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

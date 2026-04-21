@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility on Android: TalkBack, Semantics &amp; Touch… | Teamz Lab</title>
+<meta name="description" content="Android accessibility is the set of APIs, guidelines, and tools that make apps usable by people with visual, motor, auditory, or cognitive impairments. It…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/51-localization-rtl-formatting-resource-management.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accessibility on Android: TalkBack, Semantics &amp; Touch Targets">
+<meta property="og:description" content="Android accessibility is the set of APIs, guidelines, and tools that make apps usable by people with visual, motor, auditory, or cognitive impairments. It…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Accessibility on Android: TalkBack, Semantics &amp; Touch Targets">
+<meta name="twitter:description" content="Android accessibility is the set of APIs, guidelines, and tools that make apps usable by people with visual, motor, auditory, or cognitive impairments. It…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Accessibility on Android: TalkBack, Semantics & Touch Targets",
+  "description": "Android accessibility is the set of APIs, guidelines, and tools that make apps usable by people with visual, motor, auditory, or cognitive impairments. It…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 50
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Accessibility on Android: TalkBack, Semantics & Touch Targets",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Accessibility on Android: TalkBack, Semantics &amp; Touch Targets</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 50 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Accessibility on Android: TalkBack, Semantics &amp; Touch Targets</h1>
+<p class="lesson-subtitle">Build apps that work for every user — and pass accessibility audits in senior interviews</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=50">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Accessibility is the curb cut. Cutting curbs into sidewalks was mandated for wheelchair users, but skateboarders, cyclists, and parents with strollers use them every day. Making your app accessible benefits everyone — users with motor impairments, users in bright sunlight, and users multitasking.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Android accessibility is the set of APIs, guidelines, and tools that make apps usable by people with visual, motor, auditory, or cognitive impairments. It is implemented through the AccessibilityNodeInfo system in Views and the Semantics system in Jetpack Compose, surfaced to assistive technologies like TalkBack, Switch Access, and Voice Access.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Google Maps, Gmail, and WhatsApp invest heavily in accessibility. WhatsApp labels every voice message play button with a content description including the contact name and duration. Google Maps announces &#39;Directions to [destination], 12 minutes&#39; as a live region update. Apps that skip this lose 15% of the global population who have some form of disability.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>TalkBack — Android&#39;s primary screen reader</strong> — TalkBack is a system service that reads UI elements aloud and provides gesture navigation for blind and low-vision users. It uses the AccessibilityNodeInfo tree — a mirror of the View hierarchy or Compose semantic tree — to announce element labels, roles, and states.</li>
+      <li><strong>contentDescription in Views</strong> — For ImageView, ImageButton, and any view without visible text, set android:contentDescription in XML or view.contentDescription in code. TalkBack reads this string. Empty string (&#39;&#39;) signals &#39;decorative, skip me.&#39; Null means TalkBack guesses — often wrong.</li>
+      <li><strong>Compose Modifier.semantics{}</strong> — In Compose, semantics replace contentDescription. Use Modifier.semantics { contentDescription = &#39;Delete item&#39; } for custom descriptions, and mergeDescendants = true to merge a card&#39;s children into one focusable unit. Compose auto-generates semantics for Text, Button, Checkbox — you only override when the default is wrong.</li>
+      <li><strong>Touch target minimum — 48dp</strong> — Android accessibility guidelines (and Material Design) require interactive elements to have a minimum touch target of 48x48dp. A 24dp icon inside a button can have a 48dp clickable area via Modifier.minimumInteractiveComponentSize() or padding. Google Play&#39;s pre-launch report flags targets smaller than 48dp.</li>
+      <li><strong>Focus order and traversal</strong> — TalkBack moves focus in view order by default. In Views, use android:accessibilityTraversalAfter/Before to override the order. In Compose, use Modifier.semantics { traversalIndex = -1f } to move a composable earlier in the focus order (lower index = earlier).</li>
+      <li><strong>Live regions — dynamic content announcement</strong> — When content changes without user interaction (a loading indicator becomes a result, an error appears), use ViewCompat.setAccessibilityLiveRegion(view, ACCESSIBILITY_LIVE_REGION_POLITE) in Views, or Modifier.semantics { liveRegion = LiveRegionMode.Polite } in Compose. POLITE waits for the current announcement to finish; ASSERTIVE interrupts.</li>
+      <li><strong>Heading semantics</strong> — Screen reader users navigate by headings. Mark section titles with ViewCompat.setAccessibilityHeading(view, true) in Views, or Modifier.semantics { heading() } in Compose. This lets users jump between sections without traversing every element.</li>
+      <li><strong>State announcements — checked, selected, disabled</strong> — Compose Button, Checkbox, Switch, and RadioButton all emit correct state semantics automatically. For custom components, declare state explicitly: Modifier.semantics { stateDescription = if (isOn) &#39;On&#39; else &#39;Off&#39; }. Avoid using color alone to communicate state.</li>
+      <li><strong>Testing — Accessibility Scanner and UI Automator</strong> — The Accessibility Scanner app (by Google) overlays issues on your running app: missing labels, small touch targets, low contrast. In automated testing, use ComposeTestRule.onNode(hasContentDescription(&#39;Delete&#39;)).assertIsDisplayed() or UiAutomator with UiSelector.description() to assert accessibility properties.</li>
+      <li><strong>Contrast ratio — WCAG AA minimum 4.5:1</strong> — Body text must have a contrast ratio of at least 4.5:1 against its background (WCAG AA). Large text (18sp+) requires 3:1. Material 3&#39;s color system is built to satisfy these ratios by default, but custom colors must be checked. Android Studio&#39;s Layout Inspector shows contrast ratios.</li>
+      <li><strong>Custom actions</strong> — For swipe-to-delete or long-press actions that TalkBack cannot replicate, expose them as custom accessibility actions: ViewCompat.addAccessibilityAction(view, &#39;Delete&#39;, ...). In Compose: Modifier.semantics { customActions = listOf(CustomAccessibilityAction(&#39;Delete&#39;) { ... }) }.</li>
+      <li><strong>Audit before submission</strong> — Run Accessibility Scanner on every screen before release. Google Play&#39;s pre-launch report includes an accessibility check. Apps on Google Play that fail basic accessibility may be flagged in accessibility-focused app stores and reviews. Senior engineers treat accessibility as a first-class requirement, not an afterthought.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ── Compose: accessible product card ─────────────────────────
+@Composable
+fun ProductCard(
+    product: Product,
+    onDelete: () -&gt; Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true) {}  // merge child semantics
+            .clickable { /* open detail */ }
+            .padding(16.dp)
+    ) {
+        AsyncImage(
+            model = product.imageUrl,
+            contentDescription = null,  // decorative; card semantics cover it
+            modifier = Modifier.size(48.dp)
+        )
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                text = product.name,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.semantics { heading() }
+            )
+            Text(
+                text = product.price,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        IconButton(
+            onClick = onDelete,
+            modifier = Modifier
+                .minimumInteractiveComponentSize()  // enforces 48dp touch target
+                .semantics {
+                    contentDescription = &quot;Delete ${product.name}&quot;
+                    customActions = listOf(
+                        CustomAccessibilityAction(&quot;Delete&quot;) { onDelete(); true }
+                    )
+                }
+        ) {
+            Icon(Icons.Default.Delete, contentDescription = null)
+        }
+    }
+}
+
+// ── Live region for status updates ───────────────────────────
+@Composable
+fun SyncStatus(message: String) {
+    Text(
+        text = message,
+        modifier = Modifier.semantics {
+            liveRegion = LiveRegionMode.Polite
+        }
+    )
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> semantics(mergeDescendants = true) on the Row collapses all child semantic nodes into one — TalkBack reads the card as a single focused item, not a dozen separate elements</li>
+      <li><span class="walk-num">2.</span> AsyncImage with contentDescription = null marks the image as decorative — the merged Row semantics already describe the product</li>
+      <li><span class="walk-num">3.</span> Modifier.semantics { heading() } on the product name Text marks it as a heading — TalkBack users can swipe to jump between headings without traversing every element</li>
+      <li><span class="walk-num">4.</span> minimumInteractiveComponentSize() on the IconButton enforces the 48dp touch target rule even when the visible icon is 24dp</li>
+      <li><span class="walk-num">5.</span> contentDescription on the IconButton semantics block overrides the default &#39;button&#39; announcement with the specific product name — critical for lists with many delete buttons</li>
+      <li><span class="walk-num">6.</span> customActions exposes &#39;Delete&#39; as an accessibility action — TalkBack users in &#39;explore by touch&#39; mode can activate it from the actions menu instead of needing to precisely tap the icon</li>
+      <li><span class="walk-num">7.</span> SyncStatus Text with liveRegion = LiveRegionMode.Polite announces status changes (e.g. &#39;Sync complete&#39;) to TalkBack after the current speech finishes — no extra user gesture needed</li>
+      <li><span class="walk-num">8.</span> Icon inside the IconButton has contentDescription = null — the parent button&#39;s semantics already carry the description; double-announcing would confuse TalkBack</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Composable
+fun FavoriteButton(isFavorite: Boolean, onClick: () -&gt; Unit) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = if (isFavorite) Icons.Filled.Favorite
+                          else Icons.Outlined.FavoriteBorder,
+            contentDescription = &quot;Favorite&quot;,
+            tint = if (isFavorite) Color.Red else Color.Gray
+        )
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">TalkBack will always say &#39;Favorite&#39; regardless of state. How should the description communicate the current state to the user?</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) The contentDescription is always &#39;Favorite&#39; — TalkBack announces the same label whether the item is favorited or not. A blind user cannot tell the current state. Fix: contentDescription = if (isFavorite) &#39;Remove from favorites&#39; else &#39;Add to favorites&#39;. This makes the label action-oriented and state-aware. (2) State is communicated only by color (Red vs Gray) — color alone is insufficient for users with color blindness or low vision. The description fix above also resolves this. Optionally add Modifier.semantics { stateDescription = if (isFavorite) &#39;Favorited&#39; else &#39;Not favorited&#39; } to expose state separately from the action label, which some screen readers announce as &#39;[label], [state]&#39;.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">TalkBack is like a friend who reads everything on the screen out loud for people who can&#39;t see it. If you don&#39;t label your pictures and buttons, your friend has to guess — and they usually get it wrong. Adding labels is like writing a description on every sticky note so your friend can read it correctly.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The AccessibilityNodeInfo tree in Android was introduced in API 14 (Android 4.0) — the same release that introduced the 48dp touch target guideline. That guideline is derived from the average adult fingertip width of approximately 9mm, which maps to ~48dp at 160dpi.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Audit one screen of an app you own using Accessibility Scanner. Fix the top three issues it reports. Then write a Compose test using onNode(hasContentDescription(&#39;Delete Apple&#39;)) and verify the IconButton is reachable and clickable via the semantic tree.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/jetpack/compose/accessibility" target="_blank" rel="noopener noreferrer">Accessibility in Jetpack Compose</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/ui/accessibility" target="_blank" rel="noopener noreferrer">Make apps more accessible — Android Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor" target="_blank" rel="noopener noreferrer">Accessibility Scanner</a> <span class="res-source">(Google Play)</span></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html" target="_blank" rel="noopener noreferrer">WCAG 2.1 — Contrast Guidelines</a> <span class="res-source">(W3C)</span></li>
+      <li><a href="https://m3.material.io/foundations/accessible-design/overview" target="_blank" rel="noopener noreferrer">Material Design — Accessibility</a> <span class="res-source">(Material Design)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=50">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html" rel="prev">← Jetpack Compose vs Flutter — How to…</a>
+  <a class="nav-next" href="./51-localization-rtl-formatting-resource-management.html" rel="next">Localization, RTL, Formatting &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

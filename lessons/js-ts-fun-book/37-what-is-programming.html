@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is Programming? — Full-Stack Playbook | Teamz Lab</title>
+<meta name="description" content="Programming is the act of writing instructions (code) that tell a computer what to do. These instructions are written in a programming language that both…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/37-what-is-programming.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/36-your-learning-path-forward.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/38-setup-your-toolkit.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="What is Programming?">
+<meta property="og:description" content="Programming is the act of writing instructions (code) that tell a computer what to do. These instructions are written in a programming language that both…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/js-ts-fun-book/37-what-is-programming.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is Programming?">
+<meta name="twitter:description" content="Programming is the act of writing instructions (code) that tell a computer what to do. These instructions are written in a programming language that both…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "What is Programming?",
+  "description": "Programming is the act of writing instructions (code) that tell a computer what to do. These instructions are written in a programming language that both…",
+  "url": "https://learn.teamzlab.com/lessons/js-ts-fun-book/37-what-is-programming.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Full-Stack Playbook",
+    "url": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 37
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Full-Stack Playbook",
+      "item": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "What is Programming?",
+      "item": "https://learn.teamzlab.com/lessons/js-ts-fun-book/37-what-is-programming.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/js-ts-fun-book.html">Full-Stack Playbook</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/js-ts-fun-book.html">Full-Stack Playbook</a> / <span aria-current="page">What is Programming?</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 37 of 49</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">What is Programming?</h1>
+<p class="lesson-subtitle">Your First Step into the Digital World</p>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=37">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Programming is like training a very obedient dog. You give commands one at a time — &#39;sit&#39;, &#39;fetch the ball&#39;, &#39;bring it back&#39; — and the dog does EXACTLY what you say, nothing more, nothing less. If you say &#39;sit&#39; when you meant &#39;shake&#39;, the dog sits. It never guesses your intention — you have to be precise!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Programming is the act of writing instructions (code) that tell a computer what to do. These instructions are written in a programming language that both humans and computers can understand. You write code, the computer executes it step by step, and something useful happens — a website loads, a game runs, a calculation is made.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Everything digital runs on code. When you open Instagram, send a text message, use Google Maps, or play a video game — code is making it all happen. Someone (a programmer!) wrote every feature you use. Programming isn&#39;t just for &#39;tech people&#39; — it&#39;s becoming a universal skill like reading and writing.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What is Code?</strong> — Code is simply a set of instructions written in a language that computers can understand. Just like you write sentences in English, you write code in a programming language. Each line tells the computer to do ONE specific thing — display text, do math, or make a decision.</li>
+      <li><strong>What is a Program?</strong> — A program is a collection of code instructions bundled together to accomplish a task. Your web browser, your music player, even the calculator on your phone — they&#39;re all programs. Someone wrote every single instruction that makes them work!</li>
+      <li><strong>How Computers Execute Code</strong> — Computers read your code from top to bottom, one line at a time — like reading a book. They do EXACTLY what you say, nothing more, nothing less. They can&#39;t guess what you meant. If you say &#39;add 2 + 2&#39; they add. If you forget to say it, they won&#39;t. Computers are obedient but not smart.</li>
+      <li><strong>Input and Output</strong> — Every program takes something IN (input) and produces something OUT (output). A calculator takes numbers (input) and shows the result (output). A search engine takes your query (input) and shows matching websites (output). All programs follow this Input → Process → Output pattern.</li>
+      <li><strong>What are Programming Languages?</strong> — Just like there are many human languages (English, Spanish, French), there are many programming languages (JavaScript, Python, Java). Each has its own grammar and rules. We&#39;re learning JavaScript — the language of the web. It runs in every browser on Earth!</li>
+      <li><strong>Why Learn Programming?</strong> — Programming is a superpower. It lets you build websites, create apps, automate boring tasks, analyze data, and solve problems. You don&#39;t need to be a math genius — you need curiosity and patience. Every expert programmer started exactly where you are right now: knowing nothing.</li>
+      <li><strong>Bugs and Debugging</strong> — A &#39;bug&#39; is a mistake in your code that makes it behave unexpectedly. &#39;Debugging&#39; is the process of finding and fixing those mistakes. Even the best programmers write bugs — the skill is learning to find and fix them. The term &#39;bug&#39; came from an actual moth found inside a computer in 1947!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Your very first code! Let&#39;s say hello to the world.
+// In JavaScript, console.log() prints text to the screen.
+
+console.log(&quot;Hello, World!&quot;);
+// Output: Hello, World!
+
+// Let&#39;s do some math
+console.log(2 + 3);
+// Output: 5
+
+// Let&#39;s combine text
+console.log(&quot;My name is &quot; + &quot;Alex&quot;);
+// Output: My name is Alex
+
+// The computer reads top to bottom, one line at a time:
+console.log(&quot;Step 1: Wake up&quot;);
+console.log(&quot;Step 2: Brush teeth&quot;);
+console.log(&quot;Step 3: Start coding!&quot;);
+// These print in order: Step 1, Step 2, Step 3</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> A comment explaining this is your first code. Comments start with // and are ignored by the computer.</li>
+      <li><span class="walk-num">2.</span> console.log() is a built-in function that prints text to the screen.</li>
+      <li><span class="walk-num">3.</span> </li>
+      <li><span class="walk-num">4.</span> Printing the classic &#39;Hello, World!&#39; — every programmer&#39;s first program!</li>
+      <li><span class="walk-num">5.</span> This is what appears on screen when the line above runs.</li>
+      <li><span class="walk-num">6.</span> </li>
+      <li><span class="walk-num">7.</span> A comment introducing math operations.</li>
+      <li><span class="walk-num">8.</span> The computer calculates 2 + 3 and prints the result.</li>
+      <li><span class="walk-num">9.</span> The output is 5 — the computer did the math for us!</li>
+      <li><span class="walk-num">10.</span> </li>
+      <li><span class="walk-num">11.</span> A comment about combining text (called &#39;concatenation&#39;).</li>
+      <li><span class="walk-num">12.</span> The + sign joins two pieces of text together into one.</li>
+      <li><span class="walk-num">13.</span> The output combines both text pieces into a single line.</li>
+      <li><span class="walk-num">14.</span> </li>
+      <li><span class="walk-num">15.</span> A comment explaining execution order.</li>
+      <li><span class="walk-num">16.</span> This prints first because the computer reads top to bottom.</li>
+      <li><span class="walk-num">17.</span> This prints second.</li>
+      <li><span class="walk-num">18.</span> This prints third — computers always follow the order you write!</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>console.log(&quot;Hello, World!)
+console.log(2 + 3)</code></pre><details><summary>Need a hint?</summary><div class="hint">Look very carefully at the quotes in the first line...</div></details><details><summary>Show answer</summary><div class="answer">The first line is missing the closing double quote before the parenthesis. Fix: console.log(&quot;Hello, World!&quot;) — every opening quote needs a matching closing quote.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a very obedient robot friend. It will do ANYTHING you tell it — but only if you tell it in the right language, step by step. Programming is learning to talk to that robot. &#39;Pick up the cup. Walk to the table. Put the cup down.&#39; If you say it right, the robot does it perfectly!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The first computer &#39;bug&#39; was a real bug! In 1947, a moth got stuck inside the Harvard Mark II computer and caused errors. Engineer Grace Hopper taped the moth into the logbook and wrote &#39;First actual case of bug being found.&#39; The term stuck!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Open any website, right-click, and choose &#39;Inspect&#39; (or press F12). Click the &#39;Console&#39; tab. Type: console.log(&quot;I wrote my first code!&quot;) and press Enter. Congratulations — you just ran your first line of code!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=QZwneRb-zqA" target="_blank" rel="noopener noreferrer">How Do Computers Work?</a> <span class="res-source">(Crash Course)</span></li>
+      <li><a href="https://www.freecodecamp.org/news/what-is-programming/" target="_blank" rel="noopener noreferrer">What is Programming?</a> <span class="res-source">(freeCodeCamp)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=l1F_yRV5lcE" target="_blank" rel="noopener noreferrer">Programming in 100 Seconds</a> <span class="res-source">(Fireship)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=37">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./36-your-learning-path-forward.html" rel="prev">← Your Learning Path Forward</a>
+  <a class="nav-next" href="./38-setup-your-toolkit.html" rel="next">Setup Your Toolkit →</a>
+</nav>
+
+<a class="back-to-course" href="/c/js-ts-fun-book.html">← Back to course: Full-Stack Playbook</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

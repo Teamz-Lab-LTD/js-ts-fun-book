@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logging, Observability, Analytics &amp; Feature Flags… | Teamz Lab</title>
+<meta name="description" content="Observability in Flutter apps combines crash reporting, analytics, logging, and feature flags to understand production health, user behaviour, and ship new…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/54-monetization-iap-subscriptions-ads-revenuecat.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logging, Observability, Analytics &amp; Feature Flags">
+<meta property="og:description" content="Observability in Flutter apps combines crash reporting, analytics, logging, and feature flags to understand production health, user behaviour, and ship new…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Logging, Observability, Analytics &amp; Feature Flags">
+<meta name="twitter:description" content="Observability in Flutter apps combines crash reporting, analytics, logging, and feature flags to understand production health, user behaviour, and ship new…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Logging, Observability, Analytics & Feature Flags",
+  "description": "Observability in Flutter apps combines crash reporting, analytics, logging, and feature flags to understand production health, user behaviour, and ship new…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 55
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Logging, Observability, Analytics & Feature Flags",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Logging, Observability, Analytics &amp; Feature Flags</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 55 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Logging, Observability, Analytics &amp; Feature Flags</h1>
+<p class="lesson-subtitle">Monitoring production health, understanding user behaviour, and shipping safely with flags</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=55">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Observability is like a pilot&#39;s cockpit — analytics tells you where the plane is going (user journeys), logging tells you what the engines are doing (system events), crash reporting tells you when something breaks (incidents), and feature flags let you flick switches mid-flight without landing the plane (deployments).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Observability in Flutter apps combines crash reporting, analytics, logging, and feature flags to understand production health, user behaviour, and ship new features safely with controlled rollouts.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A SaaS collaboration app tracks workspace_created, message_sent, and file_uploaded events in Amplitude for funnel analysis. Feature flags in Remote Config gate the new AI summarization feature to 5% of Pro users. Crashlytics custom keys (workspaceId, userRole) help reproduce workspace-specific crashes in minutes.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Structured logging</strong> — Use structured logs (JSON key-value pairs) instead of plain print statements. In Flutter: the logger package or talker package provides log levels (verbose, debug, info, warning, error, fatal). In production, pipe logs to a backend service. Never log PII (names, emails, payment data).</li>
+      <li><strong>Firebase Crashlytics</strong> — FlutterError.onError and PlatformDispatcher.instance.onError should forward errors to Crashlytics. Use Crashlytics.instance.recordError for caught errors. Set custom keys (userId, screen, feature) before crashes for context. Separate fatal vs non-fatal errors.</li>
+      <li><strong>Analytics event design</strong> — Good analytics events answer business questions: not &#39;button_tap&#39; but &#39;checkout_started {plan: annual, source: paywall_v2}&#39;. Define an event taxonomy upfront. Use consistent naming: noun_verb (signup_completed, message_sent, payment_failed). Track funnels, not just pageviews.</li>
+      <li><strong>Firebase Analytics vs Amplitude vs Mixpanel</strong> — Firebase Analytics: free, integrates with AdWords/BigQuery, limited real-time querying. Amplitude: strong funnel analysis, cohort analysis, free tier generous. Mixpanel: event-based, powerful retention analysis, SQL access on paid plans. For Flutter: firebase_analytics, amplitude_flutter, mixpanel_flutter packages.</li>
+      <li><strong>Feature flags with Remote Config</strong> — Firebase Remote Config allows changing app behaviour without a release. Use for: feature rollouts (enable for 10% users), A/B testing, kill switches (disable broken feature), config values (paywall prices, timeout durations). Always define safe defaults in code.</li>
+      <li><strong>Remote Config best practices</strong> — Fetch + activate at app start (with cacheExpiration). Use minimum fetch interval to avoid hitting quota (default 12h in prod, 0 in debug). Define parameter groups for organization. Document every flag with owner, purpose, and expiry date — flags accumulate and become technical debt.</li>
+      <li><strong>A/B testing basics</strong> — Firebase A/B Testing uses Remote Config under the hood. Define a metric (retention D1, purchase conversion), create variants, set audience (% of users or user segment), let it run to statistical significance (usually 2-4 weeks, minimum 1000 users per variant). Don&#39;t peek early.</li>
+      <li><strong>Crash triage workflow</strong> — Step 1: Crashlytics alert → check crash-free user rate (target &gt;99.5%). Step 2: Identify top crash by impacted users. Step 3: Read stack trace + custom keys. Step 4: Reproduce locally. Step 5: Fix and verify in staging. Step 6: Release with crash rate monitoring. Step 7: Close issue in Crashlytics.</li>
+      <li><strong>ANR analysis</strong> — ANR (Application Not Responding) on Android occurs when the main thread is blocked &gt;5s. Firebase Crashlytics captures ANRs. Common causes: synchronous network calls on main thread, heavy computation without compute() isolate, blocking I/O. Use Android Vitals in Play Console for additional ANR data.</li>
+      <li><strong>Memory leak detection</strong> — Use flutter_memory_monitor or DevTools Memory tab. Common leaks: StreamSubscription not cancelled, AnimationController not disposed, timers not cancelled, large images in memory. LeakTracker (Flutter SDK built-in, debug mode) auto-detects widget lifecycle leaks.</li>
+      <li><strong>Monitoring production health dashboard</strong> — Key metrics to track: crash-free user rate (&gt;99.5%), ANR rate (&lt;0.47% for Play Store featuring), p50/p95 API latency, DAU/MAU ratio (engagement health), error rate by endpoint. Use Firebase Performance Monitoring for network request tracing.</li>
+      <li><strong>Privacy and consent for analytics</strong> — GDPR requires consent before tracking EU users. Firebase Analytics respects Analytics Collection Enabled flag. Implement a consent gate at first launch. Consider consent management platforms (OneTrust, Usercentrics). Never track without consent — fines are severe and app stores enforce this.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Comprehensive observability setup
+import &#39;package:firebase_crashlytics/firebase_crashlytics.dart&#39;;
+import &#39;package:firebase_analytics/firebase_analytics.dart&#39;;
+import &#39;package:firebase_remote_config/firebase_remote_config.dart&#39;;
+import &#39;package:talker_flutter/talker_flutter.dart&#39;;
+
+final talker = TalkerFlutter.init();
+
+Future&lt;void&gt; setupObservability() async {
+  // Crashlytics — catch all Flutter errors
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+}
+
+// Analytics service with event taxonomy
+class Analytics {
+  static final _analytics = FirebaseAnalytics.instance;
+
+  static Future&lt;void&gt; workspaceCreated({
+    required String plan,
+    required int memberCount,
+  }) async {
+    await _analytics.logEvent(
+      name: &#39;workspace_created&#39;,
+      parameters: {&#39;plan&#39;: plan, &#39;member_count&#39;: memberCount},
+    );
+    talker.info(&#39;workspace_created plan=$plan members=$memberCount&#39;);
+  }
+
+  static Future&lt;void&gt; paymentFailed({
+    required String reason,
+    required String plan,
+  }) async {
+    await _analytics.logEvent(
+      name: &#39;payment_failed&#39;,
+      parameters: {&#39;reason&#39;: reason, &#39;plan&#39;: plan},
+    );
+    // Also record as non-fatal for investigation
+    FirebaseCrashlytics.instance.recordError(
+      &#39;PaymentFailed: $reason&#39;,
+      null,
+      fatal: false,
+      information: [&#39;plan: $plan&#39;],
+    );
+  }
+}
+
+// Feature flags with Remote Config
+class FeatureFlags {
+  static final _config = FirebaseRemoteConfig.instance;
+
+  static Future&lt;void&gt; initialize() async {
+    await _config.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(hours: 12),
+    ));
+    // Safe defaults — app works without network
+    await _config.setDefaults({
+      &#39;ai_summary_enabled&#39;: false,
+      &#39;max_file_upload_mb&#39;: 25,
+      &#39;paywall_variant&#39;: &#39;control&#39;,
+    });
+    await _config.fetchAndActivate();
+  }
+
+  static bool get aiSummaryEnabled =&gt; _config.getBool(&#39;ai_summary_enabled&#39;);
+  static int get maxFileUploadMb =&gt; _config.getInt(&#39;max_file_upload_mb&#39;);
+  static String get paywallVariant =&gt; _config.getString(&#39;paywall_variant&#39;);
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> FlutterError.onError catches errors inside the Flutter framework — widget build failures, assertion errors, rendering exceptions.</li>
+      <li><span class="walk-num">2.</span> PlatformDispatcher.instance.onError catches errors in async code and platform-level errors not caught by Flutter — the two together give full coverage.</li>
+      <li><span class="walk-num">3.</span> recordFlutterFatalError vs recordError: fatal errors crashed the app; non-fatal were caught but worth tracking. Crashlytics groups these separately in the dashboard.</li>
+      <li><span class="walk-num">4.</span> Analytics.workspaceCreated logs to both Firebase Analytics and the local talker logger — production log for analysis, local log for debugging.</li>
+      <li><span class="walk-num">5.</span> payment_failed is also recorded as a non-fatal Crashlytics error with context — this surfaces payment issues in the Crashlytics dashboard alongside crashes for prioritisation.</li>
+      <li><span class="walk-num">6.</span> RemoteConfigSettings sets fetchTimeout (network call timeout) and minimumFetchInterval (how often to hit the server — avoid quota exhaustion).</li>
+      <li><span class="walk-num">7.</span> setDefaults ensures the app behaves correctly even on first launch before Remote Config fetches — critical for flags that gate core features.</li>
+      <li><span class="walk-num">8.</span> fetchAndActivate() fetches new values AND activates them atomically — fetching without activating leaves stale values until the next app restart.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class FeatureFlags {
+  static final _config = FirebaseRemoteConfig.instance;
+
+  static Future&lt;void&gt; initialize() async {
+    await _config.fetchAndActivate();
+  }
+
+  static bool get newDashboard =&gt; _config.getBool(&#39;new_dashboard&#39;);
+}
+
+// In main():
+await FeatureFlags.initialize();
+if (FeatureFlags.newDashboard) {
+  runApp(const NewDashboardApp());
+} else {
+  runApp(const LegacyApp());
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">This crashes on first install and sometimes fails silently. Two things are wrong.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: No setDefaults call — on first install, before any fetch completes, getBool(&#39;new_dashboard&#39;) returns false (the SDK default for missing bool keys) but this is accidental behaviour, not intentional. If the default should be true, the app incorrectly shows the legacy UI. Fix: call setDefaults({&#39;new_dashboard&#39;: false}) with explicit intent before fetchAndActivate. Bug 2: No setConfigSettings call — without minimumFetchInterval configuration, the SDK uses its default (12h in production, unlimited in debug) but more importantly there is no fetchTimeout set. If the network is slow, fetchAndActivate can hang indefinitely. Fix: add RemoteConfigSettings with a fetchTimeout of 10 seconds so the app startup isn&#39;t blocked on a slow Remote Config server — it falls back to cached/default values gracefully.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your app is a spaceship. Logging is the flight recorder that writes down everything that happens. Crashlytics is the emergency beacon that screams if something breaks. Analytics is the mission report that tells you how the journey went. Feature flags are the control switches that let ground control turn things on and off while you&#39;re flying.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Spotify uses feature flags to deploy code to 100% of users but enable features for 0% initially — every new feature ships dark (deployed but inactive) and is turned on gradually. This decouples deployment from release, dramatically reducing incident risk.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Set up a complete observability stack for a Flutter app: (1) Configure Crashlytics to catch both Flutter framework errors and platform errors. (2) Create an Analytics class with at least 3 semantically named events (with parameters). (3) Set up Remote Config with 3 feature flags and safe defaults. (4) Implement a crash triage checklist for a hypothetical NullPointerException in a payment screen. (5) Define what a healthy crash-free user rate target should be.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://firebase.flutter.dev/docs/crashlytics/overview" target="_blank" rel="noopener noreferrer">Firebase Crashlytics Flutter setup</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/remote-config/overview" target="_blank" rel="noopener noreferrer">Firebase Remote Config Flutter</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://pub.dev/packages/talker_flutter" target="_blank" rel="noopener noreferrer">Talker — Flutter logging package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/analytics/overview" target="_blank" rel="noopener noreferrer">Firebase Analytics Flutter</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://martinfowler.com/articles/feature-toggles.html" target="_blank" rel="noopener noreferrer">Feature flag best practices</a> <span class="res-source">(Martin Fowler)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=55">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./54-monetization-iap-subscriptions-ads-revenuecat.html" rel="prev">← Monetization: IAP, Subscriptions, Ads…</a>
+  <a class="nav-next" href="./56-system-design-i-real-time-collaboration-app.html" rel="next">System Design I: Real-time… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Interview Coding Patterns — Career Launchpad | Teamz Lab</title>
+<meta name="description" content="Interview coding patterns are reusable algorithmic templates that solve broad categories of problems. Instead of memorizing solutions to 1000 individual…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/career-launchpad/05-top-interview-coding-patterns.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/career-launchpad/04-leetcode-strategy-pattern-based-approach.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/career-launchpad/06-live-coding-under-pressure.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Top Interview Coding Patterns">
+<meta property="og:description" content="Interview coding patterns are reusable algorithmic templates that solve broad categories of problems. Instead of memorizing solutions to 1000 individual…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-career-launchpad.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/career-launchpad/05-top-interview-coding-patterns.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Top Interview Coding Patterns">
+<meta name="twitter:description" content="Interview coding patterns are reusable algorithmic templates that solve broad categories of problems. Instead of memorizing solutions to 1000 individual…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-career-launchpad.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Top Interview Coding Patterns",
+  "description": "Interview coding patterns are reusable algorithmic templates that solve broad categories of problems. Instead of memorizing solutions to 1000 individual…",
+  "url": "https://learn.teamzlab.com/lessons/career-launchpad/05-top-interview-coding-patterns.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Career Launchpad: Land Your Dream Dev Job in 2026",
+    "url": "https://learn.teamzlab.com/c/career-launchpad.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 5
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Career Launchpad",
+      "item": "https://learn.teamzlab.com/c/career-launchpad.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Top Interview Coding Patterns",
+      "item": "https://learn.teamzlab.com/lessons/career-launchpad/05-top-interview-coding-patterns.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/career-launchpad.html">Career Launchpad</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/career-launchpad.html">Career Launchpad</a> / <span aria-current="page">Top Interview Coding Patterns</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 5 of 16</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Top Interview Coding Patterns</h1>
+<p class="lesson-subtitle">Master the exact patterns that appear in 90% of technical interviews at top companies</p>
+
+<a class="cta-interactive" href="../../learn.html?course=career-launchpad&amp;lesson=5">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Coding patterns are like martial arts kata — choreographed sequences of moves. A karate master doesn&#39;t think about each punch individually in a fight; they recognize the situation and flow into the right kata instinctively. Similarly, top interviewees don&#39;t solve each problem from scratch — they recognize the pattern and apply the template.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Interview coding patterns are reusable algorithmic templates that solve broad categories of problems. Instead of memorizing solutions to 1000 individual problems, mastering 10-15 patterns gives you the tools to solve virtually any problem an interviewer throws at you. Each pattern has a recognizable trigger (problem description keywords), a template (code structure), and variations (twists interviewers add).</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Google&#39;s interview process has been studied extensively. Analysis of thousands of interview questions shows that 15 patterns cover approximately 90% of all coding questions asked at FAANG companies. A former Google interviewer revealed that they deliberately pick problems that test pattern recognition — they want to see if you can identify the underlying structure, not just brute-force a solution.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Two Pointers Mastery</strong> — Use when dealing with sorted arrays or linked lists where you need to find pairs. Start pointers at both ends (or both at start). Move them based on comparison with target. Covers: pair sum, triplets, removing duplicates, squaring sorted arrays. O(n) time.</li>
+      <li><strong>Sliding Window Deep Dive</strong> — Use for problems involving contiguous subarrays or substrings with a constraint. Maintain a window that expands right and shrinks left. Two types: fixed-size window (easy) and variable-size window (medium). Covers: max sum subarray, longest substring, minimum window substring.</li>
+      <li><strong>BFS vs DFS Decision Framework</strong> — BFS = shortest path, level-order, minimum steps. DFS = all paths, combinations, permutations, tree depth. BFS uses a queue, DFS uses recursion/stack. If the problem says &#39;shortest&#39; or &#39;minimum steps&#39; — it&#39;s BFS. If it says &#39;all possible&#39; or &#39;generate all&#39; — it&#39;s DFS.</li>
+      <li><strong>Dynamic Programming Simplified</strong> — DP = recursion + memoization. Step 1: Write the brute force recursive solution. Step 2: Add memoization (top-down) or convert to tabulation (bottom-up). Key question: &#39;Can I express the answer using answers to smaller subproblems?&#39; If yes → DP.</li>
+      <li><strong>Binary Search Variations</strong> — Beyond basic search: find first/last occurrence, search in rotated array, find peak element, search in 2D matrix. The key insight: if you can define a condition that splits the search space in half, you can use binary search. Not just for sorted arrays!</li>
+      <li><strong>Heap / Priority Queue Patterns</strong> — Use for Top K, K-th largest/smallest, merge K sorted lists, scheduling problems. Min-heap for K largest (counterintuitive!), max-heap for K smallest. Always maintain heap size K for O(n log K) instead of O(n log n).</li>
+      <li><strong>Graph Pattern Recognition</strong> — Adjacency list for sparse graphs, matrix for dense. BFS for shortest unweighted path, Dijkstra for weighted. Topological sort for dependency ordering. Union-Find for connected components. Detect cycle: DFS with 3-state coloring.</li>
+      <li><strong>Interval Patterns</strong> — Sort by start time first. Then: merge overlapping intervals (expand end), insert interval (binary search insert point), meeting rooms (min-heap for end times). Key insight: after sorting, you only need to compare with the previous interval.</li>
+      <li><strong>Backtracking Template</strong> — Used for combinations, permutations, subsets, N-Queens. Template: make a choice, recurse, undo the choice (backtrack). Optimization: prune early when you know a path can&#39;t lead to a valid solution. Always think: what are my choices at each step?</li>
+      <li><strong>Pattern Combination in Hard Problems</strong> — Hard problems combine 2-3 patterns. Example: &#39;Find shortest path with constraints&#39; = BFS + DP. &#39;Find K closest points&#39; = Heap + Euclidean distance. Practice recognizing multi-pattern problems by breaking them into subproblems.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code># Complete Pattern Templates for Top Interview Patterns
+# =====================================================
+
+# 1. TWO POINTERS: Pair with Target Sum (Sorted Array)
+\`\`\`python
+def pair_with_target(arr, target):
+    left, right = 0, len(arr) - 1
+    while left &lt; right:
+        current_sum = arr[left] + arr[right]
+        if current_sum == target:
+            return [left, right]
+        elif current_sum &lt; target:
+            left += 1    # Need bigger sum
+        else:
+            right -= 1   # Need smaller sum
+    return [-1, -1]
+# Time: O(n), Space: O(1)
+\`\`\`
+
+# 2. SLIDING WINDOW: Longest Substring with K Distinct Chars
+\`\`\`python
+def longest_substring_k_distinct(s, k):
+    window_start, max_length = 0, 0
+    char_freq = {}
+    for window_end in range(len(s)):
+        right_char = s[window_end]
+        char_freq[right_char] = char_freq.get(right_char, 0) + 1
+        while len(char_freq) &gt; k:  # Shrink window
+            left_char = s[window_start]
+            char_freq[left_char] -= 1
+            if char_freq[left_char] == 0:
+                del char_freq[left_char]
+            window_start += 1
+        max_length = max(max_length, window_end - window_start + 1)
+    return max_length
+# Time: O(n), Space: O(k)
+\`\`\`
+
+# 3. MODIFIED BINARY SEARCH: Search in Rotated Array
+\`\`\`python
+def search_rotated(arr, target):
+    left, right = 0, len(arr) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        # Left half is sorted
+        if arr[left] &lt;= arr[mid]:
+            if arr[left] &lt;= target &lt; arr[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        # Right half is sorted
+        else:
+            if arr[mid] &lt; target &lt;= arr[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+    return -1
+# Time: O(log n), Space: O(1)
+\`\`\`
+
+# 4. TOP K ELEMENTS: K Largest Numbers (Min-Heap)
+\`\`\`python
+import heapq
+def find_k_largest(nums, k):
+    min_heap = []
+    for num in nums:
+        heapq.heappush(min_heap, num)
+        if len(min_heap) &gt; k:
+            heapq.heappop(min_heap)  # Remove smallest
+    return list(min_heap)
+# Time: O(n log k), Space: O(k)
+\`\`\`
+
+# 5. BACKTRACKING: Generate All Subsets
+\`\`\`python
+def subsets(nums):
+    result = []
+    def backtrack(start, current):
+        result.append(current[:])  # Add copy
+        for i in range(start, len(nums)):
+            current.append(nums[i])       # Choose
+            backtrack(i + 1, current)      # Explore
+            current.pop()                  # Un-choose
+    backtrack(0, [])
+    return result
+# Time: O(2^n), Space: O(n) for recursion stack
+\`\`\`</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Two Pointers: Start at both ends of sorted array. If sum too small, move left up. If too big, move right down. Guaranteed O(n).</li>
+      <li><span class="walk-num">2.</span> Sliding Window: The char_freq dictionary tracks what&#39;s in our current window. When too many distinct chars, shrink from left.</li>
+      <li><span class="walk-num">3.</span> The while loop inside the for loop looks like O(n²) but is actually O(n) — each element enters and leaves the window at most once.</li>
+      <li><span class="walk-num">4.</span> Rotated Binary Search: The trick is one half is always sorted. Check if target falls in the sorted half; if yes, search there.</li>
+      <li><span class="walk-num">5.</span> Top K with min-heap: Keep only K elements in the heap. When you add element K+1, the smallest gets evicted. What remains = K largest.</li>
+      <li><span class="walk-num">6.</span> Backtracking for subsets: At each position, you either include the element or skip it. This creates a binary tree of 2^n possibilities.</li>
+      <li><span class="walk-num">7.</span> The pattern of append → recurse → pop is the backtracking template. &#39;Pop&#39; undoes the choice so you can try the next option.</li>
+      <li><span class="walk-num">8.</span> Notice every solution includes time and space complexity — always state this in interviews.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code># Sliding Window: Find max sum subarray of size K
+def max_sum_subarray(arr, k):
+    max_sum = 0
+    window_sum = 0
+    for i in range(len(arr)):
+        window_sum += arr[i]
+        if i &gt;= k:
+            window_sum -= arr[i - k]
+            max_sum = max(max_sum, window_sum)
+    return max_sum
+
+# Test: max_sum_subarray([2, 1, 5, 1, 3, 2], 3)
+# Expected: 9 (5+1+3), but returns 6. Why?</code></pre><details><summary>Need a hint?</summary><div class="hint">There are 2 bugs: one is an off-by-one error in when the window becomes valid, and the other is about where the max_sum update happens. When does the first valid window of size K complete?</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: The condition should be &#39;if i &gt;= k&#39; is correct for removing, but max_sum should also be updated when i == k-1 (the first complete window). Bug 2: max_sum update is inside the &#39;if i &gt;= k&#39; block, so it misses the first valid window (when i == k-1). Fix: change to &#39;if i &gt;= k - 1&#39; for the max_sum update, and &#39;if i &gt;= k&#39; for the subtraction. Or restructure: subtract when i &gt;= k, then always update max_sum when i &gt;= k - 1.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Think of coding patterns like LEGO instruction booklets. Each booklet teaches you how to build one type of thing — a car, a house, a spaceship. Once you know 15 different booklets, someone can give you a pile of random LEGO pieces and say &#39;build me a castle with wheels&#39; and you&#39;ll think: &#39;Oh! That&#39;s the house booklet + the car booklet combined!&#39; That&#39;s pattern recognition!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The &#39;Two Pointers&#39; technique was first formally described in computer science literature in the 1960s, but it became a standard interview pattern after companies realized it could distinguish between candidates who truly understand algorithms and those who just memorize solutions. The technique alone covers at least 30 common interview questions.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Solve one problem for each of these 5 patterns today: (1) Two Pointers: LeetCode #167 Two Sum II. (2) Sliding Window: LeetCode #3 Longest Substring Without Repeating Characters. (3) BFS: LeetCode #102 Binary Tree Level Order Traversal. (4) Binary Search: LeetCode #33 Search in Rotated Sorted Array. (5) Backtracking: LeetCode #78 Subsets. Before coding each one, write down which pattern you&#39;ll use and WHY. Time yourself — aim for under 20 minutes per Easy, 30 minutes per Medium.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.designgurus.io/course/grokking-the-coding-interview" target="_blank" rel="noopener noreferrer">Grokking the Coding Interview Patterns</a> <span class="res-source">(Design Gurus)</span></li>
+      <li><a href="https://www.youtube.com/c/NeetCode" target="_blank" rel="noopener noreferrer">NeetCode Pattern Explanations</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://seanprashad.com/leetcode-patterns/" target="_blank" rel="noopener noreferrer">LeetCode Patterns by Sean Prashad</a> <span class="res-source">(Sean Prashad)</span></li>
+      <li><a href="https://visualgo.net/" target="_blank" rel="noopener noreferrer">VisuAlgo - Algorithm Visualizations</a> <span class="res-source">(VisuAlgo)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=career-launchpad&amp;lesson=5">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./04-leetcode-strategy-pattern-based-approach.html" rel="prev">← LeetCode Strategy: Pattern-Based…</a>
+  <a class="nav-next" href="./06-live-coding-under-pressure.html" rel="next">Live Coding Under Pressure →</a>
+</nav>
+
+<a class="back-to-course" href="/c/career-launchpad.html">← Back to course: Career Launchpad</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

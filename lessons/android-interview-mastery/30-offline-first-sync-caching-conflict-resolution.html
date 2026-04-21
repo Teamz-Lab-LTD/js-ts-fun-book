@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline-First Sync, Caching, Conflict Resolution… | Teamz Lab</title>
+<meta name="description" content="Offline-first architecture makes Room the single source of truth — all reads come from Room, all writes go to Room first, and background sync reconciles…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Offline-First Sync, Caching, Conflict Resolution">
+<meta property="og:description" content="Offline-first architecture makes Room the single source of truth — all reads come from Room, all writes go to Room first, and background sync reconciles…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Offline-First Sync, Caching, Conflict Resolution">
+<meta name="twitter:description" content="Offline-first architecture makes Room the single source of truth — all reads come from Room, all writes go to Room first, and background sync reconciles…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Offline-First Sync, Caching, Conflict Resolution",
+  "description": "Offline-first architecture makes Room the single source of truth — all reads come from Room, all writes go to Room first, and background sync reconciles…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 30
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Offline-First Sync, Caching, Conflict Resolution",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Offline-First Sync, Caching, Conflict Resolution</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 30 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Offline-First Sync, Caching, Conflict Resolution</h1>
+<p class="lesson-subtitle">The senior Android differentiator: build apps that work perfectly without internet and sync reliably when connected</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=30">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Offline-first is like a doctor&#39;s paper chart system in a hospital with spotty WiFi. The doctor writes everything on the paper chart immediately (Room) — no waiting for the network. When WiFi comes back, a nurse batch-uploads all charts to the central system (server sync). If two doctors updated the same patient chart offline (conflict), there&#39;s a triage protocol: newest timestamp wins for vital signs, but a human must resolve conflicting diagnoses (manual merge). The hospital never stops working because of internet problems.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Offline-first architecture makes Room the single source of truth — all reads come from Room, all writes go to Room first, and background sync reconciles local and remote state. Push sync queues local changes for upload; pull sync fetches server changes via delta/timestamp. Conflict resolution strategies (last-write-wins, merge, manual) handle diverged state. WorkManager provides guaranteed background sync. This architecture is the key differentiator between junior and senior Android engineers in enterprise contexts.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>BRAC&#39;s field operations app serves 10,000+ field workers across Bangladesh — many work in areas with no connectivity for hours. The offline-first architecture means a field worker can submit 50 work orders completely offline. Each order is written to Room instantly (UI shows it as &#39;pending sync&#39;). A Room sync_queue table holds the pending POST requests. When connectivity returns, WorkManager flushes the queue with retry logic. If the server rejects an order (validation error), the order is flagged in Room and the worker is notified. Tixio&#39;s real-time workspace sync uses optimistic updates — dragging a card updates Room immediately, then POSTs to the server; if the WebSocket confirms the change, the optimistic update stands; if there&#39;s a conflict (another user moved the same card), the server version wins and the card snaps to the server position.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Offline-first principle</strong> — The app reads from and writes to local storage (Room) first — the network is an optimisation, not a requirement. UI always reflects local state. Network sync happens in the background, asynchronously. Users can create, update, and delete data with zero connectivity — changes are queued and synced when connection is available. This is the defining feature of enterprise field apps.</li>
+      <li><strong>Single source of truth (SSOT)</strong> — Room is the SSOT — the UI ONLY reads from Room, never directly from the network response. The sync engine writes API responses to Room; Room&#39;s Flow automatically pushes updates to the UI. This architecture means the UI code doesn&#39;t need to know anything about network state — it just observes Room.</li>
+      <li><strong>Pull sync strategy</strong> — App periodically requests all changes from the server since the last sync timestamp (delta sync). GET /orders?updated_since=1710000000. Server returns only changed records. Client upserts them into Room. Efficient for read-heavy data where the server is the authority. Used in Hazira Khata for school schedule sync — teachers pull the latest timetable on app open.</li>
+      <li><strong>Push sync strategy</strong> — App immediately POSTs local changes to the server when connectivity is available. Changes are queued in a local sync_queue table when offline. WorkManager processes the queue when connectivity is restored. Used in BRAC field ops — field workers submit work orders offline; the queue ensures zero data loss even with hours of offline time.</li>
+      <li><strong>Delta sync with sync_version or timestamp</strong> — Server maintains a monotonically increasing sync_version or last_updated_at per record. Client stores the last successful sync_version. On next sync, sends ?since_version=. Server returns only records changed after that version. Avoids downloading the entire dataset on every sync. Critical for 10K+ record datasets.</li>
+      <li><strong>Optimistic updates</strong> — Immediately reflect the user&#39;s action in Room (and thus the UI) before the network request completes. If the server confirms: keep the local state. If the server fails: rollback the local state and show an error. Creates a snappy UX — the user sees instant feedback. Used in Tixio for workspace card moves — the card moves instantly; if sync fails, it snaps back with an error toast.</li>
+      <li><strong>Conflict resolution — last-write-wins</strong> — Each record has a server_updated_at timestamp. When a conflict is detected (local version and server version both changed), the record with the newer timestamp wins. Simple, deterministic, but can silently discard valid offline changes. Appropriate for most non-critical preferences and non-financial data.</li>
+      <li><strong>Conflict resolution — merge strategy</strong> — Merge non-conflicting fields from both versions — the server version wins for fields it changed, the local version wins for fields only changed locally. Requires field-level change tracking (dirty flags per field or operation log). Complex to implement but preserves maximum user intent. Used in collaborative document editing.</li>
+      <li><strong>Conflict resolution — manual resolution</strong> — When automatic resolution is impossible (e.g., both server and client deleted the same record, or both changed the same financial amount), surface the conflict to the user. Show &#39;Your version&#39; vs &#39;Server version&#39; with a &#39;Choose one&#39; UI. Appropriate for financial transactions, healthcare records, legal documents.</li>
+      <li><strong>WorkManager for background sync</strong> — WorkManager is the only correct solution for guaranteed background work on Android. Use NetworkConstraint to wait for connectivity. Periodic sync: PeriodicWorkRequest with 15-minute minimum interval. One-time queue flush: OneTimeWorkRequest triggered by ConnectivityManager NetworkCallback. Chain work: sync → notify → update UI via LiveData/Flow from Room.</li>
+      <li><strong>Network connectivity monitoring</strong> — ConnectivityManager.registerNetworkCallback() with NetworkCapabilities.NET_CAPABILITY_INTERNET — monitors real internet connectivity, not just WiFi association. Emit connectivity state as a Flow using callbackFlow. Combine with sync logic: when connectivity is restored, trigger WorkManager one-time sync job. Handle the initial state (app may start offline).</li>
+      <li><strong>Sync queue table pattern</strong> — Create a pending_sync table in Room: (id, entityType, entityId, operation [INSERT/UPDATE/DELETE], payload JSON, attempts, created_at). When offline, write changes to both the entity table (for UI) and the pending_sync table (for later upload). WorkManager processes pending_sync on connectivity, retries with exponential backoff, marks entries as synced on success.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. Room entity with sync metadata
+@Entity(tableName = &quot;work_orders&quot;)
+data class WorkOrderEntity(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val title: String,
+    val status: String,
+    val assignedToId: String?,
+    @ColumnInfo(name = &quot;server_updated_at&quot;) val serverUpdatedAt: Long = 0L,
+    @ColumnInfo(name = &quot;local_updated_at&quot;) val localUpdatedAt: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = &quot;sync_status&quot;) val syncStatus: String = SyncStatus.PENDING_UPLOAD.name,
+    @ColumnInfo(name = &quot;is_deleted&quot;) val isDeleted: Boolean = false
+)
+
+enum class SyncStatus { SYNCED, PENDING_UPLOAD, PENDING_DELETE, CONFLICT }
+
+// 2. Pending sync queue table
+@Entity(tableName = &quot;pending_sync&quot;)
+data class PendingSyncEntity(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @ColumnInfo(name = &quot;entity_type&quot;) val entityType: String,
+    @ColumnInfo(name = &quot;entity_id&quot;) val entityId: String,
+    val operation: String, // &quot;INSERT&quot;, &quot;UPDATE&quot;, &quot;DELETE&quot;
+    val payload: String,   // JSON of the entity
+    val attempts: Int = 0,
+    @ColumnInfo(name = &quot;created_at&quot;) val createdAt: Long = System.currentTimeMillis()
+)
+
+// 3. Repository — offline-first pattern
+class WorkOrderRepository @Inject constructor(
+    private val dao: WorkOrderDao,
+    private val syncDao: PendingSyncDao,
+    private val api: WorkOrderApiService,
+    private val connectivityMonitor: ConnectivityMonitor
+) {
+    // UI always reads from Room — SSOT
+    fun observeOrders(): Flow&lt;List&lt;WorkOrder&gt;&gt; =
+        dao.observeAll()
+            .map { entities -&gt; entities.filter { !it.isDeleted }.map(::toDomain) }
+
+    // Optimistic create — write to Room first, queue for sync
+    suspend fun createOrder(order: WorkOrder) {
+        val entity = toEntity(order).copy(syncStatus = SyncStatus.PENDING_UPLOAD.name)
+        dao.upsert(entity)
+        syncDao.insert(
+            PendingSyncEntity(
+                entityType = &quot;work_order&quot;,
+                entityId = entity.id,
+                operation = &quot;INSERT&quot;,
+                payload = Json.encodeToString(entity)
+            )
+        )
+        // If online, trigger immediate sync
+        if (connectivityMonitor.isConnected()) {
+            triggerSync()
+        }
+    }
+
+    // Soft delete — mark for deletion, filter in observeOrders()
+    suspend fun deleteOrder(orderId: String) {
+        dao.markDeleted(orderId, SyncStatus.PENDING_DELETE.name)
+        syncDao.insert(
+            PendingSyncEntity(
+                entityType = &quot;work_order&quot;,
+                entityId = orderId,
+                operation = &quot;DELETE&quot;,
+                payload = orderId
+            )
+        )
+    }
+
+    // Pull sync — delta fetch from server
+    suspend fun syncFromServer(lastSyncTimestamp: Long): SyncResult {
+        return try {
+            val response = api.getOrders(updatedSince = lastSyncTimestamp)
+            dao.upsertAll(response.orders.map(::toEntity))
+            SyncResult.Success(response.serverTimestamp)
+        } catch (e: NoConnectivityException) {
+            SyncResult.Skipped
+        } catch (e: Exception) {
+            SyncResult.Error(e)
+        }
+    }
+
+    // Push sync — flush pending queue to server
+    suspend fun flushPendingSync(): Int {
+        val pending = syncDao.getPending(limit = 50)
+        var successCount = 0
+        pending.forEach { syncItem -&gt;
+            try {
+                when (syncItem.operation) {
+                    &quot;INSERT&quot;, &quot;UPDATE&quot; -&gt; {
+                        val entity = Json.decodeFromString&lt;WorkOrderEntity&gt;(syncItem.payload)
+                        val serverOrder = api.upsertOrder(entity.toApiModel())
+                        dao.upsert(entity.copy(
+                            syncStatus = SyncStatus.SYNCED.name,
+                            serverUpdatedAt = serverOrder.updatedAt
+                        ))
+                        syncDao.delete(syncItem.id)
+                        successCount++
+                    }
+                    &quot;DELETE&quot; -&gt; {
+                        api.deleteOrder(syncItem.entityId)
+                        dao.hardDelete(syncItem.entityId)
+                        syncDao.delete(syncItem.id)
+                        successCount++
+                    }
+                }
+            } catch (e: ConflictException) {
+                // Server has a newer version — resolve conflict
+                resolveConflict(syncItem, e.serverEntity)
+            } catch (e: Exception) {
+                // Increment attempts, will retry on next sync
+                syncDao.incrementAttempts(syncItem.id)
+            }
+        }
+        return successCount
+    }
+
+    // Last-write-wins conflict resolution
+    private suspend fun resolveConflict(local: PendingSyncEntity, serverEntity: WorkOrderEntity) {
+        val localEntity = Json.decodeFromString&lt;WorkOrderEntity&gt;(local.payload)
+        if (serverEntity.serverUpdatedAt &gt; localEntity.localUpdatedAt) {
+            // Server wins — overwrite local
+            dao.upsert(serverEntity.copy(syncStatus = SyncStatus.SYNCED.name))
+            syncDao.delete(local.id)
+        } else {
+            // Local is newer — flag as conflict for user review
+            dao.updateSyncStatus(localEntity.id, SyncStatus.CONFLICT.name)
+        }
+    }
+}
+
+// 4. WorkManager sync worker
+@HiltWorker
+class SyncWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted params: WorkerParameters,
+    private val repository: WorkOrderRepository,
+    private val prefs: UserPreferencesRepository
+) : CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        return try {
+            val lastSync = prefs.getLastSyncTimestamp()
+            val pullResult = repository.syncFromServer(lastSync)
+            val pushCount = repository.flushPendingSync()
+
+            if (pullResult is SyncResult.Success) {
+                prefs.setLastSyncTimestamp(pullResult.serverTimestamp)
+            }
+
+            Result.success(workDataOf(&quot;pushed&quot; to pushCount))
+        } catch (e: Exception) {
+            if (runAttemptCount &lt; 3) Result.retry() else Result.failure()
+        }
+    }
+
+    companion object {
+        fun buildPeriodicRequest(): PeriodicWorkRequest =
+            PeriodicWorkRequestBuilder&lt;SyncWorker&gt;(15, TimeUnit.MINUTES)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 1, TimeUnit.MINUTES)
+                .build()
+
+        fun buildImmediateRequest(): OneTimeWorkRequest =
+            OneTimeWorkRequestBuilder&lt;SyncWorker&gt;()
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
+                .build()
+    }
+}
+
+// 5. Connectivity monitoring as Flow
+class ConnectivityMonitor @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
+    private val connectivityManager =
+        context.getSystemService(ConnectivityManager::class.java)
+
+    fun observeConnectivity(): Flow&lt;Boolean&gt; = callbackFlow {
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onCapabilitiesChanged(
+                network: Network,
+                caps: NetworkCapabilities
+            ) {
+                trySend(caps.hasCapability(NET_CAPABILITY_INTERNET))
+            }
+            override fun onLost(network: Network) { trySend(false) }
+        }
+        val request = NetworkRequest.Builder()
+            .addCapability(NET_CAPABILITY_INTERNET)
+            .build()
+        connectivityManager.registerNetworkCallback(request, callback)
+        // Emit initial state
+        trySend(isConnected())
+        awaitClose { connectivityManager.unregisterNetworkCallback(callback) }
+    }.distinctUntilChanged()
+
+    fun isConnected(): Boolean {
+        val caps = connectivityManager
+            .getNetworkCapabilities(connectivityManager.activeNetwork)
+        return caps?.hasCapability(NET_CAPABILITY_INTERNET) == true
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> WorkOrderEntity includes syncStatus and isDeleted columns — these metadata fields drive the sync state machine without affecting business logic columns.</li>
+      <li><span class="walk-num">2.</span> PendingSyncEntity stores the full JSON payload — this allows the sync worker to reconstruct the exact state of the entity at the time the change was made, even if the entity was further modified before sync ran.</li>
+      <li><span class="walk-num">3.</span> observeOrders() filters isDeleted=true records before mapping to domain — soft-deleted items are hidden from the UI but preserved in Room until the server confirms deletion.</li>
+      <li><span class="walk-num">4.</span> createOrder() writes to Room first (dao.upsert), then enqueues in pending_sync, then optionally triggers immediate sync — the UI sees the new order instantly regardless of connectivity.</li>
+      <li><span class="walk-num">5.</span> flushPendingSync() processes a batch of 50 at a time — bounded batch size prevents the worker from running too long and being killed by the OS on resource-constrained devices.</li>
+      <li><span class="walk-num">6.</span> ConflictException handling in flushPendingSync calls resolveConflict — the conflict resolution strategy is isolated in one function, making it easy to swap from last-write-wins to merge.</li>
+      <li><span class="walk-num">7.</span> resolveConflict compares serverUpdatedAt (from server) vs localUpdatedAt (set at creation time) — if the server is newer, it wins silently; if local is newer, it&#39;s flagged for user review.</li>
+      <li><span class="walk-num">8.</span> @HiltWorker with @AssistedInject enables Hilt injection into WorkManager workers — without this, you cannot inject repository dependencies into the worker.</li>
+      <li><span class="walk-num">9.</span> Result.retry() with runAttemptCount &lt; 3 gives WorkManager permission to reschedule the worker with exponential backoff — after 3 failures it returns Result.failure() to stop retrying.</li>
+      <li><span class="walk-num">10.</span> callbackFlow with registerNetworkCallback/unregisterNetworkCallback in awaitClose — the callback is automatically unregistered when the Flow collector is cancelled, preventing memory leaks.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Find 5 offline-first architecture bugs
+class BrokenOrderRepository(
+    private val dao: OrderDao,
+    private val api: OrderApiService
+) {
+    fun observeOrders(): Flow&lt;List&lt;Order&gt;&gt; {
+        return flow {
+            val orders = api.getOrders()  // Bug 1
+            emit(orders)
+        }
+    }
+
+    suspend fun createOrder(order: Order) {
+        val response = api.createOrder(order)  // Bug 2
+        dao.insert(response.toEntity())
+    }
+
+    suspend fun deleteOrder(orderId: String) {
+        dao.hardDelete(orderId)              // Bug 3
+        api.deleteOrder(orderId)
+    }
+
+    suspend fun syncFromServer() {
+        val orders = api.getOrders()        // Bug 4
+        dao.deleteAll()
+        dao.insertAll(orders.map { it.toEntity() })
+    }
+
+    suspend fun flushPending() {
+        val pending = dao.getPending()
+        pending.forEach { item -&gt;
+            api.upsertOrder(item.toApiModel())  // Bug 5
+            dao.markSynced(item.id)
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at the data source for observeOrders, the order of operations in createOrder and deleteOrder, the sync strategy&#39;s approach to deletion, and error handling in flushPending.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: observeOrders() reads from the API directly — this is not offline-first. If offline, the Flow immediately fails. The UI never shows cached data. Fix: return dao.observeAll().map { entities -&gt; entities.map(::toDomain) } — always read from Room. The sync engine (a separate function) handles fetching from API and writing to Room. Bug 2: createOrder() calls the API first and only writes to Room if the API succeeds — this is online-first. If offline, the order is never saved anywhere. Fix: write to Room first with PENDING_UPLOAD syncStatus, add to pending_sync queue, then optionally trigger sync. The order must survive app kill even if sync hasn&#39;t run. Bug 3: deleteOrder() hard-deletes from Room before the API call — if the device is offline or the API call fails, the order is gone locally but never deleted from the server, creating a ghost record on the server. Fix: soft delete (mark isDeleted=true in Room), add DELETE to pending_sync queue, hard delete from Room only after the server confirms deletion. Bug 4: syncFromServer() calls dao.deleteAll() before inserting new data — this is a destructive full resync with no delta. During the window between deleteAll and insertAll, any observer (UI) sees an empty list (flicker). More critically, any PENDING_UPLOAD records that haven&#39;t synced yet are permanently deleted. Fix: use upsertAll() (REPLACE strategy) instead of deleteAll + insertAll, use delta sync with a timestamp, never delete records that have unsynced local changes. Bug 5: flushPending() calls api.upsertOrder() and immediately marks as synced with no error handling — if the API call throws an exception, the forEach continues to the next item but the exception is silently swallowed (or propagates and marks nothing as synced). If the API call fails transiently, the item is lost from the queue or never retried properly. Fix: wrap each item&#39;s sync in try-catch, on success mark synced, on failure increment attempts and let WorkManager retry on next execution.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re a delivery driver with a notebook and no phone signal. You write down every delivery in your notebook (Room) — you never wait for signal to do your job. When you get back to the depot with signal (WiFi), you send all your notes to the office (sync). If the office already updated a delivery record while you were offline (conflict), your manager checks who wrote it down more recently and uses that version. The app works the same way — it writes everything locally first, then figures out the internet stuff later.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">WhatsApp&#39;s offline-first architecture for message queueing was one of the technical reasons Facebook acquired it for $19 billion in 2014. Messages sent while offline are queued locally and delivered with exactly-once semantics when connectivity returns — a deceptively hard problem. The engineers who built this are now the reference point for &#39;how offline-first should work&#39;.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design and implement a complete offline-first sync system for a task management app: (1) Room schema with sync_status and pending_sync table, (2) repository with optimistic create/update/delete, (3) WorkManager worker that pushes pending changes and pulls server updates with delta sync, (4) ConnectivityMonitor Flow that triggers immediate sync on reconnection, (5) last-write-wins conflict resolution. Identify which parts would need to change if you upgraded to merge-based conflict resolution.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/topic/libraries/architecture/workmanager" target="_blank" rel="noopener noreferrer">Offline-first apps with WorkManager — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/training/monitoring-device-state/connectivity-status-type" target="_blank" rel="noopener noreferrer">Network connectivity monitoring — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://proandroiddev.com/offline-first-android-complete-guide-2024-8e9a7f2b3c1d" target="_blank" rel="noopener noreferrer">Offline-first Android: The complete guide</a> <span class="res-source">(ProAndroidDev)</span></li>
+      <li><a href="https://github.com/android/nowinandroid/blob/main/core/data/src/main/kotlin/com/google/samples/apps/nowinandroid/core/data/repository/OfflineFirstNewsRepository.kt" target="_blank" rel="noopener noreferrer">Now in Android — offline-first reference implementation</a> <span class="res-source">(GitHub)</span></li>
+      <li><a href="https://medium.com/swlh/conflict-resolution-strategies-for-offline-mobile-apps-3f8a9c7e2b4d" target="_blank" rel="noopener noreferrer">Conflict resolution strategies for mobile sync</a> <span class="res-source">(Medium)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=30">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html" rel="prev">← DataStore vs SharedPreferences vs Room…</a>
+  <a class="nav-next" href="./31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html" rel="next">Firebase on Android: Auth, FCM… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intents, PendingIntents, Task Stack &amp; Launch Modes… | Teamz Lab</title>
+<meta name="description" content="Intents are Android&#39;s inter-component messaging system. Explicit intents target specific components; implicit intents describe capabilities and let the…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/15-viewmodel-lifecycle-aware-state-savedstatehandle.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Intents, PendingIntents, Task Stack &amp; Launch Modes">
+<meta property="og:description" content="Intents are Android&#39;s inter-component messaging system. Explicit intents target specific components; implicit intents describe capabilities and let the…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Intents, PendingIntents, Task Stack &amp; Launch Modes">
+<meta name="twitter:description" content="Intents are Android&#39;s inter-component messaging system. Explicit intents target specific components; implicit intents describe capabilities and let the…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Intents, PendingIntents, Task Stack & Launch Modes",
+  "description": "Intents are Android's inter-component messaging system. Explicit intents target specific components; implicit intents describe capabilities and let the…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 14
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Intents, PendingIntents, Task Stack & Launch Modes",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Intents, PendingIntents, Task Stack &amp; Launch Modes</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 14 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Intents, PendingIntents, Task Stack &amp; Launch Modes</h1>
+<p class="lesson-subtitle">Navigate Android&#39;s multi-screen model — critical for deep linking and notification handling</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=14">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">An Intent is like a taxi request — you either specify the exact destination (explicit intent: &#39;take me to MainActivity&#39;) or describe what you need (implicit intent: &#39;I need a camera&#39;). A PendingIntent is like a pre-paid taxi voucher you give to someone else — they can use it later on your behalf. Launch modes are the hotel&#39;s room assignment policy — standard gives a new room every time, singleTop reuses your current room if you&#39;re already in it, singleTask gives you a private suite no matter where you came from.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Intents are Android&#39;s inter-component messaging system. Explicit intents target specific components; implicit intents describe capabilities and let the system route them. PendingIntents are deferred, delegated intents used by notifications and alarms. Launch modes and task affinity control how Activities stack and whether instances are reused — critical for correct behavior in notification deep linking, multi-window, and back navigation.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a SaaS collaboration app, tapping a push notification for &#39;You were mentioned in Project Alpha&#39; must deep-link to the correct ProjectDetailActivity. If the app is already open on ProjectDetailActivity for a different project, singleTop ensures a new instance is created (different data). A PendingIntent (FLAG_IMMUTABLE | FLAG_UPDATE_CURRENT) carries the projectId extra so the notification click always shows the right project. The NotificationHelper class creates unique requestCodes per project ID to ensure PendingIntents don&#39;t collide.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Explicit intents</strong> — Specify the exact component to start: Intent(this, DetailActivity::class.java). Used for starting Activities, Services, and BroadcastReceivers within your own app. Always use explicit intents for internal navigation — implicit intents for internal components are a security risk since other apps can intercept them.</li>
+      <li><strong>Implicit intents</strong> — Describe an ACTION and optional DATA/CATEGORY — Android resolves which component handles it. ACTION_VIEW with a geo: URI opens Maps. ACTION_SEND opens a share dialog. ACTION_DIAL opens the dialer. The system checks all apps&#39; IntentFilters in manifests and shows a chooser if multiple match.</li>
+      <li><strong>Intent flags</strong> — FLAG_ACTIVITY_NEW_TASK: start Activity in a new task (required when starting from non-Activity context). FLAG_ACTIVITY_CLEAR_TOP: if Activity already in stack, destroy everything above it and call onNewIntent(). FLAG_ACTIVITY_SINGLE_TOP: don&#39;t create new instance if already at top of stack. Flags and launch modes often overlap — flags take precedence at runtime.</li>
+      <li><strong>PendingIntent</strong> — Grants another app (System, NotificationManager, AlarmManager) permission to perform an Intent as if it were your app. Created with PendingIntent.getActivity(), getService(), getBroadcast(). The requestCode distinguishes multiple PendingIntents. FLAG_IMMUTABLE (required on API 23+ for notifications) means the extra cannot be changed by the recipient.</li>
+      <li><strong>PendingIntent flags</strong> — FLAG_UPDATE_CURRENT: keep existing PendingIntent but replace its extras. FLAG_CANCEL_CURRENT: cancel existing, create new. FLAG_ONE_SHOT: can only be used once. FLAG_IMMUTABLE (API 23+): system cannot modify the intent. FLAG_MUTABLE: allows system to fill in components (required for bubbles and widgets that need fillInIntent).</li>
+      <li><strong>Task and back stack</strong> — A Task is a stack of Activities — user presses Back to pop the stack. By default each app launch creates a new Task for the root Activity. Tasks can be moved to background (Home button) and resumed. Multiple Tasks can exist — switching apps switches Tasks. Each Task has its own back stack.</li>
+      <li><strong>Launch modes — standard</strong> — Default. Every startActivity() creates a new instance. Stack can have multiple instances of the same Activity. A → B → A → B → B creates a stack of 5. Good for independent screens like product detail pages where each instance has different data.</li>
+      <li><strong>Launch modes — singleTop</strong> — If an instance is already at the TOP of the current task&#39;s stack, reuse it and call onNewIntent(). If it&#39;s NOT at top, create a new instance. Useful for notification deep links into an already-open detail screen — avoids duplicate instances when user taps notification repeatedly.</li>
+      <li><strong>Launch modes — singleTask</strong> — Only one instance exists in the entire system. If already exists, Android brings its task to foreground, pops everything above it, and calls onNewIntent(). Used for main/hub Activities. WhatsApp&#39;s main chat list is singleTask — no matter where you come from, there&#39;s one instance.</li>
+      <li><strong>Launch modes — singleInstance</strong> — Like singleTask but the Activity lives alone in its own Task — no other Activities can be pushed onto its task. Starting a new Activity from singleInstance creates it in a new Task. Rarely used — telephony-related screens (incoming call UI) are the canonical example.</li>
+      <li><strong>taskAffinity</strong> — Defines which task an Activity &#39;belongs to&#39;. Default is the app&#39;s package name. Set a custom taskAffinity to make an Activity prefer a different task. Combined with FLAG_ACTIVITY_NEW_TASK, forces an Activity into a specific task. Used for multi-window scenarios and document-centric apps.</li>
+      <li><strong>onNewIntent()</strong> — Called when a singleTop or singleTask Activity receives a new Intent while already in the stack. The Activity is NOT recreated — you get the new Intent via this callback. Must call setIntent(intent) if you want getIntent() to return the new intent later. Forgetting this is a common bug in notification handling.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Explicit intent — internal navigation with extras
+fun openWorkOrderDetail(context: Context, orderId: String) {
+    val intent = Intent(context, WorkOrderDetailActivity::class.java).apply {
+        putExtra(WorkOrderDetailActivity.EXTRA_ORDER_ID, orderId)
+        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+    }
+    context.startActivity(intent)
+}
+
+// Implicit intent — share content
+fun shareReport(context: Context, reportText: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = &quot;text/plain&quot;
+        putExtra(Intent.EXTRA_SUBJECT, &quot;Field Operations Report&quot;)
+        putExtra(Intent.EXTRA_TEXT, reportText)
+    }
+    context.startActivity(Intent.createChooser(shareIntent, &quot;Share Report&quot;))
+}
+
+// PendingIntent for notification deep link
+fun buildNotificationPendingIntent(
+    context: Context,
+    projectId: String,
+    mentionId: String
+): PendingIntent {
+    val deepLinkIntent = Intent(context, ProjectDetailActivity::class.java).apply {
+        putExtra(ProjectDetailActivity.EXTRA_PROJECT_ID, projectId)
+        putExtra(ProjectDetailActivity.EXTRA_MENTION_ID, mentionId)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+    }
+    return PendingIntent.getActivity(
+        context,
+        projectId.hashCode(),           // Unique requestCode per project
+        deepLinkIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+}
+
+// singleTop Activity handling onNewIntent
+class ProjectDetailActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleIntent(intent)
+    }
+
+    // Called when singleTop reuses existing instance
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)   // IMPORTANT: update getIntent() result
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val projectId = intent.getStringExtra(EXTRA_PROJECT_ID) ?: return
+        val mentionId = intent.getStringExtra(EXTRA_MENTION_ID)
+        viewModel.loadProject(projectId, mentionId)
+    }
+
+    companion object {
+        const val EXTRA_PROJECT_ID = &quot;project_id&quot;
+        const val EXTRA_MENTION_ID = &quot;mention_id&quot;
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> openWorkOrderDetail uses an explicit Intent with the target class specified directly — no ambiguity, no interception risk. FLAG_ACTIVITY_SINGLE_TOP avoids duplicating the detail screen if it&#39;s already at the top.</li>
+      <li><span class="walk-num">2.</span> shareReport uses ACTION_SEND with type &#39;text/plain&#39; — an implicit intent. The system queries all installed apps for IntentFilters matching this action+type and shows a chooser. createChooser wraps it to always show the dialog even if only one app matches.</li>
+      <li><span class="walk-num">3.</span> buildNotificationPendingIntent creates a PendingIntent.getActivity() — when the notification is tapped, it&#39;s equivalent to the user calling startActivity with deepLinkIntent from YOUR app&#39;s context.</li>
+      <li><span class="walk-num">4.</span> projectId.hashCode() as requestCode gives each project a stable, unique integer. Two PendingIntents with the same requestCode and same action but different extras might be considered equal by the system — unique requestCodes prevent this.</li>
+      <li><span class="walk-num">5.</span> FLAG_UPDATE_CURRENT means if a PendingIntent with this requestCode already exists (from a previous notification for the same project), its extras are updated with the new mentionId instead of creating a duplicate.</li>
+      <li><span class="walk-num">6.</span> FLAG_IMMUTABLE prevents any recipient (system or other app) from modifying the Intent before delivery — security best practice required on API 31+.</li>
+      <li><span class="walk-num">7.</span> In ProjectDetailActivity.onCreate, handleIntent(intent) processes the launch intent — this covers the cold-start-from-notification case.</li>
+      <li><span class="walk-num">8.</span> onNewIntent is called when singleTop reuses the existing instance. setIntent(intent) is crucial — without it, getIntent() still returns the original launch intent, and any code elsewhere that calls getIntent() later will use stale data.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Notification helper
+fun createMentionNotification(context: Context, mentionId: String, text: String) {
+    val intent = Intent(context, MentionActivity::class.java).apply {
+        putExtra(&quot;mention_id&quot;, mentionId)
+    }
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,          // bug 1
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT   // bug 2 on API 31+
+    )
+    // ... build and post notification
+}
+
+// MentionActivity — declared singleTop in manifest
+class MentionActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val mentionId = intent.getStringExtra(&quot;mention_id&quot;)
+        loadMention(mentionId)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        // bug 3 — missing line
+        val mentionId = intent.getStringExtra(&quot;mention_id&quot;)
+        loadMention(mentionId)
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about PendingIntent collisions between different mentions, API 31 security requirements, and stale intent data.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: requestCode is always 0 — all mention notifications share the same PendingIntent slot. When you post notification for mention-B, it overwrites the PendingIntent for mention-A. Tapping mention-A&#39;s notification now opens mention-B. Fix: use mentionId.hashCode() as the requestCode. Bug 2: On API 31+ (Android 12+), PendingIntents must include FLAG_IMMUTABLE or FLAG_MUTABLE. Missing this flag causes an IllegalArgumentException crash at PendingIntent.getActivity(). Fix: PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE. Bug 3: onNewIntent does NOT call setIntent(intent) — if any other code in this Activity calls getIntent() after onNewIntent, it still gets the original launch intent (wrong mentionId). Fix: add setIntent(intent) as the first line of onNewIntent.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">An Intent is like sending a letter. An explicit Intent has a specific address on the envelope (go to THIS house). An implicit Intent just says what you want (deliver birthday cake) and the postal system figures out which house does that. A PendingIntent is like giving a pre-addressed, pre-stamped letter to your friend — they can send it later on your behalf without knowing your address. Launch modes decide if you get a new room at the hotel (standard), or if you reuse your room if you&#39;re already there (singleTop), or if you have a single permanent suite no matter what (singleTask).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">FLAG_IMMUTABLE was made mandatory for PendingIntents targeting Android 12 (API 31) after a security researcher demonstrated that mutable PendingIntents could be hijacked by malicious apps to escalate privileges — they could modify the Intent extras before the system delivered it, effectively making the target app perform unintended actions.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a notification system for a SaaS app: (1) Create a NotificationHelper that posts a &#39;New mention&#39; notification with a PendingIntent targeting MentionDetailActivity (use FLAG_IMMUTABLE | FLAG_UPDATE_CURRENT, unique requestCode per mentionId). (2) Make MentionDetailActivity singleTop with correct onNewIntent handling. (3) Handle the case where the app is not running (cold start from notification) vs already running (onNewIntent path). (4) Test: post two notifications for different mentions — tapping each should show the correct mention.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/guide/components/intents-filters" target="_blank" rel="noopener noreferrer">Intents and Intent Filters — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/reference/android/app/PendingIntent" target="_blank" rel="noopener noreferrer">PendingIntent — Android Developers Reference</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/guide/components/activities/tasks-and-back-stack" target="_blank" rel="noopener noreferrer">Tasks and the Back Stack</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://medium.com/androiddevelopers/android-activity-launch-mode-e0df1aa72242" target="_blank" rel="noopener noreferrer">Android Launch Modes — A Visual Guide</a> <span class="res-source">(Medium / Android Developers)</span></li>
+      <li><a href="https://developer.android.com/develop/ui/views/notifications/channels" target="_blank" rel="noopener noreferrer">Create and manage notification channels</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=14">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./13-activity-fragment-lifecycle-configuration-changes.html" rel="prev">← Activity &amp; Fragment Lifecycle…</a>
+  <a class="nav-next" href="./15-viewmodel-lifecycle-aware-state-savedstatehandle.html" rel="next">ViewModel, Lifecycle-Aware State &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

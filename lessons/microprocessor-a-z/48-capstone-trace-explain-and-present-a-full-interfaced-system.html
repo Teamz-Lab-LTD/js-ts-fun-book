@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone: Trace, Explain, and Present a Full… | Teamz Lab</title>
+<meta name="description" content="This capstone lesson brings together every concept from the entire course. You will trace complete system operations — from CPU instruction execution…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html">
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Capstone: Trace, Explain, and Present a Full Interfaced System">
+<meta property="og:description" content="This capstone lesson brings together every concept from the entire course. You will trace complete system operations — from CPU instruction execution…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Capstone: Trace, Explain, and Present a Full Interfaced System">
+<meta name="twitter:description" content="This capstone lesson brings together every concept from the entire course. You will trace complete system operations — from CPU instruction execution…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Capstone: Trace, Explain, and Present a Full Interfaced System",
+  "description": "This capstone lesson brings together every concept from the entire course. You will trace complete system operations — from CPU instruction execution…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 48
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Capstone: Trace, Explain, and Present a Full Interfaced System",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Capstone: Trace, Explain, and Present a Full Interfaced System</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 48 of 48</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Capstone: Trace, Explain, and Present a Full Interfaced System</h1>
+<p class="lesson-subtitle">The Final Challenge — Master the Complete Picture</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=48">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">This capstone is like a final pilot check-ride. You have learned every instrument in the cockpit individually — altimeter (registers), compass (flags), throttle (control signals), radio (serial), autopilot (interrupts). Now you must fly the complete airplane: take off (reset and boot), navigate (execute instructions), communicate with the tower (I/O), handle emergencies (interrupts), and land safely (produce correct output). The examiner watches every move and asks &#39;Why did you do that?&#39; You must explain every decision, every signal, every timing detail.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>This capstone lesson brings together every concept from the entire course. You will trace complete system operations — from CPU instruction execution through address decoding, memory access, peripheral interaction, interrupt handling, and DMA transfer. You will analyze exam-style problems that combine knowledge across multiple topics. And you will practice presenting a complete system design: block diagram, memory map, decoding logic, initialization firmware, ISR code, and main application — the full skill set of a microprocessor engineer.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>The ability to trace a complete system — to follow a signal from a device through an interrupt controller to the CPU, through the ISR, to a memory write, and out to a display — is exactly what embedded systems engineers do when debugging real products. When a car&#39;s ABS module fails, an engineer traces the sensor signal through the interrupt chain to find the fault. When a medical device misbehaves, engineers trace bus activity with logic analyzers. This complete-system thinking is the most valuable skill you can develop.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What &#39;Trace the System&#39; Means</strong> — Tracing a system means following the exact sequence of events from power-on to a specific operation: which address appears on the bus, which chip responds, what data flows, which signals are asserted, and in what order. It is the ultimate demonstration of understanding — you cannot fake a trace. If you can trace the complete execution of an instruction including address decoding, memory access, and peripheral interaction, you truly understand how a microprocessor system works.</li>
+      <li><strong>Tracing a Complete I/O Operation</strong> — Tracing an I/O port access (like OUT 80h, AL) follows the same logic but with M/IO=0. The address bus carries the port number (0080h), M/IO goes LOW signaling I/O, the I/O decoder generates CS_8255, and the 8255 latches the data from the data bus. Every signal change has a purpose, and exam questions often ask you to list them in order.</li>
+      <li><strong>Tracing an Interrupt Sequence</strong> — The most complex trace: a hardware interrupt from 8254 timer through 8259 PIC to the CPU. The timer counts to zero → asserts OUT0 → connected to 8259 IR0 → 8259 asserts INTR → CPU finishes current instruction → sends two INTA pulses → 8259 provides vector → CPU reads IVT → jumps to ISR → ISR executes → sends EOI → IRET. This involves every major chip in the system working together.</li>
+      <li><strong>Tracing a DMA Transfer</strong> — When the floppy controller wants to transfer data via DMA Channel 2: FDC asserts DREQ2 → 8237 asserts HRQ → CPU asserts HLDA → 8237 takes bus control → 8237 drives address bus and asserts DACK2 → data moves from FDC to memory → count decrements → when count=0, TC asserted → 8237 releases HRQ → CPU resumes. The CPU is completely hands-off during the actual transfer.</li>
+      <li><strong>Exam-Style Analysis Questions</strong> — University exams and interviews test your ability to analyze unfamiliar systems. Common formats: (1) Given a memory map, determine address ranges and decoder equations. (2) Given a control word, determine chip configuration. (3) Given assembly code, trace register and flag changes. (4) Given a system diagram, identify missing connections. (5) Calculate timing values for timer modes. You must combine knowledge from multiple lessons to answer these.</li>
+      <li><strong>Signal Timing Diagram Reading</strong> — Timing diagrams show signal values (HIGH/LOW) on a shared time axis. Being able to read them is essential for hardware understanding. Key signals to track: CLK (reference), ALE (address latch), Address Bus, Data Bus, RD/WR, M/IO, INTA, READY. Practice reading: when does the address appear? When does data become valid? When does the CPU latch data? These details matter for real hardware design.</li>
+      <li><strong>Design Presentation — Communicating Your Work</strong> — Presenting a system design means organizing your work for others: (1) System overview and requirements. (2) Block diagram showing all components. (3) Detailed memory and I/O map. (4) Address decoding equations with truth tables. (5) Complete initialization code with comments. (6) ISR code for each interrupt source. (7) Main loop flow. (8) Testing methodology. Good engineers communicate designs clearly — a brilliant design nobody can understand is a failed design.</li>
+      <li><strong>Course Synthesis — Everything Connects</strong> — This entire 48-lesson course flows as one integrated knowledge graph: digital logic (Lesson 4) builds gates used in decoders (Lesson 37). Registers (Lesson 11) hold data moved by instructions (Lessons 21-24). Addressing modes (Lesson 17) select memory interfaced in Lesson 37. Interrupts (Lessons 34-35) are managed by the 8259 (Lesson 42). Timers (Lesson 41) trigger those interrupts. I/O (Lessons 38-40) uses the 8255. Serial (Lesson 44) extends communication. Everything connects.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; =============================================
+; CAPSTONE: Full System Trace Example
+; =============================================
+;
+; Scenario: User presses key &#39;5&#39; on keyboard.
+; Trace the COMPLETE path through the system.
+;
+; === PHASE 1: Key Detection ===
+;
+; Main loop executes: IN AL, 81h (read 8255 Port B)
+;
+; CPU bus cycle:
+;   Address bus = 0081h
+;   M/IO = 0 (I/O cycle)
+;   I/O decoder: A7=1,A6=0,A5=0 → Y4 → CS_8255
+;   8255: A1=0, A0=1 → Port B selected
+;   CPU asserts RD
+;   8255 puts Port B data on D0-D7
+;   CPU reads into AL: 11011111 → column 5 active
+;
+; === PHASE 2: Display Update ===
+;
+; Code: MOV AL, [SEG_TABLE + 5]
+;   CPU reads address 0000:SEG_TBL+5 from RAM
+;   CS_RAM active (memory, low address)
+;   AL = 6Dh (pattern for &#39;5&#39;)
+;
+; Code: OUT 80h, AL
+;   Address bus = 0080h, M/IO = 0
+;   CS_8255 active, A1=0, A0=0 → Port A
+;   CPU asserts WR, 8255 latches 6Dh
+;   Seven-segment shows &#39;5&#39;
+;
+; === PHASE 3: Serial Logging ===
+;
+; Code: OUT 60h, AL (send &#39;5&#39; via 8251)
+;   Address bus = 0060h, M/IO = 0
+;   CS_8251 active
+;   8251 serializes byte: START-10100110-STOP
+;   TxD line sends at 9600 baud
+;
+; === PHASE 4: Timer Interrupt ===
+;
+; Meanwhile, 8254 Counter 0 reaches 0
+;   OUT0 → 8259 IR0 → INTR asserted
+;   CPU: INTA pulse 1 → ISR bit set
+;   CPU: INTA pulse 2 → vector 08h received
+;   CPU: reads IVT[08h] → jumps to TIMER_ISR
+;   ISR: refreshes multiplexed display
+;   ISR: MOV AL, 20h / OUT 20h, AL → EOI
+;   ISR: IRET → back to main loop
+;
+; COMPLETE TRACE: keypress → detection → display
+;   → serial log → timer interrupt → display refresh
+;   All chips working together! ✓</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Title comment for the capstone full system trace</li>
+      <li><span class="walk-num">2.</span> Separator line</li>
+      <li><span class="walk-num">3.</span> Blank line</li>
+      <li><span class="walk-num">4.</span> Scenario description: user presses key &#39;5&#39; and we trace everything</li>
+      <li><span class="walk-num">5.</span> Blank line</li>
+      <li><span class="walk-num">6.</span> PHASE 1: Key Detection — scanning the keyboard through 8255</li>
+      <li><span class="walk-num">7.</span> Blank line</li>
+      <li><span class="walk-num">8.</span> Main loop reads Port B: IN AL, 81h</li>
+      <li><span class="walk-num">9.</span> Blank line</li>
+      <li><span class="walk-num">10.</span> CPU places port address 0081h on the address bus</li>
+      <li><span class="walk-num">11.</span> M/IO signal = 0 because this is an I/O instruction (IN)</li>
+      <li><span class="walk-num">12.</span> I/O decoder analyzes: A7=1, A6=0, A5=0 maps to output Y4</li>
+      <li><span class="walk-num">13.</span> Y4 drives CS_8255 LOW — the 8255 is selected</li>
+      <li><span class="walk-num">14.</span> Inside the 8255: A1=0, A0=1 selects Port B register</li>
+      <li><span class="walk-num">15.</span> CPU asserts RD (read) control signal</li>
+      <li><span class="walk-num">16.</span> 8255 responds by placing Port B data onto D0-D7 of the data bus</li>
+      <li><span class="walk-num">17.</span> CPU reads the data bus into AL — pattern shows column 5 is active (key pressed)</li>
+      <li><span class="walk-num">18.</span> Blank line</li>
+      <li><span class="walk-num">19.</span> PHASE 2: Display Update — showing the digit on seven-segment</li>
+      <li><span class="walk-num">20.</span> Blank line</li>
+      <li><span class="walk-num">21.</span> Code looks up segment pattern for digit 5 from table in RAM</li>
+      <li><span class="walk-num">22.</span> CS_RAM activates (memory access, low address range)</li>
+      <li><span class="walk-num">23.</span> AL receives 6Dh — the seven-segment pattern that displays &#39;5&#39;</li>
+      <li><span class="walk-num">24.</span> Blank line</li>
+      <li><span class="walk-num">25.</span> OUT 80h, AL sends the pattern to 8255 Port A (display port)</li>
+      <li><span class="walk-num">26.</span> Address bus = 0080h, M/IO=0 for I/O cycle</li>
+      <li><span class="walk-num">27.</span> CS_8255 active again, A1=0 A0=0 selects Port A</li>
+      <li><span class="walk-num">28.</span> CPU asserts WR, 8255 latches the byte 6Dh onto Port A output pins</li>
+      <li><span class="walk-num">29.</span> Seven-segment display lights up segments to show the digit 5</li>
+      <li><span class="walk-num">30.</span> Blank line</li>
+      <li><span class="walk-num">31.</span> PHASE 3: Serial Logging — send the key value over USART</li>
+      <li><span class="walk-num">32.</span> Blank line</li>
+      <li><span class="walk-num">33.</span> OUT 60h, AL sends the value to the 8251 data register</li>
+      <li><span class="walk-num">34.</span> CS_8251 activates for the I/O address</li>
+      <li><span class="walk-num">35.</span> 8251 converts the parallel byte to a serial frame</li>
+      <li><span class="walk-num">36.</span> TxD line transmits START bit, 8 data bits, STOP bit at 9600 baud</li>
+      <li><span class="walk-num">37.</span> Blank line</li>
+      <li><span class="walk-num">38.</span> PHASE 4: Timer Interrupt — asynchronous periodic event</li>
+      <li><span class="walk-num">39.</span> Blank line</li>
+      <li><span class="walk-num">40.</span> 8254 Counter 0 has been counting down and reaches zero</li>
+      <li><span class="walk-num">41.</span> OUT0 output pulses to 8259 IR0 input</li>
+      <li><span class="walk-num">42.</span> 8259 sets IRR bit 0, priority resolver selects it, asserts INTR</li>
+      <li><span class="walk-num">43.</span> CPU finishes current instruction, sees INTR with IF=1</li>
+      <li><span class="walk-num">44.</span> First INTA pulse: 8259 sets ISR bit 0, clears IRR bit 0</li>
+      <li><span class="walk-num">45.</span> Second INTA pulse: 8259 places vector 08h on data bus, CPU reads it</li>
+      <li><span class="walk-num">46.</span> CPU reads IVT entry at address 0020h — gets ISR address</li>
+      <li><span class="walk-num">47.</span> CPU pushes FLAGS, CS, IP onto stack and jumps to TIMER_ISR</li>
+      <li><span class="walk-num">48.</span> ISR refreshes the multiplexed display (cycles through digits)</li>
+      <li><span class="walk-num">49.</span> ISR sends EOI (20h to port 20h) to clear the 8259 ISR bit</li>
+      <li><span class="walk-num">50.</span> IRET pops IP, CS, FLAGS — returns to main loop exactly where it left off</li>
+      <li><span class="walk-num">51.</span> Blank line</li>
+      <li><span class="walk-num">52.</span> Summary: complete trace from keypress through all chips back to normal execution</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; System ISR for timer interrupt:
+;
+TIMER_ISR:
+  INC WORD PTR [TICK_COUNT]
+  CMP WORD PTR [TICK_COUNT], 1000
+  JNE TIMER_DONE
+  MOV WORD PTR [TICK_COUNT], 0
+  ; Send status byte via 8251
+  MOV AL, &#39;T&#39;
+  OUT 60h, AL
+TIMER_DONE:
+  IRET
+;
+; Main code enables interrupts:
+  MOV AL, 0FEh
+  OUT 21h, AL           ; unmask IR0
+  STI</code></pre><details><summary>Need a hint?</summary><div class="hint">The ISR modifies memory and registers. What about preserving the interrupted program&#39;s state? Also, what critical command is missing before IRET?</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) The ISR does not save/restore registers (AX) or flags. INC and CMP modify flags, and MOV AL changes AX. The interrupted program&#39;s register values are corrupted. Fix: add PUSH AX at the start and POP AX before IRET (and PUSHF/POPF if needed). (2) There is no EOI command before IRET. Without &#39;MOV AL, 20h / OUT 20h, AL&#39;, the 8259&#39;s ISR bit stays set, blocking all future timer interrupts after the first one. Fix: add EOI before IRET.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you built the world&#39;s most amazing Rube Goldberg machine — a ball rolls down a ramp, hits a lever, the lever rings a bell, the bell wakes up a hamster, the hamster runs on a wheel, the wheel powers a light. The capstone is like showing your machine to the whole class and explaining: &#39;The ball starts HERE because of gravity, the lever turns because of THIS angle, the bell rings because of THIS force, the hamster wakes because of THIS sound.&#39; You trace every step and explain WHY it works. If you can do that for a whole microprocessor system — from key press to display to serial output to interrupt — you have truly mastered the machine beneath the software!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The skills you have built in this course — understanding registers, memory maps, bus timing, interrupts, and I/O interfacing — are essentially the same skills needed to reverse-engineer any electronic device. Security researchers use exactly these trace techniques to analyze unknown chips, find vulnerabilities in IoT devices, and understand how proprietary hardware works. The U.S. and global semiconductor industries have a massive shortage of engineers who understand hardware at this level — your knowledge is genuinely rare and valuable.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Complete capstone challenge: Given an 8086 system with ROM (F0000-FFFFF), RAM (00000-0FFFF), 8255 (port C0-C3h), 8254 (port 40-43h), 8259 (port 20-21h), and 8251 (port A0-A1h): (1) Draw the complete block diagram with all bus connections. (2) Derive every chip select equation. (3) Write the full initialization code. (4) Write a timer ISR that increments a counter and sends its value via serial every 1000 interrupts. (5) Trace the execution of one complete timer interrupt cycle, listing every signal change in order.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=rUQbs5YYjBw" target="_blank" rel="noopener noreferrer">8086 System Design Complete Example</a> <span class="res-source">(Education 4u)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/microprocessor-tutorials/" target="_blank" rel="noopener noreferrer">Microprocessor Exam Questions and Solutions</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=N7uIa_aJiYw" target="_blank" rel="noopener noreferrer">Tracing 8086 Instructions</a> <span class="res-source">(Neso Academy)</span></li>
+      <li><a href="https://edge.edx.org/c4x/BITSPilani/EEE231/asset/8086_family_Users_Manual_1_.pdf" target="_blank" rel="noopener noreferrer">8086 Family User Manual</a> <span class="res-source">(Intel)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=48">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./47-designing-a-small-microprocessor-based-system.html" rel="prev">← Designing a Small Microprocessor-Based…</a>
+  <span class="nav-placeholder"></span>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

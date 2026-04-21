@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Design I: Real-time Collaboration App — Flutter… | Teamz Lab</title>
+<meta name="description" content="A real-time collaboration system design covers the architecture needed to support multi-workspace messaging with presence, offline queuing, file sharing…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="System Design I: Real-time Collaboration App">
+<meta property="og:description" content="A real-time collaboration system design covers the architecture needed to support multi-workspace messaging with presence, offline queuing, file sharing…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="System Design I: Real-time Collaboration App">
+<meta name="twitter:description" content="A real-time collaboration system design covers the architecture needed to support multi-workspace messaging with presence, offline queuing, file sharing…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "System Design I: Real-time Collaboration App",
+  "description": "A real-time collaboration system design covers the architecture needed to support multi-workspace messaging with presence, offline queuing, file sharing…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 56
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "System Design I: Real-time Collaboration App",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">System Design I: Real-time Collaboration App</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 56 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">System Design I: Real-time Collaboration App</h1>
+<p class="lesson-subtitle">Designing a Tixio-style multi-workspace chat platform — architecture, WebSockets, offline queue, and scaling</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=56">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Designing a real-time collaboration app is like designing a city&#39;s postal and telephone system simultaneously — messages must deliver instantly (phone calls), survive network outages (mail backup), handle millions of concurrent users (city scale), and organize communication by neighborhoods (workspaces) and streets (channels).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>A real-time collaboration system design covers the architecture needed to support multi-workspace messaging with presence, offline queuing, file sharing, and horizontal scaling — a common senior Flutter/backend system design interview topic.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Tixio is a Teamz Lab SaaS product providing multi-workspace collaboration. Its Flutter app maintains a persistent WebSocket connection, queues messages locally when offline, and uses Redis Pub/Sub to fan out messages across server instances to connected team members worldwide.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Requirements gathering — the most important step</strong> — Senior interviewers watch HOW you gather requirements, not just what you design. Clarify: scale (MAU, concurrent users, message volume), geography (single region vs global), real-time requirements (latency SLA), offline needs, message persistence duration, file sharing limits, and compliance (GDPR, data residency). State your assumptions explicitly.</li>
+      <li><strong>High-level architecture layers</strong> — Client (Flutter) → API Gateway (load balancer + auth) → Application servers (NestJS/Go) → WebSocket server cluster → Message broker (Redis Pub/Sub or Kafka) → Persistence layer (PostgreSQL + Redis cache) → Object storage (S3/Supabase Storage for files) → Push notification service (FCM/APNs). Draw this top-down in interviews.</li>
+      <li><strong>Data model design</strong> — Core entities: User, Workspace, WorkspaceMember (role: owner/admin/member), Channel (public/private), ChannelMember, Message (id, channelId, authorId, content, type, replyToId, reactions, editedAt, deletedAt), FileAttachment, PresenceRecord. Use UUIDs for all IDs — distributed-safe and non-guessable.</li>
+      <li><strong>WebSocket design and connection management</strong> — Each Flutter client opens a persistent WebSocket to a sticky-load-balanced server. On connect: authenticate via JWT, subscribe to all channels the user is a member of, receive missed messages since last_seen_at. Server sends typed events: message.new, message.edited, member.typing, presence.update, channel.created.</li>
+      <li><strong>Offline message queue</strong> — Flutter client maintains a local SQLite queue (drift) of outbound messages. On send: write to local DB with status=pending, display optimistically in UI. Background isolate attempts WS send; on ACK from server, mark status=sent with server-assigned ID. On reconnect, flush queue in order. Never lose a user&#39;s message.</li>
+      <li><strong>Presence and typing indicators</strong> — Presence: client sends heartbeat every 30s over WS. Server marks user online; TTL expires after 45s without heartbeat. Typing: client sends typing.start on first keypress, typing.stop on 3s inactivity or send. Server fans out to channel members. Do NOT persist typing events to DB — ephemeral only.</li>
+      <li><strong>Message delivery guarantees</strong> — At-least-once delivery from server to client (client deduplicates by message ID). Client-to-server: queue + retry gives at-least-once. For exactly-once semantics, use idempotency keys (client generates UUID per message; server rejects duplicates). Sequence numbers per channel allow gap detection for missed messages.</li>
+      <li><strong>Fan-out architecture</strong> — When a message is sent to a channel with 500 members: naive approach broadcasts to all 500 WS connections on one server — doesn&#39;t scale. Better: use Redis Pub/Sub channel per workspace. Each WS server subscribes to relevant workspace channels. When a message arrives, the broker fans it out to all servers, each delivering to their connected members.</li>
+      <li><strong>Scaling considerations</strong> — WS servers are stateful — use sticky sessions (consistent hashing by userId). Horizontal scaling: add WS servers, Redis handles cross-server pub/sub. Database: read replicas for message history queries; write to primary. For 10M messages/day: PostgreSQL handles it with proper indexing (channelId + createdAt). For 100M+: consider TimescaleDB or Cassandra for time-series message storage.</li>
+      <li><strong>File sharing design</strong> — Client uploads file directly to S3/Supabase Storage via presigned URL (avoids routing large files through app server). On upload complete, client sends message with fileUrl. Server validates URL ownership before persisting. Thumbnails: generate server-side on upload trigger. Max file size enforced at presigned URL generation.</li>
+      <li><strong>Interview narration strategy</strong> — Structure your answer: (1) Clarify requirements — 2 minutes. (2) High-level diagram — 3 minutes. (3) Deep dive into 2-3 components the interviewer flags as interesting. (4) Discuss tradeoffs of your choices. (5) Address scaling and failure scenarios. Signal seniority by mentioning what you&#39;d NOT build initially (over-engineering is a red flag).</li>
+      <li><strong>Failure handling and resilience</strong> — WS connection drop: client reconnects with exponential backoff (1s, 2s, 4s, max 30s). Reconnect sends last_event_id to receive missed messages. Server crash: Redis pub/sub state is in-memory — on restart, clients reconnect and replay. Message loss window: minimize by persisting to DB before broadcasting. Circuit breaker on external services (FCM, S3).</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Flutter: Offline message queue with optimistic UI
+// drift schema
+class Messages extends Table {
+  IntColumn get id =&gt; integer().autoIncrement()();
+  TextColumn get localId =&gt; text()(); // client-generated UUID
+  TextColumn get serverId =&gt; text().nullable()(); // assigned after ACK
+  TextColumn get channelId =&gt; text()();
+  TextColumn get content =&gt; text()();
+  TextColumn get status =&gt; text().withDefault(const Constant(&#39;pending&#39;))();
+  // pending | sending | sent | failed
+  DateTimeColumn get createdAt =&gt; dateTime()();
+}
+
+// MessageQueue service
+class MessageQueue {
+  final AppDatabase _db;
+  final WebSocketService _ws;
+  bool _flushing = false;
+
+  MessageQueue(this._db, this._ws);
+
+  // Called when user taps Send
+  Future&lt;Message&gt; enqueue(String channelId, String content) async {
+    final localId = const Uuid().v4();
+    final msg = await _db.messagesDao.insertMessage(
+      localId: localId,
+      channelId: channelId,
+      content: content,
+      status: &#39;pending&#39;,
+    );
+    unawaited(flush()); // attempt immediate send
+    return msg;
+  }
+
+  // Called on WS connect and network restore
+  Future&lt;void&gt; flush() async {
+    if (_flushing || !_ws.isConnected) return;
+    _flushing = true;
+    try {
+      final pending = await _db.messagesDao.getPendingMessages();
+      for (final msg in pending) {
+        await _db.messagesDao.updateStatus(msg.localId, &#39;sending&#39;);
+        try {
+          final serverMsg = await _ws.sendMessage(
+            channelId: msg.channelId,
+            content: msg.content,
+            idempotencyKey: msg.localId,
+          );
+          await _db.messagesDao.markSent(
+            localId: msg.localId,
+            serverId: serverMsg.id,
+          );
+        } catch (e) {
+          await _db.messagesDao.updateStatus(msg.localId, &#39;failed&#39;);
+        }
+      }
+    } finally {
+      _flushing = false;
+    }
+  }
+}
+
+// WebSocket event dispatcher
+class WebSocketService {
+  late WebSocketChannel _channel;
+  final StreamController&lt;WsEvent&gt; _events = StreamController.broadcast();
+
+  Stream&lt;WsEvent&gt; get events =&gt; _events.stream;
+  bool get isConnected =&gt; _channel.closeCode == null;
+
+  void connect(String token) {
+    _channel = WebSocketChannel.connect(
+      Uri.parse(&#39;wss://api.tixio.com/ws?token=$token&#39;),
+    );
+    _channel.stream.listen(
+      (data) =&gt; _events.add(WsEvent.fromJson(jsonDecode(data as String))),
+      onDone: _handleDisconnect,
+      onError: (e) =&gt; _handleDisconnect(),
+    );
+  }
+
+  void _handleDisconnect() {
+    // Exponential backoff reconnect
+    Future.delayed(const Duration(seconds: 2), () =&gt; reconnect());
+  }
+
+  Future&lt;ServerMessage&gt; sendMessage({
+    required String channelId,
+    required String content,
+    required String idempotencyKey,
+  }) async {
+    final completer = Completer&lt;ServerMessage&gt;();
+    _channel.sink.add(jsonEncode({
+      &#39;type&#39;: &#39;message.send&#39;,
+      &#39;channelId&#39;: channelId,
+      &#39;content&#39;: content,
+      &#39;idempotencyKey&#39;: idempotencyKey,
+    }));
+    // Listen for ACK matching idempotencyKey
+    final sub = events
+        .where((e) =&gt; e.type == &#39;message.ack&#39; &amp;&amp; e.idempotencyKey == idempotencyKey)
+        .first
+        .then((e) =&gt; completer.complete(ServerMessage.fromEvent(e)));
+    return completer.future.timeout(const Duration(seconds: 10));
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Messages table uses both localId (UUID from client) and serverId (assigned after server ACK) — this enables optimistic UI (show message immediately) while correctly reconciling with the server&#39;s canonical ID.</li>
+      <li><span class="walk-num">2.</span> status column tracks the message lifecycle: pending → sending → sent/failed — the UI uses this to show delivery indicators (clock icon, check mark, error icon).</li>
+      <li><span class="walk-num">3.</span> enqueue() writes to local DB first, then calls flush() with unawaited — the UI responds immediately while delivery happens asynchronously.</li>
+      <li><span class="walk-num">4.</span> flush() guards with _flushing flag to prevent concurrent flush calls (e.g., from reconnect + manual retry simultaneously) causing duplicate sends.</li>
+      <li><span class="walk-num">5.</span> sendMessage sets idempotencyKey from localId — the server returns the same idempotencyKey in the ACK, allowing the client to match and mark the correct message as sent.</li>
+      <li><span class="walk-num">6.</span> The WS event listener uses .first on a filtered stream — it awaits exactly one matching ACK event then completes the Completer.</li>
+      <li><span class="walk-num">7.</span> timeout(10 seconds) on the ACK wait prevents the flush from hanging indefinitely if the server doesn&#39;t ACK — triggers the catch block and marks message as failed for retry.</li>
+      <li><span class="walk-num">8.</span> _handleDisconnect triggers reconnect after 2s — a full implementation uses exponential backoff with jitter to avoid thundering herd when a server restarts and many clients reconnect simultaneously.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// WebSocket reconnect with message replay
+class ChatBloc extends Bloc&lt;ChatEvent, ChatState&gt; {
+  StreamSubscription? _wsSub;
+
+  ChatBloc() : super(ChatInitial()) {
+    on&lt;ConnectWs&gt;((event, emit) {
+      _ws.connect(event.token);
+      _wsSub = _ws.events.listen((wsEvent) {
+        add(WsEventReceived(wsEvent));
+      });
+    });
+    on&lt;WsEventReceived&gt;((event, emit) {
+      final messages = (state as ChatLoaded).messages;
+      emit(ChatLoaded(messages: [...messages, event.wsEvent.message]));
+    });
+    on&lt;DisconnectWs&gt;((event, emit) {
+      _wsSub?.cancel();
+      _ws.disconnect();
+    });
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">After network reconnect, the user sees duplicate messages and misses some messages sent while offline. Two architectural issues cause this.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: On reconnect, the client re-subscribes and receives new messages, but doesn&#39;t request missed messages from when it was disconnected. Fix: track lastEventId or lastSeenAt per channel; on WS reconnect, send a &#39;replay&#39; request to the server for messages since lastSeenAt. The server returns missed messages before resuming live events. Bug 2: No deduplication — if the server replays messages that were already in the local DB (from optimistic inserts), they appear twice. Fix: deduplicate by message ID before adding to state — check if messages list already contains a message with the same serverId or localId before appending. In practice, use a LinkedHashMap keyed by message ID for O(1) dedup in the state.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re designing a city&#39;s communication system. Everyone lives in neighborhoods (workspaces) with streets (channels). When someone shouts a message on a street, a runner (WebSocket server) carries it to everyone on that street. If the runner is sick, a backup runner takes over. If you&#39;re sleeping (offline), your messages are saved in your mailbox (queue) and delivered when you wake up. The post office (Redis) makes sure all runners know all the news.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Slack&#39;s architecture originally used a single MySQL database per workspace (&#39;cell-based architecture&#39;). This allowed them to scale to thousands of workspaces without a single database becoming a bottleneck — an elegant design that influenced many subsequent collaboration tools.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Whiteboard the complete system design for a Tixio-like collaboration app. Cover: (1) Requirements clarification (list 6 questions you&#39;d ask). (2) High-level architecture diagram with all layers. (3) Data model for workspaces, channels, and messages. (4) WebSocket connection lifecycle (connect, auth, subscribe, disconnect, reconnect). (5) Offline message queue flow. (6) How you&#39;d scale from 1K to 1M concurrent users. (7) One failure scenario and your mitigation strategy.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://slack.engineering/flannel-an-application-level-edge-cache-to-make-slack-scale/" target="_blank" rel="noopener noreferrer">Slack&#39;s architecture and scaling story</a> <span class="res-source">(Slack Engineering)</span></li>
+      <li><a href="https://redis.io/docs/manual/pubsub/" target="_blank" rel="noopener noreferrer">Redis Pub/Sub documentation</a> <span class="res-source">(Redis Docs)</span></li>
+      <li><a href="https://systemdesign.one/slack-architecture/" target="_blank" rel="noopener noreferrer">Designing real-time messaging systems</a> <span class="res-source">(systemdesign.one)</span></li>
+      <li><a href="https://pub.dev/packages/web_socket_channel" target="_blank" rel="noopener noreferrer">WebSocketChannel Flutter package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction" target="_blank" rel="noopener noreferrer">System design interview framework</a> <span class="res-source">(hellointerview.com)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=56">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./55-logging-observability-analytics-feature-flags.html" rel="prev">← Logging, Observability, Analytics &amp;…</a>
+  <a class="nav-next" href="./57-system-design-ii-fintech-claimspayment-app.html" rel="next">System Design II: Fintech… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

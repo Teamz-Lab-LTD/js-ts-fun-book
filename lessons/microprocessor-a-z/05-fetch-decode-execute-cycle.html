@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fetch-Decode-Execute Cycle — Microprocessor A–Z | Teamz Lab</title>
+<meta name="description" content="The Fetch-Decode-Execute cycle is the fundamental operating loop of every CPU. In the Fetch phase, the processor retrieves the next instruction from memory…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/05-fetch-decode-execute-cycle.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/04-digital-logic-foundations.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/06-registers-alu-and-buses.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fetch-Decode-Execute Cycle">
+<meta property="og:description" content="The Fetch-Decode-Execute cycle is the fundamental operating loop of every CPU. In the Fetch phase, the processor retrieves the next instruction from memory…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/05-fetch-decode-execute-cycle.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fetch-Decode-Execute Cycle">
+<meta name="twitter:description" content="The Fetch-Decode-Execute cycle is the fundamental operating loop of every CPU. In the Fetch phase, the processor retrieves the next instruction from memory…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Fetch-Decode-Execute Cycle",
+  "description": "The Fetch-Decode-Execute cycle is the fundamental operating loop of every CPU. In the Fetch phase, the processor retrieves the next instruction from memory…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/05-fetch-decode-execute-cycle.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 5
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Fetch-Decode-Execute Cycle",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/05-fetch-decode-execute-cycle.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Fetch-Decode-Execute Cycle</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 5 of 48</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Fetch-Decode-Execute Cycle</h1>
+<p class="lesson-subtitle">The heartbeat of every processor — the three-step loop that runs millions of times per second</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=5">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine you work at a restaurant. Each order follows the same cycle: (1) Fetch — the waiter picks up the next order slip from the queue, (2) Decode — the chef reads the slip to understand what dish to make, (3) Execute — the chef actually cooks the dish. Then the waiter grabs the next slip and the cycle repeats endlessly, all day long. A microprocessor works exactly the same way with instructions instead of order slips.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The Fetch-Decode-Execute cycle is the fundamental operating loop of every CPU. In the Fetch phase, the processor retrieves the next instruction from memory using the Instruction Pointer. In the Decode phase, the control unit interprets the opcode to determine what operation and operands are involved. In the Execute phase, the CPU performs the actual operation. This three-step cycle repeats for every instruction the processor runs. The 8086 enhances this basic cycle with a 6-byte prefetch queue that overlaps fetching and execution for better performance.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every program you have ever run — from a web browser to a video game — was ultimately executed as billions of fetch-decode-execute cycles. When your PC boots, the very first cycle fetches the instruction at address FFFF0h (the reset vector). From that moment until you shut down, the cycle never stops. Modern CPUs run this loop billions of times per second and add sophisticated features like out-of-order execution, branch prediction, and speculative execution — but the fundamental three-step loop is the same one the 8086 used in 1978.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Three-Step Cycle</strong> — Every instruction the CPU runs goes through three fundamental phases: Fetch (retrieve the instruction from memory), Decode (figure out what the instruction means), and Execute (perform the operation). This cycle repeats for every single instruction in your program, millions of times per second.</li>
+      <li><strong>Fetch Phase — Getting the Instruction</strong> — During the fetch phase, the CPU places the value of the Instruction Pointer (IP) onto the address bus. The memory at that address responds by placing the instruction opcode onto the data bus. The CPU reads those bytes into its instruction register and increments IP to point to the next instruction.</li>
+      <li><strong>Decode Phase — Understanding the Instruction</strong> — The control unit examines the opcode in the instruction register and determines: what operation to perform (ADD, MOV, JMP, etc.), which registers or memory locations are involved, and how many additional bytes (operands) need to be read. The decoder activates the correct internal data paths.</li>
+      <li><strong>Execute Phase — Performing the Operation</strong> — The CPU carries out the decoded instruction. This could mean: transferring data between registers, sending values to the ALU for arithmetic, reading or writing memory, or modifying the instruction pointer for a jump. The result is stored in the destination specified by the instruction.</li>
+      <li><strong>The Role of the Instruction Pointer</strong> — The IP (Instruction Pointer) is the CPU&#39;s bookmark. It always holds the address of the next instruction to fetch. After each fetch, IP is automatically incremented. Jump instructions (JMP, JE, CALL) modify IP directly, changing the flow of execution.</li>
+      <li><strong>Instruction Pipelining in 8086</strong> — The 8086 has a 6-byte prefetch queue managed by the Bus Interface Unit (BIU). While the Execution Unit (EU) is executing the current instruction, the BIU fetches the next instructions ahead of time. This overlap means the CPU rarely has to wait for a fetch — a primitive form of pipelining.</li>
+      <li><strong>What Happens on a Branch</strong> — When a jump or conditional branch is executed, the prefetch queue becomes invalid because the CPU is going to a different address. The BIU must flush the queue and start fetching from the new target address. This causes a brief stall known as a pipeline flush or branch penalty.</li>
+      <li><strong>Bus Interface Unit vs Execution Unit</strong> — The 8086 CPU is internally divided into two independent units. The BIU handles all communication with the outside world: fetching instructions, reading memory, writing memory. The EU handles decoding and executing instructions. They work in parallel, communicating through the instruction queue.</li>
+      <li><strong>Cycle Timing and Clock Dependence</strong> — Each phase of the fetch-decode-execute cycle takes a specific number of clock cycles (T-states). A simple register MOV might take 2 clocks, while a memory-to-register ADD might take 9+. The CPU clock speed determines how fast these cycles complete. An 8086 at 5 MHz completes one T-state every 200 nanoseconds.</li>
+      <li><strong>Interrupts and the Cycle</strong> — The CPU checks for pending interrupts at the end of each instruction&#39;s execute phase (not mid-instruction). If an interrupt is pending and IF=1, the CPU pushes flags, CS, and IP onto the stack, then fetches the interrupt handler address from the interrupt vector table — beginning the fetch-decode-execute cycle at the handler.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Complete fetch-decode-execute trace for a small program
+; Running on 8086, starting at CS:IP = 0000:0100
+
+; Program in memory:
+; 0100h: B8 05 00    ; MOV AX, 0005h
+; 0103h: BB 03 00    ; MOV BX, 0003h
+; 0106h: 01 D8       ; ADD AX, BX
+; 0108h: F4          ; HLT
+
+; --- Cycle 1: MOV AX, 0005h ---
+; FETCH:   IP=0100h, read bytes B8 05 00 from memory
+; DECODE:  B8 = MOV AX, imm16 -&gt; need 2 more bytes (05 00)
+; EXECUTE: AX &lt;- 0005h, IP advanced to 0103h
+
+; --- Cycle 2: MOV BX, 0003h ---
+; FETCH:   IP=0103h, read bytes BB 03 00 from memory
+; DECODE:  BB = MOV BX, imm16 -&gt; need 2 more bytes (03 00)
+; EXECUTE: BX &lt;- 0003h, IP advanced to 0106h
+
+; --- Cycle 3: ADD AX, BX ---
+; FETCH:   IP=0106h, read bytes 01 D8 from memory
+; DECODE:  01 = ADD r/m16, r16; D8 = ModR/M for AX, BX
+; EXECUTE: ALU computes 0005h + 0003h = 0008h
+;          AX &lt;- 0008h, flags updated (ZF=0, CF=0)
+;          IP advanced to 0108h
+
+; --- Cycle 4: HLT ---
+; FETCH:   IP=0108h, read byte F4 from memory
+; DECODE:  F4 = HLT (halt processor)
+; EXECUTE: CPU enters halt state, cycle stops
+;          (only RESET, NMI, or INTR can wake it)</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Our program starts at address 0100h. The CPU&#39;s Instruction Pointer (IP) is set to 0100h, ready to begin the first fetch.</li>
+      <li><span class="walk-num">2.</span> Cycle 1 FETCH: The BIU puts address 0100h on the address bus. Memory responds with bytes B8 05 00. These are loaded into the instruction register.</li>
+      <li><span class="walk-num">3.</span> Cycle 1 DECODE: The decoder sees opcode B8h and recognizes it as &#39;MOV AX, immediate 16-bit value.&#39; It knows to read the next 2 bytes (05 00) as the value 0005h (little-endian).</li>
+      <li><span class="walk-num">4.</span> Cycle 1 EXECUTE: The value 0005h is loaded into register AX. IP is advanced by 3 bytes (instruction length) to 0103h.</li>
+      <li><span class="walk-num">5.</span> Cycle 2 follows the same pattern for MOV BX, 0003h — BX gets loaded with 0003h, IP advances to 0106h.</li>
+      <li><span class="walk-num">6.</span> Cycle 3 FETCH: Bytes 01 D8 are fetched from address 0106h. Meanwhile, the BIU may have already prefetched these into the 6-byte queue.</li>
+      <li><span class="walk-num">7.</span> Cycle 3 DECODE: Opcode 01h means &#39;ADD r/m16, r16&#39;. The ModR/M byte D8h specifies the destination is AX and the source is BX.</li>
+      <li><span class="walk-num">8.</span> Cycle 3 EXECUTE: The ALU adds AX (0005h) + BX (0003h) = 0008h. The result goes into AX. Flags are updated: ZF=0 (not zero), CF=0 (no carry).</li>
+      <li><span class="walk-num">9.</span> Cycle 4: The HLT instruction (F4h) is fetched, decoded, and executed. The CPU enters halt state and stops the fetch-decode-execute cycle until an interrupt or reset occurs.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; Program to add numbers 1+2+3+4+5 = 15
+; Expected: AX = 000Fh (15 decimal)
+
+MOV AX, 0000h    ; sum = 0
+MOV CX, 0005h    ; counter = 5
+
+LOOP_START:
+  ADD AX, CX     ; sum += counter
+  DEC CX         ; counter--
+  JNZ LOOP_START ; jump if counter != 0
+
+; BUG: What if we replaced JNZ with JMP?
+; JMP LOOP_START  ; unconditional jump</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about what happens to the fetch-decode-execute cycle if the jump is unconditional. When would CX reach zero, and would the loop ever check?</div></details><details><summary>Show answer</summary><div class="answer">Bug: If JNZ is replaced with JMP (unconditional jump), the loop never terminates. Even though DEC CX eventually makes CX = 0, JMP does not check any flags — it always jumps back to LOOP_START. CX would decrement past 0 to FFFFh, then keep going forever. The fetch-decode-execute cycle would endlessly repeat the loop body. JNZ works correctly because it checks the Zero Flag (ZF) set by DEC — when CX becomes 0, ZF=1 and JNZ does NOT jump, allowing execution to fall through and end.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Think of a robot following a recipe book. Step 1 (Fetch): The robot looks at the next line in the recipe. Step 2 (Decode): The robot reads and understands what that line says — like &#39;add 2 cups of flour.&#39; Step 3 (Execute): The robot actually scoops and adds the flour. Then it moves its finger to the next line and starts over. The robot does this for every single line until the recipe is done. That&#39;s exactly what a CPU does with instructions!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 8086&#39;s 6-byte prefetch queue was considered revolutionary in 1978. It was one of the first commercial processors to overlap instruction fetching and execution. This simple form of pipelining gave the 8086 a significant speed advantage over the 8085, which had to wait for each fetch to complete before executing. Modern CPUs have taken this idea to extremes — an Intel Core i9 has a pipeline over 20 stages deep!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a small 8086 assembly program (5-8 instructions) and trace the complete fetch-decode-execute cycle for each instruction. For each cycle, write down: (1) the value of IP before the fetch, (2) the bytes fetched from memory, (3) what the decoder determines, and (4) what changes during execution (registers, flags, memory). Include at least one conditional jump to show what happens to the prefetch queue when a branch is taken vs not taken.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://en.wikipedia.org/wiki/Instruction_cycle" target="_blank" rel="noopener noreferrer">Instruction Cycle - Wikipedia</a> <span class="res-source">(Wikipedia)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=Z5JC9Ve1sfI" target="_blank" rel="noopener noreferrer">Fetch Decode Execute Cycle Explained</a> <span class="res-source">(YouTube - Computerphile)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/internal-architecture-of-8086-microprocessor/" target="_blank" rel="noopener noreferrer">8086 Internal Architecture</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_8086_functional_units.htm" target="_blank" rel="noopener noreferrer">8086 BIU and EU Explained</a> <span class="res-source">(TutorialsPoint)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=5">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./04-digital-logic-foundations.html" rel="prev">← Digital Logic Foundations</a>
+  <a class="nav-next" href="./06-registers-alu-and-buses.html" rel="next">Registers, ALU, and Buses →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MongoDB — The Flexible Database — Full-Stack Playbook | Teamz Lab</title>
+<meta name="description" content="MongoDB is a NoSQL database that stores data as flexible JSON-like documents (BSON). Unlike SQL databases with rigid tables, MongoDB lets each document have…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/18-mongodb-the-flexible-database.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/17-validation-dtos.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/19-prisma-your-database-translator.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB — The Flexible Database">
+<meta property="og:description" content="MongoDB is a NoSQL database that stores data as flexible JSON-like documents (BSON). Unlike SQL databases with rigid tables, MongoDB lets each document have…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/js-ts-fun-book/18-mongodb-the-flexible-database.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MongoDB — The Flexible Database">
+<meta name="twitter:description" content="MongoDB is a NoSQL database that stores data as flexible JSON-like documents (BSON). Unlike SQL databases with rigid tables, MongoDB lets each document have…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "MongoDB — The Flexible Database",
+  "description": "MongoDB is a NoSQL database that stores data as flexible JSON-like documents (BSON). Unlike SQL databases with rigid tables, MongoDB lets each document have…",
+  "url": "https://learn.teamzlab.com/lessons/js-ts-fun-book/18-mongodb-the-flexible-database.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Full-Stack Playbook",
+    "url": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 18
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Full-Stack Playbook",
+      "item": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "MongoDB — The Flexible Database",
+      "item": "https://learn.teamzlab.com/lessons/js-ts-fun-book/18-mongodb-the-flexible-database.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/js-ts-fun-book.html">Full-Stack Playbook</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/js-ts-fun-book.html">Full-Stack Playbook</a> / <span aria-current="page">MongoDB — The Flexible Database</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 18 of 49</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">MongoDB — The Flexible Database</h1>
+<p class="lesson-subtitle">Store Data Like JSON Files</p>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">MySQL is like a strict printed form — every person fills in EXACTLY the same boxes (columns). MongoDB is like a folder of sticky notes — each note can have different info! One has a phone number, another has an address. Both are fine!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>MongoDB is a NoSQL database that stores data as flexible JSON-like documents (BSON). Unlike SQL databases with rigid tables, MongoDB lets each document have its own structure. It&#39;s the &#39;M&#39; in the MEAN/MERN stack.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>MongoDB is used by Adobe, eBay, Forbes, Google, and Toyota. It&#39;s especially popular for apps with varied data shapes — like property listings, user profiles, or content management systems.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Documents, Not Tables</strong> — MongoDB stores data as JSON-like documents instead of rigid table rows. Each document can have different fields from others in the same collection, giving ultimate flexibility for data like user profiles.</li>
+      <li><strong>No Schema Migrations</strong> — Need a new field? Just include it in your next document — no ALTER TABLE, no migration scripts, no downtime. MongoDB adapts to your data shape naturally, speeding up development versus SQL databases.</li>
+      <li><strong>Nested Data</strong> — Store complex objects inside other objects naturally. A user can contain an address object, an array of orders, and nested preferences — all in one document without expensive JOINs that slow SQL queries.</li>
+      <li><strong>Scales Horizontally</strong> — When your app outgrows one server, MongoDB distributes data across multiple machines via sharding. Each shard holds a portion of your data. Add more servers to handle more load without rewriting app code.</li>
+      <li><strong>BSON Format</strong> — MongoDB stores data in Binary JSON (BSON), extending JSON with types like Date, ObjectId, Binary, and Decimal128. BSON is more compact and faster to parse than plain JSON, improving read/write performance.</li>
+      <li><strong>Collections, Not Tables</strong> — Collections are the MongoDB equivalent of SQL tables, and documents are like rows. Unlike SQL tables, collections do not enforce a fixed schema — two documents in the same collection can have different fields.</li>
+      <li><strong>Indexing for Speed</strong> — Without indexes, MongoDB scans every document to find matches — very slow at scale. Create indexes on frequently-queried fields like email or createdAt so MongoDB jumps directly to matching documents.</li>
+      <li><strong>When to Use MongoDB</strong> — MongoDB excels with varied data shapes: property listings, user profiles, CMS, IoT data. Choose SQL instead when you need complex multi-table JOINs, strict ACID transactions, or rigid data structures.</li>
+      <li><strong>Aggregation Pipeline</strong> — The aggregation pipeline processes data in stages: $match filters, $group aggregates, $sort orders, $project reshapes output. Like an assembly line where each stage transforms data before passing it along.</li>
+      <li><strong>Replica Sets for Reliability</strong> — Replica sets maintain multiple copies of your data across servers. If the primary goes down, a secondary is auto-promoted within seconds. Provides high availability and protects against hardware failures.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// SQL (MySQL) — rigid table structure 📊
+// Every row MUST have the same columns:
+// | id | name  | email           | age |
+// | 1  | Alex  | alex@mail.com   | 25  |
+// | 2  | Sam   | sam@mail.com    | 30  |
+
+// MongoDB — flexible documents 📄
+// Document 1
+{
+  &quot;_id&quot;: ObjectId(&quot;abc123&quot;),
+  &quot;name&quot;: &quot;Alex&quot;,
+  &quot;email&quot;: &quot;alex@mail.com&quot;,
+  &quot;age&quot;: 25
+}
+// Document 2 — has EXTRA fields, and that&#39;s OK!
+{
+  &quot;_id&quot;: ObjectId(&quot;def456&quot;),
+  &quot;name&quot;: &quot;Sam&quot;,
+  &quot;email&quot;: &quot;sam@mail.com&quot;,
+  &quot;age&quot;: 30,
+  &quot;phone&quot;: &quot;+1234567&quot;,
+  &quot;address&quot;: {
+    &quot;city&quot;: &quot;New York&quot;,
+    &quot;country&quot;: &quot;USA&quot;
+  },
+  &quot;hobbies&quot;: [&quot;coding&quot;, &quot;gaming&quot;, &quot;cooking&quot;]
+}
+
+// Nested data — no JOINs needed! 🎯
+{
+  &quot;_id&quot;: ObjectId(&quot;prop123&quot;),
+  &quot;name&quot;: &quot;Sunset Apartment&quot;,
+  &quot;address&quot;: {
+    &quot;street&quot;: &quot;123 Main St&quot;,
+    &quot;city&quot;: &quot;San Francisco&quot;,
+    &quot;coordinates&quot;: { &quot;lat&quot;: 37.77, &quot;lng&quot;: -122.41 }
+  },
+  &quot;images&quot;: [
+    { &quot;url&quot;: &quot;photo1.jpg&quot;, &quot;caption&quot;: &quot;Living room&quot; },
+    { &quot;url&quot;: &quot;photo2.jpg&quot;, &quot;caption&quot;: &quot;Kitchen&quot; }
+  ],
+  &quot;amenities&quot;: [&quot;wifi&quot;, &quot;parking&quot;, &quot;gym&quot;],
+  &quot;price&quot;: 2500,
+  &quot;available&quot;: true
+}
+
+// MongoDB queries with Prisma
+const user = await prisma.user.create({
+  data: {
+    name: &quot;John&quot;,
+    email: &quot;john@mail.com&quot;,
+    age: 25
+  }
+});
+
+// Find with flexible filtering
+const adults = await prisma.user.findMany({
+  where: { age: { gte: 18 } }
+});
+
+// Update nested data
+await prisma.property.update({
+  where: { id: &quot;prop123&quot; },
+  data: {
+    address: {
+      city: &quot;Los Angeles&quot;
+    }
+  }
+});</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> SQL (MySQL) — rigid table structure 📊</li>
+      <li><span class="walk-num">2.</span> Every row MUST have the same columns:</li>
+      <li><span class="walk-num">3.</span> | id | name  | email           | age |</li>
+      <li><span class="walk-num">4.</span> | 1  | Alex  | alex@mail.com   | 25  |</li>
+      <li><span class="walk-num">5.</span> | 2  | Sam   | sam@mail.com    | 30  |</li>
+      <li><span class="walk-num">6.</span> </li>
+      <li><span class="walk-num">7.</span> MongoDB — flexible documents 📄</li>
+      <li><span class="walk-num">8.</span> Document 1</li>
+      <li><span class="walk-num">9.</span> Opening block</li>
+      <li><span class="walk-num">10.</span> </li>
+      <li><span class="walk-num">11.</span> </li>
+      <li><span class="walk-num">12.</span> </li>
+      <li><span class="walk-num">13.</span> </li>
+      <li><span class="walk-num">14.</span> Closing block</li>
+      <li><span class="walk-num">15.</span> Document 2 — has EXTRA fields, and that&#39;s OK!</li>
+      <li><span class="walk-num">16.</span> Opening block</li>
+      <li><span class="walk-num">17.</span> </li>
+      <li><span class="walk-num">18.</span> </li>
+      <li><span class="walk-num">19.</span> </li>
+      <li><span class="walk-num">20.</span> </li>
+      <li><span class="walk-num">21.</span> </li>
+      <li><span class="walk-num">22.</span> </li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> </li>
+      <li><span class="walk-num">25.</span> Closing block</li>
+      <li><span class="walk-num">26.</span> </li>
+      <li><span class="walk-num">27.</span> Closing block</li>
+      <li><span class="walk-num">28.</span> </li>
+      <li><span class="walk-num">29.</span> Nested data — no JOINs needed! 🎯</li>
+      <li><span class="walk-num">30.</span> Opening block</li>
+      <li><span class="walk-num">31.</span> </li>
+      <li><span class="walk-num">32.</span> </li>
+      <li><span class="walk-num">33.</span> </li>
+      <li><span class="walk-num">34.</span> </li>
+      <li><span class="walk-num">35.</span> </li>
+      <li><span class="walk-num">36.</span> </li>
+      <li><span class="walk-num">37.</span> Closing block</li>
+      <li><span class="walk-num">38.</span> </li>
+      <li><span class="walk-num">39.</span> </li>
+      <li><span class="walk-num">40.</span> </li>
+      <li><span class="walk-num">41.</span> </li>
+      <li><span class="walk-num">42.</span> </li>
+      <li><span class="walk-num">43.</span> </li>
+      <li><span class="walk-num">44.</span> </li>
+      <li><span class="walk-num">45.</span> Closing block</li>
+      <li><span class="walk-num">46.</span> </li>
+      <li><span class="walk-num">47.</span> MongoDB queries with Prisma</li>
+      <li><span class="walk-num">48.</span> Declaring a variable</li>
+      <li><span class="walk-num">49.</span> </li>
+      <li><span class="walk-num">50.</span> </li>
+      <li><span class="walk-num">51.</span> </li>
+      <li><span class="walk-num">52.</span> </li>
+      <li><span class="walk-num">53.</span> Closing block</li>
+      <li><span class="walk-num">54.</span> </li>
+      <li><span class="walk-num">55.</span> </li>
+      <li><span class="walk-num">56.</span> Find with flexible filtering</li>
+      <li><span class="walk-num">57.</span> Declaring a variable</li>
+      <li><span class="walk-num">58.</span> </li>
+      <li><span class="walk-num">59.</span> </li>
+      <li><span class="walk-num">60.</span> </li>
+      <li><span class="walk-num">61.</span> Update nested data</li>
+      <li><span class="walk-num">62.</span> Waiting for an async operation to complete</li>
+      <li><span class="walk-num">63.</span> </li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> </li>
+      <li><span class="walk-num">66.</span> </li>
+      <li><span class="walk-num">67.</span> Closing block</li>
+      <li><span class="walk-num">68.</span> Closing block</li>
+      <li><span class="walk-num">69.</span> </li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>const user = await prisma.user.findUnique({
+  where: { name: &quot;John&quot; }
+});</code></pre><details><summary>Need a hint?</summary><div class="hint">What kind of field does findUnique require?</div></details><details><summary>Show answer</summary><div class="answer">findUnique requires a unique field (like id or @unique field). &#39;name&#39; is usually not unique. Fix: use findFirst for non-unique fields, or use id/email instead.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine a folder full of sticky notes. Each note can have different things - one has a phone number, another has a drawing. That&#39;s MongoDB! Unlike a strict notebook with lines and columns (SQL), your sticky notes can have whatever you want.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">MongoDB&#39;s name comes from &#39;humongous&#39; — because it was designed to handle HUMONGOUS amounts of data. The founders literally just shortened the word! 🦕</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design a schema for a movie database: each movie has a title, year, genres (array), and a nested &#39;ratings&#39; object with { imdb: number, rottenTomatoes: number }. Insert 5 movies, then write a query to find all movies after 2020 with an IMDB rating above 7. Can you sort them by year descending?</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.mongodb.com/docs/manual/" target="_blank" rel="noopener noreferrer">MongoDB Documentation</a> <span class="res-source">(MongoDB Official)</span></li>
+      <li><a href="https://learn.mongodb.com/" target="_blank" rel="noopener noreferrer">MongoDB University Free Courses</a> <span class="res-source">(MongoDB University)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=-bt_y4Loofg" target="_blank" rel="noopener noreferrer">MongoDB in 100 Seconds</a> <span class="res-source">(Fireship)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./17-validation-dtos.html" rel="prev">← Validation &amp; DTOs</a>
+  <a class="nav-next" href="./19-prisma-your-database-translator.html" rel="next">Prisma — Your Database Translator →</a>
+</nav>
+
+<a class="back-to-course" href="/c/js-ts-fun-book.html">← Back to course: Full-Stack Playbook</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

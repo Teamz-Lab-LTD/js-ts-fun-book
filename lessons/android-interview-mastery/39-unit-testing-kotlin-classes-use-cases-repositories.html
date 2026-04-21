@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Testing Kotlin: Classes, Use Cases &amp; Repositories… | Teamz Lab</title>
+<meta name="description" content="Unit testing Kotlin means writing JVM-based tests for your business logic classes — use cases, repositories (via mocks), domain models, and utility classes…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/40-viewmodel-flow-testing-coroutine-test-utilities.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unit Testing Kotlin: Classes, Use Cases &amp; Repositories">
+<meta property="og:description" content="Unit testing Kotlin means writing JVM-based tests for your business logic classes — use cases, repositories (via mocks), domain models, and utility classes…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unit Testing Kotlin: Classes, Use Cases &amp; Repositories">
+<meta name="twitter:description" content="Unit testing Kotlin means writing JVM-based tests for your business logic classes — use cases, repositories (via mocks), domain models, and utility classes…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Unit Testing Kotlin: Classes, Use Cases & Repositories",
+  "description": "Unit testing Kotlin means writing JVM-based tests for your business logic classes — use cases, repositories (via mocks), domain models, and utility classes…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 39
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Unit Testing Kotlin: Classes, Use Cases & Repositories",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Unit Testing Kotlin: Classes, Use Cases &amp; Repositories</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 39 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Unit Testing Kotlin: Classes, Use Cases &amp; Repositories</h1>
+<p class="lesson-subtitle">Write fast, reliable JVM unit tests for your Kotlin business logic with JUnit5 and MockK</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=39">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Unit testing a use case is like fact-checking a journalist&#39;s article by interviewing the source directly — you bypass the whole publication system (database, network, UI) and go straight to the logic. MockK is your interview script: you tell the &#39;source&#39; (repository) exactly what to say, then check whether the journalist (use case) reported it correctly.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Unit testing Kotlin means writing JVM-based tests for your business logic classes — use cases, repositories (via mocks), domain models, and utility classes — without any Android dependencies. JUnit5 provides the test runner and lifecycle hooks. MockK provides idiomatic Kotlin mocking for suspend functions and coroutines. kotlinx-coroutines-test&#39;s runTest handles suspend function testing. Turbine simplifies Flow testing. Together these tools let you verify your app&#39;s core logic in milliseconds.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a school management app&#39;s SaaS backend-connected Android client, the CalculateGradeReportUseCase had complex logic: fetch raw scores from the repository, calculate weighted averages per subject, apply school-defined pass marks, generate a grade letter, and check if the student qualifies for honors. Unit tests for this use case ran in 8ms each, covered 14 scenarios (including missing scores, zero-weight subjects, and exact boundary grades), and caught 3 bugs during development — including one where honor roll qualification logic had an off-by-one error on the GPA threshold.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>JUnit5 setup for Android</strong> — Add junit-jupiter to testImplementation in build.gradle. Use @Test, @BeforeEach, @AfterEach, @Nested for organizing tests. JUnit5 requires the android-junit5 Gradle plugin for Android projects. Backtick function names (fun `returns error when network fails`()) create self-documenting test names.</li>
+      <li><strong>MockK basics — mockk()</strong> — val repo = mockk() creates a mock. every { repo.getStudent(&#39;1&#39;) } returns Student(...) stubs a return value. coEvery { repo.getStudent(&#39;1&#39;) } returns Student(...) is for suspend functions. MockK is Kotlin-native — it handles suspend functions, object mocks, and companion object mocking natively.</li>
+      <li><strong>Verifying calls with verify and coVerify</strong> — verify { repo.saveStudent(any()) } asserts that saveStudent was called at least once. verify(exactly = 1) { ... } asserts exactly one call. verify(exactly = 0) { ... } asserts the method was NOT called. coVerify is the suspend-function equivalent. Over-use of verify leads to brittle tests — prefer asserting output over verifying internal calls.</li>
+      <li><strong>Argument captors with slot()</strong> — val slot = slot(); every { repo.save(capture(slot)) } returns Unit. After calling the use case, slot.captured gives you the exact argument that was passed. Useful when you need to assert on the exact data passed to a dependency — e.g., checking that a payment amount was correctly converted before saving.</li>
+      <li><strong>Testing pure Kotlin classes</strong> — Pure functions with no dependencies are the easiest to test — instantiate the class, call the method, assert the result. No mocks needed. Calculator, Validator, Formatter classes fall into this category. These should have the most thorough test coverage since they are cheapest to test.</li>
+      <li><strong>Testing use cases with mock repositories</strong> — A use case orchestrates business logic using injected repositories. In tests: mock the repository (coEvery), call the use case, assert the returned Result or emitted value. The use case should be tested for: happy path, repository throws exception, invalid input, edge cases (empty list, null optional).</li>
+      <li><strong>Testing suspend functions with runTest</strong> — kotlinx-coroutines-test provides runTest { } — a coroutine builder for tests. It runs the test in a TestCoroutineScope, advances virtual time, and properly handles exceptions from suspend functions. Replace every coroutineScope.launch { } in your test with runTest { }.</li>
+      <li><strong>Turbine for Flow testing</strong> — Turbine (by Cash App) makes testing Flow emissions simple. val item = flow.test { val item = awaitItem(); cancel() }. Use awaitItem() for each expected emission, awaitComplete() for finite flows, awaitError() for error flows. Without Turbine, testing Flows requires complex channel-based gymnastics.</li>
+      <li><strong>Testing error paths — just as important</strong> — Every use case should handle errors from the repository. Test that when the repo throws an IOException, the use case returns Result.Error (or the appropriate error state). Test that error messages are correctly propagated. Error path tests catch the bugs that crash your app in production.</li>
+      <li><strong>Asserting with Truth or kotlin.test</strong> — Google Truth: assertThat(result).isEqualTo(expected) — readable, extensible. Kotlin&#39;s built-in kotlin.test: assertEquals(expected, actual), assertNotNull(value). Avoid raw JUnit4 assertEquals where Truth reads more clearly. For collections: assertThat(list).containsExactly(...).inOrder().</li>
+      <li><strong>Test naming conventions</strong> — Method name format: &#39;given [context] when [action] then [expectation]&#39; or &#39;action returns expected for valid input&#39;. Backtick names in Kotlin allow natural language: fun `getStudent throws NotFoundException when student does not exist`(). Good names make test failures self-explanatory without reading the test body.</li>
+      <li><strong>Parameterized tests</strong> — @ParameterizedTest with @MethodSource or @CsvSource runs the same test logic with multiple input sets. Great for testing boundary conditions: test grade boundaries (59=FAIL, 60=PASS, 100=PASS) in one test. Reduces test count while increasing coverage.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// build.gradle.kts (app module)
+dependencies {
+    testImplementation(&quot;org.junit.jupiter:junit-jupiter:5.10.0&quot;)
+    testImplementation(&quot;io.mockk:mockk:1.13.8&quot;)
+    testImplementation(&quot;org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3&quot;)
+    testImplementation(&quot;app.cash.turbine:turbine:1.0.0&quot;)
+    testImplementation(&quot;com.google.truth:truth:1.1.5&quot;)
+}
+
+// --- Domain classes under test ---
+data class Student(val id: String, val name: String, val gradeLevel: Int)
+data class GradeReport(val studentId: String, val average: Double, val passed: Boolean)
+
+interface StudentRepository {
+    suspend fun getStudent(id: String): Student
+    suspend fun getScores(studentId: String): List&lt;Double&gt;
+}
+
+class GenerateGradeReportUseCase(private val repo: StudentRepository) {
+    suspend fun execute(studentId: String): Result&lt;GradeReport&gt; = runCatching {
+        val student = repo.getStudent(studentId)
+        val scores = repo.getScores(studentId)
+        if (scores.isEmpty()) throw IllegalStateException(&quot;No scores found for ${student.name}&quot;)
+        val average = scores.average()
+        GradeReport(studentId = student.id, average = average, passed = average &gt;= 60.0)
+    }
+}
+
+// --- Unit Tests ---
+class GenerateGradeReportUseCaseTest {
+
+    private val mockRepo = mockk&lt;StudentRepository&gt;()
+    private val useCase = GenerateGradeReportUseCase(mockRepo)
+
+    @BeforeEach
+    fun setUp() {
+        // Common stub — individual tests can override
+        coEvery { mockRepo.getStudent(&quot;s1&quot;) } returns Student(&quot;s1&quot;, &quot;Alice&quot;, gradeLevel = 10)
+    }
+
+    @Test
+    fun `execute returns passing report for scores above 60`() = runTest {
+        coEvery { mockRepo.getScores(&quot;s1&quot;) } returns listOf(70.0, 80.0, 90.0)
+
+        val result = useCase.execute(&quot;s1&quot;)
+
+        assertThat(result.isSuccess).isTrue()
+        val report = result.getOrThrow()
+        assertThat(report.average).isEqualTo(80.0)
+        assertThat(report.passed).isTrue()
+    }
+
+    @Test
+    fun `execute returns failing report for average below 60`() = runTest {
+        coEvery { mockRepo.getScores(&quot;s1&quot;) } returns listOf(40.0, 50.0, 55.0)
+
+        val result = useCase.execute(&quot;s1&quot;)
+
+        assertThat(result.getOrThrow().passed).isFalse()
+    }
+
+    @Test
+    fun `execute returns failure when scores list is empty`() = runTest {
+        coEvery { mockRepo.getScores(&quot;s1&quot;) } returns emptyList()
+
+        val result = useCase.execute(&quot;s1&quot;)
+
+        assertThat(result.isFailure).isTrue()
+        assertThat(result.exceptionOrNull()).isInstanceOf(IllegalStateException::class.java)
+    }
+
+    @Test
+    fun `execute propagates repository exception as failure`() = runTest {
+        coEvery { mockRepo.getStudent(&quot;s1&quot;) } throws IOException(&quot;Network error&quot;)
+
+        val result = useCase.execute(&quot;s1&quot;)
+
+        assertThat(result.isFailure).isTrue()
+    }
+}
+
+// --- Turbine for Flow testing ---
+class StudentScoreStreamTest {
+    private val fakeRepo = FakeStudentRepository()
+    private val viewModel = StudentScoreViewModel(fakeRepo)
+
+    @Test
+    fun `score flow emits updated value after new score added`() = runTest {
+        viewModel.scoreFlow.test {
+            assertThat(awaitItem()).isEmpty()      // initial empty state
+            fakeRepo.emitScore(Score(&quot;s1&quot;, 85.0))
+            assertThat(awaitItem()).hasSize(1)     // after emission
+            cancel()
+        }
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> mockk() creates a mock — a fake object that records what you call on it and returns whatever you tell it to.</li>
+      <li><span class="walk-num">2.</span> @BeforeEach fun setUp() runs before every single test method — use it to set up common stubs that most tests share, keeping individual tests short.</li>
+      <li><span class="walk-num">3.</span> coEvery { mockRepo.getStudent(&#39;s1&#39;) } returns Student(...) stubs the suspend function — without the &#39;co&#39; prefix MockK would throw an error for suspend functions.</li>
+      <li><span class="walk-num">4.</span> runTest { } is the coroutine test builder — it creates a TestScope with virtual time control and properly propagates exceptions from suspend functions to the test framework.</li>
+      <li><span class="walk-num">5.</span> result.isSuccess and result.getOrThrow() test the Result wrapper — always check both the success flag AND the actual value.</li>
+      <li><span class="walk-num">6.</span> The empty scores test asserts result.isFailure is true AND checks the exception type — verifying that the right kind of failure occurred, not just any failure.</li>
+      <li><span class="walk-num">7.</span> The IOException propagation test simulates a network failure — asserting that the use case correctly converts repository exceptions into Result.Failure without crashing.</li>
+      <li><span class="walk-num">8.</span> viewModel.scoreFlow.test { } from Turbine opens a collector for the Flow — all emissions are queued and accessible via awaitItem().</li>
+      <li><span class="walk-num">9.</span> awaitItem() suspends until the next emission arrives — if the Flow does not emit within the timeout (default 1s), the test fails with a clear timeout message.</li>
+      <li><span class="walk-num">10.</span> cancel() at the end of a Turbine test { } block is required for infinite flows — it signals that you are done collecting and prevents the test from hanging.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class TransferFundsUseCaseTest {
+
+    private val repo = mockk&lt;AccountRepository&gt;()
+    private val useCase = TransferFundsUseCase(repo)
+
+    // Bug 1
+    @Test
+    fun testTransfer() = runTest {
+        coEvery { repo.getAccount(&quot;acc1&quot;) } returns Account(&quot;acc1&quot;, balance = 500.0)
+        coEvery { repo.getAccount(&quot;acc2&quot;) } returns Account(&quot;acc2&quot;, balance = 100.0)
+        coEvery { repo.transfer(any(), any(), any()) } returns Unit
+
+        useCase.transfer(&quot;acc1&quot;, &quot;acc2&quot;, amount = 200.0)
+
+        // Bug 2
+        coVerify { repo.getAccount(&quot;acc1&quot;) }
+        coVerify { repo.getAccount(&quot;acc2&quot;) }
+        coVerify { repo.transfer(&quot;acc1&quot;, &quot;acc2&quot;, 200.0) }
+    }
+
+    // Bug 3
+    @Test
+    fun testInsufficientFunds() = runTest {
+        coEvery { repo.getAccount(&quot;acc1&quot;) } returns Account(&quot;acc1&quot;, balance = 50.0)
+        coEvery { repo.getAccount(&quot;acc2&quot;) } returns Account(&quot;acc2&quot;, balance = 0.0)
+
+        val result = useCase.transfer(&quot;acc1&quot;, &quot;acc2&quot;, amount = 200.0)
+
+        // Bug 4
+        assertThat(result).isNotNull()
+    }
+
+    // Bug 5
+    @Test
+    fun testNegativeAmount() {
+        val result = useCase.transfer(&quot;acc1&quot;, &quot;acc2&quot;, amount = -50.0)
+        assertThat(result.isFailure).isTrue()
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at test names, what is being asserted vs what should be asserted, missing runTest wrapper, and the insufficient funds test assertions.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: The test method name &#39;testTransfer&#39; is too generic and provides no information when it fails in CI. Rename it to &#39;transfer succeeds and returns success result when balance is sufficient&#39; — this immediately tells you what broke without reading the test body. Bug 2: The happy path test only uses coVerify to check internal method calls — it never asserts the RETURN VALUE of useCase.transfer(). If transfer() returns a Result&lt;Unit&gt; or a TransferReceipt, the test should assert that Result.isSuccess is true. The current test would pass even if the use case returned a failure Result, as long as it called the repository methods. Bug 3: &#39;testInsufficientFunds&#39; suffers from the same naming problem. Rename to &#39;transfer returns Result.Failure with InsufficientFundsException when source balance is less than amount&#39;. Bug 4: assertThat(result).isNotNull() is an almost useless assertion — it only checks that transfer() returned something (not null), not that it returned the right thing. For an insufficient funds scenario, the test should assert: assertThat(result.isFailure).isTrue() AND assertThat(result.exceptionOrNull()).isInstanceOf(InsufficientFundsException::class.java). Currently a Result.Success would pass this assertion, meaning the test would pass even if the use case incorrectly approved the transfer. Bug 5: The testNegativeAmount test is missing the runTest { } wrapper — transfer() is a suspend function and cannot be called from a regular non-coroutine context. This test will likely fail to compile or throw an IllegalStateException at runtime. Wrap the body in runTest { }.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are testing whether a recipe works. You do not go to the grocery store (the real database). Instead you use plastic toy ingredients (mocks) that always give you exactly what you tell them to. Then you follow the recipe (the use case), and check if the dish came out right (assert the result). runTest is like a magic kitchen where time moves super fast so you do not have to wait for the oven.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">MockK was created because Mockito — the dominant Java mocking library — has poor support for Kotlin features: it cannot mock final classes by default, cannot mock suspend functions, and produces confusing errors with Kotlin&#39;s null-safety. MockK was designed from the ground up for Kotlin and handles all these cases natively. It is now the most widely used mocking library in Android Kotlin projects.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a complete unit test class for a TransferFundsUseCase from a fintech app. The use case: takes sourceAccountId, destinationAccountId, and amount; validates amount &gt; 0 and account IDs are not blank; fetches both accounts from AccountRepository; checks source balance &gt;= amount; calls repo.transfer(). Test: happy path, insufficient balance, invalid amount (&lt;=0), blank account IDs, repository throws NetworkException. Use MockK and runTest.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://mockk.io/" target="_blank" rel="noopener noreferrer">MockK Documentation</a> <span class="res-source">(MockK)</span></li>
+      <li><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-test/" target="_blank" rel="noopener noreferrer">kotlinx-coroutines-test</a> <span class="res-source">(Kotlin)</span></li>
+      <li><a href="https://github.com/cashapp/turbine" target="_blank" rel="noopener noreferrer">Turbine by Cash App</a> <span class="res-source">(Cash App)</span></li>
+      <li><a href="https://junit.org/junit5/docs/current/user-guide/" target="_blank" rel="noopener noreferrer">JUnit 5 User Guide</a> <span class="res-source">(JUnit)</span></li>
+      <li><a href="https://developer.android.com/training/testing/local-tests" target="_blank" rel="noopener noreferrer">Android Unit Testing Guide</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=39">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html" rel="prev">← Testing Strategy: Unit vs…</a>
+  <a class="nav-next" href="./40-viewmodel-flow-testing-coroutine-test-utilities.html" rel="next">ViewModel &amp; Flow Testing: Coroutine… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

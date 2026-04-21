@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrofit, OkHttp, Interceptors, Token Refresh &amp;… | Teamz Lab</title>
+<meta name="description" content="Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit, OkHttp, Interceptors, Token Refresh &amp; Pagination">
+<meta property="og:description" content="Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Retrofit, OkHttp, Interceptors, Token Refresh &amp; Pagination">
+<meta name="twitter:description" content="Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Retrofit, OkHttp, Interceptors, Token Refresh & Pagination",
+  "description": "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 27
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Retrofit, OkHttp, Interceptors, Token Refresh & Pagination",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Retrofit, OkHttp, Interceptors, Token Refresh &amp; Pagination</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 27 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Retrofit, OkHttp, Interceptors, Token Refresh &amp; Pagination</h1>
+<p class="lesson-subtitle">Production-grade networking: auth flows, retry logic, error mapping, and cursor/offset pagination patterns</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=27">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Retrofit is the waiter who takes your order (API call) and brings back your food (response). OkHttp is the kitchen — it does the actual work. Interceptors are the kitchen stations the order passes through: the logging station writes everything down, the auth station stamps your order with your ID badge, and the retry station sends the order back if the kitchen is temporarily closed.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don&#39;t cause skipped items like offset pagination would.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Retrofit fundamentals</strong> — Retrofit turns HTTP API definitions into Kotlin interfaces. @GET, @POST, @PUT, @DELETE, @PATCH annotate functions. @Path for URL segments, @Query for query params, @Body for request body, @Header for single headers, @Headers for static headers. Return types: suspend fun T, suspend fun Response, Call.</li>
+      <li><strong>OkHttp as the HTTP engine</strong> — Retrofit delegates all HTTP work to OkHttp. OkHttp manages connection pooling, response caching, TLS, and request/response interception. Configure OkHttp via OkHttpClient.Builder() — set timeouts, add interceptors, configure TLS/certificate pinning, add cache. Pass to Retrofit via .client(okHttpClient).</li>
+      <li><strong>Application interceptors</strong> — Added via addInterceptor() — execute once per logical request, even if the request is cached. Use for: adding auth headers to every request, logging request/response bodies, transforming responses globally. Run in the order added. chain.proceed(request) passes the request down the chain.</li>
+      <li><strong>Network interceptors</strong> — Added via addNetworkInterceptor() — execute for each network transmission (not for cached responses). Use for: monitoring actual network traffic, modifying cache headers, tracking raw bytes transferred. Useful for analytics on actual network usage vs. cache usage.</li>
+      <li><strong>Auth interceptor pattern</strong> — Intercepts every request, reads the token from a TokenProvider/AuthRepository, and adds &#39;Authorization: Bearer &#39; header. Should NOT perform token refresh (that&#39;s the Authenticator&#39;s job). Keep the interceptor simple: add header, proceed, return response.</li>
+      <li><strong>OkHttp Authenticator for token refresh</strong> — Authenticator.authenticate() is called automatically when a 401 response is received. Inside: synchronously refresh the token (critical — must be synchronized to prevent multiple concurrent refreshes), update stored token, return the original request with the new token. Return null to give up and propagate the 401. Use a Mutex or synchronized block.</li>
+      <li><strong>Retry interceptor</strong> — Intercepts failed responses and retries with exponential backoff. Check for retryable conditions: network errors, 503, 429. Implement a retry count limit. Use Thread.sleep() (interceptors run on non-main threads) or coroutine delay if using CoroutineInterceptor. Important: do NOT retry non-idempotent requests (POST) without understanding business consequences.</li>
+      <li><strong>Error mapping to domain exceptions</strong> — Map HTTP errors to typed domain exceptions before they reach the ViewModel. In a repository or network result mapper: 401 → UnauthorizedException, 404 → NotFoundException, 422 → ValidationException(errors), 503 → ServerUnavailableException, network exception → NoConnectivityException. ViewModel receives typed exceptions, not raw HttpException.</li>
+      <li><strong>Offset pagination</strong> — Classic approach: pass page=1&amp;pageSize=20 as query params. Server returns total count + items. Client tracks current page, increments on load-more. Simple to implement, easy to jump to arbitrary pages. Problem: if items are inserted/deleted between pages, you get duplicates or skipped items.</li>
+      <li><strong>Cursor pagination</strong> — Server returns a next_cursor with each response. Client passes the cursor in the next request. Cursor encodes the position (e.g., last item ID or timestamp). Handles insertions/deletions between pages correctly. No way to jump to arbitrary page. Preferred for real-time feeds (social, notifications). Twitter, Slack, GitHub all use cursor pagination.</li>
+      <li><strong>Paging 3 library integration</strong> — PagingSource defines how to load pages — loadBefore/loadAfter with LoadResult.Page or LoadResult.Error. RemoteMediator bridges network + Room for offline-first paging. Pager + PagingConfig creates a Flow&gt;. UI uses LazyColumn + collectAsLazyPagingItems() in Compose or PagingDataAdapter in RecyclerView.</li>
+      <li><strong>Network result wrapper pattern</strong> — Wrap all API calls in a sealed class: sealed class NetworkResult { data class Success(val data: T) : NetworkResult(); data class Error(val exception: DomainException) : NetworkResult(); class Loading : NetworkResult() }. Repository returns NetworkResult, ViewModel maps to UiState. Eliminates try/catch scattered through ViewModels.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. Retrofit interface definition
+interface PaybackApiService {
+    @GET(&quot;transactions&quot;)
+    suspend fun getTransactions(
+        @Query(&quot;cursor&quot;) cursor: String? = null,
+        @Query(&quot;limit&quot;) limit: Int = 20
+    ): TransactionPageResponse
+
+    @POST(&quot;payments&quot;)
+    suspend fun createPayment(@Body request: PaymentRequest): Response&lt;PaymentResponse&gt;
+
+    @GET(&quot;users/{userId}/profile&quot;)
+    suspend fun getProfile(@Path(&quot;userId&quot;) userId: String): ProfileResponse
+}
+
+// 2. Auth Interceptor — adds bearer token to every request
+class AuthInterceptor @Inject constructor(
+    private val tokenProvider: TokenProvider
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = tokenProvider.getAccessToken()
+        val request = chain.request().newBuilder()
+            .header(&quot;Authorization&quot;, &quot;Bearer $token&quot;)
+            .header(&quot;X-App-Version&quot;, BuildConfig.VERSION_NAME)
+            .build()
+        return chain.proceed(request)
+    }
+}
+
+// 3. Authenticator — handles 401 token refresh
+class TokenAuthenticator @Inject constructor(
+    private val tokenProvider: TokenProvider,
+    private val authApi: AuthApiService
+) : Authenticator {
+    // Mutex prevents concurrent refresh races
+    private val refreshMutex = Mutex()
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        // If we&#39;ve already retried, give up
+        if (response.request.header(&quot;X-Retry-Auth&quot;) != null) return null
+
+        return runBlocking {
+            refreshMutex.withLock {
+                // Check if another coroutine already refreshed while we waited
+                val currentToken = tokenProvider.getAccessToken()
+                val requestToken = response.request
+                    .header(&quot;Authorization&quot;)?.removePrefix(&quot;Bearer &quot;)
+
+                if (currentToken != requestToken) {
+                    // Token already refreshed by another request — just retry
+                    return@withLock response.request.newBuilder()
+                        .header(&quot;Authorization&quot;, &quot;Bearer $currentToken&quot;)
+                        .build()
+                }
+
+                // Actually refresh
+                try {
+                    val refreshResponse = authApi.refreshToken(
+                        tokenProvider.getRefreshToken()
+                    )
+                    tokenProvider.saveTokens(
+                        refreshResponse.accessToken,
+                        refreshResponse.refreshToken
+                    )
+                    response.request.newBuilder()
+                        .header(&quot;Authorization&quot;, &quot;Bearer ${refreshResponse.accessToken}&quot;)
+                        .header(&quot;X-Retry-Auth&quot;, &quot;true&quot;)
+                        .build()
+                } catch (e: Exception) {
+                    tokenProvider.clearTokens() // Force re-login
+                    null
+                }
+            }
+        }
+    }
+}
+
+// 4. Cursor pagination — PagingSource
+class TransactionPagingSource(
+    private val api: PaybackApiService
+) : PagingSource&lt;String, Transaction&gt;() {
+
+    override suspend fun load(params: LoadParams&lt;String&gt;): LoadResult&lt;String, Transaction&gt; {
+        return try {
+            val response = api.getTransactions(
+                cursor = params.key, // null on first load
+                limit = params.loadSize
+            )
+            LoadResult.Page(
+                data = response.transactions,
+                prevKey = null, // cursor pagination is forward-only
+                nextKey = response.nextCursor // null = no more pages
+            )
+        } catch (e: HttpException) {
+            LoadResult.Error(mapHttpException(e))
+        } catch (e: IOException) {
+            LoadResult.Error(NoConnectivityException())
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState&lt;String, Transaction&gt;): String? = null
+}
+
+// 5. Error mapping — HTTP to domain exceptions
+fun mapHttpException(e: HttpException): DomainException = when (e.code()) {
+    401 -&gt; UnauthorizedException(&quot;Session expired&quot;)
+    403 -&gt; ForbiddenException(&quot;Insufficient permissions&quot;)
+    404 -&gt; NotFoundException(&quot;Resource not found&quot;)
+    422 -&gt; {
+        val errorBody = e.response()?.errorBody()?.string()
+        ValidationException(parseValidationErrors(errorBody))
+    }
+    503 -&gt; ServerUnavailableException(&quot;Service temporarily unavailable&quot;)
+    else -&gt; UnknownApiException(e.code(), e.message())
+}
+
+// 6. OkHttp client assembly
+@Provides @Singleton
+fun provideOkHttpClient(
+    authInterceptor: AuthInterceptor,
+    authenticator: TokenAuthenticator
+): OkHttpClient = OkHttpClient.Builder()
+    .addInterceptor(HttpLoggingInterceptor().apply {
+        level = if (BuildConfig.DEBUG)
+            HttpLoggingInterceptor.Level.BODY
+        else
+            HttpLoggingInterceptor.Level.NONE
+    })
+    .addInterceptor(authInterceptor)
+    .authenticator(authenticator)
+    .connectTimeout(30, TimeUnit.SECONDS)
+    .readTimeout(30, TimeUnit.SECONDS)
+    .build()</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Retrofit interface uses @Query(&#39;cursor&#39;) with a nullable default — on first page load, cursor is null, server returns from the beginning.</li>
+      <li><span class="walk-num">2.</span> AuthInterceptor.intercept() calls chain.request().newBuilder() to create a mutated copy of the request — OkHttp Requests are immutable so you must build a new one.</li>
+      <li><span class="walk-num">3.</span> TokenAuthenticator uses runBlocking inside authenticate() because OkHttp Authenticator is a blocking Java interface — coroutine suspend is not directly supported here.</li>
+      <li><span class="walk-num">4.</span> refreshMutex.withLock ensures only one coroutine performs the refresh — others wait, then find the token already updated and skip the refresh call.</li>
+      <li><span class="walk-num">5.</span> Checking requestToken vs currentToken inside the lock detects &#39;token already refreshed by another request&#39; — retry with new token without making another network call.</li>
+      <li><span class="walk-num">6.</span> TransactionPagingSource.load() receives params.key as the cursor — null on initial load, nextCursor on subsequent loads.</li>
+      <li><span class="walk-num">7.</span> LoadResult.Page sets prevKey = null because cursor pagination is forward-only — Paging 3 disables prepend loading.</li>
+      <li><span class="walk-num">8.</span> mapHttpException() is a pure function that transforms HttpException codes to sealed class instances — no Android dependencies, unit testable.</li>
+      <li><span class="walk-num">9.</span> HttpLoggingInterceptor level is set to BODY only in DEBUG builds — never log request/response bodies in production (security and performance).</li>
+      <li><span class="walk-num">10.</span> addInterceptor(authInterceptor) runs before authenticator — the interceptor adds the current token, authenticator handles 401 renewal.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Find 4 bugs in this networking setup
+class BrokenAuthenticator(
+    private val tokenProvider: TokenProvider,
+    private val authApi: AuthApiService
+) : Authenticator {
+    override fun authenticate(route: Route?, response: Response): Request? {
+        val newTokens = runBlocking {
+            authApi.refreshToken(tokenProvider.getRefreshToken())  // Bug 1
+        }
+        tokenProvider.saveTokens(newTokens.accessToken, newTokens.refreshToken)
+        return response.request.newBuilder()
+            .header(&quot;Authorization&quot;, &quot;Bearer ${newTokens.accessToken}&quot;)
+            .build()  // Bug 2
+    }
+}
+
+class BrokenAuthInterceptor(
+    private val tokenProvider: TokenProvider,
+    private val authApi: AuthApiService  // Bug 3
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = tokenProvider.getAccessToken()
+        val request = chain.request().newBuilder()
+            .header(&quot;Authorization&quot;, &quot;Bearer $token&quot;)
+            .build()
+        val response = chain.proceed(request)
+        if (response.code == 401) {
+            runBlocking { authApi.refreshToken(tokenProvider.getRefreshToken()) }  // Bug 4
+        }
+        return response
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at concurrency safety, infinite loop prevention, separation of responsibilities, and which component should handle which concern.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: No mutex/synchronization around the token refresh — if two requests receive 401 simultaneously, both will call refreshToken() concurrently. The first refresh invalidates the refresh token; the second call will fail (most OAuth servers allow single-use refresh tokens), causing a logout. Fix: wrap with a Mutex and check if token was already refreshed before calling the API. Bug 2: Missing the &#39;X-Retry-Auth&#39; guard — there&#39;s no check to detect if we&#39;ve already retried. If the new token is also rejected (e.g., account suspended), authenticate() is called again infinitely. Fix: check if response.request.header(&#39;X-Retry-Auth&#39;) != null and return null (give up) before refreshing. Bug 3: AuthInterceptor injects AuthApiService — the interceptor that adds auth headers to ALL requests is also holding a reference to the auth API. This creates a circular dependency risk and violates single responsibility. The interceptor should only add headers; token refresh is the Authenticator&#39;s job. Bug 4: BrokenAuthInterceptor is doing token refresh itself on 401 — this is the Authenticator&#39;s responsibility. Having both the interceptor and authenticator handle 401 means token refresh can be triggered twice for the same request, causing race conditions. Remove the 401 check from the interceptor entirely — let OkHttp route 401s to the Authenticator.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine ordering food through an app. Retrofit is the order screen — you pick what you want and press send. OkHttp is the delivery driver who actually goes to the restaurant. Interceptors are checkpoints on the way: one writes down every order in a notebook (logging), another shows your membership card at the restaurant door (auth). If your card expired (401), a special agent (Authenticator) runs to get you a new card, then the driver retries the delivery — you don&#39;t even notice.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">OkHttp&#39;s connection pool reuses TCP connections by default (5 connections, 5 minutes idle). This means your second API call in an app session is typically 30-50% faster than the first because TLS handshake and TCP connection setup are skipped. On mobile networks with high latency, this can save 200-500ms per request.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a RetryInterceptor that retries requests up to 3 times with exponential backoff (1s, 2s, 4s) for 503 responses and IOException. Ensure it does NOT retry POST requests. Then write the error mapping function that converts HttpException and IOException to a sealed class NetworkError with at least 5 subtypes. Wire both into the OkHttpClient builder.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://square.github.io/okhttp/features/interceptors/" target="_blank" rel="noopener noreferrer">OkHttp Interceptors — Official Guide</a> <span class="res-source">(OkHttp)</span></li>
+      <li><a href="https://square.github.io/retrofit/" target="_blank" rel="noopener noreferrer">Retrofit — Square Documentation</a> <span class="res-source">(Square)</span></li>
+      <li><a href="https://developer.android.com/topic/libraries/architecture/paging/v3-overview" target="_blank" rel="noopener noreferrer">Android Paging 3 Library</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://proandroiddev.com/handling-token-refresh-with-okhttp-authenticator-b0c1b3a79af0" target="_blank" rel="noopener noreferrer">Token Refresh with OkHttp Authenticator — Race condition prevention</a> <span class="res-source">(ProAndroidDev)</span></li>
+      <li><a href="https://medium.com/swlh/offset-vs-cursor-pagination-best-practices-b38ab7b7f40c" target="_blank" rel="noopener noreferrer">Cursor vs Offset Pagination — When to use each</a> <span class="res-source">(Medium)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=27">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./26-dependency-injection-manual-di-vs-hilt-vs-dagger.html" rel="prev">← Dependency Injection: Manual DI vs…</a>
+  <a class="nav-next" href="./28-room-sqlite-migrations-transactions-relations.html" rel="next">Room, SQLite, Migrations, Transactions… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

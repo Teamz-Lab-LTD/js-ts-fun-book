@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkManager, Background Tasks, Foreground Services &amp;… | Teamz Lab</title>
+<meta name="description" content="WorkManager is Jetpack&#39;s library for deferrable, guaranteed background work. It wraps JobScheduler, AlarmManager, and BroadcastReceiver into a single API…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="WorkManager, Background Tasks, Foreground Services &amp; Alarm Limitations">
+<meta property="og:description" content="WorkManager is Jetpack&#39;s library for deferrable, guaranteed background work. It wraps JobScheduler, AlarmManager, and BroadcastReceiver into a single API…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WorkManager, Background Tasks, Foreground Services &amp; Alarm Limitations">
+<meta name="twitter:description" content="WorkManager is Jetpack&#39;s library for deferrable, guaranteed background work. It wraps JobScheduler, AlarmManager, and BroadcastReceiver into a single API…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "WorkManager, Background Tasks, Foreground Services & Alarm Limitations",
+  "description": "WorkManager is Jetpack's library for deferrable, guaranteed background work. It wraps JobScheduler, AlarmManager, and BroadcastReceiver into a single API…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 32
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "WorkManager, Background Tasks, Foreground Services & Alarm Limitations",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">WorkManager, Background Tasks, Foreground Services &amp; Alarm Limitations</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 32 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">WorkManager, Background Tasks, Foreground Services &amp; Alarm Limitations</h1>
+<p class="lesson-subtitle">Reliable background execution in the age of battery optimization</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=32">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">WorkManager is like a reliable postal service — you hand it a package (task) with delivery requirements (constraints: needs WiFi, needs charging) and it guarantees delivery even if you go to sleep, restart your phone, or the postman&#39;s car breaks down. Foreground Services are like a courier who rings your doorbell and stays visible until they finish. AlarmManager after Android 12 is like the post office that now charges extra for guaranteed exact-time delivery.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>WorkManager is Jetpack&#39;s library for deferrable, guaranteed background work. It wraps JobScheduler, AlarmManager, and BroadcastReceiver into a single API that survives app kills and device restarts. Foreground Services handle user-visible ongoing tasks. AlarmManager handles exact-time alarms but faces increasing OS restrictions from Android 12 onward.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In BRAC&#39;s field ops app, WorkManager handled offline data sync: a PeriodicWorkRequest every 15 minutes with CONNECTED constraint, chained with an upload task that had exponential backoff. When FCM delivered a data message (new assignment), it enqueued a OneTimeWorkRequest immediately. The foreground service ran during large file uploads so the system wouldn&#39;t kill the transfer mid-stream.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>WorkManager guaranteed execution</strong> — WorkManager guarantees task execution even if the app is killed or the device restarts. It uses JobScheduler (API 23+), AlarmManager+BroadcastReceiver (API &lt;23), and BatteryOptimization-aware scheduling — you don&#39;t choose the backend, WorkManager does.</li>
+      <li><strong>OneTimeWorkRequest</strong> — For tasks that run once: val request = OneTimeWorkRequestBuilder().setConstraints(constraints).setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build(). The exponential backoff with jitter prevents thundering herd on server recovery.</li>
+      <li><strong>PeriodicWorkRequest</strong> — For recurring tasks with a minimum interval of 15 minutes: PeriodicWorkRequestBuilder(15, TimeUnit.MINUTES).setConstraints(constraints).build(). The system may batch and delay periodic work — do not rely on exact timing.</li>
+      <li><strong>Constraints</strong> — Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).setRequiresCharging(false).setRequiresBatteryNotLow(true).build(). In BRAC field ops, sync work required CONNECTED only — not UNMETERED — because field officers use mobile data.</li>
+      <li><strong>Chaining work</strong> — WorkManager.getInstance(context).beginWith(uploadRequest).then(notifyRequest).enqueue(). For parallel branches: beginWith(listOf(req1, req2)).then(mergeRequest). Chaining is DAG-based — downstream tasks receive output data from upstream via workDataOf().</li>
+      <li><strong>Worker vs CoroutineWorker</strong> — Worker runs on a background thread (Executor). CoroutineWorker runs on Dispatchers.IO and supports suspend functions — strongly preferred for Kotlin codebases. Override doWork() in both; return Result.success(), Result.failure(), or Result.retry().</li>
+      <li><strong>Foreground services requirement</strong> — Since Android 8 (API 26), long-running background services MUST call startForeground(id, notification) within 5 seconds of starting or the system kills the service with ANR-like behavior. The notification must remain visible for the service lifetime.</li>
+      <li><strong>Foreground service types (Android 14+)</strong> — Android 14 requires declaring foreground service type in the manifest: android:foregroundServiceType=&quot;dataSync|mediaPlayback|location&quot;. The wrong or missing type causes a SecurityException at startForeground() call.</li>
+      <li><strong>Doze mode impact</strong> — In Doze mode (screen off, stationary, unplugged), the system defers network access, wafers, and syncs to maintenance windows. WorkManager work with network constraints is automatically deferred. High-priority FCM messages can wake the device from Doze.</li>
+      <li><strong>AlarmManager exact alarms (Android 12+)</strong> — Android 12 (API 31) requires SCHEDULE_EXACT_ALARM permission for setExact() and setExactAndAllowWhileIdle(). Android 13 made this permission not pre-granted — users must grant it in Special app access settings. Always check canScheduleExactAlarms() before scheduling.</li>
+      <li><strong>WorkManager vs AlarmManager</strong> — Use WorkManager for deferrable, constraint-based, guaranteed background work (sync, upload, cleanup). Use AlarmManager only when exact timing is a hard user requirement (calendar reminders, medication alarms) — not for data sync or analytics flush.</li>
+      <li><strong>Battery optimization exemption</strong> — Requesting battery optimization exemption (REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) triggers a Play Store policy review. Only request it for apps with a genuine always-on need (health monitoring, IoT). WorkManager handles most cases without it.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. CoroutineWorker — preferred for Kotlin
+class SyncWorker(context: Context, params: WorkerParameters) :
+    CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        return try {
+            val repo = ServiceLocator.getRepository(applicationContext)
+            repo.syncFromServer()
+            Result.success()
+        } catch (e: IOException) {
+            if (runAttemptCount &lt; 3) Result.retry()
+            else Result.failure(workDataOf(&quot;error&quot; to e.message))
+        }
+    }
+}
+
+// 2. Enqueue with constraints and chaining
+fun scheduleSyncWork(context: Context) {
+    val constraints = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .setRequiresBatteryNotLow(true)
+        .build()
+
+    val periodicSync = PeriodicWorkRequestBuilder&lt;SyncWorker&gt;(
+        15, TimeUnit.MINUTES
+    )
+        .setConstraints(constraints)
+        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+        .addTag(&quot;sync&quot;)
+        .build()
+
+    // KEEP_EXISTING prevents duplicate periodic work
+    WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+        &quot;periodic_sync&quot;,
+        ExistingPeriodicWorkPolicy.KEEP,
+        periodicSync
+    )
+}
+
+// 3. Foreground service (Android 8+ requirement)
+class UploadService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(&quot;Uploading data...&quot;)
+            .setSmallIcon(R.drawable.ic_upload)
+            .setOngoing(true)
+            .build()
+        // Must call within 5 seconds — or system kills the service
+        startForeground(NOTIF_ID, notification)
+        CoroutineScope(Dispatchers.IO).launch {
+            runUploadPipeline()
+            stopSelf()
+        }
+        return START_NOT_STICKY
+    }
+    override fun onBind(intent: Intent?) = null
+}
+
+// 4. AlarmManager exact alarm (Android 12+)
+fun scheduleExactAlarm(context: Context, triggerAtMillis: Long) {
+    val alarmManager = context.getSystemService(AlarmManager::class.java)
+    if (alarmManager.canScheduleExactAlarms()) {
+        val intent = PendingIntent.getBroadcast(
+            context, 0,
+            Intent(context, AlarmReceiver::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP, triggerAtMillis, intent
+        )
+    } else {
+        // Request permission — launches system settings
+        val permIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+        context.startActivity(permIntent)
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> CoroutineWorker suspends on Dispatchers.IO automatically — no need to manage threads manually compared to the base Worker class.</li>
+      <li><span class="walk-num">2.</span> runAttemptCount tracks how many times WorkManager has retried this worker instance — use it to limit retries before declaring failure.</li>
+      <li><span class="walk-num">3.</span> Result.retry() signals WorkManager to reschedule with the configured backoff policy (EXPONENTIAL doubles the delay each attempt).</li>
+      <li><span class="walk-num">4.</span> PeriodicWorkRequestBuilder(15, TimeUnit.MINUTES) sets the repeat interval — the system may delay beyond 15 min for battery optimization.</li>
+      <li><span class="walk-num">5.</span> enqueueUniquePeriodicWork with KEEP policy ensures only one periodic sync worker runs at a time — calling it again does nothing if one already exists.</li>
+      <li><span class="walk-num">6.</span> startForeground(NOTIF_ID, notification) must be called within 5 seconds of onStartCommand() to keep the service alive on Android 8+.</li>
+      <li><span class="walk-num">7.</span> START_NOT_STICKY means if the system kills the service, it won&#39;t be restarted unless there are pending intents — correct for one-shot upload services.</li>
+      <li><span class="walk-num">8.</span> stopSelf() in the coroutine&#39;s completion block ensures the service stops after the upload finishes, removing the persistent notification.</li>
+      <li><span class="walk-num">9.</span> alarmManager.canScheduleExactAlarms() is required before calling setExact() on Android 12+ to avoid SecurityException.</li>
+      <li><span class="walk-num">10.</span> PendingIntent.FLAG_IMMUTABLE is required for PendingIntents on Android 12+ as a security requirement.</li>
+      <li><span class="walk-num">11.</span> setExactAndAllowWhileIdle() fires the alarm even during Doze mode — use only for user-facing time-critical alarms.</li>
+      <li><span class="walk-num">12.</span> WorkManager.enqueue() with addTag() allows you to cancel or observe a group of related tasks by tag using cancelAllWorkByTag().</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class DataSyncWorker(ctx: Context, params: WorkerParameters) :
+    CoroutineWorker(ctx, params) {
+
+    override suspend fun doWork(): Result {
+        return try {
+            syncData()
+            Result.success()
+        } catch (e: Exception) {
+            Result.retry()  // Bug 1
+        }
+    }
+}
+
+class BackgroundSyncService : Service() {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        CoroutineScope(Dispatchers.IO).launch {
+            longRunningSync()  // Bug 2
+            stopSelf()
+        }
+        return START_STICKY
+    }
+    override fun onBind(intent: Intent?) = null
+}
+
+fun scheduleSync(context: Context) {
+    val work = PeriodicWorkRequestBuilder&lt;DataSyncWorker&gt;(
+        5, TimeUnit.MINUTES  // Bug 3
+    ).build()
+    WorkManager.getInstance(context).enqueue(work)  // Bug 4
+}
+
+fun scheduleReminder(context: Context, timeMs: Long) {
+    val alarmManager = context.getSystemService(AlarmManager::class.java)
+    val pi = PendingIntent.getBroadcast(context, 0,
+        Intent(context, ReminderReceiver::class.java), 0)  // Bug 5
+    alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeMs, pi)
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Check retry logic for non-retryable errors, missing startForeground(), minimum periodic interval, unique work enqueueing, and PendingIntent flags on Android 12+.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: Catching all Exception and always returning Result.retry() means HTTP 4xx errors (bad request, unauthorized) will retry indefinitely until WorkManager gives up — wasting battery and generating server load. Fix: catch IOException separately for Result.retry(), catch HttpException and check statusCode — for 4xx return Result.failure(), for 5xx return Result.retry() if runAttemptCount &lt; 3. Bug 2: BackgroundSyncService never calls startForeground() — on Android 8+, a service that does not call startForeground() within 5 seconds of onStartCommand() is killed by the system. This will cause a crash or silent failure. Fix: call startForeground(NOTIF_ID, buildNotification()) immediately at the top of onStartCommand(), before launching the coroutine. Bug 3: PeriodicWorkRequestBuilder with 5 minutes is below the 15-minute minimum — WorkManager will throw an IllegalArgumentException at runtime: &#39;Interval duration lesser than minimum allowed duration&#39;. Fix: use 15, TimeUnit.MINUTES as the minimum. Bug 4: WorkManager.getInstance(context).enqueue(work) for periodic work does not deduplicate — every call to scheduleSync() enqueues another periodic worker. Over time, dozens of duplicate sync workers run simultaneously. Fix: use enqueueUniquePeriodicWork(&quot;data_sync&quot;, ExistingPeriodicWorkPolicy.KEEP, work) to guarantee only one instance runs. Bug 5: PendingIntent flags value 0 is missing FLAG_IMMUTABLE — on Android 12+ this causes an IllegalArgumentException: &#39;Targeting S+ requires FLAG_IMMUTABLE or FLAG_MUTABLE&#39;. Fix: use PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have homework to do but you want to do it later. WorkManager is like a very reliable assistant who promises to do your homework even if you fall asleep, your computer restarts, or you forget about it entirely. A Foreground Service is like doing homework with a sticky note on your forehead saying &#39;I&#39;m busy&#39; so people don&#39;t interrupt you. And AlarmManager is like setting an alarm clock — but from Android 12, the alarm clock company says you need special permission to set alarms at exactly the right second.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">WorkManager uses a Room database internally to persist enqueued work across process death and device reboots. Every WorkRequest you enqueue is written to a SQLite table — that&#39;s why WorkManager can survive a force-stop and still execute your task after the device restarts.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a production-ready sync architecture: (1) A CoroutineWorker that reads pending items from Room, uploads via Retrofit with retry logic (Result.retry() on IOException, Result.failure() on HttpException 4xx), and returns output data with the count of synced items; (2) A unique periodic work enqueue that survives app restarts and reuses an existing worker if already enqueued (KEEP policy); (3) A function triggered by an FCM data message that enqueues a one-time immediate sync with CONNECTED constraint; (4) A foreground service for large file upload that updates the notification progress percentage and calls stopSelf() on completion or failure.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/topic/libraries/architecture/workmanager" target="_blank" rel="noopener noreferrer">WorkManager Guide — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/components/foreground-services" target="_blank" rel="noopener noreferrer">Foreground Services Guide</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/about/versions/12/behavior-changes-12#exact-alarm-permission" target="_blank" rel="noopener noreferrer">Exact Alarms — Android 12 Changes</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/topic/performance/power/optimize-battery" target="_blank" rel="noopener noreferrer">Battery Optimization Overview</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/topic/libraries/architecture/workmanager/advanced" target="_blank" rel="noopener noreferrer">WorkManager Advanced Topics — Chaining &amp; Unique Work</a> <span class="res-source">(Android Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=32">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html" rel="prev">← Firebase on Android: Auth, FCM…</a>
+  <a class="nav-next" href="./33-notifications-channels-push-flows-deep-links-app-links.html" rel="next">Notifications, Channels, Push Flows… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

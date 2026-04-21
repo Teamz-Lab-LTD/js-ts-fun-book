@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8251 USART and Serial Communication Basics… | Teamz Lab</title>
+<meta name="description" content="The 8251 USART (Universal Synchronous/Asynchronous Receiver/Transmitter) converts parallel data from the CPU into serial bit streams for transmission, and…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/44-8251-usart-and-serial-communication-basics.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/43-8237-dma-controller.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/45-from-8086-to-80386-pentium-and-x86-thinking.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="8251 USART and Serial Communication Basics">
+<meta property="og:description" content="The 8251 USART (Universal Synchronous/Asynchronous Receiver/Transmitter) converts parallel data from the CPU into serial bit streams for transmission, and…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/44-8251-usart-and-serial-communication-basics.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="8251 USART and Serial Communication Basics">
+<meta name="twitter:description" content="The 8251 USART (Universal Synchronous/Asynchronous Receiver/Transmitter) converts parallel data from the CPU into serial bit streams for transmission, and…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "8251 USART and Serial Communication Basics",
+  "description": "The 8251 USART (Universal Synchronous/Asynchronous Receiver/Transmitter) converts parallel data from the CPU into serial bit streams for transmission, and…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/44-8251-usart-and-serial-communication-basics.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 44
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "8251 USART and Serial Communication Basics",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/44-8251-usart-and-serial-communication-basics.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">8251 USART and Serial Communication Basics</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 44 of 48</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">8251 USART and Serial Communication Basics</h1>
+<p class="lesson-subtitle">Talking One Bit at a Time</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=44">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Parallel communication is like a wide highway with 8 lanes — all 8 bits travel side by side, arriving instantly. Serial communication is like a single-lane road — bits travel one after another in a queue. It is slower per clock, but you only need one wire instead of eight! The 8251 USART is like a traffic controller at the end of this single-lane road: it takes the 8-bit byte from the CPU, lines the bits up single-file (serialize), and sends them down the wire. On the receiving end, it collects arriving bits and reassembles them into a byte (deserialize).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The 8251 USART (Universal Synchronous/Asynchronous Receiver/Transmitter) converts parallel data from the CPU into serial bit streams for transmission, and converts incoming serial bit streams back into parallel bytes. It supports both asynchronous mode (with start/stop bits, configurable baud rates) and synchronous mode (continuous clocked data). Programming involves writing a Mode Word (data format) and Command Word (enable Tx/Rx), then polling status bits to send and receive data.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Serial communication is everywhere. Your computer&#39;s USB ports evolved from the serial port concept. Bluetooth, Wi-Fi, and cellular data are all serial at the physical layer. Arduino boards use UART to communicate with your PC. Modems, GPS modules, and industrial sensors still use classic RS-232 serial (the same standard the 8251 was designed for). Understanding serial framing — start bits, stop bits, parity — is fundamental to debugging any communication protocol.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Serial vs Parallel Communication</strong> — Parallel sends all 8 bits simultaneously on 8 wires — fast but requires many connections. Serial sends bits one at a time on 1-2 wires — slower per clock but needs far fewer wires, making it practical for long distances and connections between separate devices. At high speeds, serial actually wins because parallel wires suffer from timing skew — which is why USB, Ethernet, and SATA are all serial.</li>
+      <li><strong>UART vs USART</strong> — UART (Universal Asynchronous Receiver/Transmitter) handles only asynchronous communication — no shared clock between sender and receiver. USART (Universal Synchronous/Asynchronous Receiver/Transmitter) supports BOTH asynchronous and synchronous modes. Async uses start/stop bits to frame each byte. Sync uses a shared clock signal, sending data continuously without start/stop overhead.</li>
+      <li><strong>Asynchronous Frame Format</strong> — In async mode, each byte is wrapped in a frame: 1 start bit (always LOW), 5-8 data bits (LSB first), optional parity bit (error detection), and 1-2 stop bits (always HIGH). The start bit alerts the receiver that data is coming. The stop bit(s) provide idle time before the next frame. The line is HIGH when idle (no data).</li>
+      <li><strong>Baud Rate and Bit Timing</strong> — Baud rate is the number of signal changes (bits) per second. At 9600 baud, each bit lasts 1/9600 = 104.17 microseconds. Common baud rates: 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200. The 8251 uses an external clock (TxC/RxC) at 1x, 16x, or 64x the baud rate. With 16x oversampling, the receiver samples each bit 16 times and picks the middle samples for reliability.</li>
+      <li><strong>8251 Architecture and Pins</strong> — The 8251 connects to the CPU via D0-D7 (data bus), C/D (command/data select, like A0), RD, WR, CS, and CLK. Serial side: TxD (transmit data output), RxD (receive data input), TxC (transmit clock), RxC (receive clock), plus handshaking signals TxRDY, RxRDY, TxE (transmitter empty), DTR, DSR, RTS, CTS for modem control.</li>
+      <li><strong>Mode Word — Configuring the 8251</strong> — After reset, the first write to the control register is the Mode Word. It sets: sync/async mode, character length (5-8 bits), parity enable and type (even/odd), number of stop bits (1, 1.5, or 2), and baud rate factor (1x/16x/64x). The mode word is written ONCE after reset — to change it, you must reset the 8251 again.</li>
+      <li><strong>Command Word — Controlling Operation</strong> — After the mode word, subsequent writes to the control register are Command Words. The command word enables/disables the transmitter and receiver, controls DTR and RTS signals, sends a break character, performs error reset, and can force an internal reset (to re-enter mode word). TxEN must be set to transmit, RxEN must be set to receive.</li>
+      <li><strong>Transmitting and Receiving Data</strong> — To transmit: check TxRDY status bit (or read port status register bit 0), then write the byte to the data register. The 8251 serializes it and sends on TxD. To receive: check RxRDY status bit (status register bit 1), then read the data register. The 8251 has already deserialized the incoming bits into a byte. Error flags (parity, overrun, framing) are in the status register.</li>
+      <li><strong>Start/Stop/Parity Bits Explained</strong> — The start bit (always 0/LOW) tells the receiver &#39;a byte is beginning — start your bit timer!&#39; Data bits follow (LSB first). The optional parity bit provides simple error detection: even parity makes total 1s even, odd parity makes them odd. Stop bits (always 1/HIGH) give the receiver time to process and return to idle. The classic &#39;8N1&#39; format means 8 data bits, No parity, 1 stop bit.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; =============================================
+; 8251 USART — Complete Serial Setup
+; =============================================
+;
+; 8251 at base 80h (data) and 81h (control/status)
+; Format: 9600 baud, 8N1, 16x clock
+;
+; === INITIALIZATION ===
+;
+; After power-up, send 3 dummy bytes + reset
+; (ensures 8251 is in known state)
+  MOV AL, 00h
+  OUT 81h, AL           ; dummy 1
+  OUT 81h, AL           ; dummy 2
+  OUT 81h, AL           ; dummy 3
+  MOV AL, 40h           ; internal reset command
+  OUT 81h, AL           ; reset 8251
+;
+; Mode Word: 8 data, no parity, 1 stop, 16x
+;   01 00 11 10 = 4Eh
+  MOV AL, 4Eh
+  OUT 81h, AL           ; write mode word
+;
+; Command Word: enable Tx, Rx, DTR, RTS
+;   0 0 1 1 0 1 1 1 = 37h
+  MOV AL, 37h
+  OUT 81h, AL           ; write command word
+;
+; === SEND STRING ===
+;
+  LEA SI, MSG           ; point to message
+SEND_LOOP:
+  LODSB                 ; AL = next char, SI++
+  CMP AL, 0             ; null terminator?
+  JE DONE
+;
+TX_POLL:
+  IN AL, 81h            ; read status
+  TEST AL, 01h          ; TxRDY?
+  JZ TX_POLL            ; wait for ready
+  LODSB                 ; reload char (LODSB advanced SI)
+  DEC SI                ; fix SI
+  MOV AL, [SI-1]        ; get the char
+  OUT 80h, AL           ; transmit byte
+  JMP SEND_LOOP
+;
+DONE:
+  ; Transmission complete
+;
+MSG DB &#39;Hello Serial!&#39;, 0Dh, 0Ah, 0
+;
+; === RECEIVE BYTE ===
+RX_POLL:
+  IN AL, 81h            ; read status
+  TEST AL, 02h          ; RxRDY?
+  JZ RX_POLL
+  IN AL, 80h            ; AL = received byte</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Title comment for 8251 USART setup</li>
+      <li><span class="walk-num">2.</span> Separator line</li>
+      <li><span class="walk-num">3.</span> Blank line</li>
+      <li><span class="walk-num">4.</span> 8251 ports: 80h for data read/write, 81h for control/status</li>
+      <li><span class="walk-num">5.</span> Configuration: 9600 baud, 8 data bits, no parity, 1 stop bit, 16x clock</li>
+      <li><span class="walk-num">6.</span> Blank line</li>
+      <li><span class="walk-num">7.</span> === INITIALIZATION SECTION ===</li>
+      <li><span class="walk-num">8.</span> Blank line</li>
+      <li><span class="walk-num">9.</span> After power-up, the 8251 might be in an unknown state</li>
+      <li><span class="walk-num">10.</span> Write three dummy bytes to flush any pending mode/command bytes</li>
+      <li><span class="walk-num">11.</span> First dummy write to control port</li>
+      <li><span class="walk-num">12.</span> Second dummy write</li>
+      <li><span class="walk-num">13.</span> Third dummy write</li>
+      <li><span class="walk-num">14.</span> Load internal reset command (bit 6 = 1) into AL</li>
+      <li><span class="walk-num">15.</span> Send reset command — 8251 is now waiting for a mode word</li>
+      <li><span class="walk-num">16.</span> Blank line</li>
+      <li><span class="walk-num">17.</span> Mode word for 8 data, no parity, 1 stop, 16x oversampling</li>
+      <li><span class="walk-num">18.</span> Binary breakdown: 01 (1 stop) 00 (no parity) 11 (8 bits) 10 (16x) = 4Eh</li>
+      <li><span class="walk-num">19.</span> Write mode word to control register — 8251 format is now set</li>
+      <li><span class="walk-num">20.</span> Blank line</li>
+      <li><span class="walk-num">21.</span> Command word: enable transmitter, receiver, DTR, and RTS lines</li>
+      <li><span class="walk-num">22.</span> Binary: 00110111 = 37h — TxEN, DTR, RxEN, RTS all set to 1</li>
+      <li><span class="walk-num">23.</span> Write command — 8251 is now active and ready to communicate</li>
+      <li><span class="walk-num">24.</span> Blank line</li>
+      <li><span class="walk-num">25.</span> === SEND STRING SECTION ===</li>
+      <li><span class="walk-num">26.</span> Blank line</li>
+      <li><span class="walk-num">27.</span> Load address of the null-terminated message string into SI</li>
+      <li><span class="walk-num">28.</span> SEND_LOOP label — iterate through each character</li>
+      <li><span class="walk-num">29.</span> LODSB loads byte at [SI] into AL and increments SI</li>
+      <li><span class="walk-num">30.</span> Check if AL is zero (null terminator marks end of string)</li>
+      <li><span class="walk-num">31.</span> If null, jump to DONE — message fully transmitted</li>
+      <li><span class="walk-num">32.</span> Blank line</li>
+      <li><span class="walk-num">33.</span> TX_POLL label — wait for transmitter to be ready</li>
+      <li><span class="walk-num">34.</span> Read status register from port 81h</li>
+      <li><span class="walk-num">35.</span> Test bit 0 (TxRDY) — is the transmitter ready for a new byte?</li>
+      <li><span class="walk-num">36.</span> If TxRDY is 0, loop back and poll again</li>
+      <li><span class="walk-num">37.</span> Reload the character (SI was advanced by LODSB)</li>
+      <li><span class="walk-num">38.</span> Adjust SI back to correct position</li>
+      <li><span class="walk-num">39.</span> Get the character byte</li>
+      <li><span class="walk-num">40.</span> Write byte to data register at port 80h — 8251 serializes and transmits it</li>
+      <li><span class="walk-num">41.</span> Jump back to send the next character</li>
+      <li><span class="walk-num">42.</span> Blank line</li>
+      <li><span class="walk-num">43.</span> DONE label — all characters sent</li>
+      <li><span class="walk-num">44.</span> Blank line</li>
+      <li><span class="walk-num">45.</span> MSG: the message bytes in memory including carriage return and line feed</li>
+      <li><span class="walk-num">46.</span> Blank line</li>
+      <li><span class="walk-num">47.</span> === RECEIVE SECTION ===</li>
+      <li><span class="walk-num">48.</span> RX_POLL: poll for incoming data</li>
+      <li><span class="walk-num">49.</span> Read status register</li>
+      <li><span class="walk-num">50.</span> Test bit 1 (RxRDY) — has a complete byte been received?</li>
+      <li><span class="walk-num">51.</span> If not, keep polling</li>
+      <li><span class="walk-num">52.</span> Read received byte from data register — AL contains the deserialized byte</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; Initialize 8251: 8 data, even parity, 1 stop, 16x
+;
+; Mode word:
+;   B1B0 = 10 (16x)
+;   L1L0 = 11 (8 bits)
+;   PEN  = 1  (parity on)
+;   EP   = 1  (even)
+;   S1S0 = 01 (1 stop)
+;
+  MOV AL, 01 11 1 1 11 10  ; = 7Eh
+  OUT 81h, AL
+;
+; Command word: enable Tx and Rx
+  MOV AL, 05h              ; TxEN + RxEN
+  OUT 80h, AL              ; write to data port</code></pre><details><summary>Need a hint?</summary><div class="hint">Where should the command word be written — data port or control port? Also check the binary-to-hex conversion.</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) The command word is written to port 80h (data register) instead of port 81h (control/status register). Commands must go to the control port. Fix: OUT 81h, AL. (2) The binary value written as the mode word comment doesn&#39;t assemble correctly. The actual mode word should be: S1S0=01, EP=1, PEN=1, L1L0=11, B1B0=10 → 01111110 = 7Eh — the hex value is correct but the MOV instruction syntax is wrong. Use: MOV AL, 7Eh.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a long narrow tube that can only fit one marble at a time. You have 8 different-colored marbles (your data byte) but you can only send them one by one through the tube. Before you start, you send a special black marble (start bit) to tell your friend on the other end &#39;get ready, marbles are coming!&#39; Then you send all 8 color marbles, and finish with a white marble (stop bit) meaning &#39;that is one complete message.&#39; Your friend catches each marble and lines them up to see the original 8-color pattern. That is serial communication!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The RS-232 serial standard that the 8251 implements was first published in 1960 — over 60 years ago! It used voltage levels of +12V and -12V to represent 0 and 1. The 9600 baud rate that became the most common default was chosen because it was the maximum speed that worked reliably over telephone-quality copper wires. Incredibly, RS-232 serial ports are still used today in industrial equipment, network switches, and scientific instruments.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Configure the 8251 for 7 data bits, even parity, 2 stop bits, with a 64x baud rate factor. Calculate the mode word bit by bit. Then write a complete &#39;echo&#39; program that receives a byte from the serial port and immediately transmits it back — the simplest possible serial communication test.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=p-2sYF3R_Vc" target="_blank" rel="noopener noreferrer">8251 USART Explained</a> <span class="res-source">(Neso Academy)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/8251-usart-microprocessor/" target="_blank" rel="noopener noreferrer">8251 USART Architecture and Programming</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://datasheetspdf.com/pdf/1350282/Intel/8251A/1" target="_blank" rel="noopener noreferrer">Intel 8251A Datasheet</a> <span class="res-source">(Intel)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=IyGwvGzrqp8" target="_blank" rel="noopener noreferrer">Serial Communication Basics</a> <span class="res-source">(Ben Eater)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=44">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./43-8237-dma-controller.html" rel="prev">← 8237 DMA Controller</a>
+  <a class="nav-next" href="./45-from-8086-to-80386-pentium-and-x86-thinking.html" rel="next">From 8086 to 80386, Pentium, and x86… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

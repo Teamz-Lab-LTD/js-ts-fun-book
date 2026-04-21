@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP, SOLID Principles &amp; Composition — Flutter… | Teamz Lab</title>
+<meta name="description" content="OOP in Dart combines classes, mixins, abstract classes, and interfaces. SOLID principles guide how to structure code: Single Responsibility, Open/Closed…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/09-oop-solid-principles-composition.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/08-error-handling-result-types-defensive-coding.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/10-widget-tree-element-tree-render-tree.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP, SOLID Principles &amp; Composition">
+<meta property="og:description" content="OOP in Dart combines classes, mixins, abstract classes, and interfaces. SOLID principles guide how to structure code: Single Responsibility, Open/Closed…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/09-oop-solid-principles-composition.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OOP, SOLID Principles &amp; Composition">
+<meta name="twitter:description" content="OOP in Dart combines classes, mixins, abstract classes, and interfaces. SOLID principles guide how to structure code: Single Responsibility, Open/Closed…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "OOP, SOLID Principles & Composition",
+  "description": "OOP in Dart combines classes, mixins, abstract classes, and interfaces. SOLID principles guide how to structure code: Single Responsibility, Open/Closed…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/09-oop-solid-principles-composition.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 9
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "OOP, SOLID Principles & Composition",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/09-oop-solid-principles-composition.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">OOP, SOLID Principles &amp; Composition</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 9 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">OOP, SOLID Principles &amp; Composition</h1>
+<p class="lesson-subtitle">Architecture Interview Questions Start Here</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=9">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">SOLID principles are like rules for building with LEGO. Single Responsibility: each block does one thing. Open/Closed: you can add new blocks without breaking existing ones. Liskov: any blue block should work wherever a blue block is expected. Interface Segregation: don&#39;t force a car kit on someone building a house. Dependency Inversion: the instructions depend on the blocks, not the other way around.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>OOP in Dart combines classes, mixins, abstract classes, and interfaces. SOLID principles guide how to structure code: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion. Composition over inheritance means building behavior from smaller pieces rather than deep class hierarchies. These concepts are tested in every architecture interview.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a SaaS collaboration app, Clean Architecture embodies all SOLID principles: BLoCs have single responsibilities (ChatBloc, AuthBloc). Repositories implement abstract interfaces (DIP). New features extend the system without modifying existing code (OCP). Sealed states model each feature exhaustively. GetIt injects dependencies as abstractions.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Classes and Constructors in Dart</strong> — Dart classes have named constructors, factory constructors, const constructors, and initializer lists. Const constructors create compile-time constant instances. Factory constructors can return cached instances or subtypes. Interview: Explain const constructor benefits.</li>
+      <li><strong>Single Responsibility Principle (SRP)</strong> — A class should have ONE reason to change. UserRepository handles data access. UserValidator handles validation. UserNotifier handles notifications. NOT: UserManager that does all three. Interview: Break a god class into focused classes.</li>
+      <li><strong>Open/Closed Principle (OCP)</strong> — Classes should be open for extension, closed for modification. Add new behavior by creating new classes (strategy pattern, new subclasses), not by modifying existing code. In Flutter: add new BLoC events without changing existing event handlers.</li>
+      <li><strong>Liskov Substitution Principle (LSP)</strong> — Subtypes must be substitutable for their parent types. If fetchData(Repository repo) works with BaseRepository, it must work with any Repository subclass. Breaking LSP: a ReadOnlyRepo that throws on write() — it violates the contract of its parent.</li>
+      <li><strong>Interface Segregation Principle (ISP)</strong> — Don&#39;t force clients to depend on methods they don&#39;t use. Split fat interfaces: instead of CrudRepository with read/write/delete, have ReadRepository and WriteRepository. Classes implement only what they need.</li>
+      <li><strong>Dependency Inversion Principle (DIP)</strong> — High-level modules should NOT depend on low-level modules. Both should depend on abstractions. UserBloc depends on abstract UserRepository, not on concrete ApiUserRepository. This enables testing (inject mock) and flexibility (swap implementations).</li>
+      <li><strong>Composition Over Inheritance</strong> — Prefer composing behavior from smaller pieces rather than deep inheritance chains. Use mixins, DI, and delegation instead of class A extends B extends C extends D. Deep inheritance is fragile — changing a parent breaks all children.</li>
+      <li><strong>Abstract Classes vs Interfaces</strong> — In Dart, every class is implicitly an interface. Abstract classes provide partial implementation. Use abstract class for shared behavior + contract. Use &#39;implements&#39; for pure contract. Interview: When would you use extends vs implements?</li>
+      <li><strong>Factory Pattern</strong> — Factory constructors decide which concrete type to create: factory Logger(String type) { if (type == &#39;file&#39;) return FileLogger(); return ConsoleLogger(); }. Used for DI containers, service locators, and creating instances from JSON.</li>
+      <li><strong>SOLID in Flutter Practice</strong> — BLoC follows SRP (one feature per BLoC). Repository pattern follows DIP (BLoC depends on abstract repo). GetIt follows DIP (register abstractions, resolve concretions). Sealed states follow OCP (add states without changing BLoC logic).</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// OOP &amp; SOLID in Dart/Flutter
+
+// --- SINGLE RESPONSIBILITY ---
+
+// BAD: God class doing everything
+// class UserManager {
+//   Future&lt;User&gt; fetchUser() { ... }
+//   bool validateEmail(String email) { ... }
+//   Future&lt;void&gt; sendNotification() { ... }
+//   Future&lt;void&gt; cacheUser() { ... }
+// }
+
+// GOOD: Focused classes
+abstract class UserRepository {
+  Future&lt;User&gt; getById(String id);
+  Future&lt;void&gt; save(User user);
+}
+
+class UserValidator {
+  bool isValidEmail(String email) =&gt; email.contains(&#39;@&#39;) &amp;&amp; email.contains(&#39;.&#39;);
+  bool isValidName(String name) =&gt; name.length &gt;= 2;
+}
+
+class UserNotificationService {
+  Future&lt;void&gt; sendWelcome(User user) async { /* ... */ }
+}
+
+// --- DEPENDENCY INVERSION ---
+
+// High-level (BLoC) depends on abstraction, not concrete class
+class UserBloc extends Bloc&lt;UserEvent, UserState&gt; {
+  final UserRepository _repository; // Abstract! Not ApiUserRepository
+
+  UserBloc({required UserRepository repository})
+      : _repository = repository,
+        super(const UserInitial()) {
+    on&lt;LoadUser&gt;(_onLoadUser);
+  }
+
+  Future&lt;void&gt; _onLoadUser(LoadUser event, Emitter&lt;UserState&gt; emit) async {
+    emit(const UserLoading());
+    try {
+      final user = await _repository.getById(event.id);
+      emit(UserLoaded(user));
+    } catch (e) {
+      emit(UserError(e.toString()));
+    }
+  }
+}
+
+// Concrete implementations — swappable
+class ApiUserRepository implements UserRepository {
+  final Dio _dio;
+  ApiUserRepository(this._dio);
+
+  @override
+  Future&lt;User&gt; getById(String id) async {
+    final response = await _dio.get(&#39;/users/$id&#39;);
+    return User.fromJson(response.data);
+  }
+
+  @override
+  Future&lt;void&gt; save(User user) async {
+    await _dio.post(&#39;/users&#39;, data: user.toJson());
+  }
+}
+
+class MockUserRepository implements UserRepository {
+  @override
+  Future&lt;User&gt; getById(String id) async =&gt; User(id: id, name: &#39;Test User&#39;);
+
+  @override
+  Future&lt;void&gt; save(User user) async {}
+}
+
+// --- COMPOSITION OVER INHERITANCE ---
+
+// BAD: Deep inheritance
+// class Animal { void eat() {} }
+// class Bird extends Animal { void fly() {} }
+// class Penguin extends Bird {} // Penguin can fly?! Broken.
+
+// GOOD: Composition with mixins
+mixin CanSwim {
+  void swim() =&gt; print(&#39;Swimming!&#39;);
+}
+
+mixin CanFly {
+  void fly() =&gt; print(&#39;Flying!&#39;);
+}
+
+class Duck with CanSwim, CanFly {}
+class Penguin with CanSwim {} // No flying!
+
+// --- FACTORY CONSTRUCTORS ---
+
+abstract class Logger {
+  void log(String message);
+
+  factory Logger(String env) {
+    return switch (env) {
+      &#39;production&#39; =&gt; CrashlyticsLogger(),
+      &#39;debug&#39;      =&gt; ConsoleLogger(),
+      _            =&gt; ConsoleLogger(),
+    };
+  }
+}
+
+class ConsoleLogger implements Logger {
+  @override
+  void log(String message) =&gt; print(&#39;[LOG] $message&#39;);
+}
+
+class CrashlyticsLogger implements Logger {
+  @override
+  void log(String message) {
+    // Send to Crashlytics in production
+  }
+}
+
+// --- CONST CONSTRUCTORS ---
+
+class AppColors {
+  final Color primary;
+  final Color secondary;
+
+  const AppColors({required this.primary, required this.secondary});
+
+  static const light = AppColors(
+    primary: Color(0xFF2196F3),
+    secondary: Color(0xFF4CAF50),
+  );
+}
+// const creates compile-time constants — reused, not recreated</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Abstract UserRepository — the contract that BLoC depends on</li>
+      <li><span class="walk-num">2.</span> UserValidator — separate class, single responsibility: validation</li>
+      <li><span class="walk-num">3.</span> UserBloc depends on abstract UserRepository, not a concrete class</li>
+      <li><span class="walk-num">4.</span> Constructor takes the abstraction — enables injection of any implementation</li>
+      <li><span class="walk-num">5.</span> On event, delegates to repository — BLoC doesn&#39;t know or care about HTTP/DB details</li>
+      <li><span class="walk-num">6.</span> ApiUserRepository — concrete implementation of the abstract contract</li>
+      <li><span class="walk-num">7.</span> MockUserRepository — another implementation for testing</li>
+      <li><span class="walk-num">8.</span> Composition with mixins — Duck can swim AND fly</li>
+      <li><span class="walk-num">9.</span> Penguin only mixes in CanSwim — no broken fly() method</li>
+      <li><span class="walk-num">10.</span> Factory constructor — returns different implementations based on input</li>
+      <li><span class="walk-num">11.</span> Const constructor — enables compile-time constant instances</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class OrderService {
+  final ApiClient _api;
+  OrderService(this._api);
+
+  Future&lt;Order&gt; createOrder(Cart cart) async {
+    final isValid = _validateCart(cart);
+    if (!isValid) throw Exception(&#39;Invalid cart&#39;);
+    final order = await _api.post(&#39;/orders&#39;, cart.toJson());
+    await _sendConfirmationEmail(order);
+    await _updateInventory(order);
+    await _notifyWarehouse(order);
+    return Order.fromJson(order);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">How many responsibilities does this class have? What happens when email logic changes?</div></details><details><summary>Show answer</summary><div class="answer">OrderService violates SRP — it validates, creates orders, sends emails, updates inventory, AND notifies warehouse. Any change to email/inventory/notification logic requires modifying this class. Fix: Extract into OrderValidator, OrderRepository, EmailService, InventoryService, WarehouseNotifier. OrderService should coordinate, not implement.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re building a robot. SRP says each part does one job — the arm grabs, the legs walk, the eyes see. Composition is like snapping parts together — you can give your robot wings OR wheels, mix and match. Inheritance is like saying &#39;my robot must be exactly like Dad-robot plus one extra thing&#39; — but what if Dad-robot has a broken part? Now your robot is broken too!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The SOLID principles were introduced by Robert C. Martin (Uncle Bob) in the early 2000s. The acronym SOLID was actually coined by Michael Feathers. Uncle Bob says the most important principle is Dependency Inversion because it enables all the others — and it&#39;s exactly what makes Flutter&#39;s testable architecture possible.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Refactor a monolithic UserService class (that handles auth, profile CRUD, avatar upload, and notifications) into SOLID-compliant classes. Show the abstract interfaces, concrete implementations, and how they&#39;d be wired together with dependency injection.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://dart.dev/language/classes" target="_blank" rel="noopener noreferrer">Dart Classes</a> <span class="res-source">(Dart Official)</span></li>
+      <li><a href="https://dart.dev/language/constructors" target="_blank" rel="noopener noreferrer">SOLID Principles in Dart</a> <span class="res-source">(Dart Official)</span></li>
+      <li><a href="https://dart.dev/language/mixins" target="_blank" rel="noopener noreferrer">Mixins in Dart</a> <span class="res-source">(Dart Official)</span></li>
+      <li><a href="https://dart.dev/language/class-modifiers#abstract" target="_blank" rel="noopener noreferrer">Abstract Classes</a> <span class="res-source">(Dart Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=9">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./08-error-handling-result-types-defensive-coding.html" rel="prev">← Error Handling, Result Types &amp;…</a>
+  <a class="nav-next" href="./10-widget-tree-element-tree-render-tree.html" rel="next">Widget Tree, Element Tree &amp; Render Tree →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Management Landscape — Flutter Interview Mastery | Teamz Lab</title>
+<meta name="description" content="Flutter&#39;s state management landscape spans: setState (local, simple), ValueNotifier (simple shared value), Provider (ChangeNotifier wrapper), Riverpod…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="State Management Landscape">
+<meta property="og:description" content="Flutter&#39;s state management landscape spans: setState (local, simple), ValueNotifier (simple shared value), Provider (ChangeNotifier wrapper), Riverpod…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="State Management Landscape">
+<meta name="twitter:description" content="Flutter&#39;s state management landscape spans: setState (local, simple), ValueNotifier (simple shared value), Provider (ChangeNotifier wrapper), Riverpod…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "State Management Landscape",
+  "description": "Flutter's state management landscape spans: setState (local, simple), ValueNotifier (simple shared value), Provider (ChangeNotifier wrapper), Riverpod…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 16
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "State Management Landscape",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">State Management Landscape</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 16 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">State Management Landscape</h1>
+<p class="lesson-subtitle">How to Answer &#39;How Do You Choose State Management?&#39; in an Interview</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=16">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">State management solutions are like different ways to organize a team. setState is like a solo freelancer — fast and simple for one person. ValueNotifier is like a group chat — anyone subscribed gets the update. Provider is like a department head distributing info. Riverpod is a better-organized company. BLoC is like a corporate bureaucracy — more process, but scales to thousands of employees without chaos.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter&#39;s state management landscape spans: setState (local, simple), ValueNotifier (simple shared value), Provider (ChangeNotifier wrapper), Riverpod (compile-safe, testable), and BLoC (event-driven, unidirectional). Each has tradeoffs. Senior engineers choose based on complexity, testability requirements, and team size — not hype.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a fintech app: authentication state → Riverpod (global, async, needs loading/error states). Transaction list → BLoC (complex filtering, sorting, pagination events). Toast notifications → ValueNotifier (simple show/hide). Theme toggle → Provider or simple ValueNotifier. User form → local setState or Formz with Riverpod.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What Is State in Flutter?</strong> — State is any data that can change and that the UI should reflect. Three types: (1) Local UI state — expanded/collapsed, selected tab, form text. (2) Shared app state — authenticated user, cart, theme preference. (3) Server state — data fetched from an API, sync status. Different state types need different solutions.</li>
+      <li><strong>setState — Simple, Synchronous, Local</strong> — Best for: local UI state in a single widget (toggle, counter, tab selection). Problems: doesn&#39;t scale across widgets, causes full subtree rebuilds, can&#39;t be accessed from other widgets. When interviewers ask &#39;when would you use setState?&#39;, answer: only for isolated local UI state that doesn&#39;t need sharing.</li>
+      <li><strong>ValueNotifier and ValueListenableBuilder</strong> — ValueNotifier is a ChangeNotifier that holds a single value. When value changes, listeners are notified. ValueListenableBuilder rebuilds only when the value changes. Lightweight, no dependencies. Good for: simple shared values, theme toggles, small counters. Not for complex multi-field state.</li>
+      <li><strong>Provider — ChangeNotifier Wrapper</strong> — Provider wraps InheritedWidget with a ChangeNotifier. ChangeNotifier has notifyListeners(). Consumer or context.watch() subscribes and rebuilds on change. context.read() one-time access. Simple, Flutter team endorsed. Limitation: can have Provider hell with many providers, ChangeNotifier is mutable and hard to test.</li>
+      <li><strong>Riverpod — Provider Done Right</strong> — Riverpod fixes Provider&#39;s problems: compile-time safe (no ProviderNotFoundError at runtime), testable (override providers in tests), providers defined globally (not in widget tree), supports async providers (FutureProvider, StreamProvider), StateNotifier for immutable state. Interview: Why Riverpod over Provider? Compile safety + testability.</li>
+      <li><strong>BLoC — Business Logic Component</strong> — BLoC separates business logic from UI completely. Events go IN, States come OUT, UI reacts to States. Strict unidirectional data flow. Excellent for: complex features, team environments, testability. Overhead for simple features. The explicit event → state model makes code reviewable and predictable at scale.</li>
+      <li><strong>When to Choose Each Solution</strong> — setState: isolated widget UI state. ValueNotifier: simple shared value, one type. Provider/Riverpod: app-wide shared state, dependency injection. Cubit: simple feature logic. BLoC: complex feature with multiple events, side effects, team collaboration. Interview tip: demonstrate you understand tradeoffs, not that one tool is always best.</li>
+      <li><strong>Comparison: Mutability and Testability</strong> — setState and ChangeNotifier are MUTABLE — harder to test, harder to track changes. BLoC/Riverpod StateNotifier use IMMUTABLE states — each state transition produces a new object, making testing trivial (given event, assert final state). Immutable state + sealed classes = exhaustive UI rendering.</li>
+      <li><strong>The Anti-Pattern: Business Logic in Widgets</strong> — Putting API calls, validation logic, or business rules inside StatefulWidget is an anti-pattern. It makes code untestable (can&#39;t test without pumping a widget), unreadable (UI and logic mixed), and unmaintainable. Widgets should only: render UI, dispatch events, and react to state changes.</li>
+      <li><strong>Interview Question: How Do You Choose?</strong> — Answer template: &#39;I start with the simplest solution that fits the problem. For local widget state, setState or ValueNotifier. For shared app state or features with async logic, I default to Riverpod or BLoC depending on team preference and feature complexity. BLoC for complex features where explicit event modeling helps the team, Riverpod for everything else.&#39;</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// State Management Landscape — Comparison
+
+import &#39;package:flutter/material.dart&#39;;
+
+// ============================================================
+// 1. setState — LOCAL only
+// ============================================================
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  State&lt;FavoriteButton&gt; createState() =&gt; _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State&lt;FavoriteButton&gt; {
+  bool _isFavorite = false; // Local UI state — perfect for setState
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
+      onPressed: () =&gt; setState(() =&gt; _isFavorite = !_isFavorite),
+    );
+  }
+}
+
+// ============================================================
+// 2. ValueNotifier — SIMPLE shared value
+// ============================================================
+
+final themeNotifier = ValueNotifier&lt;ThemeMode&gt;(ThemeMode.system);
+
+class ThemeToggle extends StatelessWidget {
+  const ThemeToggle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Rebuilds ONLY when themeNotifier.value changes
+    return ValueListenableBuilder&lt;ThemeMode&gt;(
+      valueListenable: themeNotifier,
+      builder: (context, mode, _) {
+        return Switch(
+          value: mode == ThemeMode.dark,
+          onChanged: (isDark) {
+            themeNotifier.value =
+                isDark ? ThemeMode.dark : ThemeMode.light;
+          },
+        );
+      },
+    );
+  }
+}
+
+// ============================================================
+// 3. ChangeNotifier (Provider pattern)
+// ============================================================
+
+class CartNotifier extends ChangeNotifier {
+  final List&lt;String&gt; _items = [];
+  List&lt;String&gt; get items =&gt; List.unmodifiable(_items);
+  int get count =&gt; _items.length;
+
+  void add(String item) {
+    _items.add(item);
+    notifyListeners(); // All listeners rebuild
+  }
+
+  void remove(String item) {
+    _items.remove(item);
+    notifyListeners();
+  }
+}
+
+// Consumer&lt;CartNotifier&gt;: rebuilds when notifyListeners() is called
+// context.read&lt;CartNotifier&gt;(): one-time access, no rebuild
+
+// ============================================================
+// 4. Comparison matrix
+// ============================================================
+
+// | Solution      | Scope         | Mutable | Testable | Complexity |
+// |---------------|---------------|---------|----------|------------|
+// | setState      | Widget-local  | Yes     | Hard     | Minimal    |
+// | ValueNotifier | Widget-shared | Yes     | OK       | Low        |
+// | Provider      | App-wide      | Yes     | Medium   | Medium     |
+// | Riverpod      | App-wide      | No*     | Excellent| Medium     |
+// | BLoC          | Feature-wide  | No      | Excellent| High       |
+// *StateNotifier in Riverpod uses immutable state
+
+// ============================================================
+// 5. The right pattern for each state type
+// ============================================================
+
+// LOCAL UI state (expanded, selected, typing)
+// → setState or ValueNotifier
+
+// SHARED UI state (theme, locale)
+// → ValueNotifier or Provider
+
+// SERVER state (API data, loading, errors)
+// → Riverpod FutureProvider / StreamProvider, or BLoC
+
+// COMPLEX feature logic (auth, cart, search with filters)
+// → BLoC (explicit events make reviews easy) or Riverpod StateNotifier
+
+// ============================================================
+// 6. Why immutable state wins
+// ============================================================
+
+// MUTABLE (ChangeNotifier):
+// class UserState extends ChangeNotifier {
+//   String name = &#39;&#39;;  // Mutated in place
+//   void setName(String n) { name = n; notifyListeners(); }
+// }
+// Problem: hard to know WHAT changed, hard to test past states
+
+// IMMUTABLE (BLoC / Riverpod StateNotifier):
+sealed class UserState {}
+class UserInitial extends UserState {}
+class UserLoading extends UserState {}
+class UserLoaded extends UserState {
+  final String name;
+  const UserLoaded(this.name);
+}
+class UserError extends UserState {
+  final String message;
+  const UserError(this.message);
+}
+// Each state is a distinct object — test by asserting emitted states
+// Sealed: exhaustive handling in switch — compiler warns on missing cases
+
+// ============================================================
+// 7. Interview answer template
+// ============================================================
+
+// &quot;For purely local widget state — an expanded card or a selected tab —
+// I use setState. For simple shared values like theme, ValueNotifier is
+// lightweight and dependency-free. For app-wide state with dependency
+// injection, I reach for Riverpod — it&#39;s compile-safe and trivially
+// testable by overriding providers. For complex features where I want
+// explicit, reviewable event modeling, I use BLoC. The team, feature
+// complexity, and testability requirements guide the choice.&quot;</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> FavoriteButton: setState for isolated local toggle — textbook use case</li>
+      <li><span class="walk-num">2.</span> ValueNotifier declared globally — any widget can access it</li>
+      <li><span class="walk-num">3.</span> ValueListenableBuilder: rebuilds ONLY when themeNotifier.value is reassigned</li>
+      <li><span class="walk-num">4.</span> CartNotifier extends ChangeNotifier — notifyListeners() triggers all consumers</li>
+      <li><span class="walk-num">5.</span> Comparison matrix: scope, mutability, testability, complexity</li>
+      <li><span class="walk-num">6.</span> Sealed class UserState — compiler ensures all cases are handled in switch</li>
+      <li><span class="walk-num">7.</span> Each subclass (Loading, Loaded, Error) is a distinct object — testable</li>
+      <li><span class="walk-num">8.</span> Interview template: demonstrates decision-making process, not dogma</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class CounterProvider extends ChangeNotifier {
+  int count = 0;
+
+  void increment() {
+    count++;
+    // Forgot something here
+  }
+}
+
+class CounterDisplay extends StatelessWidget {
+  final CounterProvider provider;
+  const CounterDisplay({super.key, required this.provider});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(&#39;Count: ${provider.count}&#39;);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">CounterDisplay never updates when increment() is called. What is missing?</div></details><details><summary>Show answer</summary><div class="answer">notifyListeners() is missing from increment(). Without it, listeners (CounterDisplay) are never told the value changed, so the UI stays stale. Fix: add notifyListeners() after &#39;count++&#39;. Also, CounterDisplay should use Consumer&lt;CounterProvider&gt; or context.watch&lt;CounterProvider&gt;() — listening to a ChangeNotifier passed as a constructor param bypasses Provider&#39;s rebuild mechanism.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">State management is about how your app remembers things and tells the screen to update. setState is like a sticky note on your own desk — only YOU can see it. ValueNotifier is like a group chat — everyone watching gets the message. Provider is like a bulletin board in the office. Riverpod is a fancier bulletin board that won&#39;t let you post the wrong thing. BLoC is like a formal company process: fill out a form (Event), submit to the department (BLoC), get an official response (State).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 2023 Flutter State of Flutter survey found BLoC (used by ~54% of respondents) and Riverpod (~52%) are the two most popular state management solutions, with Provider still at ~48%. setState is used by nearly everyone but mostly for local UI state. GetX, while popular, is generally discouraged by the Flutter team due to architectural concerns.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build the same feature — a list of tasks that can be toggled complete — using three approaches: (1) setState in one StatefulWidget, (2) ValueNotifier with ValueListenableBuilder, (3) a ChangeNotifier class with Consumer. Write a paragraph comparing the testability, readability, and scalability of each approach.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/data-and-backend/state-mgmt/intro" target="_blank" rel="noopener noreferrer">State Management in Flutter</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://riverpod.dev/docs/introduction/why_riverpod" target="_blank" rel="noopener noreferrer">Riverpod Documentation</a> <span class="res-source">(riverpod.dev)</span></li>
+      <li><a href="https://bloclibrary.dev/" target="_blank" rel="noopener noreferrer">BLoC Library</a> <span class="res-source">(bloclibrary.dev)</span></li>
+      <li><a href="https://pub.dev/packages/provider" target="_blank" rel="noopener noreferrer">Provider Package</a> <span class="res-source">(pub.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=16">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./15-forms-validation-focus-controllers.html" rel="prev">← Forms, Validation, Focus &amp; Controllers</a>
+  <a class="nav-next" href="./17-cubit-fundamentals.html" rel="next">Cubit Fundamentals →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

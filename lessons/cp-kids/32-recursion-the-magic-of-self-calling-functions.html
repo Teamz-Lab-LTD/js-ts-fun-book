@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recursion — The Magic of Self-Calling Functions — CP… | Teamz Lab</title>
+<meta name="description" content="Recursion is a technique where a function solves a problem by calling itself with a smaller version of the same problem. Every recursive function needs a…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/32-recursion-the-magic-of-self-calling-functions.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/31-more-greedy-problems.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/33-more-recursion-adventures.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Recursion — The Magic of Self-Calling Functions">
+<meta property="og:description" content="Recursion is a technique where a function solves a problem by calling itself with a smaller version of the same problem. Every recursive function needs a…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/cp-kids/32-recursion-the-magic-of-self-calling-functions.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Recursion — The Magic of Self-Calling Functions">
+<meta name="twitter:description" content="Recursion is a technique where a function solves a problem by calling itself with a smaller version of the same problem. Every recursive function needs a…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Recursion — The Magic of Self-Calling Functions",
+  "description": "Recursion is a technique where a function solves a problem by calling itself with a smaller version of the same problem. Every recursive function needs a…",
+  "url": "https://learn.teamzlab.com/lessons/cp-kids/32-recursion-the-magic-of-self-calling-functions.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Competitive Programming: Zero to Hero",
+    "url": "https://learn.teamzlab.com/c/cp-kids.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 32
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "CP Zero to Hero",
+      "item": "https://learn.teamzlab.com/c/cp-kids.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Recursion — The Magic of Self-Calling Functions",
+      "item": "https://learn.teamzlab.com/lessons/cp-kids/32-recursion-the-magic-of-self-calling-functions.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/cp-kids.html">CP Zero to Hero</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/cp-kids.html">CP Zero to Hero</a> / <span aria-current="page">Recursion — The Magic of Self-Calling Functions</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 32 of 50</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Recursion — The Magic of Self-Calling Functions</h1>
+<p class="lesson-subtitle">When a function calls itself — and it actually works!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=32">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Recursion is like Russian nesting dolls — you open one doll and find a smaller one inside. You keep opening until you find the tiniest doll (the base case). Then you close them all back up. Each doll is a function call, and the smallest doll tells you when to stop!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Recursion is a technique where a function solves a problem by calling itself with a smaller version of the same problem. Every recursive function needs a base case (when to stop) and a recursive case (how to make the problem smaller). It&#39;s like solving a big puzzle by breaking it into identical smaller puzzles.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Recursion appears everywhere! File systems use recursion (folders inside folders inside folders). Google&#39;s search algorithm uses recursion to crawl web pages. Family trees are recursive (you have parents, who have parents, who have parents...). Even Russian nesting dolls and fractal art are recursive patterns!</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What is Recursion?</strong> — Recursion is when a function calls ITSELF. It sounds crazy, but it&#39;s one of the most powerful ideas in programming. Instead of using a loop, the function keeps calling itself with a simpler version of the problem until it reaches a stopping point.</li>
+      <li><strong>The Base Case — When to STOP</strong> — The base case is the MOST IMPORTANT part of recursion. It tells the function when to stop calling itself. Without a base case, the function would call itself forever (infinite recursion) and your program would crash. Think of it as the smallest nesting doll — no more dolls inside!</li>
+      <li><strong>The Recursive Case — Making Progress</strong> — The recursive case is where the function calls itself with a SIMPLER or SMALLER input. For example, to calculate 5!, we say 5! = 5 × 4!, and then 4! = 4 × 3!, and so on. Each call makes the problem smaller until we hit the base case.</li>
+      <li><strong>Factorial Example</strong> — Factorial of n (written n!) means multiplying all numbers from 1 to n. So 5! = 5 × 4 × 3 × 2 × 1 = 120. With recursion: factorial(5) = 5 × factorial(4) = 5 × 4 × factorial(3) = ... = 5 × 4 × 3 × 2 × 1. The base case is factorial(0) = 1 or factorial(1) = 1.</li>
+      <li><strong>The Call Stack — A Stack of Plates</strong> — When a function calls itself, each call gets placed on the &#39;call stack&#39; — like stacking plates. factorial(5) goes on, then factorial(4) on top, then factorial(3), etc. When the base case is reached, the plates start coming off one by one as each call returns its result.</li>
+      <li><strong>Sum of Numbers with Recursion</strong> — To add numbers from 1 to n: sum(n) = n + sum(n-1). sum(5) = 5 + sum(4) = 5 + 4 + sum(3) = 5 + 4 + 3 + sum(2) = 5 + 4 + 3 + 2 + sum(1) = 5 + 4 + 3 + 2 + 1 = 15. Base case: sum(1) = 1.</li>
+      <li><strong>Stack Overflow — Too Many Plates!</strong> — If you forget the base case or the problem doesn&#39;t get smaller, the function calls itself forever. The call stack gets too big and your program crashes with a &#39;stack overflow&#39; error. Always make sure your recursion moves toward the base case!</li>
+      <li><strong>Recursion vs Loops</strong> — Anything you can do with recursion, you can also do with loops (and vice versa). Sometimes recursion makes code much cleaner and easier to understand. Other times, a simple loop is better. As you practice, you&#39;ll develop a feel for which to use.</li>
+      <li><strong>Thinking Recursively</strong> — The trick to recursion is: assume the function already works for smaller inputs, then figure out how to use that to solve the current input. For factorial: IF factorial(n-1) gives me the right answer, THEN factorial(n) = n × factorial(n-1). Trust the magic!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// Factorial using recursion
+int factorial(int n) {
+    if (n &lt;= 1) return 1;  // Base case!
+    return n * factorial(n - 1);  // Recursive case
+}
+
+// Sum from 1 to n using recursion
+int sumTo(int n) {
+    if (n == 1) return 1;  // Base case
+    return n + sumTo(n - 1);  // Recursive case
+}
+
+int main() {
+    cout &lt;&lt; &quot;5! = &quot; &lt;&lt; factorial(5) &lt;&lt; &quot;\n&quot;;  // 120
+    cout &lt;&lt; &quot;Sum 1 to 10 = &quot; &lt;&lt; sumTo(10) &lt;&lt; &quot;\n&quot;;  // 55
+    
+    // Let&#39;s trace factorial(4):
+    // factorial(4) = 4 * factorial(3)
+    //              = 4 * 3 * factorial(2)
+    //              = 4 * 3 * 2 * factorial(1)
+    //              = 4 * 3 * 2 * 1
+    //              = 24
+    cout &lt;&lt; &quot;4! = &quot; &lt;&lt; factorial(4) &lt;&lt; &quot;\n&quot;;  // 24
+    return 0;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> #include  — includes all standard libraries so we can use cout, cin, and everything else we need.</li>
+      <li><span class="walk-num">2.</span> using namespace std; — lets us write cout instead of std::cout.</li>
+      <li><span class="walk-num">3.</span> int factorial(int n) — we define a function that takes a number n and returns its factorial. The return type is int.</li>
+      <li><span class="walk-num">4.</span> if (n &lt;= 1) return 1; — this is the BASE CASE! When n is 0 or 1, we know the factorial is 1, so we return immediately without making another recursive call. This is what stops the recursion.</li>
+      <li><span class="walk-num">5.</span> return n * factorial(n - 1); — this is the RECURSIVE CASE. We multiply n by the factorial of (n-1). We trust that factorial(n-1) will give us the correct answer for the smaller problem.</li>
+      <li><span class="walk-num">6.</span> int sumTo(int n) — another recursive function that adds all numbers from 1 to n.</li>
+      <li><span class="walk-num">7.</span> if (n == 1) return 1; — base case for the sum function. The sum from 1 to 1 is just 1.</li>
+      <li><span class="walk-num">8.</span> return n + sumTo(n - 1); — recursive case: n plus the sum of all numbers from 1 to (n-1).</li>
+      <li><span class="walk-num">9.</span> In main(), we call factorial(5) which returns 120 (5×4×3×2×1) and sumTo(10) which returns 55 (1+2+3+...+10).</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int factorial(int n) {
+    return n * factorial(n - 1);
+}
+
+int main() {
+    cout &lt;&lt; factorial(5) &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">What happens when factorial keeps calling itself? Is there anything that tells it when to stop?</div></details><details><summary>Show answer</summary><div class="answer">The bug is a MISSING BASE CASE! The function calls factorial(5), then factorial(4), then factorial(3), factorial(2), factorial(1), factorial(0), factorial(-1)... and it never stops! This causes a stack overflow crash. The fix is to add &#39;if (n &lt;= 1) return 1;&#39; at the beginning of the function before the recursive call.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re in a line of people, and you want to know how many people are in the line. You ask the person behind you: &#39;How many people are behind you?&#39; They ask the person behind THEM the same question. This keeps going until the last person says &#39;Zero — nobody is behind me!&#39; (that&#39;s the base case). Then each person adds 1 and passes the answer forward. That&#39;s recursion — asking the same question to a smaller group!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The word &#39;recursion&#39; is itself recursive in a fun way — if you Google &#39;recursion&#39;, Google shows &#39;Did you mean: recursion?&#39; as a joke! Also, the famous computer scientist Niklaus Wirth once said: &#39;To understand recursion, you must first understand recursion.&#39; 🤯</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a recursive function called power(base, exp) that calculates base^exp. For example, power(2, 3) should return 8. The base case is: any number to the power of 0 is 1. The recursive case is: power(base, exp) = base * power(base, exp - 1). Test it with power(3, 4) — it should give 81!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=ivl5-snqul8" target="_blank" rel="noopener noreferrer">Recursion in 5 Minutes</a> <span class="res-source">(Reducible)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/introduction-to-recursion-data-structure-and-algorithm-tutorials/" target="_blank" rel="noopener noreferrer">Recursion for Beginners</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://codeforces.com/problemset?tags=recursion" target="_blank" rel="noopener noreferrer">Recursion Practice Problems</a> <span class="res-source">(Codeforces)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=32">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./31-more-greedy-problems.html" rel="prev">← More Greedy Problems</a>
+  <a class="nav-next" href="./33-more-recursion-adventures.html" rel="next">More Recursion Adventures →</a>
+</nav>
+
+<a class="back-to-course" href="/c/cp-kids.html">← Back to course: CP Zero to Hero</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

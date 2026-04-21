@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Design II: Fintech Claims/Payment App — Flutter… | Teamz Lab</title>
+<meta name="description" content="A fintech claims and payment system design covers the security architecture, authentication patterns, encrypted storage, idempotent API design, document…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/58-system-design-iii-offline-first-field-app-at-scale.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="System Design II: Fintech Claims/Payment App">
+<meta property="og:description" content="A fintech claims and payment system design covers the security architecture, authentication patterns, encrypted storage, idempotent API design, document…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="System Design II: Fintech Claims/Payment App">
+<meta name="twitter:description" content="A fintech claims and payment system design covers the security architecture, authentication patterns, encrypted storage, idempotent API design, document…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "System Design II: Fintech Claims/Payment App",
+  "description": "A fintech claims and payment system design covers the security architecture, authentication patterns, encrypted storage, idempotent API design, document…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 57
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "System Design II: Fintech Claims/Payment App",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">System Design II: Fintech Claims/Payment App</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 57 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">System Design II: Fintech Claims/Payment App</h1>
+<p class="lesson-subtitle">Designing a secure, compliant payment and claims processing system — auth, encryption, document handling, and error cascades</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=57">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Designing a fintech app is like designing a bank vault inside a shopping mall. The mall needs to be accessible and fast, but the vault needs multiple locks, audit logs of every access, and fail-safe mechanisms — if one lock breaks, the vault stays locked, not open.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>A fintech claims and payment system design covers the security architecture, authentication patterns, encrypted storage, idempotent API design, document handling, and compliance requirements needed to build a production-grade financial application in Flutter.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Payback and TapMeHome are fintech apps requiring claims processing with document upload, BankID authentication, and strict audit trails. The Flutter client uses flutter_secure_storage for JWT storage, certificate pinning via dio, and the saga pattern on the backend to handle multi-step claim payouts with automatic compensation on failure.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Fintech requirements clarification</strong> — Always clarify before designing: transaction volume (TPS), geography and currency support, compliance requirements (PCI-DSS for card data, GDPR for EU users, SOC 2 for enterprise clients), settlement requirements (real-time vs T+2), reversal and dispute windows, fraud detection requirements, and regulatory reporting needs.</li>
+      <li><strong>Security-first architecture principle</strong> — Fintech systems are threat modeled from day one. OWASP Mobile Top 10 applies to Flutter: insecure data storage, unprotected endpoints, insufficient transport layer security, client-side injection, reverse engineering. Defense in depth: every layer assumes the one above it can be compromised.</li>
+      <li><strong>Authentication architecture — BankID and strong auth</strong> — For Scandinavian markets: BankID/MitID provides government-grade identity verification. Flow: initiate auth → redirect to BankID app → receive signed JWT with identity claims. For other markets: SMS OTP + TOTP as MFA. JWT short-lived (15min) + refresh token (7 days, rotated on use, stored in secure storage not localStorage).</li>
+      <li><strong>Encrypted local storage</strong> — Sensitive data (token, account numbers, cached claim data) must never be in plain SharedPreferences. Use flutter_secure_storage (iOS Keychain, Android EncryptedSharedPreferences / Keystore). For structured sensitive data: drift with SQLCipher encryption. Never log sensitive values — redact in error reports.</li>
+      <li><strong>API design for payment flows</strong> — Payment endpoints must be idempotent. Use idempotency keys (client sends UUID header, server returns same response for duplicate requests). Payment state machine: INITIATED → PROCESSING → COMPLETED / FAILED / REVERSED. Never allow direct state jumps — validate transitions server-side. Return machine-readable error codes, not just HTTP status.</li>
+      <li><strong>Document upload for claims</strong> — Claims require document evidence (photos, PDFs). Flow: client requests presigned S3 URL → uploads directly to S3 → sends documentId to API → API validates ownership and associates with claim. Client-side: compress images before upload (flutter_image_compress). Enforce file type allowlist. Scan for malware server-side (ClamAV or AWS Macie).</li>
+      <li><strong>Error handling cascades</strong> — Fintech errors have business consequences. Design for: network timeout (retry with exponential backoff + idempotency key), partial payment (saga pattern — compensating transactions), third-party gateway failure (circuit breaker), user session expired mid-payment (save payment state, resume after re-auth). Never show raw error messages to users — map to user-friendly strings.</li>
+      <li><strong>Saga pattern for distributed transactions</strong> — When a claim payout involves multiple steps (verify claim → reserve funds → initiate transfer → update ledger → send notification), use the Saga pattern. Each step has a compensating transaction. If step 3 fails, automatically reverse steps 1 and 2. Choreography sagas (event-driven) suit microservices; orchestration sagas (central coordinator) are easier to debug.</li>
+      <li><strong>Audit logging and compliance</strong> — Every financial action must be logged: who, what, when, from which IP/device. Logs are immutable (append-only, separate from application DB). PostgreSQL with insert-only policy, or dedicated audit log service. Log retention: 7 years for most financial regulations. Audit logs must be available for regulatory inspection within 24 hours.</li>
+      <li><strong>Flutter security implementation</strong> — Certificate pinning: prevent MITM attacks by pinning the server&#39;s TLS certificate. Use dio with a custom certificate validator or package:ssl_pinning_plugin. Root/jailbreak detection: package:flutter_jailbreak_detection — deny app function on compromised devices for regulatory compliance. Screenshot prevention: FLAG_SECURE on Android, iOS overlayWindow on backgrounding.</li>
+      <li><strong>Offline handling in fintech</strong> — Fintech apps should be conservative about offline capabilities. Acceptable offline: view cached account balance (marked as &#39;last updated&#39;), view claim history. NOT acceptable offline: initiate payments, submit new claims. Show clear &#39;offline&#39; banners. Queue non-critical actions (support messages) but gate financial transactions behind connectivity check.</li>
+      <li><strong>Interview narration for fintech design</strong> — Signal seniority with: (1) Mentioning compliance by name (PCI-DSS, GDPR) without prompting. (2) Proposing the saga pattern for multi-step transactions before the interviewer asks about failure scenarios. (3) Discussing idempotency before discussing retry logic. (4) Noting that the audit log should be a separate system from the application database. (5) Raising the BankID/MFA requirement proactively for EU fintech.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Fintech Flutter: Secure auth + payment flow
+import &#39;package:flutter_secure_storage/flutter_secure_storage.dart&#39;;
+import &#39;package:dio/dio.dart&#39;;
+
+// Secure token storage
+class SecureTokenStore {
+  static const _storage = FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock_this_device),
+  );
+
+  static Future&lt;void&gt; saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    await Future.wait([
+      _storage.write(key: &#39;access_token&#39;, value: accessToken),
+      _storage.write(key: &#39;refresh_token&#39;, value: refreshToken),
+    ]);
+  }
+
+  static Future&lt;String?&gt; getAccessToken() =&gt;
+      _storage.read(key: &#39;access_token&#39;);
+
+  static Future&lt;void&gt; clearAll() async {
+    await _storage.deleteAll();
+  }
+}
+
+// Dio with auth interceptor + certificate pinning
+class ApiClient {
+  static Dio create() {
+    final dio = Dio(BaseOptions(
+      baseUrl: &#39;https://api.payback-app.com&#39;,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 30),
+    ));
+
+    // Certificate pinning (simplified — use ssl_pinning_plugin for production)
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      final client = HttpClient();
+      client.badCertificateCallback = (cert, host, port) {
+        // Validate against pinned certificate SHA256 fingerprint
+        return CertificatePinner.isValid(cert, host);
+      };
+      return client;
+    };
+
+    // Auth interceptor with token refresh
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final token = await SecureTokenStore.getAccessToken();
+        if (token != null) {
+          options.headers[&#39;Authorization&#39;] = &#39;Bearer $token&#39;;
+        }
+        options.headers[&#39;X-Idempotency-Key&#39;] = const Uuid().v4();
+        handler.next(options);
+      },
+      onError: (error, handler) async {
+        if (error.response?.statusCode == 401) {
+          // Attempt token refresh
+          final refreshed = await _refreshToken();
+          if (refreshed) {
+            // Retry original request
+            handler.resolve(await dio.fetch(error.requestOptions));
+            return;
+          }
+          // Refresh failed — clear tokens and redirect to login
+          await SecureTokenStore.clearAll();
+          GetIt.I&lt;AuthRouter&gt;().navigateToLogin();
+        }
+        handler.next(error);
+      },
+    ));
+
+    return dio;
+  }
+}
+
+// Payment state machine — enforced both client and server
+enum PaymentStatus { initiated, processing, completed, failed, reversed }
+
+class PaymentStateMachine {
+  static const Map&lt;PaymentStatus, Set&lt;PaymentStatus&gt;&gt; _validTransitions = {
+    PaymentStatus.initiated: {PaymentStatus.processing},
+    PaymentStatus.processing: {PaymentStatus.completed, PaymentStatus.failed},
+    PaymentStatus.failed: {PaymentStatus.reversed},
+    PaymentStatus.completed: {PaymentStatus.reversed},
+    PaymentStatus.reversed: {},
+  };
+
+  static bool canTransition(PaymentStatus from, PaymentStatus to) =&gt;
+      _validTransitions[from]?.contains(to) ?? false;
+}
+
+// Claim document upload with presigned URL
+class ClaimDocumentService {
+  final Dio _dio;
+
+  Future&lt;String&gt; uploadDocument(File imageFile) async {
+    // 1. Compress image
+    final compressed = await FlutterImageCompress.compressAndGetFile(
+      imageFile.path,
+      &#39;${imageFile.path}_compressed.jpg&#39;,
+      quality: 80,
+      minWidth: 1920,
+    );
+
+    // 2. Get presigned URL
+    final presignedResponse = await _dio.post(&#39;/claims/documents/presign&#39;, data: {
+      &#39;contentType&#39;: &#39;image/jpeg&#39;,
+      &#39;fileSize&#39;: compressed!.lengthSync(),
+    });
+    final uploadUrl = presignedResponse.data[&#39;uploadUrl&#39;] as String;
+    final documentId = presignedResponse.data[&#39;documentId&#39;] as String;
+
+    // 3. Upload directly to S3
+    await Dio().put(
+      uploadUrl,
+      data: compressed.openRead(),
+      options: Options(
+        headers: {
+          &#39;Content-Type&#39;: &#39;image/jpeg&#39;,
+          &#39;Content-Length&#39;: compressed.lengthSync(),
+        },
+      ),
+    );
+
+    return documentId; // Return ID for claim association
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> FlutterSecureStorage with AndroidOptions(encryptedSharedPreferences: true) uses Android&#39;s EncryptedSharedPreferences backed by the Android Keystore — hardware-backed on devices with a secure element.</li>
+      <li><span class="walk-num">2.</span> IOSOptions with first_unlock_this_device means tokens are accessible after the first device unlock but not while the device is locked — balancing security with background refresh capability.</li>
+      <li><span class="walk-num">3.</span> Future.wait saves both tokens atomically — avoids a state where access token is saved but refresh token write fails.</li>
+      <li><span class="walk-num">4.</span> The Dio interceptor adds X-Idempotency-Key on every mutating request — generated fresh per request so retries use the same key (stored in a retry handler, not shown here for brevity).</li>
+      <li><span class="walk-num">5.</span> onError intercept for 401 attempts a token refresh before failing — this handles silent token refresh without the user seeing a login screen for normal session continuation.</li>
+      <li><span class="walk-num">6.</span> After refresh, handler.resolve(await dio.fetch(error.requestOptions)) retries the original request with the new token — the original caller&#39;s Future receives the retried response transparently.</li>
+      <li><span class="walk-num">7.</span> PaymentStateMachine encodes valid state transitions as a const Map — invalid transitions are caught before the API call, preventing invalid state mutation requests.</li>
+      <li><span class="walk-num">8.</span> ClaimDocumentService uploads via presigned URL: the app server issues a time-limited, scope-limited S3 URL; the file never passes through the app server, reducing load and keeping PII data out of application logs.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class AuthInterceptor extends Interceptor {
+  bool _isRefreshing = false;
+
+  @override
+  Future&lt;void&gt; onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 401) {
+      final newToken = await _refreshAccessToken();
+      if (newToken != null) {
+        err.requestOptions.headers[&#39;Authorization&#39;] = &#39;Bearer $newToken&#39;;
+        final response = await Dio().fetch(err.requestOptions);
+        handler.resolve(response);
+        return;
+      }
+    }
+    handler.next(err);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Multiple concurrent API calls all return 401 simultaneously. What happens and how do you fix it?</div></details><details><summary>Show answer</summary><div class="answer">Bug: Multiple concurrent 401 errors trigger _refreshAccessToken() simultaneously — resulting in multiple parallel refresh token requests to the server. Most servers invalidate the refresh token after first use (rotation), so only the first refresh succeeds; the rest fail with invalid_token, logging the user out incorrectly. Fix: use the _isRefreshing flag and a queue. When _isRefreshing is true, queue subsequent 401 retries and wait for the single in-flight refresh to complete, then retry all queued requests with the new token. Pattern: use a Completer&lt;String&gt; stored as a field — first 401 starts the refresh and sets the completer; subsequent 401s await the same completer. Also: new Dio() inside the interceptor creates a new instance without interceptors — use the original dio instance reference (passed to the interceptor constructor) to avoid infinite loops when retrying.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Building a fintech app is like being a bank manager. You need super-strong locks on every door (encryption and secure storage), cameras recording everything (audit logs), guards checking IDs carefully (strong auth with BankID), and emergency plans for when things go wrong (saga pattern). If the electricity goes out mid-transaction, you need to know exactly what happened and put everything back exactly as it was.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The average fintech data breach costs 5.9 million USD — nearly double the cross-industry average. This is why fintech apps undergo the most rigorous security architecture reviews, and why senior fintech interviews always include security design questions.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the complete auth and payment flow for a claims app: (1) BankID authentication flow with JWT issuance. (2) Secure token storage implementation. (3) Document upload flow with presigned URLs and client-side compression. (4) Payment state machine (define all states and valid transitions). (5) Error handling for: network timeout mid-payment, session expiry during document upload, payment gateway failure. (6) What audit data would you log for a claim submission?</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://owasp.org/www-project-mobile-security-testing-guide/" target="_blank" rel="noopener noreferrer">OWASP Mobile Security Testing Guide</a> <span class="res-source">(OWASP)</span></li>
+      <li><a href="https://pub.dev/packages/flutter_secure_storage" target="_blank" rel="noopener noreferrer">flutter_secure_storage package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://microservices.io/patterns/data/saga.html" target="_blank" rel="noopener noreferrer">Saga pattern for distributed transactions</a> <span class="res-source">(microservices.io)</span></li>
+      <li><a href="https://www.pcisecuritystandards.org/document_library/" target="_blank" rel="noopener noreferrer">PCI DSS mobile payment guidelines</a> <span class="res-source">(PCI SSC)</span></li>
+      <li><a href="https://pub.dev/packages/dio" target="_blank" rel="noopener noreferrer">Dio HTTP client for Flutter</a> <span class="res-source">(pub.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=57">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./56-system-design-i-real-time-collaboration-app.html" rel="prev">← System Design I: Real-time…</a>
+  <a class="nav-next" href="./58-system-design-iii-offline-first-field-app-at-scale.html" rel="next">System Design III: Offline-First Field… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

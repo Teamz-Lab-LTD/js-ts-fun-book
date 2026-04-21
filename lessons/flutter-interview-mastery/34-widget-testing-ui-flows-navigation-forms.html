@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Widget Testing: UI Flows, Navigation &amp; Forms — Flutter… | Teamz Lab</title>
+<meta name="description" content="Widget testing renders Flutter widgets in a headless test environment, allowing you to simulate user interactions (tap, type, scroll) and assert on the…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/34-widget-testing-ui-flows-navigation-forms.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/33-testing-bloccubit-async-state-sequences.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/35-integration-testing-e2e-flows.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Widget Testing: UI Flows, Navigation &amp; Forms">
+<meta property="og:description" content="Widget testing renders Flutter widgets in a headless test environment, allowing you to simulate user interactions (tap, type, scroll) and assert on the…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/34-widget-testing-ui-flows-navigation-forms.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Widget Testing: UI Flows, Navigation &amp; Forms">
+<meta name="twitter:description" content="Widget testing renders Flutter widgets in a headless test environment, allowing you to simulate user interactions (tap, type, scroll) and assert on the…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Widget Testing: UI Flows, Navigation & Forms",
+  "description": "Widget testing renders Flutter widgets in a headless test environment, allowing you to simulate user interactions (tap, type, scroll) and assert on the…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/34-widget-testing-ui-flows-navigation-forms.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 34
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Widget Testing: UI Flows, Navigation & Forms",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/34-widget-testing-ui-flows-navigation-forms.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Widget Testing: UI Flows, Navigation &amp; Forms</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 34 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Widget Testing: UI Flows, Navigation &amp; Forms</h1>
+<p class="lesson-subtitle">Testing Flutter UI in a simulated environment — finders, pumps, and interaction simulation</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=34">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Widget testing is like a robot QA tester that reads your UI, taps buttons, types text, and checks what appeared on screen — all without a real phone. It is faster than manual testing and more realistic than unit tests, sitting squarely in the middle of the testing pyramid.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Widget testing renders Flutter widgets in a headless test environment, allowing you to simulate user interactions (tap, type, scroll) and assert on the resulting UI state — without a real device. It sits between unit tests and integration tests in cost and coverage.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>On a school management platform, widget tests for the student registration form caught that the &#39;Submit&#39; button was not disabled during loading — a mock BLoC was injected emitting LoadingState, and the test found the button was still tappable, which would have caused duplicate submissions.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>WidgetTester fundamentals</strong> — The flutter_test library provides WidgetTester, which renders widgets in a test environment. You pump widgets into the test harness, interact with them, and assert on what is visible.</li>
+      <li><strong>pump() vs pumpAndSettle()</strong> — pump() advances the frame clock by one tick. pumpAndSettle() keeps pumping until all animations and async operations complete. Use pumpAndSettle() after navigation or animations; use pump(Duration) for precise timing control.</li>
+      <li><strong>Finders: locating widgets</strong> — find.text(&#39;Login&#39;), find.byType(ElevatedButton), find.byKey(const Key(&#39;submit-btn&#39;)), find.byIcon(Icons.search). Keys are the most reliable finder — use ValueKey or Key constants in production code to enable testing.</li>
+      <li><strong>Interacting: tap, enterText, drag</strong> — await tester.tap(find.byKey(const Key(&#39;submit&#39;))); await tester.enterText(find.byType(TextField), &#39;user@example.com&#39;); await tester.drag(finder, Offset(0, -200)). Always pump after interactions.</li>
+      <li><strong>Wrapping with MaterialApp and providers</strong> — Widgets under test need their dependencies. Wrap with MaterialApp for theme/navigation, wrap with BlocProvider or ChangeNotifierProvider for state. Missing providers cause red screen errors in tests.</li>
+      <li><strong>Testing navigation</strong> — Use NavigatorObserver or check that a specific route widget appears after a tap. For GoRouter, wrap with a router-aware MaterialApp. Navigation testing is where many teams have gaps.</li>
+      <li><strong>Testing form validation</strong> — Submit an empty form and expect find.text(&#39;Email is required&#39;) to appear. This tests that validators run and error messages render correctly — critical for fintech and claims apps.</li>
+      <li><strong>Testing loading and error states</strong> — Mock the BLoC or provider to emit specific states, then assert that LoadingSpinner appears during loading and ErrorWidget appears on error. Test all three states: loading, success, error.</li>
+      <li><strong>testWidgets function</strong> — Each widget test is wrapped in testWidgets(&#39;description&#39;, (WidgetTester tester) async { ... }). The tester parameter is your interface to the simulated Flutter environment.</li>
+      <li><strong>Key-based finding is production practice</strong> — Adding semantic keys to important widgets (forms, buttons, navigation elements) is not just for testing — it also enables accessibility tooling and deep linking. It is a production quality signal.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// test/presentation/widgets/login_form_test.dart
+import &#39;package:flutter_test/flutter_test.dart&#39;;
+import &#39;package:flutter_bloc/flutter_bloc.dart&#39;;
+import &#39;package:mocktail/mocktail.dart&#39;;
+
+class MockAuthBloc extends MockBloc&lt;AuthEvent, AuthState&gt; implements AuthBloc {}
+
+void main() {
+  late MockAuthBloc mockAuthBloc;
+
+  setUp(() {
+    mockAuthBloc = MockAuthBloc();
+  });
+
+  testWidgets(&#39;shows validation error when email is empty on submit&#39;,
+      (WidgetTester tester) async {
+    when(() =&gt; mockAuthBloc.state).thenReturn(const AuthInitialState());
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider&lt;AuthBloc&gt;.value(
+          value: mockAuthBloc,
+          child: const LoginScreen(),
+        ),
+      ),
+    );
+
+    // Submit without entering any text
+    await tester.tap(find.byKey(const Key(&#39;login-submit-btn&#39;)));
+    await tester.pump();
+
+    expect(find.text(&#39;Email is required&#39;), findsOneWidget);
+    expect(find.text(&#39;Password is required&#39;), findsOneWidget);
+  });
+
+  testWidgets(&#39;shows loading indicator when AuthBloc emits LoadingState&#39;,
+      (WidgetTester tester) async {
+    when(() =&gt; mockAuthBloc.state).thenReturn(const AuthLoadingState());
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider&lt;AuthBloc&gt;.value(
+          value: mockAuthBloc,
+          child: const LoginScreen(),
+        ),
+      ),
+    );
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byKey(const Key(&#39;login-submit-btn&#39;)), findsNothing);
+  });
+
+  testWidgets(&#39;navigates to HomeScreen on AuthenticatedState&#39;,
+      (WidgetTester tester) async {
+    // Start with initial state
+    whenListen(
+      mockAuthBloc,
+      Stream.fromIterable([
+        const AuthLoadingState(),
+        const AuthenticatedState(),
+      ]),
+      initialState: const AuthInitialState(),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        routes: {
+          &#39;/home&#39;: (_) =&gt; const HomeScreen(),
+        },
+        home: BlocProvider&lt;AuthBloc&gt;.value(
+          value: mockAuthBloc,
+          child: const LoginScreen(),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.byType(LoginScreen), findsNothing);
+  });
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> testWidgets(&#39;...&#39;, (WidgetTester tester) async {}) — the test runner injects WidgetTester as tester</li>
+      <li><span class="walk-num">2.</span> when(() =&gt; mockAuthBloc.state).thenReturn(const AuthInitialState()) — stubs the BLoC&#39;s current state before the widget renders</li>
+      <li><span class="walk-num">3.</span> tester.pumpWidget(MaterialApp(home: BlocProvider.value(...))) — renders the full widget tree with its required providers</li>
+      <li><span class="walk-num">4.</span> tester.tap(find.byKey(const Key(&#39;login-submit-btn&#39;))) — simulates a user tap; must await</li>
+      <li><span class="walk-num">5.</span> tester.pump() — advances one frame so validators run and error widgets rebuild</li>
+      <li><span class="walk-num">6.</span> expect(find.text(&#39;Email is required&#39;), findsOneWidget) — asserts the error message appeared</li>
+      <li><span class="walk-num">7.</span> whenListen(mockAuthBloc, Stream.fromIterable([...])) — simulates a stream of states for navigation test</li>
+      <li><span class="walk-num">8.</span> tester.pumpAndSettle() — waits for the navigation animation to fully complete before asserting</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>testWidgets(&#39;shows error on empty submit&#39;, (tester) async {
+  when(() =&gt; mockAuthBloc.state).thenReturn(const AuthInitialState());
+
+  await tester.pumpWidget(
+    MaterialApp(
+      home: LoginScreen(),
+    ),
+  );
+
+  await tester.tap(find.byKey(const Key(&#39;submit-btn&#39;)));
+  await tester.pump();
+
+  expect(find.text(&#39;Email is required&#39;), findsOneWidget);
+});</code></pre><details><summary>Need a hint?</summary><div class="hint">The test will throw a red screen error before even reaching the tap. Look at how LoginScreen gets its BLoC.</div></details><details><summary>Show answer</summary><div class="answer">Bug: LoginScreen uses BlocProvider to get AuthBloc but the test wraps it in a plain MaterialApp without providing the BLoC. Fix: wrap the widget with BlocProvider&lt;AuthBloc&gt;.value(value: mockAuthBloc, child: const LoginScreen()). This is one of the most common widget test setup errors.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a little robot that can look at your app&#39;s screen, press buttons, and type words — but it does not need a real phone. You tell it: &#39;Press the Login button without typing anything and tell me if you see an error message.&#39; The robot checks and reports back in a fraction of a second. That is widget testing.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Flutter&#39;s widget test environment runs at 10x faster than real device speed because it skips GPU rendering entirely. The test harness uses a software rasteriser, which means 1000 widget tests typically run in under 60 seconds.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a widget test for a form that has an email field, a password field, and a submit button. Test three scenarios: (1) empty submit shows validation errors, (2) valid input with loading state shows spinner and hides button, (3) successful auth navigates to HomeScreen.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/cookbook/testing/widget/introduction" target="_blank" rel="noopener noreferrer">Widget Testing — Flutter Cookbook</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html" target="_blank" rel="noopener noreferrer">flutter_test library API</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/flutter_test/WidgetTester-class.html" target="_blank" rel="noopener noreferrer">WidgetTester class</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://pub.dev/packages/bloc_test" target="_blank" rel="noopener noreferrer">MockBloc — bloc_test docs</a> <span class="res-source">(pub.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=34">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./33-testing-bloccubit-async-state-sequences.html" rel="prev">← Testing BLoC/Cubit: Async State…</a>
+  <a class="nav-next" href="./35-integration-testing-e2e-flows.html" rel="next">Integration Testing &amp; E2E Flows →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

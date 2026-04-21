@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory, Addressing, and I/O Concepts — Microprocessor… | Teamz Lab</title>
+<meta name="description" content="Memory in the 8086 system is a 1 MB address space (00000h-FFFFFh) accessed through segmentation, where physical address = segment * 16 + offset. The CPU…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/08-memory-addressing-and-io-concepts.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/07-clock-t-states-and-machine-cycles.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/09-why-the-8086-matters.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memory, Addressing, and I/O Concepts">
+<meta property="og:description" content="Memory in the 8086 system is a 1 MB address space (00000h-FFFFFh) accessed through segmentation, where physical address = segment * 16 + offset. The CPU…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/08-memory-addressing-and-io-concepts.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Memory, Addressing, and I/O Concepts">
+<meta name="twitter:description" content="Memory in the 8086 system is a 1 MB address space (00000h-FFFFFh) accessed through segmentation, where physical address = segment * 16 + offset. The CPU…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Memory, Addressing, and I/O Concepts",
+  "description": "Memory in the 8086 system is a 1 MB address space (00000h-FFFFFh) accessed through segmentation, where physical address = segment * 16 + offset. The CPU…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/08-memory-addressing-and-io-concepts.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 8
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Memory, Addressing, and I/O Concepts",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/08-memory-addressing-and-io-concepts.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Memory, Addressing, and I/O Concepts</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 8 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Memory, Addressing, and I/O Concepts</h1>
+<p class="lesson-subtitle">How the CPU finds and accesses data — the memory map, addressing modes, and the I/O subsystem</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=8">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine a city where every building has a unique street address (memory addressing). The CPU is a delivery driver who needs to find buildings using different methods: sometimes they know the exact address (direct addressing), sometimes they know &#39;the building 3 doors down from the post office&#39; (based addressing), and sometimes they check a note that says which address to go to (indirect addressing). Memory is the rows of buildings, and I/O ports are special service windows on the city&#39;s edge — separate from the main buildings but reachable by the same delivery truck.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Memory in the 8086 system is a 1 MB address space (00000h-FFFFFh) accessed through segmentation, where physical address = segment * 16 + offset. The CPU supports multiple addressing modes — immediate, register, direct, register indirect, based, indexed, and combinations — to flexibly specify where data lives. I/O is accessed either through a separate 64 KB port space (using IN/OUT instructions) or through memory-mapped addresses. Address decoding hardware ensures the right chip responds to each address.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>When your computer boots, the CPU fetches its first instruction from ROM at address FFFF0h — that&#39;s a direct result of the memory map design. When you type on a keyboard, the CPU reads I/O port 60h using IN AL, 60h. When a program accesses video memory, it writes to addresses starting at B8000h (memory-mapped I/O). Understanding the memory map and addressing modes is essential for writing device drivers, BIOS code, bootloaders, and any software that interacts directly with hardware.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The 8086 Memory Space — 1 MB</strong> — The 8086 has a 20-bit address bus giving access to 2^20 = 1,048,576 bytes (1 MB) of memory, addressed from 00000h to FFFFFh. This memory is shared between RAM, ROM, and memory-mapped devices. The programmer sees a flat 1 MB space, but it is physically divided into segments for access using 16-bit registers.</li>
+      <li><strong>Segmented Memory Architecture</strong> — Since the 8086 has only 16-bit registers but needs 20-bit addresses, it uses segmentation. A physical address is calculated as: Segment * 16 + Offset (or equivalently, Segment &lt;&lt; 4 + Offset). This means multiple segment:offset pairs can point to the same physical address — for example, 1000:0050 and 0FFF:0060 both equal 10050h.</li>
+      <li><strong>RAM vs ROM</strong> — RAM (Random Access Memory) is volatile read-write memory — it loses content when power is off. ROM (Read-Only Memory) is non-volatile and retains its content permanently. The 8086 system puts the BIOS in ROM at the top of the memory map (near FFFFFh) and user programs/data in RAM at the bottom. The reset vector must be in ROM because RAM is empty at power-on.</li>
+      <li><strong>Addressing Modes — How the CPU Specifies Operands</strong> — The 8086 supports multiple addressing modes that determine how the operand&#39;s location is calculated. These range from simple (the data is in the instruction itself) to complex (the address is computed from multiple registers plus a displacement). Mastering addressing modes is key to writing efficient assembly code.</li>
+      <li><strong>Direct Addressing</strong> — In direct addressing, the memory address is specified as a constant in the instruction. The CPU computes the physical address as DS*16 + displacement. This is simple and clear but inflexible — you can only access one fixed location. Useful for accessing known variables at fixed addresses.</li>
+      <li><strong>Register Indirect and Based Addressing</strong> — Register indirect addressing uses a register (BX, SI, DI, or BP) to hold the address. Based addressing adds a constant displacement to the register. This enables dynamic memory access — like array traversal and structure field access — because the register can be changed at runtime.</li>
+      <li><strong>Based + Indexed Addressing</strong> — The most powerful mode combines a base register (BX or BP), an index register (SI or DI), and an optional displacement. This is ideal for accessing elements of 2D arrays or fields within arrays of structures. The effective address = base + index + displacement.</li>
+      <li><strong>Memory-Mapped I/O vs Port-Mapped I/O</strong> — The 8086 supports two methods for accessing peripherals. Memory-mapped I/O treats device registers as memory addresses — you use MOV to read/write them. Port-mapped I/O uses a separate 64 KB I/O address space (0000h-FFFFh) accessed with special IN and OUT instructions. The M/IO pin distinguishes the two.</li>
+      <li><strong>The I/O Address Space</strong> — The 8086 has a separate 16-bit I/O address space with 65,536 ports (0000h-FFFFh). Ports 00h-FFh can be accessed with direct addressing (IN AL, port). Ports 0000h-FFFFh require indirect addressing through DX (IN AL, DX). Common ports include 60h (keyboard), 3F8h (COM1 serial), and 20h (PIC interrupt controller).</li>
+      <li><strong>Address Decoding</strong> — Address decoding is the hardware logic that determines which memory or I/O chip responds to a given address. Upper address bits are fed into a decoder (like the 74138) that generates chip-select signals. When the CPU puts an address on the bus, only the selected chip activates. Without proper decoding, multiple chips would conflict on the data bus.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Demonstrating memory addressing modes and I/O on 8086
+
+; --- Setup ---
+MOV AX, 1000h
+MOV DS, AX           ; DS = 1000h (data segment)
+MOV AX, 2000h
+MOV SS, AX           ; SS = 2000h (stack segment)
+MOV SP, 0FFEh        ; SP = top of stack area
+
+; --- Immediate Addressing ---
+MOV AX, 1234h        ; AX = 1234h (value in instruction)
+MOV CX, 0005h        ; CX = 5 (loop counter)
+
+; --- Direct Addressing ---
+MOV [0100h], AX      ; store 1234h at DS:0100h
+                      ; physical = 10000h + 0100h = 10100h
+
+; --- Register Indirect ---
+MOV BX, 0100h
+MOV DX, [BX]         ; DX = value at DS:BX = DS:0100h
+                      ; DX now = 1234h
+
+; --- Based Addressing (array access) ---
+MOV BX, 0200h        ; BX = base of array
+MOV AX, [BX+0]       ; element 0
+MOV AX, [BX+2]       ; element 1
+MOV AX, [BX+4]       ; element 2
+
+; --- Based + Indexed (2D array) ---
+MOV BX, 0300h        ; base of 2D table
+MOV SI, 0010h        ; row offset
+MOV AX, [BX+SI+4]    ; table[row][col]
+                      ; EA = 0300h + 0010h + 4 = 0314h
+
+; --- Stack Addressing (BP-based) ---
+PUSH 0042h           ; push value onto stack
+MOV BP, SP
+MOV AX, [BP+0]       ; read top of stack via BP
+                      ; uses SS segment: SS:BP
+
+; --- I/O Port Access ---
+IN AL, 60h            ; port-mapped I/O: read keyboard port
+                      ; M/IO = 0, address bus = 0060h
+
+MOV DX, 03F8h
+IN AL, DX             ; read COM1 serial port data
+                      ; indirect port addressing via DX
+
+; --- Memory-Mapped I/O (video memory) ---
+MOV AX, 0B800h
+MOV ES, AX            ; ES points to video memory
+MOV DI, 0000h
+MOV WORD [ES:DI], 0741h  ; write &#39;A&#39; (41h) in white (07h)
+                          ; to top-left of text screen
+
+HLT</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> We start by setting up segment registers. DS=1000h means our data area starts at physical address 10000h. SS=2000h with SP=0FFEh means our stack grows downward from physical address 20FFEh.</li>
+      <li><span class="walk-num">2.</span> MOV AX, 1234h demonstrates immediate addressing — the value 1234h is encoded right in the instruction bytes. No memory access needed beyond the instruction fetch.</li>
+      <li><span class="walk-num">3.</span> MOV [0100h], AX uses direct addressing. The assembler encodes 0100h as a displacement in the instruction. Physical address = DS*16 + 0100h = 10100h. The data bus carries 1234h from AX to memory.</li>
+      <li><span class="walk-num">4.</span> MOV BX, 0100h / MOV DX, [BX] shows register indirect addressing. BX holds the offset, and the CPU computes DS*16 + BX to find the physical address. The value at that address (1234h, which we stored earlier) loads into DX.</li>
+      <li><span class="walk-num">5.</span> The based addressing section (MOV AX, [BX+0], [BX+2], [BX+4]) treats BX as the base of an array. Adding 0, 2, 4 accesses consecutive 16-bit elements — this is how you walk through arrays in assembly.</li>
+      <li><span class="walk-num">6.</span> MOV AX, [BX+SI+4] is the most powerful mode: based + indexed + displacement. BX is the table base, SI is the row offset, and 4 is the column offset. The CPU adds all three to compute the effective address.</li>
+      <li><span class="walk-num">7.</span> Stack access via BP (MOV AX, [BP+0]) automatically uses the SS segment instead of DS. This is how functions access their parameters and local variables on the stack.</li>
+      <li><span class="walk-num">8.</span> IN AL, 60h shows port-mapped I/O. The address bus carries 0060h, M/IO is set to 0 (selecting I/O space), and the keyboard controller responds with the scan code on the data bus.</li>
+      <li><span class="walk-num">9.</span> The video memory write (MOV WORD [ES:DI], 0741h) is memory-mapped I/O. ES points to segment B800h (video RAM), and writing 0741h places the character &#39;A&#39; (41h) with white attribute (07h) at the top-left screen position.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; Program to copy 10 bytes from source to destination
+; Source:      DS:1000h
+; Destination: DS:2000h
+
+MOV AX, 3000h
+MOV DS, AX         ; DS = 3000h
+MOV SI, 1000h      ; source offset
+MOV DI, 2000h      ; destination offset
+MOV CX, 10         ; 10 bytes to copy
+
+COPY_LOOP:
+  MOV AL, [SI]     ; read byte from DS:SI
+  MOV [DI], AL     ; write byte to DS:DI
+  INC SI
+  INC DI
+  DEC CX
+  JNZ COPY_LOOP
+
+; BUG: What if source is at DS:1000h and
+; destination needs to be in a DIFFERENT segment?</code></pre><details><summary>Need a hint?</summary><div class="hint">Both [SI] and [DI] default to the DS segment. What if the destination address requires a different segment base? Which segment does DI usually pair with for string operations?</div></details><details><summary>Show answer</summary><div class="answer">Bug: Both MOV AL, [SI] and MOV [DI], AL use the DS segment by default. If the destination needs to be in a different segment (e.g., copying data to video memory at B800:0000), writing to DS:DI writes to the wrong physical address. Fix: Use a segment override for the destination — MOV [ES:DI], AL — and set ES to the destination segment (e.g., MOV AX, 0B800h / MOV ES, AX). Even better, use the 8086&#39;s string instruction MOVSB which automatically reads from DS:SI and writes to ES:DI, handling the segment separation correctly: REP MOVSB copies CX bytes from DS:SI to ES:DI with auto-increment.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine a huge hotel with 1 million rooms (that&#39;s memory). Each room has a number (address). The CPU is a guest who needs to find specific rooms. Sometimes they know the exact room number (direct addressing), sometimes they ask the front desk &#39;what room is in register BX?&#39; (indirect addressing), and sometimes they calculate &#39;start at room BX, go SI rooms down the hall, then 4 more doors&#39; (based+indexed). There&#39;s also a separate row of service windows (I/O ports) where the guest can talk to the kitchen, laundry, and concierge without going to a room.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 8086&#39;s segmented memory architecture was a source of both innovation and frustration. It allowed a 16-bit CPU to access 1 MB of memory, which was huge in 1978. But the overlapping segments created the infamous &#39;segment:offset&#39; confusion that plagued DOS programmers for over a decade. The terms &#39;near pointer&#39; (16-bit, same segment) and &#39;far pointer&#39; (32-bit, segment:offset) became essential vocabulary. Intel finally escaped segmentation with the flat memory model in 32-bit protected mode — but the legacy lives on in the x86 architecture&#39;s segment registers.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design a memory map for a simple 8086-based system with: 32 KB of RAM starting at 00000h, 8 KB of ROM at the top of the address space (containing the reset vector), and a memory-mapped I/O device at address A0000h. Show: (1) the address ranges for each component, (2) which address lines (A0-A19) are used for chip select decoding, (3) write 8086 code that initializes a data structure in RAM, copies data to the I/O device, and then jumps to a routine in ROM. Annotate each instruction with its addressing mode.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.geeksforgeeks.org/addressing-modes-8086-microprocessor/" target="_blank" rel="noopener noreferrer">8086 Addressing Modes</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=wKn14K4eJAM" target="_blank" rel="noopener noreferrer">Memory Organization in 8086</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_io_interfacing.htm" target="_blank" rel="noopener noreferrer">8086 I/O Interfacing</a> <span class="res-source">(TutorialsPoint)</span></li>
+      <li><a href="https://en.wikipedia.org/wiki/X86_memory_segmentation" target="_blank" rel="noopener noreferrer">x86 Memory Segmentation</a> <span class="res-source">(Wikipedia)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=8">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./07-clock-t-states-and-machine-cycles.html" rel="prev">← Clock, T-States, and Machine Cycles</a>
+  <a class="nav-next" href="./09-why-the-8086-matters.html" rel="next">Why the 8086 Matters →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

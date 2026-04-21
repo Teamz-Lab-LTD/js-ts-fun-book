@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Signal Strength: Why Bars Lie — Android Phone… | Teamz Lab</title>
+<meta name="description" content="Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-phone-health/17-is-your-isp-spying-on-you-dns-ssl-checks.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network Signal Strength: Why Bars Lie">
+<meta property="og:description" content="Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Network Signal Strength: Why Bars Lie">
+<meta name="twitter:description" content="Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-phone-health.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Network Signal Strength: Why Bars Lie",
+  "description": "Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm…",
+  "url": "https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Phone Health: Battery, Privacy, Performance & Security",
+    "url": "https://learn.teamzlab.com/c/android-phone-health.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 18
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Phone Health",
+      "item": "https://learn.teamzlab.com/c/android-phone-health.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Network Signal Strength: Why Bars Lie",
+      "item": "https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-phone-health.html">Android Phone Health</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-phone-health.html">Android Phone Health</a> / <span aria-current="page">Network Signal Strength: Why Bars Lie</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 18 of 25</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Network Signal Strength: Why Bars Lie</h1>
+<p class="lesson-subtitle">Understanding the real numbers behind your WiFi and cellular connection</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Signal bars on your phone are like a restaurant&#39;s star rating on Google — they give you a rough idea, but they hide a lot of detail. A restaurant might show 4 stars, but that does not tell you if the food is great but the service is slow. Similarly, 3 bars might mean very different things on different phones. The real measurement is dBm — the actual &#39;decibel&#39; reading of signal power — and understanding it is like reading the full restaurant review instead of just glancing at the stars.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm (decibel-milliwatts). Unlike the vague signal bars on your phone which vary by manufacturer, dBm gives you an objective, universal measurement. Understanding signal strength helps you find dead zones, troubleshoot connection problems, optimize router placement, and know whether you need a signal booster or WiFi extender.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Priya worked from home and her video calls dropped constantly in her home office. Her phone showed 3 bars of WiFi, so she assumed the internet itself was the problem and nearly upgraded to a more expensive plan. Then she used DeviceGPT to measure her actual signal strength: -82 dBm in her office versus -41 dBm in the living room near the router. The problem was not her internet speed — it was WiFi signal reaching her office through two concrete walls. She bought a $30 WiFi extender, placed it in the hallway between the router and her office, and her signal improved to -55 dBm. Video calls became crystal clear without changing her ISP plan.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Why Signal Bars Are Unreliable</strong> — There is no universal standard for what signal bars mean. Samsung, Google, and OnePlus all use different scales to convert signal strength into bars. Three bars on a Samsung might equal two bars on a Pixel. Phone manufacturers choose their own thresholds to make their devices look better. A 2023 analysis found that bar displays can differ by up to 40% between brands for identical signal strength.</li>
+      <li><strong>Understanding dBm: The Real Number</strong> — dBm (decibel-milliwatts) is the actual unit of signal power. It is always a negative number for phone signals — closer to 0 is STRONGER (less negative = better). Think of it like temperature below zero: -10 degrees is warmer than -90 degrees. For cellular signal, -50 dBm is excellent and -120 dBm is barely usable.</li>
+      <li><strong>WiFi Signal vs Cellular Signal</strong> — WiFi and cellular signals use different frequency ranges and have different dBm scales. A &#39;good&#39; WiFi signal is around -50 to -65 dBm, while a &#39;good&#39; cellular signal is around -70 to -85 dBm. You cannot compare the two directly. WiFi signals also degrade much faster with distance — every wall can reduce WiFi signal by 3-15 dBm depending on the material.</li>
+      <li><strong>Finding Dead Zones in Your Home</strong> — Dead zones are areas where signal drops below usable levels. They are caused by distance, building materials, interference from other electronics, and the placement of your router or distance from cell towers. About 72% of homes have at least one WiFi dead zone. Mapping your dead zones helps you know where to place WiFi extenders or where to avoid important calls.</li>
+      <li><strong>What Kills Your Signal</strong> — Many everyday things interfere with signals. Microwave ovens blast 2.4 GHz interference (same as WiFi). Fish tanks absorb signal like a water wall. Mirrors reflect signals unpredictably. Bluetooth devices compete for airwaves. Even your body blocks signal — holding your phone differently can change signal by 5-10 dBm. The infamous iPhone 4 &#39;antennagate&#39; was caused by holding the phone wrong.</li>
+      <li><strong>5G, 4G, and 3G Signal Differences</strong> — Different network generations handle signal differently. 5G mmWave has blazing speed but terrible range — it cannot even go through a window. 5G Sub-6 is more balanced. 4G LTE has good range and decent speed. Your phone constantly switches between these based on signal strength. A phone showing &#39;5G&#39; might actually deliver slower speeds than strong 4G if the 5G signal is weak.</li>
+      <li><strong>How to Measure Real Signal Strength</strong> — You can find your actual dBm reading by dialing hidden codes on Android (*#*#4636#*#* on many phones opens a testing menu) or using apps like DeviceGPT. The dBm reading updates in real time as you move around. This gives you the objective truth that signal bars hide — and it is the same measurement that cell tower technicians use.</li>
+      <li><strong>Improving Your Signal</strong> — Once you know your actual signal numbers, you can take action. For WiFi, moving your router to a central location and elevating it can improve signal by 10-20 dBm throughout your home. For cellular, window-mounted signal boosters can add 20-40 dBm indoors. Even simple things like switching WiFi channels to avoid neighbor interference can make a big difference.</li>
+      <li><strong>WiFi Channel Congestion</strong> — WiFi routers broadcast on numbered channels. In apartments, dozens of routers may compete on the same channel — like everyone trying to talk in the same hallway. The 2.4 GHz band has only 3 non-overlapping channels (1, 6, and 11). If your neighbors are all on channel 6, switching to channel 1 or 11 can dramatically improve your speed even without signal strength changing.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>╔══════════════════════════════════════╗
+║  📶 SIGNAL STRENGTH AUDIT GUIDE 📶  ║
+╠══════════════════════════════════════╣
+║                                      ║
+║  STEP 1: GET YOUR BASELINE           ║
+║  □ Stand next to your WiFi router    ║
+║  □ Open DeviceGPT → Signal Strength  ║
+║  □ Record WiFi dBm: _____ dBm       ║
+║  □ Record Cellular dBm: _____ dBm   ║
+║                                      ║
+║  STEP 2: MAP YOUR HOME               ║
+║  □ Walk to each room you use         ║
+║  □ Stand still for 10 seconds        ║
+║  □ Record the dBm reading            ║
+║  □ Mark rooms as:                    ║
+║    ✓ Good   (above -65 dBm WiFi)    ║
+║    ⚠ Fair   (-65 to -75 dBm)        ║
+║    ✗ Dead   (below -75 dBm)         ║
+║                                      ║
+║  STEP 3: IDENTIFY PROBLEMS           ║
+║  □ Which rooms are dead zones?       ║
+║  □ What&#39;s between them and router?   ║
+║  □ Any signal killers nearby?        ║
+║    (microwave, fish tank, etc.)      ║
+║                                      ║
+║  STEP 4: FIX IT                      ║
+║  □ Can router move to central spot?  ║
+║  □ WiFi extender for dead zones?     ║
+║  □ Try different WiFi channel?       ║
+║  □ Switch bands (2.4 vs 5 GHz)?     ║
+║  □ Enable WiFi Calling for cellular? ║
+║                                      ║
+║  STEP 5: VERIFY                      ║
+║  □ Re-test after changes             ║
+║  □ Compare new dBm to old            ║
+║  □ Did dead zones improve?           ║
+╚══════════════════════════════════════╝</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The audit starts with a baseline measurement next to the router. This is your maximum possible WiFi signal — everything else will be weaker. If even this reading is poor, the problem is your router itself.</li>
+      <li><span class="walk-num">2.</span> Mapping each room creates a visual picture of signal coverage. Standing still for 10 seconds is important because signal fluctuates — you want a stable reading, not a momentary spike.</li>
+      <li><span class="walk-num">3.</span> The good/fair/dead classification (-65, -75 dBm thresholds) translates abstract numbers into actionable categories. You do not need to memorize dBm scales — just know which zone each room falls into.</li>
+      <li><span class="walk-num">4.</span> Identifying what is between dead zones and the router reveals the cause. Two concrete walls explain a 30+ dBm drop, while a microwave in the path explains intermittent dropouts during cooking.</li>
+      <li><span class="walk-num">5.</span> The fix-and-verify cycle is crucial. Many people buy WiFi extenders and never check if they actually helped. Re-testing with dBm gives you objective proof that your money was well spent.</li>
+      <li><span class="walk-num">6.</span> This systematic approach prevents the most common mistake: upgrading your ISP plan when the problem is actually signal coverage. No amount of bandwidth helps if the signal cannot reach your device.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>My WiFi router is on the floor in the
+corner of my living room, behind the
+TV stand. I get great WiFi in the
+living room but terrible signal in
+every other room.
+
+I called my ISP and upgraded to the
+fastest plan (500 Mbps) but nothing
+improved in the other rooms.
+
+What did I do wrong?</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about WiFi signal behavior and where the router is placed.</div></details><details><summary>Show answer</summary><div class="answer">Upgrading your ISP plan increases bandwidth at the router but does nothing for signal reach. The real problems are router placement: on the floor (signal radiates outward and upward, so floor placement wastes coverage), in a corner (signal goes in all directions, so a corner wastes 75% into walls and outside), and behind the TV (electronics block and interfere with signal). Move the router to a central, elevated location (on a shelf, middle of the home) and you will likely see dramatic improvement in every room without spending more on your ISP plan.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are standing in a field and someone is shouting to you. When they are close, you hear them loud and clear — that is a strong signal (like -50 dBm). As they walk farther away, their voice gets quieter — that is the signal getting weaker. If they go behind a big wall, you can barely hear them — that is what happens when WiFi goes through concrete. The bars on your phone are like someone guessing &#39;can you hear them okay?&#39; but dBm is like actually measuring the volume with a microphone. Different people might guess differently (that is why bars vary by phone brand), but the microphone always tells the truth.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The signal from a typical WiFi router is about 100 milliwatts — roughly 100 million times weaker than a microwave oven, even though they use the same 2.4 GHz frequency. Meanwhile, the signal your phone receives from a cell tower can be as weak as 0.000000000001 watts (one trillionth of a watt) and your phone can still make a call. Phone radios are incredibly sensitive — they can detect signals weaker than the cosmic background radiation left over from the Big Bang.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Grab your phone and do a signal strength walk-through of your home. Start next to your WiFi router and note the dBm reading (use DeviceGPT or Settings → About Phone → SIM Status). Then walk to every room you regularly use — kitchen, bedroom, bathroom, your usual couch spot. Write down the dBm for each location. Find your worst dead zone and your strongest spot. Bonus: try standing near your microwave while it is running and watch what happens to your WiFi dBm!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.metageek.com/training/resources/understanding-rssi/" target="_blank" rel="noopener noreferrer">Understanding WiFi Signal Strength</a> <span class="res-source">(MetaGeek)</span></li>
+      <li><a href="https://www.pcmag.com/how-to/how-to-eliminate-wi-fi-dead-zones" target="_blank" rel="noopener noreferrer">How to Fix WiFi Dead Zones</a> <span class="res-source">(PCMag)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">WiFi Signal Explained for Beginners</a> <span class="res-source">(YouTube)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./17-is-your-isp-spying-on-you-dns-ssl-checks.html" rel="prev">← Is Your ISP Spying on You? DNS &amp; SSL…</a>
+  <a class="nav-next" href="./19-the-10-minute-android-security-checklist.html" rel="next">The 10-Minute Android Security Checklist →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-phone-health.html">← Back to course: Android Phone Health</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

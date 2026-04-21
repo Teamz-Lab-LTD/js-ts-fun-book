@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Native/Platform APIs: Camera, Bluetooth, NFC, Sensors… | Teamz Lab</title>
+<meta name="description" content="Android&#39;s platform APIs provide programmatic access to device hardware: CameraX for photo and video, Bluetooth for device pairing and data transfer, NFC for…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/58-system-design-i-offline-first-field-app-at-scale.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Native/Platform APIs: Camera, Bluetooth, NFC, Sensors &amp; Maps">
+<meta property="og:description" content="Android&#39;s platform APIs provide programmatic access to device hardware: CameraX for photo and video, Bluetooth for device pairing and data transfer, NFC for…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Native/Platform APIs: Camera, Bluetooth, NFC, Sensors &amp; Maps">
+<meta name="twitter:description" content="Android&#39;s platform APIs provide programmatic access to device hardware: CameraX for photo and video, Bluetooth for device pairing and data transfer, NFC for…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Native/Platform APIs: Camera, Bluetooth, NFC, Sensors & Maps",
+  "description": "Android's platform APIs provide programmatic access to device hardware: CameraX for photo and video, Bluetooth for device pairing and data transfer, NFC for…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 57
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Native/Platform APIs: Camera, Bluetooth, NFC, Sensors & Maps",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Native/Platform APIs: Camera, Bluetooth, NFC, Sensors &amp; Maps</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 57 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Native/Platform APIs: Camera, Bluetooth, NFC, Sensors &amp; Maps</h1>
+<p class="lesson-subtitle">Discussing hardware APIs confidently in senior Android interviews</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=57">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Your Android phone is like a Swiss Army knife — Camera is the blade, Bluetooth is the connector cable, NFC is the tap-to-transfer button, sensors are the compass and spirit level, and Maps is the GPS. A senior developer does not need to be an expert in all of them, but must know which tool to grab and why.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Android&#39;s platform APIs provide programmatic access to device hardware: CameraX for photo and video, Bluetooth for device pairing and data transfer, NFC for contactless communication, the sensor framework for motion and environment data, and Google Maps SDK for mapping and location. Senior developers must know the correct modern API for each, common permission pitfalls, and how to discuss each one intelligently in an architecture conversation.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A field inspection app uses CameraX to capture defect photos, BLE to read data from IoT sensors on equipment, NFC to identify equipment by tapping a tag, the accelerometer to detect phone orientation for AR overlays, and Maps to show where the equipment is located. All with proper runtime permission handling and graceful degradation when hardware is absent.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>CameraX — the modern camera API</strong> — CameraX is the Jetpack library that abstracts Camera2&#39;s complexity. It exposes three use cases: Preview (show viewfinder), ImageCapture (take photos), and ImageAnalysis (process frames in real time, e.g., ML Kit barcode scanning). Lifecycle-aware — bind use cases to a LifecycleOwner and CameraX handles open/close automatically. Always prefer CameraX over Camera2 unless you need fine-grained control.</li>
+      <li><strong>Camera permissions and result contracts</strong> — REQUEST_CODE style camera is deprecated. Use ActivityResultContracts.TakePicture() for capturing to a URI, or TakePicturePreview() for a thumbnail Bitmap. Combine with FileProvider for secure storage. Always request Manifest.permission.CAMERA at runtime before launching.</li>
+      <li><strong>Bluetooth Classic vs BLE</strong> — Bluetooth Classic (BR/EDR) is for high-bandwidth continuous connections: audio streaming, file transfer, HID devices (keyboards, mice). BLE (Bluetooth Low Energy) is for low-power, intermittent data: IoT sensors, fitness trackers, beacons. They use different APIs: BluetoothSocket for Classic, BluetoothGatt for BLE. Know which your use case needs before writing a line of code.</li>
+      <li><strong>BLE workflow</strong> — BLE flow: 1) Get BluetoothAdapter. 2) Scan for devices (BluetoothLeScanner.startScan with ScanFilter). 3) Connect via device.connectGatt(). 4) Discover services in onServicesDiscovered callback. 5) Read/write Characteristics. 6) Enable Notifications for real-time updates. Each step is asynchronous and callback-driven. In 2026, wrap in coroutines with callbackFlow for a clean API.</li>
+      <li><strong>Bluetooth permissions (API 31+ changes)</strong> — Android 12 (API 31) split Bluetooth permissions: BLUETOOTH_SCAN (scanning), BLUETOOTH_CONNECT (connecting to paired devices), BLUETOOTH_ADVERTISE (advertising as peripheral). The old BLUETOOTH and BLUETOOTH_ADMIN permissions are no longer sufficient. Missing these causes silent scan failures — a common production bug on Android 12+ devices.</li>
+      <li><strong>NFC — reading and writing NDEF tags</strong> — NFC (Near Field Communication) uses the NDEF (NFC Data Exchange Format) for structured data on tags. enableForegroundDispatch() or enableReaderMode() puts your Activity in the NFC foreground, intercepting tag scans before other apps. Read NdefMessage from the discovered tag, parse NdefRecords. Write by formatting a tag with NdefFormatable. Used for smart posters, transit cards, and device pairing.</li>
+      <li><strong>Sensor framework</strong> — SensorManager gives access to all hardware sensors: accelerometer (TYPE_ACCELEROMETER), gyroscope (TYPE_GYROSCOPE), magnetometer (TYPE_MAGNETIC_FIELD), proximity (TYPE_PROXIMITY), light (TYPE_LIGHT), step counter (TYPE_STEP_COUNTER). Register a SensorEventListener with the desired sampling rate (SENSOR_DELAY_NORMAL, SENSOR_DELAY_GAME, SENSOR_DELAY_FASTEST). Always unregister in onPause() to save battery.</li>
+      <li><strong>Google Maps SDK integration</strong> — Add the Maps SDK dependency, get an API key from Google Cloud Console, add it to Manifest (com.google.android.geo.API_KEY). Use SupportMapFragment or MapView. Call getMapAsync() to get a GoogleMap instance. Add markers with MarkerOptions, draw routes with Polylines, customize map style with JSON style files. For location, use FusedLocationProviderClient — never the old LocationManager API.</li>
+      <li><strong>FusedLocationProviderClient — the right location API</strong> — FusedLocationProviderClient (from Google Play Services) automatically selects the best location source (GPS, Wi-Fi, cell) and batches updates efficiently. Use requestLocationUpdates() for continuous tracking, getCurrentLocation() for one-shot. Request ACCESS_FINE_LOCATION for GPS-accurate, ACCESS_COARSE_LOCATION for approximate. Background location (ACCESS_BACKGROUND_LOCATION) requires extra permission and policy justification since Android 10.</li>
+      <li><strong>Permission handling for hardware APIs</strong> — Pattern for any hardware API: 1) Declare permission in Manifest. 2) Check ContextCompat.checkSelfPermission() at runtime. 3) If denied, request via ActivityResultContracts.RequestPermission(). 4) If permanently denied, show Settings intent. 5) Handle the feature gracefully when permission is absent. Never assume permission is granted even if declared in Manifest.</li>
+      <li><strong>Interview breadth strategy</strong> — For hardware APIs in interviews, demonstrate: you know what the API does, you know the key permission requirements, you know the modern Jetpack/Play Services approach vs the legacy approach, and you can name a real scenario where you have used or would use it. Depth is expected only for Camera and Location — breadth suffices for BLE, NFC, and sensors.</li>
+      <li><strong>Feature requirements in Manifest</strong> — Use  for optional hardware. This prevents Play Store from filtering out your app on devices without the hardware while still letting you check feature availability at runtime with PackageManager.hasSystemFeature().</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// CameraX — capture a photo
+class CameraActivity : AppCompatActivity() {
+    private lateinit var imageCapture: ImageCapture
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
+            }
+            imageCapture = ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build()
+
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageCapture)
+        }, ContextCompat.getMainExecutor(this))
+    }
+
+    fun takePhoto() {
+        val photoFile = File(cacheDir, &quot;photo_${System.currentTimeMillis()}.jpg&quot;)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    // photo saved to photoFile
+                }
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(&quot;Camera&quot;, &quot;Capture failed: ${exc.message}&quot;, exc)
+                }
+            }
+        )
+    }
+}
+
+// BLE scan and connect (simplified)
+class BleManager(private val context: Context) {
+    private val bluetoothAdapter: BluetoothAdapter? =
+        (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+
+    fun scanForDevices(onDeviceFound: (BluetoothDevice) -&gt; Unit) {
+        val scanner = bluetoothAdapter?.bluetoothLeScanner ?: return
+        val filter = ScanFilter.Builder()
+            .setServiceUuid(ParcelUuid(SERVICE_UUID))
+            .build()
+        val settings = ScanSettings.Builder()
+            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+            .build()
+
+        scanner.startScan(listOf(filter), settings, object : ScanCallback() {
+            override fun onScanResult(callbackType: Int, result: ScanResult) {
+                onDeviceFound(result.device)
+            }
+        })
+    }
+
+    fun connect(device: BluetoothDevice, onDataReceived: (ByteArray) -&gt; Unit): BluetoothGatt {
+        return device.connectGatt(context, false, object : BluetoothGattCallback() {
+            override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
+                if (newState == BluetoothProfile.STATE_CONNECTED) gatt.discoverServices()
+            }
+            override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
+                val char = gatt.getService(SERVICE_UUID)?.getCharacteristic(CHAR_UUID)
+                gatt.setCharacteristicNotification(char, true)
+            }
+            override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+                onDataReceived(characteristic.value)
+            }
+        })
+    }
+
+    companion object {
+        val SERVICE_UUID: UUID = UUID.fromString(&quot;0000180d-0000-1000-8000-00805f9b34fb&quot;)
+        val CHAR_UUID: UUID = UUID.fromString(&quot;00002a37-0000-1000-8000-00805f9b34fb&quot;)
+    }
+}
+
+// Sensor — step counter
+class StepCounterManager(context: Context) : SensorEventListener {
+    private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    private val stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+    var stepCount: Long = 0
+
+    fun register() {
+        sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+    fun unregister() { sensorManager.unregisterListener(this) }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_STEP_COUNTER) {
+            stepCount = event.values[0].toLong()
+        }
+    }
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+}
+
+// FusedLocationProviderClient
+class LocationManager(private val context: Context) {
+    private val fusedClient = LocationServices.getFusedLocationProviderClient(context)
+
+    fun getCurrentLocation(onResult: (Location?) -&gt; Unit) {
+        fusedClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+            .addOnSuccessListener { location -&gt; onResult(location) }
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ProcessCameraProvider.getInstance() returns a ListenableFuture — the addListener callback runs on the main executor once the camera is ready.</li>
+      <li><span class="walk-num">2.</span> bindToLifecycle() ties the camera session to the Activity lifecycle — CameraX automatically opens/closes the camera on resume/pause, preventing resource leaks.</li>
+      <li><span class="walk-num">3.</span> ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY prioritizes speed over quality — use CAPTURE_MODE_MAXIMIZE_QUALITY for still photos where wait time is acceptable.</li>
+      <li><span class="walk-num">4.</span> ImageCapture.takePicture() saves directly to a file via OutputFileOptions — more efficient than capturing to a Bitmap in memory for full-resolution photos.</li>
+      <li><span class="walk-num">5.</span> BluetoothLeScanner.startScan with a ScanFilter targeting a specific ServiceUUID reduces battery usage — scanning without filters drains battery rapidly.</li>
+      <li><span class="walk-num">6.</span> onServicesDiscovered fires after connectGatt triggers service discovery — this is the correct place to get Characteristic references, not in onConnectionStateChange.</li>
+      <li><span class="walk-num">7.</span> setCharacteristicNotification enables client-side notification; you also typically need to write to the CCCD descriptor on the characteristic — omitting this is a common BLE bug.</li>
+      <li><span class="walk-num">8.</span> SensorManager.registerListener in onResume and unregisterListener in onPause is the correct lifecycle pattern — sensors drain battery if left registered in background.</li>
+      <li><span class="walk-num">9.</span> Sensor.TYPE_STEP_COUNTER returns total steps since reboot as a monotonically increasing float — you must save a baseline at session start and subtract to get session steps.</li>
+      <li><span class="walk-num">10.</span> FusedLocationProviderClient.getCurrentLocation with PRIORITY_HIGH_ACCURACY uses GPS — for battery-sensitive apps, use PRIORITY_BALANCED_POWER_ACCURACY instead.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class SensorActivity : AppCompatActivity(), SensorEventListener {
+    private lateinit var sensorManager: SensorManager
+    private var accelerometer: Sensor? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST)
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        val x = event.values[0]
+        val y = event.values[1]
+        val z = event.values[2]
+        updateUI(x, y, z)
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are two bugs: one drains battery and crashes when the screen rotates; the other causes thread safety issues in UI updates.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: registerListener() is called in onCreate() but there is no corresponding unregisterListener() in onPause() or onStop(). The sensor stays registered when the Activity goes to the background (screen off, user switches apps), continuously draining battery and CPU. Fix: register in onResume(), unregister in onPause(). Bug 2: SENSOR_DELAY_FASTEST delivers sensor events at the maximum hardware rate (up to 200Hz on some devices). onSensorChanged() fires on a background thread at this rate, but updateUI() presumably updates Views. Touching UI from a background thread causes CalledFromWrongThreadException. Additionally, at 200Hz, you may flood the UI thread with updates. Fix: Use SENSOR_DELAY_NORMAL (5 updates/sec) or SENSOR_DELAY_GAME (50 updates/sec) for UI purposes, and post UI updates via runOnUiThread{} or a Handler tied to the main Looper.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Your phone has special superpowers built in. Camera is its eyes. Bluetooth is like a wireless walkie-talkie to talk to other gadgets nearby. NFC is like a magic touch — tap your phone on a sticker and it instantly knows what the sticker says. Sensors are like the phone&#39;s sense of balance and feel. Maps is like giving the phone a brain that knows every road in the world.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">NFC tags can be as tiny as a grain of rice when implanted under the skin. There is a growing community of biohackers who implant NFC chips in their hands to unlock doors, store contact info, or even carry crypto wallet keys. Android&#39;s NFC API can read these the same way it reads a tap-to-pay card.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design a warehouse inventory app that uses: (1) NFC to identify bins by tapping a tag (read NDEF text record). (2) CameraX ImageAnalysis + ML Kit to scan barcodes on items. (3) BLE to connect to a weight sensor on a shelf. (4) Maps to show warehouse layout. For each feature, specify: the permission(s) required, the key API class used, and one gotcha that could cause a production bug. Then explain how you would gracefully degrade if any hardware is unavailable.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/training/camerax" target="_blank" rel="noopener noreferrer">CameraX overview — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/connectivity/bluetooth/ble-overview" target="_blank" rel="noopener noreferrer">Bluetooth Low Energy — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/connectivity/nfc/nfc" target="_blank" rel="noopener noreferrer">NFC basics — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/sensors/sensors_overview" target="_blank" rel="noopener noreferrer">Sensors overview — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient" target="_blank" rel="noopener noreferrer">FusedLocationProviderClient — Google Play Services</a> <span class="res-source">(Google Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=57">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./56-contentprovider-fileprovider-uri-permissions.html" rel="prev">← ContentProvider, FileProvider &amp; URI…</a>
+  <a class="nav-next" href="./58-system-design-i-offline-first-field-app-at-scale.html" rel="next">System Design I: Offline-First Field… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

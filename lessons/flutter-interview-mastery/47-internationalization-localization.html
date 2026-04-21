@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internationalization &amp; Localization — Flutter… | Teamz Lab</title>
+<meta name="description" content="Internationalization and localization make your app usable by people in different countries and languages. For global products — SaaS tools, NGO field apps…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/48-adaptive-ui-phone-tablet-foldables-desktop.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Internationalization &amp; Localization">
+<meta property="og:description" content="Internationalization and localization make your app usable by people in different countries and languages. For global products — SaaS tools, NGO field apps…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Internationalization &amp; Localization">
+<meta name="twitter:description" content="Internationalization and localization make your app usable by people in different countries and languages. For global products — SaaS tools, NGO field apps…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Internationalization & Localization",
+  "description": "Internationalization and localization make your app usable by people in different countries and languages. For global products — SaaS tools, NGO field apps…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 47
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Internationalization & Localization",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Internationalization &amp; Localization</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 47 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Internationalization &amp; Localization</h1>
+<p class="lesson-subtitle">flutter_localizations, ARB files, intl package, RTL, plurals, dynamic locale switching</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Internationalization (i18n) is building a restaurant kitchen that can cook any cuisine. Localization (l10n) is actually cooking French food for French customers — writing the specific menus, using local ingredients (date formats, currencies), and respecting table customs (RTL for Arabic). The kitchen infrastructure is i18n; each specific cuisine is l10n.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Internationalization and localization make your app usable by people in different countries and languages. For global products — SaaS tools, NGO field apps, fintech platforms — this is a day-one architectural decision. Retrofitting i18n into an established codebase is expensive; doing it from the start is cheap.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>The NGO survey app deploys in 12 countries. Each field worker sees their device&#39;s language automatically. Arabic workers see RTL layout. Survey question counts use proper plural rules (&#39;1 question remaining&#39; vs &#39;3 questions remaining&#39;). Sync timestamps are formatted in local date order. The translation team updates ARB files via Lokalise; CI runs flutter gen-l10n and fails if any keys are missing.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>i18n vs l10n</strong> — Internationalization (i18n) is engineering the app to support multiple locales — dates, currencies, text direction, string externalisation. Localization (l10n) is the process of providing actual translations and locale-specific values for each target locale.</li>
+      <li><strong>flutter_localizations Setup</strong> — Add flutter_localizations to pubspec.yaml. Set supportedLocales in MaterialApp. Add generate: true and l10n.yaml config. Run flutter gen-l10n to generate the AppLocalizations class from ARB files.</li>
+      <li><strong>ARB Files</strong> — Application Resource Bundle (.arb) files are JSON-like files containing string keys with translations: { &#39;greetUser&#39;: &#39;Hello, {name}!&#39;, &#39;@greetUser&#39;: { &#39;description&#39;: &#39;Greeting&#39;, &#39;placeholders&#39;: { &#39;name&#39;: { &#39;type&#39;: &#39;String&#39; } } } }. One ARB per locale (app_en.arb, app_ar.arb, app_fr.arb).</li>
+      <li><strong>intl Package</strong> — Provides DateFormat, NumberFormat, Intl.plural(), Intl.gender(), Intl.select() for locale-aware formatting. Always format dates and numbers through intl — never concatenate locale-sensitive values as strings.</li>
+      <li><strong>Date &amp; Number Formatting</strong> — DateFormat(&#39;d MMMM y&#39;, locale).format(date) respects locale date order. NumberFormat.currency(locale: locale, symbol: &#39;€&#39;).format(amount) formats for locale. Critical for fintech apps showing claim amounts and transaction dates.</li>
+      <li><strong>Plural Rules</strong> — Different languages have different plural forms. English: one/other. Arabic: zero/one/two/few/many/other. Use Intl.plural() or ARB plural syntax: { &#39;itemCount&#39;: &#39;{count, plural, =0{No items} =1{1 item} other{{count} items}}&#39; }. Never hardcode &#39;items&#39; after a number.</li>
+      <li><strong>RTL Support</strong> — Arabic, Hebrew, Urdu require right-to-left layout. Set locale to &#39;ar&#39; and Flutter automatically flips Row direction, padding direction, and text alignment. Use Directionality.of(context) to detect RTL. Test with Arabic locale on a real device.</li>
+      <li><strong>Dynamic Locale Switching</strong> — Allow users to change language in-app without restarting. Store chosen locale in SharedPreferences. Pass a locale override to MaterialApp via a ValueNotifier or a Riverpod/BLoC state. Rebuild MaterialApp when locale changes.</li>
+      <li><strong>Translation Workflow</strong> — Export ARB files to translators. Use Lokalise, Phrase, or POEditor for professional translation management. Re-import translated ARBs. Run flutter gen-l10n. Review plurals and gendered strings — machine translation often gets these wrong.</li>
+      <li><strong>Fallback Locale</strong> — MaterialApp.localeResolutionCallback handles cases where the user&#39;s device locale has no matching translation. Default: fall back to the first entry in supportedLocales. Implement custom resolution for region fallbacks (e.g., &#39;pt_BR&#39; falls back to &#39;pt&#39;).</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === l10n.yaml ===
+/*
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+*/
+
+// === app_en.arb ===
+/*
+{
+  &quot;appTitle&quot;: &quot;Survey App&quot;,
+  &quot;@appTitle&quot;: { &quot;description&quot;: &quot;Application title&quot; },
+
+  &quot;greetUser&quot;: &quot;Hello, {name}!&quot;,
+  &quot;@greetUser&quot;: {
+    &quot;placeholders&quot;: { &quot;name&quot;: { &quot;type&quot;: &quot;String&quot; } }
+  },
+
+  &quot;pendingCount&quot;: &quot;{count, plural, =0{No pending surveys} =1{1 pending survey} other{{count} pending surveys}}&quot;,
+  &quot;@pendingCount&quot;: {
+    &quot;placeholders&quot;: { &quot;count&quot;: { &quot;type&quot;: &quot;int&quot; } }
+  },
+
+  &quot;claimAmount&quot;: &quot;Amount: {amount}&quot;,
+  &quot;@claimAmount&quot;: {
+    &quot;placeholders&quot;: { &quot;amount&quot;: { &quot;type&quot;: &quot;String&quot; } }
+  }
+}
+*/
+
+// === app_ar.arb ===
+/*
+{
+  &quot;appTitle&quot;: &quot;تطبيق الاستبيان&quot;,
+  &quot;greetUser&quot;: &quot;مرحباً، {name}!&quot;,
+  &quot;pendingCount&quot;: &quot;{count, plural, =0{لا توجد استبيانات} =1{استبيان واحد} =2{استبيانان} few{{count} استبيانات} many{{count} استبياناً} other{{count} استبيان}}&quot;,
+  &quot;claimAmount&quot;: &quot;المبلغ: {amount}&quot;
+}
+*/
+
+// === MaterialApp setup ===
+class MyApp extends StatefulWidget {
+  @override
+  State&lt;MyApp&gt; createState() =&gt; _MyAppState();
+}
+
+class _MyAppState extends State&lt;MyApp&gt; {
+  Locale? _locale;
+
+  void _setLocale(Locale locale) {
+    setState(() =&gt; _locale = locale);
+    SharedPreferences.getInstance().then(
+      (prefs) =&gt; prefs.setString(&#39;locale&#39;, locale.languageCode),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      locale: _locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        // Custom fallback: pt_BR -&gt; pt -&gt; en
+        if (deviceLocale == null) return supportedLocales.first;
+        for (final locale in supportedLocales) {
+          if (locale.languageCode == deviceLocale.languageCode) return locale;
+        }
+        return supportedLocales.first; // Default: English
+      },
+      home: HomeScreen(onLocaleChange: _setLocale),
+    );
+  }
+}
+
+// === USING LOCALIZATIONS ===
+class HomeScreen extends StatelessWidget {
+  final void Function(Locale) onLocaleChange;
+  const HomeScreen({required this.onLocaleChange, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.appTitle)),
+      body: Column(children: [
+        Text(l10n.greetUser(name: &#39;Ahmad&#39;)),
+        Text(l10n.pendingCount(count: 3)),
+
+        // Locale-aware number formatting
+        Text(NumberFormat.currency(
+          locale: locale.toLanguageTag(), symbol: &#39;$&#39;,
+        ).format(1234567.89)),  // -&gt; $1,234,567.89 or locale equivalent
+
+        // Locale-aware date formatting
+        Text(DateFormat.yMMMMd(locale.toLanguageTag())
+            .format(DateTime.now())),
+
+        // Language switcher
+        DropdownButton&lt;Locale&gt;(
+          value: locale,
+          items: AppLocalizations.supportedLocales.map((l) =&gt;
+            DropdownMenuItem(value: l, child: Text(l.languageCode))
+          ).toList(),
+          onChanged: (l) { if (l != null) onLocaleChange(l); },
+        ),
+      ]),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> l10n.yaml tells flutter gen-l10n where ARB files live and what output file to generate — must be at project root</li>
+      <li><span class="walk-num">2.</span> @greetUser object in ARB provides metadata (description, placeholder types) that gen-l10n uses to generate type-safe method signatures</li>
+      <li><span class="walk-num">3.</span> Plural ARB syntax {count, plural, =0{...} =1{...} other{...}} — ICU message format that intl applies correct CLDR plural rules per locale</li>
+      <li><span class="walk-num">4.</span> AppLocalizations.of(context)! — retrieves the localizations instance; throws if localizationsDelegates not configured in MaterialApp</li>
+      <li><span class="walk-num">5.</span> Localizations.localeOf(context) — reads the current active locale for use in intl formatting calls</li>
+      <li><span class="walk-num">6.</span> NumberFormat.currency(locale: locale.toLanguageTag()) — formats according to local numeric conventions (decimal/thousands separators)</li>
+      <li><span class="walk-num">7.</span> DateFormat.yMMMMd(locale.toLanguageTag()) — formats date in locale order (e.g., January 15, 2025 in en; 15 janvier 2025 in fr)</li>
+      <li><span class="walk-num">8.</span> localeResolutionCallback implements custom fallback logic — critical for regional variants like pt_BR not having a separate ARB</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// In HomeScreen
+Widget build(BuildContext context) {
+  final count = pendingSurveys.length;
+  return Text(
+    count == 1
+        ? &#39;1 pending survey&#39;
+        : &#39;$count pending surveys&#39;,
+  );
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">This works in English but will break in other languages. What are the two issues?</div></details><details><summary>Show answer</summary><div class="answer">Bug 1 (Hardcoded strings): The text is hardcoded English — it will not translate to any other language. All user-visible strings must be in ARB files and accessed via AppLocalizations.of(context). Bug 2 (Incorrect plural logic): The if count == 1 / else pattern only handles English two-form plurals. Languages like Arabic have six plural forms; Russian has different rules for 11. Use the ARB plural syntax and Intl.plural() which applies CLDR plural rules per locale. Fix: Define &#39;pendingCount&#39; in all ARB files using ICU plural syntax and use l10n.pendingCount(count: count) in the widget.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your app as a multilingual waiter at a restaurant. i18n is training the waiter to be able to speak multiple languages — learning grammar, number rules, how to read a menu backwards (RTL). l10n is actually writing the French menu, the Arabic menu, the Spanish menu. The waiter (app) is infrastructure; the menus (ARB files) are the content.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The word &#39;internationalization&#39; has 18 characters between the first &#39;i&#39; and the last &#39;n&#39; — which is why developers abbreviated it &#39;i18n&#39;. Similarly, &#39;localization&#39; has 10 characters between &#39;l&#39; and &#39;n&#39; — &#39;l10n&#39;. These numeronyms were popularised at Digital Equipment Corporation in the 1970s and are now universal in the software industry.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the i18n architecture for the NGO survey app supporting English, Arabic (RTL), French, and Spanish: (1) ARB file structure for a plural string &#39;You have N unanswered questions&#39;, (2) how dynamic locale switching works without app restart, (3) what you would check in CI to prevent shipping with missing translations.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization" target="_blank" rel="noopener noreferrer">Flutter internationalization guide</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://pub.dev/packages/intl" target="_blank" rel="noopener noreferrer">intl package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification" target="_blank" rel="noopener noreferrer">ARB file format</a> <span class="res-source">(GitHub)</span></li>
+      <li><a href="https://cldr.unicode.org/index/cldr-spec/plural-rules" target="_blank" rel="noopener noreferrer">CLDR plural rules</a> <span class="res-source">(Unicode CLDR)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html" target="_blank" rel="noopener noreferrer">flutter_localizations API</a> <span class="res-source">(Flutter Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./46-accessibility-semantics-screen-readers-focus.html" rel="prev">← Accessibility: Semantics, Screen…</a>
+  <a class="nav-next" href="./48-adaptive-ui-phone-tablet-foldables-desktop.html" rel="next">Adaptive UI: Phone, Tablet, Foldables… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

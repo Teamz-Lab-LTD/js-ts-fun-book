@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>More DP Adventures — Coins and Stairs — CP Zero to Hero | Teamz Lab</title>
+<meta name="description" content="This lesson covers classic DP problems that appear frequently in programming contests and interviews. The climbing stairs problem and coin change problem…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/42-more-dp-adventures-coins-and-stairs.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/41-dynamic-programming-remember-and-reuse.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/43-graphs-connecting-the-dots.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="More DP Adventures — Coins and Stairs">
+<meta property="og:description" content="This lesson covers classic DP problems that appear frequently in programming contests and interviews. The climbing stairs problem and coin change problem…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/cp-kids/42-more-dp-adventures-coins-and-stairs.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="More DP Adventures — Coins and Stairs">
+<meta name="twitter:description" content="This lesson covers classic DP problems that appear frequently in programming contests and interviews. The climbing stairs problem and coin change problem…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "More DP Adventures — Coins and Stairs",
+  "description": "This lesson covers classic DP problems that appear frequently in programming contests and interviews. The climbing stairs problem and coin change problem…",
+  "url": "https://learn.teamzlab.com/lessons/cp-kids/42-more-dp-adventures-coins-and-stairs.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Competitive Programming: Zero to Hero",
+    "url": "https://learn.teamzlab.com/c/cp-kids.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 42
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "CP Zero to Hero",
+      "item": "https://learn.teamzlab.com/c/cp-kids.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "More DP Adventures — Coins and Stairs",
+      "item": "https://learn.teamzlab.com/lessons/cp-kids/42-more-dp-adventures-coins-and-stairs.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/cp-kids.html">CP Zero to Hero</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/cp-kids.html">CP Zero to Hero</a> / <span aria-current="page">More DP Adventures — Coins and Stairs</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 42 of 50</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">More DP Adventures — Coins and Stairs</h1>
+<p class="lesson-subtitle">Master classic DP problems that appear in contests everywhere — stairs, coins, and more!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=42">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine you are at the bottom of a staircase and you can take either 1 step or 2 steps at a time. How many different ways can you reach the top? You could go 1-1-1-1, or 2-2, or 1-2-1, and so on. Instead of listing every single possibility (which gets crazy for 100 stairs!), you notice a pattern: the number of ways to reach stair N depends only on how many ways to reach stair N-1 and stair N-2. Sound familiar? It is Fibonacci in disguise! That is the beauty of DP — once you learn the patterns, you see them everywhere.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>This lesson covers classic DP problems that appear frequently in programming contests and interviews. The climbing stairs problem and coin change problem are the perfect next step after Fibonacci — they use the same DP thinking but in more practical scenarios. Mastering these patterns gives you the foundation to solve hundreds of DP variations.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>The coin change algorithm is used by vending machines to figure out the best way to give you change with the fewest coins. The stairs problem is similar to path planning — like figuring out how many different routes a robot can take on a grid. Delivery companies use DP to find the cheapest shipping routes, and game designers use DP to calculate all possible move combinations.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Climbing Stairs Problem</strong> — You are at the bottom of a staircase with N steps. Each time, you can climb 1 or 2 steps. How many distinct ways can you reach the top? For 1 step, there is 1 way. For 2 steps, there are 2 ways (1+1 or 2). For 3 steps, there are 3 ways. The pattern is exactly Fibonacci! dp[i] = dp[i-1] + dp[i-2] because you either came from one step below (took 1 step) or two steps below (took 2 steps).</li>
+      <li><strong>Extending Stairs — What if You Can Take 1, 2, or 3 Steps?</strong> — If you can take 1, 2, or 3 steps at a time, the recurrence becomes dp[i] = dp[i-1] + dp[i-2] + dp[i-3]. The idea is the same — you could have arrived from 1, 2, or 3 steps below. This is called the Tribonacci variant. See how easy it is to extend DP once you understand the pattern? Just add more terms to the recurrence!</li>
+      <li><strong>The Coin Change Problem — Minimum Coins</strong> — You have coins of certain values (like 1, 5, and 10 cents) and you need to make exactly N cents using the fewest coins possible. For example, to make 13 cents with coins {1, 5, 10}, the answer is 4 coins (10+1+1+1). dp[i] represents the minimum coins needed to make amount i. For each coin value c, dp[i] = min(dp[i], dp[i-c] + 1). Start with dp[0] = 0 (zero coins for zero amount).</li>
+      <li><strong>The Coin Change Problem — Count Ways</strong> — A different coin problem: how many WAYS can you make N cents? For example, making 5 cents with {1, 2, 5} has 4 ways: 5, 2+2+1, 2+1+1+1, and 1+1+1+1+1. This time dp[i] counts the number of ways. We loop through coins and for each coin c, add dp[i-c] to dp[i]. This is a classic interview and contest problem!</li>
+      <li><strong>How to Identify DP Problems</strong> — Here are the biggest hints: the problem asks for minimum, maximum, or count. You can make choices that affect future options. The problem has optimal substructure — the best solution to the big problem uses the best solutions to smaller problems. Greedy does not work (like always taking the biggest coin does not always give minimum coins). If you see these signs, try DP!</li>
+      <li><strong>Setting Up the DP Table</strong> — Always start by asking: what does dp[i] represent? For stairs, dp[i] = number of ways to reach step i. For coin change, dp[i] = minimum coins to make amount i. Then ask: what are the base cases? dp[0] is usually 0 or 1. Finally ask: how does dp[i] depend on smaller values? Write that relationship and you have your solution!</li>
+      <li><strong>Handling Impossible Cases</strong> — Sometimes there is no solution — like making 3 cents with only {2, 4} coins. You need to handle this! A common trick is to initialize dp[] with a very large number (like 1e9 or INT_MAX) meaning &#39;impossible.&#39; Only dp[0] starts at 0. If dp[N] is still huge at the end, then there is no valid solution. Always remember to check for impossible cases in your output!</li>
+      <li><strong>Practice Tips for DP</strong> — Start with these classic problems in order: Fibonacci, Climbing Stairs, Coin Change (min coins), Coin Change (count ways), and House Robber. These five problems teach you the core DP patterns. After you understand them, move to 2D DP problems like grid paths and knapsack. Practice 2-3 DP problems per week and you will become comfortable within a month!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// ===== Problem 1: Climbing Stairs =====
+// How many ways to climb N stairs (1 or 2 steps at a time)?
+long long climbStairs(int n) {
+    if (n &lt;= 2) return n;
+    
+    vector&lt;long long&gt; dp(n + 1);
+    dp[1] = 1;  // 1 way to climb 1 stair
+    dp[2] = 2;  // 2 ways to climb 2 stairs (1+1 or 2)
+    
+    for (int i = 3; i &lt;= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];  // Come from 1 or 2 steps below
+    }
+    return dp[n];
+}
+
+// ===== Problem 2: Minimum Coins =====
+// Find the fewest coins needed to make amount N
+int minCoins(vector&lt;int&gt;&amp; coins, int amount) {
+    vector&lt;int&gt; dp(amount + 1, 1e9);  // Initialize with &quot;impossible&quot;
+    dp[0] = 0;  // 0 coins needed for amount 0
+    
+    for (int i = 1; i &lt;= amount; i++) {
+        for (int c : coins) {
+            if (c &lt;= i &amp;&amp; dp[i - c] != 1e9) {
+                dp[i] = min(dp[i], dp[i - c] + 1);
+            }
+        }
+    }
+    return dp[amount] == 1e9 ? -1 : dp[amount];  // -1 if impossible
+}
+
+// ===== Problem 3: Count Ways to Make Change =====
+// How many ways can you make amount N using given coins?
+long long countWays(vector&lt;int&gt;&amp; coins, int amount) {
+    vector&lt;long long&gt; dp(amount + 1, 0);
+    dp[0] = 1;  // 1 way to make amount 0: use no coins
+    
+    for (int c : coins) {             // Loop coins in outer loop!
+        for (int i = c; i &lt;= amount; i++) {
+            dp[i] += dp[i - c];       // Add ways using this coin
+        }
+    }
+    return dp[amount];
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    // Climbing Stairs
+    int n = 10;
+    cout &lt;&lt; &quot;Ways to climb &quot; &lt;&lt; n &lt;&lt; &quot; stairs: &quot; &lt;&lt; climbStairs(n) &lt;&lt; &quot;\n&quot;;
+    
+    // Minimum Coins
+    vector&lt;int&gt; coins = {1, 5, 10, 25};
+    int amount = 37;
+    cout &lt;&lt; &quot;Min coins for &quot; &lt;&lt; amount &lt;&lt; &quot; cents: &quot; &lt;&lt; minCoins(coins, amount) &lt;&lt; &quot;\n&quot;;
+    
+    // Count Ways
+    cout &lt;&lt; &quot;Ways to make &quot; &lt;&lt; amount &lt;&lt; &quot; cents: &quot; &lt;&lt; countWays(coins, amount) &lt;&lt; &quot;\n&quot;;
+    
+    return 0;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> climbStairs(n) uses a DP array where dp[i] = number of ways to reach step i. We know dp[1] = 1 (just take one step) and dp[2] = 2 (take 1+1 or take 2). Everything else builds from these.</li>
+      <li><span class="walk-num">2.</span> The loop for (int i = 3; i &lt;= n; i++) fills the table bottom-up. dp[i] = dp[i-1] + dp[i-2] because you either took 1 step from stair i-1 or 2 steps from stair i-2. Same as Fibonacci!</li>
+      <li><span class="walk-num">3.</span> minCoins() initializes dp[] with 1e9 (a huge number representing &#39;impossible&#39;). Only dp[0] = 0 because you need 0 coins to make 0 cents.</li>
+      <li><span class="walk-num">4.</span> For each amount i from 1 to N, we try every coin c. If coin c is not bigger than i and dp[i-c] is not impossible, then dp[i] = min(dp[i], dp[i-c] + 1). The +1 is for using one more coin of value c.</li>
+      <li><span class="walk-num">5.</span> If dp[amount] is still 1e9 at the end, it means no combination of coins can make that amount, so we return -1.</li>
+      <li><span class="walk-num">6.</span> countWays() is different — the outer loop goes over coins, not amounts! This is important. Looping coins outside prevents counting the same combination in different orders (like 1+5 and 5+1 as separate ways).</li>
+      <li><span class="walk-num">7.</span> For each coin c, we update dp[i] += dp[i-c] for all valid amounts. This means: the number of ways to make amount i increases by the number of ways to make (i minus this coin).</li>
+      <li><span class="walk-num">8.</span> dp[0] = 1 in countWays because there is exactly 1 way to make amount 0: use no coins at all. This base case is crucial — without it, all values would stay 0.</li>
+      <li><span class="walk-num">9.</span> In main(), we test all three functions. Climbing 10 stairs gives 89 ways. Making 37 cents with {1,5,10,25} takes 4 coins (25+10+1+1). These are classic results you should memorize!</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int minCoins(vector&lt;int&gt;&amp; coins, int amount) {
+    vector&lt;int&gt; dp(amount + 1, 1e9);
+    dp[0] = 0;
+    
+    for (int i = 1; i &lt;= amount; i++) {
+        for (int c : coins) {
+            if (c &lt;= i) {
+                dp[i] = min(dp[i], dp[i - c] + 1);
+            }
+        }
+    }
+    return dp[amount];
+}
+
+int main() {
+    vector&lt;int&gt; coins = {3, 7};
+    cout &lt;&lt; minCoins(coins, 5) &lt;&lt; &quot;\n&quot;;  // Should say impossible!
+    return 0;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">What happens when it is impossible to make the amount? What value does the function return? Is there a missing check?</div></details><details><summary>Show answer</summary><div class="answer">The bug is that the function does not check if dp[amount] is still 1e9 (impossible). When you try to make 5 cents with coins {3, 7}, it is impossible — but the function returns 1000000000 instead of -1. The fix is to add a check at the end: return dp[amount] &gt;= 1e9 ? -1 : dp[amount]. Also, there is a subtle issue: dp[i-c] + 1 could overflow if dp[i-c] is 1e9. Add a check: if (c &lt;= i &amp;&amp; dp[i-c] != (int)1e9) before updating.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you want to get to the top of a playground slide that has 5 steps. You can go up 1 step or jump up 2 steps at a time. How many different ways can you get to the top? You could go 1-1-1-1-1, or 2-1-1-1, or 1-2-2... there are lots of ways! Instead of listing them all (which is hard), we use a trick: the number of ways to reach step 5 is just the ways to reach step 4 plus the ways to reach step 3. Because from step 4 you take 1 step, and from step 3 you jump 2 steps. Easy peasy!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The coin change problem is so important that it appears in almost every programming interview at big tech companies. Google, Amazon, and Microsoft have all asked variations of it! The problem was first studied by mathematicians over 200 years ago, long before computers existed. Euler and other famous mathematicians worked on counting coin combinations. Now you are learning the same math that fascinated geniuses!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Solve these three problems step by step. First, modify the climbing stairs solution to allow 1, 2, or 3 steps — how many ways to climb 10 stairs now? Second, find the minimum coins to make 63 cents using coins {1, 5, 10, 25}. Third, count how many ways you can make 50 cents using {1, 5, 10, 25}. Bonus: solve the House Robber problem — given an array of house values, find the maximum you can rob without robbing two adjacent houses. Hint: dp[i] = max(dp[i-1], dp[i-2] + arr[i]).</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=Y0lT9Fck7qI" target="_blank" rel="noopener noreferrer">Climbing Stairs — NeetCode</a> <span class="res-source">(YouTube — NeetCode)</span></li>
+      <li><a href="https://leetcode.com/problems/coin-change/" target="_blank" rel="noopener noreferrer">Coin Change — LeetCode 322</a> <span class="res-source">(LeetCode)</span></li>
+      <li><a href="https://codeforces.com/blog/entry/43256" target="_blank" rel="noopener noreferrer">Introduction to DP — Codeforces Blog</a> <span class="res-source">(Codeforces)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=42">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./41-dynamic-programming-remember-and-reuse.html" rel="prev">← Dynamic Programming — Remember and Reuse</a>
+  <a class="nav-next" href="./43-graphs-connecting-the-dots.html" rel="next">Graphs — Connecting the Dots →</a>
+</nav>
+
+<a class="back-to-course" href="/c/cp-kids.html">← Back to course: CP Zero to Hero</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

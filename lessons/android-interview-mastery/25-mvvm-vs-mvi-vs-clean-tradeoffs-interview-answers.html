@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVVM vs MVI vs Clean — Tradeoffs &amp; Interview Answers… | Teamz Lab</title>
+<meta name="description" content="MVVM, MVI, and Clean Architecture are patterns for separating concerns in Android apps. MVVM is the Jetpack-native baseline — low ceremony, widely…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/24-repository-pattern-use-cases-dependency-inversion.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVVM vs MVI vs Clean — Tradeoffs &amp; Interview Answers">
+<meta property="og:description" content="MVVM, MVI, and Clean Architecture are patterns for separating concerns in Android apps. MVVM is the Jetpack-native baseline — low ceremony, widely…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MVVM vs MVI vs Clean — Tradeoffs &amp; Interview Answers">
+<meta name="twitter:description" content="MVVM, MVI, and Clean Architecture are patterns for separating concerns in Android apps. MVVM is the Jetpack-native baseline — low ceremony, widely…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "MVVM vs MVI vs Clean — Tradeoffs & Interview Answers",
+  "description": "MVVM, MVI, and Clean Architecture are patterns for separating concerns in Android apps. MVVM is the Jetpack-native baseline — low ceremony, widely…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 25
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "MVVM vs MVI vs Clean — Tradeoffs & Interview Answers",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">MVVM vs MVI vs Clean — Tradeoffs &amp; Interview Answers</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 25 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">MVVM vs MVI vs Clean — Tradeoffs &amp; Interview Answers</h1>
+<p class="lesson-subtitle">Compare architectures, show real tradeoffs, and answer &#39;why this architecture?&#39; without dogma</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=25">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Choosing an architecture is like choosing a kitchen layout. MVVM is the classic home kitchen — familiar, flexible, works great for most meals. MVI is a professional restaurant kitchen — strict stations, one-way ticket system, zero ambiguity, but more setup. Clean Architecture is the full restaurant operation — front-of-house, back-of-house, supply chain all separated, ultimate scale but you need the team to justify it.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>MVVM, MVI, and Clean Architecture are patterns for separating concerns in Android apps. MVVM is the Jetpack-native baseline — low ceremony, widely understood. MVI adds strict unidirectionality and a single immutable state object — predictable but verbose. Clean Architecture adds layer separation (Presentation/Domain/Data) for testability and scalability. The winning interview answer shows you understand each pattern&#39;s tradeoffs and can match the right tool to the context.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>At Tixio (SaaS real-time collaboration), the team adopted MVI + Clean for the workspace board screen because 15+ user interactions (drag, resize, invite, comment, sync) all mutate the same canvas state — MVVM&#39;s multiple StateFlows caused consistency bugs. For the simpler settings and profile screens, plain MVVM was kept. At BRAC&#39;s field operations app, Clean Architecture allowed swapping the sync backend from Firebase to a custom REST API without touching domain UseCases or any ViewModel.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>MVVM core contract</strong> — Model (data/domain) — ViewModel (state holder, business logic) — View (UI observes state). ViewModel exposes StateFlow/LiveData. View collects and renders. Two-way data binding optional. Android Jetpack ViewModel survives config changes. Most widely used in Android today.</li>
+      <li><strong>MVVM strengths</strong> — Low boilerplate for simple screens. Jetpack-native (ViewModel, LiveData, DataBinding). Easy to onboard new developers. Google-recommended baseline. Works perfectly for 80% of screens — forms, lists, detail views. Tests focus on ViewModel state transformations.</li>
+      <li><strong>MVVM weaknesses</strong> — State can be scattered across multiple LiveData/StateFlow fields. ViewModel can bloat over time (God ViewModel). Events (one-shot side effects like navigation, toasts) need special handling — SharedFlow/Channel. No enforced unidirectional data flow — two-way binding can create hard-to-trace state bugs in large teams.</li>
+      <li><strong>MVI core contract</strong> — Model (immutable state) — View (renders state, emits Intents) — Intent (user action/event) — Reducer (Intent + current state = new state). Strictly unidirectional: View → Intent → ViewModel reduces → new State → View. State is a single sealed class/data class.</li>
+      <li><strong>MVI strengths</strong> — Single source of truth — one UI state object captures everything. Time-travel debugging and state logging are trivial. Predictable: given the same state + intent, output is always the same. Excellent for complex screens with many interactions. Natural fit with Jetpack Compose&#39;s recomposition model.</li>
+      <li><strong>MVI weaknesses</strong> — Higher boilerplate — every action needs an Intent class, every state needs a sealed class. Learning curve for teams new to functional thinking. Over-engineering for simple CRUD screens. State class can become large for complex screens unless broken into sub-states carefully.</li>
+      <li><strong>Clean Architecture layers</strong> — Presentation (ViewModels, UI) → Domain (UseCases, Repository interfaces, Entities) → Data (Repository implementations, Room DAOs, Retrofit services). Dependencies point inward only — Data and Presentation depend on Domain, never the reverse. Domain has zero Android dependencies.</li>
+      <li><strong>Clean Architecture strengths</strong> — Domain layer is pure Kotlin — unit testable without Android emulator. Swap data sources without touching domain or UI. Multiple delivery mechanisms (app + widget + tile) share the same domain. Enforces team boundaries in large codebases. Scales to 50+ screen apps.</li>
+      <li><strong>Clean Architecture weaknesses</strong> — Significant upfront investment — 3+ modules, interfaces everywhere, mappers between layers. For a 5-screen app it&#39;s overkill. UseCase-per-action can become verbose. Requires team discipline to maintain layer boundaries — easy to leak Android imports into domain accidentally.</li>
+      <li><strong>When to use what — interview answer</strong> — MVVM alone: small-medium apps, solo/small teams, tight deadlines, simple screens. MVVM + Clean: medium-large apps, team of 3+, need testability, clear feature boundaries. MVI + Clean: complex interactive screens (dashboards, editors), Compose-first projects, teams that value predictability over simplicity. Never be dogmatic — real-world is hybrid.</li>
+      <li><strong>How to answer &#39;why this architecture?&#39;</strong> — Structure answer as: (1) Context — app size, team size, deadline. (2) Tradeoffs considered — what alternatives you evaluated. (3) Decision — what you chose and why. (4) What you&#39;d change in retrospect. Shows engineering maturity. Interviewers want to hear &#39;it depends&#39; backed by reasoning, not religious devotion.</li>
+      <li><strong>Architecture in Compose era</strong> — Jetpack Compose pushes toward MVI naturally — composables are pure functions of state, so single UiState data class + sealed Intent/Event fits perfectly. Google&#39;s Compose samples use UiState + Channel for events. MVVM with multiple StateFlows still works but state consistency becomes harder to guarantee.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// MVVM — standard ViewModel approach
+class OrderListViewModel(
+    private val getOrders: GetOrdersUseCase
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(OrderListState())
+    val uiState: StateFlow&lt;OrderListState&gt; = _uiState.asStateFlow()
+
+    fun loadOrders() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            getOrders().collect { orders -&gt;
+                _uiState.update { it.copy(orders = orders, isLoading = false) }
+            }
+        }
+    }
+}
+
+// MVI — Intent + Reducer pattern
+sealed class OrderIntent {
+    object LoadOrders : OrderIntent()
+    data class DeleteOrder(val id: String) : OrderIntent()
+    data class FilterByStatus(val status: OrderStatus) : OrderIntent()
+}
+
+data class OrderUiState(
+    val orders: List&lt;Order&gt; = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val filter: OrderStatus? = null
+)
+
+class OrderMviViewModel(
+    private val getOrders: GetOrdersUseCase,
+    private val deleteOrder: DeleteOrderUseCase
+) : ViewModel() {
+    private val _state = MutableStateFlow(OrderUiState())
+    val state: StateFlow&lt;OrderUiState&gt; = _state.asStateFlow()
+
+    fun process(intent: OrderIntent) {
+        when (intent) {
+            is OrderIntent.LoadOrders -&gt; loadOrders()
+            is OrderIntent.DeleteOrder -&gt; delete(intent.id)
+            is OrderIntent.FilterByStatus -&gt; filter(intent.status)
+        }
+    }
+
+    private fun loadOrders() { /* ... */ }
+    private fun delete(id: String) { /* ... */ }
+    private fun filter(status: OrderStatus) {
+        _state.update { it.copy(filter = status) }
+    }
+}
+
+// Clean Architecture — Domain layer (zero Android imports)
+// Domain/UseCase
+class GetOrdersUseCase(private val repo: OrderRepository) {
+    operator fun invoke(): Flow&lt;List&lt;Order&gt;&gt; = repo.getOrders()
+}
+
+// Domain/Repository interface
+interface OrderRepository {
+    fun getOrders(): Flow&lt;List&lt;Order&gt;&gt;
+    suspend fun syncOrders()
+}
+
+// Data/Repository implementation
+class OrderRepositoryImpl(
+    private val dao: OrderDao,
+    private val api: OrderApiService,
+    private val mapper: OrderMapper
+) : OrderRepository {
+    override fun getOrders(): Flow&lt;List&lt;Order&gt;&gt; =
+        dao.observeAll().map { entities -&gt; entities.map(mapper::toDomain) }
+
+    override suspend fun syncOrders() {
+        val remote = api.fetchOrders()
+        dao.upsertAll(remote.map(mapper::toEntity))
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> MVVM ViewModel exposes a single _uiState MutableStateFlow backed by an immutable StateFlow — the UI collects from the public val only.</li>
+      <li><span class="walk-num">2.</span> uiState.update { it.copy(...) } is the idiomatic way to update a data class state atomically — thread-safe and concise.</li>
+      <li><span class="walk-num">3.</span> MVI sealed class OrderIntent models every possible user action as a type — exhaustive when in process() forces handling all cases.</li>
+      <li><span class="walk-num">4.</span> OrderUiState is a single data class — the entire screen state is one object, making it easy to log, snapshot, and restore.</li>
+      <li><span class="walk-num">5.</span> process(intent) is the single entry point for the MVI ViewModel — the View calls this for every user action, no other public functions needed.</li>
+      <li><span class="walk-num">6.</span> Clean Architecture: GetOrdersUseCase wraps the repository call — this is the Domain layer, zero Android imports, pure Kotlin.</li>
+      <li><span class="walk-num">7.</span> OrderRepository is an interface in the Domain layer — Data layer provides the implementation, dependency inversion principle in action.</li>
+      <li><span class="walk-num">8.</span> OrderRepositoryImpl bridges Domain and Data — it reads from Room DAO (Flow for reactivity) and writes to Room on sync, never exposing Data models to Domain.</li>
+      <li><span class="walk-num">9.</span> mapper::toDomain transforms Entity (database model) to Domain model — each layer has its own model class, decoupled from the others.</li>
+      <li><span class="walk-num">10.</span> The repository exposes Flow&gt; so any collector (ViewModel, UseCase) gets real-time updates when Room data changes.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Spot all architecture violations — there are 5
+class DashboardViewModel(
+    private val orderDao: OrderDao,              // Bug 1
+    private val api: RetrofitApiService,         // Bug 2
+    private val prefs: SharedPreferences         // Bug 3
+) : ViewModel() {
+    private val _orders = MutableStateFlow&lt;List&lt;OrderEntity&gt;&gt;(emptyList())  // Bug 4
+    val orders = _orders.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    private val _error = MutableStateFlow&lt;String?&gt;(null)
+
+    fun loadDashboard() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val orders = api.getOrders().body()!!  // Bug 5
+                _orders.value = orders.map { OrderEntity(it.id, it.title, it.status) }
+                prefs.edit().putLong(&quot;last_sync&quot;, System.currentTimeMillis()).apply()
+            } catch (e: Exception) {
+                _error.value = e.message
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at what the ViewModel imports, what it exposes, how many state flows it has, how it accesses data, and how it handles the API response.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: ViewModel directly imports OrderDao (Data layer) — violates Clean Architecture. Presentation must not depend on Data. Fix: inject a UseCase that wraps the repository. Bug 2: ViewModel directly imports RetrofitApiService (Data layer) — same violation. The ViewModel should never know about Retrofit. Fix: GetOrdersUseCase handles all data orchestration. Bug 3: SharedPreferences access in ViewModel — infrastructure concern leaked into Presentation. Fix: create a SyncRepository or SyncUseCase that handles the last_sync timestamp internally. Bug 4: ViewModel exposes List&lt;OrderEntity&gt; — Data layer model exposed to Presentation, violating layer boundaries. Fix: map to a Domain model (Order) or a UI model (OrderUiItem) before emitting. Bug 5: .body()!! — force unwraps a nullable Response body, will crash if the API returns a non-2xx response or empty body. Fix: use a safe wrapper like response.body() ?: emptyList() or use a Result-based API wrapper that maps errors to domain exceptions before they reach the ViewModel.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your bedroom. MVVM is keeping your stuff in labeled boxes — toys here, books there. Easy to find things. MVI is having ONE master list of everything in your room at all times — you never lose track but writing the list takes longer. Clean Architecture is like separating your room, your house, and your neighbourhood — each has its own rules and doesn&#39;t mess with the others. All three keep things organised, just at different scales.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Google&#39;s own Android architecture samples on GitHub have changed recommended patterns four times since 2017 — from MVP to MVVM to MVVM+LiveData to MVVM+StateFlow to now MVI-leaning with Compose. The pattern war is real, which is why interviewers ask about tradeoffs rather than &#39;which is correct&#39;.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Take a ViewModel you&#39;ve written with 3+ separate StateFlow properties representing parts of the same screen&#39;s state. Refactor it to a single UiState data class. Then identify all one-shot events (navigation, Snackbars) and move them to a SharedFlow. Write the before/after and explain what problems the refactor solves.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/topic/architecture" target="_blank" rel="noopener noreferrer">Guide to App Architecture — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/topic/architecture/ui-layer" target="_blank" rel="noopener noreferrer">UI Layer — StateFlow &amp; UiState patterns</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://medium.com/swlh/mvi-architecture-with-android-fcde123e3c4a" target="_blank" rel="noopener noreferrer">MVI Architecture with Kotlin Flows</a> <span class="res-source">(Medium)</span></li>
+      <li><a href="https://proandroiddev.com/mvvm-vs-mvi-architecture-in-android-7f5d3b66f0b2" target="_blank" rel="noopener noreferrer">Android Architecture: MVVM vs MVI — Real Comparison</a> <span class="res-source">(ProAndroidDev)</span></li>
+      <li><a href="https://github.com/android/nowinandroid" target="_blank" rel="noopener noreferrer">Now in Android — Google&#39;s reference app with Clean + MVI</a> <span class="res-source">(GitHub)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=25">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./24-repository-pattern-use-cases-dependency-inversion.html" rel="prev">← Repository Pattern, Use Cases &amp;…</a>
+  <a class="nav-next" href="./26-dependency-injection-manual-di-vs-hilt-vs-dagger.html" rel="next">Dependency Injection: Manual DI vs… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

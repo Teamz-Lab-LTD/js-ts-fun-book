@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSockets, Socket.IO &amp; Real-time Sync — Flutter… | Teamz Lab</title>
+<meta name="description" content="WebSockets provide a persistent bidirectional channel between Flutter and a server, enabling real-time features: chat, presence, live editing, and push…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/23-rest-apis-with-dio-interceptors-token-refresh-retries.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebSockets, Socket.IO &amp; Real-time Sync">
+<meta property="og:description" content="WebSockets provide a persistent bidirectional channel between Flutter and a server, enabling real-time features: chat, presence, live editing, and push…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WebSockets, Socket.IO &amp; Real-time Sync">
+<meta name="twitter:description" content="WebSockets provide a persistent bidirectional channel between Flutter and a server, enabling real-time features: chat, presence, live editing, and push…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "WebSockets, Socket.IO & Real-time Sync",
+  "description": "WebSockets provide a persistent bidirectional channel between Flutter and a server, enabling real-time features: chat, presence, live editing, and push…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 24
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "WebSockets, Socket.IO & Real-time Sync",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">WebSockets, Socket.IO &amp; Real-time Sync</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 24 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">WebSockets, Socket.IO &amp; Real-time Sync</h1>
+<p class="lesson-subtitle">Building Live Collaboration Features That Actually Work at Scale</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=24">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">HTTP is like sending letters — you write, send, wait for a reply, done. WebSockets are like a phone call — once connected, both sides can talk freely at any time without hanging up and calling back. Socket.IO is a phone system with auto-reconnect: if the call drops, it silently calls back, replaying any missed messages. In a collaboration app, you need the phone call — polling with HTTP is like texting your team every 2 seconds asking &#39;anything new?&#39;</div></section>
+
+<section class="section"><h2>What is it?</h2><p>WebSockets provide a persistent bidirectional channel between Flutter and a server, enabling real-time features: chat, presence, live editing, and push notifications. Socket.IO adds auto-reconnect and event semantics on top. The challenge in production is handling connection lifecycle, missed messages during disconnections, and optimistic UI updates correctly.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a SaaS collaboration app: the SocketService singleton maintains one WebSocket connection per session. When a user opens a channel, the ChatBloc subscribes to the SocketService stream filtered for that channel&#39;s events. Incoming messages are shown instantly. Outgoing messages are shown immediately as &#39;pending&#39; (optimistic) and confirmed when the server acks. On network loss, a &#39;Reconnecting...&#39; banner appears, and when reconnected, the app backfills missed messages from the REST API.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>WebSocket vs HTTP Polling</strong> — HTTP polling: client requests every N seconds. Long polling: client waits until server has data. WebSocket: persistent bidirectional connection, server pushes instantly. In a real-time chat app, WebSocket latency is ~10ms vs polling latency of up to N seconds. The bandwidth difference is dramatic: one WS frame vs full HTTP request/response overhead.</li>
+      <li><strong>WebSocket in Flutter — dart:io</strong> — Flutter provides WebSocket via dart:io: WebSocket.connect(uri). Listen to the stream for incoming messages, use socket.add() to send. Handle errors with stream.handleError(). The connection is a Stream — you can use StreamBuilder to reactively update the UI. Remember to close the socket in dispose().</li>
+      <li><strong>Socket.IO Client in Flutter</strong> — socket_io_client package wraps the Socket.IO protocol: auto-reconnect, namespace support, event-based API (socket.on(&#39;message&#39;, handler)), and fallback to HTTP long-polling when WebSockets are blocked. Preferred over raw WebSockets when the backend uses Socket.IO (common with Node.js backends).</li>
+      <li><strong>Connection Lifecycle Management</strong> — Manage connection state explicitly: disconnected → connecting → connected → reconnecting → failed. Expose this as a stream so the UI can show a &#39;Reconnecting...&#39; banner. On app background (AppLifecycleState.paused), consider disconnecting and reconnecting on foreground to save battery and avoid stale connections.</li>
+      <li><strong>Reconnection Strategies</strong> — Socket.IO has built-in reconnect with configurable delay and max attempts. For raw WebSockets, implement exponential backoff manually: 1s, 2s, 4s, 8s... up to a max (60s). On each reconnect, re-subscribe to channels and request missed messages since the last received message ID (sequence gap detection).</li>
+      <li><strong>Real-time Message Sync Architecture</strong> — Messages arrive out of order — use sequence numbers or timestamps to sort. Track the lastReceivedMessageId. On reconnect, send GET /messages?after={lastId} to backfill missed messages, then merge with live WebSocket stream. This ensures no messages are lost during brief disconnections.</li>
+      <li><strong>Optimistic Updates</strong> — When a user sends a message, add it to the UI immediately with a &#39;pending&#39; indicator before server acknowledgment. On server ack, update the message status to &#39;sent&#39;. On failure, mark as &#39;failed&#39; with a retry option. Users expect WhatsApp/Slack-level responsiveness — waiting for server round-trip before showing the message feels broken.</li>
+      <li><strong>Rooms and Channels</strong> — In a multi-workspace collaboration app, each workspace and channel is a Socket.IO room. On workspace switch, leave old rooms and join new ones: socket.emit(&#39;join&#39;, {&#39;room&#39;: channelId}). The backend broadcasts to room members only. Each reconnect must rejoin all active rooms.</li>
+      <li><strong>Presence and Typing Indicators</strong> — &#39;User X is typing&#39; — debounce keystrokes (300ms), emit a &#39;typing&#39; event, server broadcasts to channel members. Stop after 3 seconds of inactivity. Online/offline presence: emit &#39;user_online&#39; on connect, server broadcasts to workspace members, emit &#39;user_offline&#39; on disconnect (use server-side disconnect event).</li>
+      <li><strong>Stream Architecture in Flutter</strong> — Keep WebSocket events in a StreamController in a singleton service. Multiple BLoCs/ViewModels subscribe to this stream. Avoid exposing the raw socket to the UI. The SocketService is registered as a singleton in GetIt — one connection, multiple consumers.</li>
+      <li><strong>Testing Real-time Features</strong> — Use a FakeSocketService that implements the same interface. In tests, manually emit events via the fake&#39;s stream to simulate incoming messages. No real network in tests. In integration tests, use a local Socket.IO server or mockserver.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;dart:async&#39;;
+import &#39;package:socket_io_client/socket_io_client.dart&#39; as IO;
+
+// === 1. Socket Service — Singleton, manages lifecycle ===
+enum SocketStatus { disconnected, connecting, connected, reconnecting }
+
+class SocketService {
+  static final SocketService _instance = SocketService._internal();
+  factory SocketService() =&gt; _instance;
+  SocketService._internal();
+
+  IO.Socket? _socket;
+  final _eventController = StreamController&lt;SocketEvent&gt;.broadcast();
+  final _statusController = StreamController&lt;SocketStatus&gt;.broadcast();
+
+  Stream&lt;SocketEvent&gt; get events =&gt; _eventController.stream;
+  Stream&lt;SocketStatus&gt; get status =&gt; _statusController.stream;
+
+  void connect({required String url, required String token}) {
+    _statusController.add(SocketStatus.connecting);
+
+    _socket = IO.io(url, IO.OptionBuilder()
+      .setTransports([&#39;websocket&#39;])
+      .setAuth({&#39;token&#39;: token})
+      .enableAutoConnect()
+      .enableReconnection()
+      .setReconnectionDelay(1000)
+      .setReconnectionDelayMax(30000)
+      .setReconnectionAttempts(double.infinity.toInt())
+      .build());
+
+    _socket!.onConnect((_) {
+      _statusController.add(SocketStatus.connected);
+      // Re-join all active rooms after reconnect
+      for (final room in _activeRooms) {
+        _socket!.emit(&#39;join&#39;, {&#39;room&#39;: room});
+      }
+    });
+
+    _socket!.onDisconnect((_) =&gt; _statusController.add(SocketStatus.disconnected));
+    _socket!.onReconnecting((_) =&gt; _statusController.add(SocketStatus.reconnecting));
+
+    // Register event listeners
+    _socket!.on(&#39;new_message&#39;, (data) =&gt;
+        _eventController.add(NewMessageEvent.fromJson(data as Map&lt;String, dynamic&gt;)));
+    _socket!.on(&#39;user_typing&#39;, (data) =&gt;
+        _eventController.add(UserTypingEvent.fromJson(data as Map&lt;String, dynamic&gt;)));
+    _socket!.on(&#39;message_read&#39;, (data) =&gt;
+        _eventController.add(MessageReadEvent.fromJson(data as Map&lt;String, dynamic&gt;)));
+  }
+
+  final _activeRooms = &lt;String&gt;{};
+
+  void joinChannel(String channelId) {
+    _activeRooms.add(channelId);
+    _socket?.emit(&#39;join&#39;, {&#39;room&#39;: channelId});
+  }
+
+  void leaveChannel(String channelId) {
+    _activeRooms.remove(channelId);
+    _socket?.emit(&#39;leave&#39;, {&#39;room&#39;: channelId});
+  }
+
+  void sendMessage({required String channelId, required String content, required String tempId}) {
+    _socket?.emit(&#39;send_message&#39;, {
+      &#39;channel_id&#39;: channelId,
+      &#39;content&#39;: content,
+      &#39;temp_id&#39;: tempId,  // For optimistic update matching
+    });
+  }
+
+  void emitTyping(String channelId) =&gt; _socket?.emit(&#39;typing&#39;, {&#39;channel&#39;: channelId});
+
+  void disconnect() {
+    _socket?.disconnect();
+    _activeRooms.clear();
+  }
+
+  void dispose() {
+    _socket?.dispose();
+    _eventController.close();
+    _statusController.close();
+  }
+}
+
+// === 2. Optimistic Message Handling in BLoC ===
+class ChatBloc extends Bloc&lt;ChatEvent, ChatState&gt; {
+  final SocketService _socketService;
+  final ChatRepository _repository;
+  StreamSubscription&lt;SocketEvent&gt;? _socketSub;
+  String? _lastMessageId;
+
+  ChatBloc(this._socketService, this._repository) : super(const ChatState()) {
+    on&lt;JoinChannel&gt;(_onJoinChannel);
+    on&lt;SendMessage&gt;(_onSendMessage);
+    on&lt;_SocketEventReceived&gt;(_onSocketEvent);
+  }
+
+  Future&lt;void&gt; _onJoinChannel(JoinChannel event, Emitter&lt;ChatState&gt; emit) async {
+    _socketService.joinChannel(event.channelId);
+
+    // Load history and track last message for gap detection
+    final history = await _repository.getMessages(channelId: event.channelId);
+    _lastMessageId = history.lastOrNull?.id;
+    emit(state.copyWith(messages: history, channelId: event.channelId));
+
+    // Subscribe to socket events for this channel
+    _socketSub = _socketService.events
+        .whereType&lt;NewMessageEvent&gt;()
+        .where((e) =&gt; e.channelId == event.channelId)
+        .listen((e) =&gt; add(_SocketEventReceived(e)));
+  }
+
+  Future&lt;void&gt; _onSendMessage(SendMessage event, Emitter&lt;ChatState&gt; emit) async {
+    // Optimistic update — show immediately
+    final tempMessage = Message.pending(
+      id: event.tempId,
+      content: event.content,
+      senderId: event.senderId,
+    );
+    emit(state.copyWith(messages: [...state.messages, tempMessage]));
+
+    // Send via socket — confirmation will arrive as a NewMessageEvent
+    _socketService.sendMessage(
+      channelId: state.channelId!,
+      content: event.content,
+      tempId: event.tempId,
+    );
+  }
+
+  void _onSocketEvent(_SocketEventReceived event, Emitter&lt;ChatState&gt; emit) {
+    final incoming = event.socketEvent as NewMessageEvent;
+    // Replace pending optimistic message or add new message
+    final updated = state.messages.map((m) =&gt;
+        m.id == incoming.tempId ? incoming.toMessage() : m
+    ).toList();
+    if (!updated.any((m) =&gt; m.id == incoming.message.id)) {
+      updated.add(incoming.message);
+    }
+    emit(state.copyWith(messages: updated));
+  }
+
+  @override
+  Future&lt;void&gt; close() {
+    _socketSub?.cancel();
+    _socketService.leaveChannel(state.channelId ?? &#39;&#39;);
+    return super.close();
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> SocketService is a singleton — one instance, one WebSocket connection for the whole app</li>
+      <li><span class="walk-num">2.</span> StreamController.broadcast() allows multiple subscribers — many BLoCs can listen to the same socket</li>
+      <li><span class="walk-num">3.</span> OptionBuilder configures Socket.IO: WebSocket transport, auth token, auto-reconnect with exponential backoff</li>
+      <li><span class="walk-num">4.</span> onConnect re-joins all active rooms — critical after reconnection, otherwise messages for those channels are missed</li>
+      <li><span class="walk-num">5.</span> _activeRooms tracks which channels are joined so re-subscription survives reconnects</li>
+      <li><span class="walk-num">6.</span> joinChannel adds to the tracked set AND emits the join event to the server</li>
+      <li><span class="walk-num">7.</span> sendMessage includes a tempId — this matches the optimistic message to the server confirmation</li>
+      <li><span class="walk-num">8.</span> ChatBloc subscribes to socket events filtered by channel — no irrelevant events reach this BLoC</li>
+      <li><span class="walk-num">9.</span> JoinChannel loads history and tracks the last message ID for gap detection on reconnect</li>
+      <li><span class="walk-num">10.</span> Optimistic update: pending message is added to state immediately before server confirmation</li>
+      <li><span class="walk-num">11.</span> Socket confirmation arrives as NewMessageEvent — replace the pending message by tempId</li>
+      <li><span class="walk-num">12.</span> In close(), cancel the stream subscription and leave the channel — clean resource management</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class SocketService {
+  late IO.Socket _socket;
+
+  void connect(String url, String token) {
+    _socket = IO.io(url, {&#39;auth&#39;: {&#39;token&#39;: token}});
+    _socket.on(&#39;message&#39;, (data) =&gt; print(data));
+  }
+
+  void joinChannel(String id) {
+    _socket.emit(&#39;join&#39;, id);
+  }
+}
+
+// Usage in Widget
+class ChatScreen extends StatefulWidget { ... }
+class _ChatScreenState extends State&lt;ChatScreen&gt; {
+  final socket = SocketService();
+
+  @override
+  void initState() {
+    super.initState();
+    socket.connect(&#39;wss://api.example.com&#39;, token);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Three issues: singleton misuse, connection lifecycle, and reconnect room re-subscription.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: SocketService is not a singleton — each ChatScreen creates a new SocketService and a new WebSocket connection. Fix: use a GetIt singleton. Bug 2: No dispose() or disconnect() in _ChatScreenState — the socket connection is never closed when the screen is removed, causing memory leaks and stale connections. Fix: override dispose() and call socket.disconnect(). Bug 3: joinChannel only emits the join event once — on reconnect, the channel is not rejoined because there is no _activeRooms tracking. Fix: track joined channels and re-emit joins in onConnect handler.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you and your friend have walkie-talkies (WebSocket). Either of you can talk any time — it&#39;s instant. Now imagine your walkie-talkie signal drops (network interruption). A smart walkie-talkie (Socket.IO) tries to reconnect automatically, and when it does, it asks &#39;what did I miss?&#39; and replays those messages. Typing indicators are like pressing the talk button for half a second — everyone hears the click and knows you&#39;re about to speak.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The WebSocket protocol (RFC 6455) starts as an HTTP request — the browser or app sends an HTTP Upgrade header, the server responds with 101 Switching Protocols, and from that point the TCP connection is repurposed as a WebSocket. This is why WebSockets work on port 80/443 and pass through most firewalls and corporate proxies that block other protocols.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the reconnection flow for a real-time collaboration app: (1) show a &#39;Reconnecting...&#39; banner when SocketStatus is reconnecting, (2) on successful reconnect, re-join all active channels, (3) backfill missed messages via REST API using the lastReceivedMessageId, (4) merge backfilled messages with the live stream without duplicates.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://pub.dev/packages/socket_io_client" target="_blank" rel="noopener noreferrer">socket_io_client Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://api.dart.dev/stable/dart-io/WebSocket-class.html" target="_blank" rel="noopener noreferrer">Dart WebSocket API</a> <span class="res-source">(Dart Official)</span></li>
+      <li><a href="https://datatracker.ietf.org/doc/html/rfc6455" target="_blank" rel="noopener noreferrer">WebSocket Protocol RFC 6455</a> <span class="res-source">(IETF)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/dart-ui/AppLifecycleState.html" target="_blank" rel="noopener noreferrer">AppLifecycleState Flutter</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://medium.com/flutter-community/building-real-time-apps-with-flutter-and-socket-io-9b4f0f6a7b2a" target="_blank" rel="noopener noreferrer">Building Real-time Apps with Flutter and Socket.IO</a> <span class="res-source">(Flutter Community)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=24">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./23-rest-apis-with-dio-interceptors-token-refresh-retries.html" rel="prev">← REST APIs with Dio, Interceptors…</a>
+  <a class="nav-next" href="./25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html" rel="next">Local Persistence: SharedPreferences… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

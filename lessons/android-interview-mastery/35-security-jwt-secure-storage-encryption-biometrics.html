@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security: JWT, Secure Storage, Encryption &amp; Biometrics… | Teamz Lab</title>
+<meta name="description" content="Android security spans multiple layers: network security (JWT, certificate pinning, HTTPS), data at rest (EncryptedSharedPreferences, Keystore), data in use…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/36-android-performance-anr-jank-memory-leaks-startup-time.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Security: JWT, Secure Storage, Encryption &amp; Biometrics">
+<meta property="og:description" content="Android security spans multiple layers: network security (JWT, certificate pinning, HTTPS), data at rest (EncryptedSharedPreferences, Keystore), data in use…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Security: JWT, Secure Storage, Encryption &amp; Biometrics">
+<meta name="twitter:description" content="Android security spans multiple layers: network security (JWT, certificate pinning, HTTPS), data at rest (EncryptedSharedPreferences, Keystore), data in use…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Security: JWT, Secure Storage, Encryption & Biometrics",
+  "description": "Android security spans multiple layers: network security (JWT, certificate pinning, HTTPS), data at rest (EncryptedSharedPreferences, Keystore), data in use…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 35
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Security: JWT, Secure Storage, Encryption & Biometrics",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Security: JWT, Secure Storage, Encryption &amp; Biometrics</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 35 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Security: JWT, Secure Storage, Encryption &amp; Biometrics</h1>
+<p class="lesson-subtitle">Build Android apps that protect user data at every layer</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=35">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">JWT is like a wristband at a festival — the bouncer stamps it at the gate (server issues token), and every booth checks it without calling the gate (stateless validation). EncryptedSharedPreferences is a lockbox inside a lockbox — Android Keystore holds the key, and nobody but your app (and the OS) can open it. BiometricPrompt is a fingerprint on a safe — the hardware scanner verifies identity, never exposing the biometric data to your app code.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Android security spans multiple layers: network security (JWT, certificate pinning, HTTPS), data at rest (EncryptedSharedPreferences, Keystore), data in use (BiometricPrompt with CryptoObject), and code protection (ProGuard/R8). Senior engineers are expected to know not just how to implement each but why each layer is necessary and what attacks it mitigates.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In Payback fintech app, the JWT was stored in EncryptedSharedPreferences backed by AES256_GCM. The OkHttp Authenticator handled 401 token refresh with a Mutex to prevent race conditions. Certificate pinning was applied to the payment endpoint. BiometricPrompt unlocked a Keystore-backed AES key that decrypted the locally cached balance — even a rooted device couldn&#39;t read the balance without passing biometric auth.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>JWT structure</strong> — Three base64url-encoded parts separated by dots: header.payload.signature. Header specifies algorithm (RS256, HS256). Payload contains claims (sub, iat, exp, custom fields). Signature is computed by the server — your Android app should NEVER trust a JWT without backend validation.</li>
+      <li><strong>JWT token lifecycle on Android</strong> — Store access token in EncryptedSharedPreferences (never plain SharedPreferences or plain files). Attach as Authorization: Bearer  header. Check exp claim before requests and refresh proactively. Use an OkHttp Authenticator (not Interceptor) to refresh on 401.</li>
+      <li><strong>OkHttp Authenticator for token refresh</strong> — The Authenticator.authenticate() callback is called only on 401 responses — the right place to refresh the token and retry the original request. Use @Synchronized or a Mutex to prevent simultaneous refresh calls from multiple in-flight requests.</li>
+      <li><strong>EncryptedSharedPreferences</strong> — MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build(). Then EncryptedSharedPreferences.create(context, fileName, masterKey, AES256_SIV, AES256_GCM). Both keys and values are encrypted — even if the device is rooted, the data is unreadable without the Keystore key.</li>
+      <li><strong>Android Keystore</strong> — Hardware-backed (TEE/StrongBox) key storage that never exposes the raw key material to the app process. Keys can be constrained: user authentication required, key expires after X seconds of non-use, hardware attestation. Use KeyPairGenerator or KeyGenerator with KeyGenParameterSpec.</li>
+      <li><strong>BiometricPrompt</strong> — BiometricPrompt(activity, executor, callback) with BiometricPrompt.PromptInfo. On success, authenticate() returns a CryptoObject that can be used to unlock a Keystore-backed cipher. This ties biometric authentication to a specific cryptographic operation — not just a UI gate.</li>
+      <li><strong>BiometricManager availability check</strong> — BiometricManager.from(context).canAuthenticate(BIOMETRIC_STRONG) returns: BIOMETRIC_SUCCESS (available), BIOMETRIC_ERROR_NO_HARDWARE, BIOMETRIC_ERROR_HW_UNAVAILABLE, BIOMETRIC_ERROR_NONE_ENROLLED. Always check before showing the biometric option.</li>
+      <li><strong>Certificate pinning with OkHttp</strong> — CertificatePinner.Builder().add(&quot;api.teamzlab.com&quot;, &quot;sha256/AAAA...&quot;).build(). Attach to OkHttpClient.Builder(). Prevents MITM attacks even with compromised CA certificates. In Payback fintech, pinning was mandatory for payment API endpoints.</li>
+      <li><strong>ProGuard/R8 obfuscation</strong> — R8 (the modern replacement for ProGuard) minifies, optimizes, and obfuscates bytecode. Enable with minifyEnabled = true and shrinkResources = true in release build config. Add -keep rules for classes used via reflection (Gson models, Retrofit interfaces, Firebase).</li>
+      <li><strong>OWASP Mobile Top 10 — key items</strong> — M1: Improper Credential Usage (hardcoded keys). M2: Inadequate Supply Chain Security. M4: Insufficient Input/Output Validation. M8: Security Misconfiguration (cleartext traffic). M9: Insecure Data Storage (plain SharedPreferences for tokens). Know these for senior interview questions.</li>
+      <li><strong>Cleartext traffic prevention</strong> — Since Android 9, cleartext (HTTP) traffic is blocked by default. Ensure all API calls use HTTPS. For debug builds only, use a network security config XML to allow specific domains. Never allow cleartext in release builds — apps with cleartext traffic can be rejected from Play Store.</li>
+      <li><strong>Secure coding checklist</strong> — No API keys in source code (use BuildConfig from local.properties, not committed). No sensitive data in logs (Timber.d in debug only). No sensitive data in Activity extras or deep link URIs (use POST body or session reference). Validate all input on the server, not just the client.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. EncryptedSharedPreferences — secure token storage
+fun createSecurePrefs(context: Context): SharedPreferences {
+    val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+    return EncryptedSharedPreferences.create(
+        context,
+        &quot;secure_prefs&quot;,
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+}
+
+fun saveToken(context: Context, token: String) {
+    createSecurePrefs(context).edit().putString(&quot;access_token&quot;, token).apply()
+}
+
+// 2. OkHttp Authenticator — thread-safe token refresh
+class TokenAuthenticator(
+    private val tokenRepo: TokenRepository
+) : Authenticator {
+    private val mutex = Mutex()
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        // Avoid infinite loop if refresh itself returns 401
+        if (response.request.header(&quot;Authorization&quot;)?.contains(&quot;refresh&quot;) == true) return null
+
+        val newToken = runBlocking {
+            mutex.withLock {
+                // Check if another coroutine already refreshed
+                val current = tokenRepo.getAccessToken()
+                if (current != response.request.header(&quot;Authorization&quot;)?.removePrefix(&quot;Bearer &quot;)) {
+                    current // Already refreshed by another thread
+                } else {
+                    tokenRepo.refreshToken() // Perform the actual refresh
+                }
+            }
+        } ?: return null // Refresh failed — propagate 401
+
+        return response.request.newBuilder()
+            .header(&quot;Authorization&quot;, &quot;Bearer $newToken&quot;)
+            .build()
+    }
+}
+
+// 3. BiometricPrompt with CryptoObject
+class BiometricAuthManager(private val activity: FragmentActivity) {
+
+    fun authenticate(onSuccess: (BiometricPrompt.AuthenticationResult) -&gt; Unit, onError: (String) -&gt; Unit) {
+        val biometricManager = BiometricManager.from(activity)
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            != BiometricManager.BIOMETRIC_SUCCESS) {
+            onError(&quot;Biometric not available&quot;)
+            return
+        }
+        val cipher = getOrCreateKeyStoreCipher() // Keystore-backed AES cipher
+
+        val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    onSuccess(result) // result.cryptoObject?.cipher can decrypt data
+                }
+                override fun onAuthenticationError(code: Int, msg: CharSequence) {
+                    onError(msg.toString())
+                }
+                override fun onAuthenticationFailed() {
+                    // Called for non-matching biometric — user can retry
+                }
+            })
+
+        val info = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(&quot;Authenticate to access balance&quot;)
+            .setSubtitle(&quot;Use your fingerprint or face&quot;)
+            .setNegativeButtonText(&quot;Use PIN instead&quot;)
+            .build()
+
+        prompt.authenticate(info, BiometricPrompt.CryptoObject(cipher))
+    }
+
+    private fun getOrCreateKeyStoreCipher(): Cipher {
+        val keyStore = KeyStore.getInstance(&quot;AndroidKeyStore&quot;).also { it.load(null) }
+        if (!keyStore.containsAlias(&quot;balance_key&quot;)) {
+            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, &quot;AndroidKeyStore&quot;).apply {
+                init(KeyGenParameterSpec.Builder(&quot;balance_key&quot;,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .setUserAuthenticationRequired(true)
+                    .build())
+                generateKey()
+            }
+        }
+        val key = keyStore.getKey(&quot;balance_key&quot;, null) as SecretKey
+        return Cipher.getInstance(&quot;AES/CBC/PKCS7Padding&quot;).also { it.init(Cipher.ENCRYPT_MODE, key) }
+    }
+}
+
+// 4. Certificate pinning
+val okHttpClient = OkHttpClient.Builder()
+    .certificatePinner(
+        CertificatePinner.Builder()
+            .add(&quot;api.payback.com&quot;, &quot;sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;)
+            .add(&quot;api.payback.com&quot;, &quot;sha256/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=&quot;) // backup pin
+            .build()
+    )
+    .build()</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> MasterKey with AES256_GCM creates a hardware-backed master key in the Android Keystore — this key is used to encrypt all data in the EncryptedSharedPreferences file.</li>
+      <li><span class="walk-num">2.</span> AES256_SIV encrypts the preference keys (so an attacker can&#39;t even see what keys you store). AES256_GCM encrypts the values with authentication.</li>
+      <li><span class="walk-num">3.</span> The Mutex.withLock() in the Authenticator ensures only one coroutine performs the token refresh — others wait and then use the freshly refreshed token.</li>
+      <li><span class="walk-num">4.</span> Comparing current token with the one in the response&#39;s Authorization header detects if another coroutine already refreshed — prevents redundant refresh calls.</li>
+      <li><span class="walk-num">5.</span> Returning null from authenticate() tells OkHttp to stop retrying and propagate the 401 to the caller — critical for avoiding infinite refresh loops.</li>
+      <li><span class="walk-num">6.</span> BiometricManager.canAuthenticate(BIOMETRIC_STRONG) checks hardware availability and enrollment — always check before showing the biometric option.</li>
+      <li><span class="walk-num">7.</span> KeyGenParameterSpec with setUserAuthenticationRequired(true) binds the key to biometric authentication — the Keystore refuses to use the key without recent biometric auth.</li>
+      <li><span class="walk-num">8.</span> BiometricPrompt.CryptoObject(cipher) ties the authentication result to the cipher — on success, result.cryptoObject?.cipher is initialized and ready to encrypt/decrypt.</li>
+      <li><span class="walk-num">9.</span> KeyStore.getInstance(&quot;AndroidKeyStore&quot;).load(null) loads the hardware-backed keystore — null means no password is needed, as the Keystore is protected by the device secure hardware.</li>
+      <li><span class="walk-num">10.</span> CertificatePinner.add() with two pins provides a primary and backup — if the server rotates certificates, the backup pin prevents app breakage.</li>
+      <li><span class="walk-num">11.</span> The sha256/ prefix in CertificatePinner specifies the pin is a SHA-256 hash of the certificate&#39;s SubjectPublicKeyInfo — not the full certificate.</li>
+      <li><span class="walk-num">12.</span> minifyEnabled = true enables R8 — it shrinks, optimizes, and obfuscates in a single pass, making reverse engineering significantly harder.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Bug-ridden authentication implementation
+object TokenStore {
+    // Bug 1 — insecure storage
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+    fun saveToken(token: String) {
+        prefs.edit().putString(&quot;auth_token&quot;, token).apply()
+    }
+}
+
+class ApiAuthenticator(private val tokenRepo: TokenRepository) : Authenticator {
+    override fun authenticate(route: Route?, response: Response): Request? {
+        // Bug 2 — no loop prevention
+        val newToken = runBlocking { tokenRepo.refreshToken() }
+        return response.request.newBuilder()
+            .header(&quot;Authorization&quot;, &quot;Bearer $newToken&quot;)
+            .build()
+    }
+}
+
+fun setupBiometric(activity: FragmentActivity) {
+    val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity),
+        object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                unlockApp()  // Bug 3 — no CryptoObject
+            }
+        })
+    val info = BiometricPrompt.PromptInfo.Builder()
+        .setTitle(&quot;Authenticate&quot;)
+        .build()  // Bug 4
+    prompt.authenticate(info)
+}
+
+val client = OkHttpClient.Builder()
+    .addInterceptor { chain -&gt;  // Bug 5 — wrong hook for refresh
+        val response = chain.proceed(chain.request())
+        if (response.code == 401) {
+            val newToken = runBlocking { tokenRepo.refreshToken() }
+            chain.proceed(chain.request().newBuilder()
+                .header(&quot;Authorization&quot;, &quot;Bearer $newToken&quot;).build())
+        } else response
+    }.build()</code></pre><details><summary>Need a hint?</summary><div class="hint">Check storage security, infinite loop prevention in Authenticator, CryptoObject usage in BiometricPrompt, PromptInfo required fields, and the correct OkHttp hook for token refresh.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: PreferenceManager.getDefaultSharedPreferences() stores data in plain XML — readable by anyone with root access or physical device access. Auth tokens stored here are a textbook OWASP M9 (Insecure Data Storage) violation. Fix: use EncryptedSharedPreferences with a MasterKey backed by Android Keystore. Bug 2: The Authenticator has no loop prevention — if refreshToken() itself returns a 401 (e.g., refresh token is expired), authenticate() is called again infinitely. Fix: check if the failing request was already a refresh attempt (e.g., check a header or URL) and return null to stop the loop. Also add Mutex to prevent concurrent refresh calls. Bug 3: BiometricPrompt is used as a simple UI gate with no CryptoObject — a sophisticated attacker could bypass the UI check. The cryptographic operation (decrypting sensitive data) is not tied to the biometric auth result. Fix: create a Keystore-backed cipher and pass it as BiometricPrompt.CryptoObject — use result.cryptoObject?.cipher to perform the actual decryption only after successful auth. Bug 4: PromptInfo is missing setNegativeButtonText() — BiometricPrompt requires either a negative button (for non-device-credential fallback) or setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL). Without this, authenticate() throws an IllegalArgumentException. Fix: add .setNegativeButtonText(&quot;Use PIN instead&quot;) to the PromptInfo builder. Bug 5: Using an Interceptor for 401 token refresh is incorrect — Interceptors were designed for request/response transformation, not for retry-with-new-credentials flows. The Interceptor approach can also interfere with other interceptors and doesn&#39;t integrate with OkHttp&#39;s retry machinery. Fix: use OkHttpClient.Builder().authenticator(TokenAuthenticator()) — OkHttp&#39;s Authenticator is the correct, purpose-built hook for responding to 401 challenges.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">JWT is like a wristband you get at a concert — security checks it at the door (server creates it) and bouncers inside just glance at it (your app checks the stamp) without calling the door every time. EncryptedSharedPreferences is a diary with a combination lock where only your phone&#39;s special chip knows the combination — even if someone steals the diary, they can&#39;t read it. BiometricPrompt is putting your fingerprint on a safe — your fingerprint never leaves the safe scanner, it just unlocks it.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Android Keystore keys marked with setUserAuthenticationRequired(true) use a hardware-level binding. When the user changes their screen lock PIN or removes biometrics, the key becomes permanently invalid — the app can never decrypt data encrypted with that key again. This is intentional security behavior, not a bug — it&#39;s why secure apps must handle key invalidation and re-encrypt data after biometric enrollment changes.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a secure token management system: (1) EncryptedSharedPreferences wrapper with save/get/clear methods for access token, refresh token, and expiry timestamp; (2) An OkHttp Authenticator that reads the current token, checks if it was already refreshed by another concurrent request (compare with response&#39;s Authorization header), refreshes if needed using a Mutex to prevent race conditions, and returns null (propagates 401) if refresh fails; (3) A BiometricAuth class that checks availability, creates or retrieves a Keystore-backed AES key with user authentication required, presents BiometricPrompt with a CryptoObject, and on success uses the cipher to decrypt a locally stored encrypted payload; (4) Certificate pinning on your OkHttpClient with a primary and backup pin.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences" target="_blank" rel="noopener noreferrer">EncryptedSharedPreferences — Security Library</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/training/articles/keystore" target="_blank" rel="noopener noreferrer">Android Keystore System</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/training/sign-in/biometric-auth" target="_blank" rel="noopener noreferrer">BiometricPrompt Guide</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://square.github.io/okhttp/4.x/okhttp/okhttp3/-certificate-pinner/" target="_blank" rel="noopener noreferrer">OkHttp Certificate Pinning</a> <span class="res-source">(OkHttp Docs)</span></li>
+      <li><a href="https://owasp.org/www-project-mobile-top-10/" target="_blank" rel="noopener noreferrer">OWASP Mobile Top 10</a> <span class="res-source">(OWASP)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=35">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./34-android-permissions-storage-changes-privacy-safe-handling.html" rel="prev">← Android Permissions, Storage Changes &amp;…</a>
+  <a class="nav-next" href="./36-android-performance-anr-jank-memory-leaks-startup-time.html" rel="next">Android Performance: ANR, Jank, Memory… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

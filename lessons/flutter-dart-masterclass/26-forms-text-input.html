@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms &amp; Text Input — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Forms in Flutter use the Form widget with a GlobalKey to group TextFormField inputs for collective validation. Each TextFormField has a validator function…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/26-forms-text-input.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/25-stack-positioned.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/27-building-custom-widgets.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Forms &amp; Text Input">
+<meta property="og:description" content="Forms in Flutter use the Form widget with a GlobalKey to group TextFormField inputs for collective validation. Each TextFormField has a validator function…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/26-forms-text-input.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forms &amp; Text Input">
+<meta name="twitter:description" content="Forms in Flutter use the Form widget with a GlobalKey to group TextFormField inputs for collective validation. Each TextFormField has a validator function…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Forms & Text Input",
+  "description": "Forms in Flutter use the Form widget with a GlobalKey to group TextFormField inputs for collective validation. Each TextFormField has a validator function…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/26-forms-text-input.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 26
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Forms & Text Input",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/26-forms-text-input.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Forms &amp; Text Input</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 26 of 51</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Forms &amp; Text Input</h1>
+<p class="lesson-subtitle">Collecting User Data with Validation</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=26">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A Form in Flutter is like a paper application form at a bank. Each TextFormField is a blank line where you write information (name, email, phone). Validation is like the bank teller checking your form before accepting it — &#39;You left the email blank!&#39; or &#39;That phone number is too short!&#39;. The GlobalKey is like the form&#39;s tracking number that lets the bank find and process your specific form.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Forms in Flutter use the Form widget with a GlobalKey to group TextFormField inputs for collective validation. Each TextFormField has a validator function that returns an error string or null. TextEditingController provides programmatic access to field values. InputDecoration styles the fields with labels, icons, and borders.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, the login screen, registration screen, and profile edit screen all use Form with TextFormField. The project defines reusable validator functions for email, password strength, and required fields. TextEditingControllers read values on submit and pass them to the authentication BLoC. FocusNodes provide smooth keyboard navigation between fields.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>TextFormField Basics</strong> — TextFormField is a text input field designed to work inside a Form widget. It displays a text box where users type. It supports decoration (labels, hints, icons), input types (keyboard layouts), and validation. Use it for any text input: name, email, password, search, etc.</li>
+      <li><strong>Form Widget and GlobalKey</strong> — Form groups multiple TextFormField widgets together so you can validate, save, or reset them all at once. Attach a GlobalKey to access the form&#39;s state. Call formKey.currentState!.validate() to run all field validators simultaneously.</li>
+      <li><strong>Validation Functions</strong> — The validator property takes a function that receives the field value and returns an error message string if invalid, or null if valid. Validators can check for empty values, minimum length, email format, matching passwords, and any custom business logic. They run when you call form.validate().</li>
+      <li><strong>TextEditingController</strong> — TextEditingController gives you programmatic access to a text field&#39;s value. You can read the current text, set it to a new value, clear it, or listen for changes. Always create controllers in initState or as final fields, and dispose of them in dispose() to prevent memory leaks.</li>
+      <li><strong>InputDecoration Styling</strong> — InputDecoration controls the appearance of a TextFormField: labelText (floating label), hintText (placeholder), prefixIcon, suffixIcon, border styles (OutlineInputBorder, UnderlineInputBorder), error styling, filled background, and content padding. A well-decorated field guides users on what to enter.</li>
+      <li><strong>Password Visibility Toggle</strong> — For password fields, set obscureText: true to hide the input with dots. Add a suffixIcon with an IconButton that toggles a boolean state variable to switch between Icons.visibility and Icons.visibility_off. This common pattern lets users verify their password before submitting.</li>
+      <li><strong>FocusNode Control</strong> — FocusNode controls which text field has keyboard focus. Use it to auto-focus a field when a screen opens, move focus to the next field when the user presses &#39;Next&#39; on the keyboard (textInputAction), or unfocus all fields when the user taps outside (FocusScope.of(context).unfocus).</li>
+      <li><strong>AutovalidateMode</strong> — AutovalidateMode controls when validation runs. AutovalidateMode.disabled (default) only validates when you call form.validate(). AutovalidateMode.onUserInteraction validates as the user types or leaves a field. Set it on the Form or individual TextFormField to give real-time validation feedback.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  State&lt;LoginForm&gt; createState() =&gt; _LoginFormState();
+}
+
+class _LoginFormState extends State&lt;LoginForm&gt; {
+  final _formKey = GlobalKey&lt;FormState&gt;();
+  final _emailCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
+  final _passwordFocus = FocusNode();
+  bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _passwordCtrl.dispose();
+    _passwordFocus.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      setState(() =&gt; _isLoading = true);
+      // Send _emailCtrl.text and _passwordCtrl.text to auth
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() =&gt; _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(&#39;Login successful!&#39;)),
+        );
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Login&#39;)),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _emailCtrl,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_passwordFocus);
+                },
+                decoration: const InputDecoration(
+                  labelText: &#39;Email&#39;,
+                  prefixIcon: Icon(Icons.email_outlined),
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return &#39;Email is required&#39;;
+                  }
+                  if (!value.contains(&#39;@&#39;)) {
+                    return &#39;Enter a valid email&#39;;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _passwordCtrl,
+                focusNode: _passwordFocus,
+                obscureText: _obscurePassword,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) =&gt; _submit(),
+                decoration: InputDecoration(
+                  labelText: &#39;Password&#39;,
+                  prefixIcon: const Icon(Icons.lock_outlined),
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return &#39;Password is required&#39;;
+                  }
+                  if (value.length &lt; 6) {
+                    return &#39;Password must be at least 6 characters&#39;;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: _isLoading ? null : _submit,
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(&#39;Login&#39;),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import the Material package</li>
+      <li><span class="walk-num">2.</span> </li>
+      <li><span class="walk-num">3.</span> Define LoginForm as a StatefulWidget since form state changes</li>
+      <li><span class="walk-num">4.</span> </li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> Create the State class</li>
+      <li><span class="walk-num">7.</span> GlobalKey to access the Form&#39;s state for validation</li>
+      <li><span class="walk-num">8.</span> TextEditingController for the email field</li>
+      <li><span class="walk-num">9.</span> TextEditingController for the password field</li>
+      <li><span class="walk-num">10.</span> FocusNode to control password field focus</li>
+      <li><span class="walk-num">11.</span> Boolean to toggle password visibility</li>
+      <li><span class="walk-num">12.</span> Boolean to track loading state</li>
+      <li><span class="walk-num">13.</span> </li>
+      <li><span class="walk-num">14.</span> Dispose controllers and focus nodes to free memory</li>
+      <li><span class="walk-num">15.</span> </li>
+      <li><span class="walk-num">16.</span> </li>
+      <li><span class="walk-num">17.</span> </li>
+      <li><span class="walk-num">18.</span> </li>
+      <li><span class="walk-num">19.</span> The submit method handles form submission</li>
+      <li><span class="walk-num">20.</span> Check if all validators pass</li>
+      <li><span class="walk-num">21.</span> Set loading to true to show progress indicator</li>
+      <li><span class="walk-num">22.</span> Read email and password from controllers</li>
+      <li><span class="walk-num">23.</span> Simulate a network delay of 2 seconds</li>
+      <li><span class="walk-num">24.</span> Set loading back to false</li>
+      <li><span class="walk-num">25.</span> Show a success SnackBar</li>
+      <li><span class="walk-num">26.</span> </li>
+      <li><span class="walk-num">27.</span> </li>
+      <li><span class="walk-num">28.</span> </li>
+      <li><span class="walk-num">29.</span> </li>
+      <li><span class="walk-num">30.</span> Build method creates the UI</li>
+      <li><span class="walk-num">31.</span> Scaffold with an AppBar titled Login</li>
+      <li><span class="walk-num">32.</span> Body wrapped in 24px padding</li>
+      <li><span class="walk-num">33.</span> Form widget groups all fields with the form key</li>
+      <li><span class="walk-num">34.</span> Column stretches children to full width</li>
+      <li><span class="walk-num">35.</span> </li>
+      <li><span class="walk-num">36.</span> Email TextFormField</li>
+      <li><span class="walk-num">37.</span> Attach the email controller</li>
+      <li><span class="walk-num">38.</span> Set keyboard to email type with @ shortcut</li>
+      <li><span class="walk-num">39.</span> Next action moves to password field</li>
+      <li><span class="walk-num">40.</span> On submit, move focus to password field</li>
+      <li><span class="walk-num">41.</span> </li>
+      <li><span class="walk-num">42.</span> InputDecoration with label, email icon, and outlined border</li>
+      <li><span class="walk-num">43.</span> </li>
+      <li><span class="walk-num">44.</span> </li>
+      <li><span class="walk-num">45.</span> </li>
+      <li><span class="walk-num">46.</span> Validator: check empty then check for @ symbol</li>
+      <li><span class="walk-num">47.</span> Return error strings or null for valid</li>
+      <li><span class="walk-num">48.</span> </li>
+      <li><span class="walk-num">49.</span> </li>
+      <li><span class="walk-num">50.</span> </li>
+      <li><span class="walk-num">51.</span> 16px gap between fields</li>
+      <li><span class="walk-num">52.</span> </li>
+      <li><span class="walk-num">53.</span> Password TextFormField</li>
+      <li><span class="walk-num">54.</span> Attach password controller and focus node</li>
+      <li><span class="walk-num">55.</span> obscureText hides the password text</li>
+      <li><span class="walk-num">56.</span> Done action triggers submit</li>
+      <li><span class="walk-num">57.</span> On keyboard done press, call submit</li>
+      <li><span class="walk-num">58.</span> InputDecoration with label, lock icon, border</li>
+      <li><span class="walk-num">59.</span> </li>
+      <li><span class="walk-num">60.</span> suffixIcon toggles between visibility icons</li>
+      <li><span class="walk-num">61.</span> </li>
+      <li><span class="walk-num">62.</span> Toggle the obscure boolean on press</li>
+      <li><span class="walk-num">63.</span> </li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> </li>
+      <li><span class="walk-num">66.</span> </li>
+      <li><span class="walk-num">67.</span> </li>
+      <li><span class="walk-num">68.</span> Validator: check empty then check minimum length</li>
+      <li><span class="walk-num">69.</span> </li>
+      <li><span class="walk-num">70.</span> </li>
+      <li><span class="walk-num">71.</span> </li>
+      <li><span class="walk-num">72.</span> </li>
+      <li><span class="walk-num">73.</span> 24px gap before the submit button</li>
+      <li><span class="walk-num">74.</span> </li>
+      <li><span class="walk-num">75.</span> 48px height button for comfortable tap target</li>
+      <li><span class="walk-num">76.</span> Disable button while loading by setting onPressed to null</li>
+      <li><span class="walk-num">77.</span> Show CircularProgressIndicator when loading</li>
+      <li><span class="walk-num">78.</span> </li>
+      <li><span class="walk-num">79.</span> </li>
+      <li><span class="walk-num">80.</span> </li>
+      <li><span class="walk-num">81.</span> Otherwise show Login text</li>
+      <li><span class="walk-num">82.</span> </li>
+      <li><span class="walk-num">83.</span> </li>
+      <li><span class="walk-num">84.</span> </li>
+      <li><span class="walk-num">85.</span> </li>
+      <li><span class="walk-num">86.</span> </li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class _FormState extends State&lt;MyForm&gt; {
+  final _formKey = GlobalKey&lt;FormState&gt;();
+  final _ctrl = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: TextFormField(controller: _ctrl),
+    );
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">What is missing that could cause a memory leak?</div></details><details><summary>Show answer</summary><div class="answer">The TextEditingController is never disposed. When the widget is removed from the tree, the controller keeps listening in memory. Fix: add a dispose() method that calls _ctrl.dispose() and super.dispose() to free the controller&#39;s resources.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are filling out a permission slip for a school trip. Each blank line is like a TextFormField where you write your name, your parent&#39;s phone number, and your allergies. The teacher (validator) checks every line before accepting the form. If you forgot to write your name, the teacher circles that line in red and says &#39;Please fill this in!&#39; That red error message is exactly what TextFormField&#39;s validator does. The GlobalKey is like the teacher knowing which permission slip is yours among all the students.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Flutter&#39;s Form widget is inspired by HTML forms in web development. Just like HTML forms have an action and input elements with validation attributes, Flutter Forms group TextFormFields and validate them collectively. The GlobalKey concept is unique to Flutter though — it is how widgets talk to their state objects from outside!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a registration form with four fields: Name (required, min 2 characters), Email (required, must contain @), Password (required, min 8 characters, must contain a number), and Confirm Password (must match password). Add FocusNode navigation between fields, a password visibility toggle, AutovalidateMode.onUserInteraction, and a submit button that shows a loading spinner while processing.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/cookbook/forms" target="_blank" rel="noopener noreferrer">Forms - Flutter Cookbook</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/material/TextFormField-class.html" target="_blank" rel="noopener noreferrer">TextFormField Class</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://docs.flutter.dev/cookbook/forms/validation" target="_blank" rel="noopener noreferrer">Form Validation</a> <span class="res-source">(Flutter Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=26">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./25-stack-positioned.html" rel="prev">← Stack &amp; Positioned</a>
+  <a class="nav-next" href="./27-building-custom-widgets.html" rel="next">Building Custom Widgets →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

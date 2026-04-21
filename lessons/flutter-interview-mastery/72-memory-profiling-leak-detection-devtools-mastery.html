@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Profiling, Leak Detection &amp; DevTools Mastery… | Teamz Lab</title>
+<meta name="description" content="Memory profiling is the practice of monitoring your Flutter app&#39;s memory allocation, retention, and garbage collection to identify leaks and optimize…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/73-flutter-internals-how-rendering-actually-works.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Memory Profiling, Leak Detection &amp; DevTools Mastery">
+<meta property="og:description" content="Memory profiling is the practice of monitoring your Flutter app&#39;s memory allocation, retention, and garbage collection to identify leaks and optimize…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Memory Profiling, Leak Detection &amp; DevTools Mastery">
+<meta name="twitter:description" content="Memory profiling is the practice of monitoring your Flutter app&#39;s memory allocation, retention, and garbage collection to identify leaks and optimize…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Memory Profiling, Leak Detection & DevTools Mastery",
+  "description": "Memory profiling is the practice of monitoring your Flutter app's memory allocation, retention, and garbage collection to identify leaks and optimize…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 72
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Memory Profiling, Leak Detection & DevTools Mastery",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Memory Profiling, Leak Detection &amp; DevTools Mastery</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 72 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Memory Profiling, Leak Detection &amp; DevTools Mastery</h1>
+<p class="lesson-subtitle">Find and fix memory leaks, decode the GC, and use DevTools like a performance surgeon</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=72">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Your app&#39;s memory is like a restaurant kitchen. Objects are ingredients — you bring them in (allocate), cook with them (use), and clean up (GC collects). A memory leak is like a cook who keeps bringing in fresh ingredients but never throws away the scraps — eventually the kitchen overflows and the whole restaurant shuts down (OOM crash). DevTools is your health inspector: it shows you which ingredients are piling up, which cook is hoarding them, and exactly when the kitchen gets too full.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Memory profiling is the practice of monitoring your Flutter app&#39;s memory allocation, retention, and garbage collection to identify leaks and optimize resource usage. DevTools provides heap snapshots, allocation tracking, timeline analysis, and widget rebuild profiling. Mastering these tools separates developers who guess at performance from those who measure and fix with precision.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a production app serving thousands of users on low-end Android devices (1-2GB RAM), memory management is critical. A forgotten StreamSubscription in a chat screen causes memory to grow with every navigation cycle. A full-resolution image gallery consumes 500MB+ without cacheWidth/cacheHeight. DevTools Memory tab reveals the leak in minutes — the retainer path shows the exact subscription holding the State object alive. Fix, measure again, confirm the sawtooth GC pattern replaces the upward trend.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Dart memory model — young and old generation GC</strong> — Dart uses a generational garbage collector. New space (young generation): small, fast, collects frequently using a semi-space (copy) collector — most short-lived objects die here. Old space (old generation): larger, collects less frequently using a mark-sweep-compact algorithm. Objects that survive multiple young GC cycles get promoted to old space. Why it matters: if you keep unnecessary references to objects, they get promoted to old space where they&#39;re expensive to collect. Understanding this explains why &#39;just create a new object&#39; is cheap in Dart — most die in young GC — but holding references is expensive.</li>
+      <li><strong>Common Flutter memory leak patterns</strong> — (1) Forgotten stream subscriptions — StreamSubscription not cancelled in dispose(). (2) AnimationController not disposed — ticker keeps firing after widget removal. (3) ChangeNotifier listeners not removed — addListener without corresponding removeListener. (4) Global/static references to BuildContext — context holds the entire widget subtree in memory. (5) Closures capturing large objects — a callback referencing &#39;this&#39; in a StatefulWidget keeps the whole State alive. (6) Image cache growing unbounded — large images cached by default in ImageCache. (7) Platform channel callbacks not cleaned up — native callbacks preventing GC.</li>
+      <li><strong>DevTools Memory tab — reading the dashboard</strong> — Open DevTools → Memory tab. Key panels: (1) Memory chart: shows Dart heap usage over time — RSS (total allocated), Used (live objects), External (native memory). (2) Allocation Profile: tracks how many instances of each class exist and how much memory they use. (3) Diff snapshots: take a snapshot, perform an action, take another snapshot — the diff shows what was allocated. Watch for: steady upward trend in Used memory = leak. Sawtooth pattern = normal GC. Flat line = no allocations. Spike that doesn&#39;t come down = large retained object.</li>
+      <li><strong>Heap snapshots — finding retained objects</strong> — Take a heap snapshot in DevTools Memory tab → Snapshot. This shows every live object, its class, shallow size (just the object), and retained size (the object + everything it keeps alive). Sort by retained size to find the biggest offenders. Common findings: a single StreamController retaining megabytes of event data, a State object retained by a GlobalKey after navigation, an Image codec retaining pixel buffers. The retainer path shows the chain of references keeping an object alive — follow it to find the root cause of the leak.</li>
+      <li><strong>Timeline/Performance overlay interpretation</strong> — DevTools Performance tab shows frame rendering. The UI thread builds widgets and lays out the tree. The Raster thread paints to the GPU. A frame must complete both in ~16ms for 60fps. Red bars = jank. Common jank causes: (1) Expensive build() — too many widgets rebuilt. (2) Layout thrashing — reading layout info then writing it in the same frame. (3) Large image decoding on the main isolate. (4) Synchronous file I/O. The Performance overlay (MaterialApp showPerformanceOverlay: true) shows two graphs in the running app — keep both green.</li>
+      <li><strong>Closure captures and subscription leaks</strong> — The most insidious leaks come from closures. When you write `timer = Timer.periodic(dur, (_) { setState(() =&gt; count++); })` — the closure captures `this` (the State object). If the timer isn&#39;t cancelled in dispose(), the State (and its entire widget subtree) can never be GC&#39;d. Same with: StreamSubscription callbacks, Future.then callbacks after navigation, debounce timers, and event bus listeners. Fix: always cancel/dispose in dispose(). Use `mounted` checks: `if (mounted) setState(...)`. Better: use lifecycle-aware patterns (BLoC auto-close, Riverpod autoDispose).</li>
+      <li><strong>Widget rebuild profiling with DevTools</strong> — DevTools Widget Inspector → Performance tab → Track Widget Rebuilds. This highlights which widgets rebuild on each frame with a blue flash. Excessive rebuilds waste CPU. Common causes: (1) Calling setState too high in the tree — pushes rebuilds to all children. (2) Creating new objects in build() — new callbacks, new lists, new decorators trigger child rebuilds. (3) Not using const constructors — const widgets are canonicalized and skip rebuild. Fix: push state down, extract widgets, use const, use context.select() or BlocSelector for granular rebuilds.</li>
+      <li><strong>The Observatory and VM service protocol</strong> — Dart VM exposes a service protocol for debugging. Observatory (deprecated UI, replaced by DevTools) provides: (1) CPU profiler — sample-based, shows which functions consume the most time. (2) Memory profiler — allocation tracking per function. (3) Isolate inspector — see all isolates, their memory, and state. Access via `dart:developer` — `debugger()` pauses in DevTools, `Timeline.startSync/finishSync` adds custom timeline events. `dart run --observe` opens the VM service for inspection.</li>
+      <li><strong>Identifying and fixing image memory issues</strong> — Images are the #1 memory consumer in most Flutter apps. Each decoded image takes width * height * 4 bytes in memory. A 4000x3000 photo = 48MB decoded. Flutter&#39;s ImageCache has a default maximum of 1000 images and 100MB. Fixes: (1) Use cacheWidth/cacheHeight in Image.network to decode at display size, not full resolution. (2) Use cached_network_image for disk caching and placeholder management. (3) Call imageCache.clear() on memory pressure (didReceiveMemoryWarning). (4) Use ResizeImage to limit decoded size. (5) Evict specific images: imageCache.evict(url).</li>
+      <li><strong>Profiling isolate memory in compute-heavy apps</strong> — Each isolate has its own heap — memory in one isolate isn&#39;t visible to another&#39;s GC. If you spawn isolates via compute() or Isolate.spawn(), monitor their memory separately. Heavy isolates (JSON parsing, image processing) can accumulate memory that doesn&#39;t show in the main isolate&#39;s DevTools view. Fix: pass results back and let the isolate die (compute() does this). For long-lived isolates: implement periodic cleanup and monitor via VM service protocol. Isolate.exit() sends the result and kills the isolate in one step — most memory-efficient.</li>
+      <li><strong>Automated leak detection with leak_tracker</strong> — The leak_tracker package (by the Flutter team) automatically detects disposed objects that aren&#39;t garbage collected. Add to dev_dependencies, wrap tests with `withLeakTracking(() async { ... })`. It catches: widgets not disposed, controllers not disposed, streams not closed. Integrates with flutter test. For production monitoring: track memory warnings via WidgetsBindingObserver.didHaveMemoryPressure() and log to analytics. Combine with integration tests that navigate through all screens and check for memory growth.</li>
+      <li><strong>Production memory monitoring strategy</strong> — (1) CI: run integration tests with DevTools memory recording — fail if heap grows beyond threshold after full navigation cycle. (2) Staging: use Observatory to take heap snapshots before and after key user flows — diff should show no unexpected retained objects. (3) Production: log didHaveMemoryPressure events to Firebase Analytics — correlate with crash-free rate. (4) Code review checklist: every StreamSubscription has a cancel, every AnimationController has a dispose, every addListener has a removeListener. (5) Lint rules: use_build_context_synchronously, cancel_subscriptions, close_sinks.</li>
+      <li><strong>Interview questions about memory and profiling</strong> — (1) How does Dart&#39;s GC work? Answer: generational — young (semi-space copy) and old (mark-sweep-compact). (2) Name 3 common memory leak patterns. Answer: uncancelled subscriptions, undisposed controllers, closures capturing State. (3) How would you diagnose a memory leak? Answer: DevTools heap snapshot diff before/after the suspect action, check retainer path. (4) What&#39;s the difference between shallow and retained size? Answer: shallow = object only, retained = object + everything uniquely reachable from it. (5) How do you handle large images? Answer: cacheWidth/cacheHeight, ResizeImage, imageCache.clear() on pressure.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Memory profiling patterns and leak fixes
+
+import &#39;dart:async&#39;;
+import &#39;dart:developer&#39; as developer;
+import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter/foundation.dart&#39;;
+
+// ===== LEAK: Uncancelled Stream Subscription =====
+
+// BAD — memory leak
+class LeakyChat extends StatefulWidget {
+  const LeakyChat({super.key});
+  @override
+  State&lt;LeakyChat&gt; createState() =&gt; _LeakyChatState();
+}
+
+class _LeakyChatState extends State&lt;LeakyChat&gt; {
+  late final StreamSubscription _subscription;
+  final List&lt;String&gt; _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // This subscription is NEVER cancelled!
+    _subscription = chatStream.listen((msg) {
+      setState(() =&gt; _messages.add(msg));
+      // Closure captures &#39;this&#39; — State can&#39;t be GC&#39;d
+    });
+  }
+
+  // Missing dispose()! The subscription keeps this State alive forever.
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: _messages.length,
+      itemBuilder: (_, i) =&gt; Text(_messages[i]),
+    );
+  }
+}
+
+// FIXED — properly disposed
+class FixedChat extends StatefulWidget {
+  const FixedChat({super.key});
+  @override
+  State&lt;FixedChat&gt; createState() =&gt; _FixedChatState();
+}
+
+class _FixedChatState extends State&lt;FixedChat&gt; {
+  late final StreamSubscription _subscription;
+  final List&lt;String&gt; _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = chatStream.listen((msg) {
+      if (mounted) {
+        setState(() =&gt; _messages.add(msg));
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel(); // CRITICAL — break the reference chain
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: _messages.length,
+      itemBuilder: (_, i) =&gt; Text(_messages[i]),
+    );
+  }
+}
+
+// ===== IMAGE MEMORY OPTIMIZATION =====
+
+class OptimizedImage extends StatelessWidget {
+  final String url;
+  const OptimizedImage({super.key, required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      url,
+      // Decode at display size, not full resolution
+      // 4000x3000 image → 200x150 in memory = 120KB instead of 48MB
+      cacheWidth: 200,
+      cacheHeight: 150,
+      fit: BoxFit.cover,
+      errorBuilder: (_, error, __) =&gt; const Icon(Icons.error),
+    );
+  }
+}
+
+// Memory pressure handler
+class MemoryAwareApp extends StatefulWidget {
+  const MemoryAwareApp({super.key});
+  @override
+  State&lt;MemoryAwareApp&gt; createState() =&gt; _MemoryAwareAppState();
+}
+
+class _MemoryAwareAppState extends State&lt;MemoryAwareApp&gt;
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didHaveMemoryPressure() {
+    // OS is running low on memory — free caches
+    imageCache.clear();
+    imageCache.clearLiveImages();
+    debugPrint(&#39;Memory pressure: cleared image cache&#39;);
+    // Log to analytics for monitoring
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: HomeScreen());
+  }
+}
+
+// ===== CUSTOM TIMELINE EVENTS FOR PROFILING =====
+
+Future&lt;List&lt;Product&gt;&gt; fetchProducts() async {
+  // Custom timeline event — visible in DevTools Performance tab
+  developer.Timeline.startSync(&#39;fetchProducts&#39;);
+  try {
+    final response = await apiClient.get(&#39;/products&#39;);
+    developer.Timeline.startSync(&#39;parseProducts&#39;);
+    final products = (response.data as List)
+        .map((json) =&gt; Product.fromJson(json))
+        .toList();
+    developer.Timeline.finishSync(); // end parseProducts
+    return products;
+  } finally {
+    developer.Timeline.finishSync(); // end fetchProducts
+  }
+}
+
+// ===== WIDGET REBUILD TRACKER =====
+
+class RebuildTracker extends StatelessWidget {
+  final String name;
+  final Widget child;
+
+  const RebuildTracker({
+    super.key,
+    required this.name,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Only in debug mode — zero cost in release
+    if (kDebugMode) {
+      debugPrint(&#39;REBUILD: $name at ${DateTime.now().millisecondsSinceEpoch}&#39;);
+    }
+    return child;
+  }
+}
+
+// ===== LEAK DETECTION HELPER FOR TESTS =====
+
+/// Tracks object disposal in debug mode
+mixin DisposableTracker&lt;T extends StatefulWidget&gt; on State&lt;T&gt; {
+  final _activeSubscriptions = &lt;String, StreamSubscription&gt;{};
+  final _activeControllers = &lt;String, AnimationController&gt;{};
+
+  void trackSubscription(String id, StreamSubscription sub) {
+    _activeSubscriptions[id] = sub;
+  }
+
+  void trackController(String id, AnimationController ctrl) {
+    _activeControllers[id] = ctrl;
+  }
+
+  @override
+  void dispose() {
+    // Auto-cancel all tracked subscriptions
+    for (final entry in _activeSubscriptions.entries) {
+      entry.value.cancel();
+      if (kDebugMode) {
+        debugPrint(&#39;Auto-cancelled subscription: ${entry.key}&#39;);
+      }
+    }
+    // Auto-dispose all tracked controllers
+    for (final entry in _activeControllers.entries) {
+      entry.value.dispose();
+      if (kDebugMode) {
+        debugPrint(&#39;Auto-disposed controller: ${entry.key}&#39;);
+      }
+    }
+    _activeSubscriptions.clear();
+    _activeControllers.clear();
+    super.dispose();
+  }
+}
+
+// Usage:
+// class _MyState extends State&lt;MyWidget&gt; with DisposableTracker&lt;MyWidget&gt; {
+//   void initState() {
+//     super.initState();
+//     trackSubscription(&#39;chat&#39;, chatStream.listen(onMessage));
+//     trackController(&#39;fade&#39;, AnimationController(vsync: this));
+//   }
+//   // No need to manually dispose — DisposableTracker handles it
+// }
+
+// ===== MEMORY USAGE SUMMARY =====
+
+class MemoryInfo {
+  /// Get current Dart heap usage (debug only)
+  static Map&lt;String, dynamic&gt; getHeapUsage() {
+    // Uses dart:developer ProcessInfo in debug mode
+    return {
+      &#39;currentRss&#39;: ProcessInfo.currentRss,      // Resident Set Size
+      &#39;maxRss&#39;: ProcessInfo.maxRss,                // Peak RSS
+      &#39;timestamp&#39;: DateTime.now().toIso8601String(),
+    };
+  }
+
+  /// Log memory snapshot for comparison
+  static void logSnapshot(String label) {
+    if (kDebugMode) {
+      final info = getHeapUsage();
+      debugPrint(&#39;MEMORY [$label]: RSS=${(info[&quot;currentRss&quot;] / 1024 / 1024).toStringAsFixed(1)}MB, &#39;
+          &#39;Peak=${(info[&quot;maxRss&quot;] / 1024 / 1024).toStringAsFixed(1)}MB&#39;);
+    }
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> LeakyChat: subscription captures &#39;this&#39; via setState closure — without cancel() in dispose(), this State + its widget subtree can never be GC&#39;d</li>
+      <li><span class="walk-num">2.</span> FixedChat: dispose() cancels the subscription + mounted check prevents setState after dispose — the two-part fix for subscription leaks</li>
+      <li><span class="walk-num">3.</span> OptimizedImage: cacheWidth/cacheHeight decode at display resolution — a 4000x3000 image uses 120KB instead of 48MB in memory</li>
+      <li><span class="walk-num">4.</span> MemoryAwareApp: WidgetsBindingObserver.didHaveMemoryPressure fires when the OS is low on memory — clear imageCache to free decoded images</li>
+      <li><span class="walk-num">5.</span> developer.Timeline.startSync/finishSync: custom labeled events appear in DevTools Performance timeline — nested events show sub-operation timing</li>
+      <li><span class="walk-num">6.</span> RebuildTracker: wraps any widget to log rebuilds in debug mode — kDebugMode check means zero cost in release builds</li>
+      <li><span class="walk-num">7.</span> DisposableTracker mixin: auto-cancels all tracked subscriptions and controllers in dispose() — a safety net against forgotten cleanup</li>
+      <li><span class="walk-num">8.</span> trackSubscription/trackController: register resources by name — the mixin cancels/disposes them all, with debug logging to verify cleanup</li>
+      <li><span class="walk-num">9.</span> MemoryInfo.getHeapUsage: ProcessInfo.currentRss shows resident set size — compare snapshots before/after user flows to detect growth</li>
+      <li><span class="walk-num">10.</span> logSnapshot: formatted debug output shows RSS in MB at labeled points — &#39;before scroll&#39; vs &#39;after scroll&#39; reveals memory behavior</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+  @override
+  State&lt;SearchScreen&gt; createState() =&gt; _SearchScreenState();
+}
+
+class _SearchScreenState extends State&lt;SearchScreen&gt; {
+  Timer? _debounce;
+  List&lt;String&gt; _results = [];
+
+  void _onSearch(String query) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () async {
+      final results = await searchApi(query);
+      setState(() =&gt; _results = results);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(onChanged: _onSearch),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _results.length,
+            itemBuilder: (_, i) =&gt; ListTile(title: Text(_results[i])),
+          ),
+        ),
+      ],
+    );
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Two memory-related issues hide in this code. One causes a leak, the other causes a framework error. Think about what happens when the user presses the back button while a search is pending.</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) Memory leak: _debounce Timer is never cancelled in dispose(). If the user navigates away while the 300ms debounce is pending, the Timer fires, the closure captures &#39;this&#39; (the State), and calls setState on a disposed State. Fix: add `@override void dispose() { _debounce?.cancel(); super.dispose(); }`. (2) setState after dispose: even with the dispose fix, there&#39;s a race condition — the API call (searchApi) is async. If the user navigates away after the Timer fires but before the API returns, setState is called on a disposed widget. Fix: add a `mounted` check: `if (mounted) setState(() =&gt; _results = results);`. Both issues together cause the State to be retained in memory AND throw framework errors.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your room is your app&#39;s memory. Every time you play with a toy (use an object), you should put it back on the shelf when you&#39;re done (dispose). If you keep taking out toys but never putting them back, your room gets so messy you can&#39;t move (the app crashes). DevTools is like a magic camera that takes a picture of your room and shows you exactly which toys are on the floor and who forgot to put them away.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Instagram&#39;s Android team discovered that a single undisposed ExoPlayer instance was consuming 50MB of memory per video view — with users scrolling through feeds of hundreds of videos, this caused OOM crashes on 30% of low-end devices. The fix (properly releasing players when off-screen) reduced OOM crash rate by 85%. Memory leaks aren&#39;t just technical debt — they&#39;re user-facing crashes that show up in app store ratings.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Perform a memory audit on an existing Flutter project: (1) Open DevTools Memory tab and take a baseline heap snapshot. (2) Navigate to a screen with a list, scroll through 50 items, then navigate back. Repeat 5 times. (3) Take another heap snapshot and diff with the baseline. (4) Identify any classes whose instance count grows with each navigation cycle — these are leak candidates. (5) Check the retainer path for each suspect and fix the leak (cancel subscriptions, dispose controllers). (6) Repeat the test and verify the diff shows zero growth.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/tools/devtools/memory" target="_blank" rel="noopener noreferrer">Flutter DevTools Memory View</a> <span class="res-source">(docs.flutter.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/perf/rendering-performance" target="_blank" rel="noopener noreferrer">Flutter Performance Profiling</a> <span class="res-source">(docs.flutter.dev)</span></li>
+      <li><a href="https://dart.dev/tools/dart-devtools/memory" target="_blank" rel="noopener noreferrer">Dart VM Garbage Collection</a> <span class="res-source">(dart.dev)</span></li>
+      <li><a href="https://pub.dev/packages/leak_tracker" target="_blank" rel="noopener noreferrer">leak_tracker Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/perf/best-practices" target="_blank" rel="noopener noreferrer">Flutter Performance Best Practices</a> <span class="res-source">(docs.flutter.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=72">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./71-animations-deep-dive-implicit-explicit-hero-custompainter.html" rel="prev">← Animations Deep Dive: Implicit…</a>
+  <a class="nav-next" href="./73-flutter-internals-how-rendering-actually-works.html" rel="next">Flutter Internals: How Rendering… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

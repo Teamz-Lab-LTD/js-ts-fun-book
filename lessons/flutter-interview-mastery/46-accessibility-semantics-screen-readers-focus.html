@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility: Semantics, Screen Readers &amp; Focus… | Teamz Lab</title>
+<meta name="description" content="Accessibility ensures your app is usable by people with disabilities — visual impairments, motor limitations, cognitive differences. It is also legally…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/45-mobile-security-jwt-secure-storage-biometrics-encryption.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Accessibility: Semantics, Screen Readers &amp; Focus">
+<meta property="og:description" content="Accessibility ensures your app is usable by people with disabilities — visual impairments, motor limitations, cognitive differences. It is also legally…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Accessibility: Semantics, Screen Readers &amp; Focus">
+<meta name="twitter:description" content="Accessibility ensures your app is usable by people with disabilities — visual impairments, motor limitations, cognitive differences. It is also legally…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Accessibility: Semantics, Screen Readers & Focus",
+  "description": "Accessibility ensures your app is usable by people with disabilities — visual impairments, motor limitations, cognitive differences. It is also legally…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 46
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Accessibility: Semantics, Screen Readers & Focus",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Accessibility: Semantics, Screen Readers &amp; Focus</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 46 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Accessibility: Semantics, Screen Readers &amp; Focus</h1>
+<p class="lesson-subtitle">Semantics widget, TalkBack/VoiceOver testing, focus order, WCAG compliance in Flutter</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=46">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Accessibility is like building a physical space: the widgets you see are the visual architecture, but Semantics is the tactile map you hand to someone navigating with a cane (screen reader). Without it, they experience your beautiful building as a featureless wall. A 48x48 tap target is like a door handle that&#39;s reachable — too small and nobody can open the door.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Accessibility ensures your app is usable by people with disabilities — visual impairments, motor limitations, cognitive differences. It is also legally required in many jurisdictions (ADA in the US, EAA in the EU) for apps in public-facing sectors. Senior Flutter engineers are expected to design for and test accessibility from the start.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>The NGO survey app for field workers: survey questions must be completable via TalkBack for workers with low vision. Each question&#39;s Semantics label includes the question number and type. Radio buttons use MergeSemantics to combine the question text with the answer. Decorative country flag images use ExcludeSemantics. Form submit button has a minimum 48x48 tap target enforced by SizedBox.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Semantics Widget</strong> — Semantics() wraps any widget to provide accessibility metadata: label, hint, value, button, header, enabled, onTap, onLongPress. The screen reader reads these instead of (or in addition to) the visual content.</li>
+      <li><strong>Automatic Semantics</strong> — Most Flutter material widgets automatically provide semantics: Text provides its content, ElevatedButton says &#39;button&#39;, Checkbox says checked/unchecked state. Custom widgets built from Container/GestureDetector have NO automatic semantics — you must add them manually.</li>
+      <li><strong>MergeSemantics</strong> — MergeSemantics combines its children&#39;s semantic nodes into a single node. Use it when multiple widgets together form one logical accessible element (e.g., an icon + label row that should be announced as one item).</li>
+      <li><strong>ExcludeSemantics</strong> — ExcludeSemantics hides a subtree from the accessibility tree entirely. Use for purely decorative elements (background images, dividers, loading spinners that accompany text descriptions).</li>
+      <li><strong>Semantic Actions</strong> — Semantics can declare custom actions: onTap, onLongPress, onScrollUp, onScrollDown, onIncrease, onDecrease. Sliders and custom scrollable widgets need these to be usable without touch.</li>
+      <li><strong>Focus Management</strong> — FocusNode and FocusScope control keyboard/directional navigation focus. FocusOrder (NumericFocusOrder, LexicalFocusOrder) controls tab order. For screen readers, the visual order typically matches the semantic tree order — verify with TalkBack.</li>
+      <li><strong>Tap Target Size</strong> — WCAG 2.5.5 requires a minimum 44x44 CSS px tap target. Android Material guidelines recommend 48x48 dp. Use GestureDetector or InkWell with a minimum size constraint, or the SizedBox wrapper pattern. Small icons must be wrapped.</li>
+      <li><strong>TalkBack &amp; VoiceOver Testing</strong> — Test on real devices: enable TalkBack (Android) via Settings &gt; Accessibility. Enable VoiceOver (iOS) via Settings &gt; Accessibility. Use the Flutter accessibility inspector in DevTools. Never ship a release without TalkBack testing of critical user flows.</li>
+      <li><strong>WCAG Compliance Basics</strong> — WCAG 2.1 Level AA is the standard for most apps: Perceivable (text alternatives for non-text content), Operable (keyboard accessible, no seizure-inducing content), Understandable (readable, predictable), Robust (compatible with assistive tech).</li>
+      <li><strong>Colour Contrast</strong> — WCAG AA requires 4.5:1 contrast ratio for normal text, 3:1 for large text and UI components. Use the Flutter DevTools accessibility checker or browser-based contrast checkers. The default accent colour must be checked against backgrounds.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === CUSTOM ACCESSIBLE CARD ===
+class ClaimCard extends StatelessWidget {
+  final Claim claim;
+  final VoidCallback onTap;
+  const ClaimCard({required this.claim, required this.onTap, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: &#39;Claim ${claim.id}&#39;,
+      hint: &#39;Double tap to view claim details&#39;,
+      button: true,
+      enabled: true,
+      child: GestureDetector(
+        onTap: onTap,
+        child: MergeSemantics(
+          // Merges icon + status text into one announcement
+          child: Row(children: [
+            ExcludeSemantics(
+              child: Icon(Icons.receipt, color: Theme.of(context).colorScheme.primary),
+            ),
+            const SizedBox(width: 12),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(&#39;Claim #${claim.id}&#39;,
+                  style: Theme.of(context).textTheme.titleMedium),
+              Text(claim.status,
+                  style: Theme.of(context).textTheme.bodySmall),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+// === TAP TARGET SIZE ENFORCEMENT ===
+class AccessibleIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  final String semanticLabel;
+
+  const AccessibleIconButton({
+    required this.icon, required this.onPressed,
+    required this.semanticLabel, super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(24),
+        child: const SizedBox(
+          width: 48, height: 48,  // WCAG minimum tap target
+          child: Center(child: Icon(icon)),
+        ),
+      ),
+    );
+  }
+}
+
+// === FOCUS ORDER CONTROL ===
+class SurveyForm extends StatefulWidget {
+  @override
+  State&lt;SurveyForm&gt; createState() =&gt; _SurveyFormState();
+}
+
+class _SurveyFormState extends State&lt;SurveyForm&gt; {
+  final _nameFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _submitFocus = FocusNode();
+
+  @override
+  void dispose() {
+    _nameFocus.dispose(); _emailFocus.dispose(); _submitFocus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      TextFormField(
+        focusNode: _nameFocus,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) =&gt; _emailFocus.requestFocus(),
+        decoration: const InputDecoration(labelText: &#39;Full name&#39;),
+      ),
+      TextFormField(
+        focusNode: _emailFocus,
+        textInputAction: TextInputAction.done,
+        onFieldSubmitted: (_) =&gt; _submitFocus.requestFocus(),
+        decoration: const InputDecoration(labelText: &#39;Email address&#39;),
+      ),
+      Semantics(
+        focusable: true,
+        child: Focus(
+          focusNode: _submitFocus,
+          child: ElevatedButton(
+            onPressed: _submit,
+            child: const Text(&#39;Submit survey&#39;),
+          ),
+        ),
+      ),
+    ]);
+  }
+}
+
+// === FLUTTER TEST — ACCESSIBILITY ===
+testWidgets(&#39;ClaimCard announces correct semantics&#39;, (tester) async {
+  await tester.pumpWidget(MaterialApp(
+    home: ClaimCard(claim: mockClaim, onTap: () {}),
+  ));
+
+  expect(
+    tester.getSemantics(find.byType(ClaimCard)),
+    matchesSemantics(label: &#39;Claim 123&#39;, isButton: true, hasTapAction: true),
+  );
+});</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Semantics(label: &#39;Claim 123&#39;, hint: &#39;Double tap to view&#39;, button: true) — provides all three key screen reader properties: what it is, what it does, and its role</li>
+      <li><span class="walk-num">2.</span> ExcludeSemantics on the receipt icon — prevents the screen reader from announcing &#39;image&#39; before the meaningful text content</li>
+      <li><span class="walk-num">3.</span> MergeSemantics — makes the entire Row (icon + title + status) announce as one node instead of three separate announcements</li>
+      <li><span class="walk-num">4.</span> SizedBox(width: 48, height: 48) — enforces minimum tap target size around small icons</li>
+      <li><span class="walk-num">5.</span> FocusNode + textInputAction.next — chains keyboard focus between form fields in the correct logical order</li>
+      <li><span class="walk-num">6.</span> onFieldSubmitted: (_) =&gt; _emailFocus.requestFocus() — programmatically moves focus when user presses the keyboard&#39;s next action</li>
+      <li><span class="walk-num">7.</span> matchesSemantics matcher in widget test — verifies the semantic tree node, not the visual widget</li>
+      <li><span class="walk-num">8.</span> tester.getSemantics(find.byType(ClaimCard)) — retrieves the SemanticsNode for the widget under test</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class StatusBadge extends StatelessWidget {
+  final String status;
+  const StatusBadge({required this.status, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: status == &#39;approved&#39; ? Colors.green : Colors.red,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(status, style: const TextStyle(color: Colors.white)),
+    );
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">This widget has two accessibility issues — one about screen reader semantics and one about WCAG compliance. Find both.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1 (Semantics): The Container + Text combination has basic text semantics but no role or context. A screen reader will announce the text &#39;approved&#39; without context about what it means. Wrap with Semantics(label: &#39;Status: approved&#39;) to provide meaningful context. Bug 2 (Colour contrast): The widget communicates status ONLY through colour (green vs red). Users with colour blindness (affects ~8% of males) cannot distinguish these. WCAG 1.4.1 (Use of Color) requires that colour is not the only visual means of conveying information. Add an icon or text prefix: &#39;Approved&#39; / &#39;Rejected&#39; so the meaning is not colour-dependent. Additionally, white text on Colors.green (hex #4CAF50) may fail the 4.5:1 contrast ratio check.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine someone is using your app but they can&#39;t see the screen — they hear a voice reading it to them. If you built a beautiful custom button from scratch but never added a label, the voice just says &#39;blank&#39; — useless. Semantics is like putting a little sticky note on everything: &#39;this is a button called Submit.&#39; MergeSemantics groups sticky notes together so the voice reads it as one thing instead of three confusing pieces.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Apple added VoiceOver to iPhone in 2009 — two years after the original iPhone launched with no accessibility features at all. It was announced in the same keynote as iPhone 3GS. Stevie Wonder called in to the WWDC keynote personally to thank Apple. Today iOS has the highest screen reader usage on mobile worldwide, with over 20% of iPhone users having at least one accessibility feature enabled.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Audit the ClaimCard widget in the code sample for all accessibility issues. List: (1) what the screen reader announces without the Semantics wrapper, (2) why the receipt icon uses ExcludeSemantics, (3) what MergeSemantics changes about the announcement, (4) how you would test this on a physical device.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/ui/accessibility-and-internationalization/accessibility" target="_blank" rel="noopener noreferrer">Flutter accessibility docs</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/widgets/Semantics-class.html" target="_blank" rel="noopener noreferrer">Semantics class API</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener noreferrer">WCAG 2.1 guidelines</a> <span class="res-source">(W3C)</span></li>
+      <li><a href="https://support.google.com/accessibility/android/answer/6283677" target="_blank" rel="noopener noreferrer">Android Accessibility — TalkBack</a> <span class="res-source">(Google Support)</span></li>
+      <li><a href="https://docs.flutter.dev/testing/accessibility" target="_blank" rel="noopener noreferrer">Testing Flutter accessibility</a> <span class="res-source">(Flutter Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=46">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./45-mobile-security-jwt-secure-storage-biometrics-encryption.html" rel="prev">← Mobile Security: JWT, Secure Storage…</a>
+  <a class="nav-next" href="./47-internationalization-localization.html" rel="next">Internationalization &amp; Localization →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

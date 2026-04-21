@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material Design 3, Theming, Dark Mode &amp; Dynamic Color… | Teamz Lab</title>
+<meta name="description" content="Material Design 3 (M3, Material You) is Google&#39;s design system for Android apps. In Jetpack Compose it is implemented via MaterialTheme, which provides a…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/52-adaptive-android-ui-phones-tablets-foldables-multi-window.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Material Design 3, Theming, Dark Mode &amp; Dynamic Color">
+<meta property="og:description" content="Material Design 3 (M3, Material You) is Google&#39;s design system for Android apps. In Jetpack Compose it is implemented via MaterialTheme, which provides a…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Material Design 3, Theming, Dark Mode &amp; Dynamic Color">
+<meta name="twitter:description" content="Material Design 3 (M3, Material You) is Google&#39;s design system for Android apps. In Jetpack Compose it is implemented via MaterialTheme, which provides a…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Material Design 3, Theming, Dark Mode & Dynamic Color",
+  "description": "Material Design 3 (M3, Material You) is Google's design system for Android apps. In Jetpack Compose it is implemented via MaterialTheme, which provides a…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 53
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Material Design 3, Theming, Dark Mode & Dynamic Color",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Material Design 3, Theming, Dark Mode &amp; Dynamic Color</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 53 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Material Design 3, Theming, Dark Mode &amp; Dynamic Color</h1>
+<p class="lesson-subtitle">Master Material You — from colorScheme to wallpaper-extracted dynamic color and custom theming architecture</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=53">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A theme is like a brand manual for a company. It defines the colors, fonts, and shapes used everywhere so that every designer and engineer makes consistent choices. Material Design 3 is the brand manual; MaterialTheme is the library that enforces it in code so you cannot accidentally use the wrong shade of blue.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Material Design 3 (M3, Material You) is Google&#39;s design system for Android apps. In Jetpack Compose it is implemented via MaterialTheme, which provides a ColorScheme, Typography, and Shapes to all composables in its tree. Dynamic color (Android 12+) extracts a personalized palette from the user&#39;s wallpaper. Dark mode is supported by swapping ColorScheme objects based on system preference.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Google&#39;s own apps — Google Messages, Google Photos, Google Calendar — were the first to adopt Material You with dynamic color at Android 12&#39;s launch. Monzo Bank uses a custom color system layered over M3, with carefully tuned semantic color roles that map to their coral brand color. YouTube&#39;s dark mode uses M3&#39;s surface and surfaceVariant roles to create depth hierarchy without using elevation shadows.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Material Design 3 — what changed from M2</strong> — Material 3 (Material You) introduced dynamic color from wallpaper, updated color roles (primary, secondary, tertiary, surface, error — each with container and on- variants), refined typography scale (Display, Headline, Title, Body, Label), and new components (FilledTonalButton, NavigationBar, SearchBar, DatePicker, BottomSheet).</li>
+      <li><strong>MaterialTheme in Compose — three slots</strong> — MaterialTheme provides three CompositionLocals: colorScheme (ColorScheme), typography (Typography), and shapes (Shapes). Composables read them via MaterialTheme.colorScheme.primary, MaterialTheme.typography.titleMedium, MaterialTheme.shapes.medium. Never hardcode Color(0xFF...) — always reference a color role.</li>
+      <li><strong>ColorScheme — the 30 color roles</strong> — M3 defines 30 color roles: primary, onPrimary, primaryContainer, onPrimaryContainer, secondary, onSecondary, secondaryContainer, onSecondaryContainer, tertiary, error, background, surface, surfaceVariant, outline, and more. Each role has a defined contrast relationship. Use them semantically: primary for key actions, secondary for supporting actions, error for destructive states.</li>
+      <li><strong>Dark mode — two ColorScheme objects</strong> — Create a lightColorScheme() and a darkColorScheme() using M3 color roles. Switch between them based on isSystemInDarkTheme() in Compose. Persist the user&#39;s override in DataStore or SharedPreferences. Never use Color.White / Color.Black directly — use surface/onSurface roles instead.</li>
+      <li><strong>Dynamic color — Android 12+ (Material You)</strong> — On Android 12+, extract a ColorScheme from the user&#39;s wallpaper using dynamicLightColorScheme(context) / dynamicDarkColorScheme(context). This gives each user a personalized theme. Check with Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.S before calling these APIs. Fall back to a static brand scheme on older versions.</li>
+      <li><strong>Typography — M3 type scale</strong> — M3 defines 15 text styles across 5 groups: Display (3), Headline (3), Title (3), Body (3), Label (3). Create a Typography() object with custom TextStyle for each slot. Font families, weights, sizes, and tracking are all configurable. Use typography roles semantically: DisplayLarge for hero text, bodyMedium for reading content, labelSmall for captions.</li>
+      <li><strong>Shapes — the expressiveness lever</strong> — M3 shapes replace the single cornerRadius with an ExtraSmall to ExtraLarge scale. Shapes.medium (12dp) is the default for Cards and Dialogs. Custom shapes can use CutCornerShape or RoundedCornerShape. Shape communicates brand personality — more rounded = friendly, more angular = professional.</li>
+      <li><strong>Custom theming architecture</strong> — For design systems with brand colors that don&#39;t map to M3 roles, create a custom CompositionLocal (e.g., LocalAppColors) alongside MaterialTheme. This lets your brand colors be accessible throughout the Compose tree without polluting M3&#39;s semantic roles. Spotify, Airbnb, and Uber all maintain custom design systems layered over or alongside M3.</li>
+      <li><strong>Status bar and navigation bar theming</strong> — Use WindowCompat.setDecorFitsSystemWindows(window, false) for edge-to-edge. Set status bar and navigation bar icon colors with WindowInsetsControllerCompat — isAppearanceLightStatusBars = !isDark. In Compose, accompanist-systemuicontroller is legacy; use the Activity&#39;s window directly or the native WindowInsetsController API.</li>
+      <li><strong>M3 components — FilledButton, Card, TopAppBar</strong> — M3 Compose components (Button, OutlinedButton, FilledTonalButton, ElevatedButton) handle state (pressed, focused, hovered, dragged) and color automatically using the colorScheme. Do not wrap them in custom containers that override their internal colors — you break the M3 state layer system.</li>
+      <li><strong>Previewing themes in Android Studio</strong> — Use @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) for dark mode preview. Wrap preview composables in your app&#39;s theme function. Multiple previews with different uiMode and fontScale catch contrast and text scaling issues without running the app. Use PreviewParameterProvider for data-driven previews.</li>
+      <li><strong>Color token vs color value — the key discipline</strong> — Never commit a raw Color(0xFF_D9FE06) to production UI code. Define it as a named token in your color palette file (e.g., val Lime500 = Color(0xFF_D9FE06)) and reference it only in your theme (colorScheme.primary = Lime500). UI code references the role (primary), never the value. This makes theme switching and A/B testing possible.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ── App theme with dynamic color and dark mode support ───────
+@Composable
+fun AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
+    content: @Composable () -&gt; Unit
+) {
+    val colorScheme = when {
+        dynamicColor &amp;&amp; Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.S -&gt; {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context)
+            else dynamicLightColorScheme(context)
+        }
+        darkTheme -&gt; darkColorScheme(
+            primary = Color(0xFF_D9FE06),
+            onPrimary = Color(0xFF_12151A),
+            secondary = Color(0xFF_A8C7FA),
+            background = Color(0xFF_12151A),
+            surface = Color(0xFF_1D1F25)
+        )
+        else -&gt; lightColorScheme(
+            primary = Color(0xFF_4A5900),
+            onPrimary = Color(0xFF_FFFFFF),
+            secondary = Color(0xFF_555F71),
+            background = Color(0xFF_FAFCF5),
+            surface = Color(0xFF_FFFFFF)
+        )
+    }
+
+    val typography = Typography(
+        titleLarge = TextStyle(
+            fontFamily = FontFamily(Font(R.font.poppins_semibold)),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 22.sp,
+            lineHeight = 28.sp
+        ),
+        bodyMedium = TextStyle(
+            fontFamily = FontFamily(Font(R.font.poppins_regular)),
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 20.sp
+        )
+    )
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = typography,
+        shapes = Shapes(
+            small = RoundedCornerShape(8.dp),
+            medium = RoundedCornerShape(16.dp),
+            large = RoundedCornerShape(24.dp)
+        ),
+        content = content
+    )
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> AppTheme accepts darkTheme and dynamicColor parameters — composable callers can override them for preview, testing, or user preference</li>
+      <li><span class="walk-num">2.</span> The outermost when block checks for dynamic color availability: SDK &gt;= S (Android 12) is required — older devices fall back to static brand schemes</li>
+      <li><span class="walk-num">3.</span> dynamicDarkColorScheme(context) and dynamicLightColorScheme(context) call into the system wallpaper engine — they extract five seed colors and generate a full 30-role scheme</li>
+      <li><span class="walk-num">4.</span> darkColorScheme() and lightColorScheme() are named constructors that set M3 role defaults — you only override the roles relevant to your brand, the rest default to M3 system values</li>
+      <li><span class="walk-num">5.</span> Color(0xFF_D9FE06) is a raw color token — it is used only inside the theme block, never in UI composables directly</li>
+      <li><span class="walk-num">6.</span> Typography() lets you override any of the 15 type scale slots — unspecified slots inherit M3 defaults, so you only define what differs from the baseline</li>
+      <li><span class="walk-num">7.</span> FontFamily(Font(R.font.poppins_semibold)) loads a bundled font resource — the downloadable fonts API (GoogleFont) avoids bundling by fetching from Google Fonts at runtime</li>
+      <li><span class="walk-num">8.</span> Shapes() takes small, medium, and large — M3 maps them to specific component groups; Cards use medium, FABs use large, Chips use small</li>
+      <li><span class="walk-num">9.</span> MaterialTheme wraps content and provides colorScheme, typography, and shapes as CompositionLocals — every child composable in content can read them via MaterialTheme.colorScheme etc.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Composable
+fun StatusBadge(isOnline: Boolean) {
+    val badgeColor = if (isOnline) Color(0xFF4CAF50) else Color(0xFFE53935)
+    Box(
+        modifier = Modifier
+            .background(badgeColor)
+            .padding(4.dp)
+    ) {
+        Text(
+            text = if (isOnline) &quot;Online&quot; else &quot;Offline&quot;,
+            color = Color.White
+        )
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">This works in light mode. What breaks in dark mode, and how does it violate the M3 theming contract?</div></details><details><summary>Show answer</summary><div class="answer">Three issues: (1) Hardcoded Color(0xFF4CAF50) and Color(0xFFE53935) bypass the M3 ColorScheme entirely. These colors are not checked against the surface they appear on — in dark mode with a dark surface, the contrast may be insufficient. Fix: define semantic color roles in the theme (e.g., a custom onlineColor and offlineColor token in a custom CompositionLocal, or map to M3 roles — green maps naturally to a tertiary container role, red to the error role). (2) Text color is hardcoded to Color.White — this fails on light backgrounds if the badge is placed on a white card in light mode. Fix: use MaterialTheme.colorScheme.onError for the text on the error (red) background, and MaterialTheme.colorScheme.onTertiaryContainer for the online badge. (3) The component will not adapt to dynamic color — if the user&#39;s wallpaper-derived M3 scheme uses a different primary hue, the hardcoded greens and reds will clash. Semantic color roles allow the design system to make coherent color decisions.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">A theme is like choosing clothes for your whole app before it gets dressed each morning. Instead of every button picking its own color, you tell the whole app &#39;today we wear blue&#39; (or neon green, or whatever your wallpaper suggests). Every button, card, and text automatically wears the right shade of that color, matching perfectly.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Material You&#39;s dynamic color algorithm is called &#39;Tonal Palette Extraction&#39; and uses a quantization algorithm (similar to k-means clustering) to extract five key colors from the wallpaper, then generates a full 30-role ColorScheme from those five tones using the HCT (Hue, Chroma, Tone) color model — a perceptually uniform color space developed by Google specifically for this feature.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete AppTheme composable that supports: (1) dynamic color on Android 12+ with a static brand fallback, (2) a user-toggleable dark/light mode preference stored in DataStore, (3) a custom Typography using a Google Font loaded with the downloadable fonts API. Apply the theme to a screen with at least one Card, one Button, and one TopAppBar, and add dark/light @Preview annotations.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://m3.material.io" target="_blank" rel="noopener noreferrer">Material Design 3 — Official</a> <span class="res-source">(material.io)</span></li>
+      <li><a href="https://developer.android.com/develop/ui/compose/designsystems/material3" target="_blank" rel="noopener noreferrer">Material Design 3 in Compose</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/develop/ui/compose/designsystems/material3#dynamic-color" target="_blank" rel="noopener noreferrer">Dynamic color — Material You</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/develop/ui/compose/designsystems/material3#dark-theme" target="_blank" rel="noopener noreferrer">Dark theme — Android Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://m3.material.io/theme-builder" target="_blank" rel="noopener noreferrer">M3 Theme Builder</a> <span class="res-source">(material.io)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=53">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./52-adaptive-android-ui-phones-tablets-foldables-multi-window.html" rel="prev">← Adaptive Android UI: Phones, Tablets…</a>
+  <a class="nav-next" href="./54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html" rel="next">RecyclerView vs LazyColumn: Legacy vs… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

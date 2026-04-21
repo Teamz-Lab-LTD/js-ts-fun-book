@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repository Pattern, Use Cases, DI &amp; Boundaries… | Teamz Lab</title>
+<meta name="description" content="The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/22-mvvm-vs-mvi-vs-clean-vs-mvc-tradeoffs.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Repository Pattern, Use Cases, DI &amp; Boundaries">
+<meta property="og:description" content="The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Repository Pattern, Use Cases, DI &amp; Boundaries">
+<meta name="twitter:description" content="The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Repository Pattern, Use Cases, DI & Boundaries",
+  "description": "The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 21
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Repository Pattern, Use Cases, DI & Boundaries",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Repository Pattern, Use Cases, DI &amp; Boundaries</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 21 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Repository Pattern, Use Cases, DI &amp; Boundaries</h1>
+<p class="lesson-subtitle">The Architecture Layer Every Senior Flutter Dev Must Master</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=21">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of the Repository as a smart librarian. You (the Use Case) say &#39;give me Book #42&#39;. The librarian decides whether to grab it from the shelf (local DB), order it (API), or find a cached photocopy. You never care how — you just get the book. Dependency Injection is like the library&#39;s hiring system: you specify you need &#39;a librarian&#39;, and HR (GetIt) assigns one. You never build the librarian yourself.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business operation and depends on repository interfaces. GetIt/injectable wires everything together via Dependency Inversion. Together they form the infrastructure of Clean Architecture in Flutter.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a fintech claims app, ProcessRefundUseCase depends on ClaimsRepository (interface). ClaimsRepositoryImpl calls Dio for the remote API and Floor for local audit logging. When testing ProcessRefundUseCase, a FakeClaimsRepository returns mock data instantly. When the API changes from REST to GraphQL, only ClaimsRepositoryImpl changes — UseCase and UI are untouched.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Repository Pattern — Abstraction Over Data Sources</strong> — A Repository is an interface defined in the domain layer that abstracts all data access. It hides whether data comes from a REST API, SQLite, Hive, or in-memory cache. The ViewModel/Use Case only knows the interface, never the implementation. This is the single most important testability pattern in Flutter architecture.</li>
+      <li><strong>Data Flow Direction</strong> — Data flows inward: UI → ViewModel → Use Case → Repository Interface. Implementations flow outward: RepositoryImpl (data layer) → API/DB. Dependency arrows always point inward toward the domain. This is the Dependency Rule — violating it is the #1 architecture mistake seen in Flutter interviews.</li>
+      <li><strong>Use Case (Interactor) Pattern</strong> — A Use Case encapsulates a single business operation: GetUserProfileUseCase, SendMessageUseCase, ProcessRefundUseCase. It has one public method (call() or execute()), receives repository interfaces via constructor, and contains no Flutter or platform code. One class, one responsibility.</li>
+      <li><strong>Dependency Inversion Principle (DIP)</strong> — High-level modules (Use Cases) should not depend on low-level modules (Dio, SQLite). Both should depend on abstractions (Repository interfaces). This is the &#39;D&#39; in SOLID. Without DIP, changing your HTTP client requires touching business logic — a maintainability disaster at scale.</li>
+      <li><strong>GetIt for Service Location</strong> — GetIt is a service locator (not true DI). You register singletons, factories, or lazy singletons: GetIt.I.registerLazySingleton(() =&gt; AuthRepositoryImpl(dio)). Then retrieve: GetIt.I(). It&#39;s simple but requires manual registration — the injectable package generates this code automatically.</li>
+      <li><strong>injectable Code Generation</strong> — @injectable, @lazySingleton, @singleton annotations on implementations plus @module for third-party registrations. Run build_runner and injectable generates configureDependencies(). This eliminates hand-written registration boilerplate and is the production standard in 2024+ Flutter projects.</li>
+      <li><strong>Layer Boundary Enforcement</strong> — Domain layer: pure Dart, no Flutter imports, no package:dio, no package:hive. Data layer: RepositoryImpl, DTOs, mappers, API clients. Presentation layer: Widgets, ViewModels, BLoC/Cubit. If you see package:dio in a Use Case, fail the code review. This boundary is what makes the codebase testable and maintainable.</li>
+      <li><strong>DTOs and Domain Models</strong> — DTOs (Data Transfer Objects) are data-layer classes that mirror API JSON structure. Domain Models are clean Dart classes with business logic. Mappers (toEntity/fromEntity) convert between them. Never expose DTOs to the domain or UI layer — they&#39;re an implementation detail.</li>
+      <li><strong>Multiple Data Sources</strong> — A RepositoryImpl often coordinates two sources: remote (API) and local (cache). Pattern: try local cache → if stale, fetch remote → save to cache → return. This is where offline-first logic lives. The Use Case never sees this complexity — it just calls repository.getUser(id).</li>
+      <li><strong>Testing With Fakes</strong> — With proper repository abstraction, tests are trivial: class FakeUserRepository implements UserRepository { ... }. No Dio, no HTTP, no SQLite in unit tests. The Use Case is tested with a FakeRepository that returns controlled data. This is the payoff of Clean Architecture — tests run in milliseconds.</li>
+      <li><strong>Common Interview Questions</strong> — &#39;How would you add offline support?&#39; — RepositoryImpl coordinates API and local DB. &#39;How would you swap your HTTP client?&#39; — Only the data layer changes, domain/presentation untouched. &#39;How do you test business logic without hitting the network?&#39; — Use Case takes repository interface, test passes a fake.</li>
+      <li><strong>Anti-Pattern: Fat ViewModel</strong> — A common mistake is putting API calls directly in the ViewModel: _dio.get(&#39;/users&#39;). This couples presentation to infrastructure, makes testing require mocking Dio, and duplicates business logic across ViewModels. Fat ViewModels are a red flag in senior-level code reviews.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === DOMAIN LAYER (pure Dart, no Flutter imports) ===
+
+// 1. Domain Entity
+class UserProfile {
+  final String id;
+  final String name;
+  final String email;
+  final bool isPremium;
+  const UserProfile({required this.id, required this.name, required this.email, required this.isPremium});
+}
+
+// 2. Repository Interface — defined in domain, implemented in data
+abstract class UserRepository {
+  Future&lt;UserProfile&gt; getUserProfile(String userId);
+  Future&lt;void&gt; updateProfile({required String userId, required String name});
+}
+
+// 3. Use Case — one responsibility, depends on interface
+class GetUserProfileUseCase {
+  final UserRepository _repository;
+  const GetUserProfileUseCase(this._repository);
+
+  Future&lt;UserProfile&gt; call(String userId) async {
+    if (userId.isEmpty) throw ArgumentError(&#39;userId cannot be empty&#39;);
+    return _repository.getUserProfile(userId);
+  }
+}
+
+// === DATA LAYER ===
+
+// 4. DTO — mirrors API JSON
+class UserProfileDto {
+  final String id;
+  final String name;
+  final String email;
+  final bool isPremium;
+  UserProfileDto({required this.id, required this.name, required this.email, required this.isPremium});
+
+  factory UserProfileDto.fromJson(Map&lt;String, dynamic&gt; json) =&gt; UserProfileDto(
+    id: json[&#39;id&#39;] as String,
+    name: json[&#39;name&#39;] as String,
+    email: json[&#39;email&#39;] as String,
+    isPremium: json[&#39;is_premium&#39;] as bool? ?? false,
+  );
+
+  // Mapper: DTO → Domain Entity
+  UserProfile toEntity() =&gt; UserProfile(
+    id: id, name: name, email: email, isPremium: isPremium,
+  );
+}
+
+// 5. Repository Implementation — knows about Dio and local DB
+class UserRepositoryImpl implements UserRepository {
+  final Dio _dio;
+  final UserLocalDataSource _localCache;
+
+  const UserRepositoryImpl(this._dio, this._localCache);
+
+  @override
+  Future&lt;UserProfile&gt; getUserProfile(String userId) async {
+    // Try cache first
+    final cached = await _localCache.getUser(userId);
+    if (cached != null &amp;&amp; !cached.isStale) return cached.toEntity();
+
+    // Fetch remote
+    try {
+      final response = await _dio.get(&#39;/users/$userId&#39;);
+      final dto = UserProfileDto.fromJson(response.data as Map&lt;String, dynamic&gt;);
+      await _localCache.saveUser(dto); // Update cache
+      return dto.toEntity();
+    } on DioException catch (e) {
+      if (cached != null) return cached.toEntity(); // Stale fallback
+      throw _mapDioError(e);
+    }
+  }
+
+  @override
+  Future&lt;void&gt; updateProfile({required String userId, required String name}) async {
+    await _dio.patch(&#39;/users/$userId&#39;, data: {&#39;name&#39;: name});
+    await _localCache.invalidate(userId);
+  }
+
+  Exception _mapDioError(DioException e) {
+    if (e.response?.statusCode == 404) return NotFoundException(&#39;User not found&#39;);
+    if (e.response?.statusCode == 401) return UnauthorizedException();
+    return NetworkException(e.message ?? &#39;Unknown error&#39;);
+  }
+}
+
+// === DI WITH GetIt + injectable ===
+
+// 6. Registration (generated by injectable&#39;s build_runner)
+@module
+abstract class NetworkModule {
+  @lazySingleton
+  Dio get dio =&gt; Dio(BaseOptions(baseUrl: &#39;https://api.example.com&#39;));
+}
+
+@LazySingleton(as: UserRepository)
+class UserRepositoryImplAnnotated extends UserRepositoryImpl {
+  UserRepositoryImplAnnotated(Dio dio, UserLocalDataSource local) : super(dio, local);
+}
+
+@injectable
+class GetUserProfileUseCaseAnnotated extends GetUserProfileUseCase {
+  GetUserProfileUseCaseAnnotated(UserRepository repo) : super(repo);
+}
+
+// 7. In main.dart
+// await configureDependencies(); // Generated by injectable
+// final useCase = GetIt.I&lt;GetUserProfileUseCase&gt;();</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> UserProfile is a pure Dart domain entity — no Flutter, no Dio, no JSON dependencies</li>
+      <li><span class="walk-num">2.</span> UserRepository is an abstract interface defined in the domain layer</li>
+      <li><span class="walk-num">3.</span> GetUserProfileUseCase depends only on the UserRepository interface — not any implementation</li>
+      <li><span class="walk-num">4.</span> Input validation in the Use Case — business rules live here, not in the UI</li>
+      <li><span class="walk-num">5.</span> UserProfileDto mirrors the API JSON structure exactly — this is the data layer&#39;s concern</li>
+      <li><span class="walk-num">6.</span> fromJson factory parses raw JSON into the DTO</li>
+      <li><span class="walk-num">7.</span> toEntity() maps the DTO to the domain entity — the boundary between data and domain</li>
+      <li><span class="walk-num">8.</span> UserRepositoryImpl coordinates the API and cache — domain layer never sees this complexity</li>
+      <li><span class="walk-num">9.</span> Try cache first — if fresh, return immediately without hitting the network</li>
+      <li><span class="walk-num">10.</span> On cache miss, call the API and parse the response into a DTO</li>
+      <li><span class="walk-num">11.</span> Save to cache and return the domain entity</li>
+      <li><span class="walk-num">12.</span> Map DioException to domain exceptions — UI sees DomainException, never DioException</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Domain Use Case
+import &#39;package:dio/dio.dart&#39;;
+
+class GetOrdersUseCase {
+  final Dio _dio;
+  GetOrdersUseCase(this._dio);
+
+  Future&lt;List&lt;Order&gt;&gt; call(String userId) async {
+    final response = await _dio.get(&#39;/orders?userId=$userId&#39;);
+    return (response.data as List)
+        .map((json) =&gt; Order.fromJson(json))
+        .toList();
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Which layer does Dio belong to? What rule does this violate? What are the downstream consequences?</div></details><details><summary>Show answer</summary><div class="answer">The domain Use Case imports and directly uses Dio (a data layer dependency). This violates the Dependency Rule: inner layers must not depend on outer layers. Consequences: (1) unit tests must mock Dio instead of a simple repository interface, (2) swapping HTTP clients requires changing domain code, (3) the domain cannot be a standalone Dart package, (4) Order.fromJson in the domain suggests mixing DTO parsing with business logic. Fix: define abstract OrdersRepository in domain with getOrders(userId), implement with Dio in data layer, inject the interface into GetOrdersUseCase.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you want a pizza. You tell the waiter (Use Case) &#39;I want pepperoni pizza&#39;. The waiter goes to the kitchen (Repository). The kitchen decides: is there leftover pizza in the fridge (cache)? No? OK, they bake it fresh (API call). You never know how the pizza was made. And if the kitchen switches from a wood-fired oven to electric, you still get the same pizza. That&#39;s the Repository pattern.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Repository pattern was first described by Eric Evans in &#39;Domain-Driven Design&#39; (2003). It was designed for enterprise Java, but it maps perfectly to Flutter&#39;s layered architecture. Every major Flutter architecture guide (Very Good Ventures, Reso Coder, Felix Angelov) converges on this pattern because it makes testing trivial.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the domain and data layers for a &#39;ProcessRefund&#39; feature in a fintech app. Create: (1) a RefundRequest domain entity, (2) a RefundsRepository interface with processRefund() and getRefundStatus() methods, (3) a ProcessRefundUseCase that validates the amount &gt; 0 before calling the repository, (4) a stub RefundsRepositoryImpl that simulates an API call. Wire it with GetIt.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://verygood.ventures/blog/very-good-flutter-architecture" target="_blank" rel="noopener noreferrer">Very Good Ventures Flutter Architecture</a> <span class="res-source">(Very Good Ventures)</span></li>
+      <li><a href="https://pub.dev/packages/get_it" target="_blank" rel="noopener noreferrer">GetIt Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://pub.dev/packages/injectable" target="_blank" rel="noopener noreferrer">injectable Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://resocoder.com/2019/08/27/flutter-tdd-clean-architecture-course-1-explanation-project-structure/" target="_blank" rel="noopener noreferrer">Reso Coder Clean Architecture</a> <span class="res-source">(Reso Coder)</span></li>
+      <li><a href="https://dart.dev/effective-dart/design" target="_blank" rel="noopener noreferrer">Dependency Inversion Principle</a> <span class="res-source">(Dart Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=21">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./20-clean-architecture-fundamentals-for-flutter.html" rel="prev">← Clean Architecture Fundamentals for…</a>
+  <a class="nav-next" href="./22-mvvm-vs-mvi-vs-clean-vs-mvc-tradeoffs.html" rel="next">MVVM vs MVI vs Clean vs MVC — Tradeoffs →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

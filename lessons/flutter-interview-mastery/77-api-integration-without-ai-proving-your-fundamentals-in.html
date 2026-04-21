@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Integration Without AI: Proving Your Fundamentals… | Teamz Lab</title>
+<meta name="description" content="API integration without AI is the fundamental skill of connecting a Flutter app to a REST API using only your knowledge of HTTP, Dart, and Flutter — without…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html">
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="API Integration Without AI: Proving Your Fundamentals in Interviews">
+<meta property="og:description" content="API integration without AI is the fundamental skill of connecting a Flutter app to a REST API using only your knowledge of HTTP, Dart, and Flutter — without…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="API Integration Without AI: Proving Your Fundamentals in Interviews">
+<meta name="twitter:description" content="API integration without AI is the fundamental skill of connecting a Flutter app to a REST API using only your knowledge of HTTP, Dart, and Flutter — without…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "API Integration Without AI: Proving Your Fundamentals in Interviews",
+  "description": "API integration without AI is the fundamental skill of connecting a Flutter app to a REST API using only your knowledge of HTTP, Dart, and Flutter — without…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 77
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "API Integration Without AI: Proving Your Fundamentals in Interviews",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">API Integration Without AI: Proving Your Fundamentals in Interviews</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 77 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">API Integration Without AI: Proving Your Fundamentals in Interviews</h1>
+<p class="lesson-subtitle">The LinkedIn Post That Exposed 4-5 Year &#39;Senior&#39; Devs Who Can&#39;t Call a REST API Without ChatGPT</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=77">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine a chef who has cooked with a recipe app for 5 years but panics when the phone dies. They can&#39;t dice an onion, don&#39;t know oven temperatures, and ask &#39;Alexa, how do I boil water?&#39; That&#39;s what interviewers see when senior Flutter devs can&#39;t integrate a simple API without AI. The recipe app (AI) made them faster, but they never learned to cook. A real chef knows knife skills, heat control, and timing by heart — AI should make a great chef faster, not replace knowing how food works.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>API integration without AI is the fundamental skill of connecting a Flutter app to a REST API using only your knowledge of HTTP, Dart, and Flutter — without relying on AI tools to generate the code. It means you understand every line: how HTTP requests work, how JSON maps to Dart objects, how errors propagate, and how to secure credentials. The viral LinkedIn post exposed that many &#39;senior&#39; Flutter devs with 4-5 years experience cannot perform this basic task without AI assistance, and worse, some share API keys and tokens with AI tools. This lesson makes you bulletproof against that criticism by drilling the fundamentals until they are second nature.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A fintech startup interviews a Flutter developer with 5 years experience. The interviewer gives them a REST API for fetching transaction history and says &#39;build a screen that shows the user their transactions — you have 30 minutes, no internet except the API.&#39; The candidate stares at the screen. They open Chrome to go to ChatGPT — blocked. They try to remember the http package syntax — blank. They can&#39;t write fromJson without json_serializable. They don&#39;t know how to handle a 401. They get rejected. The next candidate — with only 2 years experience — writes the model, service, error handling, and UI in 25 minutes. They get the offer at a higher salary. The difference wasn&#39;t talent. It was that one practiced fundamentals while the other outsourced thinking to AI.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>REST API Fundamentals You MUST Know Cold</strong> — HTTP methods: GET (read), POST (create), PUT (replace), PATCH (update), DELETE (remove). Status codes: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 422 Unprocessable Entity, 429 Too Many Requests, 500 Internal Server Error. Headers: Content-Type (application/json), Authorization (Bearer token), Accept. Request/response cycle: client sends request with method + URL + headers + optional body, server processes and returns status code + headers + body. If an interviewer asks &#39;what&#39;s the difference between 401 and 403?&#39; and you hesitate, you&#39;ve already lost.</li>
+      <li><strong>Building API Integration Step by Step — No AI, No Code Gen</strong> — Step 1: Create a model class with fromJson/toJson. Step 2: Write an API service class using http or dio. Step 3: Make the HTTP request with proper headers. Step 4: Check status code FIRST, then parse body. Step 5: Handle errors at every step. Step 6: Return typed data to your UI layer. Step 7: Display with FutureBuilder or state management. This is the flow you must be able to do from an empty file in under 30 minutes. Practice it until it&#39;s muscle memory.</li>
+      <li><strong>Manual JSON Parsing — fromJson and toJson Without Code Gen</strong> — Yes, freezed and json_serializable exist. Yes, they save time. But in an interview, you MUST prove you understand what those tools generate. A fromJson factory constructor takes a Map and maps each key to a typed field. A toJson method returns a Map. Handle nested objects by calling NestedClass.fromJson(json[&#39;key&#39;]). Handle lists with (json[&#39;items&#39;] as List).map((e) =&gt; Item.fromJson(e)).toList(). Handle nullable fields with null checks. If you can&#39;t write this from memory, you don&#39;t understand your own data layer.</li>
+      <li><strong>Security Hygiene — NEVER Share Secrets with AI Tools</strong> — This is a CAREER-ENDING mistake that the LinkedIn post highlighted. NEVER paste API keys, Bearer tokens, .env file contents, user data, database credentials, or proprietary business logic into ChatGPT, Copilot, Claude, or any AI tool. These inputs may be logged, used for training, or stored on third-party servers. Use placeholders like &#39;YOUR_API_KEY_HERE&#39; or &#39;Bearer &#39;. If your company finds out you shared production credentials with an AI tool, that&#39;s a fireable offense. In interviews, mention this proactively — it shows security awareness that separates seniors from juniors.</li>
+      <li><strong>Error Handling That Shows Maturity</strong> — Junior devs: try-catch and show &#39;Something went wrong.&#39; Senior devs: handle EVERY failure mode differently. SocketException → no internet connection, show retry button. TimeoutException → server slow, suggest trying later. HttpException with 401 → token expired, trigger refresh. 403 → user lacks permission, show access denied. 404 → resource deleted, remove from local cache. 422 → validation failed, show field-specific errors. 429 → rate limited, implement exponential backoff. 500 → server error, log and show generic message. FormatException → malformed JSON, log for debugging. Create a custom ApiException class hierarchy. Wrap http calls in a try-catch that maps each failure to a specific, user-friendly response.</li>
+      <li><strong>The &#39;Build It Live&#39; Interview Test — 30 Minutes, No AI, No Google</strong> — Many companies now hand you a laptop with VS Code, a REST API endpoint, and say &#39;build a Flutter screen that fetches and displays this data.&#39; No internet (except the API), no AI, no Stack Overflow. You have 30 minutes. They&#39;re watching your process: Do you start with the model? Do you check the API response shape first? Do you handle errors? Do you know the http package API by heart? Practice this weekly: pick a free public API (jsonplaceholder, reqres.in, pokeapi), set a 30-minute timer, close all browser tabs, and build from scratch. This single practice habit will put you ahead of 90% of candidates.</li>
+      <li><strong>Common API Patterns You Must Implement From Memory</strong> — Pagination: track current page, append results to list, detect last page by empty response or total count. Token refresh: intercept 401, call refresh endpoint, retry original request with new token. Retry with exponential backoff: wait 1s, 2s, 4s, 8s with max retries. Response caching: store responses with timestamps, serve cache if fresh, fetch if stale. Request cancellation: use CancelToken (dio) to cancel in-flight requests when user navigates away. Request deduplication: prevent identical concurrent requests. These patterns are what separate &#39;I can call an API&#39; from &#39;I can build production-ready networking.&#39;</li>
+      <li><strong>Debugging API Issues Without AI</strong> — Step 1: Test the API in Postman or Insomnia FIRST to confirm the endpoint works. Step 2: Check the exact request your app sends — use dio interceptors to log URL, headers, body. Step 3: Compare your app&#39;s request to the working Postman request — find the difference. Step 4: Read the error message. Actually read it. Most devs skip this and paste into ChatGPT. A &#39;type String is not a subtype of type int&#39; tells you EXACTLY which field has wrong type in your fromJson. Step 5: Check the JSON response structure — is &#39;data&#39; an object or array? Is &#39;id&#39; a String or int? Mismatched types are the #1 parsing bug.</li>
+      <li><strong>AI as Accelerator, Not Crutch — The Right Way</strong> — WRONG: &#39;Hey ChatGPT, write me an API integration for this endpoint&#39; → paste result → deploy without understanding. RIGHT: Build it yourself first. Get it working. Understand every line. THEN use AI to review your code, suggest optimizations, or generate boilerplate for similar endpoints. The test: if the AI tool disappears tomorrow, can you still do your job? If the answer is no, you&#39;re not a developer — you&#39;re a prompt engineer pretending to be one. Interviewers can tell the difference in 5 minutes.</li>
+      <li><strong>Security Red Flags Interviewers Watch For</strong> — Hardcoded API keys in source code — use --dart-define or .env files with flutter_dotenv. Tokens stored in SharedPreferences (plain text) — use flutter_secure_storage which uses Keychain (iOS) and EncryptedSharedPreferences (Android). No HTTPS certificate pinning — man-in-the-middle attacks can intercept all traffic. Logging sensitive data — never print tokens, passwords, or user data to console in production. No token expiry handling — tokens should refresh automatically, not require re-login. API keys in version control — add .env to .gitignore, use CI/CD secrets. If you mention even 3 of these proactively in an interview, you&#39;ve demonstrated security maturity.</li>
+      <li><strong>The Fundamentals Litmus Test — Can You Explain These From Memory?</strong> — HTTP: a stateless protocol for client-server communication using request-response pairs over TCP. REST: an architectural style using resources (URLs), HTTP methods (verbs), and stateless requests. JSON: JavaScript Object Notation, a lightweight text format for data exchange using key-value pairs. async/await: syntactic sugar over Futures, letting you write asynchronous code that reads like synchronous code. Future vs Stream: Future resolves once, Stream emits multiple values over time. try-catch-finally: try runs code, catch handles errors by type, finally always executes for cleanup. If you stumbled on any of these, study them until you can explain each in one clear sentence without thinking.</li>
+      <li><strong>The Dio Interceptor Pattern for Production Apps</strong> — Interceptors are middleware that run before every request (onRequest), after every response (onResponse), and on every error (onError). Use onRequest to attach auth tokens automatically, log outgoing requests, and add common headers. Use onResponse to log responses and transform data. Use onError to handle 401 by refreshing tokens and retrying, implement retry logic, and map server errors to custom exceptions. This pattern keeps your API service classes clean — they just make requests while the interceptor handles cross-cutting concerns. In interviews, explaining this architecture shows you think in systems, not just screens.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// === COMPLETE API INTEGRATION FROM SCRATCH ===
+// No freezed, no code gen, no AI — pure fundamentals
+
+// ---- 1. CONFIGURATION (NEVER hardcode secrets) ----
+// Use: flutter run --dart-define=API_BASE_URL=https://api.example.com
+// Use: flutter run --dart-define=API_KEY=your_key_here
+
+class ApiConfig {
+  // Read from environment at compile time
+  static const String baseUrl = String.fromEnvironment(
+    &#39;API_BASE_URL&#39;,
+    defaultValue: &#39;https://jsonplaceholder.typicode.com&#39;,
+  );
+
+  // NEVER do this:
+  // static const apiKey = &#39;sk-1234567890abcdef&#39;; // CAREER ENDING
+  // NEVER paste this into ChatGPT/Copilot either!
+}
+
+// ---- 2. MODEL CLASS (Manual fromJson/toJson) ----
+class User {
+  final int id;
+  final String name;
+  final String email;
+  final Address? address; // Nullable nested object
+
+  const User({
+    required this.id,
+    required this.name,
+    required this.email,
+    this.address,
+  });
+
+  // Factory constructor — know this by heart
+  factory User.fromJson(Map&lt;String, dynamic&gt; json) {
+    return User(
+      id: json[&#39;id&#39;] as int,
+      name: json[&#39;name&#39;] as String,
+      email: json[&#39;email&#39;] as String,
+      address: json[&#39;address&#39;] != null
+          ? Address.fromJson(json[&#39;address&#39;] as Map&lt;String, dynamic&gt;)
+          : null,
+    );
+  }
+
+  Map&lt;String, dynamic&gt; toJson() {
+    return {
+      &#39;id&#39;: id,
+      &#39;name&#39;: name,
+      &#39;email&#39;: email,
+      &#39;address&#39;: address?.toJson(),
+    };
+  }
+}
+
+class Address {
+  final String street;
+  final String city;
+
+  const Address({required this.street, required this.city});
+
+  factory Address.fromJson(Map&lt;String, dynamic&gt; json) {
+    return Address(
+      street: json[&#39;street&#39;] as String,
+      city: json[&#39;city&#39;] as String,
+    );
+  }
+
+  Map&lt;String, dynamic&gt; toJson() =&gt; {&#39;street&#39;: street, &#39;city&#39;: city};
+}
+
+// ---- 3. CUSTOM EXCEPTIONS (Not just generic catch-all) ----
+sealed class ApiException implements Exception {
+  final String message;
+  final int? statusCode;
+  const ApiException(this.message, [this.statusCode]);
+}
+
+class NetworkException extends ApiException {
+  const NetworkException() : super(&#39;No internet connection&#39;);
+}
+
+class TimeoutException extends ApiException {
+  const TimeoutException() : super(&#39;Request timed out&#39;);
+}
+
+class UnauthorizedException extends ApiException {
+  const UnauthorizedException() : super(&#39;Session expired&#39;, 401);
+}
+
+class ForbiddenException extends ApiException {
+  const ForbiddenException() : super(&#39;Access denied&#39;, 403);
+}
+
+class NotFoundException extends ApiException {
+  const NotFoundException(String resource)
+      : super(&#39;$resource not found&#39;, 404);
+}
+
+class ServerException extends ApiException {
+  const ServerException() : super(&#39;Server error. Try later.&#39;, 500);
+}
+
+class ParseException extends ApiException {
+  const ParseException(String detail)
+      : super(&#39;Failed to parse response: $detail&#39;);
+}
+
+// ---- 4. API SERVICE (with proper error handling) ----
+import &#39;dart:convert&#39;;
+import &#39;dart:io&#39;;
+import &#39;package:http/http.dart&#39; as http;
+
+class ApiService {
+  final http.Client _client;
+  final String _baseUrl;
+  String? _authToken;
+
+  ApiService({
+    http.Client? client,
+    String? baseUrl,
+  })  : _client = client ?? http.Client(),
+        _baseUrl = baseUrl ?? ApiConfig.baseUrl;
+
+  void setAuthToken(String token) =&gt; _authToken = token;
+
+  // Core request method — handles ALL error cases
+  Future&lt;dynamic&gt; _request(
+    String method,
+    String path, {
+    Map&lt;String, dynamic&gt;? body,
+    Map&lt;String, String&gt;? queryParams,
+  }) async {
+    final uri = Uri.parse(&#39;$_baseUrl$path&#39;).replace(
+      queryParameters: queryParams,
+    );
+
+    final headers = &lt;String, String&gt;{
+      &#39;Content-Type&#39;: &#39;application/json&#39;,
+      &#39;Accept&#39;: &#39;application/json&#39;,
+      if (_authToken != null) &#39;Authorization&#39;: &#39;Bearer $_authToken&#39;,
+    };
+
+    try {
+      late http.Response response;
+
+      switch (method) {
+        case &#39;GET&#39;:
+          response = await _client
+              .get(uri, headers: headers)
+              .timeout(const Duration(seconds: 15));
+        case &#39;POST&#39;:
+          response = await _client
+              .post(uri, headers: headers, body: jsonEncode(body))
+              .timeout(const Duration(seconds: 15));
+        case &#39;PUT&#39;:
+          response = await _client
+              .put(uri, headers: headers, body: jsonEncode(body))
+              .timeout(const Duration(seconds: 15));
+        case &#39;DELETE&#39;:
+          response = await _client
+              .delete(uri, headers: headers)
+              .timeout(const Duration(seconds: 15));
+        default:
+          throw ArgumentError(&#39;Unsupported HTTP method: $method&#39;);
+      }
+
+      return _handleResponse(response);
+    } on SocketException {
+      throw const NetworkException();
+    } on TimeoutException {
+      throw const TimeoutException();
+    } on ApiException {
+      rethrow; // Don&#39;t wrap our own exceptions
+    } catch (e) {
+      throw ParseException(e.toString());
+    }
+  }
+
+  dynamic _handleResponse(http.Response response) {
+    switch (response.statusCode) {
+      case 200 || 201:
+        try {
+          return jsonDecode(response.body);
+        } on FormatException catch (e) {
+          throw ParseException(e.message);
+        }
+      case 204:
+        return null;
+      case 401:
+        throw const UnauthorizedException();
+      case 403:
+        throw const ForbiddenException();
+      case 404:
+        throw const NotFoundException(&#39;Resource&#39;);
+      case &gt;= 500:
+        throw const ServerException();
+      default:
+        throw ApiException(
+          &#39;Request failed: ${response.statusCode}&#39;,
+          response.statusCode,
+        );
+    }
+  }
+
+  // Public API methods — clean and simple
+  Future&lt;List&lt;User&gt;&gt; getUsers({int page = 1, int limit = 20}) async {
+    final json = await _request(&#39;GET&#39;, &#39;/users&#39;, queryParams: {
+      &#39;_page&#39;: page.toString(),
+      &#39;_limit&#39;: limit.toString(),
+    });
+    return (json as List).map((e) =&gt; User.fromJson(e)).toList();
+  }
+
+  Future&lt;User&gt; getUser(int id) async {
+    final json = await _request(&#39;GET&#39;, &#39;/users/$id&#39;);
+    return User.fromJson(json);
+  }
+
+  Future&lt;User&gt; createUser(User user) async {
+    final json = await _request(&#39;POST&#39;, &#39;/users&#39;, body: user.toJson());
+    return User.fromJson(json);
+  }
+
+  void dispose() =&gt; _client.close();
+}
+
+// ---- 5. DIO INTERCEPTOR (Token Refresh Pattern) ----
+// For production apps using dio package:
+/*
+class AuthInterceptor extends Interceptor {
+  final Dio dio;
+  final AuthRepository authRepo;
+
+  AuthInterceptor(this.dio, this.authRepo);
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final token = authRepo.accessToken;
+    if (token != null) {
+      options.headers[&#39;Authorization&#39;] = &#39;Bearer $token&#39;;
+    }
+    handler.next(options);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 401) {
+      try {
+        // Refresh the token
+        final newToken = await authRepo.refreshToken();
+        // Retry the original request with new token
+        final options = err.requestOptions;
+        options.headers[&#39;Authorization&#39;] = &#39;Bearer $newToken&#39;;
+        final response = await dio.fetch(options);
+        handler.resolve(response);
+        return;
+      } catch (e) {
+        // Refresh failed — force logout
+        authRepo.logout();
+      }
+    }
+    handler.next(err);
+  }
+}
+*/
+
+// ---- 6. USAGE IN UI ----
+// Using FutureBuilder (simple) or state management (production)
+/*
+class UsersScreen extends StatefulWidget {
+  @override
+  State&lt;UsersScreen&gt; createState() =&gt; _UsersScreenState();
+}
+
+class _UsersScreenState extends State&lt;UsersScreen&gt; {
+  late final ApiService _api;
+  late Future&lt;List&lt;User&gt;&gt; _usersFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _api = ApiService();
+    _usersFuture = _api.getUsers();
+  }
+
+  @override
+  void dispose() {
+    _api.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Users&#39;)),
+      body: FutureBuilder&lt;List&lt;User&gt;&gt;(
+        future: _usersFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            final error = snapshot.error;
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(_getErrorMessage(error)),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() =&gt; _usersFuture = _api.getUsers());
+                    },
+                    child: const Text(&#39;Retry&#39;),
+                  ),
+                ],
+              ),
+            );
+          }
+          final users = snapshot.data!;
+          return ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              final user = users[index];
+              return ListTile(
+                title: Text(user.name),
+                subtitle: Text(user.email),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  String _getErrorMessage(Object? error) {
+    if (error is NetworkException) return &#39;No internet. Check connection.&#39;;
+    if (error is TimeoutException) return &#39;Server slow. Try again.&#39;;
+    if (error is UnauthorizedException) return &#39;Please log in again.&#39;;
+    if (error is ServerException) return &#39;Server error. Try later.&#39;;
+    return &#39;Something went wrong.&#39;;
+  }
+}
+*/</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ApiConfig uses String.fromEnvironment to read secrets at compile time via --dart-define flags. This means API keys NEVER appear in source code — they&#39;re injected during the build. The defaultValue is only for development with public APIs.</li>
+      <li><span class="walk-num">2.</span> The User model class has typed final fields and a required const constructor. Every field has an explicit type. The address field is nullable (Address?) because the API might not always include it.</li>
+      <li><span class="walk-num">3.</span> User.fromJson is a factory constructor that takes Map — the standard type that jsonDecode returns. Each field is explicitly cast (json[&#39;id&#39;] as int) which gives clear error messages if the API returns unexpected types instead of a vague runtime crash.</li>
+      <li><span class="walk-num">4.</span> The nested Address object is parsed by checking for null first, then calling Address.fromJson. This is the pattern for every nested object — always null-check before parsing to prevent null reference errors on optional fields.</li>
+      <li><span class="walk-num">5.</span> toJson returns a Map with the ?. operator on nullable address — if address is null, the map value is null rather than crashing. This mirrors the fromJson null handling.</li>
+      <li><span class="walk-num">6.</span> The sealed class ApiException hierarchy creates specific exception types for each failure mode. Using sealed means the compiler can check you&#39;ve handled all cases in a switch statement — no missed error scenarios.</li>
+      <li><span class="walk-num">7.</span> ApiService takes an optional http.Client parameter — this is dependency injection for testing. In tests, you pass a MockClient. In production, it creates a real client. This is a pattern interviewers love to see.</li>
+      <li><span class="walk-num">8.</span> The _request method builds the URI, constructs headers with conditional auth token spread, and uses a switch expression on the HTTP method. The .timeout(Duration(seconds: 15)) ensures requests don&#39;t hang forever.</li>
+      <li><span class="walk-num">9.</span> _handleResponse uses pattern matching on status codes. The key insight: check the status code BEFORE trying to parse the body. A 401 response might have HTML error page as body — parsing it as JSON would throw a confusing FormatException instead of the real &#39;unauthorized&#39; error.</li>
+      <li><span class="walk-num">10.</span> The SocketException catch maps to NetworkException and TimeoutException maps to our custom TimeoutException. The &#39;on ApiException rethrow&#39; line prevents wrapping our own exceptions — a subtle but important detail that prevents error message corruption.</li>
+      <li><span class="walk-num">11.</span> The public API methods (getUsers, getUser, createUser) are clean one-liners that call _request and map the response to typed objects. Pagination parameters are passed as query params with toString() conversion since query params must be strings.</li>
+      <li><span class="walk-num">12.</span> The AuthInterceptor (dio pattern) intercepts 401 errors, refreshes the token, and retries the original request transparently. This means API service classes never need to handle auth — it&#39;s a cross-cutting concern handled in one place.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class Post {
+  final int id;
+  final String title;
+  final String body;
+
+  Post({required this.id, required this.title, required this.body});
+
+  factory Post.fromJson(Map&lt;String, dynamic&gt; json) {
+    return Post(
+      id: json[&#39;id&#39;],
+      title: json[&#39;title&#39;],
+      body: json[&#39;body&#39;],
+    );
+  }
+}
+
+class ApiService {
+  static const _baseUrl = &#39;https://api.example.com&#39;;
+  static const _apiKey = &#39;sk_live_a1b2c3d4e5f6g7h8i9j0&#39;;
+
+  Future&lt;List&lt;Post&gt;&gt; getPosts() async {
+    final response = await http.get(
+      Uri.parse(&#39;$_baseUrl/posts&#39;),
+      headers: {&#39;X-API-Key&#39;: _apiKey},
+    );
+
+    final List data = jsonDecode(response.body);
+    return data.map((json) =&gt; Post.fromJson(json)).toList();
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are FOUR critical bugs here — two are security issues that would get you instantly rejected in an interview, one is a type safety issue that causes runtime crashes, and one is a missing error handling pattern. Think about: secrets management, type casting, response validation, and what AI-dependent developers commonly miss.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1 (SECURITY — Career Ending): The API key is hardcoded in source code (_apiKey = &#39;sk_live_...&#39;). This will be committed to version control, visible in the compiled app, and if this class were pasted into an AI tool for debugging, the live API key goes to a third-party server. Fix: Use String.fromEnvironment or flutter_dotenv. Bug 2 (TYPE SAFETY): fromJson doesn&#39;t cast types — json[&#39;id&#39;] returns dynamic, not int. This works in testing but crashes in production when the API returns a number as String (common with some backends). Fix: Use explicit casts like json[&#39;id&#39;] as int. Bug 3 (NO ERROR HANDLING): getPosts never checks response.statusCode. If the API returns a 401, 404, or 500, the code tries to jsonDecode an error response (possibly HTML), throwing a confusing FormatException instead of a meaningful error. Fix: Check statusCode before parsing body. Bug 4 (NO TIMEOUT): The request has no timeout — if the server hangs, the app freezes indefinitely with a loading spinner. Fix: Add .timeout(const Duration(seconds: 15)) to the HTTP call.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you learned to ride a bike with training wheels (AI). You rode everywhere — to school, to the park, to your friend&#39;s house. You thought you were great at biking! Then one day someone takes the training wheels off and says &#39;ride to the store.&#39; You fall over immediately. That&#39;s what happens when developers use AI to write all their code and never learn how it actually works. The bike (API integration) isn&#39;t hard — you just need to practice without training wheels until you can balance on your own. THEN you can add a motor (AI) to go faster. But the motor only helps if you already know how to steer and brake.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">A 2024 Stack Overflow survey found that 76% of developers use AI tools, but a separate study by Karat (a technical interviewing company) found that candidates who relied heavily on AI tools during preparation performed 40% worse in live coding interviews than those who practiced manually. The reason? AI-assisted developers could recognize correct code but couldn&#39;t produce it from scratch — a phenomenon researchers call &#39;recognition-production gap.&#39; Even more alarming: GitHub&#39;s own research showed that code generated by Copilot contained security vulnerabilities 40% of the time, including hardcoded credentials. The Flutter dev community took notice when a viral LinkedIn post about senior devs failing basic API integration got 171 likes and hundreds of comments, with CTOs and hiring leads confirming they see this daily. One commenter said: &#39;I interviewed a dev who couldn&#39;t explain what a 404 status code means, but their GitHub was full of AI-generated code with perfect commit messages.&#39;</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete API integration from scratch in 30 minutes with NO AI assistance, NO internet search, and NO code generation. Use https://jsonplaceholder.typicode.com/posts as your endpoint. Requirements: (1) Create a Post model with manual fromJson/toJson including userId (int), id (int), title (String), body (String). (2) Create an ApiService class with GET all posts, GET single post by id, POST create new post, DELETE post. (3) Handle at minimum: no internet, timeout, 404, 500, and JSON parse errors with specific messages for each. (4) No hardcoded URLs in the service methods — use a base URL config. (5) Write a simple UI screen that fetches posts and displays them, with a retry button on error. Time yourself. If you can&#39;t finish in 30 minutes, practice daily until you can. This is the exact test companies are giving in interviews.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/cookbook/networking/fetch-data" target="_blank" rel="noopener noreferrer">Flutter HTTP Networking — Official Cookbook</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://pub.dev/packages/http" target="_blank" rel="noopener noreferrer">The http Package — Dart Official Documentation</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://pub.dev/packages/dio" target="_blank" rel="noopener noreferrer">Dio Package — Advanced HTTP Client for Dart</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/data-and-backend/serialization/json" target="_blank" rel="noopener noreferrer">JSON Serialization in Flutter — Official Guide</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://pub.dev/packages/flutter_secure_storage" target="_blank" rel="noopener noreferrer">Flutter Secure Storage — Secure Token Storage</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=c09XiwOZKsI" target="_blank" rel="noopener noreferrer">REST API Integration in Flutter — From Scratch</a> <span class="res-source">(Rivaan Ranawat)</span></li>
+      <li><a href="https://owasp.org/www-project-mobile-security-testing-guide/" target="_blank" rel="noopener noreferrer">OWASP Mobile Security Testing Guide</a> <span class="res-source">(OWASP)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=77">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./76-package-development-publishing-open-source-maintenance.html" rel="prev">← Package Development, Publishing &amp; Open…</a>
+  <span class="nav-placeholder"></span>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

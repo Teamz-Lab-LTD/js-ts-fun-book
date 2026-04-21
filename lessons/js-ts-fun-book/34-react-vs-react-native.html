@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React vs React Native — Full-Stack Playbook | Teamz Lab</title>
+<meta name="description" content="React Native lets you build native mobile apps (iOS + Android) using React and JavaScript. Unlike hybrid apps (like Cordova), React Native renders REAL…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/34-react-vs-react-native.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/33-what-is-a-monorepo.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/35-putting-it-all-together.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="React vs React Native">
+<meta property="og:description" content="React Native lets you build native mobile apps (iOS + Android) using React and JavaScript. Unlike hybrid apps (like Cordova), React Native renders REAL…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/js-ts-fun-book/34-react-vs-react-native.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React vs React Native">
+<meta name="twitter:description" content="React Native lets you build native mobile apps (iOS + Android) using React and JavaScript. Unlike hybrid apps (like Cordova), React Native renders REAL…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "React vs React Native",
+  "description": "React Native lets you build native mobile apps (iOS + Android) using React and JavaScript. Unlike hybrid apps (like Cordova), React Native renders REAL…",
+  "url": "https://learn.teamzlab.com/lessons/js-ts-fun-book/34-react-vs-react-native.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Full-Stack Playbook",
+    "url": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 34
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Full-Stack Playbook",
+      "item": "https://learn.teamzlab.com/c/js-ts-fun-book.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "React vs React Native",
+      "item": "https://learn.teamzlab.com/lessons/js-ts-fun-book/34-react-vs-react-native.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/js-ts-fun-book.html">Full-Stack Playbook</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/js-ts-fun-book.html">Full-Stack Playbook</a> / <span aria-current="page">React vs React Native</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 34 of 49</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">React vs React Native</h1>
+<p class="lesson-subtitle">Web vs Mobile — Same Brain, Different Body</p>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=34">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">React is like a musician who performs in a concert hall (web browser). React Native is the SAME musician performing at an outdoor festival (mobile phone). Same songs (JavaScript/React), same talent — but different stage equipment (HTML elements vs native phone components)!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>React Native lets you build native mobile apps (iOS + Android) using React and JavaScript. Unlike hybrid apps (like Cordova), React Native renders REAL native UI components — so your app feels native because it IS native.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Facebook, Instagram, Discord, Shopify, and Pinterest all use React Native. Many teams share 60-80% of code between web (React) and mobile (React Native).</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Same Language</strong> — Both use JavaScript/TypeScript and React concepts (components, hooks, state). If you know React, learning React Native is just learning new component names!</li>
+      <li><strong>Different Output</strong> — React renders HTML elements (div, span, p). React Native renders native mobile components (View, Text, TouchableOpacity). Web = browser. Mobile = iOS/Android.</li>
+      <li><strong>Code Sharing</strong> — Business logic, API calls, state management — all can be shared between web (React) and mobile (React Native)! Only UI differs.</li>
+      <li><strong>Expo for Easy Setup</strong> — Expo is to React Native what create-react-app is to React. Instant setup, hot reload, testing on your phone instantly. No Android Studio!</li>
+      <li><strong>Styling Differences</strong> — React uses CSS. React Native uses StyleSheet (like inline styles). No CSS here — just JavaScript objects. Learn once, apply everywhere!</li>
+      <li><strong>Navigation Different</strong> — React Router for web. React Navigation for mobile. Different APIs but same concepts (stacks, tabs, drawers).</li>
+      <li><strong>Performance Considerations</strong> — React Native apps can be slower than native (written in Swift/Kotlin) but much faster to develop. Trade-off between speed and time-to-market!</li>
+      <li><strong>Third-Party Libraries</strong> — Some npm packages work on web only. Check compatibility! React Navigation, Expo libraries work cross-platform. Native modules need bridges!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// React (Web) 🌐
+function Welcome() {
+  return (
+    &lt;div className=&quot;container&quot;&gt;
+      &lt;h1&gt;Hello Web!&lt;/h1&gt;
+      &lt;p&gt;Click the button&lt;/p&gt;
+      &lt;button onClick={handleClick}&gt;
+        Press Me
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+// React Native (Mobile) 📱
+// Same logic, different building blocks!
+import { View, Text, TouchableOpacity, StyleSheet } from &#39;react-native&#39;;
+
+function Welcome() {
+  return (
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;Hello Mobile!&lt;/Text&gt;
+      &lt;Text&gt;Tap the button&lt;/Text&gt;
+      &lt;TouchableOpacity onPress={handlePress}&gt;
+        &lt;Text&gt;Press Me&lt;/Text&gt;
+      &lt;/TouchableOpacity&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: &#39;center&#39;,
+    alignItems: &#39;center&#39;,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: &#39;bold&#39;,
+  },
+});
+
+// The translation table 📋
+// Web              →  Mobile
+// div              →  View
+// p, span, h1      →  Text
+// button           →  TouchableOpacity
+// img              →  Image
+// input            →  TextInput
+// onClick          →  onPress
+// className        →  style prop
+// CSS              →  StyleSheet
+
+// Shared code between React &amp; React Native ✨
+// In services/api.ts
+export async function getUsers(): Promise&lt;User[]&gt; {
+  const response = await fetch(&#39;/api/users&#39;);
+  return response.json();
+}
+
+// In Web component
+import { getUsers } from &#39;../services/api&#39;;
+function UserList() {
+  const [users, setUsers] = useState&lt;User[]&gt;([]);
+
+  useEffect(() =&gt; {
+    getUsers().then(setUsers);
+  }, []);
+
+  return (
+    &lt;div&gt;
+      {users.map(u =&gt; &lt;div key={u.id}&gt;{u.name}&lt;/div&gt;)}
+    &lt;/div&gt;
+  );
+}
+
+// In Mobile component — SAME logic!
+import { getUsers } from &#39;../services/api&#39;;
+function UserList() {
+  const [users, setUsers] = useState&lt;User[]&gt;([]);
+
+  useEffect(() =&gt; {
+    getUsers().then(setUsers);
+  }, []);
+
+  return (
+    &lt;View&gt;
+      {users.map(u =&gt; &lt;Text key={u.id}&gt;{u.name}&lt;/Text&gt;)}
+    &lt;/View&gt;
+  );
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> React (Web) 🌐</li>
+      <li><span class="walk-num">2.</span> Declaring a function</li>
+      <li><span class="walk-num">3.</span> Returning a value</li>
+      <li><span class="walk-num">4.</span> </li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> </li>
+      <li><span class="walk-num">7.</span> </li>
+      <li><span class="walk-num">8.</span> </li>
+      <li><span class="walk-num">9.</span> </li>
+      <li><span class="walk-num">10.</span> </li>
+      <li><span class="walk-num">11.</span> Closing expression</li>
+      <li><span class="walk-num">12.</span> Closing block</li>
+      <li><span class="walk-num">13.</span> </li>
+      <li><span class="walk-num">14.</span> React Native (Mobile) 📱</li>
+      <li><span class="walk-num">15.</span> Same logic, different building blocks!</li>
+      <li><span class="walk-num">16.</span> Importing required dependencies</li>
+      <li><span class="walk-num">17.</span> </li>
+      <li><span class="walk-num">18.</span> Declaring a function</li>
+      <li><span class="walk-num">19.</span> Returning a value</li>
+      <li><span class="walk-num">20.</span> </li>
+      <li><span class="walk-num">21.</span> </li>
+      <li><span class="walk-num">22.</span> </li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> </li>
+      <li><span class="walk-num">25.</span> </li>
+      <li><span class="walk-num">26.</span> </li>
+      <li><span class="walk-num">27.</span> Closing expression</li>
+      <li><span class="walk-num">28.</span> Closing block</li>
+      <li><span class="walk-num">29.</span> </li>
+      <li><span class="walk-num">30.</span> Declaring a variable</li>
+      <li><span class="walk-num">31.</span> </li>
+      <li><span class="walk-num">32.</span> </li>
+      <li><span class="walk-num">33.</span> </li>
+      <li><span class="walk-num">34.</span> </li>
+      <li><span class="walk-num">35.</span> Closing block</li>
+      <li><span class="walk-num">36.</span> </li>
+      <li><span class="walk-num">37.</span> </li>
+      <li><span class="walk-num">38.</span> </li>
+      <li><span class="walk-num">39.</span> Closing block</li>
+      <li><span class="walk-num">40.</span> </li>
+      <li><span class="walk-num">41.</span> </li>
+      <li><span class="walk-num">42.</span> The translation table 📋</li>
+      <li><span class="walk-num">43.</span> Web              →  Mobile</li>
+      <li><span class="walk-num">44.</span> div              →  View</li>
+      <li><span class="walk-num">45.</span> p, span, h1      →  Text</li>
+      <li><span class="walk-num">46.</span> button           →  TouchableOpacity</li>
+      <li><span class="walk-num">47.</span> img              →  Image</li>
+      <li><span class="walk-num">48.</span> input            →  TextInput</li>
+      <li><span class="walk-num">49.</span> onClick          →  onPress</li>
+      <li><span class="walk-num">50.</span> className        →  style prop</li>
+      <li><span class="walk-num">51.</span> CSS              →  StyleSheet</li>
+      <li><span class="walk-num">52.</span> </li>
+      <li><span class="walk-num">53.</span> Shared code between React &amp; React Native ✨</li>
+      <li><span class="walk-num">54.</span> In services/api.ts</li>
+      <li><span class="walk-num">55.</span> Exporting for use in other files</li>
+      <li><span class="walk-num">56.</span> Declaring a variable</li>
+      <li><span class="walk-num">57.</span> Returning a value</li>
+      <li><span class="walk-num">58.</span> Closing block</li>
+      <li><span class="walk-num">59.</span> </li>
+      <li><span class="walk-num">60.</span> In Web component</li>
+      <li><span class="walk-num">61.</span> Importing required dependencies</li>
+      <li><span class="walk-num">62.</span> Declaring a function</li>
+      <li><span class="walk-num">63.</span> Declaring a variable</li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> </li>
+      <li><span class="walk-num">66.</span> </li>
+      <li><span class="walk-num">67.</span> </li>
+      <li><span class="walk-num">68.</span> </li>
+      <li><span class="walk-num">69.</span> Returning a value</li>
+      <li><span class="walk-num">70.</span> </li>
+      <li><span class="walk-num">71.</span> </li>
+      <li><span class="walk-num">72.</span> </li>
+      <li><span class="walk-num">73.</span> Closing expression</li>
+      <li><span class="walk-num">74.</span> Closing block</li>
+      <li><span class="walk-num">75.</span> </li>
+      <li><span class="walk-num">76.</span> In Mobile component — SAME logic!</li>
+      <li><span class="walk-num">77.</span> Importing required dependencies</li>
+      <li><span class="walk-num">78.</span> Declaring a function</li>
+      <li><span class="walk-num">79.</span> Declaring a variable</li>
+      <li><span class="walk-num">80.</span> </li>
+      <li><span class="walk-num">81.</span> </li>
+      <li><span class="walk-num">82.</span> </li>
+      <li><span class="walk-num">83.</span> </li>
+      <li><span class="walk-num">84.</span> </li>
+      <li><span class="walk-num">85.</span> Returning a value</li>
+      <li><span class="walk-num">86.</span> </li>
+      <li><span class="walk-num">87.</span> </li>
+      <li><span class="walk-num">88.</span> </li>
+      <li><span class="walk-num">89.</span> Closing expression</li>
+      <li><span class="walk-num">90.</span> Closing block</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// React Native
+function Welcome() {
+  return (
+    &lt;div className=&quot;container&quot;&gt;
+      &lt;h1&gt;Hello Mobile!&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Can you use HTML elements in React Native?</div></details><details><summary>Show answer</summary><div class="answer">React Native doesn&#39;t use HTML elements. Fix: replace &lt;div&gt; with &lt;View&gt;, &lt;h1&gt; with &lt;Text&gt;, and className with style prop. Import View and Text from &#39;react-native&#39;.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">React is a musician who plays in a concert hall (websites). React Native is the SAME musician who plays at an outdoor festival (phones). Same songs (JavaScript), same talent, but different stage equipment! The concert hall has big speakers (browsers), the festival has portable amps (phone components).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Shopify rewrote their entire mobile app in React Native and now 80% of code is shared between iOS and Android. That&#39;s like getting 2 apps for the price of 1.2! 💰</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Compare a React button and React Native TouchableOpacity. Write the same component for both platforms!</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://reactnative.dev/docs/getting-started" target="_blank" rel="noopener noreferrer">React Native Documentation</a> <span class="res-source">(React Native Official)</span></li>
+      <li><a href="https://docs.expo.dev/" target="_blank" rel="noopener noreferrer">Expo Documentation</a> <span class="res-source">(Expo Official)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=gvkqT_Uoahw" target="_blank" rel="noopener noreferrer">React Native in 100 Seconds</a> <span class="res-source">(Fireship)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=34">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./33-what-is-a-monorepo.html" rel="prev">← What is a Monorepo?</a>
+  <a class="nav-next" href="./35-putting-it-all-together.html" rel="next">Putting It All Together →</a>
+</nav>
+
+<a class="back-to-course" href="/c/js-ts-fun-book.html">← Back to course: Full-Stack Playbook</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

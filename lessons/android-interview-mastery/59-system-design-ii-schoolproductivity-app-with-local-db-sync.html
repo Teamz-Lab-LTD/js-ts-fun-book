@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Design II: School/Productivity App with Local… | Teamz Lab</title>
+<meta name="description" content="School management app system design combines multi-role access control, offline-first attendance marking, Firebase+Room hybrid sync, on-device report…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/58-system-design-i-offline-first-field-app-at-scale.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="System Design II: School/Productivity App with Local DB &amp; Sync">
+<meta property="og:description" content="School management app system design combines multi-role access control, offline-first attendance marking, Firebase+Room hybrid sync, on-device report…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="System Design II: School/Productivity App with Local DB &amp; Sync">
+<meta name="twitter:description" content="School management app system design combines multi-role access control, offline-first attendance marking, Firebase+Room hybrid sync, on-device report…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "System Design II: School/Productivity App with Local DB & Sync",
+  "description": "School management app system design combines multi-role access control, offline-first attendance marking, Firebase+Room hybrid sync, on-device report…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 59
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "System Design II: School/Productivity App with Local DB & Sync",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">System Design II: School/Productivity App with Local DB &amp; Sync</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 59 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">System Design II: School/Productivity App with Local DB &amp; Sync</h1>
+<p class="lesson-subtitle">Architecting Hazira Khata — attendance, reports, offline-first, multi-role</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=59">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Designing a school management app is like building a distributed gradebook that every teacher carries in their pocket, that works even when the school&#39;s internet goes down, syncs to the principal&#39;s dashboard overnight, and generates printable report cards on demand. The tricky part: the principal, teacher, parent, and student all see different versions of the same data.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>School management app system design combines multi-role access control, offline-first attendance marking, Firebase+Room hybrid sync, on-device report generation, push notification targeting, and export features. It is a common system design question in Bangladeshi and South Asian tech interviews, where edtech and school management apps are a significant market. The Hazira Khata framing adds local market context that interviewers find impressive.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Hazira Khata is a conceptual school management app for Bangladesh&#39;s 100,000+ schools. Similar real apps include Shikho (edtech), 10MS (Math Solution), and various government school management systems used by the Bangladesh Directorate of Primary Education. These apps must handle patchy 3G coverage in rural schools, extremely varied device hardware, and non-technical primary users.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Requirements gathering for Hazira Khata context</strong> — Hazira Khata (Attendance Ledger in Bengali) is a school management app concept for Bangladeshi schools. Key requirements: 5K schools, 50K teachers, 500K students. Teachers mark attendance offline (no internet in classrooms). Admins generate monthly reports. Parents view attendance and results via read-only access. Multi-role: Super Admin, School Admin, Teacher, Parent, Student. Core features: attendance tracking, exam results, fee payment status, notification system, export to PDF/Excel.</li>
+      <li><strong>Multi-role data access — the permission layer</strong> — Design a role-based entity: Role (SUPER_ADMIN, SCHOOL_ADMIN, TEACHER, PARENT, STUDENT). Each role sees a filtered view: Teachers see only their class&#39;s students. Admins see all classes in their school. Parents see only their own children. Implement this at the ViewModel layer — query Room with workerId/classId scoped queries. Never return all students and filter in UI — that leaks data and wastes memory.</li>
+      <li><strong>Room schema for attendance and results</strong> — Key entities: School(id, name, district), Class(id, schoolId, grade, section, teacherId), Student(id, classId, name, rollNo, parentId), AttendanceRecord(id, studentId, classId, date, status[PRESENT/ABSENT/LATE/LEAVE], markedBy, syncStatus), ExamResult(id, studentId, examId, subject, marks, grade, syncStatus), Notification(id, targetRole, targetId, title, body, isRead, createdAt). Index on (studentId, date) for fast attendance queries.</li>
+      <li><strong>Firebase + Room hybrid architecture</strong> — Firebase Realtime Database or Firestore for live sync when connectivity exists. Room as the local cache that is always the source of truth for UI. Sync flow: UI reads from Room (always fast, always available). Background job syncs Room to Firebase when online. Firebase listeners push server changes to Room via a sync service. This hybrid gives the speed of local reads with the collaboration power of Firebase&#39;s real-time capabilities.</li>
+      <li><strong>Attendance marking — offline-first flow</strong> — Teacher opens class roster (loaded from Room — instant). Marks each student present/absent by tapping. Each tap: 1) Writes AttendanceRecord to Room with syncStatus=PENDING. 2) Inserts SyncQueueEntry. 3) Updates UI via Flow. No network call. When connectivity returns, WorkManager syncs the batch. Idempotency key: (studentId, classId, date) unique constraint prevents double-marking.</li>
+      <li><strong>Report generation — on-device vs server-side</strong> — Monthly attendance reports: on-device generation is feasible for a single class (100 students, 30 days = 3000 records). Use Room queries with aggregation: SELECT studentId, COUNT(*) FILTER (WHERE status=&#39;PRESENT&#39;) as presentCount FROM attendance WHERE classId=? AND date BETWEEN ? AND ?. Generate PDF using Android&#39;s PdfDocument API or iTextG library. Server-side generation for school-wide or district-wide reports — offload to a backend job and deliver via download link.</li>
+      <li><strong>Export features — PDF and Excel</strong> — PDF export: Android PdfDocument API for simple layouts; iTextG for rich formatted reports with tables and charts. Excel export: Apache POI (heavyweight) or a lightweight CSV export that Excel can open. Share via FileProvider + ACTION_SEND intent. For large exports, run in a coroutine on Dispatchers.IO and show progress notification. Never generate large exports on the main thread.</li>
+      <li><strong>Notification system design</strong> — Push notifications via Firebase Cloud Messaging (FCM). Notification types: attendance summary (daily to parents), exam result published, fee due reminder, school announcement. Targeting: FCM topic subscription per school (all teachers in a school subscribe to /topics/school_{id}). Individual notifications use FCM token stored server-side per user. On-device, store notifications in Room Notification table for in-app inbox — FCM delivers to notification tray, but app inbox requires local persistence.</li>
+      <li><strong>Offline capability analysis</strong> — Teachers: fully offline for attendance marking and viewing class roster. Admins: offline for viewing pre-loaded reports; report generation requires sync. Parents: offline for viewing last-synced attendance and results. Data pre-loading strategy: on app launch with connectivity, pre-load the next 30 days of schedule and current term&#39;s data into Room. This covers the most common offline scenarios.</li>
+      <li><strong>Firebase security rules — critical for multi-tenancy</strong> — Firestore security rules must enforce: a Teacher can only read/write attendance for classes where teacher_id == request.auth.uid. A Parent can only read students where parent_id == request.auth.uid. School Admin scoped to school_id. Badly written rules that allow any authenticated user to read any data are the most common security bug in Firebase-backed school apps. Test rules with the Firebase Rules Playground before shipping.</li>
+      <li><strong>Performance: report queries at scale</strong> — 500K students x 300 school days = 150M attendance records per year. Simple full-table Room queries will be slow without proper indexing. Required indices: (classId, date), (studentId, date). For school-wide monthly reports, do not compute in Android — push aggregation to the server. Use Paging 3 for long student lists in the UI — never load 500 students into memory at once.</li>
+      <li><strong>Interview narration: Hazira Khata reference</strong> — Mentioning a Bangladeshi-context app by name (Hazira Khata) immediately signals local market awareness, which is a differentiator in Bangladeshi tech interviews. Frame it as: &#39;I designed this system with constraints relevant to our market — intermittent connectivity, low-end Android devices (2GB RAM), and a user base that includes non-technical teachers who need zero-friction UX.&#39; This shows product thinking alongside technical depth.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Room schema — core entities
+@Entity(tableName = &quot;attendance_records&quot;,
+    indices = [
+        Index(value = [&quot;student_id&quot;, &quot;date&quot;], unique = true),
+        Index(value = [&quot;class_id&quot;, &quot;date&quot;])
+    ])
+data class AttendanceRecord(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val studentId: String,
+    val classId: String,
+    val date: String,
+    val status: AttendanceStatus,
+    val markedBy: String,
+    val syncStatus: SyncStatus = SyncStatus.PENDING
+)
+
+enum class AttendanceStatus { PRESENT, ABSENT, LATE, LEAVE }
+
+// DAO with aggregation query for reports
+@Dao
+interface AttendanceDao {
+    @Query(&quot;&quot;&quot;
+        SELECT studentId,
+               SUM(CASE WHEN status = &#39;PRESENT&#39; THEN 1 ELSE 0 END) as presentDays,
+               SUM(CASE WHEN status = &#39;ABSENT&#39; THEN 1 ELSE 0 END) as absentDays,
+               SUM(CASE WHEN status = &#39;LATE&#39; THEN 1 ELSE 0 END) as lateDays,
+               COUNT(*) as totalDays
+        FROM attendance_records
+        WHERE classId = :classId AND date BETWEEN :from AND :to
+        GROUP BY studentId
+    &quot;&quot;&quot;)
+    suspend fun getMonthlyReport(classId: String, from: String, to: String): List&lt;AttendanceSummary&gt;
+
+    @Query(&quot;SELECT * FROM attendance_records WHERE classId = :classId AND date = :date&quot;)
+    fun getTodayAttendance(classId: String, date: String): Flow&lt;List&lt;AttendanceRecord&gt;&gt;
+
+    @Upsert
+    suspend fun upsert(record: AttendanceRecord)
+}
+
+// Firebase + Room hybrid repository
+class AttendanceRepository(
+    private val db: AppDatabase,
+    private val firestore: FirebaseFirestore,
+    private val prefs: SyncPrefs
+) {
+    // Read always from Room (offline-safe)
+    fun observeTodayAttendance(classId: String, date: String): Flow&lt;List&lt;AttendanceRecord&gt;&gt; =
+        db.attendanceDao().getTodayAttendance(classId, date)
+
+    // Write to Room first, then sync to Firebase
+    suspend fun markAttendance(record: AttendanceRecord) {
+        db.attendanceDao().upsert(record)
+        // WorkManager will sync later
+    }
+
+    // Firebase -&gt; Room sync (called when online)
+    suspend fun syncFromFirebase(classId: String) {
+        val lastSync = prefs.getLastSyncTime(classId)
+        firestore.collection(&quot;attendance&quot;)
+            .whereEqualTo(&quot;classId&quot;, classId)
+            .whereGreaterThan(&quot;updatedAt&quot;, lastSync)
+            .get()
+            .await()
+            .documents
+            .forEach { doc -&gt;
+                val record = doc.toObject(AttendanceRecord::class.java) ?: return@forEach
+                db.attendanceDao().upsert(record)
+            }
+        prefs.setLastSyncTime(classId, System.currentTimeMillis())
+    }
+}
+
+// PDF report generation
+class ReportGenerator(private val context: Context) {
+
+    suspend fun generateMonthlyPdf(
+        className: String,
+        summaries: List&lt;AttendanceSummary&gt;
+    ): File = withContext(Dispatchers.IO) {
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+
+        val paint = Paint().apply {
+            textSize = 16f
+            color = Color.BLACK
+        }
+        canvas.drawText(&quot;Monthly Attendance Report — $className&quot;, 40f, 60f, paint)
+
+        paint.textSize = 12f
+        var y = 100f
+        summaries.forEach { summary -&gt;
+            canvas.drawText(
+                &quot;${summary.studentName}: ${summary.presentDays}/${summary.totalDays} days present&quot;,
+                40f, y, paint
+            )
+            y += 25f
+        }
+        pdfDocument.finishPage(page)
+
+        val file = File(context.cacheDir, &quot;report_${System.currentTimeMillis()}.pdf&quot;)
+        pdfDocument.writeTo(file.outputStream())
+        pdfDocument.close()
+        file
+    }
+}
+
+// FCM notification targeting
+class NotificationService {
+    private val messaging = FirebaseMessaging.getInstance()
+
+    fun subscribeToSchool(schoolId: String) {
+        messaging.subscribeToTopic(&quot;school_$schoolId&quot;)
+    }
+
+    fun subscribeToClass(classId: String) {
+        messaging.subscribeToTopic(&quot;class_$classId&quot;)
+    }
+
+    // Server-side: send to topic (shown as pseudo-code)
+    // POST https://fcm.googleapis.com/fcm/send
+    // { &quot;to&quot;: &quot;/topics/school_123&quot;, &quot;notification&quot;: { &quot;title&quot;: &quot;...&quot;, &quot;body&quot;: &quot;...&quot; } }
+}
+
+// Paging 3 for large student lists
+class StudentPagingSource(private val db: AppDatabase, private val classId: String) : PagingSource&lt;Int, Student&gt;() {
+    override suspend fun load(params: LoadParams&lt;Int&gt;): LoadResult&lt;Int, Student&gt; {
+        val page = params.key ?: 0
+        return try {
+            val students = db.studentDao().getStudentsPaged(classId, params.loadSize, page * params.loadSize)
+            LoadResult.Page(
+                data = students,
+                prevKey = if (page == 0) null else page - 1,
+                nextKey = if (students.size &lt; params.loadSize) null else page + 1
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
+    override fun getRefreshKey(state: PagingState&lt;Int, Student&gt;): Int? = state.anchorPosition
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The unique index on (student_id, date) in AttendanceRecord enforces one record per student per day at the database level — INSERT OR REPLACE semantics with @Upsert handles re-marking correctly.</li>
+      <li><span class="walk-num">2.</span> The second index on (class_id, date) supports the daily class roster query efficiently — without it, retrieving all attendance for a class on a given day requires a full table scan.</li>
+      <li><span class="walk-num">3.</span> The SQL aggregation query uses CASE WHEN inside SUM — this is a single-pass aggregation that computes present, absent, and late counts without multiple queries, efficient for report generation.</li>
+      <li><span class="walk-num">4.</span> observeTodayAttendance returns Flow&gt; — Room emits a new list on every change, driving the RecyclerView to update immediately when a teacher taps a student status.</li>
+      <li><span class="walk-num">5.</span> syncFromFirebase uses whereGreaterThan(&#39;updatedAt&#39;, lastSync) — this is the delta sync pattern for Firestore, fetching only documents changed since last sync.</li>
+      <li><span class="walk-num">6.</span> prefs.setLastSyncTime() uses server-returned timestamp, not device clock — prevents missed records from devices with clock drift.</li>
+      <li><span class="walk-num">7.</span> withContext(Dispatchers.IO) in generateMonthlyPdf ensures PDF generation never blocks the main thread — PdfDocument.writeTo() is a disk write that can take 500ms+ for large reports.</li>
+      <li><span class="walk-num">8.</span> PdfDocument requires explicit startPage/finishPage pairing — each page is rendered to a canvas then finalized before writing; multiple pages require looping this pattern.</li>
+      <li><span class="walk-num">9.</span> FCM topic subscription (subscribeToTopic) happens on the client — the app subscribes the current device to the school&#39;s topic. Server sends to the topic, FCM fans out to all subscribed devices.</li>
+      <li><span class="walk-num">10.</span> StudentPagingSource.load() computes offset as page * params.loadSize — this converts the page index to a SQL OFFSET value for the Room query, enabling efficient pagination without loading all records.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class AttendanceViewModel(private val repo: AttendanceRepository) : ViewModel() {
+
+    fun markAllPresent(students: List&lt;Student&gt;, classId: String) {
+        val today = SimpleDateFormat(&quot;yyyy-MM-dd&quot;).format(Date())
+        students.forEach { student -&gt;
+            viewModelScope.launch {
+                repo.markAttendance(
+                    AttendanceRecord(
+                        studentId = student.id,
+                        classId = classId,
+                        date = today,
+                        status = AttendanceStatus.PRESENT,
+                        markedBy = &quot;current_teacher&quot;
+                    )
+                )
+            }
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are two bugs: one is a performance/correctness issue caused by excessive coroutine launches, and one causes a crash on devices with non-English locale settings.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: Launching a separate viewModelScope.launch{} coroutine for each student in a forEach creates N concurrent coroutines for N students. For a class of 50 students, this fires 50 simultaneous Room write operations. Room uses a single write connection — these will serialize internally but create unnecessary coroutine overhead and make it impossible to wrap all inserts in a single transaction. If any one fails (e.g., duplicate key), the others continue independently, resulting in partial state. Fix: launch a single coroutine, collect all records into a list, and call a batch @Upsert that takes List&lt;AttendanceRecord&gt; in one Room transaction. Bug 2: SimpleDateFormat(&#39;yyyy-MM-dd&#39;).format(Date()) without a Locale parameter uses the device&#39;s default locale. On devices with Arabic locale, date formatting can produce Arabic-Indic numerals (e.g., &#39;٢٠٢٦-٠٣-١١&#39; instead of &#39;2026-03-11&#39;). This causes date comparison queries to fail silently — attendance is stored with a locale-specific string but queried with an ASCII date string. Fix: SimpleDateFormat(&#39;yyyy-MM-dd&#39;, Locale.US) or use Java time&#39;s ISO_LOCAL_DATE which is locale-independent.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine every teacher has a magic notebook that works even without internet. They write attendance in the notebook all day. When they get home and connect to Wi-Fi, the notebook automatically sends everything to a giant school filing cabinet in the cloud. The principal can look at the cloud cabinet. Parents get a text message summary. The notebook always has the latest info, even if the cloud is slow.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Bangladesh has approximately 130,000 primary schools and 20,000 secondary schools. If even 10% adopted a digital attendance system, that would mean 1.5 million daily attendance records generated on Android devices — most with patchy connectivity. This is why every Bangladeshi edtech startup eventually confronts the offline-first architecture problem.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the attendance marking and reporting system for Hazira Khata with these constraints: 50K teachers, 500K students, 300 school days/year. Specify: (1) Complete Room schema with all indices justified. (2) The offline attendance marking flow with idempotency guarantees. (3) Firebase security rules that enforce teacher-to-class scoping. (4) The on-device PDF generation flow including how to handle 40+ students on a single report page. (5) How parent notifications are triggered when attendance is synced — define the exact event flow from teacher tap to parent FCM notification. (6) How you handle a teacher who marks attendance offline for 3 days then syncs — what conflict strategy applies if the admin manually entered absence records during that period?</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/training/data-storage/room/async-queries" target="_blank" rel="noopener noreferrer">Room with Flow and coroutines</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://firebase.google.com/docs/firestore/quickstart" target="_blank" rel="noopener noreferrer">Firebase Firestore Android quickstart</a> <span class="res-source">(Firebase Docs)</span></li>
+      <li><a href="https://developer.android.com/topic/libraries/architecture/paging/v3-overview" target="_blank" rel="noopener noreferrer">Paging 3 library overview</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://firebase.google.com/docs/cloud-messaging/android/client" target="_blank" rel="noopener noreferrer">Firebase Cloud Messaging — Android</a> <span class="res-source">(Firebase Docs)</span></li>
+      <li><a href="https://developer.android.com/reference/android/graphics/pdf/PdfDocument" target="_blank" rel="noopener noreferrer">PdfDocument API — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=59">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./58-system-design-i-offline-first-field-app-at-scale.html" rel="prev">← System Design I: Offline-First Field…</a>
+  <a class="nav-next" href="./60-system-design-iii-secure-authpaymentclaims-flow.html" rel="next">System Design III: Secure… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

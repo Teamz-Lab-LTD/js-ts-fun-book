@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8237 DMA Controller — Microprocessor A–Z | Teamz Lab</title>
+<meta name="description" content="The 8237 DMA Controller enables peripheral devices to transfer data directly to/from memory without CPU involvement. It has 4 channels, each with address…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/43-8237-dma-controller.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/42-8259-programmable-interrupt-controller.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/44-8251-usart-and-serial-communication-basics.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="8237 DMA Controller">
+<meta property="og:description" content="The 8237 DMA Controller enables peripheral devices to transfer data directly to/from memory without CPU involvement. It has 4 channels, each with address…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/43-8237-dma-controller.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="8237 DMA Controller">
+<meta name="twitter:description" content="The 8237 DMA Controller enables peripheral devices to transfer data directly to/from memory without CPU involvement. It has 4 channels, each with address…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "8237 DMA Controller",
+  "description": "The 8237 DMA Controller enables peripheral devices to transfer data directly to/from memory without CPU involvement. It has 4 channels, each with address…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/43-8237-dma-controller.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 43
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "8237 DMA Controller",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/43-8237-dma-controller.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">8237 DMA Controller</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 43 of 48</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">8237 DMA Controller</h1>
+<p class="lesson-subtitle">Data Transfer Without CPU Overhead</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=43">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine you are a manager (CPU) who normally carries every box from the warehouse (memory) to the shipping dock (I/O device) yourself — one box at a time, reading the label, picking it up, walking over, putting it down. The 8237 DMA is like hiring a forklift driver who takes over: you tell him &#39;move 1000 boxes from aisle 5 to the dock,&#39; and he does it all while you sit at your desk doing other paperwork. You only lend him your hallway (bus) while he works.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The 8237 DMA Controller enables peripheral devices to transfer data directly to/from memory without CPU involvement. It has 4 channels, each with address and count registers. When a device asserts DREQ, the 8237 requests the bus from the CPU (HRQ/HLDA), then autonomously generates addresses and control signals to move data. It supports single, block, demand, and cascade transfer modes, freeing the CPU for other tasks during bulk data movement.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every modern computer uses DMA extensively. When you copy a large file, the disk controller uses DMA to move data to RAM without CPU intervention. Your sound card uses DMA to stream audio samples. Network cards use DMA to receive packets. Modern DMA controllers are far more capable than the 8237 (scatter-gather lists, virtual addresses), but the fundamental concept — letting hardware move data without the CPU — is identical.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What is DMA and Why Is It Needed?</strong> — DMA (Direct Memory Access) allows peripheral devices to transfer data directly to/from memory without the CPU executing instructions for each byte. Without DMA, the CPU must execute IN/OUT and MOV for every byte — using 100% of its time during large transfers (like reading a disk sector of 512 bytes). With DMA, the CPU just sets up the transfer and goes back to computing while the 8237 handles the data movement.</li>
+      <li><strong>8237 Architecture — 4 DMA Channels</strong> — The 8237 has 4 independent DMA channels (CH0-CH3). Each channel has: a 16-bit address register (current address), a 16-bit count register (bytes remaining), and a page register (external, provides upper address bits). The 8237 also contains a command register, mode registers, status register, mask register, and request register for controlling operations.</li>
+      <li><strong>DREQ, DACK, HRQ, and HLDA Signals</strong> — The DMA handshake uses four key signals. DREQ (DMA Request): the peripheral asserts this to request a transfer. DACK (DMA Acknowledge): the 8237 responds, telling the device its channel is active. HRQ (Hold Request): the 8237 asks the CPU to release the bus. HLDA (Hold Acknowledge): the CPU grants the bus to the 8237. Only after HLDA does the 8237 take control of address and data buses.</li>
+      <li><strong>Transfer Modes — Single, Block, Demand, Cascade</strong> — Single Transfer: one byte per DREQ, CPU gets the bus back between bytes. Block Transfer: once started, transfers all N bytes without releasing the bus — fastest but blocks the CPU entirely. Demand Transfer: transfers as long as DREQ is active; if DREQ drops, the 8237 releases the bus and resumes when DREQ returns. Cascade: used to chain 8237s for more channels.</li>
+      <li><strong>Transfer Types — Read, Write, Verify</strong> — The 8237 supports three transfer types. Write transfer: data moves from I/O device to memory (device → memory). Read transfer: data moves from memory to I/O device (memory → device). Verify transfer: the 8237 generates addresses but no actual data transfer occurs — used for testing. Naming convention: &#39;read&#39; and &#39;write&#39; are from memory&#39;s perspective.</li>
+      <li><strong>Programming the 8237 — Register Setup</strong> — To program a DMA transfer: (1) Write the mode register for the channel. (2) Clear the byte pointer flip-flop (ensures LSB-first order). (3) Write the start address (LSB then MSB) to the address register. (4) Write the count minus 1 (LSB then MSB) to the count register. (5) Write the page register (upper address bits). (6) Unmask the channel. The 8237 is now armed and will begin when DREQ is asserted.</li>
+      <li><strong>Page Registers and 64KB Boundaries</strong> — The 8237 has only 16-bit address registers, addressing 64KB. To access the full 8086 address space (1MB), external page registers supply the upper 4 address bits (A16-A19). A DMA transfer CANNOT cross a 64KB page boundary — if it does, the address wraps around within the same page instead of incrementing to the next. Programmers must ensure buffers do not straddle a 64KB boundary.</li>
+      <li><strong>IBM PC DMA Usage</strong> — The IBM PC has two 8237 chips. The first (ports 00h-0Fh) handles 8-bit channels 0-3: CH0 for DRAM refresh, CH2 for floppy disk. The second 8237 (ports C0h-DFh) handles 16-bit channels 5-7: CH5/6/7 for ISA peripherals. CH4 is used for cascading the two 8237s. Sound Blaster cards typically use CH1 for 8-bit audio DMA. The floppy controller&#39;s DMA channel 2 is why floppy access feels seamless even on slow CPUs.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; =============================================
+; 8237 DMA — Floppy Disk Read Setup
+; =============================================
+;
+; Transfer 512 bytes from floppy to memory at 1000h
+; Using DMA Channel 2 (IBM PC floppy channel)
+;
+; Disable DMA channel 2 during setup:
+  MOV AL, 06h           ; mask CH2 (04h + 02h)
+  OUT 0Ah, AL           ; single mask register
+;
+; Set mode: single transfer, write (device→mem), CH2
+  MOV AL, 46h           ; 01 0 0 01 10
+  OUT 0Bh, AL           ; mode register
+;
+; Clear byte pointer flip-flop:
+  MOV AL, 00h
+  OUT 0Ch, AL           ; resets LSB/MSB toggle
+;
+; Set start address = 1000h:
+  MOV AL, 00h           ; address LSB
+  OUT 04h, AL           ; CH2 address register
+  MOV AL, 10h           ; address MSB
+  OUT 04h, AL
+;
+; Set count = 511 (transfers 512 bytes):
+  MOV AL, 0FFh          ; count LSB (01FFh)
+  OUT 05h, AL           ; CH2 count register
+  MOV AL, 01h           ; count MSB
+  OUT 05h, AL
+;
+; Set page register = 0 (physical page 0):
+  MOV AL, 00h
+  OUT 81h, AL           ; CH2 page register
+;
+; Enable DMA channel 2:
+  MOV AL, 02h           ; unmask CH2
+  OUT 0Ah, AL
+;
+; DMA is armed!
+; Now send &#39;read sector&#39; command to floppy controller
+; FDC will assert DREQ2 for each byte
+; 8237 handles the entire 512-byte transfer
+; CPU is FREE to do other work
+; When done: TC asserted → interrupt via IRQ6</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Title comment for floppy disk DMA setup</li>
+      <li><span class="walk-num">2.</span> Separator line</li>
+      <li><span class="walk-num">3.</span> Blank line</li>
+      <li><span class="walk-num">4.</span> Description: transfer 512 bytes from floppy to memory address 1000h</li>
+      <li><span class="walk-num">5.</span> Using DMA Channel 2, which is the standard IBM PC floppy channel</li>
+      <li><span class="walk-num">6.</span> Blank line</li>
+      <li><span class="walk-num">7.</span> First, disable (mask) CH2 so we can safely modify its registers</li>
+      <li><span class="walk-num">8.</span> 06h = mask bit set + channel 2 selection</li>
+      <li><span class="walk-num">9.</span> Write to single mask register at port 0Ah</li>
+      <li><span class="walk-num">10.</span> Blank line</li>
+      <li><span class="walk-num">11.</span> Set the transfer mode for CH2</li>
+      <li><span class="walk-num">12.</span> 46h = single transfer, write (I/O to memory), channel 2</li>
+      <li><span class="walk-num">13.</span> Write to mode register at port 0Bh</li>
+      <li><span class="walk-num">14.</span> Blank line</li>
+      <li><span class="walk-num">15.</span> Clear the byte pointer flip-flop to ensure next write goes to LSB first</li>
+      <li><span class="walk-num">16.</span> Any value written to port 0Ch clears the flip-flop</li>
+      <li><span class="walk-num">17.</span> Write to clear flip-flop register</li>
+      <li><span class="walk-num">18.</span> Blank line</li>
+      <li><span class="walk-num">19.</span> Set the starting memory address to 1000h</li>
+      <li><span class="walk-num">20.</span> First write LSB = 00h to CH2 address register at port 04h</li>
+      <li><span class="walk-num">21.</span> Write LSB</li>
+      <li><span class="walk-num">22.</span> Then write MSB = 10h</li>
+      <li><span class="walk-num">23.</span> Write MSB — CH2 will start transferring to address 1000h</li>
+      <li><span class="walk-num">24.</span> Blank line</li>
+      <li><span class="walk-num">25.</span> Set byte count to 511 (8237 transfers count+1 bytes, so 511+1=512)</li>
+      <li><span class="walk-num">26.</span> LSB of 511 (01FFh) is FFh</li>
+      <li><span class="walk-num">27.</span> Write LSB to CH2 count register at port 05h</li>
+      <li><span class="walk-num">28.</span> MSB is 01h</li>
+      <li><span class="walk-num">29.</span> Write MSB — 8237 will transfer 512 bytes total</li>
+      <li><span class="walk-num">30.</span> Blank line</li>
+      <li><span class="walk-num">31.</span> Set the page register for physical address bits A16-A19</li>
+      <li><span class="walk-num">32.</span> Address 1000h is in page 0 (A19-A16 = 0000)</li>
+      <li><span class="walk-num">33.</span> Write to CH2 page register at port 81h</li>
+      <li><span class="walk-num">34.</span> Blank line</li>
+      <li><span class="walk-num">35.</span> Enable CH2 by clearing its mask bit</li>
+      <li><span class="walk-num">36.</span> 02h = unmask channel 2</li>
+      <li><span class="walk-num">37.</span> Write to single mask register — DMA is now armed and ready</li>
+      <li><span class="walk-num">38.</span> Blank line</li>
+      <li><span class="walk-num">39.</span> Comment: 8237 is waiting for DREQ2 from floppy controller</li>
+      <li><span class="walk-num">40.</span> Comment: send read command to FDC to start the disk operation</li>
+      <li><span class="walk-num">41.</span> Comment: FDC asserts DREQ2 each time a byte is ready</li>
+      <li><span class="walk-num">42.</span> Comment: 8237 handles the complete transfer autonomously</li>
+      <li><span class="walk-num">43.</span> Comment: CPU is free to execute other code during the transfer</li>
+      <li><span class="walk-num">44.</span> Comment: terminal count triggers IRQ6 to notify CPU of completion</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; DMA CH1 transfer 256 bytes to address 2000h
+;
+  MOV AL, 45h          ; mode: single, write, CH1
+  OUT 0Bh, AL
+;
+  OUT 0Ch, AL          ; clear flip-flop
+;
+  MOV AL, 00h
+  OUT 02h, AL          ; CH1 addr LSB
+  MOV AL, 20h
+  OUT 02h, AL          ; CH1 addr MSB
+;
+  MOV AL, 00h          ; count = 256
+  OUT 03h, AL          ; CH1 count LSB
+  MOV AL, 01h
+  OUT 03h, AL          ; CH1 count MSB
+;
+  MOV AL, 01h
+  OUT 0Ah, AL          ; unmask CH1</code></pre><details><summary>Need a hint?</summary><div class="hint">The count register should hold N-1 for N bytes. What value does 0100h represent?</div></details><details><summary>Show answer</summary><div class="answer">The count is loaded with 256 (0100h), but the 8237 transfers count+1 bytes. So this actually transfers 257 bytes, not 256. For 256 bytes, load count-1 = 255 = 00FFh. Fix: change count LSB to FFh (MOV AL, 0FFh) and count MSB to 00h (MOV AL, 00h).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Normally, if you want to move toys from one box to another, YOU have to pick up each toy and carry it. That takes all your time! DMA is like having a robot arm that moves the toys for you. You just tell the robot: &#39;Move 10 toys from the red box to the blue box.&#39; The robot does all the carrying while you go play with other things. When the robot finishes, it taps you on the shoulder (interrupt) and says &#39;All done!&#39;</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 8237 DMA controller could transfer data at about 1.6 MB/s in the original IBM PC — which was actually faster than the CPU could manage with programmed I/O loops. This speed advantage was crucial for floppy disk access: without DMA, the 4.77 MHz 8088 could barely keep up with the floppy data rate, and missed bytes would require re-reading the entire track. DMA made reliable floppy access possible on early PCs.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Program the 8237 to transfer 1024 bytes from a hypothetical ADC (Analog-to-Digital Converter) device on DMA channel 1 into a memory buffer at physical address 28000h. Calculate the page register value, determine if the transfer crosses a 64KB boundary, and write the complete setup code including mode, address, count, page, and unmask.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=2kCKMSKlvVM" target="_blank" rel="noopener noreferrer">DMA Controller 8237 Explained</a> <span class="res-source">(Neso Academy)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/8237-dma-controller/" target="_blank" rel="noopener noreferrer">8237 DMA Controller</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://datasheetspdf.com/pdf/79strona/1/Intel/8237A" target="_blank" rel="noopener noreferrer">Intel 8237A Datasheet</a> <span class="res-source">(Intel)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=tDFxBaVksBw" target="_blank" rel="noopener noreferrer">How DMA Works in Computers</a> <span class="res-source">(Education 4u)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=43">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./42-8259-programmable-interrupt-controller.html" rel="prev">← 8259 Programmable Interrupt Controller</a>
+  <a class="nav-next" href="./44-8251-usart-and-serial-communication-basics.html" rel="next">8251 USART and Serial Communication… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

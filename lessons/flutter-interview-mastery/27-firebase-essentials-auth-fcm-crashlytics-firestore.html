@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firebase Essentials: Auth, FCM, Crashlytics, Firestore… | Teamz Lab</title>
+<meta name="description" content="Firebase provides a suite of production services for Flutter apps: Firebase Auth for identity, FCM for push notifications, Crashlytics for crash reporting…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/27-firebase-essentials-auth-fcm-crashlytics-firestore.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/26-offline-first-architecture-sync.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/28-caching-pagination-lazy-loading-list-performance.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firebase Essentials: Auth, FCM, Crashlytics, Firestore">
+<meta property="og:description" content="Firebase provides a suite of production services for Flutter apps: Firebase Auth for identity, FCM for push notifications, Crashlytics for crash reporting…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/27-firebase-essentials-auth-fcm-crashlytics-firestore.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Firebase Essentials: Auth, FCM, Crashlytics, Firestore">
+<meta name="twitter:description" content="Firebase provides a suite of production services for Flutter apps: Firebase Auth for identity, FCM for push notifications, Crashlytics for crash reporting…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Firebase Essentials: Auth, FCM, Crashlytics, Firestore",
+  "description": "Firebase provides a suite of production services for Flutter apps: Firebase Auth for identity, FCM for push notifications, Crashlytics for crash reporting…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/27-firebase-essentials-auth-fcm-crashlytics-firestore.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 27
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Firebase Essentials: Auth, FCM, Crashlytics, Firestore",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/27-firebase-essentials-auth-fcm-crashlytics-firestore.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Firebase Essentials: Auth, FCM, Crashlytics, Firestore</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 27 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Firebase Essentials: Auth, FCM, Crashlytics, Firestore</h1>
+<p class="lesson-subtitle">Production Firebase Integration Every Flutter Dev Must Know</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=27">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Firebase is like hiring a team of specialists for your app: a security guard (Auth) who checks IDs at the door, a mail carrier (FCM) who delivers push notifications even when the app is closed, a black-box recorder (Crashlytics) that captures everything right before a crash, and a live spreadsheet (Firestore) that updates everyone&#39;s screen the moment a value changes.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Firebase provides a suite of production services for Flutter apps: Firebase Auth for identity, FCM for push notifications, Crashlytics for crash reporting, Firestore for real-time cloud database, and Remote Config for feature flags. Understanding the correct integration patterns and security model is essential for production apps.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a school management platform: Firebase Auth handles teacher/admin login with Google Sign-In and custom backend JWT via ID tokens. Crashlytics captures production crashes with userId and screenName breadcrumbs. FCM sends instant notifications when a student submits an assignment. Firestore powers the real-time attendance board with live document listeners. Remote Config enables/disables the beta AI feedback feature per school without an app store update.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Firebase Auth — Multiple Flows</strong> — Firebase Auth handles email/password, Google Sign-In, Apple Sign-In, phone OTP, and anonymous auth. Key concepts: User object persists across app restarts via FirebaseAuth.instance.currentUser. authStateChanges() stream rebuilds UI on sign-in/sign-out. idToken() provides a JWT for authenticating backend API calls. Refresh tokens automatically — the SDK handles expiry.</li>
+      <li><strong>Auth State as the Router Guard</strong> — Wrap your app router with an authStateChanges() StreamBuilder. If user is null, show onboarding/login. If user is non-null, show the authenticated app. With GoRouter: use redirect and refreshListenable (a ChangeNotifier wrapping the auth stream) to automatically redirect on auth state changes. This is the production pattern for auth-gated routing.</li>
+      <li><strong>ID Token for Backend Authentication</strong> — When your app uses a custom backend not just Firestore, pass Firebase&#39;s ID token to your API: final token = await user.getIdToken(). The backend verifies this token using the Firebase Admin SDK — no custom JWT infrastructure needed. The token auto-refreshes every hour — getIdToken() returns a cached token and refreshes it transparently.</li>
+      <li><strong>FCM Push Notifications</strong> — Firebase Cloud Messaging delivers push notifications in foreground, background, and terminated state. Three notification types: display notification (system handles UI), data message (app handles in background handler), notification plus data (both). Handle all three states: FirebaseMessaging.onMessage for foreground, FirebaseMessaging.onMessageOpenedApp for background tap, FirebaseMessaging.instance.getInitialMessage for terminated tap.</li>
+      <li><strong>FCM Token Management</strong> — Each device has an FCM token — a unique address for push delivery. Register the token to your backend on login. Refresh the token when FirebaseMessaging.instance.onTokenRefresh fires (tokens change when app is reinstalled or user clears data). Delete the token on logout. Without token refresh handling, users stop receiving notifications after reinstalling.</li>
+      <li><strong>Crashlytics Integration</strong> — Firebase Crashlytics captures fatal crashes automatically. For Flutter errors: FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError. For Dart async errors: PlatformDispatcher.instance.onError. Set user identifiers: crashlytics.setUserIdentifier(userId). Add custom keys: crashlytics.setCustomKey(&#39;workspace_id&#39;, workspaceId). Log breadcrumbs: crashlytics.log(&#39;User opened payment screen&#39;).</li>
+      <li><strong>Firestore Queries and Indexes</strong> — Firestore is a NoSQL document database with real-time listeners. Key query patterns: collection().where().orderBy().limit() requires a composite index for where plus orderBy. Subcollection pattern for scalable data modeling. snapshots() returns a Stream — use StreamBuilder for real-time UI. Firestore charges per read — design your data model to minimize reads per screen load.</li>
+      <li><strong>Firestore Security Rules</strong> — Security rules run server-side and are the only real authorization layer for Firestore. Never trust client-side auth alone. Rules: allow read if request.auth.uid == resource.data.userId. For complex apps, Firestore rules become complex — test them with the Firebase emulator and the Rules Playground. Missing rules are the number one security vulnerability in Firebase-backed apps.</li>
+      <li><strong>Remote Config for Feature Flags</strong> — Firebase Remote Config delivers key-value parameters to the app without a store update. Use for: feature flags like enable_new_checkout, experiment parameters, emergency kill switches like maintenance_mode. Fetch with setConfigSettings(minimumFetchInterval) — in production, use a 1-hour interval. Apply with activate(). Check with getBool(&#39;enable_new_checkout&#39;).</li>
+      <li><strong>Firestore Offline Persistence</strong> — Firestore has built-in offline persistence enabled by default on mobile. Reads return cached data when offline. Writes are queued and synced when online automatically. This gives basic offline support for free, but it is not the full offline-first architecture from Lesson 26 — there is no sync queue, no conflict resolution, and no control over sync behavior.</li>
+      <li><strong>Firebase Emulator for Local Dev</strong> — The Firebase Local Emulator Suite runs Auth, Firestore, FCM, and more locally. No billing, no production data risk. In Flutter: use dart-define to switch Firebase config between emulator and production. CI pipelines should run against the emulator. This is the production development workflow — never test FCM or Firestore against production during development.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:firebase_auth/firebase_auth.dart&#39;;
+import &#39;package:firebase_messaging/firebase_messaging.dart&#39;;
+import &#39;package:firebase_crashlytics/firebase_crashlytics.dart&#39;;
+import &#39;package:cloud_firestore/cloud_firestore.dart&#39;;
+import &#39;package:firebase_remote_config/firebase_remote_config.dart&#39;;
+
+Future&lt;void&gt; main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Crashlytics — catch all Flutter and Dart errors
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  // FCM background handler must be top-level
+  FirebaseMessaging.onBackgroundMessage(_fcmBackgroundHandler);
+  runApp(const App());
+}
+
+@pragma(&#39;vm:entry-point&#39;)
+Future&lt;void&gt; _fcmBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  await _processNotificationData(message.data);
+}
+
+// Auth with GoRouter
+class AuthNotifier extends ChangeNotifier {
+  final FirebaseAuth _auth;
+  User? _currentUser;
+  StreamSubscription&lt;User?&gt;? _sub;
+
+  AuthNotifier(this._auth) {
+    _sub = _auth.authStateChanges().listen((user) {
+      _currentUser = user;
+      notifyListeners();
+    });
+  }
+
+  bool get isAuthenticated =&gt; _currentUser != null;
+  Future&lt;String?&gt; getIdToken() =&gt; _currentUser?.getIdToken();
+  Future&lt;void&gt; signOut() =&gt; _auth.signOut();
+
+  @override
+  void dispose() { _sub?.cancel(); super.dispose(); }
+}
+
+// FCM Token Management
+class NotificationService {
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+  final UserApi _api;
+  NotificationService(this._api);
+
+  Future&lt;void&gt; initialize() async {
+    final settings = await _messaging.requestPermission(alert: true, badge: true, sound: true);
+    if (settings.authorizationStatus != AuthorizationStatus.authorized) return;
+
+    final token = await _messaging.getToken();
+    if (token != null) await _api.registerFcmToken(token);
+
+    _messaging.onTokenRefresh.listen((newToken) =&gt; _api.registerFcmToken(newToken));
+    FirebaseMessaging.onMessage.listen(_handleForeground);
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+    final initial = await _messaging.getInitialMessage();
+    if (initial != null) _handleTap(initial);
+  }
+
+  void _handleForeground(RemoteMessage message) =&gt;
+      debugPrint(&#39;Foreground: ${message.notification?.title}&#39;);
+
+  void _handleTap(RemoteMessage message) {
+    final screen = message.data[&#39;screen&#39;] as String?;
+    if (screen != null) router.push(screen);
+  }
+}
+
+// Firestore Real-Time Query
+class AttendanceRepository {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Stream&lt;List&lt;AttendanceRecord&gt;&gt; watchAttendance({
+    required String classId, required DateTime date,
+  }) {
+    return _db.collection(&#39;classes&#39;).doc(classId)
+        .collection(&#39;attendance&#39;)
+        .where(&#39;date&#39;, isEqualTo: Timestamp.fromDate(date))
+        .orderBy(&#39;studentName&#39;)
+        .snapshots()
+        .map((snap) =&gt; snap.docs.map((d) =&gt; AttendanceRecord.fromDoc(d)).toList());
+  }
+
+  Future&lt;void&gt; markAttendance({
+    required String classId, required String studentId, required bool present,
+  }) async {
+    await _db.collection(&#39;classes&#39;).doc(classId)
+        .collection(&#39;attendance&#39;).doc(studentId)
+        .set({
+          &#39;studentId&#39;: studentId, &#39;present&#39;: present,
+          &#39;markedAt&#39;: FieldValue.serverTimestamp(),
+          &#39;markedBy&#39;: FirebaseAuth.instance.currentUser?.uid,
+        }, SetOptions(merge: true));
+  }
+}
+
+// Remote Config Feature Flags
+class FeatureFlagService {
+  final FirebaseRemoteConfig _rc = FirebaseRemoteConfig.instance;
+
+  Future&lt;void&gt; initialize() async {
+    await _rc.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(hours: 1),
+    ));
+    await _rc.setDefaults({&#39;enable_ai_feedback&#39;: false, &#39;max_class_size&#39;: 40});
+    await _rc.fetchAndActivate();
+  }
+
+  bool get isAiFeedbackEnabled =&gt; _rc.getBool(&#39;enable_ai_feedback&#39;);
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Firebase.initializeApp must complete before any Firebase service is used</li>
+      <li><span class="walk-num">2.</span> FlutterError.onError catches Flutter widget tree errors and framework exceptions</li>
+      <li><span class="walk-num">3.</span> PlatformDispatcher.instance.onError catches errors in async code outside the Flutter framework</li>
+      <li><span class="walk-num">4.</span> FCM background handler must be top-level — it runs in a separate isolate with no access to class state</li>
+      <li><span class="walk-num">5.</span> AuthNotifier wraps authStateChanges() in a ChangeNotifier — GoRouter uses this for reactive routing</li>
+      <li><span class="walk-num">6.</span> getIdToken() returns a cached JWT, refreshing automatically when expired</li>
+      <li><span class="walk-num">7.</span> requestPermission on iOS shows the system dialog — check the result before registering the token</li>
+      <li><span class="walk-num">8.</span> onTokenRefresh fires when FCM assigns a new token — always update your backend</li>
+      <li><span class="walk-num">9.</span> where plus orderBy requires a composite Firestore index — create it in the Firebase Console</li>
+      <li><span class="walk-num">10.</span> FieldValue.serverTimestamp() uses the Firestore server time — avoids clock skew issues</li>
+      <li><span class="walk-num">11.</span> minimumFetchInterval of 1 hour prevents excessive Remote Config fetches</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>Future&lt;void&gt; main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const App());
+}
+
+class NotificationSetup extends StatefulWidget { }
+class _State extends State&lt;NotificationSetup&gt; {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onBackgroundMessage((message) async {
+      print(&#39;Background: ${message.notification?.title}&#39;);
+    });
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Two issues: missing crash handler setup and an invalid background message handler location.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: No Crashlytics setup — FlutterError.onError and PlatformDispatcher.instance.onError are not set, meaning crash reports are lost. Add both in main() before runApp(). Bug 2: FirebaseMessaging.onBackgroundMessage() must be called with a top-level function (not a lambda or method), and it must be set before runApp() — not inside a StatefulWidget&#39;s initState(). The background handler runs in a separate isolate where class instances are not accessible. Move to main() with a top-level @pragma(&#39;vm:entry-point&#39;) function.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Firebase is like a set of superpowers for your app. Auth is a bouncer who remembers faces — once someone logs in, they stay logged in. Crashlytics is a spy camera that takes a photo right before the app crashes. FCM is a postal system that delivers a letter to someone&#39;s phone even when they are not home. Firestore is a whiteboard that everyone in the room can see update in real time.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">FCM delivers over 400 billion messages per day across Android, iOS, and web. It is the backbone of push notifications for most of the world&#39;s apps. When you send a push notification from your app, it travels through Google&#39;s infrastructure, which maintains persistent connections to every Android device on Earth — this is why push notifications arrive even when the app is completely closed.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Set up complete Firebase integration for a school management app: (1) initialize Firebase with Crashlytics error handling in main(), (2) create an AuthNotifier ChangeNotifier that exposes the auth state stream, (3) set user context in Crashlytics on login, (4) register and refresh the FCM token, (5) create a Firestore stream query for real-time class announcements, (6) add a Remote Config feature flag for a new parent portal feature.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://firebase.flutter.dev/" target="_blank" rel="noopener noreferrer">FlutterFire Documentation</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/crashlytics/overview" target="_blank" rel="noopener noreferrer">Firebase Crashlytics Flutter</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/messaging/overview" target="_blank" rel="noopener noreferrer">FCM Flutter Setup</a> <span class="res-source">(FlutterFire)</span></li>
+      <li><a href="https://firebase.google.com/docs/firestore/security/get-started" target="_blank" rel="noopener noreferrer">Firestore Security Rules</a> <span class="res-source">(Firebase Official)</span></li>
+      <li><a href="https://firebase.flutter.dev/docs/remote-config/overview" target="_blank" rel="noopener noreferrer">Firebase Remote Config Flutter</a> <span class="res-source">(FlutterFire)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=27">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./26-offline-first-architecture-sync.html" rel="prev">← Offline-First Architecture &amp; Sync</a>
+  <a class="nav-next" href="./28-caching-pagination-lazy-loading-list-performance.html" rel="next">Caching, Pagination, Lazy Loading &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

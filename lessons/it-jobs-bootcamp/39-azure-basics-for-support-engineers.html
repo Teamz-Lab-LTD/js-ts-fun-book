@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Basics for Support Engineers — IT Jobs Bootcamp | Teamz Lab</title>
+<meta name="description" content="Azure for junior IT is a practical toolkit: create and manage RGs, VNets, NSGs, VMs, basic storage, Entra identities, RBAC assignments, and simple…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/39-azure-basics-for-support-engineers.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/38-cloud-fundamentals-shared-responsibility.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/40-microsoft-365-entra-basics.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure Basics for Support Engineers">
+<meta property="og:description" content="Azure for junior IT is a practical toolkit: create and manage RGs, VNets, NSGs, VMs, basic storage, Entra identities, RBAC assignments, and simple…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/39-azure-basics-for-support-engineers.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Azure Basics for Support Engineers">
+<meta name="twitter:description" content="Azure for junior IT is a practical toolkit: create and manage RGs, VNets, NSGs, VMs, basic storage, Entra identities, RBAC assignments, and simple…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Azure Basics for Support Engineers",
+  "description": "Azure for junior IT is a practical toolkit: create and manage RGs, VNets, NSGs, VMs, basic storage, Entra identities, RBAC assignments, and simple…",
+  "url": "https://learn.teamzlab.com/lessons/it-jobs-bootcamp/39-azure-basics-for-support-engineers.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Non-Coding IT Jobs Bootcamp",
+    "url": "https://learn.teamzlab.com/c/it-jobs-bootcamp.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 39
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IT Jobs Bootcamp",
+      "item": "https://learn.teamzlab.com/c/it-jobs-bootcamp.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Azure Basics for Support Engineers",
+      "item": "https://learn.teamzlab.com/lessons/it-jobs-bootcamp/39-azure-basics-for-support-engineers.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/it-jobs-bootcamp.html">IT Jobs Bootcamp</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/it-jobs-bootcamp.html">IT Jobs Bootcamp</a> / <span aria-current="page">Azure Basics for Support Engineers</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 39 of 60</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Azure Basics for Support Engineers</h1>
+<p class="lesson-subtitle">A practical first Azure map</p>
+
+<a class="cta-interactive" href="../../learn.html?course=it-jobs-bootcamp&amp;lesson=39">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Azure is a huge office park you rent space in. Resource groups are suites, VNets are building floors, NSGs are the security guards at each door, and RBAC is the HR policy deciding which employees open which office.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Azure for junior IT is a practical toolkit: create and manage RGs, VNets, NSGs, VMs, basic storage, Entra identities, RBAC assignments, and simple monitoring. Mastery is a long road; literacy is a week.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A growing company wants a secure test environment for new hires. You build: one RG, one VNet with two subnets (workloads / mgmt), NSGs restricting RDP/SSH to the mgmt subnet, three small VMs, Azure Backup, auto-shutdown policy, RBAC for the HR-IT group. Cost: predictable. Risk: low. Audit: pleased.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Subscription, resource group, resource</strong> — Subscription: billing boundary. Resource group: logical container for related resources. Resource: a thing (VM, storage account, database). Delete the RG — everything inside goes with it.</li>
+      <li><strong>Regions, zones, and redundancy</strong> — Pick a region near users. Use zones for high availability within a region. Use geo-redundant storage and cross-region backups for DR. Don’t overthink; start with one region, one zone, and grow.</li>
+      <li><strong>VNet, subnet, NSG, route table</strong> — VNet is your private network in Azure. Subnets segment it. NSGs are stateful firewalls (allow/deny rules) on subnet or NIC. Route tables steer traffic — including forced tunneling to an on-prem firewall.</li>
+      <li><strong>Virtual machines — the ops bread and butter</strong> — Pick size, image, disks (managed, premium for IO), networking, identity. Patch via Automation/Update Management. Back up via Azure Backup. Turn them off when not needed (cost hygiene).</li>
+      <li><strong>Entra ID vs Azure AD DS vs on-prem AD</strong> — Entra ID: modern cloud identity (OIDC/SAML, conditional access). Azure AD DS: domain-join-in-cloud service (legacy-style Kerberos/LDAP for apps that need it). On-prem AD: traditional Active Directory. They can integrate, but they’re not the same thing.</li>
+      <li><strong>RBAC and Azure Policy</strong> — RBAC controls who can do what (reader, contributor, owner, plus custom roles). Azure Policy enforces rules (‘only allow VMs in this region,’ ‘require tags,’ ‘must use approved images’). Together they enforce guardrails without micromanagement.</li>
+      <li><strong>Azure Monitor, Log Analytics, Sentinel</strong> — Monitor collects metrics/logs. Log Analytics is the query engine (KQL). Sentinel is the SIEM on top. Juniors should recognize these names and know a couple of simple KQL queries.</li>
+      <li><strong>Cost Management</strong> — Tag resources with owner/env/project. Watch Cost Analysis and set budgets. Idle VMs, unattached disks, and forgotten test resources are the #1 cloud waste. Clean them up regularly.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Azure basics — typical first-week commands (CLI)
+
+# Login
+az login
+az account set --subscription &quot;&lt;sub-id&gt;&quot;
+
+# Resource group + VNet + subnet
+az group create -n rg-lab-01 -l southeastasia
+az network vnet create -g rg-lab-01 -n vnet-lab --address-prefix 10.10.0.0/16 \
+  --subnet-name workloads --subnet-prefix 10.10.1.0/24
+
+# NSG with a basic rule
+az network nsg create -g rg-lab-01 -n nsg-workloads
+az network nsg rule create -g rg-lab-01 --nsg-name nsg-workloads -n Allow-RDP-Mgmt \
+  --priority 100 --direction Inbound --access Allow --protocol Tcp \
+  --source-address-prefixes 10.10.2.0/24 --destination-port-ranges 3389
+
+# VM with managed identity
+az vm create -g rg-lab-01 -n vm-web-01 --image Win2022Datacenter \
+  --size Standard_B2s --admin-username opsadmin --assign-identity \
+  --vnet-name vnet-lab --subnet workloads --nsg nsg-workloads
+
+# Tagging for cost
+az tag update --resource-id $(az group show -n rg-lab-01 --query id -o tsv) \
+  --operation merge --tags env=lab owner=it-support costcenter=IT-001</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> First-week CLI examples</li>
+      <li><span class="walk-num">2.</span> Login header</li>
+      <li><span class="walk-num">3.</span> az login command</li>
+      <li><span class="walk-num">4.</span> Set active subscription</li>
+      <li><span class="walk-num">5.</span> Blank separator</li>
+      <li><span class="walk-num">6.</span> RG + VNet + subnet</li>
+      <li><span class="walk-num">7.</span> Create RG in region</li>
+      <li><span class="walk-num">8.</span> Create VNet</li>
+      <li><span class="walk-num">9.</span> Define subnet with prefix</li>
+      <li><span class="walk-num">10.</span> Blank separator</li>
+      <li><span class="walk-num">11.</span> NSG header</li>
+      <li><span class="walk-num">12.</span> Create NSG</li>
+      <li><span class="walk-num">13.</span> Create RDP rule</li>
+      <li><span class="walk-num">14.</span> Blank separator</li>
+      <li><span class="walk-num">15.</span> VM header</li>
+      <li><span class="walk-num">16.</span> Create VM</li>
+      <li><span class="walk-num">17.</span> Size, identity, network</li>
+      <li><span class="walk-num">18.</span> Blank separator</li>
+      <li><span class="walk-num">19.</span> Tagging header</li>
+      <li><span class="walk-num">20.</span> Apply tags to RG</li>
+      <li><span class="walk-num">21.</span> Tag key-values for cost tracking</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>Junior exposes an Azure VM to the internet with NSG rule: Allow TCP 3389 from Any to workloads subnet, priority 100.</code></pre><details><summary>Need a hint?</summary><div class="hint">Which practice does this violate, and what’s the fix?</div></details><details><summary>Show answer</summary><div class="answer">Open RDP to ‘Any’ equals daily brute-force storms. Fix: allow 3389 only from a management subnet or trusted IPs; ideally use Azure Bastion or a jump host and disable direct public RDP entirely. Add MFA + Conditional Access; keep audit logs.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Azure is a huge digital office park. You rent a suite (resource group), put furniture (VM, storage) inside, hang rules on the door (NSG), and tell HR who can enter (RBAC). Lock up when you’re done.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Microsoft ships multiple exam paths for junior cloud admins — AZ-900 (awareness), AZ-104 (administrator), AZ-500 (security), SC-300 (identity) — and at least one of these shows up in many corporate job ads as ‘preferred.’</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Open an Azure free account. Create one RG, one VNet with two subnets, one small VM, an NSG that permits SSH or RDP only from your IP. Run it for 30 minutes, delete the RG to clean up.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://learn.microsoft.com/credentials/certifications/resources/study-guides/az-104" target="_blank" rel="noopener noreferrer">AZ-104 study guide</a> <span class="res-source">(Microsoft Learn)</span></li>
+      <li><a href="https://learn.microsoft.com/cli/azure/" target="_blank" rel="noopener noreferrer">Azure CLI reference</a> <span class="res-source">(Microsoft Learn)</span></li>
+      <li><a href="https://www.youtube.com/@johnsavill" target="_blank" rel="noopener noreferrer">John Savill Azure content</a> <span class="res-source">(John Savill)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=it-jobs-bootcamp&amp;lesson=39">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./38-cloud-fundamentals-shared-responsibility.html" rel="prev">← Cloud Fundamentals &amp; Shared…</a>
+  <a class="nav-next" href="./40-microsoft-365-entra-basics.html" rel="next">Microsoft 365 &amp; Entra Basics →</a>
+</nav>
+
+<a class="back-to-course" href="/c/it-jobs-bootcamp.html">← Back to course: IT Jobs Bootcamp</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

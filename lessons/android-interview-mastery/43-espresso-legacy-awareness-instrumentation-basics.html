@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espresso Legacy Awareness &amp; Instrumentation Basics… | Teamz Lab</title>
+<meta name="description" content="Espresso is Google&#39;s UI testing framework for Android that provides a fluent API to find views, perform actions, and assert state in instrumented tests…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/42-compose-ui-testing-fundamentals.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Espresso Legacy Awareness &amp; Instrumentation Basics">
+<meta property="og:description" content="Espresso is Google&#39;s UI testing framework for Android that provides a fluent API to find views, perform actions, and assert state in instrumented tests…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Espresso Legacy Awareness &amp; Instrumentation Basics">
+<meta name="twitter:description" content="Espresso is Google&#39;s UI testing framework for Android that provides a fluent API to find views, perform actions, and assert state in instrumented tests…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Espresso Legacy Awareness & Instrumentation Basics",
+  "description": "Espresso is Google's UI testing framework for Android that provides a fluent API to find views, perform actions, and assert state in instrumented tests…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 43
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Espresso Legacy Awareness & Instrumentation Basics",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Espresso Legacy Awareness &amp; Instrumentation Basics</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 43 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Espresso Legacy Awareness &amp; Instrumentation Basics</h1>
+<p class="lesson-subtitle">Master Espresso for XML-view codebases — still asked in every senior Android interview</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=43">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Espresso is like a meticulous restaurant inspector who waits until the kitchen is completely idle before tasting each dish. It synchronises with the UI thread and async operations automatically, so your test never taps a button before the screen is ready — unlike a human tester who might click too early.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Espresso is Google&#39;s UI testing framework for Android that provides a fluent API to find views, perform actions, and assert state in instrumented tests running on a real device or emulator. It automatically synchronises with the main thread, ensuring test actions only execute when the UI is idle.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a large enterprise school management app with 200+ XML-based screens built over 5 years, the team used Espresso to write regression tests for the student grade-entry flow. When migrating to Compose, they added ComposeTestRule alongside Espresso to test the hybrid screens without rewriting every existing test, protecting against regressions during the migration.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>onView() is the entry point</strong> — onView(ViewMatcher) selects a view in the hierarchy. It blocks until the matcher finds exactly one visible, non-ambiguous view or throws AmbiguousViewMatcherException.</li>
+      <li><strong>ViewMatchers identify views</strong> — withId(R.id.submit), withText(&#39;Login&#39;), withContentDescription(), isDisplayed(), isEnabled(), hasSibling(), withParent() — combinable with allOf() and anyOf().</li>
+      <li><strong>ViewActions drive interaction</strong> — perform(click()), perform(typeText(&#39;hello&#39;)), perform(scrollTo()), perform(swipeUp()), perform(pressBack()) — always called after onView().</li>
+      <li><strong>ViewAssertions verify state</strong> — check(matches(isDisplayed())), check(matches(withText(&#39;Error&#39;))), check(doesNotExist()) — the assertion is the test&#39;s final verdict.</li>
+      <li><strong>ActivityScenarioRule launches activities</strong> — @get:Rule val rule = ActivityScenarioRule(MainActivity::class.java) launches the Activity under test in a real device/emulator process with full lifecycle management.</li>
+      <li><strong>IdlingResource solves async timing</strong> — Retrofit calls, coroutines, RxJava chains — Espresso does NOT know about them by default. Register an IdlingResource so Espresso waits until the async work is idle before proceeding.</li>
+      <li><strong>OkHttpIdlingResource for network</strong> — Use CountingIdlingResource or OkHttp3IdlingResource (from espresso-idling-resource) to synchronise network calls made via OkHttp/Retrofit.</li>
+      <li><strong>Intents.intending() for external apps</strong> — espresso-intents lets you intercept and stub startActivity() calls. Use intending(hasAction(Intent.ACTION_PICK)).respondWith(Instrumentation.ActivityResult(RESULT_OK, data)) to fake a photo picker.</li>
+      <li><strong>RecyclerView actions</strong> — onView(withId(R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click())) or scrollToPosition(). Requires espresso-contrib dependency.</li>
+      <li><strong>DataInteraction for AdapterViews</strong> — onData(allOf(instanceOf(Map::class.java), hasEntry(&#39;key&#39;, &#39;value&#39;))).perform(click()) — for ListView/Spinner; Espresso scrolls to the item automatically.</li>
+      <li><strong>When Espresso still matters in 2026</strong> — Millions of production apps still use XML layouts with Fragments. Any role maintaining a legacy codebase or migrating to Compose incrementally requires Espresso fluency alongside Compose testing APIs.</li>
+      <li><strong>Espresso vs Compose testing</strong> — Compose uses ComposeTestRule.onNode(SemanticsMatcher) while Espresso uses onView(ViewMatcher). In a hybrid codebase use both rules in the same test class via @get:Rule annotations.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// build.gradle.kts (app)
+androidTestImplementation(&quot;androidx.test.espresso:espresso-core:3.5.1&quot;)
+androidTestImplementation(&quot;androidx.test.espresso:espresso-contrib:3.5.1&quot;)
+androidTestImplementation(&quot;androidx.test.espresso:espresso-intents:3.5.1&quot;)
+androidTestImplementation(&quot;androidx.test:rules:1.5.0&quot;)
+
+// LoginActivityTest.kt
+@RunWith(AndroidJUnit4::class)
+class LoginActivityTest {
+
+    @get:Rule
+    val activityRule = ActivityScenarioRule(LoginActivity::class.java)
+
+    // Register IdlingResource so Espresso waits for Retrofit calls
+    private val idlingResource = CountingIdlingResource(&quot;NetworkCalls&quot;)
+
+    @Before
+    fun registerIdling() {
+        IdlingRegistry.getInstance().register(idlingResource)
+    }
+
+    @After
+    fun unregisterIdling() {
+        IdlingRegistry.getInstance().unregister(idlingResource)
+    }
+
+    @Test
+    fun successfulLogin_navigatesToDashboard() {
+        // Type credentials
+        onView(withId(R.id.etEmail))
+            .perform(typeText(&quot;user@school.edu&quot;), closeSoftKeyboard())
+
+        onView(withId(R.id.etPassword))
+            .perform(typeText(&quot;secret123&quot;), closeSoftKeyboard())
+
+        // Click login button
+        onView(withId(R.id.btnLogin)).perform(click())
+
+        // Espresso waits for idlingResource to reach 0
+        // Then asserts dashboard is visible
+        onView(withId(R.id.dashboardTitle))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun emptyEmail_showsValidationError() {
+        onView(withId(R.id.btnLogin)).perform(click())
+
+        onView(withId(R.id.tilEmail))
+            .check(matches(hasDescendant(withText(&quot;Email is required&quot;))))
+    }
+
+    @Test
+    fun recyclerList_clicksThirdItem() {
+        onView(withId(R.id.rvStudents))
+            .perform(RecyclerViewActions.actionOnItemAtPosition&lt;StudentViewHolder&gt;(2, click()))
+
+        onView(withId(R.id.studentDetailName))
+            .check(matches(isDisplayed()))
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> ActivityScenarioRule(LoginActivity::class.java) — launches LoginActivity in a real instrumented process before each test and tears it down after.</li>
+      <li><span class="walk-num">2.</span> CountingIdlingResource(&#39;NetworkCalls&#39;) — a counter-based IdlingResource; Espresso treats the app as idle only when the counter is 0.</li>
+      <li><span class="walk-num">3.</span> IdlingRegistry.getInstance().register(idlingResource) — must be registered @Before each test; unregistered @After to prevent leaks across tests.</li>
+      <li><span class="walk-num">4.</span> onView(withId(R.id.etEmail)) — locates the view whose android:id is etEmail in the current activity&#39;s view hierarchy.</li>
+      <li><span class="walk-num">5.</span> perform(typeText(&#39;user@school.edu&#39;), closeSoftKeyboard()) — types the string character by character and then dismisses the keyboard so it does not obscure other views.</li>
+      <li><span class="walk-num">6.</span> onView(withId(R.id.btnLogin)).perform(click()) — simulates a finger tap on the Login button; Espresso waits for the UI to be idle first.</li>
+      <li><span class="walk-num">7.</span> onView(withId(R.id.dashboardTitle)).check(matches(isDisplayed())) — after Espresso sees the idlingResource counter reach 0 (network done), it asserts the dashboard title is visible.</li>
+      <li><span class="walk-num">8.</span> RecyclerViewActions.actionOnItemAtPosition(2, click()) — scrolls the RecyclerView to position 2 if needed, then dispatches a click on that ViewHolder.</li>
+      <li><span class="walk-num">9.</span> hasDescendant(withText(&#39;Email is required&#39;)) — a hierarchical matcher; asserts that somewhere inside the TextInputLayout there is a child view displaying that error string.</li>
+      <li><span class="walk-num">10.</span> check(doesNotExist()) — asserts the matched view is completely absent from the hierarchy (not just hidden), useful for verifying dialogs have been dismissed.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@RunWith(AndroidJUnit4::class)
+class GradeEntryTest {
+
+    @get:Rule
+    val rule = ActivityScenarioRule(GradeEntryActivity::class.java)
+
+    @Test
+    fun submitGrade_showsSuccessMessage() {
+        Thread.sleep(2000) // Bug 1
+
+        onView(withId(R.id.etGrade))
+            .perform(typeText(&quot;95&quot;))
+
+        onView(withId(R.id.btnSubmit)).perform(click())
+
+        Thread.sleep(1000) // Bug 2
+
+        onView(withText(&quot;Grade saved&quot;))
+            .check(matches(isDisplayed())) // Bug 3
+    }
+
+    @Test
+    fun invalidGrade_showsError() {
+        onView(withId(R.id.etGrade))
+            .perform(typeText(&quot;150&quot;))
+
+        onView(withId(R.id.btnSubmit)).perform(click())
+
+        onView(withId(R.id.errorText))
+            .check(matches(withText(&quot;Invalid grade&quot;))) // Bug 4
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at the Thread.sleep() calls, what check() is missing after an Espresso action on a Snackbar, and what matcher should be combined with withText() for the error assertion.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: Thread.sleep(2000) at the start is a timing hack to wait for the screen to load. Espresso already synchronises with the main thread and idles automatically — the sleep is unnecessary and makes the test slow and flaky on different devices. Fix: remove Thread.sleep() entirely; if there is async work (e.g., loading existing grade from DB), use IdlingResource instead. Bug 2: Thread.sleep(1000) after clicking Submit is another timing hack to wait for the network/database response. Same problem — register a CountingIdlingResource in the ViewModel or repository, increment before the async call, decrement in the callback, and Espresso will wait automatically without any sleep. Bug 3: onView(withText(&#39;Grade saved&#39;)).check(matches(isDisplayed())) — Snackbars are hosted in the decor view, not the activity&#39;s view hierarchy directly. This matcher can fail with NoMatchingViewException if the Snackbar appears in a parent view. Fix: use onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(&#39;Grade saved&#39;))).check(matches(isDisplayed())) to target the Snackbar&#39;s internal TextView specifically. Bug 4: check(matches(withText(&#39;Invalid grade&#39;))) on a TextView only passes if the ENTIRE text is exactly &#39;Invalid grade&#39;. If the error view shows &#39;Invalid grade: must be 0-100&#39;, this assertion fails. Fix: use check(matches(withText(containsString(&#39;Invalid grade&#39;)))) with a Hamcrest containsString matcher, or ensure the exact string matches the resource string used in the production code.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Espresso is like a robot that tests your app by tapping buttons and reading the screen. It is smart enough to wait until the app stops loading before it taps anything — so it never taps too early. You tell it &#39;find the Login button&#39; then &#39;tap it&#39; then &#39;check that the Home screen appeared&#39;, and it does all that automatically.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Espresso was created by an Googler (Valera Zakharov) and open-sourced in 2013. The name was chosen because, like a good espresso shot, tests should be fast, reliable, and jitter-free — no Thread.sleep() allowed!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write an Espresso test for a login screen that: (1) types an invalid email, clicks Login, and asserts a TextInputLayout error appears; (2) types valid credentials, clicks Login, registers a CountingIdlingResource to wait for a fake network call (increment before the call, decrement after), and asserts the dashboard title is displayed. Use ActivityScenarioRule and closeSoftKeyboard() after typing.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/training/testing/espresso" target="_blank" rel="noopener noreferrer">Espresso — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/training/testing/espresso/idling-resource" target="_blank" rel="noopener noreferrer">IdlingResource Guide</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/reference/androidx/test/espresso/contrib/RecyclerViewActions" target="_blank" rel="noopener noreferrer">RecyclerViewActions — espresso-contrib</a> <span class="res-source">(AndroidX)</span></li>
+      <li><a href="https://medium.com/androiddevelopers/migrating-to-compose-testing-5f5f3b93b5f0" target="_blank" rel="noopener noreferrer">Espresso vs Compose Testing — When to Use Each</a> <span class="res-source">(Android Developers Blog)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=43">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./42-compose-ui-testing-fundamentals.html" rel="prev">← Compose UI Testing Fundamentals</a>
+  <a class="nav-next" href="./44-modularization-feature-modules-build-tradeoffs.html" rel="next">Modularization, Feature Modules &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

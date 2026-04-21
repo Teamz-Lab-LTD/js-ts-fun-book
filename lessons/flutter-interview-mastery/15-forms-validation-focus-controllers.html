@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms, Validation, Focus &amp; Controllers — Flutter… | Teamz Lab</title>
+<meta name="description" content="Flutter forms use TextEditingController for text access, FocusNode for keyboard control, Form + GlobalKey for coordinated validation, and TextFormField for…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/14-navigation-navigator-vs-gorouter-deep-links-route-guards.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Forms, Validation, Focus &amp; Controllers">
+<meta property="og:description" content="Flutter forms use TextEditingController for text access, FocusNode for keyboard control, Form + GlobalKey for coordinated validation, and TextFormField for…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forms, Validation, Focus &amp; Controllers">
+<meta name="twitter:description" content="Flutter forms use TextEditingController for text access, FocusNode for keyboard control, Form + GlobalKey for coordinated validation, and TextFormField for…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Forms, Validation, Focus & Controllers",
+  "description": "Flutter forms use TextEditingController for text access, FocusNode for keyboard control, Form + GlobalKey for coordinated validation, and TextFormField for…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 15
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Forms, Validation, Focus & Controllers",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Forms, Validation, Focus &amp; Controllers</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 15 of 77</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Forms, Validation, Focus &amp; Controllers</h1>
+<p class="lesson-subtitle">Input Flows That Don&#39;t Frustrate Users — Senior-Level UX Patterns</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=15">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A Form is like a job application. Each FormField is a question on the form. The GlobalKey is the form&#39;s ID number — it lets the hiring manager (submit button) say &#39;review all answers now&#39; (validate). FocusNode is like eye contact — it controls which field the user is currently &#39;talking to&#39;. TextEditingController is like a notepad — it holds everything the user typed.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter forms use TextEditingController for text access, FocusNode for keyboard control, Form + GlobalKey for coordinated validation, and TextFormField for fields with built-in validation. Input formatters constrain input on keystrokes. AutovalidateMode controls when errors appear. Together they create UX-safe, production-quality input flows.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a school management platform, a student enrollment form has: name field (letters only, required), email field (format validation, async duplicate check), phone (digits only, length 10-15), date of birth (date picker). On submit, form.validate() triggers all validators, scroll animates to first error, and a loading spinner appears in the Save button while the API call completes.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>TextEditingController — The Full Picture</strong> — TextEditingController holds the text AND selection. Access text via .text, set it via .text = &#39;value&#39;. Listen to changes via addListener(). MUST be disposed. Common mistake: creating a new controller in build() — creates a new controller every rebuild, losing the text. Create controllers in initState().</li>
+      <li><strong>Form and GlobalKey</strong> — Wrap fields in Form with a GlobalKey. Call _formKey.currentState!.validate() to trigger all validators. Call .save() to trigger all onSaved callbacks. Call .reset() to clear all fields. The Form widget itself has no visual appearance — it&#39;s a logical container for coordinated validation.</li>
+      <li><strong>FormField and TextFormField</strong> — TextFormField = TextField wrapped in FormField. FormField has: initialValue, validator, onSaved, autovalidateMode. validator returns null for valid input, or an error String. Don&#39;t use both controller and initialValue — they conflict. Use controller for programmatic control, initialValue for static defaults.</li>
+      <li><strong>AutovalidateMode</strong> — AutovalidateMode.disabled: validate only when form.validate() is called. AutovalidateMode.onUserInteraction: validate as user types after first interaction. AutovalidateMode.always: validate on every rebuild. Interview: What mode prevents showing errors before the user has typed anything? onUserInteraction.</li>
+      <li><strong>FocusNode — Keyboard and Focus Control</strong> — FocusNode tracks whether a field has keyboard focus. Use FocusScope.of(context).requestFocus(nextFocusNode) to move focus programmatically. textInputAction: TextInputAction.next on TextField + focusNode management creates a smooth &#39;tab&#39; UX. MUST dispose FocusNodes.</li>
+      <li><strong>Input Formatters — Restrict Input</strong> — TextInputFormatter restricts what can be typed. FilteringTextInputFormatter.digitsOnly — numbers only. FilteringTextInputFormatter.allow(RegExp(r&#39;[a-zA-Z]&#39;)) — letters only. LengthLimitingTextInputFormatter(10) — max 10 chars. Combine multiple formatters in a list. Applies on every keystroke — instant validation.</li>
+      <li><strong>Reactive Validation Patterns</strong> — For cross-field validation (e.g., confirm password must match password), use the Form widget&#39;s validate() combined with closure capturing other controllers. Or use a FormBloc/Riverpod provider that exposes per-field validation states. Interview: How do you validate that two password fields match?</li>
+      <li><strong>Obscure Text and Password Toggle</strong> — obscureText: true hides input. Toggle with setState on an _isObscure bool. For production: never log password field values, use secure text entry, disable autocorrect and enableSuggestions for password fields.</li>
+      <li><strong>Keyboard Type and Input Action</strong> — keyboardType: TextInputType.emailAddress shows &#39;@&#39; key. TextInputType.number shows numeric keyboard. TextInputType.multiline allows newlines. textInputAction: TextInputAction.done closes keyboard. TextInputAction.next moves to next field. TextInputAction.search triggers search. Match keyboard to expected input type.</li>
+      <li><strong>Form UX Best Practices</strong> — Show errors only after user interaction (onUserInteraction). Scroll to first error on submit. Auto-move focus to next field on completion. Debounce async validators (username availability). Disable submit button while validating or loading. Show loading spinner in submit button, not a separate overlay.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Forms, Validation, Focus &amp; Controllers
+
+import &#39;dart:async&#39;;
+import &#39;package:flutter/material.dart&#39;;
+import &#39;package:flutter/services.dart&#39;;
+
+class EnrollmentForm extends StatefulWidget {
+  const EnrollmentForm({super.key});
+
+  @override
+  State&lt;EnrollmentForm&gt; createState() =&gt; _EnrollmentFormState();
+}
+
+class _EnrollmentFormState extends State&lt;EnrollmentForm&gt; {
+  // GlobalKey: lets us call validate(), save(), reset() from outside Form
+  final _formKey = GlobalKey&lt;FormState&gt;();
+
+  // Controllers: created in initState, disposed in dispose
+  late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+  late final TextEditingController _phoneController;
+
+  // FocusNodes: for keyboard navigation
+  late final FocusNode _emailFocus;
+  late final FocusNode _passwordFocus;
+  late final FocusNode _confirmFocus;
+  late final FocusNode _phoneFocus;
+
+  bool _isLoading = false;
+  bool _isPasswordVisible = false;
+  Timer? _emailDebounce;
+  String? _emailAsyncError;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+    _phoneController = TextEditingController();
+
+    _emailFocus = FocusNode();
+    _passwordFocus = FocusNode();
+    _confirmFocus = FocusNode();
+    _phoneFocus = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    // Dispose ALL controllers and FocusNodes
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _phoneController.dispose();
+
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    _confirmFocus.dispose();
+    _phoneFocus.dispose();
+
+    _emailDebounce?.cancel();
+    super.dispose();
+  }
+
+  // Async validation with debounce — check email availability
+  void _onEmailChanged(String email) {
+    _emailDebounce?.cancel();
+    _emailDebounce = Timer(const Duration(milliseconds: 500), () async {
+      // Simulate API call
+      final isTaken = await _checkEmailTaken(email);
+      if (mounted) {
+        setState(() {
+          _emailAsyncError = isTaken ? &#39;Email already registered&#39; : null;
+        });
+      }
+    });
+  }
+
+  Future&lt;bool&gt; _checkEmailTaken(String email) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return email == &#39;taken@example.com&#39;; // Simulate
+  }
+
+  // Cross-field validation: confirm password must match
+  String? _validateConfirmPassword(String? value) {
+    if (value == null || value.isEmpty) return &#39;Please confirm your password&#39;;
+    if (value != _passwordController.text) return &#39;Passwords do not match&#39;;
+    return null; // Valid
+  }
+
+  Future&lt;void&gt; _handleSubmit() async {
+    // Dismiss keyboard
+    FocusScope.of(context).unfocus();
+
+    // Validate all fields synchronously
+    if (!_formKey.currentState!.validate()) {
+      // TODO: Scroll to first error
+      return;
+    }
+
+    // Save all fields (triggers onSaved callbacks)
+    _formKey.currentState!.save();
+
+    setState(() =&gt; _isLoading = true);
+
+    try {
+      // Simulate API call
+      await Future.delayed(const Duration(seconds: 2));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(&#39;Enrolled successfully!&#39;)),
+        );
+      }
+    } finally {
+      if (mounted) setState(() =&gt; _isLoading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      // Validate after user&#39;s first interaction — no errors on fresh form
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          // --- NAME FIELD: letters only ---
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(labelText: &#39;Full Name&#39;),
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next, // Shows &#39;next&#39; on keyboard
+            inputFormatters: [
+              // Only allow letters and spaces
+              FilteringTextInputFormatter.allow(RegExp(r&#39;[a-zA-Z ]&#39;)),
+            ],
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) return &#39;Name is required&#39;;
+              if (value.trim().length &lt; 2) return &#39;Name too short&#39;;
+              return null;
+            },
+            onFieldSubmitted: (_) {
+              // Move focus to email on keyboard &#39;next&#39; tap
+              FocusScope.of(context).requestFocus(_emailFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- EMAIL FIELD: async validation ---
+          TextFormField(
+            controller: _emailController,
+            focusNode: _emailFocus,
+            decoration: InputDecoration(
+              labelText: &#39;Email&#39;,
+              // Show async error below standard validator error
+              errorText: _emailAsyncError,
+            ),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            autocorrect: false,
+            onChanged: _onEmailChanged,
+            validator: (value) {
+              if (value == null || value.isEmpty) return &#39;Email is required&#39;;
+              if (!RegExp(r&#39;^[\w.-]+@[\w-]+\.[\w.]+$&#39;).hasMatch(value)) {
+                return &#39;Invalid email format&#39;;
+              }
+              return null;
+            },
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_passwordFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- PASSWORD FIELD: obscure with toggle ---
+          TextFormField(
+            controller: _passwordController,
+            focusNode: _passwordFocus,
+            decoration: InputDecoration(
+              labelText: &#39;Password&#39;,
+              suffixIcon: IconButton(
+                icon: Icon(_isPasswordVisible
+                    ? Icons.visibility_off
+                    : Icons.visibility),
+                onPressed: () {
+                  setState(() =&gt; _isPasswordVisible = !_isPasswordVisible);
+                },
+              ),
+            ),
+            obscureText: !_isPasswordVisible,
+            textInputAction: TextInputAction.next,
+            enableSuggestions: false,
+            autocorrect: false,
+            validator: (value) {
+              if (value == null || value.isEmpty) return &#39;Password is required&#39;;
+              if (value.length &lt; 8) return &#39;At least 8 characters&#39;;
+              if (!RegExp(r&#39;[A-Z]&#39;).hasMatch(value)) return &#39;Include uppercase letter&#39;;
+              if (!RegExp(r&#39;[0-9]&#39;).hasMatch(value)) return &#39;Include a number&#39;;
+              return null;
+            },
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_confirmFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- CONFIRM PASSWORD: cross-field validation ---
+          TextFormField(
+            controller: _confirmPasswordController,
+            focusNode: _confirmFocus,
+            decoration: const InputDecoration(labelText: &#39;Confirm Password&#39;),
+            obscureText: true,
+            textInputAction: TextInputAction.next,
+            enableSuggestions: false,
+            validator: _validateConfirmPassword, // Captures passwordController
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_phoneFocus);
+            },
+          ),
+
+          const SizedBox(height: 16),
+
+          // --- PHONE FIELD: digits only, length constraint ---
+          TextFormField(
+            controller: _phoneController,
+            focusNode: _phoneFocus,
+            decoration: const InputDecoration(labelText: &#39;Phone&#39;),
+            keyboardType: TextInputType.phone,
+            textInputAction: TextInputAction.done,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(15),
+            ],
+            validator: (value) {
+              if (value == null || value.isEmpty) return &#39;Phone is required&#39;;
+              if (value.length &lt; 10) return &#39;Enter at least 10 digits&#39;;
+              return null;
+            },
+            onFieldSubmitted: (_) =&gt; _handleSubmit(),
+          ),
+
+          const SizedBox(height: 24),
+
+          // --- SUBMIT BUTTON: disabled while loading ---
+          ElevatedButton(
+            onPressed: _isLoading ? null : _handleSubmit,
+            child: _isLoading
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Text(&#39;Enroll&#39;),
+          ),
+        ],
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> GlobalKey: allows validate(), save(), reset() calls from submit button</li>
+      <li><span class="walk-num">2.</span> Controllers and FocusNodes created in initState — NOT in build()</li>
+      <li><span class="walk-num">3.</span> All controllers and FocusNodes disposed in dispose() — prevents memory leaks</li>
+      <li><span class="walk-num">4.</span> _emailDebounce: waits 500ms after typing stops before making async API call</li>
+      <li><span class="walk-num">5.</span> _validateConfirmPassword: closure captures _passwordController — cross-field validation</li>
+      <li><span class="walk-num">6.</span> autovalidateMode: onUserInteraction — shows errors only after user types</li>
+      <li><span class="walk-num">7.</span> FilteringTextInputFormatter.allow(RegExp): letters and spaces only on name field</li>
+      <li><span class="walk-num">8.</span> focusNode on email field + onFieldSubmitted moves focus to password field</li>
+      <li><span class="walk-num">9.</span> obscureText toggled by _isPasswordVisible state + visibility toggle button</li>
+      <li><span class="walk-num">10.</span> enableSuggestions: false on password — prevents autocomplete on sensitive fields</li>
+      <li><span class="walk-num">11.</span> LengthLimitingTextInputFormatter(15) + digitsOnly on phone</li>
+      <li><span class="walk-num">12.</span> Submit button: null onPressed when loading disables it; shows spinner inside button</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
+  @override
+  State&lt;SignupForm&gt; createState() =&gt; _SignupFormState();
+}
+
+class _SignupFormState extends State&lt;SignupForm&gt; {
+  @override
+  Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    return TextField(controller: controller);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Where is the controller created and what happens on every rebuild?</div></details><details><summary>Show answer</summary><div class="answer">The TextEditingController is created inside build() — a new controller is created on EVERY rebuild. This means any text the user types is lost on each setState, and the old controllers are never disposed (memory leak). Fix: declare &#39;late final TextEditingController controller;&#39; as a field, initialize in initState(), and call controller.dispose() in dispose().</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">A Form is like a paper application form. GlobalKey is the form&#39;s serial number — you need it to tell all the questions &#39;check your answers now.&#39; TextEditingController is like a pencil that writes AND remembers everything you wrote. FocusNode is like a spotlight — it shines on the question you&#39;re currently answering. Input formatters are like rules: &#39;only write numbers here, no letters allowed&#39;.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The most common Flutter form bug in production apps is forgetting to check &#39;mounted&#39; before calling setState after an async validator completes. If the user submits and navigates away before the async validation finishes, the Future resolves and tries to setState on a disposed widget. The fix is always the same: check &#39;if (mounted)&#39; before any setState inside an async callback.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a multi-step form (2 steps) for a fintech app: Step 1 collects name + email (validated), Step 2 collects password + confirm password (cross-validated). Each step has its own Form with GlobalKey. &#39;Next&#39; validates step 1 before advancing. &#39;Submit&#39; validates step 2 and shows a summary.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/cookbook/forms/validation" target="_blank" rel="noopener noreferrer">Forms in Flutter</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/widgets/TextEditingController-class.html" target="_blank" rel="noopener noreferrer">TextEditingController</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/widgets/FocusNode-class.html" target="_blank" rel="noopener noreferrer">FocusNode</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/material/TextFormField-class.html" target="_blank" rel="noopener noreferrer">TextFormField</a> <span class="res-source">(Flutter API)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=15">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./14-navigation-navigator-vs-gorouter-deep-links-route-guards.html" rel="prev">← Navigation: Navigator vs GoRouter…</a>
+  <a class="nav-next" href="./16-state-management-landscape.html" rel="next">State Management Landscape →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clean Architecture Fundamentals for Flutter — Flutter… | Teamz Lab</title>
+<meta name="description" content="Clean Architecture organizes Flutter apps into three layers: Presentation (UI + BLoC), Domain (entities + use cases + repository interfaces), and Data…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/19-advanced-bloc-patterns.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clean Architecture Fundamentals for Flutter">
+<meta property="og:description" content="Clean Architecture organizes Flutter apps into three layers: Presentation (UI + BLoC), Domain (entities + use cases + repository interfaces), and Data…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Clean Architecture Fundamentals for Flutter">
+<meta name="twitter:description" content="Clean Architecture organizes Flutter apps into three layers: Presentation (UI + BLoC), Domain (entities + use cases + repository interfaces), and Data…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Clean Architecture Fundamentals for Flutter",
+  "description": "Clean Architecture organizes Flutter apps into three layers: Presentation (UI + BLoC), Domain (entities + use cases + repository interfaces), and Data…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 20
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clean Architecture Fundamentals for Flutter",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Clean Architecture Fundamentals for Flutter</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 20 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Clean Architecture Fundamentals for Flutter</h1>
+<p class="lesson-subtitle">The Answer That Gets You Hired at Senior Level</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=20">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Clean Architecture is like a well-run hospital. The doctors (domain layer) have no idea if they&#39;re using paper charts or an iPad — they just follow medical protocols (business rules). The nurses (use cases) coordinate the doctors&#39; work. The receptionists (data layer) handle intake from outside — phone calls (APIs) or physical walk-ins (local database). The patients (UI) interact with the front desk, never directly with the doctors&#39; medical equipment.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Clean Architecture organizes Flutter apps into three layers: Presentation (UI + BLoC), Domain (entities + use cases + repository interfaces), and Data (implementations + models). The dependency rule — inner layers know nothing about outer layers — decouples business logic from UI and infrastructure. This enables independent testing, maintainability, and the ability to swap implementations.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In an offline-first field app, the SyncUseCase in the domain layer calls abstract SyncRepository.push() and pull(). The data layer implements this with SQLite for local storage and HTTP for remote sync — the domain never knows which is used. The BLoC calls SyncUseCase, which the team tests with a mock repository in 100ms flat. Swapping the local database from SQLite to Hive requires only changing the data layer.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Dependency Rule — The Core Principle</strong> — The most important rule: dependencies point INWARD. Outer layers can depend on inner layers, but inner layers CANNOT depend on outer layers. Domain (innermost) knows nothing about Flutter, Dart IO, HTTP, or databases. Data layer implements interfaces defined by Domain. Presentation depends on Domain use cases, not data sources.</li>
+      <li><strong>Three Layers: Presentation, Domain, Data</strong> — Presentation: Flutter widgets, BLoC/Cubit, ViewModels. Only knows Domain use cases and entities. Domain: entities (pure Dart business objects), use cases (single-purpose business actions), repository interfaces (abstract contracts). Data: repository implementations, API clients, local database, data models with fromJson/toJson.</li>
+      <li><strong>Domain Layer — Pure Dart, Zero Flutter</strong> — The domain layer has NO Flutter imports, NO http imports, NO sqflite imports. It can be compiled as a pure Dart library. This is the test: if you can write domain tests with just &#39;dart test&#39; and no Flutter SDK, your domain layer is clean. Entities model the business, use cases execute business rules.</li>
+      <li><strong>Entities vs Data Models</strong> — Entity: domain object with business identity. class User { final String id; final String name; }. No fromJson, no toJson — that&#39;s data layer concern. Data model: class UserModel extends User { factory UserModel.fromJson(Map json); Map toJson(); }. The model converts between JSON and entities. Interviewers love this distinction.</li>
+      <li><strong>Use Cases — Single Responsibility Business Actions</strong> — Each use case does ONE business operation: GetUserById, SubmitPayment, MarkAttendance, LogoutUser. It takes parameters (call with params object), calls the repository, returns an Entity or Result type. Use cases are the application&#39;s API — BLoC calls use cases, never repositories directly. This isolation makes business logic trivially testable.</li>
+      <li><strong>Repository Pattern — The Boundary</strong> — The repository interface lives in the DOMAIN layer (abstract class UserRepository). The implementation lives in the DATA layer (class ApiUserRepository implements UserRepository). Domain defines WHAT data it needs. Data layer decides HOW to get it (API? Cache? SQLite?). This inversion of control enables swapping implementations without touching business logic.</li>
+      <li><strong>Dependency Injection — Wiring the Layers</strong> — Use GetIt (service locator) or Riverpod to wire layers. Register: ApiUserRepository as UserRepository (interface). Inject into use cases. Inject use cases into BLoC. In tests, register MockUserRepository. The DI container is the only place that knows about concrete implementations. Everything else depends on abstractions.</li>
+      <li><strong>Folder Structure — Feature-First vs Layer-First</strong> — Layer-first: lib/data/, lib/domain/, lib/presentation/. All features in each layer. Feature-first: lib/features/auth/, lib/features/payment/, each with data/domain/presentation subdirectories. For teams: feature-first scales better (each team owns a feature folder). For small apps: layer-first is simpler. Interview: explain the tradeoffs.</li>
+      <li><strong>Result Type — Handling Errors Cleanly</strong> — Use cases return Either (dartz package) or a custom Result sealed class. Failures are domain concepts: NetworkFailure, AuthFailure, ValidationFailure. The BLoC pattern-matches on the result: if Success → emit Loaded state, if Failure → emit Error state. This avoids exception-based flow control across layer boundaries.</li>
+      <li><strong>Interview-Safe Explanation Template</strong> — &#39;I structure Flutter apps in three layers: presentation (widgets + BLoC), domain (use cases + entities + repository interfaces), and data (implementations + models). Dependencies point inward — domain has no Flutter or HTTP imports. BLoC calls use cases, use cases call repository interfaces, implementations in the data layer satisfy those interfaces. This makes every layer independently testable and swappable.&#39;</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Clean Architecture in Flutter
+
+// ============================================================
+// DOMAIN LAYER — lib/features/auth/domain/
+// Pure Dart — NO Flutter, NO http, NO sqflite imports
+// ============================================================
+
+// --- Entity: Business object ---
+class User {
+  final String id;
+  final String email;
+  final String name;
+  final UserRole role;
+
+  const User({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.role,
+  });
+}
+
+enum UserRole { admin, teacher, student }
+
+// --- Failure: Domain-level error types ---
+sealed class Failure {
+  final String message;
+  const Failure(this.message);
+}
+
+class NetworkFailure extends Failure {
+  const NetworkFailure([super.message = &#39;Network error occurred&#39;]);
+}
+
+class AuthFailure extends Failure {
+  const AuthFailure([super.message = &#39;Authentication failed&#39;]);
+}
+
+class ValidationFailure extends Failure {
+  const ValidationFailure(super.message);
+}
+
+// --- Repository Interface: Defined in Domain, Implemented in Data ---
+abstract class AuthRepository {
+  // Returns Right(User) on success, Left(Failure) on error
+  Future&lt;Either&lt;Failure, User&gt;&gt; login(String email, String password);
+  Future&lt;Either&lt;Failure, User&gt;&gt; getCurrentUser();
+  Future&lt;Either&lt;Failure, void&gt;&gt; logout();
+}
+
+// --- Use Case: Single business operation ---
+class LoginUseCase {
+  final AuthRepository _repository;
+
+  const LoginUseCase(this._repository);
+
+  // Params object: type-safe, extensible
+  Future&lt;Either&lt;Failure, User&gt;&gt; call(LoginParams params) async {
+    // Validate inputs in the domain layer
+    if (params.email.isEmpty) {
+      return const Left(ValidationFailure(&#39;Email is required&#39;));
+    }
+    if (params.password.length &lt; 8) {
+      return const Left(ValidationFailure(&#39;Password too short&#39;));
+    }
+
+    // Delegate to repository
+    return _repository.login(params.email, params.password);
+  }
+}
+
+class LoginParams {
+  final String email;
+  final String password;
+  const LoginParams({required this.email, required this.password});
+}
+
+// Simple Either implementation (or use dartz package)
+sealed class Either&lt;L, R&gt; {
+  const Either();
+}
+class Left&lt;L, R&gt; extends Either&lt;L, R&gt; {
+  final L value;
+  const Left(this.value);
+}
+class Right&lt;L, R&gt; extends Either&lt;L, R&gt; {
+  final R value;
+  const Right(this.value);
+}
+
+// ============================================================
+// DATA LAYER — lib/features/auth/data/
+// Knows about HTTP, SQLite, local storage
+// ============================================================
+
+// --- Data Model: Entity + serialization ---
+class UserModel extends User {
+  const UserModel({
+    required super.id,
+    required super.email,
+    required super.name,
+    required super.role,
+  });
+
+  factory UserModel.fromJson(Map&lt;String, dynamic&gt; json) {
+    return UserModel(
+      id: json[&#39;id&#39;] as String,
+      email: json[&#39;email&#39;] as String,
+      name: json[&#39;name&#39;] as String,
+      role: UserRole.values.byName(json[&#39;role&#39;] as String),
+    );
+  }
+
+  Map&lt;String, dynamic&gt; toJson() =&gt; {
+    &#39;id&#39;: id,
+    &#39;email&#39;: email,
+    &#39;name&#39;: name,
+    &#39;role&#39;: role.name,
+  };
+
+  // Convert to Domain entity (often the model IS the entity via inheritance)
+  User toEntity() =&gt; User(id: id, email: email, name: name, role: role);
+}
+
+// --- Repository Implementation: Satisfies the domain contract ---
+class ApiAuthRepository implements AuthRepository {
+  final AuthApiClient _apiClient;
+  final AuthLocalCache _localCache;
+
+  const ApiAuthRepository({
+    required AuthApiClient apiClient,
+    required AuthLocalCache localCache,
+  });
+
+  @override
+  Future&lt;Either&lt;Failure, User&gt;&gt; login(String email, String password) async {
+    try {
+      final response = await _apiClient.login(email, password);
+      final user = UserModel.fromJson(response);
+      await _localCache.saveUser(user); // Cache for offline use
+      return Right(user.toEntity());
+    } on UnauthorizedException {
+      return const Left(AuthFailure(&#39;Invalid credentials&#39;));
+    } on SocketException {
+      return const Left(NetworkFailure());
+    } catch (e) {
+      return Left(NetworkFailure(&#39;Unexpected error: $e&#39;));
+    }
+  }
+
+  @override
+  Future&lt;Either&lt;Failure, User&gt;&gt; getCurrentUser() async {
+    try {
+      final cached = await _localCache.getUser();
+      if (cached != null) return Right(cached.toEntity());
+      return const Left(AuthFailure(&#39;No session found&#39;));
+    } catch (e) {
+      return Left(NetworkFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future&lt;Either&lt;Failure, void&gt;&gt; logout() async {
+    try {
+      await _apiClient.logout();
+      await _localCache.clearUser();
+      return const Right(null);
+    } catch (e) {
+      return Left(NetworkFailure(e.toString()));
+    }
+  }
+}
+
+// ============================================================
+// PRESENTATION LAYER — lib/features/auth/presentation/
+// Knows about Flutter, BLoC, Widgets
+// ============================================================
+
+import &#39;package:flutter_bloc/flutter_bloc.dart&#39;;
+
+class AuthBloc extends Bloc&lt;AuthEvent, AuthState&gt; {
+  final LoginUseCase _loginUseCase; // Depends on USE CASE, not repository
+  final GetCurrentUserUseCase _getCurrentUser;
+
+  AuthBloc({
+    required LoginUseCase loginUseCase,
+    required GetCurrentUserUseCase getCurrentUser,
+  })  : _loginUseCase = loginUseCase,
+        _getCurrentUser = getCurrentUser,
+        super(const AuthInitial()) {
+    on&lt;LoginRequested&gt;(_onLoginRequested);
+    on&lt;CheckAuthStatus&gt;(_onCheckAuthStatus);
+  }
+
+  Future&lt;void&gt; _onLoginRequested(
+    LoginRequested event,
+    Emitter&lt;AuthState&gt; emit,
+  ) async {
+    emit(const AuthLoading());
+
+    final result = await _loginUseCase(
+      LoginParams(email: event.email, password: event.password),
+    );
+
+    switch (result) {
+      case Right(:final value):
+        emit(AuthAuthenticated(user: value));
+      case Left(:final value):
+        emit(AuthError(message: value.message));
+    }
+  }
+
+  Future&lt;void&gt; _onCheckAuthStatus(
+    CheckAuthStatus event,
+    Emitter&lt;AuthState&gt; emit,
+  ) async {
+    final result = await _getCurrentUser();
+    switch (result) {
+      case Right(:final value): emit(AuthAuthenticated(user: value));
+      case Left(): emit(const AuthUnauthenticated());
+    }
+  }
+}
+
+// ============================================================
+// DEPENDENCY INJECTION — lib/injection.dart
+// The only place that knows about concrete implementations
+// ============================================================
+
+import &#39;package:get_it/get_it.dart&#39;;
+
+final getIt = GetIt.instance;
+
+Future&lt;void&gt; configureDependencies() async {
+  // Data layer
+  getIt.registerLazySingleton&lt;AuthApiClient&gt;(() =&gt; AuthApiClientImpl());
+  getIt.registerLazySingleton&lt;AuthLocalCache&gt;(() =&gt; HiveAuthLocalCache());
+
+  // Repositories: register interface → implementation
+  getIt.registerLazySingleton&lt;AuthRepository&gt;(
+    () =&gt; ApiAuthRepository(
+      apiClient: getIt(),
+      localCache: getIt(),
+    ),
+  );
+
+  // Use cases
+  getIt.registerFactory(() =&gt; LoginUseCase(getIt()));
+  getIt.registerFactory(() =&gt; GetCurrentUserUseCase(getIt()));
+
+  // BLoC — registered as factory (new instance per screen)
+  getIt.registerFactory(
+    () =&gt; AuthBloc(
+      loginUseCase: getIt(),
+      getCurrentUser: getIt(),
+    ),
+  );
+}
+
+// Placeholder types to allow compilation
+class UnauthorizedException implements Exception {}
+class SocketException implements Exception {}
+abstract class AuthApiClient { Future&lt;Map&lt;String,dynamic&gt;&gt; login(String e, String p); Future&lt;void&gt; logout(); }
+abstract class AuthLocalCache { Future&lt;void&gt; saveUser(UserModel u); Future&lt;UserModel?&gt; getUser(); Future&lt;void&gt; clearUser(); }
+class AuthApiClientImpl implements AuthApiClient { @override Future&lt;Map&lt;String,dynamic&gt;&gt; login(String e, String p) async =&gt; {}; @override Future&lt;void&gt; logout() async {} }
+class HiveAuthLocalCache implements AuthLocalCache { @override Future&lt;void&gt; saveUser(UserModel u) async {} @override Future&lt;UserModel?&gt; getUser() async =&gt; null; @override Future&lt;void&gt; clearUser() async {} }
+class GetCurrentUserUseCase { final AuthRepository r; const GetCurrentUserUseCase(this.r); Future&lt;Either&lt;Failure, User&gt;&gt; call() =&gt; r.getCurrentUser(); }
+sealed class AuthEvent extends Equatable { const AuthEvent(); @override List&lt;Object?&gt; get props =&gt; []; }
+class LoginRequested extends AuthEvent { final String email; final String password; const LoginRequested({required this.email, required this.password}); @override List&lt;Object&gt; get props =&gt; [email, password]; }
+class CheckAuthStatus extends AuthEvent { const CheckAuthStatus(); }
+sealed class AuthState extends Equatable { const AuthState(); @override List&lt;Object?&gt; get props =&gt; []; }
+class AuthInitial extends AuthState { const AuthInitial(); }
+class AuthLoading extends AuthState { const AuthLoading(); }
+class AuthAuthenticated extends AuthState { final User user; const AuthAuthenticated({required this.user}); @override List&lt;Object&gt; get props =&gt; [user]; }
+class AuthUnauthenticated extends AuthState { const AuthUnauthenticated(); }
+class AuthError extends AuthState { final String message; const AuthError({required this.message}); @override List&lt;Object&gt; get props =&gt; [message]; }</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> User entity: pure Dart, no imports beyond core Dart — zero Flutter dependencies</li>
+      <li><span class="walk-num">2.</span> Sealed Failure classes: typed domain errors, not generic exceptions</li>
+      <li><span class="walk-num">3.</span> AuthRepository interface lives in DOMAIN — abstract contract, no implementation</li>
+      <li><span class="walk-num">4.</span> LoginUseCase: validates inputs (domain logic), calls repository interface</li>
+      <li><span class="walk-num">5.</span> LoginParams: typed parameter object — extensible, avoids primitive obsession</li>
+      <li><span class="walk-num">6.</span> Either: explicit success/failure return — no exception propagation across layers</li>
+      <li><span class="walk-num">7.</span> UserModel extends User: adds fromJson/toJson — data layer concern only</li>
+      <li><span class="walk-num">8.</span> ApiAuthRepository implements AuthRepository — satisfies the domain contract</li>
+      <li><span class="walk-num">9.</span> Catches specific exceptions and maps them to domain Failure types</li>
+      <li><span class="walk-num">10.</span> AuthBloc depends on LoginUseCase — never on ApiAuthRepository or ApiClient</li>
+      <li><span class="walk-num">11.</span> getIt.registerLazySingleton(() =&gt; ApiAuthRepository(...)): registers interface → implementation</li>
+      <li><span class="walk-num">12.</span> configureDependencies() is the only place in the app that knows about concrete classes</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// In the domain layer:
+import &#39;package:dio/dio.dart&#39;;
+
+class GetUserUseCase {
+  final Dio _dio;
+  GetUserUseCase(this._dio);
+
+  Future&lt;User&gt; call(String userId) async {
+    final response = await _dio.get(&#39;/users/$userId&#39;);
+    return User.fromJson(response.data);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">What architecture rule is violated? What is the impact?</div></details><details><summary>Show answer</summary><div class="answer">The domain layer imports &#39;package:dio/dio.dart&#39; — a data layer concern. This violates the Dependency Rule: inner layers must not depend on outer layers. Impact: (1) the domain layer is coupled to Dio&#39;s API (can&#39;t swap HTTP client without changing domain), (2) unit testing requires a real or mocked Dio instance, (3) the domain can&#39;t be used as a standalone Dart package. Fix: define abstract AuthRepository in domain, implement with Dio in data layer, inject the interface into GetUserUseCase.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Clean Architecture is like a burger restaurant. The menu (domain layer) says &#39;we sell cheeseburgers&#39; — it doesn&#39;t say if we grill on gas or charcoal. The kitchen (data layer) decides HOW to make the burger — grill, fryer, whatever. The waiter (presentation/BLoC) takes the customer&#39;s order and tells the kitchen. If you switch from gas to charcoal grills (swap SQLite for Hive), the menu doesn&#39;t change. The customer doesn&#39;t care. Only the kitchen changes.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Clean Architecture was created by Robert C. Martin in 2012, adapting earlier architectures (Hexagonal/Ports &amp; Adapters by Alistair Cockburn, Onion Architecture by Jeffrey Palermo). In Flutter, it was popularized by Reso Coder&#39;s tutorial series. The key insight that makes it work in Flutter is: &#39;If you can delete your lib/features/x/data/ folder and replace it with a completely different implementation in an afternoon, your architecture is clean.&#39;</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a GetTransactionHistoryUseCase that fetches transactions, filters out pending ones (business rule), and sorts by date descending. The domain entity Transaction has id, amount, status, date. Write the use case, the repository interface, and a unit test that mocks the repository and verifies the filtering logic.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://resocoder.com/2019/08/27/flutter-tdd-clean-architecture-course-1-explanation-project-structure/" target="_blank" rel="noopener noreferrer">Clean Architecture with Flutter</a> <span class="res-source">(Reso Coder)</span></li>
+      <li><a href="https://github.com/brianegan/flutter_architecture_samples" target="_blank" rel="noopener noreferrer">Flutter Architecture Samples</a> <span class="res-source">(GitHub)</span></li>
+      <li><a href="https://pub.dev/packages/get_it" target="_blank" rel="noopener noreferrer">GetIt Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://pub.dev/packages/dartz" target="_blank" rel="noopener noreferrer">dartz (Either type)</a> <span class="res-source">(pub.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=20">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./19-advanced-bloc-patterns.html" rel="prev">← Advanced BLoC Patterns</a>
+  <a class="nav-next" href="./21-repository-pattern-use-cases-di-boundaries.html" rel="next">Repository Pattern, Use Cases, DI &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

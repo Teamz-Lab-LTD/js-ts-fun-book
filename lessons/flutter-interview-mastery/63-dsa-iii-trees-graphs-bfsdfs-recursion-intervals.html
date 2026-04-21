@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA III: Trees, Graphs, BFS/DFS, Recursion &amp; Intervals… | Teamz Lab</title>
+<meta name="description" content="Trees, graphs, BFS/DFS, recursion, and interval problems are the advanced tier of mobile engineering interviews. They require pattern recognition and the…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/63-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/62-dsa-ii-stack-queue-linked-list-binary-search-heap.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/64-behavioral-foundations-w-star-confidence-concise-answers.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="DSA III: Trees, Graphs, BFS/DFS, Recursion &amp; Intervals">
+<meta property="og:description" content="Trees, graphs, BFS/DFS, recursion, and interval problems are the advanced tier of mobile engineering interviews. They require pattern recognition and the…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/63-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DSA III: Trees, Graphs, BFS/DFS, Recursion &amp; Intervals">
+<meta name="twitter:description" content="Trees, graphs, BFS/DFS, recursion, and interval problems are the advanced tier of mobile engineering interviews. They require pattern recognition and the…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "DSA III: Trees, Graphs, BFS/DFS, Recursion & Intervals",
+  "description": "Trees, graphs, BFS/DFS, recursion, and interval problems are the advanced tier of mobile engineering interviews. They require pattern recognition and the…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/63-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 63
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DSA III: Trees, Graphs, BFS/DFS, Recursion & Intervals",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/63-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">DSA III: Trees, Graphs, BFS/DFS, Recursion &amp; Intervals</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 63 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">DSA III: Trees, Graphs, BFS/DFS, Recursion &amp; Intervals</h1>
+<p class="lesson-subtitle">The hardest interview patterns — tree traversal, graph search, recursion thinking, and interval merging</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=63">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A tree is like a company org chart — the CEO is the root, managers are internal nodes, and individual contributors are leaves. A graph is like a city road network — any intersection can connect to any other. BFS is like spreading rumors at a party — it reaches everyone at the same social distance at the same time. DFS is like following one thread of gossip all the way to the end before backtracking.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Trees, graphs, BFS/DFS, recursion, and interval problems are the advanced tier of mobile engineering interviews. They require pattern recognition and the ability to trust recursive thinking — skills that come from understanding the structure, not memorizing solutions.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In Tixio&#39;s workspace hierarchy (workspace → channels → threads → messages), tree traversal computes unread counts by summing up the tree. In FieldBuzz, finding the shortest route between survey locations on a road network is a graph shortest-path problem. Calendar scheduling in any SaaS app uses merge intervals for conflict detection.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Binary tree fundamentals</strong> — Binary tree: each node has at most 2 children (left, right). BST (Binary Search Tree): left subtree values &lt; node &lt; right subtree values. Dart: class TreeNode { int val; TreeNode? left, right; TreeNode(this.val); }. Height: O(log n) for balanced, O(n) for skewed. Interview key insight: most tree problems are recursive — trust the recursion.</li>
+      <li><strong>Tree traversal patterns</strong> — Inorder (Left-Root-Right): gives sorted sequence for BST. Preorder (Root-Left-Right): good for tree serialization, copying. Postorder (Left-Right-Root): good for deletion, computing subtree results. Level-order (BFS): good for level-by-level processing. Each is O(n) time O(h) space for recursive (h = height), O(n) for iterative BFS.</li>
+      <li><strong>Recursion thinking for trees</strong> — Tree recursion template: (1) base case — null node returns base value; (2) recursive calls on left and right subtrees; (3) combine results and return. For maxDepth: if node==null return 0; return 1 + max(maxDepth(node.left), maxDepth(node.right)). Trust that the recursive call returns the correct answer for subtrees — don&#39;t try to trace the full call stack.</li>
+      <li><strong>BFS with a queue</strong> — BFS (Breadth-First Search) explores level by level. Template: Queue q = Queue(); q.add(root); while(q.isNotEmpty){ final node = q.removeFirst(); process(node); if(node.left!=null)q.add(node.left!); if(node.right!=null)q.add(node.right!); }. O(n) time O(w) space where w is max width. Use for: shortest path, level-order traversal, minimum depth.</li>
+      <li><strong>DFS patterns</strong> — DFS explores as far as possible before backtracking. Recursive DFS is natural for trees. For graphs: track visited Set to avoid cycles. Three DFS patterns: (1) return value from recursion (max depth), (2) pass accumulator down (path sum), (3) use outer variable for global result (diameter of tree). Recognize which pattern the problem needs.</li>
+      <li><strong>Graph representation</strong> — Adjacency list: Map&gt; graph = {}. Most space-efficient for sparse graphs. Adjacency matrix: List&gt; — O(V²) space, O(1) edge lookup. For interview problems: build the graph first from the input, then run BFS/DFS. Mobile context: user connections, room-device relationships, prerequisite chains.</li>
+      <li><strong>Graph BFS: shortest path</strong> — BFS guarantees shortest path in unweighted graphs. Level = distance from source. Template: Queue q with source; Set visited = {source}; int steps = 0; while q not empty: process level (all nodes at current distance), increment steps, add unvisited neighbors. This level-by-level processing is the key insight.</li>
+      <li><strong>Merge intervals pattern</strong> — Sort intervals by start time. Iterate: if current interval overlaps previous (current.start &lt;= prev.end), merge by extending prev.end = max(prev.end, current.end). Else add prev to result and move to current. O(n log n) for sort + O(n) for merge = O(n log n). Mobile context: calendar event overlap detection, time slot availability.</li>
+      <li><strong>Meeting rooms pattern</strong> — Given intervals representing meeting times, can one person attend all? Sort by start time. Check if any adjacent pair overlaps: meetings[i].start &lt; meetings[i-1].end. If yes: conflict. O(n log n). Extension: minimum rooms needed — use a min-heap of end times; greedily assign to earliest-ending room or open a new one.</li>
+      <li><strong>Recursion vs iteration</strong> — Recursion is elegant but uses O(h) stack space — can stack overflow on deep inputs (h=10K). Iterative DFS using an explicit stack avoids this. For interviews: start with recursion (easier to explain), then mention &#39;for production I&#39;d consider iterative to avoid stack overflow on degenerate inputs.&#39; Shows seniority.</li>
+      <li><strong>Interview strategy for hard problems</strong> — Hard DSA problems feel impossible until you see the pattern. Steps: (1) Draw an example — visualize the data structure. (2) Identify traversal pattern (BFS/DFS/recursion?). (3) Write the base case first. (4) Trust recursion — write the recursive case assuming subtree calls work. (5) Trace through the example. (6) Code. Interviewers want to see your thinking process, not just the answer.</li>
+      <li><strong>Complexity for trees and graphs</strong> — Tree traversal: O(n) time, O(h) space recursive (O(log n) balanced, O(n) skewed). BFS: O(V+E) time, O(V) space. DFS: O(V+E) time, O(V) space. Merge intervals: O(n log n). Always state complexity — for trees, mention that the space is O(h) not O(n) for balanced trees, and explain when that distinction matters.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Tree: max depth (recursive)
+int maxDepth(TreeNode? node) {
+  if (node == null) return 0;
+  return 1 + [maxDepth(node.left), maxDepth(node.right)].reduce((a,b) =&gt; a&gt;b?a:b);
+}
+
+// Tree: level-order traversal (BFS)
+import &#39;dart:collection&#39;;
+List&lt;List&lt;int&gt;&gt; levelOrder(TreeNode? root) {
+  if (root == null) return [];
+  final result = &lt;List&lt;int&gt;&gt;[];
+  final q = Queue&lt;TreeNode&gt;()..add(root);
+  while (q.isNotEmpty) {
+    final level = &lt;int&gt;[];
+    final size = q.length;
+    for (int i = 0; i &lt; size; i++) {
+      final node = q.removeFirst();
+      level.add(node.val);
+      if (node.left != null) q.add(node.left!);
+      if (node.right != null) q.add(node.right!);
+    }
+    result.add(level);
+  }
+  return result;
+}
+
+// Graph: BFS shortest path
+int shortestPath(Map&lt;int,List&lt;int&gt;&gt; graph, int src, int dst) {
+  final visited = &lt;int&gt;{src};
+  final q = Queue&lt;int&gt;()..add(src);
+  int steps = 0;
+  while (q.isNotEmpty) {
+    final size = q.length;
+    for (int i = 0; i &lt; size; i++) {
+      final node = q.removeFirst();
+      if (node == dst) return steps;
+      for (final neighbor in graph[node] ?? []) {
+        if (visited.add(neighbor)) q.add(neighbor);
+      }
+    }
+    steps++;
+  }
+  return -1;
+}
+
+// Merge intervals
+List&lt;List&lt;int&gt;&gt; mergeIntervals(List&lt;List&lt;int&gt;&gt; intervals) {
+  intervals.sort((a, b) =&gt; a[0].compareTo(b[0]));
+  final result = &lt;List&lt;int&gt;&gt;[intervals[0]];
+  for (final curr in intervals.skip(1)) {
+    if (curr[0] &lt;= result.last[1]) {
+      result.last[1] = result.last[1] &gt; curr[1] ? result.last[1] : curr[1];
+    } else {
+      result.add(curr);
+    }
+  }
+  return result;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> maxDepth base case: null node contributes 0 to depth</li>
+      <li><span class="walk-num">2.</span> Recursive case: 1 (current node) plus the deeper of left and right subtrees</li>
+      <li><span class="walk-num">3.</span> This single line encodes the entire depth computation — trust the recursion</li>
+      <li><span class="walk-num">4.</span> levelOrder uses BFS with a queue to process nodes level by level</li>
+      <li><span class="walk-num">5.</span> The inner for loop processes exactly one level per outer while iteration</li>
+      <li><span class="walk-num">6.</span> q.length captured before the inner loop — nodes added during iteration are next level</li>
+      <li><span class="walk-num">7.</span> shortestPath BFS increments steps after processing each complete level</li>
+      <li><span class="walk-num">8.</span> visited.add() returns false if element already in set — prevents revisiting</li>
+      <li><span class="walk-num">9.</span> mergeIntervals sorts first so overlapping intervals are guaranteed adjacent</li>
+      <li><span class="walk-num">10.</span> Last interval in result is extended if current interval overlaps it</li>
+      <li><span class="walk-num">11.</span> result.last[1] = max of both ends handles the case where current is fully contained</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Check if a binary tree is symmetric
+bool isSymmetric(TreeNode? root) {
+  return isMirror(root, root);
+}
+bool isMirror(TreeNode? left, TreeNode? right) {
+  if (left == null &amp;&amp; right == null) return true;
+  if (left == null || right == null) return false;
+  return left.val == right.val
+    &amp;&amp; isMirror(left.left, right.left)
+    &amp;&amp; isMirror(left.right, right.right);
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">The logic is nearly correct but one recursive call compares the wrong pair of subtrees. A symmetric tree mirrors around its center.</div></details><details><summary>Show answer</summary><div class="answer">Bug: isMirror(left.left, right.left) should be isMirror(left.left, right.right) and isMirror(left.right, right.right) should be isMirror(left.right, right.left). For a mirror check, the left subtree&#39;s left child must mirror the right subtree&#39;s RIGHT child (not left). The correct calls are: isMirror(left.left, right.right) &amp;&amp; isMirror(left.right, right.left).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">A tree is like a family tree — start from grandma (root), visit all kids, then grandkids. BFS visits all the grandma&#39;s children before grandchildren (level by level — like rings spreading in water). DFS visits one branch all the way down before backtracking (like following one corridor in a maze to its dead end before trying another).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The concept of graph traversal underpins Google&#39;s PageRank algorithm, GPS navigation, social network friend suggestions, and the dependency resolution in Flutter&#39;s pub package manager — all of which use variations of BFS or DFS.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement a function that counts all messages in a workspace tree where each node has a messageCount and a list of child channels. Use recursion. Then rewrite it iteratively using an explicit stack. Compare the two approaches.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://leetcode.com/explore/learn/card/data-structure-tree/" target="_blank" rel="noopener noreferrer">LeetCode Explore: Binary Tree</a> <span class="res-source">(leetcode.com)</span></li>
+      <li><a href="https://neetcode.io/roadmap" target="_blank" rel="noopener noreferrer">NeetCode — Trees and Graphs</a> <span class="res-source">(neetcode.io)</span></li>
+      <li><a href="https://visualgo.net/en/bst" target="_blank" rel="noopener noreferrer">Visualgo — Tree and Graph Visualizations</a> <span class="res-source">(visualgo.net)</span></li>
+      <li><a href="https://leetcode.com/tag/intervals/" target="_blank" rel="noopener noreferrer">LeetCode Interval Problems</a> <span class="res-source">(leetcode.com)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=63">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./62-dsa-ii-stack-queue-linked-list-binary-search-heap.html" rel="prev">← DSA II: Stack, Queue, Linked List…</a>
+  <a class="nav-next" href="./64-behavioral-foundations-w-star-confidence-concise-answers.html" rel="next">Behavioral Foundations: W-STAR… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

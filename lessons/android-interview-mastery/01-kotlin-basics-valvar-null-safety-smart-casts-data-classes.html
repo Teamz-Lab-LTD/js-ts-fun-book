@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kotlin Basics: val/var, Null Safety, Smart Casts &amp;… | Teamz Lab</title>
+<meta name="description" content="Kotlin&#39;s type system and core syntax form the foundation of every Android interview. val/var control mutability, null safety eliminates NPE at compile time…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html">
+
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/02-collections-lambdas-scope-functions-higher-order-functions.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin Basics: val/var, Null Safety, Smart Casts &amp; Data Classes">
+<meta property="og:description" content="Kotlin&#39;s type system and core syntax form the foundation of every Android interview. val/var control mutability, null safety eliminates NPE at compile time…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kotlin Basics: val/var, Null Safety, Smart Casts &amp; Data Classes">
+<meta name="twitter:description" content="Kotlin&#39;s type system and core syntax form the foundation of every Android interview. val/var control mutability, null safety eliminates NPE at compile time…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Kotlin Basics: val/var, Null Safety, Smart Casts & Data Classes",
+  "description": "Kotlin's type system and core syntax form the foundation of every Android interview. val/var control mutability, null safety eliminates NPE at compile time…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 1
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Kotlin Basics: val/var, Null Safety, Smart Casts & Data Classes",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Kotlin Basics: val/var, Null Safety, Smart Casts &amp; Data Classes</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 1 of 83</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Kotlin Basics: val/var, Null Safety, Smart Casts &amp; Data Classes</h1>
+<p class="lesson-subtitle">The fundamentals asked in every Android interview — master these first</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=1">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">val/var is like a permanent marker vs a pencil. Null safety is like a bouncer at a club — you prove your identity (non-null) before you get in, or you get redirected to the &#39;null entrance&#39; gracefully.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Kotlin&#39;s type system and core syntax form the foundation of every Android interview. val/var control mutability, null safety eliminates NPE at compile time using the ?, ?., ?:, and !! operators, smart casts reduce boilerplate, when expressions replace switch with power, and data classes generate boilerplate-free value objects.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a field operations enterprise app, you might model a WorkOrder as a data class with nullable assignedTo: Employee? — because orders can be unassigned. Using ?.let ensures you only send push notifications when there IS an assignee, while ?: provides default status text in the UI. Smart casts in a when expression dispatch different sync strategies based on the WorkOrder subtype.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>val vs var</strong> — val is read-only (like Java final) — the reference cannot be reassigned. var is mutable. Prefer val by default for immutability and thread safety. val does NOT mean the object itself is immutable — a val List can still be mutable.</li>
+      <li><strong>Nullable types with ?</strong> — In Kotlin, String is non-nullable (guaranteed non-null). String? is nullable. The compiler enforces null checks at compile time, eliminating NullPointerException at runtime when used correctly.</li>
+      <li><strong>Safe call operator ?.</strong> — user?.address?.city — chains null checks. If any part is null, the entire expression short-circuits to null instead of throwing NPE. Essential for deeply nested nullable objects in enterprise data models.</li>
+      <li><strong>Elvis operator ?:</strong> — val city = user?.address?.city ?: &#39;Unknown&#39; — provides a default value when the left side is null. Can also throw: val id = userId ?: throw IllegalStateException(&#39;User ID required&#39;)</li>
+      <li><strong>Non-null assertion !!</strong> — Forces a nullable type to non-null — throws KotlinNullPointerException if null. Use ONLY when you are 100% certain the value is non-null and the compiler cannot infer it. In production code, this is usually a code smell.</li>
+      <li><strong>let scope function for null checks</strong> — user?.let { safeUser -&gt; process(safeUser) } — executes the block only if user is non-null. Inside the block, safeUser is guaranteed non-null. Replaces verbose if (user != null) { } patterns.</li>
+      <li><strong>Smart casts with is</strong> — After an is check, Kotlin automatically casts the type — no explicit cast needed. if (shape is Circle) { shape.radius } works because the compiler knows shape is a Circle inside the if block.</li>
+      <li><strong>when expression</strong> — when replaces Java switch but is far more powerful — it&#39;s an expression (returns a value), supports arbitrary conditions, ranges, type checks, and can destructure. Exhaustive when sealed classes/enums forces all cases.</li>
+      <li><strong>Data classes</strong> — data class User(val id: Int, val name: String) auto-generates: equals(), hashCode(), toString(), copy(), componentN() functions for destructuring. Ideal for DTOs, API responses, UI state models.</li>
+      <li><strong>copy() function</strong> — val updated = user.copy(name = &#39;Alice&#39;) creates a new instance with only specified fields changed. All other fields are copied from the original. Critical for immutable state management in MVI/Compose architectures.</li>
+      <li><strong>Destructuring declarations</strong> — val (id, name) = user unpacks data class component functions. Works in for loops: for ((key, value) in map). Behind the scenes calls component1(), component2() etc.</li>
+      <li><strong>lateinit vs lazy</strong> — lateinit var is for var properties initialized later (not null, throws if accessed before init). lazy { } is for val properties initialized on first access (thread-safe by default). Use lateinit for dependency injection, lazy for expensive computed properties.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// val vs var — prefer val
+val BASE_URL = &quot;https://api.fieldops.com&quot;
+var retryCount = 0
+
+// Null safety in a real model
+data class WorkOrder(
+    val id: String,
+    val title: String,
+    val assignedTo: Employee?,   // nullable — can be unassigned
+    val completedAt: Long? = null
+)
+
+data class Employee(val id: String, val name: String, val email: String)
+
+// Safe call chain + Elvis
+fun getAssigneeName(order: WorkOrder): String {
+    return order.assignedTo?.name ?: &quot;Unassigned&quot;
+}
+
+// let for null-safe block execution
+fun notifyAssignee(order: WorkOrder) {
+    order.assignedTo?.let { employee -&gt;
+        sendPushNotification(employee.email, order.title)
+    }
+}
+
+// Smart cast with when expression
+fun describeOrder(order: Any): String = when (order) {
+    is WorkOrder -&gt; &quot;Work Order: ${order.title}&quot;
+    is String    -&gt; &quot;Raw ID: $order&quot;
+    else         -&gt; &quot;Unknown: $order&quot;
+}
+
+// copy() for immutable state update
+fun markComplete(order: WorkOrder, timestamp: Long): WorkOrder {
+    return order.copy(completedAt = timestamp)
+}
+
+// Destructuring
+fun logOrder(order: WorkOrder) {
+    val (id, title) = order
+    println(&quot;Processing order $id: $title&quot;)
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> val BASE_URL = ... — compiler enforces this reference can never be reassigned; use for constants and injected dependencies</li>
+      <li><span class="walk-num">2.</span> data class WorkOrder(...) — compiler generates equals/hashCode based on all constructor properties; two WorkOrders with same id/title are equal</li>
+      <li><span class="walk-num">3.</span> val assignedTo: Employee? — the ? makes this property nullable; compiler will reject direct access without a null check</li>
+      <li><span class="walk-num">4.</span> order.assignedTo?.name — safe call: if assignedTo is null, this returns null instead of throwing; chains safely</li>
+      <li><span class="walk-num">5.</span> ?: &#39;Unassigned&#39; — Elvis: when the left side is null, return this default; right side can also be throw or return</li>
+      <li><span class="walk-num">6.</span> order.assignedTo?.let { employee -&gt; ... } — let block only executes when assignedTo is non-null; employee inside is guaranteed non-null String</li>
+      <li><span class="walk-num">7.</span> is WorkOrder -&gt; order.title — smart cast: compiler knows order is WorkOrder inside this branch, no cast needed</li>
+      <li><span class="walk-num">8.</span> order.copy(completedAt = timestamp) — creates a NEW WorkOrder with all fields copied except completedAt; original is unchanged</li>
+      <li><span class="walk-num">9.</span> val (id, title) = order — destructuring calls order.component1() and order.component2() automatically</li>
+      <li><span class="walk-num">10.</span> fun notifyAssignee is unit-returning — no return type needed; Kotlin infers Unit (equivalent to Java void)</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>data class User(var id: Int, var name: String)
+
+fun processUser(input: Any) {
+    if (input is User) {
+        println(input.name)
+    }
+    input.name // smart cast here
+}
+
+fun getDisplayName(user: User?): String {
+    return user!!.name
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Two bugs: one with smart cast scope, one with force-unwrapping a nullable parameter</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: &#39;input.name&#39; outside the if block fails — smart cast only applies INSIDE the is-check block. Fix: move usage inside the if, or cast explicitly. Bug 2: user!!.name will throw KotlinNullPointerException if user is null — the function accepts User? so null is valid input. Fix: return user?.name ?: &#39;Guest&#39;</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a toy box. val means you can only put toys IN this box (you can&#39;t swap the box for a different box). var means you can swap the whole box. Null safety means some boxes have a warning label — &#39;this might be empty!&#39; — and Kotlin makes you CHECK before reaching in, so you never get hurt by an empty box surprise.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Kotlin&#39;s null safety has been shown to eliminate ~35% of Android crash reports that were caused by NullPointerException in Java codebases. Google&#39;s internal data showed NPE was the #1 cause of Android app crashes before Kotlin adoption.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Model a school management app&#39;s Student data class with: id (non-nullable), name (non-nullable), guardianEmail (nullable), gpa (nullable Double). Write a function that returns a formatted summary string using safe calls, Elvis, and a when expression that returns &#39;Honors&#39; / &#39;Passing&#39; / &#39;At Risk&#39; based on GPA. Write a markPromoted() function using copy().</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://kotlinlang.org/docs/basic-syntax.html" target="_blank" rel="noopener noreferrer">Kotlin Basic Syntax — Official Docs</a> <span class="res-source">(kotlinlang.org)</span></li>
+      <li><a href="https://kotlinlang.org/docs/null-safety.html" target="_blank" rel="noopener noreferrer">Null Safety in Kotlin</a> <span class="res-source">(kotlinlang.org)</span></li>
+      <li><a href="https://kotlinlang.org/docs/data-classes.html" target="_blank" rel="noopener noreferrer">Data Classes</a> <span class="res-source">(kotlinlang.org)</span></li>
+      <li><a href="https://kotlinlang.org/docs/control-flow.html" target="_blank" rel="noopener noreferrer">Control Flow: when expression</a> <span class="res-source">(kotlinlang.org)</span></li>
+      <li><a href="https://developer.android.com/kotlin/style-guide" target="_blank" rel="noopener noreferrer">Android Kotlin Style Guide</a> <span class="res-source">(developer.android.com)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=1">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <span class="nav-placeholder"></span>
+  <a class="nav-next" href="./02-collections-lambdas-scope-functions-higher-order-functions.html" rel="next">Collections, Lambdas, Scope Functions… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

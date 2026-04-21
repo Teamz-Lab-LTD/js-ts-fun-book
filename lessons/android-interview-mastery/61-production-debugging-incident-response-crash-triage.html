@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Debugging, Incident Response &amp; Crash Triage… | Teamz Lab</title>
+<meta name="description" content="Production debugging is the discipline of identifying, triaging, reproducing, and resolving failures in shipped software with minimal user impact and…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/62-cs-basics-big-o-memory-threading-networking.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Production Debugging, Incident Response &amp; Crash Triage">
+<meta property="og:description" content="Production debugging is the discipline of identifying, triaging, reproducing, and resolving failures in shipped software with minimal user impact and…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Production Debugging, Incident Response &amp; Crash Triage">
+<meta name="twitter:description" content="Production debugging is the discipline of identifying, triaging, reproducing, and resolving failures in shipped software with minimal user impact and…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Production Debugging, Incident Response & Crash Triage",
+  "description": "Production debugging is the discipline of identifying, triaging, reproducing, and resolving failures in shipped software with minimal user impact and…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 61
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Production Debugging, Incident Response & Crash Triage",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Production Debugging, Incident Response &amp; Crash Triage</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 61 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Production Debugging, Incident Response &amp; Crash Triage</h1>
+<p class="lesson-subtitle">From alert to fix — the senior engineer&#39;s playbook for production fires</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=61">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of production debugging like being an ER surgeon. The crash report is your patient&#39;s vitals. You don&#39;t panic — you triage, stabilize, diagnose, fix, and then write a post-mortem so the same emergency never kills anyone again.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Production debugging is the discipline of identifying, triaging, reproducing, and resolving failures in shipped software with minimal user impact and maximum speed. It combines tool mastery (Crashlytics, LeakCanary, adb) with systematic methodology (bisect, staged rollouts, post-mortems) and communication skills that separate senior engineers from juniors.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>At FieldBuzz, when a critical sync crash hit 12% of field officers on Android 10 devices after a release, the triage process was: Crashlytics showed a NullPointerException in the offline sync worker; the mapping file revealed it was in a DAO query path; git bisect identified a Room schema migration commit; the fix was a hotfix release at 5% rollout; a post-mortem led to adding migration unit tests to the CI pipeline.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Crashlytics Triage Workflow</strong> — Open Crashlytics, sort by &#39;Most Impacted Users&#39;. Look at crash-free user rate trend. Identify if the spike correlates with a release version. Pivot to the specific issue, read the full stack trace, check OS version and device distribution before touching code.</li>
+      <li><strong>Reading Android Stack Traces</strong> — Start from the top — the first &#39;Caused by&#39; line is the root cause. Ignore framework internals (android.*) until you&#39;ve understood your own code frames. Correlate with ProGuard/R8 mapping files to deobfuscate. The crash thread is listed first; note if it&#39;s main or a background thread.</li>
+      <li><strong>Reproducing Issues Reliably</strong> — Use Crashlytics breadcrumbs and custom keys to rebuild state. Add a debug build with verbose logging. If device-specific, use Firebase Test Lab to run on real hardware. For race conditions, add Thread.sleep or use a stress test harness. Never debug only in production.</li>
+      <li><strong>ANR (Application Not Responding) Analysis</strong> — ANRs mean main thread was blocked &gt;5s. Pull the ANR traces file (data/anr/traces.txt) from adb or Crashlytics. Look for deadlocks, synchronized blocks, StrictMode violations, or SharedPreferences.commit() on main thread. Fix: move work off main thread using coroutines or WorkManager.</li>
+      <li><strong>Memory Leak Detection with LeakCanary</strong> — Add LeakCanary to debug builds only. It hooks into the GC and alerts on objects that should be GCed but aren&#39;t. Common leaks: Activity held by a singleton, anonymous Runnable posted to Handler, context stored in a companion object. Read the leak trace top-to-bottom — the red chain is the retention path.</li>
+      <li><strong>git bisect for Regression Hunting</strong> — Run &#39;git bisect start&#39;, mark HEAD as bad, mark a known-good commit as good. Git checks out the midpoint. Test, mark good or bad. Repeat ~log2(N) times to find the exact commit that introduced the regression. Works in minutes even across hundreds of commits.</li>
+      <li><strong>Rollback Strategies</strong> — Preferred: staged rollout pause + rollback in Play Console. Alternative: server-side feature flag kill switch (Firebase Remote Config, LaunchDarkly). Last resort: emergency release with the fix. Never hot-patch production APKs — it violates Play policy.</li>
+      <li><strong>Staged Rollouts for Recovery</strong> — Release fixes at 1%, watch crash-free rate. Promote to 10% after 2h stability. Full rollout at 24h. If crash rate rises above threshold, pause rollout. This limits blast radius and gives signal early without impacting all users.</li>
+      <li><strong>Incident Communication Protocol</strong> — Acknowledge immediately in the incident channel (&lt; 15 min). Provide hourly status updates: &#39;We are investigating / We have identified / We are fixing / We have resolved&#39;. Post estimated ETA even if rough. Communicate impact scope — X% of users on Android 12+ affected.</li>
+      <li><strong>Post-Mortem Process</strong> — Write within 48h of resolution. Include: timeline, root cause, impact (users/revenue), mitigation steps, action items with DRI and due dates. Blameless — focus on system failures, not individual mistakes. Distribute to stakeholders. Action items must be tracked in the backlog.</li>
+      <li><strong>Proactive Crash Rate Alerting</strong> — Set Crashlytics alerts for crash-free user rate dropping below 99.5%. Create custom dashboards in Firebase for key user flows. Use BigQuery export for advanced analysis (funnel correlation, device segmentation). Senior engineers set up the guardrails before the fire, not during.</li>
+      <li><strong>StrictMode as a Debugging Shield</strong> — Enable StrictMode in debug builds: detect disk reads on main thread, network calls on main thread, leaked SQLite cursors, and Activity leaks. StrictMode violations in staging catch real production ANRs before they ship. Always pair with baseline profiles for perf measurement.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// LeakCanary setup (debug only — build.gradle)
+// debugImplementation &#39;com.squareup.leakcanary:leakcanary-android:2.12&#39;
+// No code needed — LeakCanary auto-installs via ContentProvider
+
+// StrictMode setup in Application.onCreate()
+class MyApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()
+                    .penaltyDialog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .build()
+            )
+        }
+    }
+}
+
+// Crashlytics custom keys for breadcrumbs
+fun logSyncAttempt(userId: String, recordCount: Int) {
+    Firebase.crashlytics.setCustomKey(&quot;last_sync_user&quot;, userId)
+    Firebase.crashlytics.setCustomKey(&quot;last_sync_count&quot;, recordCount)
+    Firebase.crashlytics.log(&quot;Sync started: $recordCount records&quot;)
+}
+
+// git bisect shell commands (not Kotlin — shown as comments)
+// git bisect start
+// git bisect bad HEAD
+// git bisect good v2.3.1
+// [git checks out midpoint — test the app]
+// git bisect good    OR    git bisect bad
+// [repeat until git prints the offending commit]
+// git bisect reset</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> LeakCanary requires zero initialization code — it installs itself via a ContentProvider that runs before Application.onCreate(). Just adding the dependency in debugImplementation is enough.</li>
+      <li><span class="walk-num">2.</span> StrictMode is activated in Application.onCreate() inside a BuildConfig.DEBUG check — it must NEVER run in release builds as the dialog penalties would show to real users.</li>
+      <li><span class="walk-num">3.</span> ThreadPolicy.detectDiskReads/Writes/Network catches the most common ANR causes — these operations block the main thread and should always run on Dispatchers.IO.</li>
+      <li><span class="walk-num">4.</span> VmPolicy.detectLeakedSqlLiteObjects catches unclosed Cursor objects — a classic Android memory and file-descriptor leak that&#39;s invisible until it causes &#39;too many open files&#39; crashes.</li>
+      <li><span class="walk-num">5.</span> Firebase.crashlytics.setCustomKey stores key-value pairs that appear alongside a crash report — use these proactively to capture user ID, feature flags, sync state before crashes happen.</li>
+      <li><span class="walk-num">6.</span> Firebase.crashlytics.log adds breadcrumb messages to the crash report — these appear in the &#39;Logs&#39; tab and give you a timeline of what happened before the crash.</li>
+      <li><span class="walk-num">7.</span> The git bisect commands shown as comments demonstrate the binary search process — git automates the midpoint selection, you just mark each commit good or bad after testing.</li>
+      <li><span class="walk-num">8.</span> git bisect reset at the end restores your working directory to HEAD — forgetting this leaves you on a detached HEAD state in the middle of the commit history.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class SyncWorker(context: Context, params: WorkerParameters)
+    : CoroutineWorker(context, params) {
+
+    override suspend fun doWork(): Result {
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            &quot;app_db&quot;
+        ).build()
+
+        return try {
+            val unsyncedRecords = db.recordDao().getUnsynced()
+            apiService.uploadRecords(unsyncedRecords)
+            Result.success()
+        } catch (e: Exception) {
+            Result.failure()
+        }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are two bugs: one causes a resource leak in every worker execution, and one silently swallows errors that should trigger a retry.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: A new Room database instance is built inside doWork() every time the worker runs. Room instances hold file handles, thread pools, and WAL connections. Building and never closing them (Room databases don&#39;t implement Closeable easily) causes resource exhaustion over time. The database should be a singleton accessed via a DI container (Hilt/Koin) or a companion object, never built fresh in each worker invocation. Bug 2: The catch block returns Result.failure() for ALL exceptions, including transient network errors (IOException, HttpException). Transient errors should return Result.retry() so WorkManager re-schedules the work with exponential backoff. Only permanent errors (auth failures, data validation errors) should return Result.failure(). Fix: check exception type and return Result.retry() for IOException and similar transient failures.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your app is a restaurant. Sometimes something goes wrong in the kitchen — a dish takes too long (ANR), or the stove catches fire (crash). Production debugging is like being the head chef who gets a pager alert, rushes to the kitchen, reads the incident log (stack trace), figures out which cook made a mistake (git bisect), tells the manager what&#39;s happening every 10 minutes (incident comms), fixes the stove, and then writes a report so the same fire never happens again (post-mortem).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The famous &#39;Therac-25&#39; radiation therapy machine bug in the 1980s killed patients because race conditions were only reproducible under specific timing. Modern post-mortem culture directly traces its roots to lessons learned from disasters like this — today&#39;s blameless post-mortems exist because blame-driven cultures suppressed the very information needed to fix systemic issues.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Given a Crashlytics report showing a NullPointerException in your Room DAO&#39;s query method affecting 3% of Android 11 users after your last release, walk through the full triage: (1) What custom keys would you have set pre-emptively to help diagnose this? (2) How would you use git bisect to confirm this is a regression? (3) What&#39;s your rollout strategy for the fix? (4) What goes in the post-mortem action items to prevent recurrence?</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://firebase.google.com/docs/crashlytics" target="_blank" rel="noopener noreferrer">Firebase Crashlytics Docs</a> <span class="res-source">(Firebase)</span></li>
+      <li><a href="https://square.github.io/leakcanary/" target="_blank" rel="noopener noreferrer">LeakCanary Documentation</a> <span class="res-source">(Square)</span></li>
+      <li><a href="https://developer.android.com/reference/android/os/StrictMode" target="_blank" rel="noopener noreferrer">StrictMode API Reference</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener noreferrer">Google SRE Book: Postmortems</a> <span class="res-source">(Google SRE)</span></li>
+      <li><a href="https://developer.android.com/topic/performance/vitals/anr" target="_blank" rel="noopener noreferrer">ANR Diagnosis Guide</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=61">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./60-system-design-iii-secure-authpaymentclaims-flow.html" rel="prev">← System Design III: Secure…</a>
+  <a class="nav-next" href="./62-cs-basics-big-o-memory-threading-networking.html" rel="next">CS Basics: Big-O, Memory, Threading &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

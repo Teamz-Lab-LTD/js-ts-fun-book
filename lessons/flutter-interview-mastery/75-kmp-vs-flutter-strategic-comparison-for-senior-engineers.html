@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMP vs Flutter — Strategic Comparison for Senior… | Teamz Lab</title>
+<meta name="description" content="KMP (Kotlin Multiplatform) and Flutter represent two fundamentally different approaches to cross-platform development. Flutter shares everything (UI +…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/74-grpc-protobuf-advanced-api-patterns.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP vs Flutter — Strategic Comparison for Senior Engineers">
+<meta property="og:description" content="KMP (Kotlin Multiplatform) and Flutter represent two fundamentally different approaches to cross-platform development. Flutter shares everything (UI +…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KMP vs Flutter — Strategic Comparison for Senior Engineers">
+<meta name="twitter:description" content="KMP (Kotlin Multiplatform) and Flutter represent two fundamentally different approaches to cross-platform development. Flutter shares everything (UI +…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "KMP vs Flutter — Strategic Comparison for Senior Engineers",
+  "description": "KMP (Kotlin Multiplatform) and Flutter represent two fundamentally different approaches to cross-platform development. Flutter shares everything (UI +…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 75
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "KMP vs Flutter — Strategic Comparison for Senior Engineers",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">KMP vs Flutter — Strategic Comparison for Senior Engineers</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 75 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">KMP vs Flutter — Strategic Comparison for Senior Engineers</h1>
+<p class="lesson-subtitle">Choose the Right Cross-Platform Strategy for Your Team</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=75">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine you&#39;re a restaurant chain expanding to 10 cities. Flutter is like building identical franchise restaurants everywhere — same kitchen, same decor, same menu, all controlled from headquarters. Fast to roll out, but every location looks the same. KMP (Kotlin Multiplatform) is like keeping each city&#39;s unique local restaurant but sharing the same supply chain, recipes, and accounting system behind the scenes — customers get a native experience, but the business logic is unified. Neither approach is wrong — it depends on whether your customers care more about consistency or local flavor.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>KMP (Kotlin Multiplatform) and Flutter represent two fundamentally different approaches to cross-platform development. Flutter shares everything (UI + logic) using its own rendering engine and Dart language. KMP shares business logic in Kotlin while keeping native UI (Jetpack Compose + SwiftUI). This lesson provides a senior engineer&#39;s framework for choosing between them based on team composition, product requirements, existing codebase, and long-term strategy.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>This comparison matters in real engineering decisions: startups choosing their initial tech stack, enterprises migrating legacy native apps, CTOs planning team structure, and senior engineers advising on architecture. Companies like Google actually use both — KMP for some Android shared logic and Flutter for consumer apps like Google Pay. The answer is never &#39;X is always better&#39; — it&#39;s &#39;X is better for YOUR situation.&#39;</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Kotlin Multiplatform Architecture — expect/actual</strong> — KMP uses a shared Kotlin module for business logic (networking, data, domain) that compiles to JVM bytecode (Android), native binary (iOS via Kotlin/Native), and JavaScript (web). Platform-specific code uses expect/actual declarations: you declare an expected interface in shared code and provide actual implementations per platform. This is fundamentally different from Flutter — KMP shares logic, not UI. The native UI layers (Jetpack Compose on Android, SwiftUI on iOS) remain fully platform-native.</li>
+      <li><strong>Shared Business Logic vs Shared UI</strong> — KMP&#39;s core philosophy: share what&#39;s invisible to users (networking, caching, business rules, data models) but keep UI native. Flutter&#39;s philosophy: share everything including UI. KMP gives 60-70% code sharing, Flutter gives 90-95%. The tradeoff is clear: KMP apps feel perfectly native because they ARE native UI, but you write UI twice. Flutter apps have one UI codebase but may not match platform conventions exactly. In interviews, present both sides without bias.</li>
+      <li><strong>Compose Multiplatform — Status &amp; Limitations</strong> — Compose Multiplatform (by JetBrains) brings shared UI to KMP using Jetpack Compose syntax. It&#39;s stable for Android and Desktop, beta for iOS, and alpha for web. On iOS, it renders via Skia (like Flutter) — NOT native UIKit. Current limitations: no native iOS feel (no UINavigationController transitions, no native text selection), limited iOS accessibility, and smaller ecosystem than Flutter. It&#39;s converging toward Flutter&#39;s model but is years behind in maturity.</li>
+      <li><strong>When to Choose KMP Over Flutter</strong> — Choose KMP when: 1) You have existing native Android/iOS apps and want to share business logic without rewriting UI, 2) Platform-native look and feel is non-negotiable (banking, health apps), 3) Your team has strong Kotlin/Swift skills, 4) You need deep platform integration (HealthKit, ARKit, Android Automotive), 5) You&#39;re an enterprise with separate iOS and Android teams willing to share a common module. KMP is evolutionary, Flutter is revolutionary.</li>
+      <li><strong>When to Choose Flutter Over KMP</strong> — Choose Flutter when: 1) Starting a new app from scratch with a small team, 2) Pixel-perfect custom UI that&#39;s identical across platforms, 3) Rapid prototyping and MVP speed is critical, 4) Your team knows Dart or is willing to learn (simpler than Kotlin + Swift), 5) You need web + desktop + mobile from one codebase, 6) The app is content/utility focused rather than platform-convention heavy. Flutter&#39;s single codebase = lower maintenance cost long-term.</li>
+      <li><strong>Migration Strategies Between Platforms</strong> — Flutter to native: Extract business logic into a Dart package, gradually replace UI screens with native views using platform channels. KMP can consume Flutter modules via method channels during transition. Native to Flutter: Use add-to-app to embed Flutter screens in existing native apps — migrate screen by screen. KMP to Flutter: Rewrite UI in Flutter, port shared Kotlin logic to Dart (they&#39;re syntactically similar). Any migration should be incremental — big-bang rewrites fail.</li>
+      <li><strong>Team Composition &amp; Hiring Considerations</strong> — Flutter: Need Dart developers (smaller pool but growing fast). One team builds everything. Faster feature velocity with smaller teams. KMP: Need Kotlin developers (large pool) + iOS developers for SwiftUI (expensive, scarce). Two UI teams + shared module team. Higher headcount but deeper platform expertise. Senior interview insight: Flutter reduces bus factor and communication overhead. KMP requires more coordination but produces more platform-polished results.</li>
+      <li><strong>Performance &amp; Native Feel Comparison</strong> — Raw rendering: Flutter and Compose Multiplatform both use Skia/Impeller — similar performance. KMP with native UI has zero rendering overhead — it IS native. Startup time: Native/KMP wins (no engine initialization). Memory: Flutter&#39;s Dart VM adds ~20-30MB baseline. Animations: Flutter&#39;s consistent 60fps is excellent, but native platforms have system animations that Flutter must manually replicate. For 95% of apps, performance difference is imperceptible.</li>
+      <li><strong>Ecosystem &amp; Package Availability</strong> — Flutter: 40,000+ packages on pub.dev, strong community, Google backing. Most common integrations exist. KMP: Smaller shared-module ecosystem, but has access to the ENTIRE native ecosystem (CocoaPods, Maven). If a native SDK exists, KMP can use it directly. Flutter must wrap native SDKs in platform channels. For rare/specialized SDKs (medical devices, hardware), KMP has an inherent advantage.</li>
+      <li><strong>Long-term Viability &amp; Industry Trends</strong> — Both are backed by major companies: Flutter by Google, KMP by JetBrains (with Google endorsing it for Android). Google officially recommends KMP for shared business logic in Android apps. Flutter is expanding to embedded/automotive. The trend is convergence: KMP is adding shared UI (Compose Multiplatform), and Flutter is improving platform integration. In 5 years, the line between them may blur. Senior advice: bet on the approach that matches your current team and product needs.</li>
+      <li><strong>Real-World Adoption Comparison</strong> — Flutter: Google Pay, BMW, Toyota, eBay, Alibaba, Nubank (largest digital bank outside Asia). KMP: Netflix (shared logic), Cash App (Square), Philips, VMware, Autodesk. Pattern: consumer apps with custom UI lean Flutter, enterprise/fintech with strict platform requirements lean KMP. Many companies use BOTH: KMP for business logic modules and Flutter for specific features.</li>
+      <li><strong>Decision Framework for Technical Leaders</strong> — Use this matrix: Team size &lt;5 = Flutter. Existing native apps = KMP. New greenfield app = Flutter. Platform conventions critical = KMP. Web + mobile + desktop = Flutter. Deep hardware integration = KMP. Time to market priority = Flutter. Separate iOS/Android teams already exist = KMP. The worst decision is no decision — analysis paralysis costs more than either approach&#39;s tradeoffs.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ============================================
+// Side-by-side: Same feature in KMP vs Flutter
+// ============================================
+
+// --- KMP Shared Module (Kotlin) ---
+// commonMain/src/UserRepository.kt
+//
+// class UserRepository(
+//     private val api: UserApi,
+//     private val cache: UserCache,
+// ) {
+//     suspend fun getUser(id: String): Result&lt;User&gt; {
+//         return cache.get(id) ?: api.fetchUser(id).also {
+//             cache.put(id, it)
+//         }
+//     }
+// }
+//
+// // expect declaration — platform provides actual
+// expect class UserCache() {
+//     fun get(id: String): User?
+//     fun put(id: String, user: User)
+// }
+
+// --- KMP iOS UI (Swift) ---
+// struct UserProfileView: View {
+//     @StateObject var viewModel = UserViewModel()
+//     var body: some View {
+//         NavigationView {
+//             // Fully native SwiftUI — uses iOS conventions
+//         }
+//     }
+// }
+
+// --- KMP Android UI (Kotlin) ---
+// @Composable
+// fun UserProfileScreen(viewModel: UserViewModel) {
+//     // Fully native Jetpack Compose — Material 3
+// }
+
+// ============================================
+// --- Flutter Equivalent (Dart) ---
+// ============================================
+
+// Shared repository (same logic, one language)
+class UserRepository {
+  final UserApi _api;
+  final UserCache _cache;
+
+  UserRepository({required UserApi api, required UserCache cache})
+      : _api = api,
+        _cache = cache;
+
+  Future&lt;User&gt; getUser(String id) async {
+    final cached = _cache.get(id);
+    if (cached != null) return cached;
+
+    final user = await _api.fetchUser(id);
+    _cache.put(id, user);
+    return user;
+  }
+}
+
+// Shared UI (one codebase, all platforms)
+class UserProfileScreen extends StatelessWidget {
+  final String userId;
+
+  const UserProfileScreen({super.key, required this.userId});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Profile&#39;)),
+      body: FutureBuilder&lt;User&gt;(
+        future: context.read&lt;UserRepository&gt;().getUser(userId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(&#39;Error: ${snapshot.error}&#39;),
+            );
+          }
+          final user = snapshot.data!;
+          return _buildProfile(user);
+        },
+      ),
+    );
+  }
+
+  Widget _buildProfile(User user) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        CircleAvatar(radius: 50, backgroundImage: NetworkImage(user.avatarUrl)),
+        const SizedBox(height: 16),
+        Text(user.name, style: const TextStyle(fontSize: 24)),
+        Text(user.email, style: const TextStyle(color: Colors.grey)),
+        const SizedBox(height: 24),
+        // Platform-adaptive: Material on Android, Cupertino on iOS
+        if (Platform.isIOS)
+          CupertinoButton(
+            child: const Text(&#39;Edit Profile&#39;),
+            onPressed: () =&gt; _editProfile(user),
+          )
+        else
+          ElevatedButton(
+            onPressed: () =&gt; _editProfile(user),
+            child: const Text(&#39;Edit Profile&#39;),
+          ),
+      ],
+    );
+  }
+
+  void _editProfile(User user) {
+    // Navigate to edit screen
+  }
+}
+
+// ============================================
+// Decision Helper — Use in architecture docs
+// ============================================
+enum ProjectCharacteristic {
+  newGreenfield,
+  existingNativeApps,
+  smallTeam,
+  separatePlatformTeams,
+  customBrandedUI,
+  platformNativeUICritical,
+  needsWebDesktop,
+  deepHardwareIntegration,
+  rapidPrototyping,
+  enterpriseCompliance,
+}
+
+String recommendApproach(Set&lt;ProjectCharacteristic&gt; traits) {
+  int flutterScore = 0;
+  int kmpScore = 0;
+
+  final scoring = {
+    ProjectCharacteristic.newGreenfield: (2, 0),
+    ProjectCharacteristic.existingNativeApps: (0, 3),
+    ProjectCharacteristic.smallTeam: (3, 0),
+    ProjectCharacteristic.separatePlatformTeams: (0, 3),
+    ProjectCharacteristic.customBrandedUI: (3, 1),
+    ProjectCharacteristic.platformNativeUICritical: (0, 3),
+    ProjectCharacteristic.needsWebDesktop: (3, 1),
+    ProjectCharacteristic.deepHardwareIntegration: (0, 2),
+    ProjectCharacteristic.rapidPrototyping: (3, 0),
+    ProjectCharacteristic.enterpriseCompliance: (1, 2),
+  };
+
+  for (final trait in traits) {
+    final (f, k) = scoring[trait]!;
+    flutterScore += f;
+    kmpScore += k;
+  }
+
+  if (flutterScore &gt; kmpScore + 3) return &#39;Strong Flutter recommendation&#39;;
+  if (kmpScore &gt; flutterScore + 3) return &#39;Strong KMP recommendation&#39;;
+  if (flutterScore &gt; kmpScore) return &#39;Slight Flutter lean — evaluate team skills&#39;;
+  if (kmpScore &gt; flutterScore) return &#39;Slight KMP lean — evaluate team skills&#39;;
+  return &#39;Either works — decide based on team expertise&#39;;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The KMP shared module shows UserRepository in Kotlin — this exact code compiles for both Android and iOS. The business logic (fetch, cache) is written once.</li>
+      <li><span class="walk-num">2.</span> The expect class UserCache declares what&#39;s needed without implementation — each platform provides its actual version (NSUserDefaults on iOS, SharedPreferences on Android).</li>
+      <li><span class="walk-num">3.</span> KMP&#39;s iOS UI is pure SwiftUI — it calls the shared Kotlin module but renders with fully native iOS components and navigation patterns.</li>
+      <li><span class="walk-num">4.</span> KMP&#39;s Android UI is pure Jetpack Compose — same shared logic, native Material 3 rendering. Two UI codebases, one logic layer.</li>
+      <li><span class="walk-num">5.</span> Flutter&#39;s UserRepository is functionally identical to KMP&#39;s — similar syntax (Dart and Kotlin are both modern languages), but it&#39;s one codebase for everything.</li>
+      <li><span class="walk-num">6.</span> Flutter&#39;s UserProfileScreen is shared across ALL platforms — one Widget tree renders on iOS, Android, web, and desktop.</li>
+      <li><span class="walk-num">7.</span> The Platform.isIOS check shows Flutter&#39;s approach to platform adaptation — you CAN make things look native, but it requires explicit conditional code.</li>
+      <li><span class="walk-num">8.</span> The decision helper enum codifies project characteristics that influence the Flutter vs KMP choice — this is useful for real architecture discussions.</li>
+      <li><span class="walk-num">9.</span> The scoring system weights each characteristic — smallTeam and rapidPrototyping strongly favor Flutter, while existingNativeApps and separatePlatformTeams favor KMP.</li>
+      <li><span class="walk-num">10.</span> The recommendation function returns nuanced advice — it acknowledges that close scores mean team expertise should be the tiebreaker, not framework features.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Common mistakes in cross-platform architecture decisions
+
+// Bug 1: Assuming Flutter can&#39;t look native
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Always using Material, even on iOS
+    return Scaffold(
+      appBar: AppBar(title: Text(&#39;Profile&#39;)),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            child: Text(&#39;Settings&#39;),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Bug 2: Wrong KMP assumption — sharing UI code
+// Expecting KMP to share this Composable on iOS
+// @Composable
+// fun SharedScreen() {
+//     MaterialTheme { Text(&quot;This runs on iOS too!&quot;) }
+//     // ^ This only works with Compose Multiplatform (beta on iOS)
+//     // Standard KMP does NOT share UI
+// }
+
+// Bug 3: Ignoring platform channels exist
+// &quot;Flutter can&#39;t access native APIs&quot;
+// This is wrong — platform channels bridge any native API</code></pre><details><summary>Need a hint?</summary><div class="hint">Three misconceptions are embedded as code: Flutter platform adaptation, KMP UI sharing scope, and Flutter native API access.</div></details><details><summary>Show answer</summary><div class="answer">1) Flutter CAN look native — use flutter_platform_widgets or conditional rendering with Platform.isIOS to show CupertinoNavigationBar, CupertinoButton, etc. The code always uses Material which looks wrong on iOS. 2) Standard KMP does NOT share UI — only Compose Multiplatform (beta on iOS) can share Composables. Confusing KMP with Compose Multiplatform is a common interview mistake. 3) Flutter absolutely CAN access native APIs via platform channels, FFI, and the plugin ecosystem. Saying &#39;Flutter can&#39;t access native APIs&#39; is a misconception — it just requires a bridge layer.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re building sandcastles on two different beaches. Flutter gives you one magic mold that stamps out the exact same castle on both beaches instantly — super fast! But it always looks the same. KMP is different — it lets you share the blueprint for the castle&#39;s foundation and tunnels, but on each beach, you hand-sculpt the towers and decorations to match what locals like. Beach A gets pointy towers, Beach B gets round ones. The foundations are identical, but each castle looks like it belongs on its beach.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Kotlin Multiplatform was announced in 2017 — the same year as Flutter&#39;s first alpha. They&#39;ve been evolving in parallel for 8+ years. JetBrains (KMP&#39;s creator) actually built their own conference app in Flutter before switching it to Compose Multiplatform — proving that even framework creators acknowledge the competition. Meanwhile, Google officially endorses BOTH Flutter and KMP for different use cases within Android development.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">You&#39;re a senior engineer presenting to your CTO. Create a written technical decision document comparing Flutter vs KMP for your company&#39;s next project: a fintech app that needs to launch on iOS, Android, and web within 6 months. Your existing team has 2 Android (Kotlin) developers, 1 iOS (Swift) developer, and 2 full-stack developers. You have an existing Android app with 50K LOC. Include: 1) Architecture diagram for each approach, 2) Timeline estimate, 3) Team ramp-up plan, 4) Risk analysis, 5) Your recommendation with justification. Present trade-offs honestly.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://kotlinlang.org/docs/multiplatform.html" target="_blank" rel="noopener noreferrer">Kotlin Multiplatform Official Documentation</a> <span class="res-source">(kotlinlang.org)</span></li>
+      <li><a href="https://developer.android.com/kotlin/multiplatform" target="_blank" rel="noopener noreferrer">Flutter vs KMP — Google&#39;s Official Perspective</a> <span class="res-source">(developer.android.com)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=mMGU1lAiJTQ" target="_blank" rel="noopener noreferrer">KMP vs Flutter — Pragmatic Comparison</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://www.jetbrains.com/lp/compose-multiplatform/" target="_blank" rel="noopener noreferrer">Compose Multiplatform iOS Status</a> <span class="res-source">(JetBrains)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=75">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./74-grpc-protobuf-advanced-api-patterns.html" rel="prev">← gRPC, Protobuf &amp; Advanced API Patterns</a>
+  <a class="nav-next" href="./76-package-development-publishing-open-source-maintenance.html" rel="next">Package Development, Publishing &amp; Open… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

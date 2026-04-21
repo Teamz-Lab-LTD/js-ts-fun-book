@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token &amp; Auth Storage — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Token-based authentication uses short-lived access tokens for API requests and long-lived refresh tokens to renew them. team_mvp_kit&#39;s TokenStorage persists…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/45-hive-local-database.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Token &amp; Auth Storage">
+<meta property="og:description" content="Token-based authentication uses short-lived access tokens for API requests and long-lived refresh tokens to renew them. team_mvp_kit&#39;s TokenStorage persists…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Token &amp; Auth Storage">
+<meta name="twitter:description" content="Token-based authentication uses short-lived access tokens for API requests and long-lived refresh tokens to renew them. team_mvp_kit&#39;s TokenStorage persists…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Token & Auth Storage",
+  "description": "Token-based authentication uses short-lived access tokens for API requests and long-lived refresh tokens to renew them. team_mvp_kit's TokenStorage persists…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 46
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Token & Auth Storage",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Token &amp; Auth Storage</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 46 of 51</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Token &amp; Auth Storage</h1>
+<p class="lesson-subtitle">Keeping Users Logged In Securely</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=46">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine a theme park where you buy a day pass (access token) at the gate. The pass expires every hour, but you also get a special renewal card (refresh token). When your pass expires, you show the renewal card to get a fresh pass without buying a new ticket. If you lose the renewal card too, you have to go back to the ticket booth (login again). That is exactly how token-based authentication works!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Token-based authentication uses short-lived access tokens for API requests and long-lived refresh tokens to renew them. team_mvp_kit&#39;s TokenStorage persists both tokens in Hive&#39;s encrypted box. The AuthInterceptor automatically attaches tokens to requests and transparently refreshes expired ones, keeping users logged in without manual intervention.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every professional app with user accounts uses this pattern. When you stay logged in to Instagram for weeks, that is refresh tokens at work. team_mvp_kit implements the complete flow: login saves tokens, the interceptor auto-attaches and auto-refreshes them, concurrent 401s are queued, and logout clears everything securely.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What Are Access Tokens?</strong> — An access token is a short string (usually a JWT) that proves you are logged in. You send it with every API request in the Authorization header. Access tokens expire quickly (15 minutes to 1 hour) for security -- if someone steals it, they can only use it briefly.</li>
+      <li><strong>What Are Refresh Tokens?</strong> — A refresh token is a long-lived token (days or weeks) used to get a NEW access token when the old one expires. You never send it with regular API requests -- only to the refresh endpoint. If the refresh token expires too, the user must log in again with their username and password.</li>
+      <li><strong>TokenStorage in team_mvp_kit</strong> — team_mvp_kit has a TokenStorage class that saves tokens in Hive&#39;s encrypted box. It stores the access token, refresh token, and expiry timestamp. It provides methods to save, retrieve, check expiry, and clear tokens. It is registered as a @singleton via injectable.</li>
+      <li><strong>Saving Tokens After Login</strong> — When the user logs in, the server returns both tokens and the expiry time. Save all three to the encrypted storage. Calculate the absolute expiry timestamp from the relative expiresIn seconds. team_mvp_kit does this in the repository right after a successful login API call.</li>
+      <li><strong>Auto-Refresh with Interceptor</strong> — The AuthInterceptor in team_mvp_kit checks every 401 response. If the access token expired, it calls the refresh endpoint with the refresh token, saves the new tokens, and retries the original request. The user never notices -- the refresh happens invisibly behind the scenes.</li>
+      <li><strong>Handling Concurrent Refresh Requests</strong> — When multiple API calls fail with 401 at the same time, you must not send multiple refresh requests. Use a flag (_isRefreshing) and a Completer to queue concurrent requests. The first 401 triggers the refresh; all others wait for it to complete, then retry with the new token.</li>
+      <li><strong>Logout and Token Cleanup</strong> — When the user logs out (or when token refresh fails), clear all stored tokens, reset in-memory state, and navigate to the login screen. team_mvp_kit calls tokenStorage.clearTokens() and then uses go_router to redirect to the login route.</li>
+      <li><strong>Checking Auth State on App Start</strong> — When the app launches, check if the user has a valid token. If yes, go to the home screen. If the token is expired, try to refresh it. If no tokens at all, go to login. team_mvp_kit uses a GoRouter redirect that checks TokenStorage on every navigation.</li>
+      <li><strong>Proactive Token Refresh</strong> — Instead of waiting for a 401 error, you can proactively check if the token is about to expire before making a request. If the token expires within the next 60 seconds, refresh it preemptively. This avoids the 401-retry cycle and gives a smoother experience.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:injectable/injectable.dart&#39;;
+
+// 1. TokenStorage - encrypted persistence (team_mvp_kit)
+@singleton
+class TokenStorage {
+  final LocalDatabaseService _db;
+  static const _accessKey = &#39;access_token&#39;;
+  static const _refreshKey = &#39;refresh_token&#39;;
+  static const _expiryKey = &#39;token_expiry&#39;;
+
+  TokenStorage(this._db);
+
+  // Read tokens
+  String? get accessToken =&gt; _db.getSecure(_accessKey);
+  String? get refreshToken =&gt; _db.getSecure(_refreshKey);
+  bool get isLoggedIn =&gt; accessToken != null;
+
+  // Check expiry
+  bool get isTokenExpired {
+    final expiry = _db.get&lt;int&gt;(_expiryKey);
+    if (expiry == null) return true;
+    return DateTime.now().millisecondsSinceEpoch &gt; expiry;
+  }
+
+  bool isTokenExpiringSoon({int seconds = 60}) {
+    final expiry = _db.get&lt;int&gt;(_expiryKey);
+    if (expiry == null) return true;
+    final buffer = seconds * 1000;
+    return DateTime.now().millisecondsSinceEpoch &gt; (expiry - buffer);
+  }
+
+  // Save tokens after login or refresh
+  Future&lt;void&gt; saveTokens(TokensDto tokens) async {
+    await _db.putSecure(_accessKey, tokens.accessToken);
+    await _db.putSecure(_refreshKey, tokens.refreshToken);
+    final expiryMs = DateTime.now().millisecondsSinceEpoch +
+        (tokens.expiresIn * 1000);
+    await _db.put(_expiryKey, expiryMs);
+  }
+
+  // Clear everything on logout
+  Future&lt;void&gt; clearTokens() async {
+    await _db.deleteSecure(_accessKey);
+    await _db.deleteSecure(_refreshKey);
+    await _db.delete(_expiryKey);
+  }
+
+  // Attempt token refresh via API
+  Future&lt;bool&gt; refreshTokens() async {
+    final refresh = refreshToken;
+    if (refresh == null) return false;
+    try {
+      // This would call the refresh endpoint
+      // For now, return false to indicate failure
+      return false;
+    } catch (_) {
+      await clearTokens();
+      return false;
+    }
+  }
+}
+
+// 2. Auth Interceptor with concurrent refresh handling
+class AuthInterceptor extends Interceptor {
+  final TokenStorage _tokenStorage;
+  final Dio _dio;
+  bool _isRefreshing = false;
+
+  AuthInterceptor(this._tokenStorage, this._dio);
+
+  @override
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) {
+    final token = _tokenStorage.accessToken;
+    if (token != null) {
+      options.headers[&#39;Authorization&#39;] = &#39;Bearer $token&#39;;
+    }
+    handler.next(options);
+  }
+
+  @override
+  void onError(
+    DioException error,
+    ErrorInterceptorHandler handler,
+  ) async {
+    if (error.response?.statusCode == 401 &amp;&amp; !_isRefreshing) {
+      _isRefreshing = true;
+      try {
+        final refreshed = await _tokenStorage.refreshTokens();
+        if (refreshed) {
+          error.requestOptions.headers[&#39;Authorization&#39;] =
+              &#39;Bearer ${_tokenStorage.accessToken}&#39;;
+          final response = await _dio.fetch(error.requestOptions);
+          return handler.resolve(response);
+        }
+      } finally {
+        _isRefreshing = false;
+      }
+    }
+    handler.next(error);
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import injectable for dependency injection</li>
+      <li><span class="walk-num">2.</span> </li>
+      <li><span class="walk-num">3.</span> Comment: TokenStorage with encrypted persistence</li>
+      <li><span class="walk-num">4.</span> @singleton annotation for single instance across the app</li>
+      <li><span class="walk-num">5.</span> TokenStorage class declaration</li>
+      <li><span class="walk-num">6.</span> Private field for LocalDatabaseService (injected)</li>
+      <li><span class="walk-num">7.</span> Constant key string for access token storage</li>
+      <li><span class="walk-num">8.</span> Constant key string for refresh token storage</li>
+      <li><span class="walk-num">9.</span> Constant key string for expiry timestamp storage</li>
+      <li><span class="walk-num">10.</span> </li>
+      <li><span class="walk-num">11.</span> Constructor receives the database service via DI</li>
+      <li><span class="walk-num">12.</span> </li>
+      <li><span class="walk-num">13.</span> Comment: Read tokens from secure storage</li>
+      <li><span class="walk-num">14.</span> Getter reads access token from encrypted box</li>
+      <li><span class="walk-num">15.</span> Getter reads refresh token from encrypted box</li>
+      <li><span class="walk-num">16.</span> isLoggedIn checks if an access token exists</li>
+      <li><span class="walk-num">17.</span> </li>
+      <li><span class="walk-num">18.</span> Comment: Check if token has expired</li>
+      <li><span class="walk-num">19.</span> isTokenExpired getter</li>
+      <li><span class="walk-num">20.</span> Read the stored expiry timestamp</li>
+      <li><span class="walk-num">21.</span> If no expiry stored, consider it expired</li>
+      <li><span class="walk-num">22.</span> Compare current time to stored expiry</li>
+      <li><span class="walk-num">23.</span> Closing isTokenExpired</li>
+      <li><span class="walk-num">24.</span> </li>
+      <li><span class="walk-num">25.</span> Helper to check if token expires within N seconds</li>
+      <li><span class="walk-num">26.</span> Read the expiry timestamp</li>
+      <li><span class="walk-num">27.</span> If no expiry, it is expiring soon</li>
+      <li><span class="walk-num">28.</span> Calculate the buffer window in milliseconds</li>
+      <li><span class="walk-num">29.</span> Return true if current time is within the buffer of expiry</li>
+      <li><span class="walk-num">30.</span> Closing isTokenExpiringSoon</li>
+      <li><span class="walk-num">31.</span> </li>
+      <li><span class="walk-num">32.</span> Comment: Save tokens after login or refresh</li>
+      <li><span class="walk-num">33.</span> saveTokens takes a TokensDto with all token data</li>
+      <li><span class="walk-num">34.</span> Store access token in encrypted box</li>
+      <li><span class="walk-num">35.</span> Store refresh token in encrypted box</li>
+      <li><span class="walk-num">36.</span> Calculate absolute expiry from relative expiresIn seconds</li>
+      <li><span class="walk-num">37.</span> Store the expiry timestamp in regular box</li>
+      <li><span class="walk-num">38.</span> Closing saveTokens</li>
+      <li><span class="walk-num">39.</span> </li>
+      <li><span class="walk-num">40.</span> Comment: Clear tokens on logout</li>
+      <li><span class="walk-num">41.</span> clearTokens removes all auth data</li>
+      <li><span class="walk-num">42.</span> Delete access token from encrypted box</li>
+      <li><span class="walk-num">43.</span> Delete refresh token from encrypted box</li>
+      <li><span class="walk-num">44.</span> Delete expiry timestamp</li>
+      <li><span class="walk-num">45.</span> Closing clearTokens</li>
+      <li><span class="walk-num">46.</span> </li>
+      <li><span class="walk-num">47.</span> Comment: Attempt to refresh the token</li>
+      <li><span class="walk-num">48.</span> refreshTokens method returns success/failure boolean</li>
+      <li><span class="walk-num">49.</span> Get the current refresh token</li>
+      <li><span class="walk-num">50.</span> If no refresh token exists, cannot refresh</li>
+      <li><span class="walk-num">51.</span> Try block for the refresh API call</li>
+      <li><span class="walk-num">52.</span> Placeholder for actual refresh endpoint call</li>
+      <li><span class="walk-num">53.</span> Return false as default (replace with real implementation)</li>
+      <li><span class="walk-num">54.</span> Catch any errors</li>
+      <li><span class="walk-num">55.</span> Clear all tokens on refresh failure</li>
+      <li><span class="walk-num">56.</span> Return false on failure</li>
+      <li><span class="walk-num">57.</span> Closing refreshTokens and TokenStorage</li>
+      <li><span class="walk-num">58.</span> </li>
+      <li><span class="walk-num">59.</span> Comment: AuthInterceptor handles token attachment and refresh</li>
+      <li><span class="walk-num">60.</span> AuthInterceptor extends Dio&#39;s Interceptor</li>
+      <li><span class="walk-num">61.</span> Private TokenStorage field</li>
+      <li><span class="walk-num">62.</span> Private Dio field for retrying requests</li>
+      <li><span class="walk-num">63.</span> Flag to prevent concurrent refresh attempts</li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> Constructor receives both dependencies</li>
+      <li><span class="walk-num">66.</span> </li>
+      <li><span class="walk-num">67.</span> Override onRequest to attach token to every request</li>
+      <li><span class="walk-num">68.</span> Method signature</li>
+      <li><span class="walk-num">69.</span> Get the current access token</li>
+      <li><span class="walk-num">70.</span> If token exists, add it to the Authorization header</li>
+      <li><span class="walk-num">71.</span> Set the Bearer token value</li>
+      <li><span class="walk-num">72.</span> Closing the if block</li>
+      <li><span class="walk-num">73.</span> Continue to next interceptor</li>
+      <li><span class="walk-num">74.</span> Closing onRequest</li>
+      <li><span class="walk-num">75.</span> </li>
+      <li><span class="walk-num">76.</span> Override onError to handle 401 and refresh</li>
+      <li><span class="walk-num">77.</span> Method signature</li>
+      <li><span class="walk-num">78.</span> Check for 401 status AND not already refreshing</li>
+      <li><span class="walk-num">79.</span> Set the refreshing flag to true</li>
+      <li><span class="walk-num">80.</span> Try to refresh the token</li>
+      <li><span class="walk-num">81.</span> If refresh succeeded, update the request header</li>
+      <li><span class="walk-num">82.</span> Set the new token on the retry request</li>
+      <li><span class="walk-num">83.</span> Retry the original request</li>
+      <li><span class="walk-num">84.</span> Return the successful retry response</li>
+      <li><span class="walk-num">85.</span> Finally block always resets the refreshing flag</li>
+      <li><span class="walk-num">86.</span> Set flag back to false</li>
+      <li><span class="walk-num">87.</span> Closing the 401 handling block</li>
+      <li><span class="walk-num">88.</span> Pass non-401 errors through</li>
+      <li><span class="walk-num">89.</span> Closing onError and AuthInterceptor</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class TokenStorage {
+  String? _accessToken;
+  String? _refreshToken;
+
+  void saveTokens(String access, String refresh) {
+    _accessToken = access;
+    _refreshToken = refresh;
+  }
+
+  String? get accessToken =&gt; _accessToken;
+  bool get isLoggedIn =&gt; _accessToken != null;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about what happens when the user closes and reopens the app...</div></details><details><summary>Show answer</summary><div class="answer">The tokens are stored only in memory (instance variables). When the app is closed and reopened, both tokens are lost and the user appears logged out. Fix: persist tokens to an encrypted Hive box or flutter_secure_storage. Also, saveTokens should be async/Future&lt;void&gt; since storage operations are asynchronous.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you go to a water park. At the entrance, they give you a wristband (access token) that lets you ride any slide for 1 hour. They also give you a special card (refresh token) that lasts all day. When your wristband beeps after 1 hour, you show your card at the info desk and they give you a fresh wristband -- you do not have to buy a new ticket! But if you lose both the wristband AND the card, you have to go back to the entrance and buy a new ticket (login again).</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">JSON Web Tokens (JWTs) are not encrypted -- they are just base64 encoded! Anyone can decode and read the payload. Never put sensitive data like passwords inside a JWT. The signature only proves the token was issued by your server, it does not hide the contents. You can paste any JWT into jwt.io and read it!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a complete TokenStorage class with: saveTokens(), clearTokens(), isLoggedIn, isTokenExpired, and accessToken/refreshToken getters. Use Hive&#39;s encrypted box. Then create a GoRouter redirect that checks isLoggedIn and redirects to /login or /home appropriately.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://pub.dev/packages/flutter_secure_storage" target="_blank" rel="noopener noreferrer">Flutter Secure Storage</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://jwt.io/introduction" target="_blank" rel="noopener noreferrer">JWT Introduction</a> <span class="res-source">(Auth0)</span></li>
+      <li><a href="https://pub.dev/packages/dio#interceptors" target="_blank" rel="noopener noreferrer">Dio Interceptors</a> <span class="res-source">(pub.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=46">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./45-hive-local-database.html" rel="prev">← Hive Local Database</a>
+  <a class="nav-next" href="./47-firebase-setup-auth.html" rel="next">Firebase Setup &amp; Auth →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navigation Basics — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Flutter&#39;s Navigator manages a stack of Route objects representing screens. Navigator.push adds a screen on top, Navigator.pop removes it, and…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/30-gorouter.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Navigation Basics">
+<meta property="og:description" content="Flutter&#39;s Navigator manages a stack of Route objects representing screens. Navigator.push adds a screen on top, Navigator.pop removes it, and…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Navigation Basics">
+<meta name="twitter:description" content="Flutter&#39;s Navigator manages a stack of Route objects representing screens. Navigator.push adds a screen on top, Navigator.pop removes it, and…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Navigation Basics",
+  "description": "Flutter's Navigator manages a stack of Route objects representing screens. Navigator.push adds a screen on top, Navigator.pop removes it, and…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 29
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Navigation Basics",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Navigation Basics</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 29 of 51</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Navigation Basics</h1>
+<p class="lesson-subtitle">Moving Between Screens with Navigator</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=29">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Navigator is like a stack of plates in a cafeteria. When you go to a new screen, you push a new plate on top of the stack. When you press the back button, you pop the top plate off and see the one underneath. You can only see the top plate (current screen) at any time, but all the previous screens are waiting underneath, exactly how you left them.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter&#39;s Navigator manages a stack of Route objects representing screens. Navigator.push adds a screen on top, Navigator.pop removes it, and MaterialPageRoute provides platform-appropriate animations. You can pass data forward through constructor parameters and backward through pop results. Named routes provide string-based navigation, while pushReplacement and pushAndRemoveUntil control the back stack.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, basic Navigator is used for simple screen transitions before go_router is introduced. The login flow uses pushReplacement to prevent going back to login after authentication. The app uses pushAndRemoveUntil on logout to clear the entire navigation stack. Understanding Navigator basics is essential before learning go_router.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Navigator.push</strong> — Navigator.push adds a new screen (route) on top of the navigation stack. The current screen stays in memory underneath. Use MaterialPageRoute to wrap the destination widget. The push method returns a Future that resolves when the pushed screen is popped — this is how you get data back from a screen.</li>
+      <li><strong>Navigator.pop</strong> — Navigator.pop removes the current screen from the stack, revealing the previous screen underneath. You can optionally pass data back to the previous screen by providing a result argument. The calling screen receives this result through the Future returned by push.</li>
+      <li><strong>Receiving Data from Pop</strong> — When you push a screen, you get a Future that completes when that screen pops. Await it to receive any data the popped screen returned. This pattern is used for selection screens, dialog results, and form submissions where the previous screen needs the result.</li>
+      <li><strong>MaterialPageRoute</strong> — MaterialPageRoute creates a platform-appropriate transition animation when navigating. On Android it slides up from the bottom, on iOS it slides in from the right. It takes a builder function that receives BuildContext and returns the destination widget. Set fullscreenDialog: true for a modal-style slide-up animation.</li>
+      <li><strong>Named Routes</strong> — Named routes let you navigate by string names instead of building MaterialPageRoute each time. Define routes in MaterialApp&#39;s routes map, then use Navigator.pushNamed(context, &#39;/detail&#39;). Named routes are simpler but limited — they cannot easily pass complex arguments. Modern Flutter prefers go_router instead.</li>
+      <li><strong>Navigator.pushReplacement</strong> — pushReplacement removes the current screen and replaces it with a new one. The user cannot go back to the replaced screen. Use it for login-to-home transitions (after login, you don&#39;t want users to go back to login) or splash screen to main app transitions.</li>
+      <li><strong>Navigator.pushAndRemoveUntil</strong> — pushAndRemoveUntil pushes a new screen and removes all previous screens from the stack until the predicate returns true. Passing (route) =&gt; false removes ALL previous screens. Use it for logout (clear entire stack and show login) or after onboarding (clear onboarding screens).</li>
+      <li><strong>WillPopScope and PopScope</strong> — PopScope (replacing the deprecated WillPopScope) intercepts the back button press. Set canPop: false to prevent going back, and use onPopInvokedWithResult to show a confirmation dialog before leaving. Use it for forms with unsaved changes or checkout flows where accidental back presses lose data.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State&lt;HomeScreen&gt; createState() =&gt; _HomeScreenState();
+}
+
+class _HomeScreenState extends State&lt;HomeScreen&gt; {
+  String _selectedFruit = &#39;None selected&#39;;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Home&#39;)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              &#39;Selected: $_selectedFruit&#39;,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () async {
+                final result = await Navigator.push&lt;String&gt;(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =&gt; const FruitPickerScreen(),
+                  ),
+                );
+                if (result != null) {
+                  setState(() =&gt; _selectedFruit = result);
+                }
+              },
+              child: const Text(&#39;Pick a Fruit&#39;),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =&gt; const SettingsScreen(),
+                  ),
+                );
+              },
+              child: const Text(&#39;Settings&#39;),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FruitPickerScreen extends StatelessWidget {
+  const FruitPickerScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final fruits = [&#39;Apple&#39;, &#39;Banana&#39;, &#39;Cherry&#39;, &#39;Durian&#39;, &#39;Elderberry&#39;];
+
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Pick a Fruit&#39;)),
+      body: ListView.builder(
+        itemCount: fruits.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(fruits[index]),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              // Pop and return the selected fruit
+              Navigator.pop(context, fruits[index]);
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Settings&#39;)),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Simulate logout: clear stack and go to login
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) =&gt; const LoginScreen(),
+              ),
+              (route) =&gt; false,
+            );
+          },
+          child: const Text(&#39;Logout&#39;),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text(&#39;Login&#39;)),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // After login, replace login with home
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) =&gt; const HomeScreen(),
+              ),
+            );
+          },
+          child: const Text(&#39;Login&#39;),
+        ),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import the Material package</li>
+      <li><span class="walk-num">2.</span> </li>
+      <li><span class="walk-num">3.</span> Define HomeScreen as a StatefulWidget</li>
+      <li><span class="walk-num">4.</span> </li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> Create the State class</li>
+      <li><span class="walk-num">7.</span> Track which fruit was selected, starting with none</li>
+      <li><span class="walk-num">8.</span> </li>
+      <li><span class="walk-num">9.</span> Build method creates the UI</li>
+      <li><span class="walk-num">10.</span> Scaffold with Home title in AppBar</li>
+      <li><span class="walk-num">11.</span> Center the content</li>
+      <li><span class="walk-num">12.</span> Column with centered alignment</li>
+      <li><span class="walk-num">13.</span> </li>
+      <li><span class="walk-num">14.</span> Display the currently selected fruit</li>
+      <li><span class="walk-num">15.</span> Style with headlineSmall from theme</li>
+      <li><span class="walk-num">16.</span> </li>
+      <li><span class="walk-num">17.</span> 24px gap</li>
+      <li><span class="walk-num">18.</span> ElevatedButton to open the fruit picker</li>
+      <li><span class="walk-num">19.</span> Await the result from Navigator.push</li>
+      <li><span class="walk-num">20.</span> Push a MaterialPageRoute to FruitPickerScreen</li>
+      <li><span class="walk-num">21.</span> </li>
+      <li><span class="walk-num">22.</span> </li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> If a fruit was selected (not null), update state</li>
+      <li><span class="walk-num">25.</span> </li>
+      <li><span class="walk-num">26.</span> </li>
+      <li><span class="walk-num">27.</span> </li>
+      <li><span class="walk-num">28.</span> 12px gap</li>
+      <li><span class="walk-num">29.</span> Another ElevatedButton for settings</li>
+      <li><span class="walk-num">30.</span> Push to SettingsScreen (no result expected)</li>
+      <li><span class="walk-num">31.</span> </li>
+      <li><span class="walk-num">32.</span> </li>
+      <li><span class="walk-num">33.</span> </li>
+      <li><span class="walk-num">34.</span> </li>
+      <li><span class="walk-num">35.</span> </li>
+      <li><span class="walk-num">36.</span> </li>
+      <li><span class="walk-num">37.</span> </li>
+      <li><span class="walk-num">38.</span> </li>
+      <li><span class="walk-num">39.</span> </li>
+      <li><span class="walk-num">40.</span> </li>
+      <li><span class="walk-num">41.</span> FruitPickerScreen is a StatelessWidget</li>
+      <li><span class="walk-num">42.</span> </li>
+      <li><span class="walk-num">43.</span> </li>
+      <li><span class="walk-num">44.</span> Define a list of fruit names</li>
+      <li><span class="walk-num">45.</span> </li>
+      <li><span class="walk-num">46.</span> Scaffold with Pick a Fruit AppBar</li>
+      <li><span class="walk-num">47.</span> ListView.builder for the fruit list</li>
+      <li><span class="walk-num">48.</span> Build a ListTile for each fruit</li>
+      <li><span class="walk-num">49.</span> Display the fruit name</li>
+      <li><span class="walk-num">50.</span> Chevron icon as trailing indicator</li>
+      <li><span class="walk-num">51.</span> On tap, pop with the selected fruit name</li>
+      <li><span class="walk-num">52.</span> Navigator.pop passes the fruit string back to HomeScreen</li>
+      <li><span class="walk-num">53.</span> </li>
+      <li><span class="walk-num">54.</span> </li>
+      <li><span class="walk-num">55.</span> </li>
+      <li><span class="walk-num">56.</span> </li>
+      <li><span class="walk-num">57.</span> </li>
+      <li><span class="walk-num">58.</span> SettingsScreen is a StatelessWidget</li>
+      <li><span class="walk-num">59.</span> </li>
+      <li><span class="walk-num">60.</span> Scaffold with Settings AppBar</li>
+      <li><span class="walk-num">61.</span> Logout button in the center</li>
+      <li><span class="walk-num">62.</span> On press, clear the entire navigation stack</li>
+      <li><span class="walk-num">63.</span> pushAndRemoveUntil pushes LoginScreen</li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> </li>
+      <li><span class="walk-num">66.</span> (route) =&gt; false removes ALL previous routes</li>
+      <li><span class="walk-num">67.</span> </li>
+      <li><span class="walk-num">68.</span> </li>
+      <li><span class="walk-num">69.</span> </li>
+      <li><span class="walk-num">70.</span> </li>
+      <li><span class="walk-num">71.</span> </li>
+      <li><span class="walk-num">72.</span> </li>
+      <li><span class="walk-num">73.</span> LoginScreen is a StatelessWidget</li>
+      <li><span class="walk-num">74.</span> </li>
+      <li><span class="walk-num">75.</span> Scaffold with Login AppBar</li>
+      <li><span class="walk-num">76.</span> Login button in the center</li>
+      <li><span class="walk-num">77.</span> On press, replace login screen with home</li>
+      <li><span class="walk-num">78.</span> pushReplacement ensures user cannot go back to login</li>
+      <li><span class="walk-num">79.</span> </li>
+      <li><span class="walk-num">80.</span> </li>
+      <li><span class="walk-num">81.</span> </li>
+      <li><span class="walk-num">82.</span> </li>
+      <li><span class="walk-num">83.</span> </li>
+      <li><span class="walk-num">84.</span> </li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>ElevatedButton(
+  onPressed: () {
+    final result = Navigator.push&lt;String&gt;(
+      context,
+      MaterialPageRoute(
+        builder: (context) =&gt; SelectionScreen(),
+      ),
+    );
+    setState(() =&gt; selected = result);
+  },
+  child: Text(&#39;Select&#39;),
+)</code></pre><details><summary>Need a hint?</summary><div class="hint">Navigator.push returns a Future. What are you missing?</div></details><details><summary>Show answer</summary><div class="answer">Navigator.push returns a Future&lt;String?&gt;, not a String directly. The code assigns the Future itself to result without awaiting it. Fix: mark the onPressed callback as async and await the push: final result = await Navigator.push&lt;String&gt;(...); Then check if result != null before calling setState.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are reading a choose-your-own-adventure book. When you go to a new chapter (screen), you stick your finger in the current page (push) so you can come back. When you want to go back, you flip to where your finger was (pop). Navigator.push is putting your finger in and flipping to a new chapter. Navigator.pop is going back to where your finger was. And if you want to start the whole book over (like logging out), pushAndRemoveUntil takes out all your fingers and starts from chapter 1!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Flutter&#39;s Navigator 1.0 (imperative push/pop) was the original navigation system. Navigator 2.0 was added in Flutter 1.22 for declarative, URL-driven navigation — but it was so complex that the community created packages like go_router and auto_route to simplify it. go_router was eventually adopted by the Flutter team as the recommended solution!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a three-screen flow: HomeScreen shows a message and two buttons (Go to Detail, Go to Settings). DetailScreen accepts a title parameter and has a back button that pops with a result string. SettingsScreen has a Logout button that uses pushAndRemoveUntil to clear the stack and navigate to a LoginScreen. Add a PopScope to the DetailScreen that shows a confirmation dialog before popping.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/ui/navigation" target="_blank" rel="noopener noreferrer">Navigation and Routing</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/cookbook/navigation/navigation-basics" target="_blank" rel="noopener noreferrer">Navigate to a New Screen and Back</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/cookbook/navigation/returning-data" target="_blank" rel="noopener noreferrer">Return Data from a Screen</a> <span class="res-source">(Flutter Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=29">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./28-design-system-theming.html" rel="prev">← Design System &amp; Theming</a>
+  <a class="nav-next" href="./30-gorouter.html" rel="next">GoRouter →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

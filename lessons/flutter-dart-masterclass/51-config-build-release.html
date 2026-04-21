@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Config, Build &amp; Release — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="App configuration, building, and releasing covers everything from managing environment-specific settings (dev vs prod URLs) to signing, building, and…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/51-config-build-release.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/50-testing-debugging.html">
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Config, Build &amp; Release">
+<meta property="og:description" content="App configuration, building, and releasing covers everything from managing environment-specific settings (dev vs prod URLs) to signing, building, and…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/51-config-build-release.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Config, Build &amp; Release">
+<meta name="twitter:description" content="App configuration, building, and releasing covers everything from managing environment-specific settings (dev vs prod URLs) to signing, building, and…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Config, Build & Release",
+  "description": "App configuration, building, and releasing covers everything from managing environment-specific settings (dev vs prod URLs) to signing, building, and…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/51-config-build-release.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 51
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Config, Build & Release",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/51-config-build-release.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Config, Build &amp; Release</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 51 of 51</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Config, Build &amp; Release</h1>
+<p class="lesson-subtitle">Shipping Your App to the World</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=51">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Building an app is like baking a cake for a competition. During practice (development), you taste-test constantly and change recipes. For the competition (release), you follow the exact recipe, frost it perfectly (sign it), put it in a proper box (build), and submit it to the judges (app stores). The TeamMvpKitConfig pattern is like having separate recipe cards for practice rounds and the final competition!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>App configuration, building, and releasing covers everything from managing environment-specific settings (dev vs prod URLs) to signing, building, and publishing your app to the Google Play Store and Apple App Store. team_mvp_kit uses the TeamMvpKitConfig pattern with separate entry points per environment and centralized config registered in the DI container.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>team_mvp_kit&#39;s build pipeline: developers run main_dev.dart locally with dev API and logging enabled. CI runs tests on every pull request. When merging to main, the pipeline builds with main_prod.dart -- production API, Crashlytics enabled, logging disabled. The signed APK/AAB and IPA are uploaded to the stores. Environment switching is a config change, not a code change.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>TeamMvpKitConfig Pattern</strong> — team_mvp_kit uses a centralized config class that holds all environment-specific settings: API base URL, Firebase options, feature flags, and app metadata. Different environments (dev, staging, production) use different config instances. This pattern makes environment switching clean and safe.</li>
+      <li><strong>Environment Entry Points</strong> — Create separate main files for each environment. main_dev.dart uses the dev config, main_prod.dart uses the prod config. Each calls a shared bootstrap function with its config. This lets you switch environments by changing which file you run, without modifying any code.</li>
+      <li><strong>Using Config in DI</strong> — Pass the config object into your dependency injection setup. Register it as a singleton so any service can access environment settings. Dio uses config.apiBaseUrl, Crashlytics checks config.enableCrashlytics, and LogInterceptor checks config.enableLogging.</li>
+      <li><strong>Dart Define for Build Variants</strong> — Use --dart-define to pass environment variables at build time without multiple main files. Access them with String.fromEnvironment(). This approach is popular for CI/CD pipelines where the environment is set by the build script.</li>
+      <li><strong>Building for Android (APK and AAB)</strong> — Use flutter build apk for a debug/test APK and flutter build appbundle for the Play Store. The AAB (Android App Bundle) is required by Google Play -- it generates optimized APKs for each device configuration, resulting in smaller downloads for users.</li>
+      <li><strong>Android App Signing</strong> — Release builds must be signed with a keystore. Create a keystore file once and configure it in android/app/build.gradle. Never commit the keystore or passwords to git. Store them securely and reference them from a local key.properties file.</li>
+      <li><strong>Building for iOS</strong> — Use flutter build ios to create the iOS app. Then open Xcode to archive and upload to App Store Connect. iOS requires an Apple Developer account ($99/year), provisioning profiles, and code signing certificates. Xcode handles most of this through automatic signing.</li>
+      <li><strong>App Version and Build Number</strong> — Set your app version in pubspec.yaml. The format is version: MAJOR.MINOR.PATCH+BUILD_NUMBER. Major for breaking changes, minor for new features, patch for bug fixes. The build number must increment with every upload to the app stores.</li>
+      <li><strong>Pre-Release Checklist</strong> — Before submitting to app stores: update version number, run all tests, test on real devices (not just emulators), check app size, verify all API endpoints point to production, disable debug logging, enable crash reporting, test deep links, and prepare store listing screenshots and descriptions.</li>
+      <li><strong>CI/CD with GitHub Actions</strong> — Automate builds and testing with GitHub Actions. On every pull request, run tests. On merge to main, build the release and optionally deploy to app stores via Fastlane. team_mvp_kit uses CI to ensure no broken code reaches the main branch.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. TeamMvpKitConfig (environment configuration)
+class TeamMvpKitConfig {
+  final String appName;
+  final String apiBaseUrl;
+  final String environment;
+  final bool enableLogging;
+  final bool enableCrashlytics;
+
+  const TeamMvpKitConfig({
+    required this.appName,
+    required this.apiBaseUrl,
+    required this.environment,
+    this.enableLogging = false,
+    this.enableCrashlytics = true,
+  });
+
+  static const dev = TeamMvpKitConfig(
+    appName: &#39;MyApp Dev&#39;,
+    apiBaseUrl: &#39;https://dev-api.example.com/v1&#39;,
+    environment: &#39;dev&#39;,
+    enableLogging: true,
+    enableCrashlytics: false,
+  );
+
+  static const staging = TeamMvpKitConfig(
+    appName: &#39;MyApp Staging&#39;,
+    apiBaseUrl: &#39;https://staging-api.example.com/v1&#39;,
+    environment: &#39;staging&#39;,
+    enableLogging: true,
+    enableCrashlytics: true,
+  );
+
+  static const prod = TeamMvpKitConfig(
+    appName: &#39;MyApp&#39;,
+    apiBaseUrl: &#39;https://api.example.com/v1&#39;,
+    environment: &#39;prod&#39;,
+    enableLogging: false,
+    enableCrashlytics: true,
+  );
+}
+
+// 2. Bootstrap function shared by all entry points
+Future&lt;void&gt; bootstrap(TeamMvpKitConfig config) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Configure Crashlytics based on config
+  await FirebaseCrashlytics.instance
+      .setCrashlyticsCollectionEnabled(
+    config.enableCrashlytics,
+  );
+
+  if (config.enableCrashlytics) {
+    FlutterError.onError =
+        FirebaseCrashlytics.instance.recordFlutterError;
+  }
+
+  // Register config in DI, then init all dependencies
+  getIt.registerSingleton&lt;TeamMvpKitConfig&gt;(config);
+  await configureDependencies();
+
+  runApp(MyApp(config: config));
+}
+
+// 3. Entry point files
+// main_dev.dart:
+//   void main() =&gt; bootstrap(TeamMvpKitConfig.dev);
+//
+// main_staging.dart:
+//   void main() =&gt; bootstrap(TeamMvpKitConfig.staging);
+//
+// main_prod.dart:
+//   void main() =&gt; bootstrap(TeamMvpKitConfig.prod);
+//
+// Run: flutter run -t lib/main_dev.dart
+// Build: flutter build apk -t lib/main_prod.dart
+
+// 4. Using config in Dio module
+@module
+abstract class NetworkModule {
+  @singleton
+  Dio dio(
+    TeamMvpKitConfig config,
+    TokenStorage tokenStorage,
+  ) {
+    final dio = Dio(BaseOptions(
+      baseUrl: config.apiBaseUrl,
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+      headers: {
+        &#39;Content-Type&#39;: &#39;application/json&#39;,
+        &#39;Accept&#39;: &#39;application/json&#39;,
+      },
+    ));
+
+    dio.interceptors.add(
+      AuthInterceptor(tokenStorage, dio),
+    );
+
+    if (config.enableLogging) {
+      dio.interceptors.add(LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+      ));
+    }
+
+    return dio;
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Comment: TeamMvpKitConfig holds all environment settings</li>
+      <li><span class="walk-num">2.</span> Class declaration with five configuration fields</li>
+      <li><span class="walk-num">3.</span> App name shown in the device app drawer</li>
+      <li><span class="walk-num">4.</span> API base URL that Dio uses for all requests</li>
+      <li><span class="walk-num">5.</span> Environment name (dev, staging, prod) for identification</li>
+      <li><span class="walk-num">6.</span> Whether to enable debug logging</li>
+      <li><span class="walk-num">7.</span> Whether to enable crash reporting</li>
+      <li><span class="walk-num">8.</span> </li>
+      <li><span class="walk-num">9.</span> Const constructor with required and optional parameters</li>
+      <li><span class="walk-num">10.</span> Closing the constructor</li>
+      <li><span class="walk-num">11.</span> </li>
+      <li><span class="walk-num">12.</span> Static const for the development configuration</li>
+      <li><span class="walk-num">13.</span> Dev app name includes &#39;Dev&#39; suffix to distinguish on device</li>
+      <li><span class="walk-num">14.</span> Dev API points to the development server</li>
+      <li><span class="walk-num">15.</span> Environment is dev</li>
+      <li><span class="walk-num">16.</span> Logging enabled for debugging</li>
+      <li><span class="walk-num">17.</span> Crashlytics disabled in dev to avoid noise</li>
+      <li><span class="walk-num">18.</span> Closing dev config</li>
+      <li><span class="walk-num">19.</span> </li>
+      <li><span class="walk-num">20.</span> Static const for the staging configuration</li>
+      <li><span class="walk-num">21.</span> Staging app name</li>
+      <li><span class="walk-num">22.</span> Staging API URL</li>
+      <li><span class="walk-num">23.</span> Environment is staging</li>
+      <li><span class="walk-num">24.</span> Logging enabled for debugging staging issues</li>
+      <li><span class="walk-num">25.</span> Crashlytics enabled to catch staging crashes</li>
+      <li><span class="walk-num">26.</span> Closing staging config</li>
+      <li><span class="walk-num">27.</span> </li>
+      <li><span class="walk-num">28.</span> Static const for the production configuration</li>
+      <li><span class="walk-num">29.</span> Production app name (clean, no suffix)</li>
+      <li><span class="walk-num">30.</span> Production API URL</li>
+      <li><span class="walk-num">31.</span> Environment is prod</li>
+      <li><span class="walk-num">32.</span> Logging disabled for security and performance</li>
+      <li><span class="walk-num">33.</span> Crashlytics enabled to catch production crashes</li>
+      <li><span class="walk-num">34.</span> Closing prod config and TeamMvpKitConfig class</li>
+      <li><span class="walk-num">35.</span> </li>
+      <li><span class="walk-num">36.</span> Comment: Bootstrap function called by each entry point</li>
+      <li><span class="walk-num">37.</span> bootstrap takes a config and sets up the entire app</li>
+      <li><span class="walk-num">38.</span> Ensure Flutter binding is ready</li>
+      <li><span class="walk-num">39.</span> </li>
+      <li><span class="walk-num">40.</span> Initialize Firebase with platform-specific options</li>
+      <li><span class="walk-num">41.</span> Passing the generated Firebase options</li>
+      <li><span class="walk-num">42.</span> Closing Firebase init</li>
+      <li><span class="walk-num">43.</span> </li>
+      <li><span class="walk-num">44.</span> Enable or disable Crashlytics based on config</li>
+      <li><span class="walk-num">45.</span> Pass the config flag to Crashlytics</li>
+      <li><span class="walk-num">46.</span> Closing the setCrashlyticsCollectionEnabled call</li>
+      <li><span class="walk-num">47.</span> </li>
+      <li><span class="walk-num">48.</span> If Crashlytics is enabled, set up the error handler</li>
+      <li><span class="walk-num">49.</span> Route all Flutter errors to Crashlytics</li>
+      <li><span class="walk-num">50.</span> Closing the if block</li>
+      <li><span class="walk-num">51.</span> </li>
+      <li><span class="walk-num">52.</span> Register the config as a singleton in GetIt DI</li>
+      <li><span class="walk-num">53.</span> Initialize all other dependencies</li>
+      <li><span class="walk-num">54.</span> </li>
+      <li><span class="walk-num">55.</span> Start the app with the config</li>
+      <li><span class="walk-num">56.</span> Closing bootstrap</li>
+      <li><span class="walk-num">57.</span> </li>
+      <li><span class="walk-num">58.</span> Comment: Entry point files for each environment</li>
+      <li><span class="walk-num">59.</span> main_dev.dart calls bootstrap with dev config</li>
+      <li><span class="walk-num">60.</span> </li>
+      <li><span class="walk-num">61.</span> main_staging.dart calls bootstrap with staging config</li>
+      <li><span class="walk-num">62.</span> </li>
+      <li><span class="walk-num">63.</span> main_prod.dart calls bootstrap with prod config</li>
+      <li><span class="walk-num">64.</span> </li>
+      <li><span class="walk-num">65.</span> Run command specifying the target entry file</li>
+      <li><span class="walk-num">66.</span> Build command specifying the target for production</li>
+      <li><span class="walk-num">67.</span> </li>
+      <li><span class="walk-num">68.</span> Comment: Dio module uses config for its base URL</li>
+      <li><span class="walk-num">69.</span> @module for third-party Dio registration</li>
+      <li><span class="walk-num">70.</span> Abstract class NetworkModule</li>
+      <li><span class="walk-num">71.</span> @singleton for one Dio instance</li>
+      <li><span class="walk-num">72.</span> Method receives config and tokenStorage from DI</li>
+      <li><span class="walk-num">73.</span> Create Dio with base URL from config</li>
+      <li><span class="walk-num">74.</span> Set the API base URL from the config object</li>
+      <li><span class="walk-num">75.</span> Set connection timeout</li>
+      <li><span class="walk-num">76.</span> Set receive timeout</li>
+      <li><span class="walk-num">77.</span> Default JSON headers</li>
+      <li><span class="walk-num">78.</span> Closing the BaseOptions and Dio constructor</li>
+      <li><span class="walk-num">79.</span> </li>
+      <li><span class="walk-num">80.</span> Add the auth interceptor for token management</li>
+      <li><span class="walk-num">81.</span> Closing interceptor add</li>
+      <li><span class="walk-num">82.</span> </li>
+      <li><span class="walk-num">83.</span> Only add logging if the config enables it</li>
+      <li><span class="walk-num">84.</span> Add LogInterceptor with request and response body logging</li>
+      <li><span class="walk-num">85.</span> Closing the logging configuration</li>
+      <li><span class="walk-num">86.</span> </li>
+      <li><span class="walk-num">87.</span> Return the fully configured Dio instance</li>
+      <li><span class="walk-num">88.</span> Closing the dio method and NetworkModule</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class AppConfig {
+  static const dev = AppConfig(
+    apiUrl: &#39;https://dev-api.example.com&#39;,
+    enableLogging: true,
+  );
+
+  final String apiUrl;
+  final bool enableLogging;
+
+  const AppConfig({required this.apiUrl, required this.enableLogging});
+}
+
+void main() {
+  final config = AppConfig.dev;
+  final dio = Dio(BaseOptions(baseUrl: config.apiUrl));
+  if (config.enableLogging) {
+    dio.interceptors.add(LogInterceptor());
+  }
+  runApp(MyApp());
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about what is missing before runApp and whether the config is accessible to the rest of the app...</div></details><details><summary>Show answer</summary><div class="answer">Three issues: 1) WidgetsFlutterBinding.ensureInitialized() is missing before creating Dio. 2) The config is created locally in main() but not registered in DI, so other classes cannot access it. Register it with getIt.registerSingleton(config). 3) Firebase.initializeApp() is missing if the app uses Firebase. 4) main should be async and use await for async operations.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are a toy maker. While building toys in your workshop (development), you use cheap materials and test a lot. When the toy is ready for the store (production), you use the best materials, put it in a nice box, add a label with your name (signing), and send it to the toy store (app store). The config pattern is like having two recipe books -- one for workshop experiments and one for the final product. You never accidentally ship a workshop prototype to the store!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The first Android app to reach 1 billion downloads was Google Maps in 2012. Today, the Google Play Store has over 3.5 million apps and the Apple App Store has over 1.8 million. Flutter apps make up a growing percentage -- companies like BMW, Alibaba, Google Pay, and eBay all use Flutter for their production apps. Your app could be next!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Create a TeamMvpKitConfig class with dev and prod static constants. Create main_dev.dart and main_prod.dart entry points. Create a bootstrap function that initializes Firebase and registers the config in GetIt. Build a release APK with flutter build apk --release -t lib/main_prod.dart.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/deployment/android" target="_blank" rel="noopener noreferrer">Flutter Build and Release for Android</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/deployment/ios" target="_blank" rel="noopener noreferrer">Flutter Build and Release for iOS</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/deployment/flavors" target="_blank" rel="noopener noreferrer">Flutter Flavors (Build Variants)</a> <span class="res-source">(Flutter Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=51">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./50-testing-debugging.html" rel="prev">← Testing &amp; Debugging</a>
+  <span class="nav-placeholder"></span>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS Basics: Big-O, Memory, Concurrency &amp; Networking… | Teamz Lab</title>
+<meta name="description" content="Computer science fundamentals — algorithm complexity, memory management, concurrency models, and networking — are the theoretical foundations that senior…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/59-production-debugging-incident-response-root-cause-analysis.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/61-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS Basics: Big-O, Memory, Concurrency &amp; Networking">
+<meta property="og:description" content="Computer science fundamentals — algorithm complexity, memory management, concurrency models, and networking — are the theoretical foundations that senior…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CS Basics: Big-O, Memory, Concurrency &amp; Networking">
+<meta name="twitter:description" content="Computer science fundamentals — algorithm complexity, memory management, concurrency models, and networking — are the theoretical foundations that senior…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "CS Basics: Big-O, Memory, Concurrency & Networking",
+  "description": "Computer science fundamentals — algorithm complexity, memory management, concurrency models, and networking — are the theoretical foundations that senior…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 60
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "CS Basics: Big-O, Memory, Concurrency & Networking",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">CS Basics: Big-O, Memory, Concurrency &amp; Networking</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 60 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">CS Basics: Big-O, Memory, Concurrency &amp; Networking</h1>
+<p class="lesson-subtitle">Surviving senior interview CS theory questions — complexity, memory models, and HTTP fundamentals</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=60">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">CS fundamentals are like knowing how engines work when you&#39;re a racing driver — you don&#39;t need to build the engine, but understanding why a diesel engine behaves differently at altitude helps you race smarter. Similarly, knowing Big-O helps you choose the right data structure, and knowing how TCP works helps you debug mobile network issues.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Computer science fundamentals — algorithm complexity, memory management, concurrency models, and networking — are the theoretical foundations that senior Flutter engineers are expected to understand at a practical level during technical interviews.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a field app sync interview, an interviewer asks why you chose a Map over a List for the in-memory cache. Answer: &#39;O(1) lookup by visitId vs O(n) linear scan — at 10K records, the Map is 10,000x faster for individual lookups.&#39; This is Big-O applied directly to Flutter architecture decisions.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Big-O notation fundamentals</strong> — Big-O describes worst-case time or space complexity as input size n grows. O(1) constant (HashMap lookup), O(log n) logarithmic (binary search), O(n) linear (list scan), O(n log n) linearithmic (merge sort), O(n²) quadratic (nested loops), O(2^n) exponential (naive recursion). Drop constants and lower terms: O(3n + 5) = O(n).</li>
+      <li><strong>Common Dart/Flutter Big-O scenarios</strong> — List.add() amortized O(1), List.insert(0, x) O(n) (shifts all elements), Map.containsKey() O(1), Set.contains() O(1), List.contains() O(n). Using a Set for membership testing instead of a List changes an O(n) loop to O(1) — common Flutter interview question.</li>
+      <li><strong>Space complexity</strong> — Space complexity measures additional memory used relative to input size. A function that creates a copy of a list is O(n) space. Recursive algorithms use O(depth) stack space — deep recursion risks stack overflow. Iterative alternatives use O(1) stack space. Flutter: large widget trees have O(n) memory where n is the number of live widgets.</li>
+      <li><strong>Stack vs heap memory</strong> — Stack: function call frames, local variables, fixed-size allocations — automatically managed, LIFO, fast allocation. Heap: objects, strings, collections — managed by Dart&#39;s garbage collector. In Dart: all objects live on the heap; local primitive-ish references (int, double, bool) are passed by value on the stack in optimized builds but are still Dart objects conceptually.</li>
+      <li><strong>Dart garbage collection</strong> — Dart uses a generational garbage collector: new objects go into &#39;young generation&#39; (collected frequently, fast). Long-lived objects are promoted to &#39;old generation&#39; (collected infrequently). Flutter DevTools Memory tab shows GC events. Avoid creating excessive short-lived objects in build() — reduces GC pressure.</li>
+      <li><strong>Process vs thread vs isolate</strong> — Process: independent memory space, OS-managed. Thread: shares process memory, OS-managed, risk of data races. Isolate (Dart): isolated memory heap, no shared memory, communicates via message passing (SendPort/ReceivePort). Dart&#39;s isolate model eliminates data races — you can&#39;t corrupt shared state because there is no shared state.</li>
+      <li><strong>Concurrency vs parallelism</strong> — Concurrency: multiple tasks in progress at the same time (may not run simultaneously) — Dart&#39;s event loop handles I/O concurrency on a single thread. Parallelism: multiple tasks running simultaneously on multiple CPU cores — Dart achieves with Isolate.spawn(). async/await in Dart is concurrent (cooperative scheduling), not parallel.</li>
+      <li><strong>Dart event loop model</strong> — Dart has two queues: microtask queue (higher priority — Future.value, scheduleMicrotask) and event queue (lower priority — I/O, timers, user input). The event loop processes all microtasks before the next event. Understanding this explains why Future.value() callbacks run before Timer(Duration.zero). Heavy sync code on the main isolate blocks both queues.</li>
+      <li><strong>TCP/IP basics</strong> — IP (Internet Protocol): routes packets across networks by IP address. TCP (Transmission Control Protocol): adds reliability (acknowledgement, retransmission), ordering, and flow control on top of IP. TCP connection: 3-way handshake (SYN → SYN-ACK → ACK). HTTP uses TCP. WebSocket upgrades an HTTP connection to a persistent TCP channel.</li>
+      <li><strong>HTTP/HTTPS request lifecycle</strong> — 1. DNS resolution (domain → IP). 2. TCP 3-way handshake. 3. TLS handshake (for HTTPS — certificate validation, key exchange, ~1-2 additional round trips). 4. HTTP request sent. 5. Server processes, responds. 6. Connection reused (HTTP/1.1 keep-alive) or closed. HTTP/2 adds multiplexing (multiple requests over one connection). HTTP/3 uses QUIC (UDP-based, faster on lossy networks).</li>
+      <li><strong>DNS resolution</strong> — DNS translates human-readable domains (api.myapp.com) to IP addresses. Hierarchy: recursive resolver (ISP/Google/Cloudflare) → root servers → TLD servers (.com, .io) → authoritative nameserver for the domain. TTL (Time To Live) controls caching. In mobile apps: DNS lookup adds latency on first request — HTTP client caches resolved IPs. DNSSEC prevents DNS spoofing.</li>
+      <li><strong>REST constraints and HTTP methods</strong> — REST (Representational State Transfer) constraints: stateless (server doesn&#39;t store client session), cacheable (responses indicate cacheability), uniform interface (resource-based URLs, standard verbs). HTTP semantics: GET (read, idempotent, cacheable), POST (create, not idempotent), PUT (replace, idempotent), PATCH (partial update), DELETE (idempotent). Idempotent: same result regardless of how many times applied.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// CS fundamentals in Dart/Flutter context
+
+// Big-O examples in practice
+void bigoExamples() {
+  final list = List.generate(1000, (i) =&gt; i);
+  final set = list.toSet();
+  final map = {for (final i in list) i: &#39;value_$i&#39;};
+
+  // O(n) — scans entire list
+  final inList = list.contains(999); // avoid for large lists
+
+  // O(1) — hash lookup
+  final inSet = set.contains(999); // prefer for membership tests
+  final inMap = map.containsKey(999); // prefer for key lookup
+
+  // O(n) — avoid insert at beginning of large lists
+  list.insert(0, -1); // shifts all 1000 elements
+  list.add(1001);     // O(1) amortized — append to end
+}
+
+// Isolate for parallel computation (true parallelism)
+Future&lt;List&lt;Visit&gt;&gt; processLargeDatasetInIsolate(List&lt;Map&gt; rawData) async {
+  return await Isolate.run(() {
+    // This runs on a separate OS thread with its own memory
+    return rawData.map(Visit.fromJson).toList();
+    // No shared state — data is copied to the isolate
+  });
+}
+
+// Dart event loop — microtask vs event queue
+void eventLoopDemo() {
+  print(&#39;1: sync&#39;);
+
+  Future(() =&gt; print(&#39;3: event queue&#39;)); // added to event queue
+
+  Future.microtask(() =&gt; print(&#39;2: microtask&#39;)); // added to microtask queue
+
+  print(&#39;1: sync continues&#39;);
+  // Output order: &#39;1: sync&#39;, &#39;1: sync continues&#39;, &#39;2: microtask&#39;, &#39;3: event queue&#39;
+}
+
+// TCP keep-alive and connection reuse with Dio
+Dio createOptimizedClient() {
+  final dio = Dio();
+  // Dio reuses connections via keep-alive automatically
+  // HTTP/2 is enabled when server supports it — multiple requests on one TCP connection
+  dio.options.connectTimeout = const Duration(seconds: 5); // TCP + TLS handshake
+  dio.options.receiveTimeout = const Duration(seconds: 30);
+  return dio;
+}
+
+// Memory-efficient list processing — O(1) space with lazy iteration
+Iterable&lt;Visit&gt; filterHighPriorityLazy(List&lt;Visit&gt; visits) sync* {
+  for (final visit in visits) {
+    if (visit.priority == Priority.high) {
+      yield visit; // lazy — doesn&#39;t create intermediate list
+    }
+  }
+}
+
+// Compare: O(n) space intermediate list
+List&lt;Visit&gt; filterHighPriorityEager(List&lt;Visit&gt; visits) =&gt;
+    visits.where((v) =&gt; v.priority == Priority.high).toList(); // toList() materializes
+
+// O(n log n) sort vs O(n²) naive sort
+void sortingComplexity(List&lt;Visit&gt; visits) {
+  // Dart&#39;s sort() uses TimSort — O(n log n) worst case
+  visits.sort((a, b) =&gt; a.createdAt.compareTo(b.createdAt));
+
+  // Never implement bubble sort — O(n²) — mention this in interviews
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> set.contains(999) is O(1) because Dart&#39;s HashSet computes a hash of 999 and does a direct bucket lookup — no iteration required regardless of set size.</li>
+      <li><span class="walk-num">2.</span> list.contains(999) is O(n) because Dart scans from index 0 to the end — at 100K elements, this is 100K comparisons per check.</li>
+      <li><span class="walk-num">3.</span> Isolate.run() copies rawData into the new isolate&#39;s memory space — this has a cost (serialization), but subsequent processing is truly parallel on a separate CPU core.</li>
+      <li><span class="walk-num">4.</span> The return value is copied back from the isolate to the calling isolate — no shared memory means no thread-safety concerns but data copy overhead.</li>
+      <li><span class="walk-num">5.</span> eventLoopDemo output order: sync code runs first (no queue), then all microtasks are drained, then events are processed — Future.microtask always beats Future() timer callbacks.</li>
+      <li><span class="walk-num">6.</span> sync* generator with yield* lazy evaluation — filterHighPriorityLazy produces values one at a time without creating an intermediate list, using O(1) additional space.</li>
+      <li><span class="walk-num">7.</span> filterHighPriorityEager&#39;s .toList() materializes all filtered results into a new list — O(k) space where k is the number of matching items.</li>
+      <li><span class="walk-num">8.</span> dio.options.connectTimeout covers both the TCP handshake and TLS negotiation — on slow mobile networks, TLS adds 1-3 round trips (about 200-600ms) so the timeout should account for this.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Checking for duplicate messages in real-time chat
+class MessageDeduplicator {
+  final List&lt;String&gt; _seenIds = [];
+
+  bool isDuplicate(String messageId) {
+    if (_seenIds.contains(messageId)) return true;
+    _seenIds.add(messageId);
+    return false;
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">This works correctly but has a performance problem and a memory problem in a busy chat app. What are they?</div></details><details><summary>Show answer</summary><div class="answer">Performance bug: _seenIds.contains() is O(n) — as the list grows with thousands of message IDs, every incoming message checks against the entire list. In a busy channel with 10K messages, each dedup check scans 10K items. Fix: use a Set&lt;String&gt; instead of List&lt;String&gt; — _seenIds.contains() becomes O(1) regardless of set size. Memory bug: the _seenIds list grows unbounded — in a long-running session, it accumulates every message ID ever seen, consuming increasing memory indefinitely. Fix: implement an LRU-style eviction by limiting the set to the last N IDs (e.g., 10,000) and removing the oldest entries when the limit is exceeded, or use a time-based expiry (only keep IDs from the last hour, since duplicates arrive within seconds of the original).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Big-O is like measuring how long it takes to find a toy. If you have 1 box (O(1)), it&#39;s instant. If you search 10 boxes one by one (O(n)), it takes 10 times longer for 10 boxes. Isolates are like two kids doing homework in separate rooms — they don&#39;t fight over the same pencil (no shared memory). HTTP is like sending a letter: you look up the address (DNS), walk to the post office (TCP handshake), seal the envelope with wax (HTTPS), send it, and wait for a reply.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Dart&#39;s isolate model was deliberately designed after the lessons learned from Java&#39;s thread model. Java threads sharing memory led to decades of concurrency bugs, deadlocks, and race conditions. Dart&#39;s approach — no shared memory, message-passing only — makes concurrent code dramatically safer, at the cost of needing to copy data between isolates.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Answer these as you would in a senior Flutter interview: (1) You have a List of 50,000 message IDs and need to check if a new incoming message is a duplicate on every WebSocket event. What data structure do you use and why? (2) A Flutter screen feels janky during a data processing operation. How do you move the work off the main thread? Show the code. (3) Explain why Future.microtask() runs before Timer(Duration.zero) in Dart. (4) A mobile user makes an HTTPS request to a cold server. List every network step from URL to response. (5) What is the difference between PUT and PATCH? When would you use each?</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.bigocheatsheet.com/" target="_blank" rel="noopener noreferrer">Big-O complexity cheat sheet</a> <span class="res-source">(bigocheatsheet.com)</span></li>
+      <li><a href="https://dart.dev/language/concurrency" target="_blank" rel="noopener noreferrer">Dart concurrency documentation</a> <span class="res-source">(Dart Docs)</span></li>
+      <li><a href="https://howhttps.works/" target="_blank" rel="noopener noreferrer">How HTTPS works</a> <span class="res-source">(howhttps.works)</span></li>
+      <li><a href="https://medium.com/dartlang/dart-asynchronous-programming-isolates-and-event-loops-bffc3e296a6a" target="_blank" rel="noopener noreferrer">Dart event loop explained</a> <span class="res-source">(Dart Medium)</span></li>
+      <li><a href="https://api.dart.dev/stable/dart-isolate/Isolate/run.html" target="_blank" rel="noopener noreferrer">Flutter Isolate.run documentation</a> <span class="res-source">(Dart API Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=60">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./59-production-debugging-incident-response-root-cause-analysis.html" rel="prev">← Production Debugging, Incident…</a>
+  <a class="nav-next" href="./61-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html" rel="next">DSA I: Arrays, Strings, HashMaps, Sets… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GraphQL with Apollo Kotlin — Android Interview Mastery | Teamz Lab</title>
+<meta name="description" content="Apollo Kotlin is a strongly-typed GraphQL client for Android/Kotlin that generates Kotlin data classes from your GraphQL schema and queries at build time.…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/78-android-1415-platform-features-migration.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/80-baseline-profiles-macrobenchmark-startup-optimization.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphQL with Apollo Kotlin">
+<meta property="og:description" content="Apollo Kotlin is a strongly-typed GraphQL client for Android/Kotlin that generates Kotlin data classes from your GraphQL schema and queries at build time.…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GraphQL with Apollo Kotlin">
+<meta name="twitter:description" content="Apollo Kotlin is a strongly-typed GraphQL client for Android/Kotlin that generates Kotlin data classes from your GraphQL schema and queries at build time.…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "GraphQL with Apollo Kotlin",
+  "description": "Apollo Kotlin is a strongly-typed GraphQL client for Android/Kotlin that generates Kotlin data classes from your GraphQL schema and queries at build time.…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 79
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GraphQL with Apollo Kotlin",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">GraphQL with Apollo Kotlin</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 79 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">GraphQL with Apollo Kotlin</h1>
+<p class="lesson-subtitle">Schema-first API development with normalized caching and real-time subscriptions</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=79">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">REST is like ordering from a fixed menu — you get the whole plate even if you only want the salad. GraphQL is like a build-your-own-bowl restaurant — you specify exactly which ingredients (fields) you want, and the kitchen (server) gives you precisely that. Apollo Kotlin is your personal waiter who remembers your preferences (cache), can take complex orders (queries with fragments), and alerts you when new dishes are ready (subscriptions).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Apollo Kotlin is a strongly-typed GraphQL client for Android/Kotlin that generates Kotlin data classes from your GraphQL schema and queries at build time. It provides a normalized cache that intelligently deduplicates data across queries, supports real-time subscriptions over WebSocket, and integrates with Kotlin coroutines and Flows for reactive data fetching. It replaces the traditional Retrofit+REST approach for APIs backed by GraphQL servers.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A social media app migrated from REST to GraphQL with Apollo Kotlin to solve the &#39;profile screen problem&#39; — the profile needed data from 5 different REST endpoints (user, posts, followers, following, settings), causing waterfall requests and over-fetching. With GraphQL, a single query fetches exactly the needed fields. The normalized cache meant that when a user updates their avatar in settings, the profile screen, comment sections, and follower lists all reflect the change instantly through cache watchers. Optimistic updates for likes made the UI feel instant — the heart animates immediately while the mutation fires in the background.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>GraphQL basics: queries, mutations, subscriptions</strong> — Queries read data (GET equivalent), mutations write data (POST/PUT/DELETE equivalent), subscriptions push real-time updates via WebSocket. Unlike REST, all requests go to a single endpoint. The client specifies exactly which fields to return, solving over-fetching and under-fetching problems.</li>
+      <li><strong>Apollo Kotlin client setup</strong> — Add the Apollo Gradle plugin and runtime dependency. The plugin downloads your schema.graphqls, and you write .graphql query files. At build time, Apollo generates type-safe Kotlin data classes for every query, mutation, and fragment. Call apolloClient.query(MyQuery()).execute() to fetch data.</li>
+      <li><strong>Schema-first development &amp; codegen</strong> — Download the schema using Apollo CLI or Gradle task (./gradlew downloadApolloSchema). Write .graphql files alongside your code. Apollo codegen generates: query/mutation data classes, input types, enum types, and fragment classes. The generated code is type-safe — schema mismatches are caught at compile time, not runtime.</li>
+      <li><strong>Normalized cache &amp; cache policies</strong> — Apollo&#39;s normalized cache breaks responses into individual objects keyed by __typename + id. When two queries return the same User, both read from the same cache entry. Cache policies: CacheOnly, NetworkOnly, CacheFirst, NetworkFirst, CacheAndNetwork. CacheFirst checks cache before network — ideal for reducing API calls.</li>
+      <li><strong>Optimistic UI updates</strong> — For mutations, provide optimistic data that immediately updates the UI before the server responds. If the mutation fails, the cache rolls back to the previous state. Use .optimisticUpdates(MyMutation.Data(...)) on the mutation call. Critical for responsive UIs in social apps (likes, follows, etc.).</li>
+      <li><strong>Error handling &amp; partial data</strong> — GraphQL can return partial data with errors — the errors array accompanies whatever data could be resolved. Apollo models this as ApolloResponse containing both data (nullable) and errors (list). Handle gracefully: show available data and display errors for failed fields. This is fundamentally different from REST&#39;s all-or-nothing responses.</li>
+      <li><strong>Pagination with GraphQL</strong> — Cursor-based pagination uses endCursor/hasNextPage and is preferred for infinite lists (stable across insertions). Offset-based pagination uses offset/limit and is simpler but breaks when items are inserted mid-page. Apollo supports both via @typePolicy and custom merge functions in the normalized cache for seamless list appending.</li>
+      <li><strong>Apollo vs Retrofit+REST comparison</strong> — Apollo advantages: type-safe queries generated from schema, precise field selection (no over-fetching), normalized caching built-in, real-time subscriptions. REST advantages: simpler caching (HTTP cache headers), broader backend support, easier file uploads, better tooling ecosystem. Use GraphQL for complex data graphs; REST for simple CRUD or when the backend mandates it.</li>
+      <li><strong>Fragments for reusable field sets</strong> — GraphQL fragments define reusable field selections. fragment UserFields on User { id name avatar } can be spread into multiple queries with ...UserFields. Apollo generates a reusable Kotlin class for each fragment. Fragments reduce duplication and ensure consistency across queries that fetch the same entity type.</li>
+      <li><strong>Watchers for reactive cache updates</strong> — apolloClient.query(MyQuery()).watch() returns a Flow that emits whenever the normalized cache changes for that query&#39;s data. This enables reactive UIs — when a mutation updates a User in cache, all watchers that include that User automatically re-emit. Pairs naturally with Compose&#39;s collectAsState().</li>
+      <li><strong>Custom scalars &amp; type adapters</strong> — GraphQL schemas define custom scalars (DateTime, URL, JSON). Apollo requires type adapters to map them to Kotlin types. Register adapters via apollo { customScalarsMapping.set(mapOf(&#39;DateTime&#39; to &#39;java.time.Instant&#39;)) } in build.gradle, then implement the adapter to serialize/deserialize. Without adapters, custom scalars default to Any.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// 1. build.gradle.kts setup
+plugins {
+    id(&quot;com.apollographql.apollo3&quot;) version &quot;3.8.2&quot;
+}
+
+dependencies {
+    implementation(&quot;com.apollographql.apollo3:apollo-runtime:3.8.2&quot;)
+    implementation(&quot;com.apollographql.apollo3:apollo-normalized-cache-sqlite:3.8.2&quot;)
+}
+
+apollo {
+    service(&quot;api&quot;) {
+        packageName.set(&quot;com.example.app.graphql&quot;)
+        // Custom scalar mapping
+        mapScalar(&quot;DateTime&quot;, &quot;java.time.Instant&quot;,
+            &quot;com.example.app.graphql.DateTimeAdapter&quot;)
+    }
+}
+
+// 2. GraphQL query file: src/main/graphql/GetUser.graphql
+// query GetUser($userId: ID!) {
+//     user(id: $userId) {
+//         ...UserFields
+//         posts(first: 10) {
+//             edges {
+//                 node {
+//                     id
+//                     title
+//                     createdAt
+//                 }
+//                 cursor
+//             }
+//             pageInfo {
+//                 hasNextPage
+//                 endCursor
+//             }
+//         }
+//     }
+// }
+//
+// fragment UserFields on User {
+//     id
+//     name
+//     avatarUrl
+//     followerCount
+// }
+
+// 3. Apollo client with normalized cache
+object GraphQLClient {
+
+    val apolloClient: ApolloClient by lazy {
+        val sqlNormalizedCache = SqlNormalizedCacheFactory(&quot;apollo.db&quot;)
+
+        ApolloClient.Builder()
+            .serverUrl(&quot;https://api.example.com/graphql&quot;)
+            .normalizedCache(sqlNormalizedCache)
+            .addHttpHeader(&quot;Authorization&quot;, &quot;Bearer ${TokenManager.accessToken}&quot;)
+            .build()
+    }
+}
+
+// 4. Repository with cache policies
+class UserRepository(
+    private val apollo: ApolloClient = GraphQLClient.apolloClient
+) {
+
+    // Cache-first: show cached data immediately, refresh in background
+    fun getUser(userId: String): Flow&lt;UserState&gt; = flow {
+        emit(UserState.Loading)
+
+        val response = apollo
+            .query(GetUserQuery(userId))
+            .fetchPolicy(FetchPolicy.CacheFirst)
+            .execute()
+
+        response.data?.user?.let { user -&gt;
+            emit(UserState.Success(user.userFields))
+        } ?: emit(UserState.Error(&quot;User not found&quot;))
+    }
+
+    // Watch for cache changes reactively
+    fun watchUser(userId: String): Flow&lt;GetUserQuery.User?&gt; {
+        return apollo
+            .query(GetUserQuery(userId))
+            .watch()
+            .map { it.data?.user }
+    }
+
+    // Mutation with optimistic update
+    suspend fun toggleFollow(userId: String, isFollowing: Boolean) {
+        val mutation = ToggleFollowMutation(userId)
+
+        val optimisticData = ToggleFollowMutation.Data(
+            toggleFollow = ToggleFollowMutation.ToggleFollow(
+                id = userId,
+                isFollowedByMe = !isFollowing,
+                followerCount = if (isFollowing) -1 else 1 // relative
+            )
+        )
+
+        apollo.mutation(mutation)
+            .optimisticUpdates(optimisticData)
+            .execute()
+    }
+
+    // Cursor-based pagination
+    suspend fun loadMorePosts(
+        userId: String,
+        cursor: String?
+    ): PostPage {
+        val response = apollo
+            .query(GetUserPostsQuery(userId, first = 10, after = cursor))
+            .fetchPolicy(FetchPolicy.NetworkOnly)
+            .execute()
+
+        val connection = response.data?.user?.posts
+        return PostPage(
+            posts = connection?.edges?.map { it.node } ?: emptyList(),
+            endCursor = connection?.pageInfo?.endCursor,
+            hasNextPage = connection?.pageInfo?.hasNextPage ?: false
+        )
+    }
+}
+
+// 5. ViewModel using Apollo
+class ProfileViewModel(
+    private val userRepo: UserRepository
+) : ViewModel() {
+
+    private val _userId = MutableStateFlow&lt;String?&gt;(null)
+
+    val userState: StateFlow&lt;UserState&gt; = _userId
+        .filterNotNull()
+        .flatMapLatest { userRepo.getUser(it) }
+        .stateIn(viewModelScope, SharingStarted.Lazily, UserState.Loading)
+
+    // Reactive cache watcher — auto-updates when cache changes
+    val user: StateFlow&lt;GetUserQuery.User?&gt; = _userId
+        .filterNotNull()
+        .flatMapLatest { userRepo.watchUser(it) }
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    fun loadUser(id: String) {
+        _userId.value = id
+    }
+
+    fun toggleFollow(userId: String, isFollowing: Boolean) {
+        viewModelScope.launch {
+            userRepo.toggleFollow(userId, isFollowing)
+        }
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> apollo { service(&#39;api&#39;) { packageName.set(...) } } — configures the Apollo Gradle plugin to generate code in the specified package; processes all .graphql files in src/main/graphql</li>
+      <li><span class="walk-num">2.</span> mapScalar(&#39;DateTime&#39;, &#39;java.time.Instant&#39;, ...) — maps the GraphQL custom scalar DateTime to Kotlin&#39;s Instant type with a custom adapter for serialization</li>
+      <li><span class="walk-num">3.</span> fragment UserFields on User { ... } — defines reusable field selections; Apollo generates a UserFields Kotlin class that can be used across queries</li>
+      <li><span class="walk-num">4.</span> SqlNormalizedCacheFactory(&#39;apollo.db&#39;) — creates a persistent SQLite-backed normalized cache; survives app restarts unlike the in-memory cache</li>
+      <li><span class="walk-num">5.</span> addHttpHeader(&#39;Authorization&#39;, ...) — adds auth headers to every request; for dynamic tokens use an HttpInterceptor instead</li>
+      <li><span class="walk-num">6.</span> .fetchPolicy(FetchPolicy.CacheFirst) — checks the normalized cache first; only hits the network if data is not cached; ideal for reducing redundant API calls</li>
+      <li><span class="walk-num">7.</span> .watch() — returns a Flow that re-emits data whenever the normalized cache entries for this query change; enables reactive UI updates across screens</li>
+      <li><span class="walk-num">8.</span> .optimisticUpdates(optimisticData) — immediately applies the provided data to the cache before the network response; rolls back automatically on failure</li>
+      <li><span class="walk-num">9.</span> GetUserPostsQuery(userId, first = 10, after = cursor) — cursor-based pagination; &#39;after&#39; is the cursor of the last item; &#39;first&#39; limits the page size</li>
+      <li><span class="walk-num">10.</span> flatMapLatest { userRepo.watchUser(it) } — switches to the latest user&#39;s watcher Flow when userId changes; cancels the previous watcher automatically</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class BookRepository(private val apollo: ApolloClient) {
+
+    suspend fun getBook(bookId: String): Book? {
+        val response = apollo
+            .query(GetBookQuery(bookId))
+            .fetchPolicy(FetchPolicy.CacheOnly)  // Bug 1
+            .execute()
+
+        return response.data?.book
+    }
+
+    suspend fun addReview(bookId: String, text: String, rating: Int) {
+        apollo
+            .mutation(AddReviewMutation(bookId, text, rating))
+            .execute()
+        // Bug 2: No optimistic update, no error handling
+    }
+
+    fun watchBooks(): Flow&lt;List&lt;Book&gt;&gt; {
+        return apollo
+            .query(GetBooksQuery())
+            .toFlow()  // Bug 3: not using watch()
+            .map { it.data?.books ?: emptyList() }
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Three bugs: a cache policy that will never show data on first launch, a mutation without optimistic updates or error handling, and a Flow that does not react to cache changes</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: FetchPolicy.CacheOnly will return null on first launch because the cache is empty — nothing ever fetches from the network. Fix: Use CacheFirst or NetworkFirst so the data is fetched from the network when not cached. Bug 2: The mutation has no optimistic update (UI waits for network response) and no error handling (failures are silently ignored). Fix: Add .optimisticUpdates() for instant UI feedback, and check response.errors or wrap in try/catch. Bug 3: .toFlow() executes the query once and completes. It does NOT re-emit when the cache is updated by mutations. Fix: Use .watch() instead to get a Flow that re-emits whenever the normalized cache changes for this query.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are at a salad bar. With REST, you order a &#39;Caesar salad&#39; and get everything on it — even croutons you do not want. With GraphQL, you hand the chef a note saying &#39;I want lettuce, cheese, and dressing — skip the croutons.&#39; The chef gives you exactly what you asked for. Apollo is your smart lunchbox that remembers what you ordered before — if you already have the lettuce from your last order, it only gets the new stuff from the chef.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Apollo Kotlin was originally called &#39;Apollo Android&#39; and was written in Java. The complete Kotlin rewrite (Apollo Kotlin 3.x) was one of the most significant migrations in the Android library ecosystem — it took 2 years and introduced a completely new API surface. The normalized cache was inspired by how Facebook&#39;s Relay client works internally. Fun fact: a well-configured Apollo cache can reduce API calls by 60-80% in typical social media apps because the same User/Post objects appear across dozens of different screens.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a book review app using Apollo Kotlin with: (1) A GraphQL schema defining Book (id, title, author, rating, reviews) and Review (id, text, rating, createdAt) types with queries, mutations, and a subscription. (2) Write the .graphql query files for: GetBooks (paginated with cursor), GetBookDetail (with reviews), AddReview mutation, and OnNewReview subscription. (3) Implement a repository with CacheFirst for book list, NetworkFirst for book detail, and optimistic updates for AddReview. (4) Create a ViewModel that uses watch() to reactively update the book list when a new review changes the average rating in the cache.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.apollographql.com/docs/kotlin/" target="_blank" rel="noopener noreferrer">Apollo Kotlin Documentation</a> <span class="res-source">(apollographql.com)</span></li>
+      <li><a href="https://graphql.org/learn/" target="_blank" rel="noopener noreferrer">GraphQL Introduction</a> <span class="res-source">(graphql.org)</span></li>
+      <li><a href="https://www.apollographql.com/docs/kotlin/caching/normalized-cache" target="_blank" rel="noopener noreferrer">Apollo Normalized Cache Guide</a> <span class="res-source">(apollographql.com)</span></li>
+      <li><a href="https://www.apollographql.com/docs/kotlin/pagination/overview" target="_blank" rel="noopener noreferrer">Apollo Pagination Guide</a> <span class="res-source">(apollographql.com)</span></li>
+      <li><a href="https://relay.dev/graphql/connections.htm" target="_blank" rel="noopener noreferrer">GraphQL Cursor Connections Spec</a> <span class="res-source">(relay.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=79">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./78-android-1415-platform-features-migration.html" rel="prev">← Android 14/15 Platform Features &amp;…</a>
+  <a class="nav-next" href="./80-baseline-profiles-macrobenchmark-startup-optimization.html" rel="next">Baseline Profiles, Macrobenchmark &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

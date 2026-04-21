@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jetpack Compose Fundamentals: Composable Functions… | Teamz Lab</title>
+<meta name="description" content="Jetpack Compose is Android&#39;s modern declarative UI toolkit. Instead of imperatively modifying Views, you describe the UI as a function of state using…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetpack Compose Fundamentals: Composable Functions, State &amp; Recomposition">
+<meta property="og:description" content="Jetpack Compose is Android&#39;s modern declarative UI toolkit. Instead of imperatively modifying Views, you describe the UI as a function of state using…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jetpack Compose Fundamentals: Composable Functions, State &amp;…">
+<meta name="twitter:description" content="Jetpack Compose is Android&#39;s modern declarative UI toolkit. Instead of imperatively modifying Views, you describe the UI as a function of state using…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Jetpack Compose Fundamentals: Composable Functions, State & Recomposition",
+  "description": "Jetpack Compose is Android's modern declarative UI toolkit. Instead of imperatively modifying Views, you describe the UI as a function of state using…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 18
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Jetpack Compose Fundamentals: Composable Functions, State & Recomposition",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Jetpack Compose Fundamentals: Composable Functions, State &amp; Recomposition</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 18 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Jetpack Compose Fundamentals: Composable Functions, State &amp; Recomposition</h1>
+<p class="lesson-subtitle">Android&#39;s modern declarative UI — the future of Android development</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Jetpack Compose is like a smart whiteboard that redraws itself automatically when the data changes. With XML Views, you had to manually say &#39;erase name, write new name&#39; every time data changed. With Compose, you describe WHAT the screen should look like given the current data — and the whiteboard figures out the minimum redraw needed. Recomposition is the whiteboard checking &#39;what changed?&#39; and only updating those parts — not redrawing everything from scratch.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Jetpack Compose is Android&#39;s modern declarative UI toolkit. Instead of imperatively modifying Views, you describe the UI as a function of state using @Composable functions. When state changes, Compose automatically recomposes only the affected parts of the UI tree. Modifier controls layout and appearance. remember/rememberSaveable manages local state. LazyColumn replaces RecyclerView. Material3 provides a complete design system. LaunchedEffect handles coroutine-based side effects tied to composition lifecycle.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a fintech SaaS app migrating from XML to Compose, the TransactionListScreen is a new full-Compose screen while legacy AccountDetailActivity still uses XML. TransactionListScreen uses LazyColumn with key=transaction.id for smooth animated updates when new transactions arrive. A search bar uses state hoisting — the query string lives in the ViewModel (StateFlow), the SearchBar composable is stateless, receiving value and onValueChange as parameters. LaunchedEffect(Unit) triggers initial data load. The app uses Material3 Scaffold with a TopAppBar and FAB for new transaction entry.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>@Composable functions</strong> — Any function annotated with @Composable can emit UI. Composables are not classes — they are functions that describe UI as a function of state. They can only be called from other @Composable functions or from a Composition entry point (setContent, ComposeView). The Compose runtime tracks which composables ran and with what parameters.</li>
+      <li><strong>Recomposition</strong> — When state changes, Compose re-executes only the composable functions whose inputs changed — not the entire UI tree. Compose compares parameters using structural equality (equals()). If nothing changed, the composable is skipped. This is called &#39;smart recomposition&#39;. Composables must be idempotent and side-effect free for correct recomposition.</li>
+      <li><strong>State — remember and mutableStateOf</strong> — var count by remember { mutableStateOf(0) } creates state that persists across recompositions. Without remember, state is reset on every recomposition. mutableStateOf creates a State object — reading its value inside a composable subscribes that composable to changes. When value changes, subscribed composables recompose.</li>
+      <li><strong>rememberSaveable</strong> — Like remember, but also survives configuration changes and process death — uses the same Bundle mechanism as onSaveInstanceState. Use rememberSaveable for UI state that should survive rotation: scroll position, selected tab, user input. For complex objects, implement Saver or use @Parcelize data classes.</li>
+      <li><strong>State hoisting</strong> — Moving state UP from a composable to its caller — the composable becomes stateless and receives state + callbacks as parameters. Pattern: (value, onValueChange) -&gt; Unit. Stateless composables are more reusable, testable, and previewable. Rule: hoist state to the lowest common ancestor of all composables that need it.</li>
+      <li><strong>Modifier</strong> — Modifier is an immutable, ordered list of instructions applied to a composable — size, padding, background, click handling, drawing, layout behavior. Order matters: Modifier.padding(16.dp).background(Color.Blue) pads THEN draws background (background inside padding). Modifier.background(Color.Blue).padding(16.dp) draws background THEN pads (background outside padding).</li>
+      <li><strong>Column, Row, Box</strong> — Column: arranges children vertically (like vertical LinearLayout). Row: horizontal (like horizontal LinearLayout). Box: stacks children (like FrameLayout) — last child drawn on top. All support Arrangement (spacing between children) and Alignment (cross-axis positioning). These are the fundamental layout composables.</li>
+      <li><strong>LazyColumn and LazyRow</strong> — Compose equivalents of RecyclerView — only compose and lay out items currently visible. items(list) and itemsIndexed(list) populate items. No Adapter or ViewHolder needed — just describe each item as a composable. LazyListState.animateScrollToItem() for programmatic scrolling. Use key parameter in items() for stable IDs and better animations.</li>
+      <li><strong>Material3 components</strong> — Jetpack Compose ships with Material3 (Material Design 3) components: Scaffold (app structure with topBar, bottomBar, FAB, snackbarHost), TopAppBar, NavigationBar, Card, Button, OutlinedTextField, Chip, Dialog. Use MaterialTheme.colorScheme, MaterialTheme.typography for theming instead of hardcoded colors.</li>
+      <li><strong>Side effects — LaunchedEffect</strong> — LaunchedEffect(key) launches a coroutine tied to the composition. Runs when the composable enters composition and re-runs if key changes. Use for one-time effects (load data, animate on first show, trigger navigation). The coroutine is cancelled when the composable leaves composition or key changes.</li>
+      <li><strong>Stability and performance</strong> — Compose skips recomposition of a composable if all its parameters are &#39;stable&#39; (implements equals() correctly) and haven&#39;t changed. Data classes are stable. Standard Kotlin collections (List, Map) are NOT stable — use Kotlin ImmutableList from kotlinx-collections-immutable or wrap in @Stable/@Immutable annotated classes for performance-critical composables.</li>
+      <li><strong>Interop — ComposeView and AndroidView</strong> — ComposeView embeds Compose inside XML layouts — migrate screens incrementally. AndroidView embeds legacy Views inside Compose — wrap a MapView, WebView, or any View with no Compose equivalent. This enables gradual migration of existing apps without a full rewrite.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// State hoisting pattern — stateless composable
+@Composable
+fun TransactionListScreen(
+    viewModel: TransactionViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
+
+    TransactionListContent(
+        uiState = uiState,
+        searchQuery = searchQuery,
+        onSearchQueryChange = viewModel::onSearchQueryChanged,
+        onTransactionClick = viewModel::onTransactionSelected,
+        onRetry = viewModel::loadTransactions
+    )
+}
+
+// Pure stateless composable — reusable, testable, previewable
+@Composable
+fun TransactionListContent(
+    uiState: TransactionUiState,
+    searchQuery: String,
+    onSearchQueryChange: (String) -&gt; Unit,
+    onTransactionClick: (Transaction) -&gt; Unit,
+    onRetry: () -&gt; Unit,
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(&quot;Transactions&quot;) })
+        },
+        modifier = modifier
+    ) { paddingValues -&gt;
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            // Search bar — stateless, controlled by parent
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
+                label = { Text(&quot;Search transactions&quot;) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            when (uiState) {
+                is TransactionUiState.Loading -&gt; {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is TransactionUiState.Success -&gt; {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(
+                            items = uiState.transactions,
+                            key = { it.id }  // Stable keys for smooth animations
+                        ) { transaction -&gt;
+                            TransactionCard(
+                                transaction = transaction,
+                                onClick = { onTransactionClick(transaction) }
+                            )
+                        }
+                    }
+                }
+                is TransactionUiState.Error -&gt; {
+                    ErrorScreen(
+                        message = uiState.message,
+                        onRetry = onRetry
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TransactionCard(
+    transaction: Transaction,
+    onClick: () -&gt; Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = transaction.description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = transaction.date,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Text(
+                text = transaction.formattedAmount,
+                style = MaterialTheme.typography.titleMedium,
+                color = if (transaction.isCredit) Color.Green else Color.Red
+            )
+        }
+    }
+}
+
+// LaunchedEffect for side effects
+@Composable
+fun TransactionDetailScreen(transactionId: String, viewModel: TransactionViewModel = hiltViewModel()) {
+    LaunchedEffect(transactionId) {  // Re-runs if transactionId changes
+        viewModel.loadTransactionDetail(transactionId)
+    }
+    // ... rest of UI
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> TransactionListScreen is the stateful screen composable — it connects the ViewModel to the stateless UI. collectAsStateWithLifecycle() is lifecycle-aware — it stops collecting when the app goes to background, saving battery.</li>
+      <li><span class="walk-num">2.</span> TransactionListContent receives only plain data and callbacks — it has zero knowledge of ViewModel, Flow, or lifecycle. This makes it @Preview-able and testable with pure data.</li>
+      <li><span class="walk-num">3.</span> Scaffold provides Material3 app structure — topBar, FAB, snackbarHost, and content with correct padding insets. The paddingValues from the lambda MUST be applied to content to avoid overlap with system bars.</li>
+      <li><span class="walk-num">4.</span> The when(uiState) block handles all three states exhaustively (sealed class). Compose recomposes only the relevant branch when uiState changes — Loading → Success transition only recomposes the LazyColumn area.</li>
+      <li><span class="walk-num">5.</span> items(transactions, key = { it.id }) gives Compose stable identity for each transaction. When new transactions arrive, Compose animates additions/removals correctly and preserves any per-item state (like expanded/collapsed).</li>
+      <li><span class="walk-num">6.</span> TransactionCard is fully stateless — it receives transaction data and an onClick lambda. Card uses the Material3 Card composable which handles elevation, shape, and ripple automatically.</li>
+      <li><span class="walk-num">7.</span> Modifier.weight(1f) on the Column inside Row makes the text column expand to fill remaining space after the amount Text has taken its natural width — equivalent to layout_weight=1 in LinearLayout.</li>
+      <li><span class="walk-num">8.</span> LaunchedEffect(transactionId) runs the load coroutine when the composable first appears AND whenever transactionId changes. The previous coroutine is cancelled before the new one starts — preventing race conditions when navigating between transactions.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>@Composable
+fun ProductListScreen(viewModel: ProductViewModel = hiltViewModel()) {
+    val products = viewModel.products.collectAsState()  // Bug 1
+
+    var selectedCategory by mutableStateOf(&quot;All&quot;)  // Bug 2
+
+    LazyColumn {
+        items(products.value) { product -&gt;   // Bug 3 — missing key
+            ProductCard(
+                product = product,
+                isSelected = product.id == viewModel.selectedId,  // Bug 4
+                onClick = { viewModel.selectProduct(product.id) }
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductCard(product: Product, isSelected: Boolean, onClick: () -&gt; Unit) {
+    val backgroundColor = if (isSelected) Color.Yellow else Color.White
+    Box(
+        modifier = Modifier
+            .background(backgroundColor)
+            .padding(16.dp)  // Bug 5
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
+    ) {
+        Text(product.name)
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about lifecycle-aware collection, state without remember, missing stable keys, reading ViewModel state in composables, and Modifier order.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: collectAsState() is not lifecycle-aware — it keeps collecting even when the app is in background, wasting CPU. Fix: collectAsStateWithLifecycle() from lifecycle-compose library. Bug 2: mutableStateOf() without remember — selectedCategory is reset to &#39;All&#39; on every recomposition. Fix: var selectedCategory by remember { mutableStateOf(&#39;All&#39;) }. Bug 3: items(products.value) has no key parameter — Compose cannot track item identity across list updates. Adding/removing items causes incorrect animations and may reuse composable state for the wrong items. Fix: items(products.value, key = { it.id }). Bug 4: Reading viewModel.selectedId directly inside a composable — if selectedId is not a State/StateFlow, this won&#39;t trigger recomposition when it changes. If it IS a StateFlow, it must be collected via collectAsStateWithLifecycle(). Fix: val selectedId by viewModel.selectedId.collectAsStateWithLifecycle() and pass selectedId to the composable. Bug 5: Modifier order is wrong — background is applied before padding, so the padding area has NO background. Then clickable is after padding but before fillMaxWidth. Correct order: Modifier.fillMaxWidth().clickable(onClick).background(backgroundColor).padding(16.dp) — fill width first, then handle clicks on full area, then background covers click area, then content padding.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Jetpack Compose is like a magic coloring book. Instead of you coloring each picture manually (Android Views with setText, setImageBitmap, etc.), you write a recipe: &#39;if the number is 5, draw 5 stars.&#39; Whenever the number changes, the book recolors itself automatically — but ONLY the pages with stars, not every page. remember is like writing your score in pencil on the page so it survives when you flip back. State hoisting is like the teacher keeping the master score sheet — individual students (composables) just read it and report changes back.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Jetpack Compose&#39;s recomposition can happen multiple times per second during animations. In the early betas, even a simple misconfiguration (like a lambda capturing unstable types) could trigger full-tree recomposition 60 times per second, completely negating any performance benefit. The Compose compiler plugin was updated to add @Composable function skipping analysis — it marks composables as skippable if all parameters are stable, and the runtime skips them if none changed.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a TransactionFilterSheet in Compose: (1) A bottom sheet with date range picker (start/end date), min/max amount sliders, and a category multi-select. (2) Use state hoisting — FilterSheetContent is stateless (receives current FilterState and onFilterChange callback). (3) The parent FilterScreen holds a FilterState in a ViewModel StateFlow. (4) Use LazyColumn for the category list with key=category.id. (5) Add a @Preview showing the sheet in different filter states. (6) Write a composable UI test verifying that selecting a category calls onFilterChange with the correct FilterState.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/jetpack/compose" target="_blank" rel="noopener noreferrer">Jetpack Compose — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/jetpack/compose/state" target="_blank" rel="noopener noreferrer">State and Jetpack Compose</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/jetpack/compose/performance/stability" target="_blank" rel="noopener noreferrer">Compose performance — stability and recomposition</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/jetpack/compose/mental-model" target="_blank" rel="noopener noreferrer">Thinking in Compose</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/jetpack/compose/libraries" target="_blank" rel="noopener noreferrer">Compose and other libraries — ViewModel, LiveData, Flow</a> <span class="res-source">(Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./17-xml-view-system-layouts-constraintlayout-recyclerview.html" rel="prev">← XML View System: Layouts…</a>
+  <a class="nav-next" href="./19-compose-state-remember-remembersaveable-state-hoisting.html" rel="next">Compose State: remember… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

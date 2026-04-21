@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designing a Small Microprocessor-Based System… | Teamz Lab</title>
+<meta name="description" content="This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/46-where-8051-and-arm-fit-in-the-big-picture.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Designing a Small Microprocessor-Based System">
+<meta property="og:description" content="This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Designing a Small Microprocessor-Based System">
+<meta name="twitter:description" content="This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Designing a Small Microprocessor-Based System",
+  "description": "This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 47
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Designing a Small Microprocessor-Based System",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Designing a Small Microprocessor-Based System</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 47 of 48</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Designing a Small Microprocessor-Based System</h1>
+<p class="lesson-subtitle">Putting All the Pieces Together</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Designing a microprocessor system is like planning a small town. The CPU is the town hall (makes all decisions). RAM is the scratchpad office (temporary workspace). ROM is the library (permanent reference). The 8255 is the post office (handles mail in and out). The 8259 is the town dispatcher (routes emergency calls by priority). Address decoding is the street numbering system — without it, mail goes to the wrong address and the whole town falls apart. A good town plan (memory map) prevents chaos.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements, selecting components (8086 + ROM + RAM + 8255 + 8254 + 8259 + 8251), designing the memory and I/O maps, implementing address decoding with 74LS138 decoders, wiring chip-select logic, writing initialization firmware, and validating the design. The result is a functional embedded system that can read input, process data, display output, handle interrupts, and communicate serially.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>This is exactly how embedded systems engineers design products today — just with modern components. A car&#39;s engine control unit follows the same design process: select an MCU (now ARM), add sensors (via ADC/I/O), add actuators (via GPIO/PWM), design the memory map, write initialization firmware, implement ISRs for real-time events, and validate everything. The tools and chips have evolved, but the methodology is identical to what we practice here with the 8086.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>System Design Methodology</strong> — Designing a microprocessor system follows a structured process: (1) Define requirements — what must the system do? (2) Select components — CPU, memory sizes, peripherals. (3) Design the memory map — assign address ranges. (4) Design address decoding — generate chip selects. (5) Draw the schematic — connect buses, control signals. (6) Write initialization code. (7) Test and validate. Skipping any step leads to debugging nightmares.</li>
+      <li><strong>System Block Diagram</strong> — The block diagram shows all components and how they connect through the bus system. The 8086 CPU connects to all devices via the address bus (A0-A19), data bus (D0-D15), and control bus (RD, WR, M/IO, INTA). Each device has a chip select (CS) driven by the address decoder. ROM connects to the data bus read-only. RAM connects read/write. I/O chips connect through the lower data bus (D0-D7) with I/O port addresses.</li>
+      <li><strong>Memory Map Design</strong> — The memory map divides the 1MB address space into regions for each device. Key rules: ROM must include FFFF0h (reset vector). RAM should start at 00000h (interrupt vector table lives at 00000h-003FFh). Leave space between memory and I/O devices. Avoid overlaps. For the I/O space (64KB), assign port addresses to each peripheral with enough consecutive addresses for their registers.</li>
+      <li><strong>Address Decoding Design</strong> — Use a 74LS138 decoder to generate chip selects from upper address lines. For memory: decode A19-A15 to select ROM and RAM blocks. For I/O: use M/IO combined with address bits to select peripherals. Each chip select equation must be derived from the assigned address range, ensuring no overlaps. Document every decode equation — this is critical for debugging.</li>
+      <li><strong>Chip Selection and Signal Connections</strong> — Each peripheral chip needs correct signal wiring. ROM: address lines A0-A14 for 32KB, D0-D7/D8-D15 for data, RD to OE, CS from decoder. RAM: same address lines, data lines, RD to OE, WR to WE, CS from decoder. 8255: A0-A1 for register select, D0-D7 for data, RD, WR, CS from I/O decoder. 8259: A0 for register select, D0-D7, RD, WR, CS, INT to CPU INTR. Clock and reset signals to all chips.</li>
+      <li><strong>Initialization Code — Booting the System</strong> — After reset, the 8086 starts executing from FFFF0h (in ROM). The initialization code must: set up segment registers, set up the stack pointer, initialize the IVT (interrupt vector table), configure the 8259 PIC, configure the 8254 timer, configure the 8255 I/O, configure the 8251 serial port, enable interrupts (STI), and jump to the main application. This boot code is the firmware of the system.</li>
+      <li><strong>Design Validation Checklist</strong> — Before building, verify: (1) Reset vector FFFF0h is inside ROM. (2) IVT area 00000-003FF is inside RAM. (3) No address overlaps between chips. (4) All chip selects derived correctly — check truth table. (5) Even/odd bank wiring correct for 16-bit bus. (6) Control signals (RD/WR/M-IO) correctly routed. (7) Clock and reset connected to all chips. (8) Pull-up resistors on open-drain signals. (9) Decoupling capacitors near each chip&#39;s power pins.</li>
+      <li><strong>Complete System Integration Example</strong> — The final system: 8086 CPU, 32KB ROM (27256), 32KB RAM (62256), 8255 for keyboard/display, 8254 for timing, 8259 for interrupts, 8251 for serial communication. The boot code in ROM initializes everything, sets up ISRs, and enters a main loop that scans the keyboard, updates the display, and handles serial commands. This is a complete, functional embedded system built entirely from the chips studied in this course.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; =============================================
+; Complete 8086 System Design
+; =============================================
+;
+; Components:
+;   8086 CPU @ 5MHz
+;   27256 ROM (32KB) at F8000-FFFFF
+;   62256 RAM (32KB) at 00000-07FFF
+;   8255 PPI at I/O 80-83h
+;   8254 Timer at I/O 40-43h
+;   8259 PIC at I/O 20-21h
+;   8251 USART at I/O 60-61h
+;
+; === Address Decoding Equations ===
+;
+; CS_ROM = M/IO AND A19 AND A18 AND A17
+;          AND A16 AND A15
+; CS_RAM = M/IO AND NOT(A19) AND NOT(A18)
+;          AND NOT(A17) AND NOT(A15)
+;
+; CS_8259 = NOT(M/IO) AND NOT(A7) AND
+;           A6 AND NOT(A5)
+; CS_8254 = NOT(M/IO) AND NOT(A7) AND
+;           NOT(A6) AND A5   — wait, that&#39;s 20h
+;
+; Correction using 74LS138:
+;   I/O decoder: C=A7, B=A6, A=A5
+;   Y1 (001) → 20-3Fh → CS_8259
+;   Y2 (010) → 40-5Fh → CS_8254
+;   Y3 (011) → 60-7Fh → CS_8251
+;   Y4 (100) → 80-9Fh → CS_8255
+;
+; === Initialization Sequence ===
+;
+  ORG 0FFF0h             ; ROM reset vector
+  JMP FAR PTR BOOT       ; first instruction
+;
+  ORG 0F800h             ; Boot code in ROM
+BOOT:
+  CLI                    ; disable interrupts
+  MOV AX, 0
+  MOV DS, AX
+  MOV ES, AX
+  MOV AX, 07FFh
+  MOV SS, AX
+  MOV SP, 0FFEh
+;
+  ; --- Init 8259 PIC ---
+  MOV AL, 13h
+  OUT 20h, AL            ; ICW1
+  MOV AL, 08h
+  OUT 21h, AL            ; ICW2
+  MOV AL, 01h
+  OUT 21h, AL            ; ICW4
+  MOV AL, 0FEh
+  OUT 21h, AL            ; unmask IR0 (timer)
+;
+  ; --- Init 8254 Timer (1ms tick) ---
+  MOV AL, 36h
+  OUT 43h, AL            ; C0, mode 3
+  MOV AL, 0A9h
+  OUT 40h, AL            ; LSB of 1193
+  MOV AL, 04h
+  OUT 40h, AL            ; MSB of 1193
+;
+  ; --- Init 8255 (PA=out, PB=in) ---
+  MOV AL, 82h
+  OUT 83h, AL
+;
+  ; --- Init 8251 (9600, 8N1, 16x) ---
+  MOV AL, 40h
+  OUT 61h, AL            ; reset
+  MOV AL, 4Eh
+  OUT 61h, AL            ; mode word
+  MOV AL, 37h
+  OUT 61h, AL            ; command word
+;
+  ; --- Set IVT for timer (INT 08h) ---
+  MOV WORD PTR DS:[0020h], OFFSET TIMER_ISR
+  MOV WORD PTR DS:[0022h], CS
+;
+  STI                    ; enable interrupts
+  JMP MAIN               ; start application</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Title comment for complete system design</li>
+      <li><span class="walk-num">2.</span> Separator line</li>
+      <li><span class="walk-num">3.</span> Blank line</li>
+      <li><span class="walk-num">4.</span> Component list with specifications</li>
+      <li><span class="walk-num">5.</span> CPU: 8086 running at 5 MHz</li>
+      <li><span class="walk-num">6.</span> ROM: 32KB mapped at top of memory for boot code</li>
+      <li><span class="walk-num">7.</span> RAM: 32KB mapped at bottom for data, stack, and IVT</li>
+      <li><span class="walk-num">8.</span> Peripheral chips with their I/O port assignments</li>
+      <li><span class="walk-num">9.</span> Blank line</li>
+      <li><span class="walk-num">10.</span> Address decoding equations section</li>
+      <li><span class="walk-num">11.</span> Blank line</li>
+      <li><span class="walk-num">12.</span> CS_ROM: active when M/IO=1 and all upper address bits = 1 (F8000-FFFFF)</li>
+      <li><span class="walk-num">13.</span> CS_RAM: active when M/IO=1 and upper bits = 0 (00000-07FFF)</li>
+      <li><span class="walk-num">14.</span> Blank line</li>
+      <li><span class="walk-num">15.</span> I/O decoder equations using 74LS138</li>
+      <li><span class="walk-num">16.</span> Comment on correction: using organized decoder outputs</li>
+      <li><span class="walk-num">17.</span> Y1 output selects 8259 PIC at ports 20-3Fh</li>
+      <li><span class="walk-num">18.</span> Y2 selects 8254 timer at ports 40-5Fh</li>
+      <li><span class="walk-num">19.</span> Y3 selects 8251 USART at ports 60-7Fh</li>
+      <li><span class="walk-num">20.</span> Y4 selects 8255 PPI at ports 80-9Fh</li>
+      <li><span class="walk-num">21.</span> Blank line</li>
+      <li><span class="walk-num">22.</span> Initialization sequence begins</li>
+      <li><span class="walk-num">23.</span> Blank line</li>
+      <li><span class="walk-num">24.</span> ORG directive places reset vector jump at ROM address FFF0h</li>
+      <li><span class="walk-num">25.</span> JMP instruction — first thing executed after power-on reset</li>
+      <li><span class="walk-num">26.</span> Blank line</li>
+      <li><span class="walk-num">27.</span> ORG places boot code at beginning of ROM space</li>
+      <li><span class="walk-num">28.</span> BOOT label — system initialization starts here</li>
+      <li><span class="walk-num">29.</span> CLI disables interrupts to prevent crashes during setup</li>
+      <li><span class="walk-num">30.</span> Clear AX for segment register initialization</li>
+      <li><span class="walk-num">31.</span> Set DS and ES to segment 0 (data at physical 00000h)</li>
+      <li><span class="walk-num">32.</span> Set ES</li>
+      <li><span class="walk-num">33.</span> Set stack segment to 07FFh</li>
+      <li><span class="walk-num">34.</span> Point stack to near top of RAM</li>
+      <li><span class="walk-num">35.</span> Set SP — stack is ready</li>
+      <li><span class="walk-num">36.</span> Blank line</li>
+      <li><span class="walk-num">37.</span> Initialize 8259 PIC — sets interrupt handling policies</li>
+      <li><span class="walk-num">38.</span> ICW1: edge triggered, single PIC, ICW4 needed</li>
+      <li><span class="walk-num">39.</span> ICW2: IR0 maps to INT 08h vector</li>
+      <li><span class="walk-num">40.</span> ICW4: 8086 mode for correct vector generation</li>
+      <li><span class="walk-num">41.</span> OCW1: unmask only IR0 (timer) — all others masked</li>
+      <li><span class="walk-num">42.</span> Blank line</li>
+      <li><span class="walk-num">43.</span> Initialize 8254 timer for 1ms periodic interrupt</li>
+      <li><span class="walk-num">44.</span> Control word: Counter 0, Mode 3 square wave, LSB+MSB</li>
+      <li><span class="walk-num">45.</span> Load count value 1193 (for ~1 KHz with 1.193 MHz clock)</li>
+      <li><span class="walk-num">46.</span> LSB of count</li>
+      <li><span class="walk-num">47.</span> MSB of count — timer starts generating interrupts</li>
+      <li><span class="walk-num">48.</span> Blank line</li>
+      <li><span class="walk-num">49.</span> Initialize 8255: Port A output, Port B input</li>
+      <li><span class="walk-num">50.</span> Control word 82h configures ports</li>
+      <li><span class="walk-num">51.</span> Blank line</li>
+      <li><span class="walk-num">52.</span> Initialize 8251 USART for 9600 baud 8N1</li>
+      <li><span class="walk-num">53.</span> Reset command clears any previous state</li>
+      <li><span class="walk-num">54.</span> Mode word: 8 data bits, no parity, 1 stop, 16x clock</li>
+      <li><span class="walk-num">55.</span> Command word: enable transmitter, receiver, DTR, RTS</li>
+      <li><span class="walk-num">56.</span> Blank line</li>
+      <li><span class="walk-num">57.</span> Set up IVT entry for timer interrupt (INT 08h)</li>
+      <li><span class="walk-num">58.</span> Store ISR offset at IVT address 0020h (vector 08h * 4)</li>
+      <li><span class="walk-num">59.</span> Store ISR segment at IVT address 0022h</li>
+      <li><span class="walk-num">60.</span> Blank line</li>
+      <li><span class="walk-num">61.</span> STI enables interrupts — system is fully initialized</li>
+      <li><span class="walk-num">62.</span> Jump to main application loop</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; System init — set up stack and start
+;
+  MOV AX, 0800h
+  MOV SS, AX
+  MOV SP, 0000h         ; stack pointer
+;
+  ; Init 8259
+  MOV AL, 13h
+  OUT 20h, AL           ; ICW1
+  MOV AL, 20h
+  OUT 21h, AL           ; ICW2: base vector 20h
+  MOV AL, 01h
+  OUT 21h, AL           ; ICW4
+;
+  STI
+  JMP MAIN</code></pre><details><summary>Need a hint?</summary><div class="hint">When SP=0000h and you PUSH, what happens? Also check if interrupts are enabled before the IVT is set up.</div></details><details><summary>Show answer</summary><div class="answer">Two bugs: (1) SP=0000h means the first PUSH will decrement SP to FFFEh and write to SS:FFFEh = 08000h+FFFEh = 17FFEh, which may be outside RAM (RAM ends at 07FFFh). SP should start at the TOP of the stack area, like FFFFh or FFFEh. (2) STI enables interrupts, but no ISR addresses have been written to the IVT. When the timer fires INT 20h, the CPU will jump to whatever garbage address is at IVT[20h], causing a crash. Fix: set up IVT entries BEFORE STI.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine building a toy robot. The 8086 CPU is the robot&#39;s brain. RAM is a whiteboard where it writes notes. ROM is an instruction booklet it can never change. The 8255 is the robot&#39;s hands (touching buttons and moving things). The 8254 is a clock on the wall (tells the robot when to do things). The 8259 is a doorbell system (tells the brain when something needs attention). The address decoder is the name tag on each part so the brain knows which part it is talking to. You build the robot by connecting all these parts to the same set of wires (the bus) and giving each part its own address!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The original IBM PC motherboard had exactly this kind of design — an 8088 CPU connected to ROM, RAM, an 8255 (keyboard interface), an 8253 (timer), an 8259 (interrupts), and an 8250 (serial port, similar to 8251). The entire design team was just 12 engineers, and they built the whole system in about one year. Their design decisions — like the memory map, IRQ assignments, and I/O port addresses — became industry standards that persisted for over 30 years.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design a complete 8086-based temperature monitoring system. Requirements: (1) Read temperature sensor via 8255 Port B, (2) Display temperature on 4-digit multiplexed 7-segment via 8255 Port A, (3) Sound an alarm via 8254 speaker when temperature exceeds a threshold, (4) Log data via 8251 serial port at 9600 baud, (5) Use 8259 for timer-driven display refresh. Provide: complete memory map, I/O map, address decoding equations, initialization code, and main loop pseudocode.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.youtube.com/watch?v=rUQbs5YYjBw" target="_blank" rel="noopener noreferrer">8086 System Design Example</a> <span class="res-source">(Education 4u)</span></li>
+      <li><a href="https://www.geeksforgeeks.org/interfacing-of-8086-with-8255/" target="_blank" rel="noopener noreferrer">Microprocessor System Design</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=N7uIa_aJiYw" target="_blank" rel="noopener noreferrer">Complete 8086 Minimum Mode System</a> <span class="res-source">(Neso Academy)</span></li>
+      <li><a href="https://datasheetspdf.com/pdf/1450322/Intel/8086/1" target="_blank" rel="noopener noreferrer">8086 Hardware Reference Manual</a> <span class="res-source">(Intel)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./46-where-8051-and-arm-fit-in-the-big-picture.html" rel="prev">← Where 8051 and ARM Fit in the Big…</a>
+  <a class="nav-next" href="./48-capstone-trace-explain-and-present-a-full-interfaced-system.html" rel="next">Capstone: Trace, Explain, and Present… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

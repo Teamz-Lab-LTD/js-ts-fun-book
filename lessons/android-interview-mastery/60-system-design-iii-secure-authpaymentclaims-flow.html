@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Design III: Secure Auth/Payment/Claims Flow… | Teamz Lab</title>
+<meta name="description" content="Fintech claims and payment app system design is the highest-stakes Android architecture question. It combines JWT authentication with biometric binding…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="System Design III: Secure Auth/Payment/Claims Flow">
+<meta property="og:description" content="Fintech claims and payment app system design is the highest-stakes Android architecture question. It combines JWT authentication with biometric binding…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="System Design III: Secure Auth/Payment/Claims Flow">
+<meta name="twitter:description" content="Fintech claims and payment app system design is the highest-stakes Android architecture question. It combines JWT authentication with biometric binding…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "System Design III: Secure Auth/Payment/Claims Flow",
+  "description": "Fintech claims and payment app system design is the highest-stakes Android architecture question. It combines JWT authentication with biometric binding…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 60
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "System Design III: Secure Auth/Payment/Claims Flow",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">System Design III: Secure Auth/Payment/Claims Flow</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 60 of 83</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">System Design III: Secure Auth/Payment/Claims Flow</h1>
+<p class="lesson-subtitle">Architecting a fintech claims and payment app — security, encrypted storage, and audit trails</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=60">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Designing a fintech claims app is like designing a bank vault with a transparent audit camera. Every door that opens must be logged. Every action must require two keys (biometric + server token). Every error must be handled gracefully — a crashed payment screen is not just a bug, it is a compliance incident. The vault must stay locked even if one guard falls asleep.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Fintech claims and payment app system design is the highest-stakes Android architecture question. It combines JWT authentication with biometric binding, encrypted local storage, OkHttp auth interceptors with race-condition-safe token refresh, a document upload pipeline using presigned URLs, claims status machine tracking, compliant audit logging, and security hardening (root detection, certificate pinning). Every architectural decision has security and compliance implications.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Payback Bangladesh manages loyalty points and payment claims for retail customers — requiring secure token management, offline claim drafting, and status tracking. TapMeHome handles transport expense claims for corporate clients — requiring document upload (receipts), multi-step approval workflows, and financial audit trails. Both apps operate in Bangladesh&#39;s regulated fintech space under Bangladesh Bank guidelines, which mandate specific security and logging requirements.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Requirements gathering — fintech specifics</strong> — Reference apps: Payback (loyalty points and payment), TapMeHome (transport payment and expense claims). Requirements: 50K users, JWT + biometric auth, encrypted local storage for sensitive data, document upload for claims (photos, PDFs), claim status tracking pipeline (SUBMITTED -&gt; UNDER_REVIEW -&gt; APPROVED/REJECTED -&gt; PAID), real-time status updates via FCM, compliance requirement: all auth events logged with timestamp and device fingerprint, session timeout after 5 minutes idle.</li>
+      <li><strong>Security architecture layer 1 — JWT + refresh token</strong> — Access token (JWT, 15-minute TTL) stored in memory only — never in SharedPreferences or file. Refresh token (30-day TTL) stored in EncryptedSharedPreferences (Jetpack Security). On app launch: check refresh token validity, exchange for new access token silently. On 401 response: trigger token refresh flow. On refresh token expiry: force logout. This 2-token pattern balances security and UX — short-lived access tokens limit exposure window.</li>
+      <li><strong>Security architecture layer 2 — biometric auth</strong> — BiometricPrompt with CryptoObject binds biometrics to cryptographic operations. Pattern: generate a secret key in AndroidKeyStore tied to biometric authentication (setUserAuthenticationRequired(true)). On successful biometric prompt, the key becomes available. Use it to decrypt the locally stored refresh token or to sign a server challenge. The key never leaves the secure hardware — even a rooted device cannot extract it.</li>
+      <li><strong>EncryptedSharedPreferences and EncryptedFile</strong> — Jetpack Security&#39;s EncryptedSharedPreferences wraps SharedPreferences with AES-256-GCM encryption using a master key stored in AndroidKeyStore. Use for: refresh token, user ID, cached sensitive profile fields. For sensitive files (claim documents before upload): use EncryptedFile with AES-256-GCM. Never store plaintext tokens, PII, or financial data in regular SharedPreferences, Room without encryption, or external storage.</li>
+      <li><strong>Auth interceptor — the OkHttp layer</strong> — Add an OkHttp Authenticator (not Interceptor) for 401 handling: on 401 response, attempt token refresh, retry the original request with new token. Add an Interceptor that attaches Authorization: Bearer {accessToken} to every request. If refresh also returns 401, clear all tokens and navigate to login. Crucially: use synchronized{} or a Mutex around the refresh call to prevent multiple parallel requests all triggering refresh simultaneously (refresh token race condition).</li>
+      <li><strong>Claims status tracking pipeline</strong> — Claim entity: ClaimId, userId, type, amount, status(DRAFT/SUBMITTED/UNDER_REVIEW/APPROVED/REJECTED/PAID), submittedAt, reviewedAt, paidAt, rejectionReason, documents[]. Status is a state machine — define valid transitions server-side and enforce them. Client tracks status via polling or FCM push. FCM notification on status change: &#39;Your claim #1234 has been approved — payment processing.&#39; Tapping notification deep-links to the specific claim detail screen.</li>
+      <li><strong>Document upload architecture</strong> — Flow: 1) User selects document (photo via CameraX or PDF via Storage Access Framework). 2) Compress if image (Bitmap.compress to JPEG 80%). 3) Encrypt locally with EncryptedFile before storing in cache. 4) Upload via presigned S3 URL (server generates URL, client uploads directly to S3, avoiding the app server as a data proxy). 5) Server confirms receipt via webhook. 6) Client polls claim status or listens for FCM confirmation. 7) Delete local encrypted cache after confirmed upload.</li>
+      <li><strong>Error handling cascades — the fintech standard</strong> — Every network call must handle: NetworkException (no connectivity — show retry with offline indicator), HttpException 4xx (client error — parse error body, show specific message: &#39;Claim amount exceeds policy limit&#39;), HttpException 5xx (server error — show generic retry, log to analytics), TimeoutException (show slow connection message with retry). Payment-specific: if payment initiation succeeds but confirmation times out, do NOT show error — show &#39;Processing&#39; state and poll for status. Double-payment is worse than a pending state.</li>
+      <li><strong>Session timeout and idle detection</strong> — 5-minute idle timeout: record last user interaction timestamp. Use a LifecycleObserver that triggers a countdown when app goes to background. On foreground return after timeout: show biometric prompt before allowing access. Implementation: SharedFlow of user interaction events, collect in a ViewModel with a debounce-based timer. On timeout, emit SessionExpired event, ViewModel observes and navigates to lock screen. Never use Handler.postDelayed for this — it does not survive process death.</li>
+      <li><strong>Compliance: audit logging</strong> — Every auth event must be logged: login success/failure (with device fingerprint: model, OS version, app version), biometric success/failure, token refresh, logout, session timeout. Log locally to an append-only Room table (AuditLog: id, eventType, timestamp, deviceFingerprint, userId, metadata). Sync audit logs to server with high priority — even before syncing claims data. Logs must be tamper-evident: include a hash of the previous log entry (linked list pattern) so the server can detect if logs were deleted or modified.</li>
+      <li><strong>Root detection and certificate pinning</strong> — Root detection: use Google Play Integrity API (replacement for SafetyNet Attestation) to verify device integrity. On failed integrity check, show warning and optionally block sensitive operations. Certificate pinning: configure OkHttp CertificatePinner with your API server&#39;s certificate hash. Prevents man-in-the-middle attacks on compromised networks (common on public Wi-Fi). Include backup pins for certificate rotation. For critical financial transactions, require additional step-up auth (biometric re-verification).</li>
+      <li><strong>Interview narration strategy for fintech design</strong> — Structure: 1) Security architecture (auth flow + token storage) — 4 min. 2) Encrypted storage for sensitive data — 2 min. 3) Claims state machine with status tracking — 3 min. 4) Document upload with S3 presigned URLs — 2 min. 5) Error handling philosophy (processing &gt; error for payments) — 2 min. 6) Compliance: audit logging, root detection, certificate pinning — 3 min. Key signal to interviewers: mention what you would NOT do (store JWT in SharedPreferences, show payment error on timeout, trust device root without Play Integrity) — negative knowledge is a strong senior indicator.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// AndroidKeyStore + BiometricPrompt key binding
+class BiometricKeyManager(private val context: Context) {
+    private val keystore = KeyStore.getInstance(&quot;AndroidKeyStore&quot;).apply { load(null) }
+    private val keyAlias = &quot;biometric_auth_key&quot;
+
+    fun generateKey() {
+        if (keystore.containsAlias(keyAlias)) return
+
+        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, &quot;AndroidKeyStore&quot;)
+        keyGenerator.init(
+            KeyGenParameterSpec.Builder(keyAlias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .setUserAuthenticationRequired(true)
+                .setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC_STRONG)
+                .build()
+        )
+        keyGenerator.generateKey()
+    }
+
+    fun getCipher(): Cipher {
+        val key = keystore.getKey(keyAlias, null) as SecretKey
+        return Cipher.getInstance(&quot;AES/GCM/NoPadding&quot;).apply {
+            init(Cipher.DECRYPT_MODE, key)
+        }
+    }
+}
+
+// BiometricPrompt with CryptoObject
+class AuthManager(private val activity: FragmentActivity) {
+    private val keyManager = BiometricKeyManager(activity)
+
+    fun authenticateWithBiometric(onSuccess: (Cipher) -&gt; Unit, onError: (String) -&gt; Unit) {
+        keyManager.generateKey()
+        val cipher = keyManager.getCipher()
+
+        val prompt = BiometricPrompt(activity, ContextCompat.getMainExecutor(activity),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    result.cryptoObject?.cipher?.let(onSuccess)
+                }
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    onError(errString.toString())
+                }
+                override fun onAuthenticationFailed() {
+                    onError(&quot;Biometric not recognized&quot;)
+                }
+            }
+        )
+        val info = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(&quot;Verify your identity&quot;)
+            .setSubtitle(&quot;Use biometrics to access your account&quot;)
+            .setNegativeButtonText(&quot;Use PIN&quot;)
+            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            .build()
+
+        prompt.authenticate(info, BiometricPrompt.CryptoObject(cipher))
+    }
+}
+
+// OkHttp Authenticator — thread-safe token refresh
+class TokenAuthenticator(
+    private val tokenRepo: TokenRepository
+) : Authenticator {
+    private val refreshMutex = Mutex()
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        if (response.request.header(&quot;Authorization&quot;) == null) return null
+
+        val newToken = runBlocking {
+            refreshMutex.withLock {
+                val currentToken = tokenRepo.getAccessToken()
+                if (currentToken != null &amp;&amp; response.request.header(&quot;Authorization&quot;) == &quot;Bearer $currentToken&quot;) {
+                    tokenRepo.refreshToken()
+                } else {
+                    currentToken
+                }
+            }
+        }
+        return newToken?.let {
+            response.request.newBuilder()
+                .header(&quot;Authorization&quot;, &quot;Bearer $it&quot;)
+                .build()
+        }
+    }
+}
+
+// EncryptedSharedPreferences for token storage
+class TokenRepository(context: Context) {
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private val prefs = EncryptedSharedPreferences.create(
+        context, &quot;secure_prefs&quot;, masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    var refreshToken: String?
+        get() = prefs.getString(&quot;refresh_token&quot;, null)
+        set(value) = prefs.edit().putString(&quot;refresh_token&quot;, value).apply()
+
+    // Access token stored in memory only
+    private var _accessToken: String? = null
+    fun getAccessToken() = _accessToken
+    fun setAccessToken(token: String) { _accessToken = token }
+    fun clearAccessToken() { _accessToken = null }
+
+    suspend fun refreshToken(): String? {
+        val refresh = refreshToken ?: run {
+            clearAll()
+            return null
+        }
+        return try {
+            val response = AuthApi.create().refresh(RefreshRequest(refresh))
+            setAccessToken(response.accessToken)
+            if (response.refreshToken != null) refreshToken = response.refreshToken
+            response.accessToken
+        } catch (e: HttpException) {
+            if (e.code() == 401) clearAll()
+            null
+        }
+    }
+
+    fun clearAll() {
+        clearAccessToken()
+        refreshToken = null
+    }
+}
+
+// Claims state machine
+enum class ClaimStatus {
+    DRAFT, SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED, PAID;
+
+    fun validTransitions(): Set&lt;ClaimStatus&gt; = when (this) {
+        DRAFT -&gt; setOf(SUBMITTED)
+        SUBMITTED -&gt; setOf(UNDER_REVIEW)
+        UNDER_REVIEW -&gt; setOf(APPROVED, REJECTED)
+        APPROVED -&gt; setOf(PAID)
+        REJECTED -&gt; setOf(DRAFT)
+        PAID -&gt; emptySet()
+    }
+
+    fun canTransitionTo(next: ClaimStatus) = validTransitions().contains(next)
+}
+
+// Document upload via presigned S3 URL
+class DocumentUploader(private val api: ClaimsApi) {
+
+    suspend fun uploadDocument(file: File, claimId: String): String {
+        // 1. Get presigned URL from server
+        val presigned = api.getPresignedUrl(
+            PresignedUrlRequest(claimId = claimId, fileName = file.name, contentType = &quot;image/jpeg&quot;)
+        )
+
+        // 2. Upload directly to S3
+        val requestBody = file.asRequestBody(&quot;image/jpeg&quot;.toMediaType())
+        val response = OkHttpClient().newCall(
+            Request.Builder()
+                .url(presigned.uploadUrl)
+                .put(requestBody)
+                .build()
+        ).execute()
+
+        if (!response.isSuccessful) throw IOException(&quot;S3 upload failed: ${response.code}&quot;)
+
+        // 3. Return the public CDN URL
+        return presigned.publicUrl
+    }
+}
+
+// Audit log with tamper-evident chaining
+@Entity(tableName = &quot;audit_logs&quot;)
+data class AuditLog(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val eventType: String,
+    val userId: String,
+    val timestamp: Long = System.currentTimeMillis(),
+    val deviceFingerprint: String,
+    val metadata: String,
+    val previousHash: String,
+    val entryHash: String
+)
+
+class AuditLogger(private val db: AppDatabase, private val context: Context) {
+
+    suspend fun log(eventType: String, userId: String, metadata: Map&lt;String, String&gt; = emptyMap()) {
+        val lastLog = db.auditLogDao().getLastEntry()
+        val fingerprint = &quot;${Build.MODEL}|${Build.VERSION.SDK_INT}|${BuildConfig.VERSION_NAME}&quot;
+        val metaJson = metadata.entries.joinToString(&quot;,&quot;) { &quot;${it.key}=${it.value}&quot; }
+        val previousHash = lastLog?.entryHash ?: &quot;GENESIS&quot;
+        val content = &quot;$eventType|$userId|${System.currentTimeMillis()}|$fingerprint|$metaJson|$previousHash&quot;
+        val entryHash = sha256(content)
+
+        db.auditLogDao().insert(
+            AuditLog(
+                eventType = eventType,
+                userId = userId,
+                deviceFingerprint = fingerprint,
+                metadata = metaJson,
+                previousHash = previousHash,
+                entryHash = entryHash
+            )
+        )
+    }
+
+    private fun sha256(input: String): String {
+        val digest = MessageDigest.getInstance(&quot;SHA-256&quot;)
+        return digest.digest(input.toByteArray()).joinToString(&quot;&quot;) { &quot;%02x&quot;.format(it) }
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> KeyGenParameterSpec with setUserAuthenticationRequired(true) and setUserAuthenticationParameters(0, AUTH_BIOMETRIC_STRONG) creates a key that is gated behind biometric — 0 seconds means the key becomes available only immediately after successful biometric, with no time window.</li>
+      <li><span class="walk-num">2.</span> BiometricPrompt.CryptoObject(cipher) binds the biometric authentication event to the cryptographic operation — the system only unlocks the key if biometric succeeds, making it impossible to use the key programmatically without user presence.</li>
+      <li><span class="walk-num">3.</span> TokenAuthenticator extends Authenticator (not Interceptor) — Authenticator is called only on 401 responses, while Interceptor is called on every request. Using Interceptor for auth would retry non-auth failures incorrectly.</li>
+      <li><span class="walk-num">4.</span> refreshMutex.withLock{} ensures only one coroutine performs token refresh at a time — without this, 5 parallel requests all getting 401 would trigger 5 simultaneous refresh calls, likely revoking all tokens.</li>
+      <li><span class="walk-num">5.</span> The condition &#39;if currentToken equals the token used in the failed request&#39; prevents a second request from re-triggering refresh when another coroutine already refreshed — the token in memory is now different, so skip refresh.</li>
+      <li><span class="walk-num">6.</span> EncryptedSharedPreferences is backed by AndroidKeyStore for its master key — unlike app-level encryption, the master key cannot be extracted even with root access because it lives in secure hardware.</li>
+      <li><span class="walk-num">7.</span> _accessToken stored as a private in-memory var means it is cleared when the process is killed — this is intentional; access tokens should not survive process death, forcing a refresh (which requires the refresh token in EncryptedSharedPreferences).</li>
+      <li><span class="walk-num">8.</span> ClaimStatus.canTransitionTo() enforces the state machine on the client — prevents UI bugs like double-submitting a claim. The server also enforces transitions, but client-side validation gives immediate feedback.</li>
+      <li><span class="walk-num">9.</span> Presigned URL upload sends the file directly from the device to S3 — the server never touches the file bytes, dramatically reducing server bandwidth costs for a document-heavy claims app.</li>
+      <li><span class="walk-num">10.</span> AuditLog.entryHash = sha256(content including previousHash) creates a cryptographic chain — server can verify integrity by recomputing hashes from GENESIS and checking every entry matches, detecting any modification or deletion.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class TokenInterceptor(private val tokenRepo: TokenRepository) : Interceptor {
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val token = tokenRepo.getAccessToken()
+        val request = chain.request().newBuilder()
+            .header(&quot;Authorization&quot;, &quot;Bearer $token&quot;)
+            .build()
+        val response = chain.proceed(request)
+
+        if (response.code == 401) {
+            val newToken = runBlocking { tokenRepo.refreshToken() }
+            val retryRequest = chain.request().newBuilder()
+                .header(&quot;Authorization&quot;, &quot;Bearer $newToken&quot;)
+                .build()
+            return chain.proceed(retryRequest)
+        }
+        return response
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are three bugs: one causes infinite retry loops, one causes race conditions in multi-threaded scenarios, and one leaks a response body causing memory issues.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: When the 401 retry itself returns 401 (e.g., refresh token also expired), the interceptor calls chain.proceed() again, which fires another 401, which calls proceed again — an infinite retry loop causing a StackOverflowError or request loop. Fix: use OkHttp&#39;s Authenticator interface instead of Interceptor for auth retries — Authenticator has built-in protection against retry loops (it is called at most once per request). Bug 2: There is no Mutex around tokenRepo.refreshToken(). If 10 requests are in-flight and all get 401 simultaneously, 10 coroutines all call refreshToken() concurrently. The first call refreshes and gets a new token; the other 9 use the old refresh token which is now invalid, getting 401 again and potentially locking the user out. Fix: wrap with a Mutex so only one refresh runs at a time, and subsequent waiters use the token obtained by the first refresh. Bug 3: response.code is read but the original response body is not closed before calling chain.proceed() for the retry. In OkHttp, response bodies are resources that must be closed (response.close()) before proceeding, otherwise a resource leak accumulates and eventually causes connection pool exhaustion. Fix: call response.close() before the retry proceed() call.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine a magic safe at the bank. To open it, you need to press your thumb on a scanner AND have a special code card. The scanner checks your thumb, and only then does the safe unlock — even if someone stole the code card, they cannot open the safe without your actual thumb. That is what biometric + AndroidKeyStore does. And every time you open or close the safe, a security camera records it with a unique code that proves the recording was not tampered with.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Bangladesh Bank&#39;s Payment Systems Department mandates that digital payment platforms maintain tamper-evident audit logs for a minimum of 5 years. This is why fintech apps in Bangladesh cannot simply use a regular log file — they need exactly the blockchain-inspired linked hash pattern shown in this lesson, implemented in a local Room database synced to secure server storage.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the complete auth and claims flow for a fintech app with these security requirements: JWT + biometric binding, 5-minute idle timeout, tamper-evident audit logs, document upload with encryption at rest. Specify: (1) The exact token storage strategy — what goes in memory, EncryptedSharedPreferences, and AndroidKeyStore, and why. (2) The OkHttp Authenticator implementation with Mutex-protected refresh and the exact condition that triggers forced logout. (3) The complete claims status machine with all valid transitions and the FCM notification triggered at each transition. (4) The document upload flow from camera capture to confirmed server receipt, including the local encryption step before upload. (5) How you implement idle timeout without breaking it across process death. (6) What security checks you run at app launch (root detection, integrity check, certificate pinning test) and how you handle failures gracefully.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/training/sign-in/biometric-auth" target="_blank" rel="noopener noreferrer">BiometricPrompt with CryptoObject — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/topic/security/data" target="_blank" rel="noopener noreferrer">Jetpack Security — EncryptedSharedPreferences</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://square.github.io/okhttp/features/authentication/" target="_blank" rel="noopener noreferrer">OkHttp Authenticator for token refresh</a> <span class="res-source">(OkHttp Docs)</span></li>
+      <li><a href="https://developer.android.com/google/play/integrity" target="_blank" rel="noopener noreferrer">Google Play Integrity API</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/training/articles/keystore" target="_blank" rel="noopener noreferrer">AndroidKeyStore system — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=60">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./59-system-design-ii-schoolproductivity-app-with-local-db-sync.html" rel="prev">← System Design II: School/Productivity…</a>
+  <a class="nav-next" href="./61-production-debugging-incident-response-crash-triage.html" rel="next">Production Debugging, Incident… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContentProvider, FileProvider &amp; URI Permissions… | Teamz Lab</title>
+<meta name="description" content="ContentProvider is Android&#39;s structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/55-broadcastreceiver-services-binder-bound-services.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="ContentProvider, FileProvider &amp; URI Permissions">
+<meta property="og:description" content="ContentProvider is Android&#39;s structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ContentProvider, FileProvider &amp; URI Permissions">
+<meta name="twitter:description" content="ContentProvider is Android&#39;s structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "ContentProvider, FileProvider & URI Permissions",
+  "description": "ContentProvider is Android's structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 56
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "ContentProvider, FileProvider & URI Permissions",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">ContentProvider, FileProvider &amp; URI Permissions</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 56 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">ContentProvider, FileProvider &amp; URI Permissions</h1>
+<p class="lesson-subtitle">Secure data and file sharing between Android apps</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=56">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A ContentProvider is like a bank teller — you cannot walk into the vault yourself, but you can request data through the official window with the right ID. FileProvider is the bank&#39;s secure courier service — it delivers a sealed package to another party without revealing where the vault is.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>ContentProvider is Android&#39;s structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data source. FileProvider is a ContentProvider subclass that securely exposes files via content:// URIs with time-limited URI permission grants, replacing the dangerous file:// URI pattern. Together they form Android&#39;s inter-app data exchange system.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>ContentProvider purpose</strong> — ContentProvider exposes structured data (usually from a SQLite database) to other apps via a standardized CRUD interface. It uses URI-based addressing: content://authority/table/id. The system routes queries through the provider, enforcing declared permissions. It is still the correct mechanism for sharing data with system components like the Contacts app or MediaStore.</li>
+      <li><strong>ContentResolver — the client side</strong> — Apps never talk to a ContentProvider directly. They use ContentResolver (obtained via context.contentResolver) to issue query(), insert(), update(), delete(), and openInputStream() calls. The system resolves the URI to the correct provider and routes the call, handling cross-process marshalling transparently.</li>
+      <li><strong>CRUD operations through ContentProvider</strong> — query() returns a Cursor. insert() returns the URI of the new row. update() and delete() return the number of affected rows. All four must be thread-safe because multiple apps can call them concurrently. SQLiteDatabase handles this internally, but custom providers must synchronize themselves.</li>
+      <li><strong>Declaring a ContentProvider</strong> — Declare in AndroidManifest with android:authorities (globally unique, typically your package name), android:exported (true if other apps need access), and android:readPermission / android:writePermission. Without exported=true and correct permissions, other apps cannot use it.</li>
+      <li><strong>FileProvider — secure file sharing</strong> — FileProvider is a special ContentProvider subclass that maps file paths to content:// URIs. It prevents exposing file:// URIs (which are blocked by FileUriExposedException since API 24) and instead grants time-limited, permission-scoped access to files. Essential for sharing photos, documents, and APKs with other apps or system intents.</li>
+      <li><strong>Configuring FileProvider</strong> — Declare FileProvider in Manifest with android:authorities, android:exported=&#39;false&#39;, and android:grantUriPermissions=&#39;true&#39;. Provide an XML file-paths resource that maps logical names to real directory paths (e.g., files-path, cache-path, external-path). Never expose the raw file system path — use logical names only.</li>
+      <li><strong>URI permission grants</strong> — FLAG_GRANT_READ_URI_PERMISSION and FLAG_GRANT_WRITE_URI_PERMISSION are added to Intents when sharing a file. These grants are temporary and scoped to the receiving app&#39;s process. They expire when the receiving task stack is cleared. This is the correct way to give another app access to your private files without making them world-readable.</li>
+      <li><strong>getUriForFile() — the key FileProvider call</strong> — FileProvider.getUriForFile(context, authority, file) converts a File object to a content:// URI. You then set this URI on an Intent along with the URI permission flags. Never pass a File path as a String extra — it bypasses the permission system entirely.</li>
+      <li><strong>MediaStore — the system ContentProvider</strong> — MediaStore is Android&#39;s built-in ContentProvider for photos, videos, audio, and documents. In Android 10+ (scoped storage), your app can only access its own files and files the user explicitly picks via MediaStore queries or Storage Access Framework. Know how to query MediaStore for images and how to insert new media correctly.</li>
+      <li><strong>When ContentProvider is still the right choice in 2026</strong> — System integrations (contacts, calendar, media), sharing structured data with third-party apps via a documented API, and search suggestions (SearchRecentSuggestionsProvider). For sharing within your own app across processes, prefer a database + ViewModel + repository pattern. ContentProvider adds complexity that is rarely justified for single-app use.</li>
+      <li><strong>CursorLoader deprecation awareness</strong> — CursorLoader was the recommended way to load ContentProvider data asynchronously in the Loader API era. It is now deprecated. Use viewModelScope + coroutines + contentResolver queries on a background dispatcher instead. Know this transition for legacy codebase discussions.</li>
+      <li><strong>Security pitfalls</strong> — Common bugs: setting exported=true on a ContentProvider without permissions (exposes all data to any app), using file:// URIs directly (causes crash on API 24+), not adding URI permission flags to the Intent (receiving app gets the URI but cannot read it). Mentioning these shows security awareness that impresses senior interviewers.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// FileProvider setup in AndroidManifest.xml (shown as comment)
+// &lt;provider
+//     android:name=&quot;androidx.core.content.FileProvider&quot;
+//     android:authorities=&quot;com.example.app.fileprovider&quot;
+//     android:exported=&quot;false&quot;
+//     android:grantUriPermissions=&quot;true&quot;&gt;
+//     &lt;meta-data
+//         android:name=&quot;android.support.FILE_PROVIDER_PATHS&quot;
+//         android:resource=&quot;@xml/file_paths&quot; /&gt;
+// &lt;/provider&gt;
+
+// res/xml/file_paths.xml (shown as comment)
+// &lt;paths&gt;
+//     &lt;cache-path name=&quot;camera_images&quot; location=&quot;images/&quot; /&gt;
+//     &lt;files-path name=&quot;documents&quot; location=&quot;docs/&quot; /&gt;
+// &lt;/paths&gt;
+
+// Sharing a file using FileProvider
+fun sharePhoto(context: Context, photoFile: File) {
+    val photoUri: Uri = FileProvider.getUriForFile(
+        context,
+        &quot;com.example.app.fileprovider&quot;,
+        photoFile
+    )
+
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = &quot;image/jpeg&quot;
+        putExtra(Intent.EXTRA_STREAM, photoUri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(Intent.createChooser(shareIntent, &quot;Share Photo&quot;))
+}
+
+// Launching camera and saving to FileProvider URI
+fun launchCamera(activity: AppCompatActivity, launcher: ActivityResultLauncher&lt;Uri&gt;): Uri {
+    val imageFile = File(activity.cacheDir, &quot;images/capture_${System.currentTimeMillis()}.jpg&quot;)
+    imageFile.parentFile?.mkdirs()
+
+    val photoUri = FileProvider.getUriForFile(
+        activity,
+        &quot;com.example.app.fileprovider&quot;,
+        imageFile
+    )
+    launcher.launch(photoUri)
+    return photoUri
+}
+
+// Custom ContentProvider skeleton
+class NotesProvider : ContentProvider() {
+
+    private lateinit var dbHelper: NotesDatabaseHelper
+
+    override fun onCreate(): Boolean {
+        dbHelper = NotesDatabaseHelper(context!!)
+        return true
+    }
+
+    override fun query(
+        uri: Uri, projection: Array&lt;String&gt;?, selection: String?,
+        selectionArgs: Array&lt;String&gt;?, sortOrder: String?
+    ): Cursor? {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(&quot;notes&quot;, projection, selection, selectionArgs, null, null, sortOrder)
+        cursor.setNotificationUri(context!!.contentResolver, uri)
+        return cursor
+    }
+
+    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        val db = dbHelper.writableDatabase
+        val id = db.insert(&quot;notes&quot;, null, values)
+        context!!.contentResolver.notifyChange(uri, null)
+        return ContentUris.withAppendedId(CONTENT_URI, id)
+    }
+
+    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array&lt;String&gt;?): Int {
+        val db = dbHelper.writableDatabase
+        val count = db.update(&quot;notes&quot;, values, selection, selectionArgs)
+        context!!.contentResolver.notifyChange(uri, null)
+        return count
+    }
+
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array&lt;String&gt;?): Int {
+        val db = dbHelper.writableDatabase
+        val count = db.delete(&quot;notes&quot;, selection, selectionArgs)
+        context!!.contentResolver.notifyChange(uri, null)
+        return count
+    }
+
+    override fun getType(uri: Uri): String = &quot;vnd.android.cursor.dir/vnd.com.example.notes&quot;
+
+    companion object {
+        val CONTENT_URI: Uri = Uri.parse(&quot;content://com.example.notes.provider/notes&quot;)
+    }
+}
+
+// Querying MediaStore for images (scoped storage, API 29+)
+fun getPhotosFromMediaStore(context: Context): List&lt;Uri&gt; {
+    val uris = mutableListOf&lt;Uri&gt;()
+    val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+    val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME)
+
+    context.contentResolver.query(collection, projection, null, null, &quot;${MediaStore.Images.Media.DATE_ADDED} DESC&quot;)?.use { cursor -&gt;
+        val idCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+        while (cursor.moveToNext()) {
+            val id = cursor.getLong(idCol)
+            uris.add(ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id))
+        }
+    }
+    return uris
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> FileProvider.getUriForFile() takes your real file path and maps it to a content:// URI using the file_paths.xml mapping — the receiving app never sees the real path.</li>
+      <li><span class="walk-num">2.</span> addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) tells the system to create a temporary permission grant tied to this Intent&#39;s recipient — without this, the URI is useless.</li>
+      <li><span class="walk-num">3.</span> Intent.createChooser() wraps the share intent so the system shows the app picker — each app in the picker automatically receives the URI permission.</li>
+      <li><span class="walk-num">4.</span> In launchCamera, imageFile.parentFile?.mkdirs() ensures the directory exists before FileProvider tries to map the path — missing directory causes FileNotFoundException.</li>
+      <li><span class="walk-num">5.</span> In NotesProvider.query(), cursor.setNotificationUri() wires the cursor to receive updates when notifyChange() is called, enabling live UI updates for registered observers.</li>
+      <li><span class="walk-num">6.</span> notifyChange() after insert/update/delete propagates the change notification to all active cursors pointing at this URI — critical for consistent UI state.</li>
+      <li><span class="walk-num">7.</span> ContentUris.withAppendedId() constructs a URI like content://authority/notes/42 for the newly inserted row — the standard way to return an item URI from insert().</li>
+      <li><span class="walk-num">8.</span> MediaStore query uses use{} block on the cursor — this is idiomatic Kotlin that auto-closes the cursor even if an exception occurs, preventing cursor leak.</li>
+      <li><span class="walk-num">9.</span> getColumnIndexOrThrow() throws if the column does not exist rather than returning -1 silently — prefer this over getColumnIndex() to catch schema mismatches early.</li>
+      <li><span class="walk-num">10.</span> ContentUris.withAppendedId on MediaStore.Images.Media.EXTERNAL_CONTENT_URI builds a direct content URI for the image that Glide, Coil, or ImageDecoder can load directly.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// In AndroidManifest.xml
+// &lt;provider
+//     android:name=&quot;androidx.core.content.FileProvider&quot;
+//     android:authorities=&quot;com.example.app.provider&quot;
+//     android:exported=&quot;true&quot;
+//     android:grantUriPermissions=&quot;true&quot;&gt;
+//     &lt;meta-data
+//         android:name=&quot;android.support.FILE_PROVIDER_PATHS&quot;
+//         android:resource=&quot;@xml/file_paths&quot; /&gt;
+// &lt;/provider&gt;
+
+fun shareDocument(context: Context, file: File) {
+    val uri = FileProvider.getUriForFile(
+        context,
+        &quot;com.example.app.provider&quot;,
+        file
+    )
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(uri, &quot;application/pdf&quot;)
+    }
+    context.startActivity(intent)
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are two bugs: one is a critical security misconfiguration in the Manifest, and one causes the receiving app to be unable to open the file.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: android:exported=&#39;true&#39; on a FileProvider is a critical security vulnerability. With exported=true, any app on the device can query your FileProvider directly without needing a URI permission grant, potentially accessing all files in the declared paths. FileProvider must always have android:exported=&#39;false&#39;. Its sharing mechanism works through URI permission grants, not direct exports. Bug 2: The Intent does not include FLAG_GRANT_READ_URI_PERMISSION. Even though FileProvider generated a content:// URI, the receiving app (e.g., a PDF viewer) does not have permission to read it. setDataAndType() sets the URI and MIME type, but the permission grant flag must be added explicitly: addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION). Without this flag, the receiving app gets a SecurityException when trying to open the file.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your photos are locked in a safe. ContentProvider is a bank teller who can look things up in that safe for you using a special code number. FileProvider is like a secure messenger service — it takes a file from your safe and delivers it to another app in a sealed envelope with a temporary key, so the other app can open it but cannot keep the key forever.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The FileUriExposedException added in Android 7.0 (API 24) was a deliberate breaking change. Google enforced it because file:// URIs bypass all of Android&#39;s permission system — any app on the device with READ_EXTERNAL_STORAGE could read a file if it knew the path. ContentProvider URIs carry cryptographic tokens that only the system can validate, making them genuinely secure.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a secure photo sharing flow: (1) Configure FileProvider in Manifest and file_paths.xml for cache directory. (2) Write a function that captures a photo using TakePicture ActivityResultContract and saves it to a FileProvider-managed cache path. (3) Write a function that shares the captured photo with FLAG_GRANT_READ_URI_PERMISSION. (4) Write a MediaStore query that returns all images taken in the last 7 days, sorted newest first. (5) Explain what happens to the URI permission grant when the receiving app&#39;s task is cleared from recents.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/guide/topics/providers/content-provider-basics" target="_blank" rel="noopener noreferrer">ContentProvider basics — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/reference/androidx/core/content/FileProvider" target="_blank" rel="noopener noreferrer">FileProvider — AndroidX Core</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/providers/content-provider-basics#Permissions" target="_blank" rel="noopener noreferrer">URI permissions — Android Developers</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/training/data-storage/shared/media" target="_blank" rel="noopener noreferrer">MediaStore access — scoped storage</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/providers/document-provider" target="_blank" rel="noopener noreferrer">Storage Access Framework overview</a> <span class="res-source">(Android Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=56">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./55-broadcastreceiver-services-binder-bound-services.html" rel="prev">← BroadcastReceiver, Services, Binder &amp;…</a>
+  <a class="nav-next" href="./57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html" rel="next">Native/Platform APIs: Camera… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

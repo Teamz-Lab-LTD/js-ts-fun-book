@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA II: Stack, Queue, Linked List, Binary Search &amp;… | Teamz Lab</title>
+<meta name="description" content="Stack, Queue, LinkedList, Binary Search, and Heap are the second tier of DSA patterns. They appear in ~40% of medium interview problems. Stacks and queues…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/63-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/65-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="DSA II: Stack, Queue, Linked List, Binary Search &amp; Heap">
+<meta property="og:description" content="Stack, Queue, LinkedList, Binary Search, and Heap are the second tier of DSA patterns. They appear in ~40% of medium interview problems. Stacks and queues…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DSA II: Stack, Queue, Linked List, Binary Search &amp; Heap">
+<meta name="twitter:description" content="Stack, Queue, LinkedList, Binary Search, and Heap are the second tier of DSA patterns. They appear in ~40% of medium interview problems. Stacks and queues…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "DSA II: Stack, Queue, Linked List, Binary Search & Heap",
+  "description": "Stack, Queue, LinkedList, Binary Search, and Heap are the second tier of DSA patterns. They appear in ~40% of medium interview problems. Stacks and queues…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 64
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DSA II: Stack, Queue, Linked List, Binary Search & Heap",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">DSA II: Stack, Queue, Linked List, Binary Search &amp; Heap</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 64 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">DSA II: Stack, Queue, Linked List, Binary Search &amp; Heap</h1>
+<p class="lesson-subtitle">Linear and hierarchical structures that unlock a new class of interview problems</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=64">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A Stack is a stack of plates — you add and remove from the top (LIFO). A Queue is a checkout line — first in, first out (FIFO). A LinkedList is a treasure hunt where each clue points to the next location. Binary search is like finding a word in a dictionary by opening to the middle, not page one. A Heap is a priority boarding gate — always processes the most important item next.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Stack, Queue, LinkedList, Binary Search, and Heap are the second tier of DSA patterns. They appear in ~40% of medium interview problems. Stacks and queues are often implemented on ArrayDeque in Kotlin. Binary search extends far beyond sorted arrays to any monotonic decision function. Heaps provide an efficient way to maintain a sorted subset of data for streaming and top-K problems.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In the Tixio real-time task management platform, notification delivery priority was implemented using a PriorityQueue — critical alerts (deadline missed, blocker added) were assigned higher priority and processed first even when multiple notifications were queued simultaneously. This is the heap pattern applied directly: always serve the highest-priority item next in O(log n) time.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Stack — LIFO and Its Interview Patterns</strong> — Stack operations: push (add to top), pop (remove from top), peek (see top without removing) — all O(1). In Kotlin, use ArrayDeque as a stack. Key patterns: bracket matching (push opens, pop and verify on close), undo/redo systems, DFS traversal, monotonic stack (maintain ascending/descending order for next-greater-element problems).</li>
+      <li><strong>Valid Parentheses — Stack Classic</strong> — Given a string of brackets, check if they are balanced. Push opening brackets. On closing bracket: if stack is empty or top does not match, return false. Pop if match. After iteration, stack must be empty. O(n) time, O(n) space. Extension: use a HashMap to map closing to opening brackets for clean code.</li>
+      <li><strong>Monotonic Stack — Next Greater Element</strong> — Maintain a stack of indices in decreasing order of values. When a new element is greater than the stack top, the stack top has found its &#39;next greater element&#39; — pop and record. Push the new element. This processes each element at most twice (push + pop), so O(n) overall. Used for: stock span, daily temperatures, largest rectangle in histogram.</li>
+      <li><strong>Queue — FIFO and BFS</strong> — Queue: add to back (enqueue), remove from front (dequeue) — both O(1). In Kotlin, ArrayDeque supports both stack and queue operations (addFirst/removeLast for stack, addLast/removeFirst for queue). Primary use: BFS traversal. Enqueue the root, then repeatedly dequeue a node and enqueue its unvisited neighbors.</li>
+      <li><strong>Linked List Concepts</strong> — A node contains a value and a pointer to the next node. Head is the first node, tail points to null. Insertion at head: O(1). Insertion at arbitrary position: O(n) to find it. No random access — must traverse. Key operations: reverse (iterative with prev/curr/next pointers), detect cycle (Floyd&#39;s fast/slow pointers), find middle (fast/slow where fast moves 2 steps).</li>
+      <li><strong>Reverse a Linked List (Iterative)</strong> — Use three pointers: prev=null, curr=head, next=null. Each iteration: save curr.next to next, point curr.next backward to prev, advance prev to curr, advance curr to next. When curr is null, prev is the new head. O(n) time, O(1) space. Recursive version is elegant but uses O(n) stack space — prefer iterative in interviews.</li>
+      <li><strong>Floyd&#39;s Cycle Detection</strong> — Use slow (1 step) and fast (2 steps) pointers. If there is a cycle, fast will eventually catch up to slow within the cycle. If fast reaches null, no cycle. O(n) time, O(1) space. Finding cycle entry: after detection, reset one pointer to head and advance both 1 step at a time — they meet at the cycle entry.</li>
+      <li><strong>Binary Search — Universal Template</strong> — Use for: sorted array search, search space minimization (find the minimum valid value), matrix search. Template: left=0, right=n-1. mid = left + (right-left)/2. If condition(mid), right=mid. Else left=mid+1. Loop ends when left==right — that is the answer. Key: define the invariant precisely. Common mistake: wrong boundary update causing infinite loops.</li>
+      <li><strong>Binary Search Variants</strong> — Lower bound (first position where value &gt;= target): right=mid when found, left=mid+1 when not. Upper bound (first position where value &gt; target): similar adjustment. Search in rotated sorted array: determine which half is sorted (compare mid to left), then check if target is in the sorted half. Always draw the invariant before coding.</li>
+      <li><strong>Heap / Priority Queue</strong> — A heap is a complete binary tree where the parent is always smaller (min-heap) or larger (max-heap) than its children. insert and removeTop are O(log n). peek is O(1). In Kotlin, PriorityQueue is a min-heap by default. For max-heap: PriorityQueue(compareByDescending { it }). Primary use: K-th largest/smallest, merge K sorted lists, task scheduling.</li>
+      <li><strong>Top-K Pattern with Heap</strong> — Find K largest elements: use a min-heap of size K. For each element, add it to the heap. If heap size &gt; K, remove the minimum. After processing all elements, the heap contains the K largest. O(n log k) time — much better than sorting (O(n log n)) when k is small. For K smallest, use a max-heap.</li>
+      <li><strong>Interview Strategy for These Structures</strong> — Stack: &#39;matching&#39;, &#39;undo&#39;, &#39;nested structure&#39; keywords. Queue: &#39;level by level&#39;, &#39;BFS&#39;, &#39;process in order received&#39;. LinkedList: rarely implemented from scratch — know reverse and cycle detection, as these are the two canonical problems. Binary search: any &#39;find in sorted&#39; or &#39;minimize the maximum&#39; phrasing. Heap: any &#39;top K&#39;, &#39;streaming median&#39;, or &#39;merge sorted&#39; phrasing.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// ─── VALID PARENTHESES (Stack, O(n)) ───
+fun isValid(s: String): Boolean {
+    val stack = ArrayDeque&lt;Char&gt;()
+    val matching = mapOf(&#39;)&#39; to &#39;(&#39;, &#39;]&#39; to &#39;[&#39;, &#39;}&#39; to &#39;{&#39;)
+    for (ch in s) {
+        if (ch in &quot;([{&quot;) {
+            stack.addLast(ch)
+        } else {
+            if (stack.isEmpty() || stack.last() != matching[ch]) return false
+            stack.removeLast()
+        }
+    }
+    return stack.isEmpty()
+}
+
+// ─── REVERSE LINKED LIST (Iterative, O(n), O(1) space) ───
+class ListNode(var value: Int, var next: ListNode? = null)
+
+fun reverseList(head: ListNode?): ListNode? {
+    var prev: ListNode? = null
+    var curr = head
+    while (curr != null) {
+        val next = curr.next  // save
+        curr.next = prev      // reverse pointer
+        prev = curr           // advance prev
+        curr = next           // advance curr
+    }
+    return prev // prev is the new head when curr is null
+}
+
+// ─── DETECT CYCLE — FLOYD&#39;S (O(n), O(1) space) ───
+fun hasCycle(head: ListNode?): Boolean {
+    var slow = head
+    var fast = head
+    while (fast != null &amp;&amp; fast.next != null) {
+        slow = slow?.next
+        fast = fast.next?.next
+        if (slow == fast) return true // fast caught slow inside cycle
+    }
+    return false
+}
+
+// ─── BINARY SEARCH — UNIVERSAL TEMPLATE ───
+fun binarySearch(nums: IntArray, target: Int): Int {
+    var left = 0
+    var right = nums.size - 1
+    while (left &lt;= right) {
+        val mid = left + (right - left) / 2
+        when {
+            nums[mid] == target -&gt; return mid
+            nums[mid] &lt; target -&gt; left = mid + 1
+            else -&gt; right = mid - 1
+        }
+    }
+    return -1
+}
+
+// ─── TOP-K LARGEST ELEMENTS (Min-Heap, O(n log k)) ───
+fun topKLargest(nums: IntArray, k: Int): List&lt;Int&gt; {
+    val minHeap = PriorityQueue&lt;Int&gt;() // min-heap by default
+    for (num in nums) {
+        minHeap.offer(num)
+        if (minHeap.size &gt; k) minHeap.poll() // remove smallest, keep K largest
+    }
+    return minHeap.toList()
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> isValid uses a HashMap to map each closing bracket to its expected opening bracket — this avoids three separate if-checks and scales to any bracket type.</li>
+      <li><span class="walk-num">2.</span> When a closing bracket is encountered, we check two conditions with OR: stack is empty (nothing to match against) OR the top does not match. Either means invalid.</li>
+      <li><span class="walk-num">3.</span> reverseList saves curr.next before overwriting it — curr.next = prev breaks the forward link, so without saving, the rest of the list is lost.</li>
+      <li><span class="walk-num">4.</span> After the while loop in reverseList, curr is null and prev points to the last original node — which is now the new head of the reversed list.</li>
+      <li><span class="walk-num">5.</span> hasCycle initializes both slow and fast at head. The loop condition checks fast and fast.next both non-null because fast moves two steps — if fast.next were null, fast.next.next would throw a NullPointerException.</li>
+      <li><span class="walk-num">6.</span> binarySearch uses left + (right - left) / 2 to avoid integer overflow. If left = 1_000_000_000 and right = 1_500_000_000, their sum overflows Int.MAX_VALUE.</li>
+      <li><span class="walk-num">7.</span> topKLargest adds every element to the min-heap, then immediately removes the minimum if size exceeds k. After processing all elements, the heap contains exactly the k largest.</li>
+      <li><span class="walk-num">8.</span> PriorityQueue.poll() is O(log n) because removing the root of a heap requires re-heapifying down the tree. This gives topKLargest O(n log k) total — O(log k) per element.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>fun reverseList(head: ListNode?): ListNode? {
+    var prev: ListNode? = null
+    var curr = head
+    while (curr != null) {
+        curr.next = prev
+        prev = curr
+        curr = curr.next
+    }
+    return prev
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">There are a bug that causes an infinite loop or always returns a single-node list. Think carefully about the order of pointer assignments.</div></details><details><summary>Show answer</summary><div class="answer">Bug: curr.next = prev overwrites the next pointer BEFORE saving it. Then curr = curr.next reads the already-overwritten pointer — which now points to prev (the previous node), not the next node in the original list. This causes the traversal to go backward or get stuck. The fix: save the original next BEFORE overwriting: val next = curr.next. Then do curr.next = prev, prev = curr, curr = next. The saved &#39;next&#39; variable preserves the forward link before the reversal.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Stack: imagine a pile of dirty dishes — you always wash and add to the top. Queue: imagine a line at a water park — first person in line goes down the slide first. Linked list: a scavenger hunt where each clue tells you where the next clue is hidden. Binary search: guessing a number between 1 and 100 by always guessing the middle — you find it in 7 guesses maximum. Heap: a queue where the most important person always cuts to the front.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Floyd&#39;s Cycle Detection algorithm was invented by Robert Floyd in 1967 and is also called the &#39;tortoise and hare&#39; algorithm. It requires only O(1) extra space — no visited set needed. The same mathematical principle (modular arithmetic in a cycle) is used in Pollard&#39;s rho algorithm for integer factorization, which was used to crack RSA keys in cryptographic research.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Implement &#39;Daily Temperatures&#39;: given an array of daily temperatures, return an array where answer[i] is the number of days until a warmer temperature. If no future day is warmer, answer[i] = 0. Example: [73,74,75,71,69,72,76,73] returns [1,1,4,2,1,1,0,0]. Trace through using a monotonic stack. What is the time and space complexity? Why is this O(n) and not O(n^2)?</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://leetcode.com/problems/valid-parentheses/" target="_blank" rel="noopener noreferrer">LeetCode — Valid Parentheses</a> <span class="res-source">(LeetCode)</span></li>
+      <li><a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank" rel="noopener noreferrer">LeetCode — Reverse Linked List</a> <span class="res-source">(LeetCode)</span></li>
+      <li><a href="https://leetcode.com/problems/kth-largest-element-in-a-stream/" target="_blank" rel="noopener noreferrer">LeetCode — Kth Largest Element in a Stream</a> <span class="res-source">(LeetCode)</span></li>
+      <li><a href="https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template" target="_blank" rel="noopener noreferrer">Binary Search Template — LeetCode Discuss</a> <span class="res-source">(LeetCode)</span></li>
+      <li><a href="https://neetcode.io/roadmap" target="_blank" rel="noopener noreferrer">Neetcode — Stack, Binary Search, Heap Patterns</a> <span class="res-source">(Neetcode)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=64">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./63-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html" rel="prev">← DSA I: Arrays, Strings, HashMaps, Sets…</a>
+  <a class="nav-next" href="./65-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html" rel="next">DSA III: Trees, Graphs, BFS/DFS… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

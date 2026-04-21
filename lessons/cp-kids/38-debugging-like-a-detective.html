@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debugging Like a Detective — CP Zero to Hero | Teamz Lab</title>
+<meta name="description" content="Debugging is the art of finding and fixing errors in your code. It&#39;s arguably the most important practical skill in competitive programming. This lesson…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/38-debugging-like-a-detective.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/37-solving-easy-contest-problems-ab-problems.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/39-time-complexity-making-your-code-fast.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debugging Like a Detective">
+<meta property="og:description" content="Debugging is the art of finding and fixing errors in your code. It&#39;s arguably the most important practical skill in competitive programming. This lesson…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/cp-kids/38-debugging-like-a-detective.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Debugging Like a Detective">
+<meta name="twitter:description" content="Debugging is the art of finding and fixing errors in your code. It&#39;s arguably the most important practical skill in competitive programming. This lesson…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Debugging Like a Detective",
+  "description": "Debugging is the art of finding and fixing errors in your code. It's arguably the most important practical skill in competitive programming. This lesson…",
+  "url": "https://learn.teamzlab.com/lessons/cp-kids/38-debugging-like-a-detective.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Competitive Programming: Zero to Hero",
+    "url": "https://learn.teamzlab.com/c/cp-kids.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 38
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "CP Zero to Hero",
+      "item": "https://learn.teamzlab.com/c/cp-kids.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Debugging Like a Detective",
+      "item": "https://learn.teamzlab.com/lessons/cp-kids/38-debugging-like-a-detective.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/cp-kids.html">CP Zero to Hero</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/cp-kids.html">CP Zero to Hero</a> / <span aria-current="page">Debugging Like a Detective</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 38 of 50</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Debugging Like a Detective</h1>
+<p class="lesson-subtitle">Finding and fixing bugs — the skill that separates good from great!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=38">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Debugging is like being Sherlock Holmes. Your code gives the wrong answer — that&#39;s the crime scene. The bug is the criminal. You gather clues (add print statements), examine evidence (check edge cases), follow logical deduction (trace through your code), and eventually catch the culprit! Every great programmer is a great detective.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Debugging is the art of finding and fixing errors in your code. It&#39;s arguably the most important practical skill in competitive programming. This lesson covers the most common bugs (off-by-one, overflow, uninitialized variables), systematic debugging techniques (print statements, edge case testing), and good habits that prevent bugs in the first place.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>The term &#39;bug&#39; in computing dates back to 1947 when a moth got stuck in the Harvard Mark II computer. Grace Hopper&#39;s team literally found a bug! Today, companies like Google and NASA spend enormous resources on testing and debugging. The Ariane 5 rocket exploded in 1996 because of an integer overflow — a bug that cost $370 million!</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Off-By-One Errors</strong> — The most common bug in programming! Using &lt; instead of &lt;=, starting at 0 instead of 1, or looping one too many or too few times. Example: &#39;for (int i = 0; i &lt;= n; i++)&#39; when the array only has indices 0 to n-1. Always double-check your loop boundaries!</li>
+      <li><strong>Uninitialized Variables</strong> — If you declare a variable but don&#39;t give it a value, it contains garbage data — a random value from memory. In C++, &#39;int sum;&#39; might be 0 or might be -1294832. Always initialize: &#39;int sum = 0;&#39; This bug is sneaky because it might work on your computer but fail on the judge!</li>
+      <li><strong>Integer Overflow</strong> — int can hold up to about 2 billion (2 × 10^9). If your calculation exceeds this, the number wraps around and gives a wrong (often negative) answer. Use &#39;long long&#39; for big numbers (up to about 9 × 10^18). Common trap: n * n when n = 100000 overflows int!</li>
+      <li><strong>Print Debugging — Your Best Tool</strong> — When your code gives wrong output, add cout statements to see what&#39;s happening inside. Print variable values, loop counters, intermediate results. &#39;cerr &lt;&lt; &quot;i=&quot; &lt;&lt; i &lt;&lt; &quot; sum=&quot; &lt;&lt; sum &lt;&lt; endl;&#39; Use cerr (not cout) so it doesn&#39;t interfere with your output!</li>
+      <li><strong>Edge Cases to Always Check</strong> — n = 0 (empty input), n = 1 (single element), negative numbers, maximum values (10^9, 10^18), all elements the same, already sorted input, reverse sorted input. These corner cases catch most bugs! Always test them before submitting.</li>
+      <li><strong>Reading Input Wrong</strong> — If your code reads input in the wrong order or reads the wrong number of values, everything else breaks. Always match your cin statements EXACTLY to the input format. If the problem says &#39;first line: n, second line: n integers,&#39; make sure you read them in that exact order.</li>
+      <li><strong>Testing Before Submitting</strong> — Never submit without testing! Run your code on ALL the given examples first. Then make up your own test cases, especially edge cases. If all examples pass but you get WA, your code probably fails on an edge case you didn&#39;t think of.</li>
+      <li><strong>Common Runtime Errors</strong> — Division by zero (always check before dividing). Array out of bounds (accessing a[-1] or a[n]). Stack overflow (infinite recursion or very deep recursion). These cause Runtime Error (RE) on the judge. Add checks for these scenarios!</li>
+      <li><strong>The Rubber Duck Method</strong> — When stuck, explain your code line-by-line to a rubber duck (or imaginary friend). Seriously! The act of explaining forces you to think through every step. Many programmers find the bug the moment they start explaining. It sounds silly but it WORKS!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    // EXAMPLE: Find the maximum subarray sum (common CP problem)
+    // Let&#39;s debug it step by step!
+    
+    int n;
+    cin &gt;&gt; n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; a[i];
+    
+    // Kadane&#39;s algorithm (simplified)
+    long long maxSum = a[0];       // NOT 0! (what if all negative?)
+    long long currentSum = a[0];   // Start with first element
+    
+    cerr &lt;&lt; &quot;Starting: maxSum=&quot; &lt;&lt; maxSum &lt;&lt; &quot; currentSum=&quot; &lt;&lt; currentSum &lt;&lt; &quot;\n&quot;;
+    
+    for (int i = 1; i &lt; n; i++) {  // Start from 1, not 0!
+        currentSum = max((long long)a[i], currentSum + a[i]);
+        maxSum = max(maxSum, currentSum);
+        
+        // Debug print — comment out before submitting!
+        cerr &lt;&lt; &quot;i=&quot; &lt;&lt; i &lt;&lt; &quot; a[i]=&quot; &lt;&lt; a[i] 
+             &lt;&lt; &quot; currentSum=&quot; &lt;&lt; currentSum 
+             &lt;&lt; &quot; maxSum=&quot; &lt;&lt; maxSum &lt;&lt; &quot;\n&quot;;
+    }
+    
+    cout &lt;&lt; maxSum &lt;&lt; &quot;\n&quot;;
+    
+    // === DEBUGGING CHECKLIST ===
+    // 1. Did I read all input correctly?
+    // 2. Are my loop bounds right (no off-by-one)?
+    // 3. Did I initialize all variables?
+    // 4. Can any calculation overflow int?
+    // 5. Did I handle edge cases (n=1, all negative)?
+    // 6. Does my output match the required format?
+    // 7. Did I test with ALL given examples?
+    
+    return 0;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> vector a(n); — we use a vector instead of int a[n] to avoid variable-length array issues on some compilers.</li>
+      <li><span class="walk-num">2.</span> long long maxSum = a[0]; — we initialize to the first element, NOT 0! If all numbers are negative (like -3, -1, -5), the answer is -1, not 0. Initializing to 0 would be a bug.</li>
+      <li><span class="walk-num">3.</span> long long currentSum = a[0]; — same here. We also use long long to prevent integer overflow when numbers are large.</li>
+      <li><span class="walk-num">4.</span> for (int i = 1; i &lt; n; i++) — we start from index 1, not 0, because we already used a[0] for initialization. Starting from 0 would process a[0] twice.</li>
+      <li><span class="walk-num">5.</span> currentSum = max((long long)a[i], currentSum + a[i]); — at each step, we choose: start fresh from a[i], or extend the current subarray. This is Kadane&#39;s algorithm!</li>
+      <li><span class="walk-num">6.</span> cerr &lt;&lt; ... — debug output goes to cerr (standard error), which is separate from cout (standard output). The judge only looks at cout, so cerr won&#39;t cause Wrong Answer. Remove or comment out before submitting for cleaner code.</li>
+      <li><span class="walk-num">7.</span> The debugging checklist at the bottom covers the most common sources of bugs. Going through this checklist before submitting can save you many Wrong Answer penalties!</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin &gt;&gt; n;
+    int a[n];
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; a[i];
+    
+    long long sum;
+    for (int i = 0; i &lt; n; i++) {
+        sum += a[i];
+    }
+    cout &lt;&lt; sum &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at the line &#39;long long sum;&#39; — what value does sum start with if you don&#39;t initialize it?</div></details><details><summary>Show answer</summary><div class="answer">The bug is an uninitialized variable! &#39;long long sum;&#39; without &#39;= 0&#39; means sum starts with whatever random garbage value was in memory. It could be 0 (making the program appear to work) or it could be 7293847192 (giving a completely wrong answer). This is especially tricky because it might work on YOUR computer but fail on the judge&#39;s computer. The fix is simple: &#39;long long sum = 0;&#39; ALWAYS initialize your variables!</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you&#39;re building a LEGO castle and something looks wrong. Maybe a wall is crooked or a piece is missing. You don&#39;t throw the whole thing away! You look carefully at each section, compare it to the picture, and find the one piece that&#39;s in the wrong spot. Then you fix just that one piece. Debugging code is exactly the same — look carefully, find the mistake, fix it. You&#39;re a code detective!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Microsoft once estimated that debugging takes 50% of all programming time. The average programmer creates about 15-50 bugs per 1000 lines of code! In competitive programming, the #1 cause of Wrong Answers isn&#39;t wrong algorithms — it&#39;s implementation bugs. Getting good at debugging can improve your rating more than learning new algorithms!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Here&#39;s a buggy program that&#39;s supposed to find the second largest number in an array. Find and fix ALL the bugs:
+
+int n; cin &gt;&gt; n;
+int a[n];
+for(int i=0; i&gt; a[i];
+int max1=0, max2=0;
+for(int i=0; imax1) { max2=max1; max1=a[i]; }
+}
+cout &lt;&lt; max2;
+
+Hint: there are at least 3 bugs. Consider: loop bounds, initialization, and what happens when the second largest isn&#39;t found correctly.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://codeforces.com/blog/entry/111217" target="_blank" rel="noopener noreferrer">Common Mistakes in Competitive Programming</a> <span class="res-source">(Codeforces Blog)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=bSdp2WeyuJY" target="_blank" rel="noopener noreferrer">Debugging Tips for Competitive Programming</a> <span class="res-source">(Errichto)</span></li>
+      <li><a href="https://codeforces.com/problemset?tags=implementation" target="_blank" rel="noopener noreferrer">Practice with Tricky Edge Cases</a> <span class="res-source">(Codeforces)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=38">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./37-solving-easy-contest-problems-ab-problems.html" rel="prev">← Solving Easy Contest Problems (A/B…</a>
+  <a class="nav-next" href="./39-time-complexity-making-your-code-fast.html" rel="next">Time Complexity — Making Your Code Fast →</a>
+</nav>
+
+<a class="back-to-course" href="/c/cp-kids.html">← Back to course: CP Zero to Hero</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

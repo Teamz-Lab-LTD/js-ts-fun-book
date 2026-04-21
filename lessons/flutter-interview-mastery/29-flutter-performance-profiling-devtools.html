@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flutter Performance Profiling &amp; DevTools — Flutter… | Teamz Lab</title>
+<meta name="description" content="Flutter DevTools provides systematic tools for diagnosing performance problems: the Performance overlay for quick visual feedback, the Timeline for…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/29-flutter-performance-profiling-devtools.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/28-caching-pagination-lazy-loading-list-performance.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/30-rendering-jank-impeller-memory-optimization.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter Performance Profiling &amp; DevTools">
+<meta property="og:description" content="Flutter DevTools provides systematic tools for diagnosing performance problems: the Performance overlay for quick visual feedback, the Timeline for…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/29-flutter-performance-profiling-devtools.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flutter Performance Profiling &amp; DevTools">
+<meta name="twitter:description" content="Flutter DevTools provides systematic tools for diagnosing performance problems: the Performance overlay for quick visual feedback, the Timeline for…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Flutter Performance Profiling & DevTools",
+  "description": "Flutter DevTools provides systematic tools for diagnosing performance problems: the Performance overlay for quick visual feedback, the Timeline for…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/29-flutter-performance-profiling-devtools.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 29
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Flutter Performance Profiling & DevTools",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/29-flutter-performance-profiling-devtools.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Flutter Performance Profiling &amp; DevTools</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 29 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Flutter Performance Profiling &amp; DevTools</h1>
+<p class="lesson-subtitle">Finding and Fixing Performance Problems Systematically</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=29">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">DevTools is like a flight data recorder for your Flutter app. The Performance overlay is the cockpit warning light — it tells you something is wrong. The Timeline is the full black-box recording — every frame, every function call, every GPU command. Finding a jank source without DevTools is like diagnosing a car problem by listening to the engine noise. DevTools lets you pop the hood, see every moving part, and find the exact cylinder that is misfiring.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter DevTools provides systematic tools for diagnosing performance problems: the Performance overlay for quick visual feedback, the Timeline for frame-by-frame analysis, Rebuild Tracker for identifying unnecessary rebuilds, and Memory/CPU profilers for deep investigation. Profile mode eliminates debug overhead for accurate measurements.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a school management platform with 500-student class lists, the initial implementation had jank on scroll. DevTools Timeline showed 35ms frames caused by two issues: (1) each list item decoded a 500x500 student photo at full resolution — fixed with memCacheWidth, (2) the ViewModel was rebuilding the entire 500-item list on any single student&#39;s data change — fixed by selecting per-student state with Riverpod. Post-fix: consistent 8ms frames.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The 16ms Frame Budget</strong> — At 60fps, you have exactly 16.67ms per frame (8.33ms at 120fps). Split between two threads: the UI thread (Dart code, widget rebuilds, layout) and the Raster thread (GPU rendering). If either thread exceeds the budget, a frame is dropped — users see jank. The Performance overlay shows both thread timings with red/green bars.</li>
+      <li><strong>Performance Overlay</strong> — Enable with MaterialApp(showPerformanceOverlay: true). The top graph shows GPU/raster thread time. The bottom shows UI thread time. Red bars mean the frame took too long. Green bars are within budget. Use this as a quick first check during development — it gives immediate visual feedback without opening DevTools.</li>
+      <li><strong>Flutter DevTools Timeline</strong> — DevTools Timeline (Performance tab) shows a flame graph of every frame. Zoom into a janky frame to see which functions took the most time. Look for: long widget build() calls, heavy layout computation, synchronous I/O on the UI thread, or large image decoding. The Timeline is the most valuable profiling tool Flutter provides.</li>
+      <li><strong>Widget Rebuild Tracking</strong> — In DevTools: Highlight Repaints shows yellow flickering on widgets that repaint, and Track Widget Rebuilds counts rebuilds in Flutter Inspector. Also use debugProfileBuildsEnabled and debugProfilePaintsEnabled flags. The goal: identify widgets rebuilding more often than necessary. A well-optimized app rebuilds only what changed.</li>
+      <li><strong>Identifying Jank Sources</strong> — Common jank causes: (1) Rebuilding a large widget tree on every state change — fix with granular state management. (2) Synchronous work on the UI thread such as JSON parsing of large responses — move to a compute() isolate. (3) Shader compilation jank (first-time frame drops) — fix with Impeller. (4) Large image decoding on UI thread — use ResizeImage.</li>
+      <li><strong>compute() and Isolates for Heavy Work</strong> — Any operation taking more than 16ms on the UI thread causes a dropped frame. Use compute(function, data) to run heavy work in a background isolate: final parsed = await compute(parseJsonList, rawJsonString). Dart isolates have no shared memory — data is serialized/deserialized on transfer (use simple data structures for lowest overhead).</li>
+      <li><strong>Frame Analysis Methodology</strong> — Systematic approach: (1) Enable Performance overlay, scroll and interact to find red frames. (2) Open DevTools Timeline, record 5 seconds of the janky interaction. (3) Find the worst frame, zoom in on the flame graph. (4) Identify the longest running function — is it in build(), layout(), or rasterization? (5) Apply the targeted fix, re-profile to confirm improvement.</li>
+      <li><strong>Memory Profiling</strong> — DevTools Memory tab shows heap size over time. Look for: linear growth (memory leak), large peaks (huge allocations), objects not being garbage collected. Use the Allocation Tracker to find which types are accumulating. Common leaks: StreamSubscription not cancelled, Timer not cancelled, ScrollController not disposed.</li>
+      <li><strong>CPU Profiling</strong> — DevTools CPU Profiler records function call stacks. Run in profile mode (flutter run --profile) — debug mode is too slow for accurate profiling. The flame chart shows which Dart functions consume the most CPU. Look for unexpected hot paths — a supposedly O(n) operation that is actually O(n squared).</li>
+      <li><strong>Flutter Inspector — Widget Tree</strong> — DevTools Inspector shows the live widget tree. Use it to: verify widget depth (deep trees are slower to build), find unexpected widget instances, check box constraints to debug layout issues, and inspect padding and margin. A 30-level deep widget tree for a simple card is a red flag.</li>
+      <li><strong>Performance Testing in CI</strong> — flutter drive with integration tests can catch performance regressions. Use FrameTimingSummarizer to assert that 99th percentile frame times stay below a threshold. This prevents regressions from landing silently. Combine with screenshot testing for comprehensive quality gates.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/foundation.dart&#39;;
+import &#39;dart:developer&#39; as developer;
+
+// Performance Overlay — only in profile builds
+class App extends StatelessWidget {
+  const App({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      showPerformanceOverlay: kProfileMode,
+      home: const HomeScreen(),
+    );
+  }
+}
+
+// compute() for heavy JSON parsing
+List&lt;User&gt; _parseUsers(String jsonString) {
+  final List&lt;dynamic&gt; jsonList = jsonDecode(jsonString) as List;
+  return jsonList.map((j) =&gt; User.fromJson(j as Map&lt;String, dynamic&gt;)).toList();
+}
+
+class UserRepository {
+  final Dio _dio;
+  UserRepository(this._dio);
+
+  Future&lt;List&lt;User&gt;&gt; getUsers() async {
+    final response = await _dio.get(&#39;/users&#39;);
+    final rawJson = response.data.toString();
+    // Move JSON parsing off the UI thread
+    return compute(_parseUsers, rawJson);
+  }
+}
+
+// Granular state selection to minimize rebuilds
+// BAD: rebuilds every time ANY field in WorkspaceState changes
+class BadHeader extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(workspaceProvider);
+    return Text(state.name);
+  }
+}
+
+// GOOD: only rebuilds when name specifically changes
+class GoodHeader extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final name = ref.watch(workspaceProvider.select((s) =&gt; s.name));
+    return Text(name);
+  }
+}
+
+// Custom Timeline markers for DevTools
+Future&lt;void&gt; loadDashboard() async {
+  developer.Timeline.startSync(&#39;LoadDashboard&#39;);
+  try {
+    developer.Timeline.startSync(&#39;FetchUsers&#39;);
+    final users = await userRepository.getUsers();
+    developer.Timeline.finishSync();
+
+    developer.Timeline.startSync(&#39;BuildState&#39;);
+    final dashboardState = DashboardState(users: users);
+    developer.Timeline.finishSync();
+
+    state = dashboardState;
+  } finally {
+    developer.Timeline.finishSync();
+  }
+}
+
+// RepaintBoundary for isolated list item repaints
+class StudentListItem extends StatelessWidget {
+  final Student student;
+  const StudentListItem({required this.student, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      child: ListTile(
+        leading: CachedNetworkImage(
+          imageUrl: student.avatarUrl,
+          memCacheWidth: 80, memCacheHeight: 80,
+        ),
+        title: Text(student.name),
+        subtitle: Text(student.grade),
+        trailing: AttendanceIndicator(studentId: student.id),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> kProfileMode ensures the overlay only appears in profile builds — never in production</li>
+      <li><span class="walk-num">2.</span> compute() sends rawJson to a background isolate — the UI thread is free to render while parsing happens</li>
+      <li><span class="walk-num">3.</span> _parseUsers must be a top-level function — closures capture context that cannot cross isolate boundaries</li>
+      <li><span class="walk-num">4.</span> BAD pattern: ref.watch(workspaceProvider) subscribes to the entire state — rebuilds on any field change</li>
+      <li><span class="walk-num">5.</span> GOOD pattern: .select() creates a derived stream — only rebuilds when the selected field value changes</li>
+      <li><span class="walk-num">6.</span> Timeline.startSync creates a named event in DevTools — visible as a labeled block in the flame graph</li>
+      <li><span class="walk-num">7.</span> Nested Timeline events show a hierarchy of work: LoadDashboard contains FetchUsers and BuildState</li>
+      <li><span class="walk-num">8.</span> RepaintBoundary on each list item isolates repaints — AttendanceIndicator animating does not repaint siblings</li>
+      <li><span class="walk-num">9.</span> memCacheWidth: 80 = 40 logical pixels times 2.0 DPR — decodes at physical resolution, not full source resolution</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class HeavyViewModel extends ChangeNotifier {
+  List&lt;Report&gt; _reports = [];
+
+  Future&lt;void&gt; loadReports() async {
+    final response = await _dio.get(&#39;/reports&#39;);
+    final jsonString = response.data.toString();
+    _reports = (jsonDecode(jsonString) as List)
+        .map((j) =&gt; Report.fromJson(j as Map&lt;String, dynamic&gt;))
+        .toList();
+    notifyListeners();
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Where is the heavy work running, and what is the performance consequence?</div></details><details><summary>Show answer</summary><div class="answer">The JSON parsing of large records runs synchronously on the UI thread inside loadReports(). jsonDecode and the .map() transformation for thousands of complex objects can easily take 50-200ms, causing dropped frames and visible jank while the UI freezes. Fix: extract the parsing into a top-level function and wrap it with compute(): _reports = await compute(_parseReports, jsonString). This moves the heavy work to a background isolate, keeping the UI thread free to render at 60fps during the parse.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your app is a restaurant kitchen and each frame is one dinner order. You have 16 seconds to plate each order. DevTools is a video camera watching every cook. The Performance overlay is the head chef shouting too slow when an order takes too long. The Timeline shows you exactly which cook is the bottleneck. Once you know Bob always takes 8 extra seconds, you can fix Bob specifically instead of retraining the whole kitchen.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Flutter team tracks jank rate — the percentage of frames that miss the 16ms target. In production Flutter apps at Google such as Google Pay, the engineering bar is less than 0.1% jank rate. That means in 1,000 frames of scrolling, at most 1 frame can be slow. Achieving this requires systematic profiling, not guesswork.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Conduct a performance investigation on a ListView.builder with 300 items where scroll jank is reported: (1) describe the step-by-step profiling process using DevTools, (2) identify three likely causes of jank given the context (list items with avatars, real-time unread badges), (3) apply the fixes (compute, RepaintBoundary, select, memCacheWidth), (4) write a performance assertion test.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/perf/ui-performance" target="_blank" rel="noopener noreferrer">Flutter Performance Profiling</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/tools/devtools/overview" target="_blank" rel="noopener noreferrer">Flutter DevTools</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/perf/best-practices" target="_blank" rel="noopener noreferrer">Flutter Performance Best Practices</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/foundation/compute.html" target="_blank" rel="noopener noreferrer">compute() Function</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://docs.flutter.dev/perf/rendering/best-practices" target="_blank" rel="noopener noreferrer">Widget Rebuild Optimization</a> <span class="res-source">(Flutter Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=29">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./28-caching-pagination-lazy-loading-list-performance.html" rel="prev">← Caching, Pagination, Lazy Loading &amp;…</a>
+  <a class="nav-next" href="./30-rendering-jank-impeller-memory-optimization.html" rel="next">Rendering, Jank, Impeller &amp; Memory… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

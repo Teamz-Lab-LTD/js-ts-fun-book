@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basic Shell Scripting for Operators — IT Jobs Bootcamp | Teamz Lab</title>
+<meta name="description" content="Shell scripting for operators is small, safe, repeatable automation. You’re not writing software products — you’re making the system click the same buttons…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/31-basic-shell-scripting-for-operators.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/30-ssh-hardening-remote-access.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/32-cia-triad-risk-least-privilege.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basic Shell Scripting for Operators">
+<meta property="og:description" content="Shell scripting for operators is small, safe, repeatable automation. You’re not writing software products — you’re making the system click the same buttons…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/31-basic-shell-scripting-for-operators.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Basic Shell Scripting for Operators">
+<meta name="twitter:description" content="Shell scripting for operators is small, safe, repeatable automation. You’re not writing software products — you’re making the system click the same buttons…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Basic Shell Scripting for Operators",
+  "description": "Shell scripting for operators is small, safe, repeatable automation. You’re not writing software products — you’re making the system click the same buttons…",
+  "url": "https://learn.teamzlab.com/lessons/it-jobs-bootcamp/31-basic-shell-scripting-for-operators.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Non-Coding IT Jobs Bootcamp",
+    "url": "https://learn.teamzlab.com/c/it-jobs-bootcamp.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 31
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IT Jobs Bootcamp",
+      "item": "https://learn.teamzlab.com/c/it-jobs-bootcamp.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Basic Shell Scripting for Operators",
+      "item": "https://learn.teamzlab.com/lessons/it-jobs-bootcamp/31-basic-shell-scripting-for-operators.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/it-jobs-bootcamp.html">IT Jobs Bootcamp</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/it-jobs-bootcamp.html">IT Jobs Bootcamp</a> / <span aria-current="page">Basic Shell Scripting for Operators</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 31 of 60</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Basic Shell Scripting for Operators</h1>
+<p class="lesson-subtitle">Small scripts, big leverage</p>
+
+<a class="cta-interactive" href="../../learn.html?course=it-jobs-bootcamp&amp;lesson=31">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A good ops script is a recipe card. It has a title, ingredients checked at the start, steps in order, a taste-test before serving, and a signal if something burned. Kitchens that cook from memory produce great chefs and terrible consistency.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Shell scripting for operators is small, safe, repeatable automation. You’re not writing software products — you’re making the system click the same buttons you would, but reliably and logged.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A healthcheck script pings a list of endpoints every 5 minutes, writes status to a log, and exits non-zero if any endpoint fails. A simple monitoring tool watches for non-zero exits and pages the on-call engineer. Two hours of writing prevents years of silent outages.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Shebang and safe options</strong> — Start every script with #!/usr/bin/env bash and set -euo pipefail. That tiny 2-line habit eliminates a huge class of silent failures.</li>
+      <li><strong>Variables and quoting</strong> — Use double quotes around variables: &quot;$HOST&quot; not $HOST. Unquoted variables cause pain when values contain spaces. Use ${VAR:-default} to handle missing values safely.</li>
+      <li><strong>Conditionals and tests</strong> — [[ -f file ]] for file exists, [[ -d dir ]] for dir, [[ -n str ]] non-empty string, [[ $a == $b ]] string compare, (( a &gt; b )) arithmetic. Know both [[ ]] and (( )) and use them deliberately.</li>
+      <li><strong>Loops the right way</strong> — for file in /var/log/*.log; do ... done. while IFS= read -r line; do ... done &lt; file. Don’t parse ls — loop files with glob patterns; shells handle spaces and newlines better.</li>
+      <li><strong>Functions and return codes</strong> — Wrap logic in small functions. Return 0 for success, non-zero for failure. Propagate failures with ‘|| return 1’. Keep scripts under 200 lines; beyond that, consider Python.</li>
+      <li><strong>Logging discipline</strong> — Timestamp every line. Log to a file with &gt;&gt; and 2&gt;&amp;1. Prefix with the script name. Use levels (INFO/WARN/ERROR) so future grep is easy.</li>
+      <li><strong>Exit codes that downstream tools trust</strong> — If your script is invoked by cron, systemd, or monitoring, its exit code is how the world knows. Exit non-zero on any real failure. Exit 0 silently on ‘nothing to do’ only when safe.</li>
+      <li><strong>When to stop writing bash</strong> — If you need JSON parsing, HTTP with retries, or complex logic, move to Python. jq is okay for light JSON, but avoid 500-line bash monsters. The right tool beats heroic scripting.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#!/usr/bin/env bash
+# /usr/local/bin/disk_alert.sh
+set -euo pipefail
+LOG=/var/log/disk_alert.log
+THRESHOLD=85
+
+log(){ printf &#39;%s [%s] %s\n&#39; &quot;$(date -Is)&quot; &quot;$1&quot; &quot;$2&quot; &gt;&gt; &quot;$LOG&quot;; }
+
+check_filesystem() {
+  local fs=&quot;$1&quot;
+  local pct
+  pct=$(df -P &quot;$fs&quot; | awk &#39;NR==2 {gsub(&quot;%&quot;,&quot;&quot;); print $5}&#39;)
+  if (( pct &gt;= THRESHOLD )); then
+    log ERROR &quot;$fs at ${pct}%% (&gt;= ${THRESHOLD}%%)&quot;
+    return 1
+  fi
+  log INFO &quot;$fs at ${pct}%%&quot;
+  return 0
+}
+
+rc=0
+for fs in / /var /home; do
+  check_filesystem &quot;$fs&quot; || rc=1
+done
+exit &quot;$rc&quot;</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Shebang and script path</li>
+      <li><span class="walk-num">2.</span> Safer bash options</li>
+      <li><span class="walk-num">3.</span> Log and threshold variables</li>
+      <li><span class="walk-num">4.</span> Blank separator</li>
+      <li><span class="walk-num">5.</span> log helper function</li>
+      <li><span class="walk-num">6.</span> Blank separator</li>
+      <li><span class="walk-num">7.</span> Check function header</li>
+      <li><span class="walk-num">8.</span> Read fs arg</li>
+      <li><span class="walk-num">9.</span> Parse df percent</li>
+      <li><span class="walk-num">10.</span> Compare to threshold</li>
+      <li><span class="walk-num">11.</span> Log ERROR and fail</li>
+      <li><span class="walk-num">12.</span> Log INFO and pass</li>
+      <li><span class="walk-num">13.</span> Blank separator</li>
+      <li><span class="walk-num">14.</span> Main loop</li>
+      <li><span class="walk-num">15.</span> Iterate over filesystems</li>
+      <li><span class="walk-num">16.</span> Accumulate failure bit</li>
+      <li><span class="walk-num">17.</span> Exit with final code</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#!/bin/bash
+FS=$1
+pct=$(df -P $FS | awk &#39;NR==2 {print $5}&#39;)
+if [ $pct -gt 85 ]; then echo full; fi</code></pre><details><summary>Need a hint?</summary><div class="hint">What are the unsafe parts here?</div></details><details><summary>Show answer</summary><div class="answer">Missing set -euo pipefail; variables not quoted; pct still contains ‘%’ from df and will break numeric comparison; no logging; no exit code for downstream monitoring. Fix: add safe options, quote &quot;$FS&quot;, strip % with awk gsub, use (( pct &gt;= 85 )), and exit non-zero on failure with logged context.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">A script is a recipe the computer follows perfectly, every time. A bad recipe leaves out steps and doesn’t say if the cake burned. A good recipe tells you clearly what happened — even at 3 AM.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Many of the most reliable scripts in corporate IT are short: 20–60 lines, well-logged, and running unchanged for years. Length is not quality; discipline is.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a bash script that checks disk usage on /, /var, /home; logs each result; and exits non-zero if any is above 85%. Test it with a synthetic threshold to prove the failure path works.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.gnu.org/software/bash/manual/" target="_blank" rel="noopener noreferrer">Bash manual</a> <span class="res-source">(GNU)</span></li>
+      <li><a href="https://www.shellcheck.net/" target="_blank" rel="noopener noreferrer">ShellCheck</a> <span class="res-source">(ShellCheck)</span></li>
+      <li><a href="https://www.youtube.com/@LearnLinuxTV" target="_blank" rel="noopener noreferrer">Bash scripting for sysadmins</a> <span class="res-source">(Learn Linux TV)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=it-jobs-bootcamp&amp;lesson=31">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./30-ssh-hardening-remote-access.html" rel="prev">← SSH, Hardening &amp; Remote Access</a>
+  <a class="nav-next" href="./32-cia-triad-risk-least-privilege.html" rel="next">CIA Triad, Risk &amp; Least Privilege →</a>
+</nav>
+
+<a class="back-to-course" href="/c/it-jobs-bootcamp.html">← Back to course: IT Jobs Bootcamp</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Row &amp; Column Layout — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Row and Column are the two fundamental layout widgets in Flutter. Row arranges children horizontally, Column arranges them vertically. Together with…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Row &amp; Column Layout">
+<meta property="og:description" content="Row and Column are the two fundamental layout widgets in Flutter. Row arranges children horizontally, Column arranges them vertically. Together with…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Row &amp; Column Layout">
+<meta name="twitter:description" content="Row and Column are the two fundamental layout widgets in Flutter. Row arranges children horizontally, Column arranges them vertically. Together with…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Row & Column Layout",
+  "description": "Row and Column are the two fundamental layout widgets in Flutter. Row arranges children horizontally, Column arranges them vertically. Together with…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 22
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Row & Column Layout",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Row &amp; Column Layout</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 22 of 51</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Row &amp; Column Layout</h1>
+<p class="lesson-subtitle">Horizontal and Vertical Arrangement</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=22">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Row and Column are like organizing books. A Row is a bookshelf where books stand side by side horizontally. A Column is a stack of books piled on top of each other vertically. MainAxisAlignment is how you space them along the shelf (or stack), and CrossAxisAlignment is how you align them perpendicular to that direction.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Row and Column are the two fundamental layout widgets in Flutter. Row arranges children horizontally, Column arranges them vertically. Together with MainAxisAlignment, CrossAxisAlignment, Expanded, Flexible, and Spacer, they handle the vast majority of Flutter layouts through simple composition.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, nearly every screen uses Row and Column. Login forms use Column to stack fields vertically. App bars use Row for horizontal icon arrangement. List tiles combine both: a Row with an icon, a Column of title and subtitle, and a trailing action. Mastering Row and Column is mastering Flutter layout.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Column Widget</strong> — Column arranges its children widgets vertically from top to bottom. Its main axis runs vertically and its cross axis runs horizontally. Wrap multiple widgets in a Column to stack them. By default, a Column takes the full available height of its parent.</li>
+      <li><strong>Row Widget</strong> — Row arranges its children widgets horizontally from left to right. Its main axis runs horizontally and its cross axis runs vertically. Use Row to place widgets side by side, like an icon next to a label or a profile picture beside a username.</li>
+      <li><strong>MainAxisAlignment</strong> — MainAxisAlignment controls how children are spaced along the main axis (vertical for Column, horizontal for Row). Values include: start (bunch at beginning), end (bunch at end), center (middle), spaceBetween (equal space between), spaceAround (equal space around each), and spaceEvenly (equal space everywhere).</li>
+      <li><strong>CrossAxisAlignment</strong> — CrossAxisAlignment controls how children align along the cross axis (horizontal for Column, vertical for Row). Values include: start, end, center (default), stretch (expand to fill cross axis), and baseline (align text baselines). Use stretch to make all children the same width in a Column.</li>
+      <li><strong>Expanded Widget</strong> — Expanded makes a child widget fill all remaining space along the main axis. If multiple Expanded widgets exist, they share the space equally by default. Use the flex property to control the ratio: flex: 2 takes twice the space of flex: 1. Expanded prevents overflow errors when content is too wide or tall.</li>
+      <li><strong>Flexible Widget</strong> — Flexible is like Expanded but optional — it CAN take extra space but does not have to. With FlexFit.loose, the child sizes itself naturally but won&#39;t exceed its flex share. With FlexFit.tight (which is what Expanded uses), the child MUST fill its flex share. Use Flexible when you want proportional sizing without forcing fill.</li>
+      <li><strong>Spacer Widget</strong> — Spacer is a convenience widget that creates an empty Expanded widget. It takes up all remaining space between widgets in a Row or Column. Use Spacer to push widgets apart without calculating padding manually. Multiple Spacers share space equally.</li>
+      <li><strong>Nesting Row and Column</strong> — Real layouts combine Row and Column by nesting them. A Column can contain Rows, and Rows can contain Columns. This composition pattern builds any layout: a card with a title row and description column, a list item with icon, text column, and trailing action.</li>
+      <li><strong>MainAxisSize</strong> — MainAxisSize controls whether a Row or Column takes the maximum or minimum space along its main axis. MainAxisSize.max (default) stretches to fill the parent. MainAxisSize.min shrinks to fit its children. Use min when you want a Row or Column to be only as big as its content.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:flutter/material.dart&#39;;
+
+class UserCard extends StatelessWidget {
+  final String name;
+  final String email;
+  final String role;
+
+  const UserCard({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.role,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            const CircleAvatar(
+              radius: 28,
+              child: Icon(Icons.person, size: 28),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    email,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                role,
+                style: TextStyle(
+                  color: Colors.blue.shade700,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Import the Material package</li>
+      <li><span class="walk-num">2.</span> </li>
+      <li><span class="walk-num">3.</span> Define UserCard as a StatelessWidget since it just displays data</li>
+      <li><span class="walk-num">4.</span> Declare required fields: name, email, and role</li>
+      <li><span class="walk-num">5.</span> </li>
+      <li><span class="walk-num">6.</span> </li>
+      <li><span class="walk-num">7.</span> </li>
+      <li><span class="walk-num">8.</span> </li>
+      <li><span class="walk-num">9.</span> Build method returns the widget tree</li>
+      <li><span class="walk-num">10.</span> Return a Card widget for the elevated surface look</li>
+      <li><span class="walk-num">11.</span> Pad the card content by 16 pixels on all sides</li>
+      <li><span class="walk-num">12.</span> </li>
+      <li><span class="walk-num">13.</span> Row arranges avatar, text, and badge horizontally</li>
+      <li><span class="walk-num">14.</span> </li>
+      <li><span class="walk-num">15.</span> CircleAvatar creates a round profile picture placeholder</li>
+      <li><span class="walk-num">16.</span> Set radius to 28 for a medium-sized avatar</li>
+      <li><span class="walk-num">17.</span> Person icon inside the avatar</li>
+      <li><span class="walk-num">18.</span> </li>
+      <li><span class="walk-num">19.</span> SizedBox adds 16px horizontal gap between avatar and text</li>
+      <li><span class="walk-num">20.</span> Expanded makes the text column fill remaining space</li>
+      <li><span class="walk-num">21.</span> Column stacks name and email vertically</li>
+      <li><span class="walk-num">22.</span> CrossAxisAlignment.start left-aligns the text</li>
+      <li><span class="walk-num">23.</span> </li>
+      <li><span class="walk-num">24.</span> Display the name with titleMedium theme style</li>
+      <li><span class="walk-num">25.</span> </li>
+      <li><span class="walk-num">26.</span> </li>
+      <li><span class="walk-num">27.</span> SizedBox adds 4px gap between name and email</li>
+      <li><span class="walk-num">28.</span> </li>
+      <li><span class="walk-num">29.</span> Display email with bodySmall theme style (lighter color)</li>
+      <li><span class="walk-num">30.</span> </li>
+      <li><span class="walk-num">31.</span> </li>
+      <li><span class="walk-num">32.</span> </li>
+      <li><span class="walk-num">33.</span> Container wraps the role badge</li>
+      <li><span class="walk-num">34.</span> Symmetric padding: 12px horizontal, 6px vertical</li>
+      <li><span class="walk-num">35.</span> </li>
+      <li><span class="walk-num">36.</span> BoxDecoration adds background color and rounded corners</li>
+      <li><span class="walk-num">37.</span> Light blue background</li>
+      <li><span class="walk-num">38.</span> 16px border radius for pill shape</li>
+      <li><span class="walk-num">39.</span> </li>
+      <li><span class="walk-num">40.</span> Text displays the role string</li>
+      <li><span class="walk-num">41.</span> Styled with dark blue color, small font, semibold weight</li>
+      <li><span class="walk-num">42.</span> </li>
+      <li><span class="walk-num">43.</span> </li>
+      <li><span class="walk-num">44.</span> </li>
+      <li><span class="walk-num">45.</span> </li>
+      <li><span class="walk-num">46.</span> </li>
+      <li><span class="walk-num">47.</span> </li>
+      <li><span class="walk-num">48.</span> </li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>Row(
+  children: [
+    Text(&#39;A very long text that keeps going and going&#39;),
+    Text(&#39;Another long text that also keeps going&#39;),
+  ],
+)</code></pre><details><summary>Need a hint?</summary><div class="hint">What happens when children in a Row are wider than the screen?</div></details><details><summary>Show answer</summary><div class="answer">The Row overflows because both Text widgets try to take their natural width, which exceeds the screen. Fix: wrap one or both Text widgets in Expanded or Flexible so they share the available space and wrap their text: Expanded(child: Text(&#39;A very long text...&#39;))</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have toy blocks. Column is when you stack blocks into a tower going up. Row is when you line blocks up in a train going sideways. MainAxisAlignment is like choosing whether to bunch the blocks at one end, spread them out evenly, or put them in the middle. And Expanded is like a stretchy block that grows to fill any empty space so there are no gaps!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Flutter&#39;s layout system is inspired by the CSS Flexbox model from web development. Row is like display: flex with flex-direction: row, and Column is like flex-direction: column. If you know Flexbox, you already understand Flutter layout!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a profile card that uses a Row for the top section (avatar on the left, Column of name and bio on the right), a Row of stat counters (posts, followers, following) using Expanded with equal flex, and a Row of two buttons (Follow as Expanded ElevatedButton, Message as Expanded OutlinedButton) with a SizedBox gap between them.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/ui/layout" target="_blank" rel="noopener noreferrer">Layouts in Flutter</a> <span class="res-source">(Flutter Official)</span></li>
+      <li><a href="https://api.flutter.dev/flutter/widgets/Row-class.html" target="_blank" rel="noopener noreferrer">Row Class</a> <span class="res-source">(Flutter API)</span></li>
+      <li><a href="https://docs.flutter.dev/ui/layout/constraints" target="_blank" rel="noopener noreferrer">Understanding Constraints</a> <span class="res-source">(Flutter Official)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=22">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./21-buttons-user-interactions.html" rel="prev">← Buttons &amp; User Interactions</a>
+  <a class="nav-next" href="./23-container-padding-sizedbox.html" rel="next">Container, Padding &amp; SizedBox →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

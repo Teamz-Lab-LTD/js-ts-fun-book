@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Types Deep Dive — Choosing the Right Box — CP… | Teamz Lab</title>
+<meta name="description" content="Data types tell C++ what kind of value a variable holds and how much memory to reserve. Choosing the right type is crucial in CP — too small and you get…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/07-data-types-deep-dive-choosing-the-right-box.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/06-math-operations-your-code-calculator.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/08-if-else-teaching-your-code-to-make-decisions.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Types Deep Dive — Choosing the Right Box">
+<meta property="og:description" content="Data types tell C++ what kind of value a variable holds and how much memory to reserve. Choosing the right type is crucial in CP — too small and you get…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-image.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/cp-kids/07-data-types-deep-dive-choosing-the-right-box.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data Types Deep Dive — Choosing the Right Box">
+<meta name="twitter:description" content="Data types tell C++ what kind of value a variable holds and how much memory to reserve. Choosing the right type is crucial in CP — too small and you get…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Data Types Deep Dive — Choosing the Right Box",
+  "description": "Data types tell C++ what kind of value a variable holds and how much memory to reserve. Choosing the right type is crucial in CP — too small and you get…",
+  "url": "https://learn.teamzlab.com/lessons/cp-kids/07-data-types-deep-dive-choosing-the-right-box.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Beginner",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Competitive Programming: Zero to Hero",
+    "url": "https://learn.teamzlab.com/c/cp-kids.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 7
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "CP Zero to Hero",
+      "item": "https://learn.teamzlab.com/c/cp-kids.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Data Types Deep Dive — Choosing the Right Box",
+      "item": "https://learn.teamzlab.com/lessons/cp-kids/07-data-types-deep-dive-choosing-the-right-box.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/cp-kids.html">CP Zero to Hero</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/cp-kids.html">CP Zero to Hero</a> / <span aria-current="page">Data Types Deep Dive — Choosing the Right Box</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 7 of 50</span>
+  <span class="badge diff-beginner">beginner</span>
+</div>
+
+<h1 class="lesson-title">Data Types Deep Dive — Choosing the Right Box</h1>
+<p class="lesson-subtitle">Learn why picking the right data type matters — and how overflow can silently destroy your CP solutions!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=7">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Data types are like different-sized boxes. An &#39;int&#39; is a medium box that holds numbers up to about 2 billion. A &#39;long long&#39; is a giant crate that holds numbers up to 9 quintillion. A &#39;double&#39; is a special box that can hold numbers with decimal points. If you try to stuff a giant number into a medium box, it OVERFLOWS — like trying to pour a swimming pool into a teacup. The water spills and you get garbage!</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Data types tell C++ what kind of value a variable holds and how much memory to reserve. Choosing the right type is crucial in CP — too small and you get overflow bugs, too big and you waste memory. The main types are int, long long, double, char, string, and bool.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Data types matter everywhere in computing. Banks use precise types for money (you do not want rounding errors with someone&#39;s salary!). Video games use different types for health (int), position (double), and alive/dead (bool). In CP, the wrong data type is the difference between Accepted and Wrong Answer.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>int — Your Everyday Number Box</strong> — An &#39;int&#39; stores whole numbers from about -2 billion to +2 billion (exactly -2,147,483,648 to 2,147,483,647). That is roughly ±2 × 10^9. For most CP problems, int is enough. It uses 4 bytes (32 bits) of memory. Think of it as your go-to type — use int unless you have a reason not to!</li>
+      <li><strong>long long — The Giant Number Crate</strong> — A &#39;long long&#39; stores whole numbers up to about ±9.2 × 10^18 (that is 9 quintillion — a number with 18 zeros!). It uses 8 bytes (64 bits). In CP, MANY problems need long long because they multiply big numbers or add lots of things. Rule of thumb: if a problem says n can be up to 10^9, and you multiply two of them, the result can be 10^18 — you NEED long long!</li>
+      <li><strong>Overflow — The Silent Killer</strong> — Overflow happens when a number gets too big for its type. If an int holds 2,147,483,647 and you add 1, it wraps around to -2,147,483,648! The program does NOT crash or warn you — it just gives wrong answers silently. This is the #1 sneaky bug in CP. You submit, get Wrong Answer, and spend an hour debugging when the fix is just changing int to long long!</li>
+      <li><strong>double — The Decimal Box</strong> — A &#39;double&#39; stores decimal (floating-point) numbers like 3.14159 or -0.001. It can hold very large and very small numbers, but it is not perfectly precise — 0.1 + 0.2 might give 0.30000000000004 instead of exactly 0.3! In CP, use double when the problem specifically asks for decimal output. Otherwise, stick to integers.</li>
+      <li><strong>Type Casting — Changing Boxes</strong> — You can convert between types using casting. (int)3.7 gives 3 (chops off the decimal, does NOT round). (double)5 / 2 gives 2.5 (forces decimal division). (long long)a * b does the multiplication with big numbers. Casting is your tool for telling C++: &#39;Hey, treat this number differently for a moment!&#39;</li>
+      <li><strong>When to Use What — The CP Cheat Sheet</strong> — Use &#39;int&#39; for numbers up to about 2 billion. Use &#39;long long&#39; when: the problem has numbers &gt; 10^9, or you multiply/add numbers that could exceed 2 billion, or the problem says &#39;print answer modulo 10^9+7&#39; (intermediate values might be huge). Use &#39;double&#39; only when the problem asks for decimal output.</li>
+      <li><strong>char and string — Text Types</strong> — A &#39;char&#39; holds a single character like &#39;A&#39; or &#39;7&#39;. A &#39;string&#39; holds a sequence of characters like &#39;hello&#39;. Characters have numeric values (ASCII): &#39;A&#39; is 65, &#39;a&#39; is 97, &#39;0&#39; is 48. This is useful in CP — you can do math with characters! &#39;a&#39; + 1 gives &#39;b&#39;. We will use these more in later lessons.</li>
+      <li><strong>bool — True or False</strong> — A &#39;bool&#39; holds either true or false. It uses just 1 byte. You will use bools for flags: bool found = false; then later found = true; when you discover something in your search. In C++, true is treated as 1 and false as 0, so you can even do math with them!</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    // int: up to ~2 billion
+    int a = 1000000000;  // 1 billion — fits in int
+    // int overflow example:
+    // int bad = a * 3;  // OVERFLOW! 3 billion &gt; int max
+
+    // long long: up to ~9.2 * 10^18
+    long long big = (long long)a * 3;  // Cast BEFORE multiply!
+    cout &lt;&lt; &quot;big = &quot; &lt;&lt; big &lt;&lt; &quot;\n&quot;;   // 3000000000
+
+    // double: decimal numbers
+    double pi = 3.14159265358979;
+    cout &lt;&lt; fixed &lt;&lt; setprecision(6) &lt;&lt; pi &lt;&lt; &quot;\n&quot;; // 3.141593
+
+    // Integer division vs real division
+    int x = 5, y = 2;
+    cout &lt;&lt; x / y &lt;&lt; &quot;\n&quot;;           // 2 (integer division)
+    cout &lt;&lt; (double)x / y &lt;&lt; &quot;\n&quot;;   // 2.5 (real division)
+
+    // Type casting: double to int truncates
+    double d = 3.99;
+    int truncated = (int)d;
+    cout &lt;&lt; truncated &lt;&lt; &quot;\n&quot;;  // 3 (NOT 4! it chops, not rounds)
+
+    // Checking overflow: max values
+    cout &lt;&lt; &quot;int max: &quot; &lt;&lt; INT_MAX &lt;&lt; &quot;\n&quot;;       // 2147483647
+    cout &lt;&lt; &quot;long long max: &quot; &lt;&lt; LLONG_MAX &lt;&lt; &quot;\n&quot;; // 9223372036854775807
+
+    return 0;
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> int a = 1000000000; — we store 1 billion in an int. This fits fine because int can hold up to about 2.1 billion.</li>
+      <li><span class="walk-num">2.</span> // int bad = a * 3; — DO NOT do this! 1 billion × 3 = 3 billion, which is bigger than int&#39;s max of ~2.1 billion. This would overflow and give a wrong negative number.</li>
+      <li><span class="walk-num">3.</span> long long big = (long long)a * 3; — the (long long) cast converts a to a long long BEFORE the multiplication happens. Now the math is done in long long space, and 3 billion fits perfectly.</li>
+      <li><span class="walk-num">4.</span> cout &lt;&lt; big; — prints 3000000000. Without the cast, this would have printed a garbage negative number!</li>
+      <li><span class="walk-num">5.</span> double pi = 3.14159265358979; — we store pi in a double. Doubles can hold about 15-16 significant digits.</li>
+      <li><span class="walk-num">6.</span> cout &lt;&lt; fixed &lt;&lt; setprecision(6) &lt;&lt; pi; — prints 3.141593 with exactly 6 decimal places.</li>
+      <li><span class="walk-num">7.</span> cout &lt;&lt; x / y; — integer division: 5/2 = 2. The .5 is thrown away because both x and y are int.</li>
+      <li><span class="walk-num">8.</span> cout &lt;&lt; (double)x / y; — casting x to double forces real division: 5.0/2 = 2.5.</li>
+      <li><span class="walk-num">9.</span> int truncated = (int)d; — converting 3.99 to int gives 3. It CHOPS the decimal, it does NOT round up!</li>
+      <li><span class="walk-num">10.</span> cout &lt;&lt; INT_MAX; — prints 2147483647, the largest number an int can hold. Know this number — it will save you from overflow bugs!</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    int product = a * b;
+    cout &lt;&lt; product &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">If a and b can each be up to 1,000,000,000 (10^9), what happens when you multiply them and store the result in an int?</div></details><details><summary>Show answer</summary><div class="answer">The bug is overflow! If a = 1000000000 and b = 3, then a * b = 3000000000, which exceeds the int maximum of 2147483647. The result wraps around to a negative number. The fix: change &#39;int product&#39; to &#39;long long product&#39; AND cast before multiplying: long long product = (long long)a * b; — the cast ensures the multiplication itself happens in long long.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have three piggy banks: a small one (int) that holds up to 2 billion coins, a HUGE one (long long) that holds 9 quintillion coins, and a magic one (double) that can hold half-coins and quarter-coins. If you try to put too many coins in the small piggy bank, they spill out and you lose count — that is overflow! Always pick a piggy bank big enough for your coins.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The number 2,147,483,647 (the maximum int value) is actually a prime number! It is 2^31 - 1, also called a Mersenne prime. CP contestants have this number practically tattooed on their brains because hitting it means overflow. Pro tip: if your answer should be positive but you see negative numbers appearing, overflow is almost certainly the culprit!</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Write a program that reads two integers a and b (each up to 10^9). Print their product. Be careful — the product of two numbers up to 10^9 can be up to 10^18, which overflows int! Make sure you use the right data type. Test with a=1000000000, b=3. You should get 3000000000, not a weird negative number.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://cp-algorithms.com/" target="_blank" rel="noopener noreferrer">CP-Algorithms — Data Types and Overflow</a> <span class="res-source">(CP-Algorithms)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=WpF4EHdFiAA" target="_blank" rel="noopener noreferrer">C++ Data Types for Competitive Programming</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://codeforces.com/problemset/problem/71/A" target="_blank" rel="noopener noreferrer">Codeforces — Way Too Long Words</a> <span class="res-source">(Codeforces)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=7">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./06-math-operations-your-code-calculator.html" rel="prev">← Math Operations — Your Code Calculator</a>
+  <a class="nav-next" href="./08-if-else-teaching-your-code-to-make-decisions.html" rel="next">If-Else — Teaching Your Code to Make… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/cp-kids.html">← Back to course: CP Zero to Hero</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

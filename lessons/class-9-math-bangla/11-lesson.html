@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ফাংশনের ধারণা — নবম শ্রেণি গণিত | Teamz Lab</title>
+<meta name="description" content="ফাংশন হলো দুটো সেটের মধ্যে একটা বিশেষ সম্পর্ক, যেখানে প্রথম সেটের (ডোমেইন) প্রতিটা সদস্য দ্বিতীয় সেটের (কো-ডোমেইন) ঠিক একটা সদস্যের সাথে সম্পর্কিত। সহজ…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/class-9-math-bangla/11-lesson.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/class-9-math-bangla/10-lesson.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/class-9-math-bangla/12-lesson.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="ফাংশনের ধারণা">
+<meta property="og:description" content="ফাংশন হলো দুটো সেটের মধ্যে একটা বিশেষ সম্পর্ক, যেখানে প্রথম সেটের (ডোমেইন) প্রতিটা সদস্য দ্বিতীয় সেটের (কো-ডোমেইন) ঠিক একটা সদস্যের সাথে সম্পর্কিত। সহজ…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-class9-math.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/class-9-math-bangla/11-lesson.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="bn_BD">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ফাংশনের ধারণা">
+<meta name="twitter:description" content="ফাংশন হলো দুটো সেটের মধ্যে একটা বিশেষ সম্পর্ক, যেখানে প্রথম সেটের (ডোমেইন) প্রতিটা সদস্য দ্বিতীয় সেটের (কো-ডোমেইন) ঠিক একটা সদস্যের সাথে সম্পর্কিত। সহজ…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-class9-math.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "ফাংশনের ধারণা",
+  "description": "ফাংশন হলো দুটো সেটের মধ্যে একটা বিশেষ সম্পর্ক, যেখানে প্রথম সেটের (ডোমেইন) প্রতিটা সদস্য দ্বিতীয় সেটের (কো-ডোমেইন) ঠিক একটা সদস্যের সাথে সম্পর্কিত। সহজ…",
+  "url": "https://learn.teamzlab.com/lessons/class-9-math-bangla/11-lesson.html",
+  "inLanguage": "bn",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "নবম শ্রেণির গণিত — শূন্য থেকে পরীক্ষায় ৯৫+",
+    "url": "https://learn.teamzlab.com/c/class-9-math-bangla.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 11
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "নবম শ্রেণি গণিত",
+      "item": "https://learn.teamzlab.com/c/class-9-math-bangla.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "ফাংশনের ধারণা",
+      "item": "https://learn.teamzlab.com/lessons/class-9-math-bangla/11-lesson.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/class-9-math-bangla.html">নবম শ্রেণি গণিত</a>
+      <a class="nav-link" href="/">হোম</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">হোম</a> / <a href="/c/class-9-math-bangla.html">নবম শ্রেণি গণিত</a> / <span aria-current="page">ফাংশনের ধারণা</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">পাঠ 11 / 78</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">ফাংশনের ধারণা</h1>
+<p class="lesson-subtitle">ইনপুট দাও, আউটপুট নাও — ফাংশন মেশিন!</p>
+
+<a class="cta-interactive" href="../../learn.html?course=class-9-math-bangla&amp;lesson=11">ইন্টারঅ্যাক্টিভ ভার্সন খুলুন (কুইজ + চ্যালেঞ্জ)</a>
+
+<section class="section"><h2>বাস্তব জীবনের উদাহরণ</h2><div class="analogy-box">ফাংশন হলো তোমার মায়ের ব্লেন্ডারের মতো! আম দিলে আমের জুস আসে, কমলা দিলে কমলার জুস। কিন্তু একই ফল দিলে সবসময় একই জুস আসবে — আম দিয়ে কখনো কমলার জুস আসবে না! এটাই ফাংশনের নিয়ম: প্রতিটা ইনপুটের জন্য একটাই আউটপুট। ইনপুটের সেটকে বলে ডোমেইন (কোন কোন ফল দিতে পারো), আউটপুটের সেটকে বলে রেঞ্জ (কোন কোন জুস আসে)!</div></section>
+
+<section class="section"><h2>কী এটি?</h2><p>ফাংশন হলো দুটো সেটের মধ্যে একটা বিশেষ সম্পর্ক, যেখানে প্রথম সেটের (ডোমেইন) প্রতিটা সদস্য দ্বিতীয় সেটের (কো-ডোমেইন) ঠিক একটা সদস্যের সাথে সম্পর্কিত। সহজ কথায়: এক ইনপুটে এক আউটপুট, কখনো একাধিক না!</p></section>
+
+<section class="section"><h2>বাস্তব প্রয়োগ</h2><p>তোমার বিদ্যুৎ বিল ভাবো — কত ইউনিট ব্যবহার করলে (ইনপুট) কত টাকা বিল আসবে (আউটপুট), এটা একটা ফাংশন! মোবাইলে ফ্লেক্সিলোড করো: ৫০ টাকা লোড = ৪২ টাকা ব্যালেন্স (ভ্যাটের পর) — এটাও ফাংশন। রাইড শেয়ারিং অ্যাপে (Pathao, Uber) দূরত্ব ইনপুট দিলে ভাড়া আসে — ফাংশন। CGPA ক্যালকুলেশন: সাবজেক্টের নম্বর ইনপুট, গ্রেড আউটপুট — ফাংশন। এমনকি তোমার জাতীয় পরিচয়পত্র নম্বর (NID) থেকে তোমার নাম বের করাও ফাংশন — প্রতিটি NID-তে ঠিক একজনের নাম আছে। প্রোগ্রামিংয়ে function ছাড়া কোনো অ্যাপই বানানো যায় না!</p></section>
+
+<section class="section"><h2>মূল পয়েন্টসমূহ</h2><ul class="points-list">
+      <li><strong>ফাংশন (Function) কী?</strong> — ফাংশন হলো দুটি সেটের মধ্যে এমন একটা সম্পর্ক যেখানে প্রথম সেটের প্রতিটি উপাদানের জন্য দ্বিতীয় সেটে ঠিক একটি উপাদান নির্ধারিত থাকে। f: A → B লেখা হয়, মানে A থেকে B-তে ফাংশন f।</li>
+      <li><strong>ডোমেন (Domain)</strong> — ফাংশনে যে সেট থেকে ইনপুট নেওয়া হয় সেটাই ডোমেন। f(x) = 2x + 1 হলে x যেসব মান নিতে পারে সেগুলোর সেটই ডোমেন। সহজ ভাষায়: &#39;কী দেওয়া যাবে&#39; তার তালিকা।</li>
+      <li><strong>রেঞ্জ (Range)</strong> — ফাংশনের আউটপুট যেসব মান হয় সেগুলোর সেটই রেঞ্জ। সহজ ভাষায়: &#39;কী পাওয়া যায়&#39; তার তালিকা। রেঞ্জ সবসময় কো-ডোমেনের উপসেট বা সমান।</li>
+      <li><strong>কো-ডোমেন (Co-domain) vs রেঞ্জ</strong> — কো-ডোমেন হলো আউটপুট যেসব মান নিতে পারে তার পুরো সেট। রেঞ্জ হলো আসলে যেসব মান আসে। কো-ডোমেন বড়, রেঞ্জ তার ভিতরের অংশ। যেমন: একটা দোকানে ১০০ ধরনের জিনিস আছে (কো-ডোমেন), কিন্তু তুমি মাত্র ৫টা কেনো (রেঞ্জ)।</li>
+      <li><strong>ফাংশন কি না — কীভাবে বুঝবে?</strong> — দুটি শর্ত পূরণ হতে হবে: ১) ডোমেনের প্রতিটি উপাদানের একটা ইমেজ থাকতে হবে (কাউকে বাদ দেওয়া যাবে না)। ২) একটি উপাদানের একটির বেশি ইমেজ থাকা যাবে না। যেকোনো একটা শর্ত ভাঙলেই ফাংশন না।</li>
+      <li><strong>তীরচিত্র (Arrow/Mapping Diagram)</strong> — ফাংশনকে তীরচিত্র দিয়ে দেখানো যায়। বাম দিকে ডোমেনের উপাদান, ডান দিকে কো-ডোমেনের উপাদান, তীর দিয়ে সম্পর্ক দেখানো হয়। প্রতিটি বাম দিকের উপাদান থেকে ঠিক একটা তীর যাবে।</li>
+      <li><strong>ফাংশনের মান নির্ণয়</strong> — f(x) = 3x − 2 হলে f(5) মানে x-এর জায়গায় 5 বসাও: f(5) = 3(5) − 2 = 13। এভাবে যেকোনো x-এর জন্য ফাংশনের মান বের করতে পারো।</li>
+      <li><strong>এক-এক ফাংশন (One-to-One / Injective)</strong> — যদি ডোমেনের ভিন্ন ভিন্ন উপাদানের ইমেজও ভিন্ন ভিন্ন হয়, তাহলে ফাংশনটি এক-এক। অর্থাৎ f(a) = f(b) হলে a = b হতে হবে। কো-ডোমেনের কোনো উপাদানে একাধিক তীর আসে না।</li>
+      <li><strong>সার্বিক ফাংশন (Onto / Surjective)</strong> — কো-ডোমেনের প্রতিটি উপাদান রেঞ্জে থাকলে ফাংশনটি সার্বিক বা onto। মানে কো-ডোমেন = রেঞ্জ। কো-ডোমেনে কোনো &#39;বাকি&#39; উপাদান থাকে না।</li>
+    </ul></section>
+
+<section class="section"><h2>কোড উদাহরণ</h2><pre class="code"><code>সমস্যা: f(x) = 2x² − 3x + 1 হলে
+f(0), f(2), f(−1) এবং f(a+1) নির্ণয় করো।
+
+ধাপ ১: f(0) নির্ণয়
+f(0) = 2(0)² − 3(0) + 1
+     = 0 − 0 + 1
+     = 1
+
+ধাপ ২: f(2) নির্ণয়
+f(2) = 2(2)² − 3(2) + 1
+     = 2(4) − 6 + 1
+     = 8 − 6 + 1
+     = 3
+
+ধাপ ৩: f(−1) নির্ণয়
+f(−1) = 2(−1)² − 3(−1) + 1
+      = 2(1) + 3 + 1
+      = 6
+
+ধাপ ৪: f(a+1) নির্ণয়
+f(a+1) = 2(a+1)² − 3(a+1) + 1
+       = 2(a² + 2a + 1) − 3a − 3 + 1
+       = 2a² + 4a + 2 − 3a − 3 + 1
+       = 2a² + a</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">লাইন-বাই-লাইন ব্যাখ্যা</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> f(x) = 2x² − 3x + 1 — এটা আমাদের ফাংশন, x হলো ইনপুট</li>
+      <li><span class="walk-num">2.</span> f(0): x-এর জায়গায় 0 বসাই → 2(0)² − 3(0) + 1 = 1</li>
+      <li><span class="walk-num">3.</span> f(2): x-এর জায়গায় 2 বসাই → 2(4) − 6 + 1 = 3</li>
+      <li><span class="walk-num">4.</span> f(−1): সাবধান! (−1)² = +1 হয়, আর −3(−1) = +3 হয়</li>
+      <li><span class="walk-num">5.</span> তাই f(−1) = 2(1) + 3 + 1 = 6</li>
+      <li><span class="walk-num">6.</span> f(a+1): x-এর বদলে (a+1) বসাই, বীজগণিত ব্যবহার করি</li>
+      <li><span class="walk-num">7.</span> (a+1)² = a² + 2a + 1 — এটা ভুলো না!</li>
+      <li><span class="walk-num">8.</span> সব সরলীকরণ করলে পাই 2a² + a</li>
+    </ol></section>
+
+<section class="section"><h2>বাগ খুঁজে বের করুন</h2><div class="bug-challenge"><pre class="code"><code>f(x) = x + 3
+f(2) = 2 + 3 = 5
+f(5) = 5 + 3 = 8
+∴ f(f(2)) = f(2) + f(5) = 5 + 8 = 13</code></pre><details><summary>Need a hint?</summary><div class="hint">f(f(2)) মানে কী? প্রথমে f(2) বের করো, তারপর সেই মান আবার ফাংশনে দাও।</div></details><details><summary>Show answer</summary><div class="answer">f(f(2)) = f(5) = 8, যোগ করার কিছু নেই। f(f(2)) মানে f(2)-এর আউটপুট (যেটা 5) আবার ফাংশনে ইনপুট দেওয়া, f(2) + f(5) নয়। সঠিক উত্তর: 8।</div></details></div></section>
+
+<section class="section"><h2>একদম সহজ ভাষায়</h2><div class="eli5-box">ফাংশন হলো একটা ম্যাজিক বক্স। তুমি বক্সে একটা নম্বর ফেলো, বক্স কিছু একটা করে (যেমন ডাবল করে), তারপর আরেকটা নম্বর বের করে দেয়। ২ ফেললে ৪ আসে, ৩ ফেললে ৬ আসে। কিন্তু ২ ফেলে কখনো ৫ আসবে না — সেটাই ফাংশনের প্রমিজ!</div></section>
+
+<section class="section"><h2>মজার তথ্য</h2><div class="funfact-box">তুমি প্রতিদিন ফাংশন ব্যবহার করো জানো? ATM মেশিনে কার্ড দিলে (ইনপুট) টাকা আসে (আউটপুট)। Google-এ সার্চ দিলে (ইনপুট) রেজাল্ট আসে (আউটপুট)। তোমার নাম বললে (ইনপুট) রোল নম্বর আসে (আউটপুট) — সবই ফাংশন!</div></section>
+
+<section class="section"><h2>হ্যান্ডস-অন চ্যালেঞ্জ</h2><div class="challenge-box">ফাংশন ডিটেকটিভ! নিচের কোনগুলো ফাংশন বলো: ১) ছাত্রের নাম → রোল নম্বর, ২) রোল নম্বর → মার্কস, ৩) ছাত্রের নাম → জন্মতারিখ (যমজ থাকলে?), ৪) x → x². এবার f(x) = 2x + 3 হলে f(1), f(5), f(−2) বের করো!</div></section>
+
+<section class="section"><h2>আরও রিসোর্স</h2><ul class="resources-list">
+      <li><a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:functions/x2f8bb11595b61c86:evaluating-functions/v/what-is-a-function" target="_blank" rel="noopener noreferrer">Functions - Domain and Range</a> <span class="res-source">(Khan Academy)</span></li>
+      <li><a href="https://www.desmos.com/calculator" target="_blank" rel="noopener noreferrer">Function Graphing Tool</a> <span class="res-source">(Desmos)</span></li>
+      <li><a href="https://www.mathsisfun.com/sets/function.html" target="_blank" rel="noopener noreferrer">Functions and Relations</a> <span class="res-source">(Math is Fun)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=class-9-math-bangla&amp;lesson=11">ইন্টারঅ্যাক্টিভ ভার্সন খুলুন (কুইজ + চ্যালেঞ্জ)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./10-lesson.html" rel="prev">← সেট অপারেশন ও ভেনচিত্র</a>
+  <a class="nav-next" href="./12-lesson.html" rel="next">সেট ও ফাংশন: মিশ্র অনুশীলন →</a>
+</nav>
+
+<a class="back-to-course" href="/c/class-9-math-bangla.html">← কোর্সে ফিরে যান: নবম শ্রেণি গণিত</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

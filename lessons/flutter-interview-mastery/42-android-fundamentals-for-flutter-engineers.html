@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Android Fundamentals for Flutter Engineers — Flutter… | Teamz Lab</title>
+<meta name="description" content="Android is the operating system layer beneath every Flutter Android app. Flutter engineers who understand Android fundamentals can write platform channels…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/41-push-notifications-background-work-deep-links.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/43-kotlin-coroutines-flow-vs-dart-streams.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Fundamentals for Flutter Engineers">
+<meta property="og:description" content="Android is the operating system layer beneath every Flutter Android app. Flutter engineers who understand Android fundamentals can write platform channels…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Android Fundamentals for Flutter Engineers">
+<meta name="twitter:description" content="Android is the operating system layer beneath every Flutter Android app. Flutter engineers who understand Android fundamentals can write platform channels…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Android Fundamentals for Flutter Engineers",
+  "description": "Android is the operating system layer beneath every Flutter Android app. Flutter engineers who understand Android fundamentals can write platform channels…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 42
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Android Fundamentals for Flutter Engineers",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Android Fundamentals for Flutter Engineers</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 42 of 77</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Android Fundamentals for Flutter Engineers</h1>
+<p class="lesson-subtitle">Activity lifecycle, Intents, Services, BroadcastReceivers — why Flutter devs must know this</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=42">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Flutter is like a high-end appliance with a smart control panel (Dart). Android is the electrical infrastructure of the building it runs in — circuits (ActivityManager), fuse boxes (Manifest), wiring (Intents). You can use the appliance without knowing the wiring, but when something trips a breaker or you need to add a new socket (platform channel), you need to understand the infrastructure.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Android is the operating system layer beneath every Flutter Android app. Flutter engineers who understand Android fundamentals can write platform channels correctly, diagnose production crashes, interpret logcat output, and collaborate with Android-native teammates — all critical for senior hybrid roles.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In an NGO offline-first field survey app: a foreground service keeps GPS tracking active during a field visit. A BroadcastReceiver detects network reconnection and sends a broadcast that triggers the sync WorkManager task. The AndroidManifest declares the FOREGROUND_SERVICE and ACCESS_FINE_LOCATION permissions, plus intent-filter for the deep link scheme. The Flutter team needs to know this to debug why the sync does not start after network reconnects.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Activity Lifecycle</strong> — onCreate → onStart → onResume (visible+interactive) → onPause → onStop → onDestroy. Flutter&#39;s FlutterActivity maps to a single Activity. Understanding this explains why AppLifecycleState.paused maps to onPause/onStop in Android terms.</li>
+      <li><strong>Intents</strong> — Intents are Android&#39;s messaging objects for starting Activities (explicit: specific class) or Services/broadcasts (implicit: action string). Flutter uses MethodChannel to invoke Intent-based Android APIs (share sheet, camera, file picker).</li>
+      <li><strong>Foreground Services</strong> — A Service with a persistent notification that Android will not kill under memory pressure. Required for ongoing work like music playback, GPS tracking, or BankID sessions. Must declare FOREGROUND_SERVICE permission.</li>
+      <li><strong>Background Services</strong> — Regular Services run at low priority and can be killed by Android. Since Android 8 (Oreo), background execution is severely restricted — use WorkManager instead for deferred background work.</li>
+      <li><strong>Bound Services</strong> — Services that offer an IPC interface (AIDL or Messenger). Client components bind and call methods. Used for long-running operations clients want to interact with (e.g., media players, NFC readers).</li>
+      <li><strong>BroadcastReceiver</strong> — Components that receive system or app-wide events: battery low, network change, boot complete, custom events. Registered in Manifest (static) or at runtime (dynamic). Flutter plugins use receivers to detect system events.</li>
+      <li><strong>Content Providers</strong> — Structured data sharing between apps via URIs (content://authority/path). Android&#39;s gallery, contacts, and FileProvider use this pattern. Flutter&#39;s image_picker and file_picker work through Content Provider URIs.</li>
+      <li><strong>AndroidManifest.xml</strong> — Declares: package name, permissions (uses-permission), activities, services, receivers, providers, intent-filters. Flutter adds entries here for FCM, deep links, permissions, and custom services via the plugin system.</li>
+      <li><strong>Why Flutter Engineers Need This</strong> — Debugging MethodChannel errors requires understanding Android threading (main thread vs background). Diagnosing crash logs (ANR — Application Not Responding) requires Activity lifecycle knowledge. Writing plugins or fixing native issues demands Manifest and Intent knowledge.</li>
+      <li><strong>ANR — Application Not Responding</strong> — Android kills apps that block the main thread for 5+ seconds. Flutter runs on its own thread but Kotlin code in platform channels runs on the main thread by default — long operations there cause ANRs. Always use coroutines for async platform channel work.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// --- ANDROID MANIFEST ENTRIES (android/app/src/main/AndroidManifest.xml) ---
+/*
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+  &lt;!-- Permissions --&gt;
+  &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+  &lt;uses-permission android:name=&quot;android.permission.FOREGROUND_SERVICE&quot;/&gt;
+  &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;/&gt;
+  &lt;uses-permission android:name=&quot;android.permission.RECEIVE_BOOT_COMPLETED&quot;/&gt;
+
+  &lt;application ...&gt;
+    &lt;activity android:name=&quot;.MainActivity&quot; android:exported=&quot;true&quot;&gt;
+      &lt;!-- Deep link intent filter --&gt;
+      &lt;intent-filter android:autoVerify=&quot;true&quot;&gt;
+        &lt;action android:name=&quot;android.intent.action.VIEW&quot;/&gt;
+        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot;/&gt;
+        &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot;/&gt;
+        &lt;data android:scheme=&quot;https&quot; android:host=&quot;app.myservice.com&quot;/&gt;
+      &lt;/intent-filter&gt;
+    &lt;/activity&gt;
+
+    &lt;!-- Foreground service for GPS tracking --&gt;
+    &lt;service android:name=&quot;.LocationForegroundService&quot;
+             android:foregroundServiceType=&quot;location&quot;
+             android:exported=&quot;false&quot;/&gt;
+
+    &lt;!-- BroadcastReceiver for network changes --&gt;
+    &lt;receiver android:name=&quot;.NetworkChangeReceiver&quot;
+              android:exported=&quot;false&quot;&gt;
+      &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.net.conn.CONNECTIVITY_CHANGE&quot;/&gt;
+      &lt;/intent-filter&gt;
+    &lt;/receiver&gt;
+  &lt;/application&gt;
+&lt;/manifest&gt;
+*/
+
+// --- PLATFORM CHANNEL — Calling Android Intent from Flutter ---
+// Dart side
+class ShareService {
+  static const _channel = MethodChannel(&#39;com.myapp/share&#39;);
+  static Future&lt;void&gt; shareText(String text) =&gt;
+      _channel.invokeMethod(&#39;shareText&#39;, {&#39;text&#39;: text});
+}
+
+// Kotlin side (MainActivity.kt)
+/*
+class MainActivity : FlutterActivity() {
+  override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+    super.configureFlutterEngine(flutterEngine)
+    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, &quot;com.myapp/share&quot;)
+      .setMethodCallHandler { call, result -&gt;
+        if (call.method == &quot;shareText&quot;) {
+          val intent = Intent(Intent.ACTION_SEND).apply {
+            type = &quot;text/plain&quot;
+            putExtra(Intent.EXTRA_TEXT, call.argument&lt;String&gt;(&quot;text&quot;))
+          }
+          startActivity(Intent.createChooser(intent, &quot;Share via&quot;))
+          result.success(null)
+        }
+      }
+  }
+}
+*/
+
+// --- FOREGROUND SERVICE (Kotlin) ---
+/*
+class LocationForegroundService : Service() {
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    val notification = buildNotification(&quot;Tracking location...&quot;)
+    startForeground(NOTIF_ID, notification)  // Required — shows persistent notification
+    startLocationUpdates()
+    return START_STICKY  // Restart if killed
+  }
+  override fun onBind(intent: Intent?): IBinder? = null
+}
+*/</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> uses-permission entries declare what system resources the app needs — missing permissions cause SecurityException at runtime</li>
+      <li><span class="walk-num">2.</span> intent-filter with autoVerify=&#39;true&#39; enables App Links — Android verifies your domain ownership before allowing deep links</li>
+      <li><span class="walk-num">3.</span> android:foregroundServiceType=&#39;location&#39; is required since Android 10 for location foreground services</li>
+      <li><span class="walk-num">4.</span> START_STICKY in onStartCommand tells Android to recreate the service after killing it — critical for always-on trackers</li>
+      <li><span class="walk-num">5.</span> MethodChannel name must match exactly on Dart and Kotlin sides — mismatch causes MissingPluginException</li>
+      <li><span class="walk-num">6.</span> Intent.ACTION_SEND with createChooser shows the system share sheet — no need to handle individual app integrations</li>
+      <li><span class="walk-num">7.</span> startForeground(id, notification) must be called within 5 seconds of service start or Android throws a ForegroundServiceStartNotAllowedException</li>
+      <li><span class="walk-num">8.</span> result.success(null) must always be called — failing to call result leaks the channel reply handle</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Kotlin MethodChannel handler
+MethodChannel(messenger, &quot;com.myapp/data&quot;)
+  .setMethodCallHandler { call, result -&gt;
+    if (call.method == &quot;fetchUserData&quot;) {
+      val data = networkService.fetchUserBlocking()  // Synchronous, ~2 seconds
+      result.success(data)
+    }
+  }</code></pre><details><summary>Need a hint?</summary><div class="hint">This code works in testing but causes production ANRs under load. What is wrong and how do you fix it?</div></details><details><summary>Show answer</summary><div class="answer">Bug: networkService.fetchUserBlocking() runs synchronously on the Android main thread (MethodChannel handlers execute on the main thread). A 2-second blocking call risks ANR (Android kills apps blocking main thread for 5+ seconds). Under load or slow networks it will exceed this. Fix: use Kotlin coroutines — launch(Dispatchers.IO) { val data = networkService.fetchUser(); withContext(Dispatchers.Main) { result.success(data) } }. The IO dispatcher runs on a background thread pool; withContext(Main) switches back to post the result safely.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Android is like a city. Your Flutter app is a building in that city. The city has rules: buildings must register with the city hall (Manifest), they can send messages to other buildings (Intents), some buildings have security guards who keep working all night (Foreground Services), and there are town criers who shout news to everyone (BroadcastReceivers). Even if you live in the Flutter building, you still follow the city&#39;s rules.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Android Activity was conceived in 2007 when multitasking on phones was a novel idea. The lifecycle was designed to handle phone calls interrupting apps — a problem nobody thinks about anymore. Yet every Flutter app on Android still goes through the exact same onCreate/onPause/onDestroy dance from that original design.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">You are debugging a production crash in an NGO field app. The crash log shows an ANR in the MethodChannel handler. Walk through: (1) why the ANR is happening, (2) how to fix it using Kotlin coroutines, (3) what Manifest permission you need to add for the foreground service that was added to prevent task loss.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/guide/components/activities/activity-lifecycle" target="_blank" rel="noopener noreferrer">Android Activity Lifecycle</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/about/versions/oreo/background" target="_blank" rel="noopener noreferrer">Background Execution Limits (Android 8+)</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/components/services" target="_blank" rel="noopener noreferrer">Services Overview</a> <span class="res-source">(Android Docs)</span></li>
+      <li><a href="https://docs.flutter.dev/platform-integration/platform-channels" target="_blank" rel="noopener noreferrer">Flutter Platform Channels</a> <span class="res-source">(Flutter Docs)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/manifest/manifest-intro" target="_blank" rel="noopener noreferrer">AndroidManifest.xml reference</a> <span class="res-source">(Android Docs)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=42">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./41-push-notifications-background-work-deep-links.html" rel="prev">← Push Notifications, Background Work &amp;…</a>
+  <a class="nav-next" href="./43-kotlin-coroutines-flow-vs-dart-streams.html" rel="next">Kotlin Coroutines &amp; Flow vs Dart Streams →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

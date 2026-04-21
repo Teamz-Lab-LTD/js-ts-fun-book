@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Package Development, Publishing &amp; Open Source… | Teamz Lab</title>
+<meta name="description" content="Flutter/Dart package development is the process of creating reusable libraries that can be shared on pub.dev or used privately within organizations. It…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Package Development, Publishing &amp; Open Source Maintenance">
+<meta property="og:description" content="Flutter/Dart package development is the process of creating reusable libraries that can be shared on pub.dev or used privately within organizations. It…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Package Development, Publishing &amp; Open Source Maintenance">
+<meta name="twitter:description" content="Flutter/Dart package development is the process of creating reusable libraries that can be shared on pub.dev or used privately within organizations. It…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Package Development, Publishing & Open Source Maintenance",
+  "description": "Flutter/Dart package development is the process of creating reusable libraries that can be shared on pub.dev or used privately within organizations. It…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 76
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Package Development, Publishing & Open Source Maintenance",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Package Development, Publishing &amp; Open Source Maintenance</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 76 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Package Development, Publishing &amp; Open Source Maintenance</h1>
+<p class="lesson-subtitle">Build, Publish &amp; Maintain Packages Like a Pro</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=76">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Creating a Dart package is like opening a specialty food store. Your recipe (library code) needs to be perfect, but that&#39;s only half the battle. You need attractive packaging (README &amp; docs), clear ingredient labels (API documentation), nutritional info (example app), quality certifications (tests passing on CI), a barcode for distribution (pub.dev listing), and a commitment to handling customer complaints (issue management). The best store in the world fails if no one knows it exists or the labels are wrong.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Flutter/Dart package development is the process of creating reusable libraries that can be shared on pub.dev or used privately within organizations. It encompasses everything from structuring code for maximum reusability, to writing comprehensive documentation and tests, to publishing and maintaining packages over time. For senior engineers, package development skills signal architectural thinking — you&#39;re not just consuming the ecosystem, you&#39;re contributing to it.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Every major Flutter app depends on dozens of community packages. Companies like Very Good Ventures, Invertase, and the Flutter team themselves maintain hundreds of packages. Creating internal packages is standard practice in enterprises — shared design systems, API clients, analytics wrappers, and utility libraries. Open source packages build your professional reputation: Riverpod&#39;s creator (Remi Rousselet) became one of Flutter&#39;s most recognized community members through package development.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Package Structure — lib/, example/, test/</strong> — A Dart package has a strict conventional structure: lib/ contains your library source code (with lib/src/ for private implementation), example/ contains a runnable demo app, test/ contains unit and widget tests, and the root has pubspec.yaml, README.md, CHANGELOG.md, and LICENSE. The lib/.dart file is the public barrel export — it controls exactly which APIs are visible to consumers. Everything in lib/src/ is private unless explicitly exported.</li>
+      <li><strong>pubspec.yaml — Packages vs Apps</strong> — Package pubspec.yaml differs from app pubspec.yaml: packages use &#39;version&#39; (required for publishing), &#39;homepage&#39; or &#39;repository&#39; (links on pub.dev), &#39;environment&#39; with SDK constraints, and &#39;dependencies&#39; with version ranges (^2.0.0) not exact pins. Never use &#39;dependency_overrides&#39; in published packages. Set &#39;publish_to: none&#39; for private packages. Use &#39;platforms&#39; to declare supported platforms. The &#39;topics&#39; and &#39;screenshots&#39; fields improve discoverability on pub.dev.</li>
+      <li><strong>Barrel Exports &amp; API Surface Control</strong> — Your main lib/.dart file should explicitly export only public APIs: export &#39;src/models/user.dart&#39;; export &#39;src/widgets/custom_button.dart&#39;; Never export everything with &#39;export src/&#39; — this leaks internal implementation. Use &#39;show&#39; and &#39;hide&#39; to fine-tune: export &#39;src/utils.dart&#39; show formatDate, parseDate; This is critical for maintaining backward compatibility — unexported code can change freely without breaking consumers.</li>
+      <li><strong>Publishing to pub.dev</strong> — Run &#39;dart pub publish --dry-run&#39; first to check for issues. Then &#39;dart pub publish&#39; to upload. You must authenticate with a Google account. Packages are immutable once published — you cannot delete or overwrite a version. If you publish broken code, you must publish a new version. Retraction: you can &#39;retract&#39; a version (marks it as broken, warns users) but cannot remove it. This immutability means you should ALWAYS dry-run and test thoroughly before publishing.</li>
+      <li><strong>Semantic Versioning &amp; Breaking Changes</strong> — Follow strict semver: MAJOR.MINOR.PATCH. PATCH (1.0.1): bug fixes, no API changes. MINOR (1.1.0): new features, backward compatible. MAJOR (2.0.0): breaking API changes. Pre-1.0.0 (0.x.y): breaking changes allowed in minor versions. Pub&#39;s version solver uses semver — if you break API in a minor version, you&#39;ll break every consumer&#39;s build. In interviews, explain that semver is a CONTRACT with your users, not a suggestion.</li>
+      <li><strong>Writing Effective README &amp; API Docs</strong> — A great package README includes: 1-line description, installation, basic usage with code, features list, advanced usage, migration guides for major versions, and badges (pub version, build status, coverage). API docs are generated from dartdoc comments (///). Write examples in doc comments — they appear on pub.dev API reference. Run &#39;dart doc&#39; locally to preview. The pub.dev scoring algorithm (pana) checks documentation quality and penalizes missing docs.</li>
+      <li><strong>Federated Plugins — Platform-Specific Code</strong> — Federated plugins split platform code into separate packages: my_plugin (app-facing API), my_plugin_platform_interface (shared interface), my_plugin_ios (iOS implementation), my_plugin_android (Android implementation), my_plugin_web (web implementation). This allows third parties to add platform support without modifying the core package. Use MethodChannel for platform communication. Register implementations via MyPluginPlatform.instance = MyPluginIOS(). This is the standard architecture for Flutter team plugins.</li>
+      <li><strong>Testing Packages Across Platforms</strong> — Packages need comprehensive testing: unit tests for logic, widget tests for UI components, integration tests for platform plugins, and golden tests for visual regression. Run tests on CI across platforms: flutter test (all), flutter test --platform chrome (web). For platform plugins, use the integration_test package with real devices/emulators. Test edge cases: null parameters, empty lists, large datasets, RTL layouts, dark mode. Minimum 80% coverage for credible packages.</li>
+      <li><strong>Maintaining Open Source — Issues &amp; PRs</strong> — Good maintenance includes: issue templates (bug report, feature request), PR templates, CONTRIBUTING.md with code style and process, labeled issues (good first issue, help wanted, bug, enhancement), timely responses (within 1 week), and a clear PR review process. Use GitHub Actions for CI — auto-run tests, check formatting (dart format), analyze (dart analyze), and verify pub score. A well-maintained package with 100 stars beats an abandoned one with 1000.</li>
+      <li><strong>CHANGELOG &amp; Migration Guides</strong> — Maintain CHANGELOG.md in Keep a Changelog format: ## [2.0.0] - 2026-03-11 / ### Breaking / ### Added / ### Fixed. For major versions, write a migration guide showing old vs new API with code examples. pub.dev displays the changelog prominently. Many developers check the changelog before the README. A good changelog reduces issues and support requests by 50% — users can self-serve answers to &#39;what changed in v2?&#39;</li>
+      <li><strong>pub.dev Scoring &amp; Package Quality</strong> — pub.dev scores packages on 5 criteria: Follow Dart file conventions (20pts), Provide documentation (20pts), Support multiple platforms (20pts), Pass static analysis (20pts), Support up-to-date dependencies (20pts). Maximum 140 &#39;pub points&#39; plus popularity and likes. To maximize score: add dartdoc to all public APIs, support all platforms, fix all analyzer warnings, keep dependencies current, include an example. High pub points = more visibility = more adoption.</li>
+      <li><strong>Monorepo Strategies with Melos</strong> — For multi-package projects, use Melos — a monorepo management tool. It handles: versioning all packages together, running commands across packages, managing inter-package dependencies with path overrides, automated changelogs, and coordinated publishing. Configure melos.yaml at the repo root. Commands: melos bootstrap (link packages), melos run test (test all), melos version (bump versions). Flutter&#39;s own packages repo uses a similar monorepo approach.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Complete package structure example: a reusable form validator
+
+// === pubspec.yaml ===
+// name: form_validator_pro
+// description: Production-ready form validation with built-in rules,
+//   async validation, and composable validators.
+// version: 2.1.0
+// homepage: https://github.com/yourname/form_validator_pro
+// repository: https://github.com/yourname/form_validator_pro
+// issue_tracker: https://github.com/yourname/form_validator_pro/issues
+// topics:
+//   - form
+//   - validation
+//   - input
+//
+// environment:
+//   sdk: &#39;&gt;=3.0.0 &lt;4.0.0&#39;
+//   flutter: &#39;&gt;=3.10.0&#39;
+//
+// dependencies:
+//   flutter:
+//     sdk: flutter
+//
+// dev_dependencies:
+//   flutter_test:
+//     sdk: flutter
+//   flutter_lints: ^3.0.0
+//   mocktail: ^1.0.0
+
+// === lib/form_validator_pro.dart (barrel export) ===
+/// A production-ready form validation library for Flutter.
+///
+/// Basic usage:
+/// ```dart
+/// final validator = Validator.compose([
+///   Validator.required(&#39;Email is required&#39;),
+///   Validator.email(&#39;Invalid email format&#39;),
+/// ]);
+///
+/// // Use in TextFormField
+/// TextFormField(validator: validator.call);
+/// ```
+library form_validator_pro;
+
+export &#39;src/validator.dart&#39;;
+export &#39;src/rules/rules.dart&#39;;
+export &#39;src/async_validator.dart&#39;;
+export &#39;src/extensions.dart&#39;;
+// Note: src/internal_utils.dart is NOT exported — it&#39;s private
+
+// === lib/src/validator.dart ===
+/// A composable form field validator.
+///
+/// Validators can be combined using [compose] and [composeOR]:
+/// ```dart
+/// final emailValidator = Validator.compose([
+///   Validator.required(&#39;Required&#39;),
+///   Validator.email(&#39;Invalid email&#39;),
+///   Validator.maxLength(100, &#39;Too long&#39;),
+/// ]);
+/// ```
+class Validator {
+  final String? Function(String?) _validate;
+
+  const Validator._(this._validate);
+
+  /// Validates the given [value] and returns an error message or null.
+  String? call(String? value) =&gt; _validate(value);
+
+  /// Composes multiple validators — ALL must pass (AND logic).
+  /// Returns the first error encountered, or null if all pass.
+  static Validator compose(List&lt;Validator&gt; validators) {
+    return Validator._((value) {
+      for (final validator in validators) {
+        final error = validator(value);
+        if (error != null) return error;
+      }
+      return null;
+    });
+  }
+
+  /// Composes validators with OR logic — at least one must pass.
+  static Validator composeOR(
+    List&lt;Validator&gt; validators, {
+    required String errorMessage,
+  }) {
+    return Validator._((value) {
+      for (final validator in validators) {
+        if (validator(value) == null) return null;
+      }
+      return errorMessage;
+    });
+  }
+
+  /// Value must not be null or empty.
+  static Validator required(String message) {
+    return Validator._((value) {
+      if (value == null || value.trim().isEmpty) return message;
+      return null;
+    });
+  }
+
+  /// Value must be a valid email format.
+  static Validator email(String message) {
+    return Validator._((value) {
+      if (value == null || value.isEmpty) return null; // Use required() for null check
+      final regex = RegExp(r&#39;^[\w.+-]+@[\w-]+\.[\w.]+$&#39;);
+      return regex.hasMatch(value) ? null : message;
+    });
+  }
+
+  /// Value length must be at least [min] characters.
+  static Validator minLength(int min, String message) {
+    return Validator._((value) {
+      if (value == null || value.length &lt; min) return message;
+      return null;
+    });
+  }
+
+  /// Value length must not exceed [max] characters.
+  static Validator maxLength(int max, String message) {
+    return Validator._((value) {
+      if (value != null &amp;&amp; value.length &gt; max) return message;
+      return null;
+    });
+  }
+
+  /// Value must match the given [pattern].
+  static Validator pattern(RegExp pattern, String message) {
+    return Validator._((value) {
+      if (value == null || value.isEmpty) return null;
+      return pattern.hasMatch(value) ? null : message;
+    });
+  }
+
+  /// Custom validation logic.
+  static Validator custom(String? Function(String?) validate) {
+    return Validator._(validate);
+  }
+}
+
+// === lib/src/async_validator.dart ===
+/// Async validator for server-side checks (e.g., username availability).
+///
+/// Example:
+/// ```dart
+/// final usernameValidator = AsyncValidator(
+///   validator: Validator.compose([
+///     Validator.required(&#39;Required&#39;),
+///     Validator.minLength(3, &#39;Too short&#39;),
+///   ]),
+///   asyncCheck: (value) =&gt; api.isUsernameAvailable(value),
+///   asyncErrorMessage: &#39;Username already taken&#39;,
+///   debounce: Duration(milliseconds: 500),
+/// );
+/// ```
+class AsyncValidator {
+  final Validator validator;
+  final Future&lt;bool&gt; Function(String) asyncCheck;
+  final String asyncErrorMessage;
+  final Duration debounce;
+
+  const AsyncValidator({
+    required this.validator,
+    required this.asyncCheck,
+    required this.asyncErrorMessage,
+    this.debounce = const Duration(milliseconds: 300),
+  });
+
+  /// Validates synchronously first, then async if sync passes.
+  Future&lt;String?&gt; validate(String? value) async {
+    // Sync validation first (fast fail)
+    final syncError = validator(value);
+    if (syncError != null) return syncError;
+
+    if (value == null || value.isEmpty) return null;
+
+    // Async validation (e.g., server check)
+    try {
+      final isValid = await asyncCheck(value);
+      return isValid ? null : asyncErrorMessage;
+    } catch (e) {
+      return &#39;Validation failed: please try again&#39;;
+    }
+  }
+}
+
+// === test/validator_test.dart ===
+// void main() {
+//   group(&#39;Validator.required&#39;, () {
+//     final validator = Validator.required(&#39;Required&#39;);
+//
+//     test(&#39;returns error for null&#39;, () {
+//       expect(validator(null), &#39;Required&#39;);
+//     });
+//
+//     test(&#39;returns error for empty string&#39;, () {
+//       expect(validator(&#39;&#39;), &#39;Required&#39;);
+//     });
+//
+//     test(&#39;returns null for valid input&#39;, () {
+//       expect(validator(&#39;hello&#39;), isNull);
+//     });
+//   });
+//
+//   group(&#39;Validator.compose&#39;, () {
+//     final validator = Validator.compose([
+//       Validator.required(&#39;Required&#39;),
+//       Validator.email(&#39;Invalid email&#39;),
+//     ]);
+//
+//     test(&#39;returns first error in chain&#39;, () {
+//       expect(validator(&#39;&#39;), &#39;Required&#39;);
+//       expect(validator(&#39;notanemail&#39;), &#39;Invalid email&#39;);
+//     });
+//
+//     test(&#39;returns null when all pass&#39;, () {
+//       expect(validator(&#39;test@example.com&#39;), isNull);
+//     });
+//   });
+// }</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The pubspec.yaml shows package-specific fields: version (required for pub.dev), homepage/repository (links), topics (for searchability), and SDK constraints with ranges (not exact pins).</li>
+      <li><span class="walk-num">2.</span> The barrel export file explicitly exports only public APIs — src/internal_utils.dart is intentionally NOT exported, keeping it private to the package.</li>
+      <li><span class="walk-num">3.</span> Library-level dartdoc (///) with code examples appears on pub.dev — this is the first thing users see and directly impacts adoption.</li>
+      <li><span class="walk-num">4.</span> The Validator class uses a private constructor (Validator._) with static factory methods — this forces users to use the composable API rather than subclassing.</li>
+      <li><span class="walk-num">5.</span> Validator.compose() chains validators with AND logic — the first error wins. This is the builder pattern adapted for validation.</li>
+      <li><span class="walk-num">6.</span> The email validator returns null for empty strings — responsibility separation. Use required() for null/empty checks, email() for format checks. Compose them together.</li>
+      <li><span class="walk-num">7.</span> AsyncValidator shows the sync-first-then-async pattern — fail fast on cheap checks before making expensive network calls.</li>
+      <li><span class="walk-num">8.</span> The debounce field prevents firing async validation on every keystroke — essential for server-side checks like username availability.</li>
+      <li><span class="walk-num">9.</span> The test examples show the testing pattern: group by validator type, test error cases AND success cases, test composition behavior.</li>
+      <li><span class="walk-num">10.</span> Note the overall architecture: small, focused classes with clear single responsibilities, composed together at the call site. This is what makes packages reusable.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// pubspec.yaml issues
+// name: My Cool Package    // Bug 1
+// version: 1.0
+// dependencies:
+//   http: 1.2.0            // Bug 2
+
+// lib/my_cool_package.dart
+export &#39;src/&#39;;              // Bug 3: exports everything
+
+// lib/src/helper.dart
+class _InternalHelper {     // Bug 4
+  static String format(String s) =&gt; s.trim();
+}
+
+class PublicApi {
+  // Bug 5: no dartdoc
+  String process(dynamic input) {  // Bug 6: dynamic
+    return _InternalHelper.format(input.toString());
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Six issues: package naming, version format, dependency pinning, over-exporting, missing documentation, and poor type safety.</div></details><details><summary>Show answer</summary><div class="answer">1) Package name must be lowercase with underscores — &#39;my_cool_package&#39; not &#39;My Cool Package&#39;. 2) Version must be full semver — &#39;1.0.0&#39; not &#39;1.0&#39;. Dependencies should use caret syntax (^1.2.0) not exact pins, which prevents consumers from resolving compatible versions. 3) Never export an entire directory — explicitly export specific files to control your public API surface. 4) _InternalHelper has an underscore prefix making it file-private, but it&#39;s used by PublicApi in the same file which is fine — however, the real issue is that exporting &#39;src/&#39; would expose non-underscore-prefixed classes too. 5) All public APIs need /// dartdoc comments — pub.dev pana scoring penalizes missing documentation. 6) &#39;dynamic input&#39; defeats Dart&#39;s type system — use a proper type like String to provide compile-time safety.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you bake amazing cookies at home. A package is like putting your cookie recipe in a nice box so other people can make the same cookies. You write clear instructions (documentation), list all ingredients (dependencies), put a version number on the box (1.0.0), and ship it to the store (pub.dev). If you change the recipe and someone&#39;s cookies taste different — that&#39;s a breaking change, and you need a new box number (2.0.0). Once a box is on the shelf, you can&#39;t sneak in and change it — you have to put out a new one!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The most depended-on package on pub.dev (excluding SDK packages) is &#39;collection&#39; with over 90% of all Flutter apps depending on it transitively. The pub.dev scoring algorithm (pana) was named after the Hindi/Urdu word for &#39;to obtain/get&#39; — fitting for a package manager. And the &#39;dart pub publish&#39; command is irreversible by design — once published, a version exists forever, which is why the Flutter team internally calls publishing &#39;the point of no return.&#39;</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Create a complete Dart package called &#39;result_type&#39; that provides a Rust-inspired Result type for error handling without exceptions. Include: 1) Result sealed class with Ok and Err subclasses, 2) map(), flatMap(), mapError(), fold() methods, 3) Full dartdoc documentation with examples, 4) Comprehensive tests (15+ test cases covering all methods and edge cases), 5) A proper barrel export file, 6) README with installation, basic usage, and advanced patterns, 7) CHANGELOG.md for version 1.0.0, 8) Run &#39;dart pub publish --dry-run&#39; and fix all issues until it passes cleanly.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://dart.dev/guides/libraries/create-packages" target="_blank" rel="noopener noreferrer">Creating Dart Packages — Official Guide</a> <span class="res-source">(dart.dev)</span></li>
+      <li><a href="https://dart.dev/tools/pub/publishing" target="_blank" rel="noopener noreferrer">Publishing to pub.dev</a> <span class="res-source">(dart.dev)</span></li>
+      <li><a href="https://docs.flutter.dev/packages-and-plugins/developing-packages#federated-plugins" target="_blank" rel="noopener noreferrer">Federated Plugins — Flutter Architecture</a> <span class="res-source">(flutter.dev)</span></li>
+      <li><a href="https://melos.invertase.dev/" target="_blank" rel="noopener noreferrer">Melos — Dart Monorepo Tool</a> <span class="res-source">(invertase.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=76">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html" rel="prev">← KMP vs Flutter — Strategic Comparison…</a>
+  <a class="nav-next" href="./77-api-integration-without-ai-proving-your-fundamentals-in.html" rel="next">API Integration Without AI: Proving… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

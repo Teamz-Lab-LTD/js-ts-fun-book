@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clean Architecture Overview — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="Clean Architecture is a software design philosophy that separates an application into distinct layers with clear responsibilities and a strict dependency…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/35-advanced-bloc-patterns.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/37-domain-layer.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clean Architecture Overview">
+<meta property="og:description" content="Clean Architecture is a software design philosophy that separates an application into distinct layers with clear responsibilities and a strict dependency…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Clean Architecture Overview">
+<meta name="twitter:description" content="Clean Architecture is a software design philosophy that separates an application into distinct layers with clear responsibilities and a strict dependency…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Clean Architecture Overview",
+  "description": "Clean Architecture is a software design philosophy that separates an application into distinct layers with clear responsibilities and a strict dependency…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 36
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clean Architecture Overview",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">Clean Architecture Overview</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 36 of 51</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Clean Architecture Overview</h1>
+<p class="lesson-subtitle">Building a skyscraper with a solid blueprint</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=36">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine building a skyscraper. You would not start by randomly placing windows and doors. You start with a blueprint that has clear layers: the foundation (domain), the plumbing and electrical systems (data), and the interior design (presentation). Each layer has a specific job, and a plumber never decides where the couch goes. Clean Architecture works the same way -- each layer has a clear responsibility, and inner layers never know about outer layers.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Clean Architecture is a software design philosophy that separates an application into distinct layers with clear responsibilities and a strict dependency rule: inner layers never depend on outer layers. In team_mvp_kit, the four layers are Domain (business logic and entities), Data (API calls, DTOs, and storage), Presentation (UI and BLoCs), and Infrastructure (DI, routing, and shared utilities). Code is organized feature-first, so each feature contains its own domain, data, and presentation folders.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Clean Architecture is the reason team_mvp_kit can scale from a starter kit to a full production app without rewriting. When the team decided to switch from one payment provider to another, they only changed the data layer. When adding offline support, they added a local data source and updated the repository without changing a single line in domain or presentation.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Why Architecture Matters</strong> — Without architecture, small apps are fine. But as apps grow, code becomes tangled, changes break unrelated features, and testing becomes impossible. Architecture provides guardrails that keep complexity manageable.</li>
+      <li><strong>The Dependency Rule</strong> — The most important rule: dependencies point inward. Outer layers know about inner layers, but inner layers never know about outer layers. Domain knows nothing about Flutter, databases, or APIs.</li>
+      <li><strong>The Four Layers</strong> — team_mvp_kit uses four layers: Domain (entities, use cases, repository interfaces), Data (DTOs, data sources, repository implementations), Presentation (BLoCs, screens, widgets), and Infrastructure (DI setup, routing, shared utilities).</li>
+      <li><strong>Domain Layer</strong> — The domain layer is the heart of the application. It contains business entities, use case classes, and repository interfaces. It has zero dependencies on Flutter, packages, or external services.</li>
+      <li><strong>Data Layer</strong> — The data layer implements the repository interfaces defined in the domain layer. It handles API calls, database queries, caching, and data transformation between DTOs and entities.</li>
+      <li><strong>Presentation Layer</strong> — The presentation layer contains Flutter widgets, screens, and BLoCs. It depends on the domain layer (use cases and entities) but never directly touches data sources or APIs.</li>
+      <li><strong>Infrastructure Layer</strong> — The infrastructure layer provides cross-cutting concerns: dependency injection, router configuration, network client setup, and shared utilities that do not belong to a single feature.</li>
+      <li><strong>Feature-First Organization</strong> — team_mvp_kit organizes code by feature first, then by layer. Each feature folder contains its own domain, data, and presentation subfolders, making features self-contained.</li>
+      <li><strong>Benefits of Clean Architecture</strong> — Testability: mock any layer. Flexibility: swap databases without touching UI. Scalability: add features without breaking existing ones. Onboarding: new developers know where everything goes.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Complete data flow through layers:
+//
+// 1. DOMAIN: Entity (pure Dart)
+class Product {
+  final String id;
+  final String name;
+  final double price;
+  final String imageUrl;
+
+  const Product({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.imageUrl,
+  });
+}
+
+// 2. DOMAIN: Repository interface
+abstract class ProductRepository {
+  Future&lt;List&lt;Product&gt;&gt; getAll();
+  Future&lt;Product&gt; getById(String id);
+}
+
+// 3. DOMAIN: Use case
+class GetProductsUseCase {
+  final ProductRepository _repository;
+  const GetProductsUseCase(this._repository);
+
+  Future&lt;List&lt;Product&gt;&gt; call() {
+    return _repository.getAll();
+  }
+}
+
+// 4. DATA: DTO (data transfer object)
+class ProductDto {
+  final String id;
+  final String name;
+  final double price;
+  final String imageUrl;
+
+  const ProductDto({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.imageUrl,
+  });
+
+  factory ProductDto.fromJson(Map&lt;String, dynamic&gt; json) {
+    return ProductDto(
+      id: json[&#39;id&#39;] as String,
+      name: json[&#39;name&#39;] as String,
+      price: (json[&#39;price&#39;] as num).toDouble(),
+      imageUrl: json[&#39;image_url&#39;] as String,
+    );
+  }
+
+  Product toEntity() {
+    return Product(
+      id: id,
+      name: name,
+      price: price,
+      imageUrl: imageUrl,
+    );
+  }
+}
+
+// 5. DATA: Repository implementation
+class ProductRepositoryImpl implements ProductRepository {
+  final ProductRemoteDataSource _remote;
+  const ProductRepositoryImpl(this._remote);
+
+  @override
+  Future&lt;List&lt;Product&gt;&gt; getAll() async {
+    final dtos = await _remote.fetchProducts();
+    return dtos.map((dto) =&gt; dto.toEntity()).toList();
+  }
+
+  @override
+  Future&lt;Product&gt; getById(String id) async {
+    final dto = await _remote.fetchProductById(id);
+    return dto.toEntity();
+  }
+}
+
+// 6. PRESENTATION: BLoC uses use case
+class ProductListBloc
+    extends Bloc&lt;ProductEvent, ProductState&gt; {
+  final GetProductsUseCase _getProducts;
+
+  ProductListBloc(this._getProducts)
+      : super(const ProductState()) {
+    on&lt;LoadProducts&gt;(_onLoad);
+  }
+
+  Future&lt;void&gt; _onLoad(
+    LoadProducts event,
+    Emitter&lt;ProductState&gt; emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final products = await _getProducts();
+      emit(state.copyWith(
+        products: products,
+        isLoading: false,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        failure: ServerFailure(e.toString()),
+      ));
+    }
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> The Product entity is a pure Dart class with no framework dependencies.</li>
+      <li><span class="walk-num">2.</span> ProductRepository is an abstract class defining the contract that the data layer must fulfill.</li>
+      <li><span class="walk-num">3.</span> GetProductsUseCase wraps a single business operation and depends only on the repository interface.</li>
+      <li><span class="walk-num">4.</span> ProductDto mirrors the entity but adds fromJson for deserialization and toEntity for conversion.</li>
+      <li><span class="walk-num">5.</span> The fromJson factory handles JSON field types, including snake_case to camelCase conversion.</li>
+      <li><span class="walk-num">6.</span> toEntity converts the DTO to a domain entity, decoupling API format from business format.</li>
+      <li><span class="walk-num">7.</span> ProductRepositoryImpl implements the interface by delegating to the remote data source.</li>
+      <li><span class="walk-num">8.</span> The getAll method fetches DTOs, then maps each to an entity using toEntity.</li>
+      <li><span class="walk-num">9.</span> ProductListBloc depends on the use case, not the repository or data source directly.</li>
+      <li><span class="walk-num">10.</span> The _onLoad handler follows the loading/success/failure pattern from Lesson 35.</li>
+      <li><span class="walk-num">11.</span> The flow: Screen event -&gt; BLoC -&gt; UseCase -&gt; Repository interface -&gt; Implementation -&gt; DataSource.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// domain/usecases/get_products_usecase.dart
+import &#39;package:dio/dio.dart&#39;;
+import &#39;../repositories/product_repository.dart&#39;;
+
+class GetProductsUseCase {
+  final ProductRepository _repository;
+  GetProductsUseCase(this._repository);
+
+  Future&lt;List&lt;Product&gt;&gt; call() async {
+    try {
+      return await _repository.getProducts();
+    } on DioException catch (e) {
+      throw ServerFailure(e.message ?? &#39;Error&#39;);
+    }
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Look at the imports. Which layer is this file in, and what is it importing?</div></details><details><summary>Show answer</summary><div class="answer">The use case is in the domain layer but imports &#39;package:dio/dio.dart&#39;, which is a networking package. This violates the dependency rule -- the domain layer must not know about HTTP or Dio. The DioException handling should happen in the data layer (repository implementation). Remove the Dio import and let the repository catch DioExceptions and convert them to domain Failure types.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Think about a sandwich shop. The recipe (domain layer) says &#39;put cheese between two slices of bread.&#39; The recipe does not care if the bread comes from Store A or Store B -- that is the data layer&#39;s job. The person at the counter who takes orders and serves sandwiches is the presentation layer. And the building itself -- the kitchen setup, the ordering system -- that is the infrastructure. If you change where you buy bread, the recipe stays the same. If you redesign the counter, the recipe still stays the same. That is the power of layers!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Clean Architecture was introduced by Robert C. Martin (Uncle Bob) in 2012. The core idea was actually inspired by even older patterns like Hexagonal Architecture (Alistair Cockburn, 2005) and Onion Architecture (Jeffrey Palermo, 2008). All three share the same fundamental insight: business logic should be at the center and never depend on frameworks, databases, or UI.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the complete folder structure for a new &#39;notifications&#39; feature in team_mvp_kit style. Create the Notification entity, NotificationRepository interface, GetNotificationsUseCase, NotificationDto with fromJson and toEntity, NotificationRepositoryImpl, and NotificationListBloc. Write out each file with proper imports showing the dependency direction. Verify that domain never imports from data or presentation.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://docs.flutter.dev/app-architecture" target="_blank" rel="noopener noreferrer">Flutter App Architecture Guide</a> <span class="res-source">(flutter.dev)</span></li>
+      <li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank" rel="noopener noreferrer">Clean Architecture by Uncle Bob</a> <span class="res-source">(cleancoder.com)</span></li>
+      <li><a href="https://verygood.ventures/blog/very-good-flutter-architecture" target="_blank" rel="noopener noreferrer">Very Good Architecture (VGV)</a> <span class="res-source">(verygood.ventures)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=36">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./35-advanced-bloc-patterns.html" rel="prev">← Advanced BLoC Patterns</a>
+  <a class="nav-next" href="./37-domain-layer.html" rel="next">Domain Layer →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segmented Memory and Physical Address — Microprocessor… | Teamz Lab</title>
+<meta name="description" content="The 8086 uses segmented memory to bridge the gap between its 16-bit registers and its 20-bit address bus. Every memory access combines a 16-bit segment…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/11-8086-register-set.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/13-8086-pins-and-signals.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Segmented Memory and Physical Address">
+<meta property="og:description" content="The 8086 uses segmented memory to bridge the gap between its 16-bit registers and its 20-bit address bus. Every memory access combines a 16-bit segment…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Segmented Memory and Physical Address">
+<meta name="twitter:description" content="The 8086 uses segmented memory to bridge the gap between its 16-bit registers and its 20-bit address bus. Every memory access combines a 16-bit segment…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Segmented Memory and Physical Address",
+  "description": "The 8086 uses segmented memory to bridge the gap between its 16-bit registers and its 20-bit address bus. Every memory access combines a 16-bit segment…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 12
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Segmented Memory and Physical Address",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Segmented Memory and Physical Address</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 12 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Segmented Memory and Physical Address</h1>
+<p class="lesson-subtitle">How the 8086 combines segment and offset to address 1 MB of memory with 16-bit registers</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=12">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine a huge library with 16 floors, each having 65,536 book slots. Your library card (a 16-bit register) can only hold a slot number — not enough to describe every book in the whole building. So the library uses a two-part system: a floor number (segment) and a slot on that floor (offset). The librarian multiplies the floor number by 16, then adds the slot number to get the absolute position. That is exactly how the 8086 forms a 20-bit physical address from two 16-bit values: Segment x 16 + Offset.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The 8086 uses segmented memory to bridge the gap between its 16-bit registers and its 20-bit address bus. Every memory access combines a 16-bit segment register value and a 16-bit offset using the formula: Physical Address = Segment x 16 + Offset. Four segment registers (CS, DS, SS, ES) define 64 KB windows into the 1 MB address space. The CPU automatically selects the appropriate segment register based on the type of access (code, data, stack, or string). Multiple segment:offset pairs can map to the same physical address, and segments overlap on 16-byte (paragraph) boundaries.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Segmented memory defined the IBM PC era. Every DOS program lived within the 640 KB conventional memory limit imposed by the IBM PC&#39;s memory map. DOS memory managers (HIMEM.SYS, EMM386) existed specifically to work around segmentation limits. The A20 gate — a hardware hack tied to the address wraparound — persisted in PCs until UEFI replaced BIOS. Even modern x86 CPUs boot in Real Mode with segmentation active before switching to Protected Mode with paging.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>The Problem: 16-Bit Registers, 20-Bit Addresses</strong> — The 8086 has 16-bit registers, which can only represent values 0 to 65,535 — enough to address 64 KB. But the 8086 has a 20-bit address bus, addressing 1 MB (1,048,576 bytes). The gap between 16-bit registers and 20-bit addresses is bridged by segmentation: every memory access combines two 16-bit values to produce a 20-bit physical address.</li>
+      <li><strong>Physical Address Formula</strong> — Physical Address = Segment Register x 16 + Offset. Multiplying by 16 is the same as shifting left by 4 bits, which extends the 16-bit segment to 20 bits (the low 4 bits become zero). Adding the 16-bit offset fills in those low bits and can carry into the higher bits. The BIU&#39;s dedicated adder computes this for every memory access.</li>
+      <li><strong>Segment:Offset Notation</strong> — Addresses are written as Segment:Offset — e.g., 2000h:1234h means segment 2000h, offset 1234h. This notation clearly shows both components before they are combined. Many different segment:offset pairs can produce the same physical address, which is both a feature and a source of confusion.</li>
+      <li><strong>The Four Segments in Action</strong> — CS:IP fetches instructions (code segment). DS:offset accesses most data (data segment). SS:SP and SS:BP access the stack (stack segment). ES:DI is used by string destination operations (extra segment). Each segment register defines a 64 KB window, and the windows can overlap.</li>
+      <li><strong>Segment Overlap and Aliasing</strong> — Since segments start every 16 bytes (a paragraph boundary), adjacent segments overlap by 65,520 bytes. Segment 1000h covers 10000h-1FFFFh, segment 1001h covers 10010h-2000Fh — they share most of their range. This means the same physical byte can be accessed through many different segment:offset combinations.</li>
+      <li><strong>Default Segment Assignments</strong> — The 8086 automatically selects a segment register based on the type of memory access. Code fetch uses CS. Stack operations (PUSH, POP, and [BP]) use SS. String destinations use ES. Almost everything else uses DS. You can override the default with a segment prefix byte in the instruction.</li>
+      <li><strong>Paragraph Boundaries</strong> — A paragraph is 16 bytes. Segments always start on paragraph boundaries because the segment address is shifted left by 4 bits (multiplied by 16). This means the lowest possible segment start addresses are 00000h, 00010h, 00020h, etc. You cannot start a segment at an arbitrary byte address.</li>
+      <li><strong>The Wraparound at 1 MB</strong> — With segment FFFFh and offset FFFFh, the calculated address would be FFFF0h + FFFFh = 10FFEFh — a 21-bit value. The original 8086 only has 20 address pins (A0-A19), so bit 20 is lost and the address wraps around to 0FFEFh. This wraparound was later used (and abused) by DOS programs, leading to the famous A20 gate issue on later processors.</li>
+      <li><strong>Memory Map of a Typical 8086 System</strong> — In a standard PC (8088/8086-based), the 1 MB address space is divided: 00000h-9FFFFh (640 KB) is conventional RAM. A0000h-BFFFFh is video memory. C0000h-EFFFFh is ROM for expansion cards. F0000h-FFFFFh is the system BIOS ROM. The CPU starts executing at FFFF0h after reset.</li>
+      <li><strong>Why Segmentation Was Chosen</strong> — Intel chose segmentation as a practical compromise. True 20-bit registers would require a new instruction format. Virtual memory hardware was too complex and expensive for 1978. Segmentation reused the existing 16-bit register width and instruction encoding while extending addressability to 1 MB. It also naturally supported relocatable code — change the segment register, and the same code runs at a different physical address.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Demonstrate segmented memory addressing
+.MODEL SMALL
+.STACK 100h
+.DATA
+  msg1 DB &#39;Segment Demo&#39;, 0Dh, 0Ah, &#39;$&#39;
+  val1 DW 0ABCDh
+  val2 DW 0
+
+.CODE
+MAIN PROC
+  ; Setup data segment
+  MOV AX, @DATA
+  MOV DS, AX          ; DS points to data segment
+  MOV ES, AX          ; ES also points to data segment
+
+  ; --- Default segment usage ---
+  MOV BX, OFFSET val1 ; BX = offset of val1
+  MOV AX, [BX]        ; DS:BX -&gt; reads val1 = ABCDh
+
+  ; --- Segment override ---
+  MOV AX, ES:[BX]     ; ES:BX -&gt; same physical address here
+                        ; because DS = ES in this example
+
+  ; --- Stack segment (SS) usage ---
+  PUSH 1234h           ; SS:SP -&gt; push to stack
+  MOV BP, SP
+  MOV CX, [BP]         ; SS:BP -&gt; reads 1234h from stack
+  POP AX               ; restore stack
+
+  ; --- Demonstrate address calculation ---
+  ; If DS = 1234h and BX = 0010h
+  ; Physical = 1234h x 10h + 0010h
+  ;          = 12340h + 0010h = 12350h
+
+  ; --- Different segment:offset, same address ---
+  ; DS=1235h, BX=0000h -&gt; 12350h + 0000h = 12350h
+  ; DS=1200h, BX=0350h -&gt; 12000h + 0350h = 12350h
+  ; All point to physical address 12350h
+
+  ; Store result to verify
+  MOV [val2], AX
+
+  MOV AH, 4Ch
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> MOV AX, @DATA / MOV DS, AX — loads the data segment address into DS. The assembler replaces @DATA with the paragraph address where .DATA begins</li>
+      <li><span class="walk-num">2.</span> MOV ES, AX — sets ES equal to DS. Now both segment registers point to the same segment. In real programs, ES often points to a different segment (e.g., video memory at B800h)</li>
+      <li><span class="walk-num">3.</span> MOV BX, OFFSET val1 — loads the offset (not the value) of val1 into BX. OFFSET is an assembler operator that returns the address within the data segment</li>
+      <li><span class="walk-num">4.</span> MOV AX, [BX] — reads a word from DS:BX. The BIU computes physical address = DS x 16 + BX, fetches the 16-bit value (ABCDh), and loads it into AX</li>
+      <li><span class="walk-num">5.</span> MOV AX, ES:[BX] — same offset BX, but now using ES instead of DS. The ES: prefix overrides the default segment. Since DS = ES, this reads the same physical address</li>
+      <li><span class="walk-num">6.</span> PUSH 1234h — pushes 1234h onto the stack. The BIU writes to SS:SP (stack segment). SP is decremented by 2 first, then the value is stored</li>
+      <li><span class="walk-num">7.</span> MOV BP, SP / MOV CX, [BP] — BP accesses the stack. [BP] defaults to SS segment (unlike [BX] which defaults to DS). Reads back 1234h from the top of the stack</li>
+      <li><span class="walk-num">8.</span> POP AX — pops the value from SS:SP into AX and increments SP by 2, restoring the stack to its previous state</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>MOV AX, 1234h
+MOV DS, AX         ; DS = 1234h
+MOV SI, 5678h      ; offset = 5678h
+; Programmer expects physical address: 12345678h
+MOV AL, [SI]       ; read from &#39;address 12345678h&#39;</code></pre><details><summary>Need a hint?</summary><div class="hint">How does the 8086 actually compute the physical address? Is 12345678h even possible with a 20-bit address bus?</div></details><details><summary>Show answer</summary><div class="answer">The programmer mistakenly concatenated the segment and offset (1234h + 5678h = 12345678h). The 8086 does NOT concatenate — it computes Segment x 16 + Offset = 1234h x 10h + 5678h = 12340h + 5678h = 179B8h. Also, the 8086 only has 20 address bits, so the maximum address is FFFFFh (about 1 MB). The value 12345678h would be over 300 MB — far beyond what the 8086 can address.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you live in a city with streets that are really long — 65,536 houses on each street. But the city has 65,536 streets, and streets overlap a lot (each new street starts only 16 houses apart from the last one). To find a house, you say &#39;Street 2000, House 1234.&#39; The postal service multiplies the street number by 16 and adds the house number to get the actual address. That is how the 8086 finds memory: it takes a street number (segment) and a house number (offset) and combines them into one big address.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The A20 gate is one of the strangest hardware hacks in computing history. IBM needed to maintain address wraparound compatibility with the 8086, but the 80286 had 24 address lines. Their solution? Route address line A20 through the keyboard controller, which could enable or disable it. So for years, enabling memory above 1 MB required talking to the keyboard controller — a hack that persisted for over 30 years in PC design.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Calculate the physical addresses for the following segment:offset pairs and determine which ones point to the same physical location: (a) 1000h:0100h, (b) 1010h:0000h, (c) 0FFFh:0110h, (d) 0000h:10100h (invalid — explain why), (e) 1008h:0080h. Then write an 8086 program that uses segment overrides (ES: prefix) to copy a word from one segment to another.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.geeksforgeeks.org/memory-segmentation-8086-microprocessor/" target="_blank" rel="noopener noreferrer">8086 Memory Segmentation</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_8086_addressing_modes.htm" target="_blank" rel="noopener noreferrer">Physical Address Calculation in 8086</a> <span class="res-source">(TutorialsPoint)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=yKCsHoFmMO0" target="_blank" rel="noopener noreferrer">Segmented Memory in 8086 Explained</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://en.wikipedia.org/wiki/A20_line" target="_blank" rel="noopener noreferrer">The A20 Gate — History and Technical Details</a> <span class="res-source">(Wikipedia)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=12">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./11-8086-register-set.html" rel="prev">← 8086 Register Set</a>
+  <a class="nav-next" href="./13-8086-pins-and-signals.html" rel="next">8086 Pins and Signals →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

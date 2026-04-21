@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modularization, Feature Modules &amp; Build Tradeoffs… | Teamz Lab</title>
+<meta name="description" content="Android modularization is the practice of splitting a single large Gradle module into multiple smaller, independently compilable modules with clear…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/45-gradle-basics-dependencies-build-variants-product-flavors.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modularization, Feature Modules &amp; Build Tradeoffs">
+<meta property="og:description" content="Android modularization is the practice of splitting a single large Gradle module into multiple smaller, independently compilable modules with clear…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Modularization, Feature Modules &amp; Build Tradeoffs">
+<meta name="twitter:description" content="Android modularization is the practice of splitting a single large Gradle module into multiple smaller, independently compilable modules with clear…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Modularization, Feature Modules & Build Tradeoffs",
+  "description": "Android modularization is the practice of splitting a single large Gradle module into multiple smaller, independently compilable modules with clear…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 44
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Modularization, Feature Modules & Build Tradeoffs",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Modularization, Feature Modules &amp; Build Tradeoffs</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 44 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Modularization, Feature Modules &amp; Build Tradeoffs</h1>
+<p class="lesson-subtitle">Architect large Android apps with clean module boundaries — the skill that separates seniors from juniors</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=44">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Modularizing an app is like organizing a large hospital into specialized departments — Cardiology, Radiology, Pharmacy — each with its own staff, equipment, and entrance. A cardiologist does not need access to the pharmacy&#39;s prescription database. Clear boundaries mean each department can work independently, scale separately, and be rebuilt without disrupting the whole hospital.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Android modularization is the practice of splitting a single large Gradle module into multiple smaller, independently compilable modules with clear dependency rules. Each module has a defined responsibility, reducing coupling, enabling parallel builds, and allowing teams to work independently without merge conflicts.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>A large enterprise school management platform serving 500 schools grew from 1 module to 28 modules over two years. The :feature:attendance, :feature:grades, and :feature:timetable modules are owned by separate squads. Before modularization, a CSS change in the design system caused a full 11-minute recompile. After, only :core:design-system and the two feature modules using the changed component rebuild — 90 seconds total.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Why modularize?</strong> — Single-module apps compile everything on every change. Modularization enables incremental compilation — only changed modules recompile — dramatically cutting build times on large enterprise codebases.</li>
+      <li><strong>Module types: app module</strong> — The :app module is the entry point — it declares the Application class, main Activity, and depends on all feature modules. It knows about everything but contains minimal logic itself.</li>
+      <li><strong>Module types: feature modules</strong> — :feature:login, :feature:dashboard, :feature:grades — each owns a vertical slice of the UI, ViewModel, and use cases for one product feature. They depend on :core modules but NOT on each other.</li>
+      <li><strong>Module types: core modules</strong> — :core:network, :core:database, :core:design-system, :core:common — shared infrastructure used by all feature modules. They must have no dependency on feature modules (no cycles).</li>
+      <li><strong>Module types: data modules</strong> — :data:user, :data:grades — own repositories and data sources for a specific domain. Feature modules depend on data modules via interfaces defined in :domain.</li>
+      <li><strong>API vs implementation visibility</strong> — Use &#39;api()&#39; dependency only when the type from a dependency leaks into your module&#39;s public API. Use &#39;implementation()&#39; for everything else — it keeps the dependency private and prevents accidental coupling downstream.</li>
+      <li><strong>No cross-feature dependencies</strong> — Feature modules must NEVER depend on each other directly. Communication between features goes through shared :core or :domain modules, or via navigation contracts.</li>
+      <li><strong>Navigation between modules</strong> — Use the Navigation Component with a top-level nav graph in :app, or define navigation contracts (interface + DeepLink) in :core:navigation so features expose destinations without referencing each other.</li>
+      <li><strong>Build speed improvements</strong> — Gradle&#39;s parallel execution and configuration caching mean only modules with changed sources recompile. A 200-module enterprise app can go from 8-minute full builds to 30-second incremental builds.</li>
+      <li><strong>Code ownership &amp; team scalability</strong> — Each module can be owned by a separate team with independent review, versioning, and release cadence. Module boundaries enforce Conway&#39;s Law deliberately.</li>
+      <li><strong>Dynamic feature modules</strong> — Google Play&#39;s on-demand delivery allows :feature:ar-tour to be downloaded only when the user requests it, reducing initial APK size. Declared with com.android.dynamic-feature plugin.</li>
+      <li><strong>Pitfalls: over-modularization</strong> — Creating too many tiny modules increases Gradle configuration overhead. A 2-person team with 50 modules gets slower builds, not faster. Right-size modules to team size and feature boundaries.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// settings.gradle.kts — declare all modules
+include(&quot;:app&quot;)
+include(&quot;:core:network&quot;)
+include(&quot;:core:design-system&quot;)
+include(&quot;:core:common&quot;)
+include(&quot;:domain:user&quot;)
+include(&quot;:data:user&quot;)
+include(&quot;:feature:login&quot;)
+include(&quot;:feature:dashboard&quot;)
+include(&quot;:feature:grades&quot;)
+
+// :core:network/build.gradle.kts
+plugins { id(&quot;com.android.library&quot;) }
+
+dependencies {
+    // &#39;api&#39; — OkHttp type leaks into callers&#39; public APIs
+    api(&quot;com.squareup.okhttp3:okhttp:4.12.0&quot;)
+    // &#39;implementation&#39; — Gson is internal detail, hidden from callers
+    implementation(&quot;com.google.code.gson:gson:2.10.1&quot;)
+}
+
+// :feature:grades/build.gradle.kts
+plugins { id(&quot;com.android.library&quot;) }
+
+dependencies {
+    implementation(project(&quot;:core:network&quot;))
+    implementation(project(&quot;:core:design-system&quot;))
+    implementation(project(&quot;:domain:user&quot;))   // interface only
+    // WRONG: implementation(project(&quot;:feature:login&quot;)) — never allowed!
+}
+
+// :app/build.gradle.kts — assembles everything
+plugins { id(&quot;com.android.application&quot;) }
+
+dependencies {
+    implementation(project(&quot;:feature:login&quot;))
+    implementation(project(&quot;:feature:dashboard&quot;))
+    implementation(project(&quot;:feature:grades&quot;))
+    // :app knows all features; features do NOT know each other
+}
+
+// Navigation contract in :core:navigation
+object Destinations {
+    const val GRADES = &quot;feature/grades&quot;
+    const val DASHBOARD = &quot;feature/dashboard&quot;
+}
+
+// Each feature registers its NavGraph via a NavigationProvider interface
+// resolved by dependency injection — features never import each other</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> settings.gradle.kts include() calls — each string maps to a directory containing its own build.gradle.kts; Gradle discovers and wires them as project dependencies.</li>
+      <li><span class="walk-num">2.</span> :core:network uses &#39;api(okhttp)&#39; — because network module callers (like :data:user) likely expose OkHttp types (e.g., Response) in their own APIs; using &#39;api&#39; propagates OkHttp to those callers automatically.</li>
+      <li><span class="walk-num">3.</span> :core:network uses &#39;implementation(gson)&#39; — Gson is only used internally for parsing; callers never see Gson types, so &#39;implementation&#39; hides it and prevents accidental coupling.</li>
+      <li><span class="walk-num">4.</span> :feature:grades depends on project(&#39;:core:network&#39;) and project(&#39;:domain:user&#39;) via &#39;implementation&#39; — it uses these but does NOT expose their types in its own public surface.</li>
+      <li><span class="walk-num">5.</span> The comment &#39;// WRONG: implementation(project(&#39;:feature:login&#39;))&#39; — illustrates the cardinal rule: feature modules cannot reference sibling features. This would create a cycle if :feature:login ever needed to show a grade.</li>
+      <li><span class="walk-num">6.</span> :app depends on all feature modules — it is the integration point; it adds each feature to the nav graph and provides the application-scoped DI container that wires everything together.</li>
+      <li><span class="walk-num">7.</span> Destinations object in :core:navigation — defines route strings as constants in a module that both :app (for the nav graph) and individual features (for navigate() calls) can depend on without cross-feature coupling.</li>
+      <li><span class="walk-num">8.</span> NavigationProvider interface — each feature module implements this interface and registers its NavGraph fragment; :app collects all implementations via DI (e.g., Hilt multibindings) at startup.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// :feature:grades/build.gradle.kts
+dependencies {
+    api(project(&quot;:core:network&quot;))          // Bug 1
+    api(project(&quot;:core:design-system&quot;))    // Bug 2
+    implementation(project(&quot;:feature:login&quot;))  // Bug 3
+    implementation(project(&quot;:data:grades&quot;))
+}
+
+// GradeRepository.kt in :feature:grades
+class GradeRepository(
+    private val api: GradeApi,
+    private val db: AppDatabase  // Bug 4
+) {
+    suspend fun getGrades(): List&lt;Grade&gt; = api.fetchGrades()
+}
+
+// :app/build.gradle.kts
+dependencies {
+    implementation(project(&quot;:feature:grades&quot;))
+    // :app now can use OkHttp directly without declaring it — Bug 5
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Check which dependencies should be &#39;api&#39; vs &#39;implementation&#39;, which module should own the database, and the cross-feature dependency.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: &#39;api(project(:core:network))&#39; — :feature:grades should NOT re-export :core:network to its consumers. The network client is an internal implementation detail of the grades feature. Fix: change to &#39;implementation(project(:core:network))&#39;. Using &#39;api&#39; here means :app accidentally gains access to OkHttp types via :feature:grades, which is the transitive leakage shown in Bug 5. Bug 2: &#39;api(project(:core:design-system))&#39; — design system composables and themes are implementation details of the UI in :feature:grades. Callers of :feature:grades (i.e., :app) do not need design system types. Fix: change to &#39;implementation(project(:core:design-system))&#39;. Bug 3: &#39;implementation(project(:feature:login))&#39; — a feature module depending on another feature module is architecturally forbidden. It creates hidden coupling: if :feature:login now needs to link back to grades, you get a circular dependency. Fix: any shared types (e.g., a LoggedInUser) must live in :domain or :core:common; navigation to login from grades goes through a navigation contract in :core:navigation. Bug 4: AppDatabase in :feature:grades — the Room database should live in a :core:database or :data:grades module, not in a feature module. Placing it here means other data modules cannot share the database, and the feature module takes on infrastructure responsibility it should not own. Fix: move AppDatabase to :core:database and inject it via DI. Bug 5: :app can use OkHttp without declaring it — this is the consequence of Bug 1. When :feature:grades uses &#39;api&#39; for :core:network, OkHttp leaks transitively into :app&#39;s compile classpath. This is an invisible dependency: if :feature:grades later changes to &#39;implementation&#39;, :app breaks at compile time even though :app never intentionally depended on OkHttp.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine your school has one giant room for everyone — students, teachers, the library, the canteen, and the office. When you repaint a wall, EVERYONE must leave. Modularization gives each group their own room. Now when you repaint the canteen, only canteen staff need to leave. Building your Android app this way means changing the login screen does not force you to recompile the timetable screen.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The Google Play Store Android app itself is modularized into 200+ Gradle modules. Their engineers reported that modularization reduced p50 build times by 65% and allowed 500+ engineers to work simultaneously without constant merge conflicts.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Design the module graph for a school management Android app with these features: student login/profile, grade viewing, timetable, attendance marking (teacher only), and an admin dashboard. Identify at least 3 :core modules and 5 :feature modules, define which depend on which, and explain where you would place the Room database and Retrofit client. Justify whether any module should use &#39;api()&#39; vs &#39;implementation()&#39; dependencies.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/topic/modularization" target="_blank" rel="noopener noreferrer">Guide to Android App Modularization</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/guide/playcore/feature-delivery" target="_blank" rel="noopener noreferrer">Dynamic Feature Modules</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://github.com/android/nowinandroid" target="_blank" rel="noopener noreferrer">NowInAndroid — Real-world Multi-Module Architecture</a> <span class="res-source">(GitHub / Google)</span></li>
+      <li><a href="https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation" target="_blank" rel="noopener noreferrer">Gradle — api vs implementation</a> <span class="res-source">(Gradle Docs)</span></li>
+      <li><a href="https://slack.engineering/gradle-goodness-modularization-at-scale/" target="_blank" rel="noopener noreferrer">Modularization at Scale — Slack Engineering</a> <span class="res-source">(Slack Engineering Blog)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=44">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./43-espresso-legacy-awareness-instrumentation-basics.html" rel="prev">← Espresso Legacy Awareness &amp;…</a>
+  <a class="nav-next" href="./45-gradle-basics-dependencies-build-variants-product-flavors.html" rel="next">Gradle Basics, Dependencies, Build… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

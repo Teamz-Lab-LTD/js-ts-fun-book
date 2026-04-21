@@ -40,6 +40,20 @@ const truncate = (s, n) => {
   return cut.replace(/[,;:—\-–\s]+$/, '').trim() + '…';
 };
 const isBengali = (s) => /[\u0980-\u09FF]/.test(String(s || ''));
+const kebab = (s, maxLen = 60) => {
+  s = String(s || '').replace(/<[^>]+>/g, '')
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .toLowerCase()
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  if (s.length > maxLen) s = s.slice(0, maxLen).replace(/-[^-]*$/, '');
+  return s || 'lesson';
+};
+const lessonStaticUrl = (slug, lesson) => {
+  const id = String(lesson.id).padStart(2, '0');
+  return `../lessons/${slug}/${id}-${kebab(stripTags(lesson.title || `lesson-${lesson.id}`))}.html`;
+};
 
 // Wikipedia / authoritative sameAs for common tech/topic entities.
 // Used on Course JSON-LD `about` for AI-search entity linking.
@@ -157,7 +171,7 @@ function renderCurriculum(slug, cfg, lessons) {
     // Fallback: list lessons in order
     const items = lessons.map(l => {
       const t = esc(stripTags(l.title || `Lesson ${l.id}`));
-      return `<li><a href="../learn.html?course=${esc(slug)}&amp;lesson=${esc(l.id)}"><span class="lesson-num">${esc(l.id)}</span><span class="lesson-title">${t}</span></a></li>`;
+      return `<li><a href="${lessonStaticUrl(slug, l)}"><span class="lesson-num">${esc(l.id)}</span><span class="lesson-title">${t}</span></a></li>`;
     }).join('\n        ');
     return `<div class="topic-block"><h3>Course lessons</h3><ol class="lesson-list">\n        ${items}\n      </ol></div>`;
   }
@@ -167,7 +181,7 @@ function renderCurriculum(slug, cfg, lessons) {
       const l = idx[String(id)];
       if (!l) return '';
       const t = esc(stripTags(l.title || `Lesson ${id}`));
-      return `<li><a href="../learn.html?course=${esc(slug)}&amp;lesson=${esc(id)}"><span class="lesson-num">${esc(id)}</span><span class="lesson-title">${t}</span></a></li>`;
+      return `<li><a href="${lessonStaticUrl(slug, l)}"><span class="lesson-num">${esc(id)}</span><span class="lesson-title">${t}</span></a></li>`;
     }).filter(Boolean).join('\n        ');
     if (!items) return '';
     return `<div class="topic-block">

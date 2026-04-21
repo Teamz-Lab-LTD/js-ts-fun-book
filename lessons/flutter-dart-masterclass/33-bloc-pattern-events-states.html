@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLoC Pattern - Events &amp; States — Flutter &amp; Dart | Teamz Lab</title>
+<meta name="description" content="The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/32-understanding-state.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/34-flutter_bloc-in-practice.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="BLoC Pattern - Events &amp; States">
+<meta property="og:description" content="The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BLoC Pattern - Events &amp; States">
+<meta name="twitter:description" content="The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "BLoC Pattern - Events & States",
+  "description": "The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Free Flutter Course: Beginner to Professional",
+    "url": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 33
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter & Dart",
+      "item": "https://learn.teamzlab.com/c/flutter-dart-masterclass.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "BLoC Pattern - Events & States",
+      "item": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-dart-masterclass.html">Flutter &amp; Dart</a> / <span aria-current="page">BLoC Pattern - Events &amp; States</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 33 of 51</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">BLoC Pattern - Events &amp; States</h1>
+<p class="lesson-subtitle">The traffic controller for your app&#39;s brain</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine a restaurant kitchen. Customers send in orders (Events) to the kitchen. The chef (BLoC) reads each order and prepares dishes. When a dish is ready, it goes out on a tray (State) to the dining room (UI). The chef never walks into the dining room, and the customers never walk into the kitchen. Events flow in, States flow out. That clean separation is what makes a restaurant -- and a BLoC -- work smoothly.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You define Event classes that represent user actions or system triggers, and State classes that represent the current condition of a feature. The BLoC receives events, processes them through business logic, and emits new states that the UI reacts to. Combined with Equatable for efficient comparison, this creates a predictable, testable, and scalable architecture.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>BLoC is one of the most widely adopted state management solutions in production Flutter apps, used by companies like BMW, Alibaba, and Google teams. The event-state pattern maps naturally to how users interact with apps: the user does something (event), the app processes it (BLoC logic), and the screen updates (state). In team_mvp_kit, every feature follows this pattern with BaseBloc, BaseEvent, and BaseState, making the codebase consistent and onboarding new developers straightforward.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>What Is BLoC?</strong> — BLoC stands for Business Logic Component. It is a design pattern that separates business logic from the UI by using Streams. Events go into the BLoC, and States come out. The UI never contains business logic.</li>
+      <li><strong>Event Classes</strong> — Events represent user actions or system triggers. Each event is a class. They are the inputs to your BLoC -- the orders the kitchen receives.</li>
+      <li><strong>State Classes</strong> — States represent the current condition of a feature. The UI reads the current state and renders accordingly. Each state is a class describing what the screen should show.</li>
+      <li><strong>Equatable for State Comparison</strong> — BLoC uses equality checks to decide whether to rebuild the UI. The Equatable package makes it easy to compare objects by their properties instead of by reference.</li>
+      <li><strong>BaseEvent Pattern from team_mvp_kit</strong> — In team_mvp_kit, all events extend a common BaseEvent class that extends Equatable. This ensures consistent equality behavior and makes the event hierarchy clean.</li>
+      <li><strong>BaseState Pattern from team_mvp_kit</strong> — Similarly, all states extend a BaseState class. This provides a unified state hierarchy and ensures Equatable comparison for all states across the app.</li>
+      <li><strong>The Bloc Class</strong> — A Bloc class takes events as input and emits states as output. You register event handlers using the on method, and each handler processes the event and emits new states.</li>
+      <li><strong>Single vs Multi-State BLoCs</strong> — Some BLoCs use a single state class with multiple fields (loading, data, error). Others use separate classes per state. team_mvp_kit prefers single-class states with copyWith for simpler features and sealed class hierarchies for complex ones.</li>
+      <li><strong>Naming Conventions</strong> — Good naming makes BLoC code self-documenting. Events should describe what happened (past tense or requested action). States should describe current conditions.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>import &#39;package:equatable/equatable.dart&#39;;
+import &#39;package:flutter_bloc/flutter_bloc.dart&#39;;
+
+// ---- Base classes (from team_mvp_kit) ----
+
+abstract class BaseEvent extends Equatable {
+  const BaseEvent();
+  @override
+  List&lt;Object?&gt; get props =&gt; [];
+}
+
+abstract class BaseState extends Equatable {
+  const BaseState();
+  @override
+  List&lt;Object?&gt; get props =&gt; [];
+}
+
+// ---- Events ----
+
+class LoadTodos extends BaseEvent {}
+
+class AddTodo extends BaseEvent {
+  final String title;
+  const AddTodo(this.title);
+  @override
+  List&lt;Object?&gt; get props =&gt; [title];
+}
+
+class ToggleTodo extends BaseEvent {
+  final int index;
+  const ToggleTodo(this.index);
+  @override
+  List&lt;Object?&gt; get props =&gt; [index];
+}
+
+class DeleteTodo extends BaseEvent {
+  final int index;
+  const DeleteTodo(this.index);
+  @override
+  List&lt;Object?&gt; get props =&gt; [index];
+}
+
+// ---- State ----
+
+class TodoItem {
+  final String title;
+  final bool isDone;
+  const TodoItem({required this.title, this.isDone = false});
+
+  TodoItem copyWith({String? title, bool? isDone}) {
+    return TodoItem(
+      title: title ?? this.title,
+      isDone: isDone ?? this.isDone,
+    );
+  }
+}
+
+class TodoState extends BaseState {
+  final List&lt;TodoItem&gt; todos;
+  final bool isLoading;
+  final String? error;
+
+  const TodoState({
+    this.todos = const [],
+    this.isLoading = false,
+    this.error,
+  });
+
+  TodoState copyWith({
+    List&lt;TodoItem&gt;? todos,
+    bool? isLoading,
+    String? error,
+  }) {
+    return TodoState(
+      todos: todos ?? this.todos,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
+
+  @override
+  List&lt;Object?&gt; get props =&gt; [todos, isLoading, error];
+}
+
+// ---- BLoC ----
+
+class TodoBloc extends Bloc&lt;BaseEvent, TodoState&gt; {
+  TodoBloc() : super(const TodoState()) {
+    on&lt;LoadTodos&gt;(_onLoad);
+    on&lt;AddTodo&gt;(_onAdd);
+    on&lt;ToggleTodo&gt;(_onToggle);
+    on&lt;DeleteTodo&gt;(_onDelete);
+  }
+
+  Future&lt;void&gt; _onLoad(
+    LoadTodos event,
+    Emitter&lt;TodoState&gt; emit,
+  ) async {
+    emit(state.copyWith(isLoading: true, error: null));
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      final todos = [
+        const TodoItem(title: &#39;Learn Dart&#39;),
+        const TodoItem(title: &#39;Master BLoC&#39;),
+        const TodoItem(title: &#39;Build an app&#39;),
+      ];
+      emit(state.copyWith(todos: todos, isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      ));
+    }
+  }
+
+  void _onAdd(AddTodo event, Emitter&lt;TodoState&gt; emit) {
+    final updated = [
+      ...state.todos,
+      TodoItem(title: event.title),
+    ];
+    emit(state.copyWith(todos: updated));
+  }
+
+  void _onToggle(ToggleTodo event, Emitter&lt;TodoState&gt; emit) {
+    final updated = state.todos.asMap().entries.map((entry) {
+      if (entry.key == event.index) {
+        return entry.value.copyWith(isDone: !entry.value.isDone);
+      }
+      return entry.value;
+    }).toList();
+    emit(state.copyWith(todos: updated));
+  }
+
+  void _onDelete(DeleteTodo event, Emitter&lt;TodoState&gt; emit) {
+    final updated = [...state.todos]..removeAt(event.index);
+    emit(state.copyWith(todos: updated));
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Define BaseEvent extending Equatable with an empty props list as the parent of all events.</li>
+      <li><span class="walk-num">2.</span> Define BaseState extending Equatable as the parent of all state classes.</li>
+      <li><span class="walk-num">3.</span> LoadTodos event has no data -- it just signals the BLoC to fetch todos.</li>
+      <li><span class="walk-num">4.</span> AddTodo carries a title string and includes it in props for equality.</li>
+      <li><span class="walk-num">5.</span> ToggleTodo and DeleteTodo carry an index to identify which todo to act on.</li>
+      <li><span class="walk-num">6.</span> TodoItem is a simple data class with title and isDone, plus a copyWith method.</li>
+      <li><span class="walk-num">7.</span> TodoState holds a list of TodoItems, a loading flag, and an optional error string.</li>
+      <li><span class="walk-num">8.</span> The copyWith method creates a new TodoState, only replacing the fields you specify.</li>
+      <li><span class="walk-num">9.</span> The props getter lists all three fields so Equatable can compare states accurately.</li>
+      <li><span class="walk-num">10.</span> TodoBloc extends Bloc with BaseEvent input and TodoState output, starting with an empty state.</li>
+      <li><span class="walk-num">11.</span> Register four event handlers in the constructor using the on syntax.</li>
+      <li><span class="walk-num">12.</span> _onLoad emits loading state, simulates an async fetch, then emits loaded state with todos.</li>
+      <li><span class="walk-num">13.</span> The try-catch ensures that API failures emit an error state instead of crashing.</li>
+      <li><span class="walk-num">14.</span> _onAdd spreads existing todos and appends a new TodoItem, then emits the updated state.</li>
+      <li><span class="walk-num">15.</span> _onToggle maps over todos, flipping isDone only for the matching index.</li>
+      <li><span class="walk-num">16.</span> _onDelete copies the list, removes the item at the given index, and emits.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class CounterBloc extends Bloc&lt;CounterEvent, int&gt; {
+  CounterBloc() : super(0) {
+    on&lt;Increment&gt;(_onIncrement);
+    on&lt;Decrement&gt;(_onDecrement);
+  }
+
+  void _onIncrement(Increment event, Emitter&lt;int&gt; emit) {
+    state++;
+    emit(state);
+  }
+
+  void _onDecrement(Decrement event, Emitter&lt;int&gt; emit) {
+    emit(state - 1);
+  }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">BLoC state is immutable. Can you modify it directly?</div></details><details><summary>Show answer</summary><div class="answer">In _onIncrement, &#39;state++&#39; tries to mutate the state directly, which is not allowed. The state property in a Bloc is read-only. The fix is to emit a new value: &#39;emit(state + 1)&#39; instead of &#39;state++; emit(state)&#39;. The _onDecrement handler is correct because it creates a new value with &#39;state - 1&#39;.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are ordering food at a drive-through. You talk into the speaker and say what you want -- that is an Event, like &#39;I want a burger.&#39; The kitchen hears your order, cooks the food, and hands it out the window -- that is the State, like &#39;Here is your burger, ready to eat.&#39; You never go into the kitchen, and the cook never comes to your car. The speaker and window keep everything organized. BLoC works the same way: your app screen shouts events into a speaker, and the BLoC kitchen sends back states through a window!</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The BLoC pattern was originally created by Paolo Soares and Cong Hui from Google and was first presented at DartConf 2018. It was designed to allow code sharing between Flutter and AngularDart apps, which is why it uses pure Dart streams with no Flutter dependency in the core logic.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Create a complete ShoppingCartBloc with events (AddItem, RemoveItem, ClearCart, ApplyDiscount) and a single CartState class with fields for items list, total price, and optional discount percentage. Use BaseEvent and BaseState from team_mvp_kit patterns. Implement the Bloc with all event handlers. Make sure your state has a proper copyWith method and Equatable props.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://bloclibrary.dev/getting-started/" target="_blank" rel="noopener noreferrer">BLoC Library Documentation</a> <span class="res-source">(bloclibrary.dev)</span></li>
+      <li><a href="https://pub.dev/packages/equatable" target="_blank" rel="noopener noreferrer">Equatable Package</a> <span class="res-source">(pub.dev)</span></li>
+      <li><a href="https://bloclibrary.dev/bloc-concepts/" target="_blank" rel="noopener noreferrer">Flutter BLoC Concepts</a> <span class="res-source">(bloclibrary.dev)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./32-understanding-state.html" rel="prev">← Understanding State</a>
+  <a class="nav-next" href="./34-flutter_bloc-in-practice.html" rel="next">flutter_bloc in Practice →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-dart-masterclass.html">← Back to course: Flutter &amp; Dart</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

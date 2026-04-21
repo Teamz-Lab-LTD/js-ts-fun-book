@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debugging Registers, Flags, and Memory… | Teamz Lab</title>
+<meta name="description" content="Debugging 8086 programs means systematically inspecting CPU state — registers, flags, memory, and stack — to find where actual behavior diverges from…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/32-debugging-registers-flags-and-memory.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/31-arrays-tables-and-block-operations.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/33-stack-pushpop-and-stack-frames.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debugging Registers, Flags, and Memory">
+<meta property="og:description" content="Debugging 8086 programs means systematically inspecting CPU state — registers, flags, memory, and stack — to find where actual behavior diverges from…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/microprocessor-a-z/32-debugging-registers-flags-and-memory.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Debugging Registers, Flags, and Memory">
+<meta name="twitter:description" content="Debugging 8086 programs means systematically inspecting CPU state — registers, flags, memory, and stack — to find where actual behavior diverges from…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-microprocessor.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Debugging Registers, Flags, and Memory",
+  "description": "Debugging 8086 programs means systematically inspecting CPU state — registers, flags, memory, and stack — to find where actual behavior diverges from…",
+  "url": "https://learn.teamzlab.com/lessons/microprocessor-a-z/32-debugging-registers-flags-and-memory.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Microprocessor A–Z",
+    "url": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 32
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Microprocessor A–Z",
+      "item": "https://learn.teamzlab.com/c/microprocessor-a-z.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Debugging Registers, Flags, and Memory",
+      "item": "https://learn.teamzlab.com/lessons/microprocessor-a-z/32-debugging-registers-flags-and-memory.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/microprocessor-a-z.html">Microprocessor A–Z</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/microprocessor-a-z.html">Microprocessor A–Z</a> / <span aria-current="page">Debugging Registers, Flags, and Memory</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 32 of 48</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Debugging Registers, Flags, and Memory</h1>
+<p class="lesson-subtitle">Find and fix bugs like a detective — single-step, inspect, and trace your 8086 programs</p>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=32">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Debugging is like being a detective at a crime scene (buggy program). Single-stepping is examining evidence one piece at a time. Registers are the suspect&#39;s pockets — you check what they are carrying after each step. Memory is the crime scene — you scan it for clues. Flags are the suspect&#39;s facial expressions — they reveal hidden truths (was there a carry? did the result go negative?).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>Debugging 8086 programs means systematically inspecting CPU state — registers, flags, memory, and stack — to find where actual behavior diverges from expected behavior. Single-stepping executes one instruction at a time. Breakpoints skip to the interesting code. Flag analysis reveals arithmetic edge cases. Memory dumps verify data layout. Mastering these techniques turns opaque bugs into clear root causes.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In industry, embedded engineers debug microprocessors using JTAG probes that provide single-step and memory inspection on real hardware. Reverse engineers use debuggers (OllyDbg, x64dbg) to analyze unknown binaries instruction by instruction. Boot loader developers debug pre-OS code where no printf exists — only register and memory inspection. These skills are timeless.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>Single-Stepping (Trace Mode)</strong> — Single-stepping executes one instruction at a time, pausing after each. This lets you see exactly how each instruction changes registers, flags, and memory. In emu8086, click the &#39;single step&#39; button (or press F8). In DEBUG.COM, use the T (Trace) command.</li>
+      <li><strong>Breakpoints</strong> — A breakpoint pauses execution at a specific instruction without single-stepping through everything before it. Set a breakpoint at the interesting code, run at full speed to reach it, then single-step from there. In emu8086, click the line number to toggle a breakpoint.</li>
+      <li><strong>Watching Registers</strong> — After each step, check all register values. Look for unexpected zeros, incorrect values, overflow indicators, and segment register issues. In emu8086, the register panel updates in real-time. Changed values are highlighted.</li>
+      <li><strong>Flag Analysis</strong> — Flags reveal what really happened during arithmetic and logic operations. ZF=1 means result was zero. CF=1 means unsigned overflow/borrow. SF=1 means result was negative. OF=1 means signed overflow. Always check flags after CMP, ADD, SUB operations.</li>
+      <li><strong>Memory Dump Inspection</strong> — View raw memory contents in hexadecimal. In emu8086, use the memory viewer to see bytes at any address. Compare expected vs actual values in your data segment. Watch for little-endian byte ordering — 1234h is stored as 34h, 12h.</li>
+      <li><strong>Common Bug: Wrong Segment</strong> — If your program reads garbage instead of your data, DS probably points to the wrong segment. Always verify DS after initialization. In emu8086, check that DS matches the data segment value shown in the segment panel.</li>
+      <li><strong>Common Bug: Off-by-One in Loops</strong> — LOOP decrements CX THEN checks for zero. If CX starts at 0, it wraps to FFFFh and runs 65535 times. Always guard with JCXZ before LOOP. Also verify array index bounds — accessing array[N] in an N-element array reads past the end.</li>
+      <li><strong>Common Bug: Stack Imbalance</strong> — Every PUSH must have a matching POP. If you push 3 values but pop 2, the stack is corrupted — RET will pop the wrong address and jump to garbage. Count your PUSHes and POPs carefully, especially in procedures.</li>
+      <li><strong>Common Bug: Unsigned vs Signed Confusion</strong> — Using JA/JB (unsigned) when you should use JG/JL (signed), or vice versa, causes logic errors. FFFFh is greater than 0 unsigned (65535 &gt; 0) but less than 0 signed (-1 &lt; 0). Match the jump type to your data interpretation.</li>
+      <li><strong>Using DEBUG.COM</strong> — DOS DEBUG.COM is a basic command-line debugger. Commands: R (display registers), T (trace/single-step), G (go/run), D (dump memory), U (unassemble), A (assemble), E (enter bytes). It works directly with machine code — no labels, just addresses.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>; Program: Demonstrates common bugs and how to catch them
+; Run this in emu8086, single-stepping to see each issue
+.MODEL SMALL
+.STACK 100h
+.DATA
+  values DB 200, 150, 100, 50, 25
+  vcount EQU 5
+  result DW ?
+  msg    DB &#39;Debug Demo$&#39;
+
+.CODE
+MAIN PROC
+  MOV AX, @DATA
+  MOV DS, AX
+
+  ; === Test 1: Unsigned overflow ===
+  MOV AL, 200
+  ADD AL, 100       ; AL = 300? No! AL = 44 (300-256)
+  ; Step here and check: AL=2Ch, CF=1
+  ; CF=1 tells you there was a carry out
+
+  ; === Test 2: Signed overflow ===
+  MOV AL, 127       ; max positive signed byte
+  ADD AL, 1         ; AL = 128 = -128 signed!
+  ; Step here: AL=80h, OF=1, SF=1
+  ; OF=1 tells you signed overflow occurred
+
+  ; === Test 3: Sum array (correct way) ===
+  LEA SI, values
+  XOR AX, AX        ; clear sum
+  MOV CX, vcount
+  JCXZ no_data      ; guard!
+
+sum_loop:
+  MOV BL, [SI]      ; load byte
+  XOR BH, BH        ; zero-extend to word
+  ADD AX, BX        ; add to word-size sum
+  INC SI
+  LOOP sum_loop
+  ; AX should be 200+150+100+50+25 = 525
+  ; Watch AX grow each iteration
+
+no_data:
+  MOV [result], AX
+
+  ; === Test 4: Verify memory ===
+  ; After execution, check memory at &#39;result&#39;
+  ; Should see: 0D 02 (525 = 020Dh, little-endian)
+
+  MOV AH, 4Ch
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Test 1: MOV AL, 200 / ADD AL, 100 — AL is 8 bits, so 300 wraps to 44 (300 mod 256). CF=1 signals the unsigned overflow</li>
+      <li><span class="walk-num">2.</span> Test 2: MOV AL, 127 / ADD AL, 1 — 127 is the max positive signed byte. Adding 1 gives 128 (80h), which is -128 in signed. OF=1 signals signed overflow</li>
+      <li><span class="walk-num">3.</span> JCXZ no_data — guard before the loop. If vcount were 0, this prevents the loop from running 65535 times</li>
+      <li><span class="walk-num">4.</span> XOR BH, BH — zero-extends BL to BX before adding. Without this, random data in BH corrupts the sum</li>
+      <li><span class="walk-num">5.</span> ADD AX, BX — accumulates in a 16-bit register to handle sums over 255 (our sum is 525)</li>
+      <li><span class="walk-num">6.</span> After the loop, result should be 020Dh (525). In memory it appears as 0D 02 due to little-endian byte order</li>
+      <li><span class="walk-num">7.</span> At each step in emu8086, compare your expected register values with actual values. Any discrepancy is a bug</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>; Sum should be 150 (50+50+50)
+.DATA
+  vals DW 50, 50, 50
+.CODE
+MAIN PROC
+  MOV CX, 3
+  LEA SI, vals
+  XOR AX, AX
+add_loop:
+  ADD AX, [SI]
+  INC SI
+  LOOP add_loop
+  MOV AH, 4Ch
+  INT 21h
+MAIN ENDP
+END MAIN</code></pre><details><summary>Need a hint?</summary><div class="hint">Three bugs: segment initialization, index increment size, and something you need to check with a memory dump.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: Missing MOV AX, @DATA / MOV DS, AX — DS does not point to .DATA. Bug 2: INC SI moves only 1 byte, but DW elements are 2 bytes — use ADD SI, 2. Bug 3: After fixing, verify with memory dump that vals contains 32 00 32 00 32 00 (50 = 0032h, little-endian).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you are baking a cake but it comes out wrong. Debugging is going back and checking each step: Did you use sugar or salt? (inspect registers) Did you set the oven to the right temperature? (check flags) Did you pour the batter into the right pan? (inspect memory) Single-stepping is doing ONE step at a time and checking the result before moving on. A breakpoint is saying &#39;I know steps 1-5 are fine, let me skip to step 6 and watch from there.&#39;</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">The 8086 has a special Trap Flag (TF) that enables single-stepping at the hardware level. When TF=1, the CPU automatically generates an INT 1 after every instruction. Debuggers set TF and install an INT 1 handler to gain control after each step. This same mechanism works on modern x86 processors — your favorite debugger still uses TF internally.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Take this buggy program and fix all the errors using single-stepping in emu8086: It should sum an array of 5 words and print the result, but it (1) forgets to initialize DS, (2) uses INC SI instead of ADD SI, 2 for a word array, (3) has an unbalanced stack in the print procedure, and (4) uses JA instead of JG for signed comparison.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://www.geeksforgeeks.org/debugging-in-8086-microprocessor/" target="_blank" rel="noopener noreferrer">Debugging 8086 Programs</a> <span class="res-source">(GeeksforGeeks)</span></li>
+      <li><a href="https://en.wikipedia.org/wiki/FLAGS_register" target="_blank" rel="noopener noreferrer">x86 Flags Register</a> <span class="res-source">(Wikipedia)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=KgeFMnhZuGs" target="_blank" rel="noopener noreferrer">emu8086 Debugging Tutorial</a> <span class="res-source">(YouTube)</span></li>
+      <li><a href="https://en.wikipedia.org/wiki/DEBUG_(command)" target="_blank" rel="noopener noreferrer">DEBUG.COM Commands</a> <span class="res-source">(Wikipedia)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=32">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./31-arrays-tables-and-block-operations.html" rel="prev">← Arrays, Tables, and Block Operations</a>
+  <a class="nav-next" href="./33-stack-pushpop-and-stack-frames.html" rel="next">Stack, PUSH/POP, and Stack Frames →</a>
+</nav>
+
+<a class="back-to-course" href="/c/microprocessor-a-z.html">← Back to course: Microprocessor A–Z</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

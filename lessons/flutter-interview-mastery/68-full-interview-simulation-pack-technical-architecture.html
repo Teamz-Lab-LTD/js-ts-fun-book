@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Interview Simulation Pack: Technical +… | Teamz Lab</title>
+<meta name="description" content="The Full Interview Simulation Pack is a structured mock interview system with technical, architecture, and behavioral rounds — each with scoring rubrics…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/68-full-interview-simulation-pack-technical-architecture.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/67-salary-negotiation-remote-culture-relocation.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Full Interview Simulation Pack: Technical + Architecture + Behavioral">
+<meta property="og:description" content="The Full Interview Simulation Pack is a structured mock interview system with technical, architecture, and behavioral rounds — each with scoring rubrics…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/68-full-interview-simulation-pack-technical-architecture.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Full Interview Simulation Pack: Technical + Architecture + Behavioral">
+<meta name="twitter:description" content="The Full Interview Simulation Pack is a structured mock interview system with technical, architecture, and behavioral rounds — each with scoring rubrics…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Full Interview Simulation Pack: Technical + Architecture + Behavioral",
+  "description": "The Full Interview Simulation Pack is a structured mock interview system with technical, architecture, and behavioral rounds — each with scoring rubrics…",
+  "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/68-full-interview-simulation-pack-technical-architecture.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Advanced",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Flutter Interview Mastery: Zero to Senior in 77 Lessons",
+    "url": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 68
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Flutter Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/flutter-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Full Interview Simulation Pack: Technical + Architecture + Behavioral",
+      "item": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/68-full-interview-simulation-pack-technical-architecture.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/flutter-interview-mastery.html">Flutter Interview Mastery</a> / <span aria-current="page">Full Interview Simulation Pack: Technical + Architecture + Behavioral</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 68 of 77</span>
+  <span class="badge diff-advanced">advanced</span>
+</div>
+
+<h1 class="lesson-title">Full Interview Simulation Pack: Technical + Architecture + Behavioral</h1>
+<p class="lesson-subtitle">Complete mock interview sets with scoring rubrics — the capstone that makes you interview-ready</p>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=68">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A flight simulator lets a pilot practice every emergency scenario before they ever face one in the air. This lesson is your flight simulator. By the time you walk into a real interview, you&#39;ve already answered every question type, self-evaluated against a rubric, and know exactly where your answers land on the senior scale.</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The Full Interview Simulation Pack is a structured mock interview system with technical, architecture, and behavioral rounds — each with scoring rubrics — that lets you self-evaluate and target improvement areas before the real interview.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>Preparation is the only variable you fully control. Every project story you&#39;ve practiced saves 10 seconds of recall panic during the real interview. Every DSA pattern you&#39;ve coded in Dart removes the possibility of a blank mind at the whiteboard. Every negotiation script you&#39;ve rehearsed increases your offer. This lesson is the compound interest on everything you&#39;ve learned in this course.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>How to use this simulation pack</strong> — This lesson contains three complete mock interview rounds: Technical (Dart + Flutter internals + state management), Architecture (system design + clean architecture + testing), and Behavioral (leadership + failure + ownership). For each question: answer aloud or in writing, then check the scoring rubric. Score yourself 1-4. Any score below 3 means that topic needs review before your real interview. This is a diagnostic — be honest with yourself.</li>
+      <li><strong>Technical Round — Dart and Flutter internals</strong> — Expect questions on: Dart null safety, async/await vs Futures vs Streams, isolates, const vs final vs var, extension methods, generics. Flutter-specific: Widget vs RenderObject vs Element tree, BuildContext purpose, StatelessWidget vs StatefulWidget lifecycle, why const constructors matter for performance, GlobalKey use cases and risks. Sample Q: &#39;Explain what happens in the Flutter rendering pipeline from build() to pixels on screen.&#39;</li>
+      <li><strong>Technical Round — state management deep dive</strong> — Every senior Flutter interview asks state management questions. Prepare for: &#39;What are the tradeoffs between BLoC, Riverpod, and Provider?&#39; &#39;When would you use a GlobalBloc vs a scoped provider?&#39; &#39;How does Riverpod&#39;s ref.watch() vs ref.read() differ and when do you use each?&#39; &#39;How does your state management choice affect testability?&#39; Map each answer to your production experience — theoretical answers score lower than experience-backed ones.</li>
+      <li><strong>Architecture Round — system design for mobile</strong> — Expect: &#39;Design a real-time messaging feature for an enterprise app.&#39; &#39;How would you architect an offline-first app for 10K field workers?&#39; &#39;How do you handle token refresh in a Flutter app with multiple concurrent API calls?&#39; &#39;Design the local caching strategy for a fintech app&#39;s transaction history.&#39; Senior signals: clarify requirements first, propose multiple approaches, acknowledge tradeoffs, reference real decisions from your projects.</li>
+      <li><strong>Architecture Round — clean architecture and testing</strong> — Questions: &#39;Walk me through your layered architecture — what lives in each layer?&#39; &#39;How do you test a Cubit or Bloc?&#39; &#39;What is the repository pattern and why do you use it?&#39; &#39;How do you test UI components in Flutter?&#39; &#39;Describe your CI/CD pipeline.&#39; Expected: show separation between data, domain, and presentation layers; demonstrate that you&#39;ve written widget tests and integration tests, not just unit tests.</li>
+      <li><strong>Behavioral Round — the top 10 questions you will face</strong> — These 10 questions appear in 80%+ of senior mobile interviews: (1) Tell me about yourself. (2) Why are you looking to leave your current role? (3) Tell me about your most challenging technical problem. (4) Describe a time you disagreed with a teammate. (5) Tell me about a failure and what you learned. (6) How do you handle a deadline you know you&#39;ll miss? (7) Tell me about a time you mentored someone. (8) Why do you want this role specifically? (9) Describe a time you took ownership beyond your assignment. (10) Where do you see yourself in 3 years?</li>
+      <li><strong>Scoring rubric — Technical answers (1-4 scale)</strong> — 1 (Junior): Correct but surface-level — answers &#39;what&#39; without &#39;why.&#39; 2 (Mid): Correct with some depth — mentions tradeoffs but doesn&#39;t tie to production experience. 3 (Senior): Correct, shows depth, references production decisions and their outcomes. 4 (Principal): Correct, deep, multiple alternatives discussed, guides the interviewer toward productive follow-up areas, shows architectural thinking beyond the question asked. Target: score 3 on all questions, 4 on your strongest areas.</li>
+      <li><strong>Scoring rubric — Architecture answers (1-4 scale)</strong> — 1: Proposes one solution without considering alternatives. 2: Mentions alternatives but doesn&#39;t analyze tradeoffs. 3: Clarifies requirements, proposes approach, discusses tradeoffs, references production analogies, handles failure cases. 4: All of 3, plus proactively raises concerns the interviewer didn&#39;t ask about, quantifies scale assumptions, and explicitly notes what they&#39;d NOT build at current stage (avoids over-engineering). Target: consistent 3 across all architecture questions.</li>
+      <li><strong>Scoring rubric — Behavioral answers (1-4 scale)</strong> — 1: Generic answer without specific example. 2: Has a specific example but uses &#39;we&#39; throughout, no quantified result. 3: W-STAR complete — specific, &#39;I&#39; language, quantified result, clear learning. 4: W-STAR complete plus: story is compelling (not just informative), shows proactive senior behavior, the result connects to business impact (not just technical outcome), and ends with a forward-looking reflection. Every behavioral answer should score 3 minimum before your interview.</li>
+      <li><strong>Self-evaluation after each mock round</strong> — After completing a round: (1) Which questions did you answer confidently? (2) Which required more than 30 seconds of thinking? Those are gaps. (3) Which answers lacked a specific example? Research one from your projects. (4) Which answers lacked a number? Find one. (5) Which answers went over 2 minutes? Edit them. Record yourself on video — watching yourself is uncomfortable but reveals filler words, pacing issues, and eye contact gaps that you can&#39;t detect while speaking.</li>
+      <li><strong>The day-before and day-of checklist</strong> — Day before: review your project impact map (lesson 65), review W-STAR stories for all 8 themes (lesson 64), review Big-O for common data structures (lesson 60), review one architecture diagram from lessons 56-58. Day of: test your camera/mic 30 minutes early, have a glass of water, open your IDE for live coding, have your project list visible off-screen. First 60 seconds: smile, pause, say &#39;Thank you for having me — I&#39;m excited to be here.&#39; Tone is set in the first minute.</li>
+      <li><strong>Final mindset: you are already hireable</strong> — You have shipped production apps used by real users. You have made architecture decisions under real constraints. You have debugged real production crashes. You have worked with offline sync, real-time systems, hardware integration, fintech security, and founder-level ownership. Most candidates interviewing for the same role have not done all of these things. Your job in the interview is not to convince them you&#39;re good — it&#39;s to help them see what you&#39;ve already built. Walk in with that energy.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Mock Interview Round 1: Technical — answer these aloud
+
+/*
+Q1: &quot;What is the difference between const and final in Dart?&quot;
+Expected answer (score 3):
+&quot;final means the variable can only be assigned once — the reference is
+ fixed but the object can mutate. const means the value is a compile-time
+ constant — the object is deeply immutable and canonicalized by the
+ compiler. In Flutter, const constructors on widgets allow the framework
+ to skip rebuild for that subtree, which is a significant performance
+ optimization I applied in Tixio&#39;s message list.&quot;
+
+Q2: &quot;How does Riverpod&#39;s ref.watch() differ from ref.read()?&quot;
+Expected answer (score 3):
+&quot;ref.watch() subscribes to the provider — when it changes, the widget
+ or provider using it rebuilds. ref.read() reads the current value once
+ without subscribing — no rebuild. I use ref.watch() in build() for
+ reactive UI, and ref.read() in event handlers (onPressed) where I just
+ need the current value without triggering a rebuild loop.&quot;
+
+Q3: &quot;Explain Dart isolates and when you&#39;d use them.&quot;
+Expected answer (score 3):
+&quot;Isolates have isolated memory heaps — no shared state, communicating
+ via message passing. The main isolate handles UI; spawning a background
+ isolate via compute() or Isolate.spawn() offloads CPU-heavy work without
+ blocking the frame budget. I used this in FieldBuzz to run JSON parsing
+ and Drift queries during sync without janking the UI.&quot;
+
+// Mock Interview Round 2: Architecture
+Q4: &quot;Design the token refresh mechanism for a Flutter app with
+     multiple concurrent API calls.&quot;
+Expected answer (score 3):
+&quot;Race condition risk: if three calls fire simultaneously with an expired
+ token, all three will attempt refresh — causing duplicate refresh calls
+ and potential token invalidation. Solution: a RefreshLock — a single
+ Completer&lt;String&gt; that gates all pending calls. First call triggers
+ refresh and sets the Completer. Subsequent calls await the same
+ Completer. On completion, all calls receive the new token and proceed.
+ I implemented this in Payback where concurrent claim and balance calls
+ had this exact race condition.&quot;
+
+// Mock Interview Round 3: Behavioral
+Q5: &quot;Tell me about a time you took ownership beyond your assignment.&quot;
+Expected W-STAR answer (score 4):
+&quot;Why it matters: In startups, the things that don&#39;t have an owner are
+ often the most important things.
+ Situation: During Tixio development, I noticed our message list was
+ dropping to 45fps on mid-range Android devices — nobody had assigned
+ performance optimization.
+ Task: I decided to own it without being asked.
+ Action: I opened DevTools, identified unnecessary widget rebuilds via
+ provider over-subscription, refactored to selective reads and added
+ const constructors to static subtrees. I also wrote a performance
+ regression test to prevent recurrence.
+ Result: Frame rate stabilized at 60fps. I presented the analysis and
+ fix in our next retrospective — it became our standard approach for
+ all new list widgets. [~90 seconds]&quot;
+*/
+
+// Self-scoring tracker
+class InterviewRound {
+  final String roundName;
+  final Map&lt;String, int&gt; scores; // question → 1-4 score
+
+  InterviewRound(this.roundName, this.scores);
+
+  double get avgScore =&gt; scores.values.reduce((a,b) =&gt; a+b) / scores.length;
+
+  List&lt;String&gt; get gapAreas =&gt;
+    scores.entries.where((e) =&gt; e.value &lt; 3).map((e) =&gt; e.key).toList();
+
+  String get readiness {
+    if (avgScore &gt;= 3.5) return &#39;Interview ready&#39;;
+    if (avgScore &gt;= 2.5) return &#39;Review gap areas, then ready&#39;;
+    return &#39;More preparation needed — revisit flagged lessons&#39;;
+  }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> Three mock questions are written as code comments — the format you&#39;ll face on a whiteboard</li>
+      <li><span class="walk-num">2.</span> Q1 const vs final: answer demonstrates both semantic understanding AND production application in Tixio</li>
+      <li><span class="walk-num">3.</span> Q2 ref.watch vs ref.read: answer uses &#39;I use X in Y context&#39; — experience-backed, not just theory</li>
+      <li><span class="walk-num">4.</span> Q3 isolates: answer includes a real production use case (FieldBuzz sync) — connects to your portfolio</li>
+      <li><span class="walk-num">5.</span> Q4 architecture: identifies the race condition first — this is the senior signal — then proposes the solution</li>
+      <li><span class="walk-num">6.</span> Completer pattern is the specific Dart idiom — showing language-level depth</li>
+      <li><span class="walk-num">7.</span> Q5 behavioral: explicitly labeled with W-STAR sections — score-4 because the result is organizational, not just technical</li>
+      <li><span class="walk-num">8.</span> InterviewRound class models self-evaluation — scores per question, average, gap areas</li>
+      <li><span class="walk-num">9.</span> gapAreas filters questions below score 3 — your targeted review list</li>
+      <li><span class="walk-num">10.</span> readiness property gives clear guidance: review flagged lessons, then interview</li>
+      <li><span class="walk-num">11.</span> This class is a mental model for self-assessment — apply it after every practice session</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>// Mock interview answer — score this response:
+// Q: &quot;How would you architect offline sync for a Flutter field app?&quot;
+//
+// &quot;I would use SharedPreferences to store the data locally.
+//  When internet is available, I&#39;d loop through the stored data
+//  and send each item to the server one by one.
+//  If a request fails, I&#39;d show an error to the user.
+//  This would work well for most cases.&quot;</code></pre><details><summary>Need a hint?</summary><div class="hint">Score this answer 1-4 using the architecture rubric from this lesson. Identify what elements are missing that would raise it to a score-3 answer.</div></details><details><summary>Show answer</summary><div class="answer">Score: 1. Problems: (1) SharedPreferences is wrong for structured relational data — no transactions, size limits, no queryability. Score-3 answer: Drift/SQLite. (2) &#39;Loop through and send each item one by one&#39; — sequential, no batching, no parallelism, no idempotency key, no retry logic. Score-3 answer: queue with batched requests and exponential backoff. (3) &#39;Show error to user&#39; on sync failure — sync happens in background, users shouldn&#39;t be interrupted for every sync error. Score-3 answer: silent retry with WorkManager, surface only persistent failures. (4) No mention of: conflict resolution, delta sync vs full sync, WorkManager/BGTaskScheduler for background execution, sync status per record. (5) &#39;Would work well for most cases&#39; — no scale consideration. Score-3 answer references: 10K field workers, sync time targets, conflict strategy decision. To reach score 3: mention Drift, WorkManager, delta sync with cursor, per-record sync status, conflict strategy decision, and reference a production analogy (FieldBuzz/BRAC).</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Imagine you have a big sports match coming up. The best preparation isn&#39;t reading about sports — it&#39;s playing practice matches, scoring yourself, and fixing the parts where you keep losing points. This lesson is your practice match. You play it now so that the real match feels easy.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">NASA&#39;s astronaut training program uses simulation for 80% of mission preparation. The actual mission is almost anticlimactic for trained astronauts — they&#39;ve already &#39;flown&#39; it hundreds of times. Elite interview preparation follows the same principle: by interview day, nothing should feel new.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Complete a full 90-minute mock interview session: 30 minutes technical (answer all 3 code questions aloud), 30 minutes architecture (design the token refresh system and the offline sync architecture for FieldBuzz), 30 minutes behavioral (answer all 10 behavioral questions using W-STAR with real project examples). Score yourself on the 1-4 rubric. Identify your lowest-scoring areas and create a 1-week review plan targeting those lessons.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://interviewing.io" target="_blank" rel="noopener noreferrer">Interviewing.io — Anonymous Mock Technical Interviews</a> <span class="res-source">(interviewing.io)</span></li>
+      <li><a href="https://www.pramp.com" target="_blank" rel="noopener noreferrer">Pramp — Free Peer Mock Interviews</a> <span class="res-source">(pramp.com)</span></li>
+      <li><a href="https://dart.academy/flutter-interview-questions/" target="_blank" rel="noopener noreferrer">Flutter Interview Questions — Dart Academy</a> <span class="res-source">(dart.academy)</span></li>
+      <li><a href="https://www.goodreads.com/book/show/54109255-system-design-interview" target="_blank" rel="noopener noreferrer">System Design Interview — Alex Xu (Book)</a> <span class="res-source">(goodreads.com)</span></li>
+      <li><a href="https://www.educative.io/courses/grokking-the-behavioral-interview" target="_blank" rel="noopener noreferrer">Grokking the Behavioral Interview — Educative</a> <span class="res-source">(educative.io)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=68">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./67-salary-negotiation-remote-culture-relocation.html" rel="prev">← Salary Negotiation, Remote Culture &amp;…</a>
+  <a class="nav-next" href="./69-riverpod-2x-provider-the-other-state-management.html" rel="next">Riverpod 2.x &amp; Provider — The Other… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/flutter-interview-mastery.html">← Back to course: Flutter Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>

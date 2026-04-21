@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity &amp; Fragment Lifecycle, Configuration Changes… | Teamz Lab</title>
+<meta name="description" content="The Activity lifecycle defines how Android manages UI components through state transitions. Configuration changes (rotation, locale switch) destroy and…">
+<meta name="author" content="Teamz Lab">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="date" content="2026-04-21">
+<link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html">
+<link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/12-android-app-components-activity-fragment-service.html">
+<link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activity &amp; Fragment Lifecycle, Configuration Changes">
+<meta property="og:description" content="The Activity lifecycle defines how Android manages UI components through state transitions. Configuration changes (rotation, locale switch) destroy and…">
+<meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
+<meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html">
+<meta property="og:site_name" content="Teamz Lab Learning">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Activity &amp; Fragment Lifecycle, Configuration Changes">
+<meta name="twitter:description" content="The Activity lifecycle defines how Android manages UI components through state transitions. Configuration changes (rotation, locale switch) destroy and…">
+<meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Activity & Fragment Lifecycle, Configuration Changes",
+  "description": "The Activity lifecycle defines how Android manages UI components through state transitions. Configuration changes (rotation, locale switch) destroy and…",
+  "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html",
+  "inLanguage": "en",
+  "learningResourceType": "Lesson",
+  "educationalLevel": "Intermediate",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "Android Interview Mastery: Zero to Senior in 83 Lessons",
+    "url": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Teamz Lab",
+    "url": "https://teamzlab.com"
+  },
+  "datePublished": "2025-03-01",
+  "dateModified": "2026-04-21",
+  "position": 13
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://learn.teamzlab.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Android Interview Mastery",
+      "item": "https://learn.teamzlab.com/c/android-interview-mastery.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Activity & Fragment Lifecycle, Configuration Changes",
+      "item": "https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html"
+    }
+  ]
+}
+</script>
+
+<style>
+:root{--bg:#F4F5F5;--surface:#FFFFFF;--text:#12151A;--text-muted:rgba(18,21,26,0.65);--border:#DDDDDD;--accent:#D9FE06;--accent-fg:#12151A;--font:'Poppins',sans-serif;--font-code:'Fira Code',Consolas,monospace;--text-h1:36px;--text-h2:28px;--text-h3:22px;--text-h4:19px;--text-lg:16px;--text-md:14px;--text-sm:12px;--text-xs:10px;--lh:165%}
+html[data-theme="dark"]{--bg:#12151A;--surface:#1D1F25;--text:#FFFFFF;--text-muted:rgba(255,255,255,0.7);--border:rgba(255,255,255,0.15);--accent-fg:#FFFFFF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--text-lg);line-height:var(--lh);-webkit-font-smoothing:antialiased}
+a{color:var(--accent-fg);text-decoration:none}a:hover{text-decoration:underline}
+.skip-link{position:absolute;left:50%;transform:translateX(-50%);top:-100%;background:var(--accent);color:#12151A;border-radius:0 0 10px 10px;padding:0.7rem 1rem;font-weight:700;z-index:200}.skip-link:focus{top:0}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.site-header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.7rem 1.25rem}
+.site-header__inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.teamz-logo{display:inline-flex;align-items:center;color:var(--text)}.teamz-logo:hover{color:var(--accent-fg);text-decoration:none}
+.nav-link{color:var(--text-muted);font-size:var(--text-md);font-weight:500}.nav-link:hover{color:var(--accent-fg);text-decoration:none}
+.theme-toggle{width:36px;height:36px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{color:var(--text)}
+.breadcrumb{font-size:var(--text-sm);color:var(--text-muted);margin-bottom:1rem}
+.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--accent-fg)}
+.breadcrumb span[aria-current]{color:var(--text)}
+.lesson-meta{display:flex;gap:0.6rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.badge{display:inline-block;padding:0.2rem 0.65rem;border-radius:22px;font-size:var(--text-xs);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);border:1px solid var(--border)}
+.badge.lesson-num{background:var(--accent);color:#12151A;border:1px solid var(--accent)}
+.badge.diff-beginner{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.badge.diff-intermediate{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.badge.diff-advanced{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+html[data-theme="dark"] .badge{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+html[data-theme="dark"] .badge.diff-beginner{background:rgba(40,167,69,0.2);color:#5fd778}
+html[data-theme="dark"] .badge.diff-intermediate{background:rgba(255,193,7,0.2);color:#ffd666}
+html[data-theme="dark"] .badge.diff-advanced{background:rgba(220,53,69,0.2);color:#ff7986}
+h1.lesson-title{font-size:var(--text-h1);font-weight:800;line-height:1.2;margin-bottom:0.4rem}
+.lesson-subtitle{font-size:var(--text-h4);color:var(--text-muted);font-weight:400;margin-bottom:1.8rem;line-height:1.4}
+.cta-interactive{display:flex;align-items:center;gap:0.6rem;background:var(--accent);color:#12151A;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:2.5rem;font-weight:600;border:1px solid var(--accent);font-size:var(--text-md)}
+.cta-interactive:hover{text-decoration:none;color:#12151A;transform:translateY(-1px);box-shadow:0 4px 12px rgba(217,254,6,0.35)}
+.cta-interactive::before{content:'▶';margin-right:0.2rem}
+.section{margin-bottom:2.2rem}
+.section h2{font-size:var(--text-h2);font-weight:800;margin-bottom:0.8rem;line-height:1.25}
+.section h2 .accent{color:var(--accent-fg)}
+.section p{margin-bottom:0.8rem}
+.section p:last-child{margin-bottom:0}
+.analogy-box{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:1.1rem 1.3rem;font-style:italic;color:var(--text)}
+.points-list{list-style:none;display:grid;gap:0.8rem}
+.points-list li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;font-size:var(--text-md);line-height:var(--lh)}
+.points-list li strong{color:var(--accent-fg);font-weight:700}
+pre.code{background:#1D1F25;color:#E8EAED;border-radius:10px;padding:1.2rem;overflow-x:auto;font-family:var(--font-code);font-size:13px;line-height:1.55;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.1)}
+html[data-theme="dark"] pre.code{background:#0E1013}
+.walkthrough{display:grid;gap:0.4rem;list-style:none}
+.walkthrough li{font-size:var(--text-md);color:var(--text);padding:0.4rem 0.2rem;display:flex;gap:0.5rem}
+.walk-num{color:var(--accent-fg);font-weight:700;flex-shrink:0;min-width:1.8rem}
+.bug-challenge{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.3rem}
+.bug-challenge details{cursor:pointer}
+.bug-challenge details summary{font-weight:600;color:var(--accent-fg);margin-bottom:0.5rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);list-style:none;display:flex;align-items:center;gap:0.5rem}
+.bug-challenge details summary::before{content:'▶';font-size:0.8em;transition:transform 0.2s}
+.bug-challenge details[open] summary::before{transform:rotate(90deg)}
+.bug-challenge .hint{color:var(--text-muted);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid var(--accent)}
+.bug-challenge .answer{color:var(--text);font-size:var(--text-md);margin-top:0.6rem;padding:0.6rem 0.9rem;background:var(--bg);border-radius:6px;border-left:2px solid #28a745}
+html[data-theme="dark"] .bug-challenge .answer{border-left-color:#5fd778}
+.eli5-box{background:linear-gradient(135deg,rgba(217,254,6,0.08),rgba(217,254,6,0.02));border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md);color:var(--text);line-height:var(--lh)}
+.funfact-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-size:var(--text-md);color:var(--text-muted)}
+.funfact-box::before{content:'💡 ';margin-right:0.2rem}
+html[data-theme="dark"] .funfact-box::before{content:'';}
+.challenge-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;font-size:var(--text-md)}
+.resources-list{list-style:none;display:grid;gap:0.4rem}
+.resources-list li{padding:0.5rem 0.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:var(--text-md)}
+.res-source{color:var(--text-muted);font-size:var(--text-sm);margin-left:0.3rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.nav-prev,.nav-next{flex:1;padding:1rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-weight:600;font-size:var(--text-md);line-height:1.4;display:block;max-width:45%}
+.nav-prev{text-align:left}.nav-next{text-align:right;margin-left:auto}
+.nav-prev:hover,.nav-next:hover{border-color:var(--accent-fg);color:var(--accent-fg);text-decoration:none;transform:translateY(-1px)}
+.nav-placeholder{flex:1;max-width:45%}
+.back-to-course{display:inline-block;margin-top:2rem;font-size:var(--text-md);color:var(--text-muted)}
+.back-to-course:hover{color:var(--accent-fg)}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem}h1.lesson-title{font-size:28px}.section h2{font-size:22px}.cta-interactive{font-size:var(--text-sm)}.nav-prev,.nav-next{max-width:48%;padding:0.75rem 0.9rem}}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="https://teamzlab.com/" target="_blank" rel="noopener noreferrer" class="teamz-logo" aria-label="Teamz Lab"><svg width="100" height="16" viewBox="0 0 229 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M103.64 0H0V53.18H103.64V0Z"/><path d="M228 53.1799H103.64V106.36H228V53.1799Z"/><path d="M158.84 106.37H103.64V177.59H158.83V106.37"/></svg></a>
+    <nav style="display:flex;align-items:center;gap:0.8rem;">
+      <a class="nav-link" href="/c/android-interview-mastery.html">Android Interview Mastery</a>
+      <a class="nav-link" href="/">Home</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a> / <a href="/c/android-interview-mastery.html">Android Interview Mastery</a> / <span aria-current="page">Activity &amp; Fragment Lifecycle, Configuration Changes</span>
+</nav>
+
+<div class="lesson-meta">
+  <span class="badge lesson-num">Lesson 13 of 83</span>
+  <span class="badge diff-intermediate">intermediate</span>
+</div>
+
+<h1 class="lesson-title">Activity &amp; Fragment Lifecycle, Configuration Changes</h1>
+<p class="lesson-subtitle">Master the lifecycle — the most-asked Android interview topic of all time</p>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=13">Open interactive version (quiz + challenge)</a>
+
+<section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Activity lifecycle is like a restaurant table. onCreate is when guests sit down, onResume is when food arrives and they&#39;re actively eating, onPause is when they&#39;re distracted by a phone call, onStop is when they step outside, and onDestroy is when they leave and the table is cleared. Configuration change is like the restaurant switching to a new layout — every guest (Activity) is re-seated from scratch unless you have a VIP reservation (ViewModel).</div></section>
+
+<section class="section"><h2>What is it?</h2><p>The Activity lifecycle defines how Android manages UI components through state transitions. Configuration changes (rotation, locale switch) destroy and recreate Activities — but ViewModels persist across this. onSaveInstanceState provides a Bundle-based escape hatch for small UI state that must survive process death. Fragment lifecycle adds a second dimension — the View lifecycle — that must be used correctly to avoid memory leaks and NPEs.</p></section>
+
+<section class="section"><h2>Real-world relevance</h2><p>In a field operations app, a WorkOrderDetailActivity must restore scroll position and expanded section state after rotation — these go in onSaveInstanceState. The WorkOrder data itself lives in a ViewModel so it doesn&#39;t reload from the server on every rotation. A MapFragment for GPS tracking uses onStart/onStop to register/unregister location updates, ensuring battery drain only occurs when the map is visible. The Fragment uses viewLifecycleOwner for LiveData observation to prevent leaks when navigating to sub-screens.</p></section>
+
+<section class="section"><h2>Key points</h2><ul class="points-list">
+      <li><strong>onCreate()</strong> — Called when Activity is first created. Initialize UI, set content view, restore saved state. Only called once per Activity instance (unless recreated). Use savedInstanceState to detect recreation vs fresh start. Call super.onCreate(savedInstanceState) first.</li>
+      <li><strong>onStart() &amp; onStop()</strong> — onStart: Activity becomes visible. onStop: Activity no longer visible (another Activity covers it fully or user presses Home). Register/unregister resources tied to visibility here — e.g., sensors, location updates, broadcast receivers that must only fire when visible.</li>
+      <li><strong>onResume() &amp; onPause()</strong> — onResume: Activity is in foreground and interactive — user can touch it. onPause: Activity partially obscured (dialog, split screen) or about to be stopped. onPause must be FAST — the next Activity won&#39;t start until it completes. Never do heavy work in onPause.</li>
+      <li><strong>onDestroy()</strong> — Called before Activity is destroyed — either by user finishing it or system killing it. isFinishing() tells you which. Release non-UI resources here. If configuration change triggered onDestroy, isChangingConfigurations() returns true. ViewModel.onCleared() runs after this.</li>
+      <li><strong>Configuration changes</strong> — Rotating the device, changing language, resizing in multi-window — Android destroys and recreates the Activity by default. This allows loading the correct resources (layout-land, values-es) for the new configuration. The process is: onPause → onStop → onDestroy → onCreate → onStart → onResume.</li>
+      <li><strong>onSaveInstanceState()</strong> — Called before the Activity may be killed — called even during configuration changes. Bundle supports primitives, Parcelable, Serializable. Size limit ~1MB (shared with system). Use for transient UI state (scroll position, selected tab, user-typed text). NOT for large data — use ViewModel for that.</li>
+      <li><strong>onRestoreInstanceState()</strong> — Called after onStart() with the same Bundle from onSaveInstanceState. Can also restore state in onCreate from savedInstanceState parameter. onRestoreInstanceState is only called if there is a non-null Bundle — convenient for always-restore logic.</li>
+      <li><strong>Fragment lifecycle vs Activity lifecycle</strong> — Fragment has both Fragment lifecycle and View lifecycle (separate!). onCreateView inflates the layout, onViewCreated is where you set up views/observers. onDestroyView is called when the Fragment&#39;s view is destroyed (backstack) but Fragment instance survives. Always observe LiveData/Flow with viewLifecycleOwner, not the Fragment itself.</li>
+      <li><strong>Fragment backstack</strong> — addToBackStack() saves Fragment transaction to the back stack — pressing Back pops it. replace() + addToBackStack() destroys old Fragment&#39;s view but keeps it in memory on the stack. add() keeps both Fragments alive simultaneously. Overuse causes deep stacks and memory issues in large apps.</li>
+      <li><strong>ViewModel survives configuration changes</strong> — ViewModel lives as long as the ViewModelStore lives — which is scoped to the Activity/Fragment and survives configuration changes. On config change: Activity is destroyed but ViewModelStore is retained. New Activity instance retrieves the same ViewModel. This is the official solution to configuration change data loss.</li>
+      <li><strong>onSaveInstanceState vs ViewModel</strong> — ViewModel survives config changes but NOT process death. onSaveInstanceState&#39;s Bundle survives both config changes AND process death (restored when user navigates back). Combine both: ViewModel for large runtime state, SavedStateHandle for small UI state that must survive process death.</li>
+      <li><strong>Lifecycle-aware components</strong> — DefaultLifecycleObserver (or @OnLifecycleEvent) allows any class to observe Activity/Fragment lifecycle without subclassing. ProcessLifecycleOwner tracks app-level foreground/background. This decouples business logic from UI classes.</li>
+    </ul></section>
+
+<section class="section"><h2>Code example</h2><pre class="code"><code>// Activity with proper lifecycle handling
+class WorkOrderDetailActivity : AppCompatActivity() {
+
+    private val viewModel: WorkOrderViewModel by viewModels()
+    private lateinit var binding: ActivityWorkOrderDetailBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityWorkOrderDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Restore UI state (scroll position) — NOT data
+        savedInstanceState?.let { state -&gt;
+            binding.scrollView.scrollTo(0, state.getInt(KEY_SCROLL_Y, 0))
+            binding.detailsSection.isExpanded = state.getBoolean(KEY_DETAILS_EXPANDED, false)
+        }
+
+        // Data comes from ViewModel — survives config change
+        viewModel.workOrder.observe(this) { order -&gt;
+            binding.titleText.text = order.title
+            binding.statusChip.text = order.status.label
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save transient UI state only
+        outState.putInt(KEY_SCROLL_Y, binding.scrollView.scrollY)
+        outState.putBoolean(KEY_DETAILS_EXPANDED, binding.detailsSection.isExpanded)
+    }
+
+    companion object {
+        private const val KEY_SCROLL_Y = &quot;scroll_y&quot;
+        private const val KEY_DETAILS_EXPANDED = &quot;details_expanded&quot;
+    }
+}
+
+// Fragment with CORRECT lifecycle usage
+class OrderMapFragment : Fragment(R.layout.fragment_order_map) {
+
+    private val viewModel: WorkOrderViewModel by activityViewModels()
+    private var _binding: FragmentOrderMapBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentOrderMapBinding.bind(view)
+
+        // viewLifecycleOwner — not &#39;this&#39; — to avoid leaks when on backstack
+        viewModel.location.observe(viewLifecycleOwner) { loc -&gt;
+            binding.mapView.updateMarker(loc)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null  // Prevent memory leak — view is gone but fragment lives
+    }
+}</code></pre><h3 style="font-size:var(--text-h4);margin-top:1.4rem;margin-bottom:0.7rem;">Line-by-line walkthrough</h3><ol class="walkthrough">
+      <li><span class="walk-num">1.</span> WorkOrderDetailActivity extends AppCompatActivity and uses by viewModels() delegation — this hooks into ViewModelProvider under the hood and returns the same ViewModel instance across configuration changes.</li>
+      <li><span class="walk-num">2.</span> savedInstanceState?.let { } in onCreate only runs if this is a recreation — not first launch. It restores scroll position and section expansion — small UI state that ViewModel doesn&#39;t own.</li>
+      <li><span class="walk-num">3.</span> viewModel.workOrder.observe(this) uses &#39;this&#39; (the Activity) as LifecycleOwner — correct for Activities because Activity lifecycle and view lifecycle are the same.</li>
+      <li><span class="walk-num">4.</span> onSaveInstanceState saves scroll Y and details expansion state. putInt/putBoolean are efficient — this Bundle is stored in system memory and limited to ~1MB total.</li>
+      <li><span class="walk-num">5.</span> OrderMapFragment uses by activityViewModels() to share the ViewModel with the Activity — both see the same WorkOrder and location data.</li>
+      <li><span class="walk-num">6.</span> _binding is nullable and set to null in onDestroyView — this is the standard pattern. The backing property &#39;binding&#39; asserts non-null via !! and will crash if accessed after onDestroyView, which is the desired behavior (fail fast).</li>
+      <li><span class="walk-num">7.</span> viewModel.location.observe(viewLifecycleOwner) is the critical line — viewLifecycleOwner is tied to the Fragment&#39;s VIEW lifecycle, not the Fragment lifecycle. When the Fragment goes to the backstack, the view is destroyed, this observer is removed, preventing memory leaks.</li>
+      <li><span class="walk-num">8.</span> onDestroyView sets _binding = null — without this, the binding holds a reference to the view hierarchy, and since the Fragment (which is still alive on the backstack) holds binding, the views can never be garbage collected — a classic memory leak.</li>
+    </ol></section>
+
+<section class="section"><h2>Spot the bug</h2><div class="bug-challenge"><pre class="code"><code>class ProfileFragment : Fragment() {
+    private val binding: FragmentProfileBinding by lazy {
+        FragmentProfileBinding.inflate(layoutInflater)
+    }
+    private val viewModel: ProfileViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View = binding.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.profile.observe(this) { profile -&gt;  // bug 1
+            binding.nameText.text = profile.name
+            binding.emailText.text = profile.email
+        }
+    }
+
+    // No onDestroyView override
+}
+
+class SettingsActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+        loadHeavyData()  // bug 2
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveAllSettings()    // bug 3
+        uploadSettingsToServer()
+    }
+}</code></pre><details><summary>Need a hint?</summary><div class="hint">Think about Fragment memory leaks with lazy binding, LiveData observer lifecycle, and heavy operations in lifecycle callbacks.</div></details><details><summary>Show answer</summary><div class="answer">Bug 1: observe(this) uses Fragment lifecycle — when the Fragment goes to backstack, its view is destroyed but Fragment survives. The observer still fires and accesses binding (which references destroyed views), risking NPE. Fix: observe(viewLifecycleOwner). Bug 2 (minor): loadHeavyData() in onCreate is fine for initialization, but if it blocks the main thread it causes jank. Better: call it and observe a ViewModel LiveData that does async loading. Bug 3: uploadSettingsToServer() in onPause is dangerous — onPause must return fast because the next Activity waits for it. Network call here causes visible lag on the incoming screen. Fix: enqueue a WorkManager task for reliable background upload, or at minimum move to a coroutine with lifecycleScope.launch.</div></details></div></section>
+
+<section class="section"><h2>Explain like I&#39;m 5</h2><div class="eli5-box">Think of an Activity like a TV show playing on screen. onCreate is the show starting, onResume is you actively watching, onPause is someone calling you (show still visible but you&#39;re distracted), onStop is you leaving the room, onDestroy is turning the TV off. Rotating the device is like switching to a different TV — the show has to restart, but your remote control (ViewModel) remembers where you were. onSaveInstanceState is like writing a sticky note with where you paused so the new TV can jump to the right spot.</div></section>
+
+<section class="section"><h2>Fun fact</h2><div class="funfact-box">Android&#39;s configuration change system was designed in 2008 when devices had fixed orientations. The destroy-recreate cycle was meant to load landscape layouts automatically. Today, ViewModels and Jetpack Compose largely sidestep this problem — but every Android interview still tests it because legacy codebases are everywhere.</div></section>
+
+<section class="section"><h2>Hands-on challenge</h2><div class="challenge-box">Build a NoteEditorActivity that: (1) saves scroll position and cursor position in onSaveInstanceState, (2) restores them in onRestoreInstanceState, (3) keeps the Note object (with title, body, lastModified) in a ViewModel, (4) uses a NoteEditorFragment with viewLifecycleOwner for all LiveData observers, and (5) sets _binding = null in onDestroyView. Verify rotation doesn&#39;t lose the note content OR the UI state.</div></section>
+
+<section class="section"><h2>More resources</h2><ul class="resources-list">
+      <li><a href="https://developer.android.com/guide/components/activities/activity-lifecycle" target="_blank" rel="noopener noreferrer">Activity Lifecycle — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/guide/fragments/lifecycle" target="_blank" rel="noopener noreferrer">Fragment Lifecycle — Android Developers</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/guide/topics/resources/runtime-changes" target="_blank" rel="noopener noreferrer">Handle Configuration Changes</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://developer.android.com/topic/libraries/architecture/lifecycle" target="_blank" rel="noopener noreferrer">Lifecycle-aware components with LiveData</a> <span class="res-source">(Android Developers)</span></li>
+      <li><a href="https://medium.com/androiddevelopers/viewlifecycleowner-livedata-viewmodel-and-fragment-96b3aefb15a9" target="_blank" rel="noopener noreferrer">ViewLifecycleOwner vs LifecycleOwner in Fragments</a> <span class="res-source">(Medium / Android Developers)</span></li>
+    </ul></section>
+
+<a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=13">Open interactive version (quiz + challenge)</a>
+
+<nav class="lesson-nav" aria-label="Lesson navigation">
+  <a class="nav-prev" href="./12-android-app-components-activity-fragment-service.html" rel="prev">← Android App Components: Activity…</a>
+  <a class="nav-next" href="./14-intents-pendingintents-task-stack-launch-modes.html" rel="next">Intents, PendingIntents, Task Stack &amp;… →</a>
+</nav>
+
+<a class="back-to-course" href="/c/android-interview-mastery.html">← Back to course: Android Interview Mastery</a>
+
+</main>
+
+<script>
+(function(){ const s = localStorage.getItem('theme'); if (s === 'dark') document.documentElement.setAttribute('data-theme','dark'); })();
+function toggleTheme(){ const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; if (n === 'dark') h.setAttribute('data-theme','dark'); else h.removeAttribute('data-theme'); localStorage.setItem('theme', n); }
+</script>
+</body>
+</html>
