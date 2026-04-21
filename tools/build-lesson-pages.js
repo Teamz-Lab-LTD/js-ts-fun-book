@@ -110,7 +110,12 @@ function renderLesson({ slug, cfg, lessons, lesson, prev, next, courseTitle, cou
   const difficulty = lesson.difficulty || '';
   const resources = Array.isArray(lesson.resources) ? lesson.resources : [];
 
-  const pageTitle = truncate(`${title} — ${courseShort}`, 56) + ' | Teamz Lab';
+  // Keyword-first title pattern: "{lesson topic} Tutorial — Free Lesson | Teamz Lab"
+  // Captures "tutorial" / "free X tutorial" search patterns; keeps lesson title as primary
+  // Fallback for Bengali: use localized suffix
+  const isBn = lang === 'bn';
+  const suffix = isBn ? ' | ফ্রি পাঠ — Teamz Lab' : ' | Free Tutorial — Teamz Lab';
+  const pageTitle = truncate(title, 62 - suffix.length) + suffix;
   const metaDesc = truncate(whatIs || analogy || subtitle, 158);
 
   const interactiveUrl = `../../learn.html?course=${slug}&amp;lesson=${lesson.id}`;
@@ -367,6 +372,11 @@ ${resourcesHtml ? `<section class="section"><h2>${esc(labels.resources)}</h2><ul
 </nav>
 
 <a class="back-to-course" href="/c/${esc(slug)}.html">← ${esc(labels.backToCourse)}: ${esc(courseShort)}</a>
+
+<footer style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:var(--text-sm);line-height:var(--lh);">
+  <p style="margin-bottom:0.5rem;">${isBn ? 'Teamz Lab-এর ইঞ্জিনিয়ারিং টিমের লেখা। সব পাঠ বিনামূল্যে।' : 'Written by the Teamz Lab engineering team. All lessons are free forever.'}</p>
+  <p><a href="/about.html" style="color:var(--accent-fg);">${isBn ? 'আমাদের সম্পর্কে ও রেফারেন্স' : 'About &amp; references'}</a> &middot; <a href="/roadmap.html" style="color:var(--accent-fg);">${isBn ? 'পূর্ণাঙ্গ রোডম্যাপ' : 'Full-stack roadmap'}</a> &middot; <a href="/" style="color:var(--accent-fg);">${isBn ? 'সব ফ্রি কোর্স' : 'All courses'}</a></p>
+</footer>
 
 </main>
 
