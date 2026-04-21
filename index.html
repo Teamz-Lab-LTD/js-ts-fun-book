@@ -30,8 +30,26 @@
 <meta name="twitter:creator" content="@TeamzLab">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  // Defer AdSense until after LCP — requestIdleCallback pattern
+  // Saves ~227 KiB of main-thread JS during initial render
+  (function(){
+    function loadAds(){
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';
+      s.crossOrigin = 'anonymous';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      window.addEventListener('load', function(){ requestIdleCallback(loadAds, {timeout: 3000}); });
+    } else {
+      window.addEventListener('load', function(){ setTimeout(loadAds, 1500); });
+    }
+  })();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 <script type="application/ld+json">
 {
@@ -302,7 +320,7 @@
   --bg:#F4F5F5; --surface:#FFFFFF; --text:#12151A; --text-muted:rgba(18,21,26,0.6);
   --border:#DDDDDD; --accent:#D9FE06; --accent-text:#12151A; --accent-fg:#12151A;
   /* Typography tokens */
-  --font:'Poppins',sans-serif; --font-accent:'Playfair Display',Georgia,serif; --font-code:'Fira Code',Consolas,monospace;
+  --font:'Poppins',sans-serif; --font-accent:'Poppins',sans-serif; --font-code:'Fira Code',Consolas,monospace;
   --text-6xl:96px; --text-5xl:80px; --text-4xl:72px; --text-3xl:64px; --text-2xl:56px; --text-xl:48px;
   --text-h1:40px; --text-h2:32px; --text-h3:28px; --text-h4:24px; --text-h5:20px; --text-h6:18px;
   --text-lg:16px; --text-md:14px; --text-sm:12px; --text-xs:10px;
@@ -456,7 +474,7 @@ html[data-theme="dark"] .coming-soon .badge { background:var(--border); color:va
 
 <main id="main-content" class="container">
   <section class="header" aria-labelledby="page-title">
-    <h1 id="page-title" class="hero-title">Teamz Lab <span>Learning</span></h1>
+    <h1 id="page-title" class="hero-title" style="font-display:swap">Teamz Lab <span>Learning</span></h1>
     <p id="hero-subtitle">Free interactive coding courses to learn Flutter, TypeScript, NestJS & React. Not a developer? We build mobile apps, web apps & AI solutions for businesses worldwide.</p>
     <div class="method-badges method-badges--center">
       <span class="method sr" id="method-sr">Spaced Repetition</span>
