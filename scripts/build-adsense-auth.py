@@ -1,0 +1,1 @@
+../teamz-company-automation/py/build-adsense-auth.py

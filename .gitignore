@@ -2,4 +2,7 @@ firebase-debug.log
 .firebase/
 node_modules/
 .env
+.teamz-automation.env
 .DS_Store
+.claude/scheduled_tasks.lock
+node_modules/

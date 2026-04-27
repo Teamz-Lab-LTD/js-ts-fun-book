@@ -1,0 +1,1 @@
+../teamz-company-automation/sh/continuous-build.sh

@@ -1,0 +1,1 @@
+../teamz-company-automation/sh/iap-smoke-test.sh

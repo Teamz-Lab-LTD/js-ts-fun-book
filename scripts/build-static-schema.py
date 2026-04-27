@@ -1,0 +1,1 @@
+../teamz-company-automation/py/build-static-schema.py

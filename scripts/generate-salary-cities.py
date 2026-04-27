@@ -1,0 +1,1 @@
+../teamz-company-automation/py/generate-salary-cities.py

@@ -1,0 +1,1 @@
+../teamz-company-automation/sh/refresh-ecommerce-gsc-keywords.sh
