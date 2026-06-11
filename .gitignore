@@ -6,3 +6,6 @@ node_modules/
 .DS_Store
 .claude/scheduled_tasks.lock
 node_modules/
+
+# shared automation (symlink to canonical; per-project data stays in ./automation_data)
+teamz-company-automation
