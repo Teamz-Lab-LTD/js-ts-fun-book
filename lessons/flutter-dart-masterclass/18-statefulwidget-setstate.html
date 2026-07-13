@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StatefulWidget &amp; setState | Free Tutorial — Teamz Lab</title>
-<meta name="description" content="A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…">
+<meta name="description" content="Flutter StatefulWidget &amp; setState — complete lifecycle guide. Learn initState, dispose, didUpdateWidget, and setState rules with working code examples. A…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-13">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/19-materialapp-scaffold.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="StatefulWidget &amp; setState">
-<meta property="og:description" content="A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…">
+<meta property="og:description" content="Flutter StatefulWidget &amp; setState — complete lifecycle guide. Learn initState, dispose, didUpdateWidget, and setState rules with working code examples. A…">
 <meta property="og:image" content="https://learn.teamzlab.com/og-flutter.png">
 <meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html">
 <meta property="og:site_name" content="Teamz Lab Learning">
@@ -22,7 +22,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="StatefulWidget &amp; setState">
-<meta name="twitter:description" content="A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…">
+<meta name="twitter:description" content="Flutter StatefulWidget &amp; setState — complete lifecycle guide. Learn initState, dispose, didUpdateWidget, and setState rules with working code examples. A…">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "StatefulWidget & setState",
-  "description": "A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State…",
+  "description": "Flutter StatefulWidget & setState — complete lifecycle guide. Learn initState, dispose, didUpdateWidget, and setState rules with working code examples. A…",
   "url": "https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html",
   "inLanguage": "en",
   "learningResourceType": "Lesson",
@@ -51,7 +51,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-13",
   "position": 18
 }
 </script>
@@ -187,7 +187,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A StatefulWidget is like a whiteboard in a classroom. The board frame (the widget) stays the same, but the content written on it (the state) can be erased and rewritten anytime. When a teacher writes new information (setState), the students (Flutter framework) see the update and react. In team_mvp_kit, StatefulWidgets are used for local UI state like form inputs, animations, and tab selections -- while bigger state lives in BLoC.</div></section>
 
-<section class="section"><h2>What is it?</h2><p>A StatefulWidget is a widget that can change over time. It is split into two objects: an immutable widget (created fresh each rebuild) and a mutable State object (persists across rebuilds). The State object holds mutable variables and a build method. When you call setState(), Flutter marks the widget as dirty and schedules a rebuild. On the next frame, build() runs with the updated state, and Flutter efficiently patches the UI. StatefulWidgets are essential for any UI element that responds to user interaction.</p></section>
+<section class="section"><h2>What is it?</h2><p>Flutter StatefulWidget &amp; setState — complete lifecycle guide. Learn initState, dispose, didUpdateWidget, and setState rules with working code examples. A StatefulWidget is split into an immutable widget and a mutable State object. When you call setState(), Flutter marks the widget as dirty and schedules a rebuild. On the next frame, build() runs with the updated state, and Flutter efficiently patches the UI. StatefulWidgets are essential for any UI element that responds to user interaction.</p></section>
 
 <section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, StatefulWidgets handle local UI concerns. A login form uses StatefulWidget to manage TextEditingControllers and toggle password visibility. A settings screen uses it for switch toggles. Animation controllers require StatefulWidget because they need initState for setup and dispose for cleanup. However, the project minimizes StatefulWidgets by moving most state into BLoC -- screens are often StatelessWidgets wrapping BlocBuilder, with only truly local state (like scroll position) in StatefulWidgets.</p></section>
 
