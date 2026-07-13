@@ -1,0 +1,131 @@
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-12 23:00:04 +06
+============================================================
+✓ dirty-guard passed
+fatal: unable to access 'https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git/': Could not resolve host: github.com
+  (git pull skipped/failed — non-fatal)
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+ERROR: Search Console API unreachable: HTTPSConnectionPool(host='searchconsole.googleapis.com', port=443): Max retries exceeded with url: /webmasters/v3/sites (Caused by NameResolutionError("HTTPSConnection(host='searchconsole.googleapis.com', port=443): Failed to resolve 'searchconsole.googleapis.com' ([Errno 8] nodename nor servname provided, or not known)"))
+  (build-search-console.sh missing — skipped)
+ERROR: token refresh failed: <urlopen error [Errno 60] Operation timed out>
+ERROR: Could not refresh Search Console token.
+  (build-gsc-anomalies.py missing — skipped)
+
+=== sitemap ===
+Pinging search engines...
+  Google: failed (ok, they'll crawl anyway)
+  Bing: failed (ok, they'll crawl anyway)
+
+=== content agent ===
+  SKIP: api.anthropic.com unreachable
+
+=== build: node tools/build-llms-txt.js ===
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 16 courses, 747 lessons, 166.5 KB, 925 lines
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   llms-full.txt
+	modified:   sitemap.xml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	logs/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+  (nothing to commit)
+
+=== deploy: npm run deploy ===
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Read from remote host 72.60.184.132: Can't assign requested address
+client_loop: send disconnect: Broken pipe
+rsync(85818): error: unexpected end of file
+  DEPLOY FAILED — site still serving previous build.
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+DONE — 23:39:23
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-13 23:00:04 +06
+============================================================
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+
+=== sitemap ===
+Pinging search engines...
+  Google: pinged
+  Bing: pinged
+
+=== content agent ===
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+  
+    ENHANCE candidates: 2  (queueing 2)
+      #9.7      41 impr  /lessons/flutter-dart-masterclass/18-statefu
+             └─ 'flutter statefulwidget setstate documentation'
+      #11.8     32 impr  /lessons/flutter-interview-mastery/53-fireba
+             └─ 'supabase vs custom backend'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (2 targets)
+  targets: 2   new-post tonight: False   model: sonnet
+  Done. Summary:
+  
+  **2 targets processed, 2 commits.**
+  
+  | Lesson | Query | Pos | Impr | Fix |
+  |--------|-------|-----|------|-----|
+  | flutter-dart-masterclass #18 | `flutter statefulwidget setstate documentation` | 9.7 | 41 | desc now leads with lifecycle hook list (initState, dispose, didUpdateWidget) — matches "documentation" intent |
+  | flutter-interview-mastery #53 | `supabase vs custom backend` | 11.8 | 32 | desc now leads with exact query phrase + concrete dimensions (SQL, auth, offline, pricing, lock-in) |
+  
+  **Why not change `lesson.title`:** the build script derives the HTML filename from the title via `kebab()`. Changing the title = new URL = 404 on the ranking URL. Only `whatIs` (the meta description source) was edited.
+  
+  ---
+  
+  EN COACH
+  - Fix: *(no user message prose to correct this turn — agent-only output)*
+  - Vocab: *(skipped — no user text)*
+  
+  📋 Interview Drill — [TYPE: Technical-Flutter]
+    Q: "In Flutter, when would you NOT change the URL of an already-indexed page?"
+    Ans (memorize this):
+      1. I had two Flutter lesson pages that were ranking in Google at positions 9 and 12.
+      2. I wanted to add "Flutter" to the page title to match the search query better. But I saw the build script creates the file name from the title. If I change the title, the URL changes and the old URL gets a 404. Google loses the ranking signal.
+      3. Instead I only changed the meta description field. The URL stayed the same. The ranking signals stayed safe.
+    Example (in user's voice):
+      "The page was already ranking in Google. The file name came from the title. If I changed the title, the URL would change and break. So I only changed the description — that is what shows in search results. The URL stayed the same and the ranking stayed safe."
+    Why this works: shows I check how the system works before I make a change.
+    🎯 Bonus follow-up the interviewer might ask: "What if you had to change the URL — what would you do to keep the SEO value?"
+  ✓ content agent finished
+
+=== build: node tools/build-llms-txt.js ===
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 16 courses, 747 lessons, 166.5 KB, 925 lines
