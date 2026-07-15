@@ -195,3 +195,67 @@ Pinging search engines...
 
 === build: node tools/build-llms-txt.js ===
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 16 courses, 747 lessons, 166.5 KB, 925 lines
+warning: in the working copy of 'logs/com.teamzlab.learn-nightly.log', CRLF will be replaced by LF the next time Git touches it
+[main 9ce69db] chore(nightly): refresh generated site output
+ 4 files changed, 72 insertions(+), 6 deletions(-)
+   b7e5349..9ce69db  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+DONE — 23:04:21
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-15 23:00:04 +06
+============================================================
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+
+=== sitemap ===
+Pinging search engines...
+  Google: pinged
+  Bing: pinged
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+  
+    ENHANCE candidates: 0  (queueing 0)
+  
+    NEW-post candidates queued: 0
+  
+    Nothing actionable tonight. That is a valid outcome — not an error.
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (0 targets)
+  Nothing actionable tonight — skipping the agent. (A valid outcome, not an error:
+  a queue with no target means no page is close enough and no demand is unserved.)
+
+=== build: node tools/build-llms-txt.js ===
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 16 courses, 747 lessons, 166.5 KB, 925 lines
