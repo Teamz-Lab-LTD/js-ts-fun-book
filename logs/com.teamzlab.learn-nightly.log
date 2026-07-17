@@ -323,3 +323,30 @@ Pinging search engines...
 
 === build: node tools/build-llms-txt.js ===
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 16 courses, 747 lessons, 166.5 KB, 925 lines
+warning: in the working copy of 'logs/com.teamzlab.learn-nightly.log', CRLF will be replaced by LF the next time Git touches it
+[main ae2bc99] chore(nightly): refresh generated site output
+ 4 files changed, 70 insertions(+), 6 deletions(-)
+   ae49b4a..ae2bc99  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+DONE — 23:04:11
+/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/.teamz-automation.env: line 53: States: command not found
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-17 23:00:02 +06
+============================================================
+✓ dirty-guard passed
