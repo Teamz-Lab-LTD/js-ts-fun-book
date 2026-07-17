@@ -64,7 +64,31 @@ node tools/build-llms-txt.js
 
 ---
 
-## STEP 2 — What actually fixes a 0% CTR
+## STEP 2 — CHECK `edit_mode` FIRST. It decides what you are allowed to touch.
+
+Every ENHANCE target carries `edit_mode`. Read it before you write anything.
+
+| `edit_mode` | Means | You MAY | You MUST NOT |
+|---|---|---|---|
+| `full` | 0 clicks. Nothing to lose. | rewrite title, description, body | — |
+| `additive` | **This page already earns clicks.** | add a section, an FAQ, an example, schema | **touch the title or description** |
+
+**Why `additive` exists.** A title rewrite is not a free bet. In controlled split tests at 95%
+confidence, a single title variant cost **16% of organic traffic** — one page, one tag, real
+loss. Titles move traffic in *both* directions.
+
+That would be a fair gamble if we could see the result. On this property we cannot: at ~29
+clicks/28d, a 16% drop is statistically invisible. We would never know we broke it. So on any
+page already earning clicks, the title has **proven** it works better than our guess — and our
+guess gets no vote. Add depth beside it; leave it alone.
+
+If `edit_mode: additive` and you believe the title is genuinely the problem, **say so in your
+report and change nothing**. A flagged suspicion a human can act on beats a silent 16% loss
+nobody detects.
+
+---
+
+## STEP 2a — What actually fixes a 0% CTR (`edit_mode: full` only)
 
 The queue gives you the exact query, position and impressions. The page already ranks — so the
 title and description are failing to earn the click. Fix that:
