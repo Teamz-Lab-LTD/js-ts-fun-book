@@ -7,7 +7,7 @@
 <meta name="description" content="Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-phone-health/18-network-signal-strength-why-bars-lie.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-phone-health/17-is-your-isp-spying-on-you-dns-ssl-checks.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-phone-health/19-the-10-minute-android-security-checklist.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 18
 }
 </script>
@@ -189,6 +197,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>What is it?</h2><p>Network signal strength is the actual power level of the wireless signal your phone receives from WiFi routers or cell towers, measured in dBm (decibel-milliwatts). Unlike the vague signal bars on your phone which vary by manufacturer, dBm gives you an objective, universal measurement. Understanding signal strength helps you find dead zones, troubleshoot connection problems, optimize router placement, and know whether you need a signal booster or WiFi extender.</p></section>
 
+
+
 <section class="section"><h2>Real-world relevance</h2><p>Priya worked from home and her video calls dropped constantly in her home office. Her phone showed 3 bars of WiFi, so she assumed the internet itself was the problem and nearly upgraded to a more expensive plan. Then she used DeviceGPT to measure her actual signal strength: -82 dBm in her office versus -41 dBm in the living room near the router. The problem was not her internet speed — it was WiFi signal reaching her office through two concrete walls. She bought a $30 WiFi extender, placed it in the hallway between the router and her office, and her signal improved to -55 dBm. Video calls became crystal clear without changing her ISP plan.</p></section>
 
 <section class="section"><h2>Key points</h2><ul class="points-list">
@@ -273,6 +283,8 @@ What did I do wrong?</code></pre><details><summary>Need a hint?</summary><div cl
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-phone-health&amp;lesson=18">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./17-is-your-isp-spying-on-you-dns-ssl-checks.html" rel="prev">← Is Your ISP Spying on You? DNS &amp; SSL…</a>

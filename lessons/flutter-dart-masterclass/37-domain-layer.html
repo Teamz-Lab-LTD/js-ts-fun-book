@@ -7,7 +7,7 @@
 <meta name="description" content="The Domain Layer is the innermost layer of Clean Architecture. It contains entities (core business objects), use cases (single business operations)…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/37-domain-layer.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/38-data-layer.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 37
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">The domain layer is like the rules of a board game. The rules say &#39;if you roll a six, you move six spaces.&#39; The rules do not care if the board is made of wood or cardboard (data layer). They do not care if you are playing on a table or on the floor (presentation layer). The rules are pure logic. In Clean Architecture, the domain layer is the pure business rules -- no databases, no APIs, no Flutter -- just logic.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>The Domain Layer is the innermost layer of Clean Architecture. It contains entities (core business objects), use cases (single business operations), repository interfaces (abstract contracts for data access), failure types (structured error representations), and value objects (self-validating types). The domain layer has zero dependencies on Flutter, external packages, or other layers. It is pure Dart business logic.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, the domain layer is the reason the team can work in parallel. The UI developer codes against repository interfaces and use cases without waiting for the API. When the team switched from REST to GraphQL for one feature, only the data layer changed. The domain layer is also where business rules live: &#39;Users can only have 5 active subscriptions&#39; is a domain rule, not a UI rule or database constraint.</p></section>
 
@@ -463,6 +473,8 @@ class UpdateTaskStatusUseCase
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=37">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./36-clean-architecture-overview.html" rel="prev">← Clean Architecture Overview</a>

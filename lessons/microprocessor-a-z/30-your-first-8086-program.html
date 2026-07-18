@@ -7,7 +7,7 @@
 <meta name="description" content="Your first 8086 programs combine everything learned so far: data definitions, register operations, arithmetic, and DOS interrupts for I/O. The core pattern…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/30-your-first-8086-program.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/29-emu8086masm-setup-and-syntax-basics.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/31-arrays-tables-and-block-operations.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 30
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Your first 8086 program is like your first recipe in the kitchen. You follow exact steps: gather ingredients (.DATA), prepare your workspace (initialize DS), follow the recipe (instructions), and serve the dish (display output). At first, even a simple recipe feels complex, but once you understand the pattern, you can cook anything.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Your first 8086 programs combine everything learned so far: data definitions, register operations, arithmetic, and DOS interrupts for I/O. The core pattern is: initialize segments, read input, process data, display output, and exit cleanly. Even a &#39;Hello World&#39; program teaches segment setup, string termination, and interrupt calling — foundational skills for all assembly programming.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>Every developer&#39;s journey in any language starts with simple I/O programs. In assembly, these teach you the actual machine operations behind high-level abstractions. When you debug a crashed program and see register dumps, or write an embedded bootloader that must print diagnostics without an OS, these fundamentals are what you rely on.</p></section>
 
@@ -332,6 +342,8 @@ INT 21h</code></pre><details><summary>Need a hint?</summary><div class="hint">Wh
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=30">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./29-emu8086masm-setup-and-syntax-basics.html" rel="prev">← emu8086/MASM Setup and Syntax Basics</a>

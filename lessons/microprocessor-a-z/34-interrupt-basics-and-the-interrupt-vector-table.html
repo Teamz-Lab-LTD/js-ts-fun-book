@@ -7,7 +7,7 @@
 <meta name="description" content="An interrupt is a mechanism that causes the 8086 to suspend its current program, save the flags, CS, and IP on the stack, and jump to an Interrupt Service…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/34-interrupt-basics-and-the-interrupt-vector-table.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/33-stack-pushpop-and-stack-frames.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/35-hardware-vs-software-interrupts.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 34
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Interrupts are like a doorbell system in an apartment building. Each apartment has a numbered buzzer (interrupt type 0-255). When someone presses buzzer 33 (INT 21h), the intercom (CPU) looks up apartment 33 in the directory (Interrupt Vector Table) to find the address. It pauses whatever it was doing (saves state), goes to that apartment (ISR), handles the visitor, and then returns to resume what it was doing. The directory at the lobby entrance is always at the same place — address 0000:0000.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>An interrupt is a mechanism that causes the 8086 to suspend its current program, save the flags, CS, and IP on the stack, and jump to an Interrupt Service Routine (ISR) identified by a type number (0-255). The Interrupt Vector Table (IVT) occupies the first 1024 bytes of memory (0000:0000 to 0000:03FF) and contains 256 four-byte entries, each holding the CS:IP address of an ISR. IRET returns from the ISR by restoring IP, CS, and FLAGS.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>The interrupt system is the backbone of all I/O in computing. Every keystroke generates a hardware interrupt. Every disk read completes via an interrupt. Your OS scheduler uses a timer interrupt to switch between processes. Modern x86 systems still use an evolved version of this same IVT concept (the IDT — Interrupt Descriptor Table). Understanding interrupts is essential for OS development, driver writing, and embedded systems.</p></section>
 
@@ -334,6 +344,8 @@ handler ENDP</code></pre><details><summary>Need a hint?</summary><div class="hin
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=34">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./33-stack-pushpop-and-stack-frames.html" rel="prev">← Stack, PUSH/POP, and Stack Frames</a>

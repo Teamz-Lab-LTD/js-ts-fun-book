@@ -7,7 +7,7 @@
 <meta name="description" content="The OSI and TCP/IP models are mental maps for diagnosing networking issues by isolating the failing layer. They don’t change what happens on the wire; they…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/20-osi-tcpip-without-confusion.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/19-domain-joins-login-failures.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/it-jobs-bootcamp/21-ip-addressing-subnetting.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 20
 }
 </script>
@@ -189,6 +197,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>What is it?</h2><p>The OSI and TCP/IP models are mental maps for diagnosing networking issues by isolating the failing layer. They don’t change what happens on the wire; they change how clearly you can think under pressure.</p></section>
 
+
+
 <section class="section"><h2>Real-world relevance</h2><p>A user says ‘I can’t open the portal.’ Ping IP works (L3 OK). DNS resolves (L7 partial). HTTPS connection drops mid-handshake (L6/L4 TLS). Turns out a new firewall rule blocks outbound 443 to that subnet. You narrowed it from ‘app broken’ to ‘firewall policy’ in 2 minutes.</p></section>
 
 <section class="section"><h2>Key points</h2><ul class="points-list">
@@ -269,6 +279,8 @@ Junior immediately calls the firewall team.</code></pre><details><summary>Need a
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=it-jobs-bootcamp&amp;lesson=20">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./19-domain-joins-login-failures.html" rel="prev">← Domain Joins &amp; Login Failures</a>

@@ -15,6 +15,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { headSnippets, inArticleAd } = require('./lib/head-snippets');
 
 const ROOT = path.resolve(__dirname, '..');
 const COURSES_DIR = path.join(ROOT, 'courses');
@@ -332,6 +333,7 @@ function renderPage(slug, cfg, lessons, allMeta) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+${headSnippets()}
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -466,6 +468,8 @@ ${m.topics.length ? `<section id="what-youll-learn">
     <a class="btn btn--primary" href="${esc(lessonUrl)}">${m.lang === 'bn' ? 'কোর্স শুরু করুন — ফ্রি' : 'Start the Course — Free'}</a>
   </div>
 </section>
+
+${inArticleAd('landing')}
 
 <section id="related-courses">
   <h2>${m.lang === 'bn' ? 'সম্পর্কিত ফ্রি কোর্স' : 'Related free courses'}</h2>

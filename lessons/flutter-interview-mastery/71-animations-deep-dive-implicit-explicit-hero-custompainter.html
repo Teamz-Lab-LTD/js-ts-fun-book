@@ -7,7 +7,7 @@
 <meta name="description" content="Flutter&#39;s animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 71
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Flutter animations are like a film production. Implicit animations are point-and-shoot cameras — you say &#39;go from A to B&#39; and the camera handles framing, timing, and transitions automatically. Explicit animations are a full film crew — you control the camera (AnimationController), the lens (Tween), and the motion style (Curve) individually. Hero animations are like a match cut in cinema — the same object seamlessly transitions between two scenes. CustomPainter is your VFX studio — you paint every pixel by hand on a Canvas.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Flutter&#39;s animation system spans three tiers: implicit animations (automatic transitions between property values), explicit animations (controller-driven with full timing control), and custom painting (Canvas-level pixel drawing). Hero animations handle shared-element transitions between routes. Physics-based animations use real-world simulation for natural motion.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>In a production app, you&#39;d use implicit animations for theme changes and button states, explicit animations for onboarding carousels and loading indicators, Hero transitions for image galleries (thumbnail → fullscreen), staggered animations for list item entrances, and CustomPainter for custom charts or progress rings. The choice depends on complexity — always start with the simplest tier that achieves the desired effect.</p></section>
 
@@ -557,6 +567,8 @@ class _FadeInWidgetState extends State&lt;FadeInWidget&gt;
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=71">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./70-code-generation-freezed-json_serializable-build_runner.html" rel="prev">← Code Generation: freezed…</a>

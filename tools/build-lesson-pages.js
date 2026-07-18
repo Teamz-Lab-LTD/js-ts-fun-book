@@ -27,6 +27,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { headSnippets, inArticleAd } = require('./lib/head-snippets');
 
 const ROOT = path.resolve(__dirname, '..');
 const COURSES_DIR = path.join(ROOT, 'courses');
@@ -226,6 +227,7 @@ ${next ? `<link rel="next" href="${SITE}/lessons/${slug}/${lessonFilename(next)}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+${headSnippets()}
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -342,6 +344,8 @@ ${analogy ? `<section class="section"><h2>${esc(labels.analogy)}</h2><div class=
 
 ${whatIs ? `<section class="section"><h2>${esc(labels.whatIs)}</h2><p>${esc(whatIs)}</p></section>` : ''}
 
+${inArticleAd('lessonTop')}
+
 ${realWorld ? `<section class="section"><h2>${esc(labels.realWorld)}</h2><p>${esc(realWorld)}</p></section>` : ''}
 
 ${pointsHtml ? `<section class="section"><h2>${esc(labels.keyPoints)}</h2><ul class="points-list">
@@ -365,6 +369,8 @@ ${resourcesHtml ? `<section class="section"><h2>${esc(labels.resources)}</h2><ul
     </ul></section>` : ''}
 
 <a class="cta-interactive" href="${interactiveUrl}">${esc(labels.openInteractive)}</a>
+
+${inArticleAd('lessonBottom')}
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   ${prevHtml}

@@ -7,7 +7,7 @@
 <meta name="description" content="BFS (Breadth-First Search) and DFS (Depth-First Search) are the two fundamental ways to explore every node in a graph. BFS uses a queue and explores level…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/cp-kids/44-bfs-and-dfs-exploring-graphs-step-by-step.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/cp-kids/43-graphs-connecting-the-dots.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/cp-kids/45-bit-manipulation-the-secret-language-of-computers.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 44
 }
 </script>
@@ -189,6 +197,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>What is it?</h2><p>BFS (Breadth-First Search) and DFS (Depth-First Search) are the two fundamental ways to explore every node in a graph. BFS uses a queue and explores level by level, making it ideal for shortest paths in unweighted graphs. DFS uses recursion or a stack and explores as deep as possible, making it great for finding connected components and exploring all paths.</p></section>
 
+
+
 <section class="section"><h2>Real-world relevance</h2><p>GPS navigation apps use BFS to find the shortest route between two locations on a road map. Social media platforms use BFS to suggest &#39;People You May Know&#39; by exploring friends-of-friends. DFS is used in puzzle solvers (like solving a Sudoku by trying each possibility deeply), in web crawlers that follow links as deep as they go, and in detecting cycles in dependency graphs (like making sure software packages do not depend on each other in a loop).</p></section>
 
 <section class="section"><h2>Key points</h2><ul class="points-list">
@@ -316,6 +326,8 @@ int main() {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=cp-kids&amp;lesson=44">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./43-graphs-connecting-the-dots.html" rel="prev">← Graphs — Connecting the Dots</a>

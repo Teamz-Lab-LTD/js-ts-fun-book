@@ -7,7 +7,7 @@
 <meta name="description" content="This lesson covers the practical interfacing of common I/O devices to the 8086 through the 8255 PPI: matrix keyboard scanning (row-by-row with debouncing)…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/40-interfacing-keyboard-leds-and-seven-segment-displays.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/41-82538254-timer-and-counter-basics.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 40
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of a game show. The keyboard is the contestant panel — each button press sends a signal. LEDs are the score lights — the host turns them on or off. The seven-segment display is the scoreboard — it shows numbers by lighting up specific bar-shaped segments. The 8255 is the stage manager who connects contestants to the scoreboard, relaying every press and updating every display.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>This lesson covers the practical interfacing of common I/O devices to the 8086 through the 8255 PPI: matrix keyboard scanning (row-by-row with debouncing), LED driving (direct port output with running light patterns), seven-segment display encoding (lookup tables mapping digits to segment patterns), and multiplexed multi-digit displays (time-division scanning that creates the illusion of simultaneous display).</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>Every calculator, microwave oven, elevator panel, and gas pump uses these exact techniques. The seven-segment display in your alarm clock uses multiplexing — only one digit is actually lit at any instant, switching thousands of times per second. ATM keypads use matrix scanning identical to what we implement here. These are among the most universally used interfacing patterns in all of electronics.</p></section>
 
@@ -344,6 +354,8 @@ DBNC: LOOP DBNC
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=40">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./39-8255-programmable-peripheral-interface.html" rel="prev">← 8255 Programmable Peripheral Interface</a>

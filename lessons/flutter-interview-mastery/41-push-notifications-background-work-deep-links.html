@@ -7,7 +7,7 @@
 <meta name="description" content="Push notifications let servers proactively alert users. Background work lets apps run tasks without being in the foreground. Deep links route users from…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/41-push-notifications-background-work-deep-links.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/40-ffi-native-library-binding.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 41
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of push notifications as a doorbell system for your app. FCM is the postal service that delivers the ring signal, local notifications are your doorbell hardware, WorkManager is a reliable butler who handles tasks even when you&#39;re asleep, and deep links are the house address that routes visitors straight to the right room — not just the front door.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Push notifications let servers proactively alert users. Background work lets apps run tasks without being in the foreground. Deep links route users from external sources (email, web, other apps) directly into specific app screens. Together these form the backbone of engagement and reliability for production Flutter apps.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>In a SaaS collaboration app: FCM delivers &#39;New message in #general&#39; notifications. Background message handler silently updates the local SQLite chat cache so the inbox is fresh when the user opens the app. WorkManager runs a nightly sync job. Deep links from email notifications open directly to the relevant workspace and channel.</p></section>
 
@@ -343,6 +353,8 @@ FirebaseMessaging.onBackgroundMessage(handler.handleBackground);</code></pre><de
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=41">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./40-ffi-native-library-binding.html" rel="prev">← FFI &amp; Native Library Binding</a>

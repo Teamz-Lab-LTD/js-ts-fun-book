@@ -1,10 +1,10 @@
-# Indexing Report — 2026-07-16 23:04
+# Indexing Report — 2026-07-17 23:05
 
 Total pages: 30
 Checked: 30
 Indexed: 1 (3%)
-Not indexed: 29
-Errors: 0
+Not indexed: 28
+Errors: 1
 
 ## Not Indexed Pages
 
@@ -27,7 +27,6 @@ Errors: 0
 | /accessibility/ada-compliance-checker/ | URL is unknown to Google |
 | /cricket/over-to-balls-converter/ | URL is unknown to Google |
 | /bd/nagad-charge-calculator/ | URL is unknown to Google |
-| /bd/bkash-charge-calculator/ | URL is unknown to Google |
 | /ai/headline-generator/ | URL is unknown to Google |
 | /accessibility/wcag-accessibility-checklist/ | URL is unknown to Google |
 | /bd/cgpa-calculator/ | URL is unknown to Google |

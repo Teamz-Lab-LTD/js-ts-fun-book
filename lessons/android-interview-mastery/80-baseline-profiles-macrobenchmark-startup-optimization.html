@@ -7,7 +7,7 @@
 <meta name="description" content="Baseline profiles are files that tell the Android Runtime (ART) which parts of your app to compile ahead-of-time during installation, rather than…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/80-baseline-profiles-macrobenchmark-startup-optimization.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 80
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Without baseline profiles, your app&#39;s first launch is like a chef who has to read the recipe for every dish while customers are waiting. Baseline profiles are like the chef prepping ingredients the night before — the most common dishes (critical user journeys) are pre-prepared so they are served instantly. Macrobenchmark is your stopwatch to measure exactly how long the chef takes, and Perfetto is the security camera that shows you exactly where the chef wastes time.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Baseline profiles are files that tell the Android Runtime (ART) which parts of your app to compile ahead-of-time during installation, rather than just-in-time during execution. Macrobenchmark is a testing library that measures real-world performance metrics (startup time, frame timing) on actual devices. Together, they form the foundation of Android startup optimization — profiles eliminate JIT jank, and benchmarks prove the improvement with hard numbers.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>A news app had a 2.1-second cold start on mid-range devices. Perfetto traces revealed: 600ms in ContentProvider initialization (6 libraries auto-initializing via separate ContentProviders), 400ms in Dagger setup, 300ms in first Compose frame JIT compilation, and 800ms loading initial data synchronously. The fixes: (1) Migrated to App Startup library — consolidated 6 ContentProviders into 1, saving 450ms. (2) Generated baseline profiles covering startup + first article scroll — eliminated Compose JIT jank, saving 280ms. (3) Parallelized data loading with async/coroutines and showed skeleton UI — TTID dropped to 600ms with TTFD at 1.1s. Total improvement: 2.1s to 0.6s TTID.</p></section>
 
@@ -436,6 +446,8 @@ class BInitializer : Initializer&lt;B&gt; {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=80">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./79-graphql-with-apollo-kotlin.html" rel="prev">← GraphQL with Apollo Kotlin</a>

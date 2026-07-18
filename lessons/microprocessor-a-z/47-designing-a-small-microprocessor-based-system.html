@@ -7,7 +7,7 @@
 <meta name="description" content="This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/47-designing-a-small-microprocessor-based-system.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/46-where-8051-and-arm-fit-in-the-big-picture.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/microprocessor-a-z/48-capstone-trace-explain-and-present-a-full-interfaced-system.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 47
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Designing a microprocessor system is like planning a small town. The CPU is the town hall (makes all decisions). RAM is the scratchpad office (temporary workspace). ROM is the library (permanent reference). The 8255 is the post office (handles mail in and out). The 8259 is the town dispatcher (routes emergency calls by priority). Address decoding is the street numbering system — without it, mail goes to the wrong address and the whole town falls apart. A good town plan (memory map) prevents chaos.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>This lesson integrates all previous concepts into a complete microprocessor-based system design. It covers the systematic process: defining requirements, selecting components (8086 + ROM + RAM + 8255 + 8254 + 8259 + 8251), designing the memory and I/O maps, implementing address decoding with 74LS138 decoders, wiring chip-select logic, writing initialization firmware, and validating the design. The result is a functional embedded system that can read input, process data, display output, handle interrupts, and communicate serially.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>This is exactly how embedded systems engineers design products today — just with modern components. A car&#39;s engine control unit follows the same design process: select an MCU (now ARM), add sensors (via ADC/I/O), add actuators (via GPIO/PWM), design the memory map, write initialization firmware, implement ISRs for real-time events, and validate everything. The tools and chips have evolved, but the methodology is identical to what we practice here with the 8086.</p></section>
 
@@ -380,6 +390,8 @@ BOOT:
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=microprocessor-a-z&amp;lesson=47">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./46-where-8051-and-arm-fit-in-the-big-picture.html" rel="prev">← Where 8051 and ARM Fit in the Big…</a>

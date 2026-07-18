@@ -7,7 +7,7 @@
 <meta name="description" content="Compose UI testing uses the Compose semantic tree — a parallel structure describing what composables are and do, not how they look — to find, interact with…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/42-compose-ui-testing-fundamentals.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 42
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Compose UI testing is like a blind quality inspector who uses a tactile map (the semantic tree) to navigate your UI. They cannot see pixels — they feel the labels, roles, and content descriptions. If your button has a clear content description and text, the inspector can find it, press it, and verify the result. If your UI has no semantic information, the inspector is lost — even if the UI looks beautiful on screen.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Compose UI testing uses the Compose semantic tree — a parallel structure describing what composables are and do, not how they look — to find, interact with, and assert on UI elements. createComposeRule() hosts composables in a test environment. Finders (onNodeWithText, onNodeWithTag) locate semantic nodes. Actions (performClick, performTextInput) simulate user interactions. Assertions (assertIsDisplayed, assertTextEquals) verify state. Tests run on device or emulator but are much faster and less brittle than Espresso tests.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>A fintech app&#39;s secure payment flow required UI tests for PCI compliance documentation — the test suite needed to prove that the CVV field was cleared after form submission, that the &#39;Pay Now&#39; button was disabled while processing, and that error messages appeared for invalid card numbers. Compose UI tests with testTag-based finders and assertIsNotEnabled() checks covered all three requirements reliably, ran in 8 seconds per test on a mid-range emulator, and became part of the required CI gate before any payment flow change could be merged.</p></section>
 
@@ -438,6 +448,8 @@ class LoginScreenTest {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=42">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./41-roomrepositorynetwork-testing-mocks-vs-fakes.html" rel="prev">← Room/Repository/Network Testing: Mocks…</a>

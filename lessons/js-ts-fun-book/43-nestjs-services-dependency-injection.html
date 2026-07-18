@@ -7,7 +7,7 @@
 <meta name="description" content="Services are classes marked with @Injectable() that contain business logic. Dependency Injection (DI) is NestJS&#39;s system for automatically creating and…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/43-nestjs-services-dependency-injection.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/42-nestjs-controllers-routing.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/js-ts-fun-book/44-nestjs-middleware-interceptors.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 43
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">A service is like a mechanic in an auto shop. The front desk clerk (controller) writes up the work order but never touches the engine. The mechanic (service) is the expert who actually diagnoses and fixes cars. Dependency Injection is like the shop owner who automatically assigns mechanics to each service bay — no clerk has to wander the garage looking for an available mechanic.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Services are classes marked with @Injectable() that contain business logic. Dependency Injection (DI) is NestJS&#39;s system for automatically creating and providing service instances where they&#39;re needed. Together, they enforce separation of concerns — controllers handle HTTP, services handle logic.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>Every enterprise framework uses DI: Spring (Java), ASP.NET (C#), Angular (TypeScript). It makes code testable (swap real services for mocks), modular (replace one service without touching others), and clean (no manual object creation scattered everywhere).</p></section>
 
@@ -374,6 +384,8 @@ export class UsersModule {}</code></pre><details><summary>Need a hint?</summary>
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=js-ts-fun-book&amp;lesson=43">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./42-nestjs-controllers-routing.html" rel="prev">← NestJS Controllers &amp; Routing</a>

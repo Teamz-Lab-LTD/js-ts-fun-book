@@ -7,7 +7,7 @@
 <meta name="description" content="Production debugging combines crash triage, stack trace analysis, memory leak detection, git bisect, rollback strategies, and structured incident response…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/59-production-debugging-incident-response-root-cause-analysis.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/58-system-design-iii-offline-first-field-app-at-scale.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 59
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Production debugging is like being a detective at a crime scene that&#39;s still happening. The clues are stack traces and logs, the witnesses are your monitoring tools, and you need to find the culprit (root cause) fast enough to stop the damage — while keeping stakeholders calm and informed throughout.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Production debugging combines crash triage, stack trace analysis, memory leak detection, git bisect, rollback strategies, and structured incident response processes to minimize user impact and prevent recurrence of production issues.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>A fintech payment app sees a P0 crash spike after a release — crash-free rate drops to 97%. Crashlytics shows NullPointerException in PaymentScreen, affecting Android 12 users. Custom keys reveal it&#39;s users with saved cards. Git bisect identifies the introducing commit in 10 minutes. A Remote Config kill switch disables the saved-card flow immediately. The fix ships within 2 hours. A post-mortem adds contract tests to prevent similar API contract breaks.</p></section>
 
@@ -343,6 +353,8 @@ class _ProfileScreenState extends State&lt;ProfileScreen&gt; {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=59">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./58-system-design-iii-offline-first-field-app-at-scale.html" rel="prev">← System Design III: Offline-First Field…</a>

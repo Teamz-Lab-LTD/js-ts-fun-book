@@ -7,7 +7,7 @@
 <meta name="description" content="The Presentation Layer is the outermost layer in Clean Architecture that the user interacts with. It contains BLoCs that call domain use cases and manage UI…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/39-presentation-layer.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/38-data-layer.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/40-getit-service-locator.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 39
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">The presentation layer is like the front of a restaurant. The dining room (screens), the menu boards (widgets), and the waiters (BLoCs) all work together to give the customer a great experience. The waiters take orders to the kitchen (domain layer) and bring food back. The dining room never goes into the kitchen, and the chef never serves food directly. The presentation layer is the beautiful face of your app that hides all the complex plumbing behind the scenes.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>The Presentation Layer is the outermost layer in Clean Architecture that the user interacts with. It contains BLoCs that call domain use cases and manage UI state, Screens that provide BLoCs and define page structure, Views that contain the actual UI content, and Widgets that are small reusable components. In team_mvp_kit, the presentation layer uses patterns like TeamzViewStateMixin for common screen behaviors and AsyncContent for the universal loading/error/content pattern. BLoCs handle Either results from use cases using fold() to map success and failure to UI states.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>In team_mvp_kit, every feature follows the Screen-View-Widget pattern consistently. The Screen creates and provides the BLoC. The View defines the page layout with AppBar and body. Individual widgets handle specific pieces of state using BlocSelector for optimal rebuilds. The TeamzViewStateMixin eliminates repetitive loading overlay and error handling code across dozens of screens. This consistency means any team member can jump into any feature and immediately understand the structure.</p></section>
 
@@ -540,6 +550,8 @@ class TaskCountBadge extends StatelessWidget {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=39">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./38-data-layer.html" rel="prev">← Data Layer</a>

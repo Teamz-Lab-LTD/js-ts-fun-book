@@ -7,7 +7,7 @@
 <meta name="description" content="The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/22-mvvm-vs-mvi-vs-clean-vs-mvc-tradeoffs.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 21
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Think of the Repository as a smart librarian. You (the Use Case) say &#39;give me Book #42&#39;. The librarian decides whether to grab it from the shelf (local DB), order it (API), or find a cached photocopy. You never care how — you just get the book. Dependency Injection is like the library&#39;s hiring system: you specify you need &#39;a librarian&#39;, and HR (GetIt) assigns one. You never build the librarian yourself.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>The Repository pattern is an abstraction layer between your domain (business logic) and data sources (APIs, databases). A Use Case encapsulates one business operation and depends on repository interfaces. GetIt/injectable wires everything together via Dependency Inversion. Together they form the infrastructure of Clean Architecture in Flutter.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>In a fintech claims app, ProcessRefundUseCase depends on ClaimsRepository (interface). ClaimsRepositoryImpl calls Dio for the remote API and Floor for local audit logging. When testing ProcessRefundUseCase, a FakeClaimsRepository returns mock data instantly. When the API changes from REST to GraphQL, only ClaimsRepositoryImpl changes — UseCase and UI are untouched.</p></section>
 
@@ -361,6 +371,8 @@ class GetOrdersUseCase {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-interview-mastery&amp;lesson=21">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./20-clean-architecture-fundamentals-for-flutter.html" rel="prev">← Clean Architecture Fundamentals for…</a>

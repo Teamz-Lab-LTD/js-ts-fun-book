@@ -7,7 +7,7 @@
 <meta name="description" content="Firebase is Google&#39;s Backend-as-a-Service platform for mobile apps. Auth handles identity, FCM delivers push notifications, Analytics tracks user behavior…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 31
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Firebase is like a Swiss Army knife for your app&#39;s backend — Auth is the bouncer at the door, FCM is the postal service, Analytics is the CCTV system, Crashlytics is the incident report logger, and Remote Config is the light switches you can flip from HQ without touching the wiring.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Firebase is Google&#39;s Backend-as-a-Service platform for mobile apps. Auth handles identity, FCM delivers push notifications, Analytics tracks user behavior, Crashlytics captures crash reports, and Remote Config enables server-driven feature flags — all with offline-first SDKs and tight Android integration.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>In BRAC&#39;s enterprise field ops app, FCM data messages triggered WorkManager sync jobs when the server had new assignments. Crashlytics custom keys included the field officer&#39;s region and assignment ID so crashes were triaged by geography. Remote Config toggled an offline-first mode for areas with poor connectivity — no app update needed.</p></section>
 
@@ -335,6 +345,8 @@ fun setupRemoteConfig() {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=31">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./30-offline-first-sync-caching-conflict-resolution.html" rel="prev">← Offline-First Sync, Caching, Conflict…</a>

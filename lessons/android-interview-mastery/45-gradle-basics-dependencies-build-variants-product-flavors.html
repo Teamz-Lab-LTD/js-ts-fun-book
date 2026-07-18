@@ -7,7 +7,7 @@
 <meta name="description" content="Gradle is Android&#39;s build system that compiles source code, packages resources, runs tests, and produces signed APKs or AABs. Build variants (the…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/45-gradle-basics-dependencies-build-variants-product-flavors.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/46-signing-release-builds-play-console-versioning.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 45
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Gradle&#39;s build variants are like a restaurant&#39;s menu customization system. The same kitchen (your source code) can produce a &#39;dev meal&#39; with extra debug sauce and verbose logging, a &#39;staging meal&#39; that looks almost production-ready for QA reviewers, and a &#39;prod meal&#39; with perfect presentation and no debug garnishes. The kitchen instructions (build.gradle.kts) specify exactly what goes into each variant.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Gradle is Android&#39;s build system that compiles source code, packages resources, runs tests, and produces signed APKs or AABs. Build variants (the combination of buildTypes and productFlavors) let one codebase produce multiple distinct app variants for different environments, audiences, or monetization strategies — all from a single build command.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>A SaaS school management platform maintains three productFlavors: dev (points to localhost API, has debug menu), staging (points to staging API, has internal QA tools visible), and prod (points to production API, all debug code stripped by R8). Each flavor is installable side-by-side on a QA device using applicationIdSuffix. The CI pipeline builds all 6 variants on every PR using the version catalog to guarantee dependency consistency.</p></section>
 
@@ -354,6 +364,8 @@ dependencies {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=45">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./44-modularization-feature-modules-build-tradeoffs.html" rel="prev">← Modularization, Feature Modules &amp;…</a>

@@ -7,7 +7,7 @@
 <meta name="description" content="Java-Kotlin interop is the set of annotations, conventions, and compiler behaviors that allow Java and Kotlin code to coexist and call each other within the…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/83-java-interop-legacy-code-kotlin-migration-strategy.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/82-aosp-android-platform-internals-for-app-developers.html">
 
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 83
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Java-Kotlin interop is like two people who speak related languages (say Spanish and Portuguese). They understand each other mostly, but some words have different meanings (null!), some grammar rules clash (default parameters), and you need a translator&#39;s phrasebook (@JvmStatic, @JvmOverloads) to avoid miscommunication. Migration is like gradually renovating a house room by room while people still live in it — you can&#39;t tear everything down at once.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>Java-Kotlin interop is the set of annotations, conventions, and compiler behaviors that allow Java and Kotlin code to coexist and call each other within the same project. Kotlin was designed for 100% Java interop — they compile to the same JVM bytecode and can freely reference each other&#39;s classes. However, differences in null safety, default parameters, static members, and functional interfaces create friction points that senior developers must understand. A migration strategy is the systematic approach to converting a Java codebase to Kotlin incrementally without breaking the running application.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>You join a company with a 400K-line Java Android app built over 5 years. New features are in Kotlin, but 70% of the codebase is still Java. Your ViewModel (Kotlin) calls a Java repository that returns User objects without nullability annotations — platform types everywhere. You add @NonNull/@Nullable annotations to the Java interfaces, use @JvmOverloads on your Kotlin factory functions so Java fragments can call them, and plan a module-by-module migration starting with the :data:models module. When merging upstream library updates, you resolve conflicts between their Java changes and your Kotlin conversions.</p></section>
 
@@ -441,6 +451,8 @@ class EventTracker {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=83">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./82-aosp-android-platform-internals-for-app-developers.html" rel="prev">← AOSP &amp; Android Platform Internals for…</a>

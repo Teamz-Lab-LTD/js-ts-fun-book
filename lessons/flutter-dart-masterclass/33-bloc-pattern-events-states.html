@@ -7,7 +7,7 @@
 <meta name="description" content="The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-04-21">
+<meta name="date" content="2026-07-18">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/32-understanding-state.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-dart-masterclass/34-flutter_bloc-in-practice.html">
@@ -28,6 +28,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BM660RZSGF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BM660RZSGF');</script>
+<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+<script>
+(function(){function loadAds(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7088022825081956';s.crossOrigin='anonymous';document.head.appendChild(s);}
+if('requestIdleCallback' in window){window.addEventListener('load',function(){requestIdleCallback(loadAds,{timeout:3000});});}else{window.addEventListener('load',function(){setTimeout(loadAds,1500);});}})();
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">
@@ -51,7 +59,7 @@
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-04-21",
+  "dateModified": "2026-07-18",
   "position": 33
 }
 </script>
@@ -188,6 +196,8 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Imagine a restaurant kitchen. Customers send in orders (Events) to the kitchen. The chef (BLoC) reads each order and prepares dishes. When a dish is ready, it goes out on a tray (State) to the dining room (UI). The chef never walks into the dining room, and the customers never walk into the kitchen. Events flow in, States flow out. That clean separation is what makes a restaurant -- and a BLoC -- work smoothly.</div></section>
 
 <section class="section"><h2>What is it?</h2><p>The BLoC (Business Logic Component) pattern is an architecture for Flutter apps that separates business logic from the UI using events and states. You define Event classes that represent user actions or system triggers, and State classes that represent the current condition of a feature. The BLoC receives events, processes them through business logic, and emits new states that the UI reacts to. Combined with Equatable for efficient comparison, this creates a predictable, testable, and scalable architecture.</p></section>
+
+
 
 <section class="section"><h2>Real-world relevance</h2><p>BLoC is one of the most widely adopted state management solutions in production Flutter apps, used by companies like BMW, Alibaba, and Google teams. The event-state pattern maps naturally to how users interact with apps: the user does something (event), the app processes it (BLoC logic), and the screen updates (state). In team_mvp_kit, every feature follows this pattern with BaseBloc, BaseEvent, and BaseState, making the codebase consistent and onboarding new developers straightforward.</p></section>
 
@@ -388,6 +398,8 @@ class TodoBloc extends Bloc&lt;BaseEvent, TodoState&gt; {
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=flutter-dart-masterclass&amp;lesson=33">Open interactive version (quiz + challenge)</a>
+
+
 
 <nav class="lesson-nav" aria-label="Lesson navigation">
   <a class="nav-prev" href="./32-understanding-state.html" rel="prev">← Understanding State</a>
