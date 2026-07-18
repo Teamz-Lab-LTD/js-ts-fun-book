@@ -1,6 +1,10 @@
-# ads.txt — Authorized Digital Sellers
-# Replace the placeholder below with your actual Google AdSense publisher ID
-# Format: google.com, pub-XXXXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+# ads.txt — Authorized Digital Sellers (IAB spec)
 #
-# Uncomment and update when AdSense is approved:
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+# This file MUST carry a real record. teamzlab.com/ads.txt declares
+# "subdomain=learn.teamzlab.com", which tells crawlers this subdomain has its own
+# ads.txt and to read it here — so a placeholder here means AdSense sees NO
+# authorized seller for learn.teamzlab.com and limits or stops ad serving
+# ("Earnings at risk"). It sat commented-out while 763 pages carried ad code.
+#
+# Same publisher ID as tool.teamzlab.com and the root domain — one AdSense account.
+google.com, pub-7088022825081956, DIRECT, f08c47fec0942fa0
