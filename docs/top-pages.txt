@@ -1,0 +1,45 @@
+# learn.teamzlab.com top pages by GSC impressions (90d, generated 2026-07-19).
+# Read by build-request-indexing.py via TEAMZ_TOP_PAGES_FILE. Without this file the script
+# falls back to its hardcoded TOP_PAGES list, which is tool.teamzlab.com paths — every
+# check then returns 'URL is unknown to Google' and the report claims learn is 3% indexed.
+/
+/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html
+/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html
+/lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
+/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html
+/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
+/lessons/class-9-math-bangla/51-sin-cos-tan.html
+/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html
+/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html
+/lessons/flutter-dart-masterclass/44-json-models-serialization.html
+/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html
+/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html
+/lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
+/lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html
+/roadmap.html
+/lessons/class-9-math-bangla/55-lesson.html
+/lessons/cp-kids/23-powers-and-modular-arithmetic.html
+/lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html
+/lessons/android-interview-mastery/77-r8-proguard-release-optimization.html
+/lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html
+/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html
+/lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html
+/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html
+/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html
+/lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html
+/learn.html
+/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html
+/lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html
+/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html
+/lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html
+/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html
+/lessons/flutter-interview-mastery/23-rest-apis-with-dio-interceptors-token-refresh-retries.html
+/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html
+/lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html
+/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html
+/lessons/flutter-dart-masterclass/17-statelesswidget.html
+/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html
+/lessons/flutter-dart-masterclass/26-forms-text-input.html
+/lessons/flutter-dart-masterclass/41-injectable-code-generation.html
+/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html
+/lessons/flutter-dart-masterclass/28-design-system-theming.html
