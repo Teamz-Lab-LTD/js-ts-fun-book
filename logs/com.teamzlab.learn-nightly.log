@@ -350,3 +350,12 @@ DONE — 23:04:11
   time   : 2026-07-17 23:00:02 +06
 ============================================================
 ✓ dirty-guard passed
+/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/.teamz-automation.env: line 59: States: command not found
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-18 23:00:01 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
