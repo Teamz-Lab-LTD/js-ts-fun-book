@@ -1,0 +1,27 @@
+USE "DISCOVER NEW KEYWORDS" — NOT "Get search volume"
+LOCATION = United States
+========================================
+
+WHY THIS CHANGED (2026-07-19):
+The previous batch asked Keyword Planner for the volume of terms this site ALREADY targets
+(fileprovider, espresso test, android storage...). Those came back at 50/mo for ~35 of 38
+terms — Planner's bottom bucket, i.e. no measurable demand. Asking for the volume of
+keywords we already rank for can only confirm what we already have; it can never find the
+demand we are missing. Discovery can.
+
+STEPS (Google Ads > Tools > Keyword Planner):
+  1. Click "Discover new keywords"   (NOT "Get search volume and forecasts")
+  2. Tab "Start with keywords" — paste every line of batch-radar-us-01.csv
+  3. LOCATIONS = United States       <- wrong location = wrong volume = wasted pull
+  4. Language = English
+  5. Download the results CSV
+  6. Save it into: data/manual-pull/2-DROP-RESULTS-HERE/
+
+The 16 seeds deliberately span six niches (office/data tools, dev, cloud certs, AI,
+marketing, finance, interview prep). They are SEEDS, not targets — Planner returns hundreds
+of related keywords with real volume and competition. build-course-radar.py then scores
+every returned keyword by expected $/month = RPM(niche, country) x winnable volume, and
+picks the course topic itself. No niche is pre-chosen here; the money decides.
+
+The export header may read "Keyword (by relevance)" instead of "Keyword" — the parser
+handles both as of 2026-07-19.

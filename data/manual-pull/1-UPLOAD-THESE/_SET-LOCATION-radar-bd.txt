@@ -1,0 +1,27 @@
+USE "DISCOVER NEW KEYWORDS" — NOT "Get search volume"
+LOCATION = Bangladesh
+========================================
+
+STEPS (Google Ads > Tools > Keyword Planner):
+  1. Click "Discover new keywords"   (NOT "Get search volume and forecasts")
+  2. Tab "Start with keywords" — paste every line of batch-radar-bd-01.csv
+  3. LOCATIONS = Bangladesh          <- wrong location = wrong volume = wasted pull
+  4. Language = Bengali (add English too — students search in both)
+  5. Download the results CSV
+  6. Save it into: data/manual-pull/2-DROP-RESULTS-HERE/bd/     <- the bd/ subfolder MATTERS
+
+Why bd/ and not the flat folder: the shared volume loader globs only the FLAT directory, so
+Bangladesh numbers dropped there would be read as US demand and corrupt every winnability
+score on the site. The bd/ subfolder is invisible to that loader and is read separately by
+build-course-radar.py. Never drop a BD export in the flat folder.
+
+Discovery (not lookup) because the seeds below are curriculum entry points, not targets —
+Planner will return the real long tail students actually type (board, year, chapter, solution,
+guide variants) with volume attached. The radar scores those, not these seeds.
+
+Honest expectation: BD volume is real (~2M SSC candidates/year) but BD AdSense RPM is roughly
+$0.1-0.5 vs $4.57 measured on tool.teamzlab.com. Treat this batch as the traffic and brand
+base, not the revenue path.
+
+The export header may read "Keyword (by relevance)" instead of "Keyword" — the parser handles
+both as of 2026-07-19.

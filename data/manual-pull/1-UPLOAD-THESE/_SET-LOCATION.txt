@@ -1,0 +1,8 @@
+SET KEYWORD PLANNER LOCATION = United States
+========================================
+
+Before uploading any batch-*.csv in this folder:
+  Keyword Planner -> Get search volume and forecasts -> upload the CSV ->
+  then set LOCATIONS = United States.
+
+Wrong location = wrong volume = wasted pull.

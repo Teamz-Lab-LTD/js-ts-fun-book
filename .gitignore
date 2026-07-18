@@ -9,4 +9,21 @@ node_modules/
 
 # shared automation (symlink to canonical; per-project data stays in ./automation_data)
 teamz-company-automation
-data/
+
+# data/ is nightly churn (content-queue, nightly-status, course-task) and stays out of git.
+# The exceptions below are NOT churn and must survive a lost laptop:
+#   - course-radar-seeds.json : the strategy input for every future course
+#   - course-ledger.json      : which pilots exist. Lost ledger = radar recreates duplicates.
+#                               nightly-course-prompt.md also runs `git add data/course-ledger.json`,
+#                               and git aborts the WHOLE add on an ignored path — so while this was
+#                               ignored the course agent could never commit a pilot at all.
+#   - manual-pull/            : owner-facing batch instructions, and the pulled Planner volumes,
+#                               which cost a manual 15-minute export each to recreate.
+# Note: `data/*` not `data/` — git cannot re-include a file whose parent dir is excluded.
+data/*
+!data/course-radar-seeds.json
+!data/course-ledger.json
+!data/manual-pull/
+data/manual-pull/*
+!data/manual-pull/1-UPLOAD-THESE/
+!data/manual-pull/2-DROP-RESULTS-HERE/

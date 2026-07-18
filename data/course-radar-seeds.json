@@ -1,0 +1,45 @@
+{
+  "_comment": "Track-agnostic course themes the radar scores by RPM x winnable volume (money decides, no language rule). NCTB Bangla + rising US tech. `patterns` are matched by token overlap against demand keywords; `geo` picks the Planner store (bd/ subdir vs flat US) AND the RPM country. Add themes freely; open_clustering also surfaces unseeded gaps.",
+  "themes": [
+    {
+      "id": "class-8-math-bangla",
+      "geo": "bd", "language": "bn", "curriculum": "NCTB",
+      "patterns": ["class 8 math", "অষ্টম শ্রেণির গণিত", "class 8 math solution", "class eight math"],
+      "proposed_title": "অষ্টম শ্রেণির গণিত — শূন্য থেকে পরীক্ষায় ৯৫+",
+      "proven_sibling": "class-9-math-bangla"
+    },
+    {
+      "id": "class-10-math-bangla",
+      "geo": "bd", "language": "bn", "curriculum": "NCTB",
+      "patterns": ["class 10 math", "দশম শ্রেণির গণিত", "ssc math", "class ten math"],
+      "proposed_title": "দশম শ্রেণির গণিত — SSC প্রস্তুতি",
+      "proven_sibling": "class-9-math-bangla"
+    },
+    {
+      "id": "class-9-10-science-bangla",
+      "geo": "bd", "language": "bn", "curriculum": "NCTB",
+      "patterns": ["class 9 science", "নবম শ্রেণির বিজ্ঞান", "ssc physics", "ssc chemistry"],
+      "proposed_title": "নবম-দশম শ্রেণির বিজ্ঞান — SSC মাস্টারি",
+      "proven_sibling": "class-9-math-bangla"
+    },
+    {
+      "id": "android-testing",
+      "geo": "us", "language": "en",
+      "patterns": ["roborazzi", "android screenshot testing", "android testing", "espresso test", "android instrumentation test"],
+      "proposed_title": "Android Testing Masterclass: Unit, UI & Screenshot Tests"
+    },
+    {
+      "id": "android-storage-provider",
+      "geo": "us", "language": "en",
+      "patterns": ["android contentprovider", "content uri", "file provider android", "fileprovider", "android storage"],
+      "proposed_title": "Android Storage & ContentProvider Deep Dive"
+    },
+    {
+      "id": "kmp-vs-flutter",
+      "geo": "us", "language": "en",
+      "patterns": ["kmp vs flutter", "flutter vs kmp", "kotlin multiplatform", "cross platform mobile"],
+      "proposed_title": "Kotlin Multiplatform vs Flutter: The Decision Guide"
+    }
+  ],
+  "open_clustering": true
+}
