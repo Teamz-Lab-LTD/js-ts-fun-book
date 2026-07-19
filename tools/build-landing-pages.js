@@ -333,7 +333,7 @@ function renderPage(slug, cfg, lessons, allMeta) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-${headSnippets()}
+${headSnippets(slug)}
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 229 180' fill='%23D9FE06'><path d='M103.64 0H0V53.18H103.64V0Z'/><path d='M228 53.1799H103.64V106.36H228V53.1799Z'/><path d='M158.84 106.37H103.64V177.59H158.83V106.37'/></svg>">
 
 <script type="application/ld+json">

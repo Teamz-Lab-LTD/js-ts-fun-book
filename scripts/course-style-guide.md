@@ -14,6 +14,18 @@ The style is mostly ENCODED IN THE SCHEMA. Fill every field the way the best exi
 - **NCTB accuracy over creativity.** For curriculum courses (class 6–10), the math/science MUST match
   the official NCTB chapter and formula. Correctness first; style second. Never invent a formula.
 - **No clickbait, no fake claims.** Never promise "guaranteed 95+" as fact; frame as "built to help you".
+- **Cite, quote, and quantify — in every lesson.** Name the source of any rule, standard or spec
+  ("per the NCTB 2026 Class 9 syllabus", "Flutter's official State management guide"), include at
+  least one short direct quotation from that source, and give at least one concrete number (a date,
+  a version, a measured figure, a limit). This is the ONE content tactic with published evidence
+  behind it: adding cited sources, quotations and statistics raised how much of a source an AI
+  assistant reproduces in its answer by 30-40% (Aggarwal et al., KDD 2024 "GEO: Generative Engine
+  Optimization"; partially re-validated ICLR 2026). Two honest limits, so nobody over-trusts it:
+  the metric is word-share INSIDE the AI answer, never clicks or revenue, and on a real production
+  engine the gain shrank to +9-22%. Do it because a cited, quantified lesson is a better lesson —
+  treat the AI-citation lift as a bonus, not the reason.
+- **Never invent a citation.** A fabricated source or made-up statistic is worse than none. If the
+  real number is not known, write the lesson without it rather than guessing one.
 
 ## config.js — `const COURSE_CONFIG = { ... }`
 Required: `title`, `subtitle` (may contain a `<span class="accent">`), `shortTitle`, `description`

@@ -1,0 +1,17 @@
+{
+  "_why": "Courses with ZERO Google clicks in 90 days (GSC audit 2026-07-19). Google judges low-value content at SITE level, so these 286 pages drag the whole site's quality signal down. noindex is reversible - delete a slug here and the next nightly build indexes it again. Files and content are untouched; pages stay live, measured (GA4) and monetised (AdSense).",
+  "_audited": "2026-07-19",
+  "_window_days": 90,
+  "_pages": 286,
+  "_review": "Re-check after 90 days. A course that starts earning clicks from internal links or the AI channel should be removed from this list.",
+  "slugs": [
+    "android-phone-health",
+    "career-launchpad",
+    "clothing-business",
+    "cp-kids",
+    "ebook-business",
+    "hard-to-replace-by-ai",
+    "it-jobs-bootcamp",
+    "js-ts-fun-book"
+  ]
+}

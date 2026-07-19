@@ -23,6 +23,7 @@ teamz-company-automation
 data/*
 !data/course-radar-seeds.json
 !data/course-ledger.json
+!data/noindex-courses.json
 !data/manual-pull/
 data/manual-pull/*
 !data/manual-pull/1-UPLOAD-THESE/

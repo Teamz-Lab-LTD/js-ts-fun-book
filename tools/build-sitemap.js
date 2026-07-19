@@ -72,8 +72,14 @@ function main() {
   }
 
   // Per course: the landing page + every lesson page, all stamped with the course's source date.
-  let courses = 0, lessonCount = 0;
+  // Skip noindexed courses entirely. A sitemap entry means "please index this"; a noindex meta on
+  // the same page means "do not". Shipping both wastes crawl budget on pages we have deliberately
+  // withdrawn, and Google reports them as "Excluded by noindex" errors against a submitted sitemap.
+  const { noindexSlugs } = require('./lib/head-snippets');
+  const skip = noindexSlugs();
+  let courses = 0, lessonCount = 0, skipped = 0;
   for (const slug of listCourseSlugs()) {
+    if (skip.has(slug)) { skipped++; continue; }
     const srcDate = gitDate([
       path.join(COURSES_DIR, slug, 'config.js'),
       path.join(COURSES_DIR, slug, 'data.js'),
@@ -93,7 +99,10 @@ function main() {
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     entries.join('\n') + `\n</urlset>\n`;
 
-  console.log(`build-sitemap: ${entries.length} URLs (${courses} course landings, ${lessonCount} lessons, ${roots.length} root)`);
+  // Always print what was withheld. A sitemap that silently shrank by 294 URLs is indistinguishable
+  // from a broken generator — which is exactly how the tool.teamzlab.com sitemap bug hid for months.
+  console.log(`build-sitemap: ${entries.length} URLs (${courses} course landings, ${lessonCount} lessons, ${roots.length} root)`
+    + (skipped ? ` — withheld ${skipped} noindexed course(s) per data/noindex-courses.json` : ''));
   if (dryRun) { console.log('(dry run — not written)'); return; }
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
   console.log(`Wrote sitemap.xml (${entries.length} URLs) at repo root.`);

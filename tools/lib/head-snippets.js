@@ -24,6 +24,31 @@ const AD_SLOTS = {
   landing: '',        // after a course landing's curriculum
 };
 
+// Courses that earn nothing and are held back from Google's site-wide quality view.
+// A 90-day GSC audit on 2026-07-19 found 719 of 747 lessons (96.3%) took ZERO clicks, and 8 whole
+// courses — 286 pages, 38% of the site — took zero between them. Google assesses low-value content
+// at SITE level, so those pages drag every good page down with them. noindex (not deletion) is the
+// reversible fix: the files stay, the lessons stay readable, they simply stop counting against the
+// site. Remove a slug from data/noindex-courses.json and the next build indexes it again.
+let _noindex = null;
+function noindexSlugs() {
+  if (_noindex) return _noindex;
+  try {
+    const p = require('path').join(__dirname, '..', '..', 'data', 'noindex-courses.json');
+    _noindex = new Set(JSON.parse(require('fs').readFileSync(p, 'utf8')).slugs || []);
+  } catch (e) {
+    _noindex = new Set();   // missing/corrupt list must never silently noindex the whole site
+  }
+  return _noindex;
+}
+
+// "follow", not "none": the links out of these pages still pass through to the courses that DO work.
+function robotsMeta(slug) {
+  return noindexSlugs().has(slug)
+    ? '<meta name="robots" content="noindex,follow">'
+    : '';
+}
+
 function ga4Snippet() {
   return `<!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=${GA4_ID}"></script>
@@ -41,8 +66,11 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
 }
 
 // Everything that belongs in <head>, on every generated page.
-function headSnippets() {
-  return ga4Snippet() + '\n' + adsenseLoader();
+// GA4 + the ad loader always ship — a noindexed page still has readers, and we still want it
+// measured and monetised; it is only held back from Google's INDEX, not from the site.
+function headSnippets(slug) {
+  const robots = robotsMeta(slug);
+  return (robots ? robots + '\n' : '') + ga4Snippet() + '\n' + adsenseLoader();
 }
 
 // Responsive in-article ad. Returns '' (nothing) when the slot is not yet configured.
@@ -55,4 +83,4 @@ function inArticleAd(slotKey) {
 </div>`;
 }
 
-module.exports = { GA4_ID, ADS_CLIENT, AD_SLOTS, ga4Snippet, adsenseLoader, headSnippets, inArticleAd };
+module.exports = { GA4_ID, ADS_CLIENT, AD_SLOTS, ga4Snippet, adsenseLoader, headSnippets, inArticleAd, robotsMeta, noindexSlugs };
