@@ -359,3 +359,11 @@ DONE — 23:04:11
 ============================================================
   preflight pre: OK (4 checks, root=teamz-lab-learning)
 ✓ dirty-guard passed
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-19 23:00:01 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
