@@ -1,14 +1,15 @@
 USE "DISCOVER NEW KEYWORDS" — NOT "Get search volume"
-LOCATION = United States   |   THREE separate runs
+LOCATION = United States   |   FOUR separate runs
 ========================================
 
-Run each CSV as its OWN "Discover new keywords" search. Do NOT paste all three together:
-Keyword Planner's "Start with keywords" box takes roughly 10 seeds per run, so a longer list is
-silently truncated and the extra seeds return nothing at all — a wasted pull that looks successful.
+Run each CSV as its OWN "Discover new keywords" search. Do NOT paste them together: the
+"Start with keywords" box takes roughly 10 seeds per run, so a longer list is silently truncated
+and the extra seeds return nothing — a wasted pull that still looks successful.
 
-  batch-radar-us-01.csv   insurance / mortgage / legal   (RPM 38-55, the top of the table)
-  batch-radar-us-02.csv   tax / finance                  (RPM 31-35)
-  batch-radar-us-03.csv   health + career                (RPM 13-16, and this site's proven winner)
+  batch-radar-us-01.csv   RPM $55.0 -> $35.0   mortgage, insurance, legal, tax
+  batch-radar-us-02.csv   RPM $31.5 -> $20.0   finance, longevity, business-saas, real-estate
+  batch-radar-us-03.csv   RPM $20.0 -> $11.5   health-supplements, career-jobs, health-general, parenting-family
+  batch-radar-us-04.csv   RPM $11.5 -> $10.0   home-improvement, education, travel, auto
 
 STEPS, for each file:
   1. Google Ads > Tools > Keyword Planner > "Discover new keywords"
@@ -17,28 +18,41 @@ STEPS, for each file:
   4. Language = English
   5. Download the results CSV into: data/manual-pull/2-DROP-RESULTS-HERE/
 
-WHY THESE SEEDS (three revisions, each corrected by evidence):
-  v1 was the site's own dead vocabulary (fileprovider, espresso test) — Planner said 50/mo.
-  v2 was a guess at "high-RPM niches" and was wrong against data already on this disk: ten of
-     sixteen seeds landed in the $7/$6.5 technology+productivity tier, the BOTTOM of
-     data/rpm-benchmarks.json, while every lane above $20 was omitted.
-  v3 (this one) is built on three measured inputs:
-     - RPM lanes read from data/rpm-benchmarks.json, highest first: mortgage 55, insurance 42.5,
-       legal 38.5, tax 35, finance 31.5, career-jobs 16, health-general 13. Lane choice is the
-       single biggest lever on this project: $1k/mo needs ~335,000 views at the site's measured
-       $2.98 RPM, but only ~23,500 at insurance rates.
-     - SHORT seeds (1-3 words). P(AI Overview) climbs 9.5% at 1 word to 46.4% at 7+ across 146M
-       SERPs, so long specific phrasing is the AIO-dense zone, not a safe harbour. This site proves
-       it: it ranks position 4 for a 9-word 8255 query and takes zero clicks.
-     - THIS SITE'S OWN CLICK EVIDENCE. protecting-aging-parents takes 10-25% CTR at positions
-       3.7-5.9, the best on the property, while a developer-reference page takes 1,563 impressions
-       at position 13.5 for zero. Personal-stakes consumer topics get clicked here; reference
-       lookups do not. Hence scam protection / elder fraud / identity theft in batch 03.
+HOW THESE WERE CHOSEN — and what bias is left.
+Generated mechanically from teamz-company-automation/data/rpm-benchmarks.json (Ezoic 2025 +
+Mediavine EPMV, updated 2026-04-13), ranked by measured US CPM, highest first. The lane ORDER is
+the table's, not anyone's judgement. Regenerate and the same order comes out.
 
-EXPECT REFUSALS. build-course-radar.py will reject vanity heads this site cannot win, clusters
-dominated by one term, and AIO-dense clusters (median query >= 6 words). Most of these seeds
-probably die there. That is the filter working. The verdict agreed up front: >= 3 clusters survive
-= a real path; 0-2 survive = ads cannot reach $1k on this site and the plan changes to a services
-funnel instead.
+Two exclusions, both stated so they can be argued with:
+  - b2b-leadgen ($50-300) tops the table but the file's own units note says it is priced PER LEAD,
+    not per 1000 impressions. It is a different business model and cannot be compared to CPM lanes
+    in an ads play. It is NOT excluded on preference — if the goal ever shifts from ads to lead
+    generation, it should be the FIRST thing tested.
+  - Lanes under $10 CPM (technology $7, productivity $6.5, fitness $7, lifestyle $5.5, creative
+    $4, gaming $3.5, entertainment $2.5, memes $1.2). The cut is a number, not a taste — and this
+    site already proves the point: its entire existing footprint sits in technology/productivity
+    and Planner returned 50/mo for ~35 of 38 of its keywords.
+
+Earlier versions of this file WERE biased and are recorded here so it does not happen again:
+  v1  the site's own dead vocabulary (fileprovider, espresso test) — Planner said 50/mo.
+  v2  a guess at "high-RPM niches": ten of sixteen seeds landed in the $7/$6.5 bottom tier while
+      every lane above $20 was omitted.
+  v3  8 of 26 lanes, hand-picked — and inconsistently: career-jobs ($16) and health-general ($13)
+      were included while longevity ($25), business-saas ($22) and health-supplements ($20) were
+      dropped. Higher-paying lanes cut, lower-paying lanes kept. Indefensible.
+  v4  (this one) every CPM lane >= $10, ordered by the table.
+
+Seed PHRASING is still human: two 1-3 word entry points per lane. Short on purpose — P(AI Overview)
+climbs 9.5% at 1 word to 46.4% at 7+ across 146M SERPs, and this site ranks position 4 for a 9-word
+query and takes zero clicks because Google prints the answer inline. Seeds are doors, not targets:
+Planner returns the real long tail behind each one with volume and competition attached.
+
+EXPECT HEAVY REFUSALS. build-course-radar.py rejects vanity heads this site cannot win, clusters
+dominated by one term, duplicates of existing courses, and AIO-dense clusters (median query >= 6
+words). Most of these probably die there — that is the filter working, not failing.
+
+VERDICT AGREED IN ADVANCE, so neither side moves the goalposts afterwards:
+  >= 3 clusters survive  -> a real path; the engine starts building courses on its own.
+  0-2 clusters survive   -> ads cannot reach $1k/mo on this site; switch to a services funnel.
 
 The export header may read "Keyword (by relevance)" instead of "Keyword" — the parser handles both.
