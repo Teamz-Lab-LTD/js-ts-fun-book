@@ -367,3 +367,71 @@ DONE — 23:04:11
 ============================================================
   preflight pre: OK (4 checks, root=teamz-lab-learning)
 ✓ dirty-guard passed
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-20 23:00:01 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +2 new   (store 107, unpulled 70)
+    gate: holding (need >=150 new AND >=21d; have 70 new, last 3d)
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 37 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 7 sessions across 4 pages (28d)
+  
+    ENHANCE candidates: 0  (queueing 0)
+  
+    NEW-post candidates queued: 0
+  
+    Nothing actionable tonight. That is a valid outcome — not an error.
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (0 targets)
+  Nothing actionable tonight — skipping the agent. (A valid outcome, not an error:
+  a queue with no target means no page is close enough and no demand is unserved.)
+
+=== course agent ===
+  course-radar: 28 clusters (37 US kw, 0 BD kw, 2 gaps)
+    $   0.25/mo  us  productivity    2kw vol= 100.0 kmp-vs-flutter
+    $   0.25/mo  us  productivity    2kw vol= 100.0 open-aosp-system
+    $   0.25/mo  us  productivity    2kw vol= 100.0 open-intel-8255
+    $   0.19/mo  us  productivity    2kw vol= 100.0 open-8255-control
+    $   0.19/mo  us  productivity    2kw vol= 100.0 open-teamz-lab
+    $    0.0/mo  bd  unknown         0kw vol=     0 class-8-math-bangla needs-volume
+    $    0.0/mo  bd  unknown         0kw vol=     0 class-10-math-bangla needs-volume
+    $    0.0/mo  bd  unknown         0kw vol=     0 class-9-10-science-bangla needs-volume
+    (20 refused: android-testing:one-head, android-storage-provider:one-head, open-8255-chip:one-head, open-8255-pin:one-head, open-8255-programmable:one-head, open-android-repository:one-head)
+    gate -> None: no eligible cluster
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ nu-investment-banking-lease-finance-bn (lenient)
+✓ protecting-aging-parents (lenient)
+validate-course: all 16 OK.
+build-homepage: 16 courses, 0 generated card(s).
+index.html written.
+build-sitemap: 472 URLs (8 course landings, 461 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (472 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 16 courses, 747 lessons, 166.5 KB, 925 lines
