@@ -462,8 +462,15 @@ function main() {
 
   console.log(`\nTotal: ${totalPages} lesson pages ${dryRun ? 'would be' : 'were'} generated.`);
 
-  // Emit a lesson-urls.txt for sitemap generation convenience
-  if (!dryRun && !onlyId) {
+  // Emit a lesson-urls.txt for sitemap generation convenience.
+  // Only on a FULL build. allLessonUrls holds just the slugs we were asked to build, so a
+  // single-slug run (`build-lesson-pages.js pet-insurance`, which is what the nightly course
+  // agent issues) would overwrite the site-wide list with that one course's 10 URLs — it cut
+  // 747 lines to 10 the first time a pilot was created. Nothing reads this file today, so the
+  // damage was cosmetic, but it left the file modified, and it is not a declared nightly
+  // artifact: the dirty-guard then skipped content, build, deploy AND push on every
+  // subsequent night while still exiting 0.
+  if (!dryRun && !onlyId && !onlySlug) {
     const urlsFile = path.join(ROOT, 'tools', 'lesson-urls.txt');
     fs.writeFileSync(urlsFile, allLessonUrls.map(u => SITE + u).join('\n') + '\n');
     console.log(`URL list written to: tools/lesson-urls.txt (${allLessonUrls.length} URLs)`);
