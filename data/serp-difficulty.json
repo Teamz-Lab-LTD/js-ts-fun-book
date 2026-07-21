@@ -47,11 +47,11 @@
       9
     ],
     [
-      "quora.com",
+      "usa.gov",
       8
     ],
     [
-      "usa.gov",
+      "quora.com",
       8
     ],
     [
@@ -63,11 +63,11 @@
       7
     ],
     [
-      "rocketmortgage.com",
+      "wellsfargo.com",
       7
     ],
     [
-      "wellsfargo.com",
+      "rocketmortgage.com",
       7
     ],
     [
@@ -177,7 +177,8 @@
           "url": "https://www.navyfederal.org/makingcents/tools/mortgage-refinance-calculator.html",
           "title": "Mortgage Refinance Calculator"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "mortgage preapproval": {
       "keyword": "mortgage preapproval",
@@ -251,7 +252,8 @@
           "url": "https://www.youtube.com/watch?v=qq6ACmpCI6A",
           "title": "Mortgage Preapproval Process Step By Step 2026"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "reverse mortgage": {
       "keyword": "reverse mortgage",
@@ -325,7 +327,8 @@
           "url": "https://dfi.wa.gov/how-reverse-mortgages-work",
           "title": "How Reverse Mortgages Work"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "home equity loan": {
       "keyword": "home equity loan",
@@ -399,7 +402,8 @@
           "url": "https://www.pennymac.com/refinancing-products/home-equity-loans",
           "title": "Home Equity Loans: Rates, Benefits & Flexible Options"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "heloc": {
       "keyword": "heloc",
@@ -473,7 +477,8 @@
           "url": "https://www.us.hsbc.com/home-loans/what-is-a-heloc-loan/",
           "title": "What Is Home Equity Line Of Credit Or HELOC?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "fha loan": {
       "keyword": "fha loan",
@@ -547,7 +552,8 @@
           "url": "https://www.nar.realtor/fha/fha-loan-requirements",
           "title": "FHA Loan Requirements: What Every Real Estate Agent ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "va loan": {
       "keyword": "va loan",
@@ -621,7 +627,8 @@
           "url": "https://lawforveterans.org/money-and-debt/73-loans-and-contracts/356-the-ins-and-outs-of-va-loans",
           "title": "The Ins and Outs of VA Home Loans"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "mortgage points": {
       "keyword": "mortgage points",
@@ -695,7 +702,8 @@
           "url": "https://cusohl.com/buying-down-mortgage-points-in-2025-how-it-really-works/",
           "title": "Buying Down Mortgage Points in 2025: How It Really Works"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "term life insurance": {
       "keyword": "term life insurance",
@@ -727,7 +735,7 @@
         {
           "domain": "guardianlife.com",
           "url": "https://www.guardianlife.com/life-insurance/how-term-life-works",
-          "title": "Term Life Insurance — Types and How it Works"
+          "title": "Term Life Insurance \u2014 Types and How it Works"
         },
         {
           "domain": "trustage.com",
@@ -769,7 +777,8 @@
           "url": "https://www.law.cornell.edu/wex/term_life_insurance",
           "title": "term life insurance | Wex - Law.Cornell.Edu"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "whole life insurance": {
       "keyword": "whole life insurance",
@@ -843,7 +852,8 @@
           "url": "https://www.nerdwallet.com/insurance/life/learn/whole-life-insurance",
           "title": "How Does Whole Life Insurance Work?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "car insurance claim": {
       "keyword": "car insurance claim",
@@ -917,7 +927,8 @@
           "url": "https://www.thegeneral.com/claims/",
           "title": "Car Accident Claims Information"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "home insurance claim": {
       "keyword": "home insurance claim",
@@ -979,7 +990,7 @@
         {
           "domain": "statefarm.com",
           "url": "https://www.statefarm.com/claims/home-and-property",
-          "title": "Home ＆ Property Claims"
+          "title": "Home \uff06 Property Claims"
         },
         {
           "domain": "njm.com",
@@ -991,7 +1002,8 @@
           "url": "https://www.experian.com/blogs/ask-experian/what-happens-when-you-file-homeowners-insurance-claim/",
           "title": "What Happens When You File a Homeowners Insurance ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "renters insurance": {
       "keyword": "renters insurance",
@@ -1018,7 +1030,7 @@
         {
           "domain": "allstate.com",
           "url": "https://www.allstate.com/renters-insurance",
-          "title": "Renters Insurance – Quotes Starting at $5/month"
+          "title": "Renters Insurance \u2013 Quotes Starting at $5/month"
         },
         {
           "domain": "statefarm.com",
@@ -1033,7 +1045,7 @@
         {
           "domain": "lemonade.com",
           "url": "https://www.lemonade.com/fr/en",
-          "title": "Lemonade Insurance in France from 4 €/month"
+          "title": "Lemonade Insurance in France from 4 \u20ac/month"
         },
         {
           "domain": "en.wikipedia.org",
@@ -1065,7 +1077,8 @@
           "url": "https://www.nationwide.com/personal/insurance/renters/",
           "title": "Renters Insurance Quotes"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "pet insurance": {
       "keyword": "pet insurance",
@@ -1092,7 +1105,7 @@
         {
           "domain": "petinsurance.com",
           "url": "https://www.petinsurance.com/",
-          "title": "Pet Insurance by Nationwide® | America's Best Pet & Vet Insurance"
+          "title": "Pet Insurance by Nationwide\u00ae | America's Best Pet & Vet Insurance"
         },
         {
           "domain": "lemonade.com",
@@ -1102,7 +1115,7 @@
         {
           "domain": "aspcapetinsurance.com",
           "url": "https://www.aspcapetinsurance.com/",
-          "title": "Pet Insurance Coverage - Rated One of the Best | ASPCA® Pet Health ..."
+          "title": "Pet Insurance Coverage - Rated One of the Best | ASPCA\u00ae Pet Health ..."
         },
         {
           "domain": "allstate.com",
@@ -1139,7 +1152,8 @@
           "url": "https://www.embracepetinsurance.com/?srsltid=AfmBOooQ4FrPcvctfzkMlQy0P8JwiQRVkVveM3Qg6zCbQOIYelOtvhfL",
           "title": "Pet Insurance You Can Use at Any Licensed Vet | Embrace"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "disability insurance": {
       "keyword": "disability insurance",
@@ -1213,7 +1227,8 @@
           "url": "https://doi.nv.gov/consumers/disability-insurance/",
           "title": "Disability Insurance"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "health insurance marketplace": {
       "keyword": "health insurance marketplace",
@@ -1240,7 +1255,7 @@
         {
           "domain": "healthcare.gov",
           "url": "https://www.healthcare.gov/",
-          "title": "Welcome to the Health Insurance Marketplace® | HealthCare ..."
+          "title": "Welcome to the Health Insurance Marketplace\u00ae | HealthCare ..."
         },
         {
           "domain": "irs.gov",
@@ -1287,7 +1302,8 @@
           "url": "https://www.anthem.com/individual-and-family/insurance-basics/health-insurance/marketplace-health-insurance",
           "title": "What is the Health Insurance Marketplace?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "llc formation": {
       "keyword": "llc formation",
@@ -1361,7 +1377,8 @@
           "url": "https://www.pa.gov/agencies/dos/programs/business/types-of-filings-and-registrations/pennsylvania-limited-liability-company",
           "title": "Pennsylvania Limited Liability Company"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "small claims court": {
       "keyword": "small claims court",
@@ -1435,7 +1452,8 @@
           "url": "https://www.flcourts.gov/Courts-System/florida-courts-help/other-resources/Small-Claims",
           "title": "Small Claims / Other Resources / Florida Courts Help / Courts System"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "power of attorney": {
       "keyword": "power of attorney",
@@ -1509,7 +1527,8 @@
           "url": "https://www.law.cornell.edu/wex/power_of_attorney",
           "title": "power of attorney | Wex | US Law | LII / Legal Information Institute"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "tenant rights": {
       "keyword": "tenant rights",
@@ -1583,7 +1602,8 @@
           "url": "https://www.clevelandmanagement.com/pdf/Tenant%20Landlord%20Obligations.pdf",
           "title": "Tenant/Landlord Rights and Obligations"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "child custody": {
       "keyword": "child custody",
@@ -1657,7 +1677,8 @@
           "url": "https://oklaw.org/resource/child-custody-unwed-parents",
           "title": "Child Custody and Visitation - OKLaw.org"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "workers comp": {
       "keyword": "workers comp",
@@ -1731,7 +1752,8 @@
           "url": "https://www.wcirb.com/research-and-education/online-guide-workers%E2%80%99-compensation/overview-california-workers-compensation",
           "title": "Overview of California Workers' Compensation"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "speeding ticket": {
       "keyword": "speeding ticket",
@@ -1805,7 +1827,8 @@
           "url": "https://www.protectyourlegalrights.com/blog/north-carolina-speeding-laws/",
           "title": "North Carolina Speeding Laws and Penalties (2026)"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "estate planning": {
       "keyword": "estate planning",
@@ -1879,7 +1902,8 @@
           "url": "https://www.ramseysolutions.com/retirement/estate-planning-guide?srsltid=AfmBOoqncBEPQSZ5Yb6-m4ypGoA94Ml1-oEaqLMKMIC-2Bt6ikKsiq85",
           "title": "Estate Planning Guide"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "tax deductions": {
       "keyword": "tax deductions",
@@ -1953,7 +1977,8 @@
           "url": "https://www.fidelity.com/learning-center/smart-money/tax-deductions-and-credits",
           "title": "13 tax deductions and credits for 2025 and 2026"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "self employment tax": {
       "keyword": "self employment tax",
@@ -2027,7 +2052,8 @@
           "url": "https://www.ey.com/en_us/insights/tax/ey-taxchat-self-employment-tax-what-it-is-how-it-works-and-how-you-can-save",
           "title": "Self-employment tax: what it is, how it works and how you ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "quarterly taxes": {
       "keyword": "quarterly taxes",
@@ -2101,7 +2127,8 @@
           "url": "https://www.fidelity.com/learning-center/smart-money/estimated-tax-payments",
           "title": "Estimated tax payments and quarterly tax guide"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "capital gains tax": {
       "keyword": "capital gains tax",
@@ -2175,7 +2202,8 @@
           "url": "https://www.fbfs.com/learning-center/what-is-capital-gains-tax",
           "title": "What is Capital Gains Tax?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "tax brackets": {
       "keyword": "tax brackets",
@@ -2249,7 +2277,8 @@
           "url": "https://taxfoundation.org/data/all/federal/2024-tax-brackets/",
           "title": "2024 Tax Brackets"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "roth ira": {
       "keyword": "roth ira",
@@ -2323,7 +2352,8 @@
           "url": "https://www.edwardjones.com/us-en/investment-services/account-options/retirement/roth-ira",
           "title": "Roth IRA: What Is a Roth IRA?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "401k withdrawal": {
       "keyword": "401k withdrawal",
@@ -2397,7 +2427,8 @@
           "url": "https://www.blackrock.com/us/individual/education/retirement/withdrawal-rules-and-strategies",
           "title": "Retirement withdrawal rules and strategies"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "tax extension": {
       "keyword": "tax extension",
@@ -2471,7 +2502,8 @@
           "url": "https://www.investopedia.com/terms/f/filing-extension.asp",
           "title": "Filing Extension: What It Is and How It Works"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "budgeting basics": {
       "keyword": "budgeting basics",
@@ -2545,7 +2577,8 @@
           "url": "https://www.intuit.com/blog/budgeting/the-basics-of-budgeting/",
           "title": "How to Budget: The basics of budgeting"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "credit score": {
       "keyword": "credit score",
@@ -2619,7 +2652,8 @@
           "url": "https://www.investopedia.com/terms/c/credit_score.asp",
           "title": "What Is a Credit Score?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "debt payoff": {
       "keyword": "debt payoff",
@@ -2671,7 +2705,7 @@
         {
           "domain": "debtpayoffplanner.com",
           "url": "https://www.debtpayoffplanner.com/",
-          "title": "Debt Payoff Planner – The #1 App to Plan and Track Your Payoff"
+          "title": "Debt Payoff Planner \u2013 The #1 App to Plan and Track Your Payoff"
         },
         {
           "domain": "ramseysolutions.com",
@@ -2693,7 +2727,8 @@
           "url": "https://play.google.com/store/apps/details?id=com.oxbowsoft.debtplanner&hl=en_US",
           "title": "Debt Payoff Planner & Tracker - Apps on Google Play"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "emergency fund": {
       "keyword": "emergency fund",
@@ -2767,7 +2802,8 @@
           "url": "https://www.chase.com/personal/banking/education/budgeting-saving/how-much-should-i-have-in-emergency-fund",
           "title": "Guide to Emergency Fund | Chase"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "index funds": {
       "keyword": "index funds",
@@ -2841,7 +2877,8 @@
           "url": "https://www.schwab.com/schwab-index-funds-etfs",
           "title": "Index Funds: A powerful, low-cost way to invest."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "high yield savings": {
       "keyword": "high yield savings",
@@ -2915,7 +2952,8 @@
           "url": "https://www.usbank.com/financial-education/save/choose-savings-account.html",
           "title": "How to choose the right savings account for your goals [2026 guide]"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "cd rates": {
       "keyword": "cd rates",
@@ -2989,7 +3027,8 @@
           "url": "https://www.bankrate.com/banking/cds/best-4-year-cd-rates/",
           "title": "Best 4-Year CD Rates for July 2026 - Banking"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "credit card interest": {
       "keyword": "credit card interest",
@@ -3063,7 +3102,8 @@
           "url": "https://www.consumerfinance.gov/ask-cfpb/what-is-a-credit-card-interest-rate-what-does-apr-mean-en-44/",
           "title": "What is a credit card interest rate? What does APR mean?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "healthy aging": {
       "keyword": "healthy aging",
@@ -3105,7 +3145,7 @@
         {
           "domain": "healthyaging.net",
           "url": "https://healthyaging.net/",
-          "title": "Healthy Aging®. Healthy Aging is The Premier Lifestyle Website for All Ages"
+          "title": "Healthy Aging\u00ae. Healthy Aging is The Premier Lifestyle Website for All Ages"
         },
         {
           "domain": "pfizer.com",
@@ -3137,7 +3177,8 @@
           "url": "https://www.healthinaging.org/",
           "title": "HealthInAging.org: Home"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "longevity diet": {
       "keyword": "longevity diet",
@@ -3211,7 +3252,8 @@
           "url": "https://patient.info/features/diet-and-nutrition/the-longevity-diet-can-it-add-years-to-your-life",
           "title": "The longevity diet - can it add years to your life?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "intermittent fasting": {
       "keyword": "intermittent fasting",
@@ -3285,7 +3327,8 @@
           "url": "https://www.webmd.com/diet/intermittent-fasting",
           "title": "Intermittent Fasting Guide: Benefits, Methods & Tips"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "sleep quality": {
       "keyword": "sleep quality",
@@ -3359,7 +3402,8 @@
           "url": "https://www.health.harvard.edu/healthy-aging-and-longevity/sleep-hygiene-simple-practices-for-better-rest",
           "title": "Sleep hygiene: Simple practices for better rest"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "blood pressure": {
       "keyword": "blood pressure",
@@ -3433,7 +3477,8 @@
           "url": "https://www.medicalnewstoday.com/articles/270644",
           "title": "Understanding blood pressure: What is normal?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "cholesterol": {
       "keyword": "cholesterol",
@@ -3507,7 +3552,8 @@
           "url": "https://en.wikipedia.org/wiki/Cholesterol",
           "title": "Cholesterol"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "strength training seniors": {
       "keyword": "strength training seniors",
@@ -3581,7 +3627,8 @@
           "url": "https://www.youtube.com/watch?v=2gRV1a6V_2g",
           "title": "20 Min Strength Training for Seniors Exercise at Home - Chair Workout ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "brain health": {
       "keyword": "brain health",
@@ -3655,7 +3702,8 @@
           "url": "https://brain.health/",
           "title": "Brain Health Network - Helping keep your brain healthy"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "email marketing": {
       "keyword": "email marketing",
@@ -3707,7 +3755,7 @@
         {
           "domain": "business.adobe.com",
           "url": "https://business.adobe.com/blog/basics/guide-to-email-marketing",
-          "title": "Email marketing — a step-by-step guide to getting started"
+          "title": "Email marketing \u2014 a step-by-step guide to getting started"
         },
         {
           "domain": "hubspot.com",
@@ -3729,7 +3777,8 @@
           "url": "https://en.wikipedia.org/wiki/Email_marketing",
           "title": "Email marketing"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "crm setup": {
       "keyword": "crm setup",
@@ -3803,7 +3852,8 @@
           "url": "https://blog.sellerant.com/your-guide-to-a-crm-setup?hs_amp=true",
           "title": "CRM for Startups: Your Complete Guide to a Successful Setup"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "invoicing software": {
       "keyword": "invoicing software",
@@ -3877,7 +3927,8 @@
           "url": "https://quickbooks.intuit.com/accounting/invoicing/",
           "title": "Online Invoicing Software for Small Businesses - QuickBooks"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "payroll setup": {
       "keyword": "payroll setup",
@@ -3924,7 +3975,7 @@
         {
           "domain": "payrollsetup.com",
           "url": "https://www.payrollsetup.com/",
-          "title": "Set up Payroll For Small Business | Payrollsetup.com®"
+          "title": "Set up Payroll For Small Business | Payrollsetup.com\u00ae"
         },
         {
           "domain": "youtube.com",
@@ -3951,7 +4002,8 @@
           "url": "https://www.surepayroll.com/resources/article/set-up-payroll-account",
           "title": "How to Set Up Payroll for Your Small Business"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "business plan": {
       "keyword": "business plan",
@@ -4025,7 +4077,8 @@
           "url": "https://www.incauthority.com/blog/own-a-company-you-need-a-business-plan/?srsltid=AfmBOooDNNsZkss6S17fXlnFKFEWIaoHkSjlVJbLEdCEWMGZlr8XsjQb",
           "title": "What is a Business Plan & How Do You Write It?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "dropshipping": {
       "keyword": "dropshipping",
@@ -4099,7 +4152,8 @@
           "url": "https://www.forbes.com/advisor/business/what-is-dropshipping-everything-you-need-to-know/",
           "title": "What Is Dropshipping?: Everything You Need To Know"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "print on demand": {
       "keyword": "print on demand",
@@ -4131,7 +4185,7 @@
         {
           "domain": "printify.com",
           "url": "https://printify.com/print-on-demand/",
-          "title": "Print on Demand – start your online business"
+          "title": "Print on Demand \u2013 start your online business"
         },
         {
           "domain": "gelato.com",
@@ -4173,7 +4227,8 @@
           "url": "https://merchone.com/blog/how-print-on-demand-works/",
           "title": "Print-on-Demand for Business: What It Is; How to Start ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "freelance contracts": {
       "keyword": "freelance contracts",
@@ -4247,7 +4302,8 @@
           "url": "https://worksuite.com/resources/insights/freelance-contract-template",
           "title": "The Ultimate Freelance Contract Template in 2024 (and Beyond)"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "first time homebuyer": {
       "keyword": "first time homebuyer",
@@ -4299,7 +4355,7 @@
         {
           "domain": "reddit.com",
           "url": "https://www.reddit.com/r/FirstTimeHomeBuyer/comments/1sn84vd/what_exactly_are_the_benefits_of_being_considered/",
-          "title": "What exactly are the benefits of being considered a “First Time Home Buyer”?"
+          "title": "What exactly are the benefits of being considered a \u201cFirst Time Home Buyer\u201d?"
         },
         {
           "domain": "reddit.com",
@@ -4321,7 +4377,8 @@
           "url": "https://www.usa.gov/buying-home-programs",
           "title": "Home buying assistance"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "rental property": {
       "keyword": "rental property",
@@ -4395,7 +4452,8 @@
           "url": "https://www.mymemphisrental.com/",
           "title": "Memphis Property Management | Enterprise Property ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "closing costs": {
       "keyword": "closing costs",
@@ -4469,7 +4527,8 @@
           "url": "https://www.nashvillesmls.com/blog/how-to-calculate-a-budget-for-closing-costs.html",
           "title": "Closing Costs in Tennessee: How Much Should You Budget For?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "property tax": {
       "keyword": "property tax",
@@ -4543,7 +4602,8 @@
           "url": "https://www.youtube.com/watch?v=9AGhS1gq-A0",
           "title": "Breaking down Georgia's property tax debate | FOX 5 News"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "home appraisal": {
       "keyword": "home appraisal",
@@ -4617,7 +4677,8 @@
           "url": "https://www.citizensbank.com/learning/what-is-an-appraisal.aspx",
           "title": "What Is a Home Appraisal? | Everything You Should Know"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "house flipping": {
       "keyword": "house flipping",
@@ -4691,7 +4752,8 @@
           "url": "https://www.realtor.com/advice/buy/how-to-flip-a-house/",
           "title": "How To Start Flipping Houses: A Checklist"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "real estate investing": {
       "keyword": "real estate investing",
@@ -4765,7 +4827,8 @@
           "url": "https://www.reihub.net/resources/property-investment-for-beginners/",
           "title": "Property Investment for Beginners: A Comprehensive Guide"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "escrow": {
       "keyword": "escrow",
@@ -4839,7 +4902,8 @@
           "url": "https://www.five-starbank.com/resources/what-is-escrow",
           "title": "What is Escrow?"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "vitamin d": {
       "keyword": "vitamin d",
@@ -4913,7 +4977,8 @@
           "url": "https://medlineplus.gov/lab-tests/vitamin-d-test/",
           "title": "Vitamin D Test"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "creatine": {
       "keyword": "creatine",
@@ -4987,7 +5052,8 @@
           "url": "https://www.walmart.com/browse/health-and-medicine/creatine/976760_1166769_5627144",
           "title": "Creatine in Protein & Fitness"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "magnesium": {
       "keyword": "magnesium",
@@ -5061,7 +5127,8 @@
           "url": "https://mcpress.mayoclinic.org/nutrition-fitness/the-magic-of-magnesium/",
           "title": "The magic of magnesium"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "protein powder": {
       "keyword": "protein powder",
@@ -5135,7 +5202,8 @@
           "url": "https://www.vitaminshoppe.com/c/protein-fitness/protein-powders",
           "title": "Protein Powders: Whey, Plant & More"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "resume writing": {
       "keyword": "resume writing",
@@ -5177,7 +5245,7 @@
         {
           "domain": "writing.wisc.edu",
           "url": "https://writing.wisc.edu/handbook/resume/",
-          "title": "Resume Writing Tips – The Writing Center – UW–Madison"
+          "title": "Resume Writing Tips \u2013 The Writing Center \u2013 UW\u2013Madison"
         },
         {
           "domain": "forbes.com",
@@ -5202,14 +5270,15 @@
         {
           "domain": "careerservices.upenn.edu",
           "url": "https://careerservices.upenn.edu/channels/resume/",
-          "title": "Write a Resume/CV – Career Services | University of Pennsylvania"
+          "title": "Write a Resume/CV \u2013 Career Services | University of Pennsylvania"
         },
         {
           "domain": "adobe.com",
           "url": "https://www.adobe.com/acrobat/guides/how-to-write-a-resume.html",
-          "title": "How to write a resume — a step-by-step guide."
+          "title": "How to write a resume \u2014 a step-by-step guide."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "salary negotiation": {
       "keyword": "salary negotiation",
@@ -5283,7 +5352,8 @@
           "url": "https://gicp.org/careers/negotiating-salary/",
           "title": "Mastering salary negotiations: Essential dos and don'ts for ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "job interview": {
       "keyword": "job interview",
@@ -5357,7 +5427,8 @@
           "url": "https://www.bls.gov/careeroutlook/2016/article/employment-interviewing.htm",
           "title": "Employment interviewing: Seizing the opportunity and the job"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "career change": {
       "keyword": "career change",
@@ -5431,7 +5502,8 @@
           "url": "https://www.forbes.com/sites/josephliu/2019/04/02/successfully-change-careers/",
           "title": "How To Change Careers, According To 50 People Who ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "medicare enrollment": {
       "keyword": "medicare enrollment",
@@ -5498,14 +5570,15 @@
         {
           "domain": "bcbs.com",
           "url": "https://www.bcbs.com/explore-affordable-health-plans/medicare/understanding-eligibility",
-          "title": "Medicare Eligibility – When Can You Enroll in Medicare"
+          "title": "Medicare Eligibility \u2013 When Can You Enroll in Medicare"
         },
         {
           "domain": "uhc.com",
           "url": "https://www.uhc.com/medicare/medicare-education/how-to-enroll-in-medicare.html",
           "title": "How to Enroll in Medicare"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "blood test results": {
       "keyword": "blood test results",
@@ -5579,7 +5652,8 @@
           "url": "https://bluepointmedgroup.com/understanding-your-lab-results-a-simple-guide-for-patients/",
           "title": "Understanding Your Lab Results: A Simple Guide for Patients"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "physical therapy": {
       "keyword": "physical therapy",
@@ -5653,7 +5727,8 @@
           "url": "https://www.athletico.com/regions/illinois/chicago/",
           "title": "Physical Therapy in Chicago, IL"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "migraine relief": {
       "keyword": "migraine relief",
@@ -5727,7 +5802,8 @@
           "url": "https://newsroom.osfhealthcare.org/at-home-migraine-relief-fact-vs-fiction/",
           "title": "At-home migraine relief: Fact vs. fiction"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "newborn care": {
       "keyword": "newborn care",
@@ -5799,9 +5875,10 @@
         {
           "domain": "cdc.gov",
           "url": "https://www.cdc.gov/child-development/positive-parenting-tips/infants.html",
-          "title": "Positive Parenting Tips: Infants (0–1 years) | Child Development"
+          "title": "Positive Parenting Tips: Infants (0\u20131 years) | Child Development"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "potty training": {
       "keyword": "potty training",
@@ -5875,7 +5952,8 @@
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3307553/",
           "title": "Toilet training children: when to start and how to train - PMC"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "college savings": {
       "keyword": "college savings",
@@ -5949,7 +6027,8 @@
           "url": "https://www.wellsfargo.com/investing/education/529/",
           "title": "529 Plans Through Wells Fargo Advisors"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "screen time": {
       "keyword": "screen time",
@@ -6023,7 +6102,8 @@
           "url": "https://projecthealthyschools.org/screen_time/",
           "title": "Importance of Screen-Time Alternatives"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "home insulation": {
       "keyword": "home insulation",
@@ -6097,7 +6177,8 @@
           "url": "https://www.thespruce.com/types-of-insulation-7570458",
           "title": "10 Types of Insulation Every Homeowner Should Know"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "diy plumbing": {
       "keyword": "diy plumbing",
@@ -6171,7 +6252,8 @@
           "url": "http://diyplumbingadvice.com/",
           "title": "DIY Plumbing Advice Home Page"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "hvac maintenance": {
       "keyword": "hvac maintenance",
@@ -6245,7 +6327,8 @@
           "url": "https://www.getmaintainx.com/blog/commercial-hvac-maintenance-guide",
           "title": "Commercial HVAC Maintenance: Complete Guide & Checklist"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "solar panels": {
       "keyword": "solar panels",
@@ -6292,7 +6375,7 @@
         {
           "domain": "youtube.com",
           "url": "https://www.youtube.com/watch?v=wlxXLxjJJho",
-          "title": "Solar Panels – How Do They Work?"
+          "title": "Solar Panels \u2013 How Do They Work?"
         },
         {
           "domain": "youtube.com",
@@ -6312,14 +6395,15 @@
         {
           "domain": "listado.mercadolibre.com.ar",
           "url": "https://listado.mercadolibre.com.ar/panel-solar",
-          "title": "Panel Solar | MercadoLibre 📦"
+          "title": "Panel Solar | MercadoLibre \ud83d\udce6"
         },
         {
           "domain": "greenpeace.org",
           "url": "https://www.greenpeace.org/argentina/blog/problemas/climayenergia/como-funciona-un-panel-solar-explicado-de-una-manera-sencilla/",
-          "title": "¿Cómo funciona un panel solar? Explicado de una manera ..."
+          "title": "\u00bfC\u00f3mo funciona un panel solar? Explicado de una manera ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "study techniques": {
       "keyword": "study techniques",
@@ -6361,7 +6445,7 @@
         {
           "domain": "arc.duke.edu",
           "url": "https://arc.duke.edu/study-strategies-that-work/",
-          "title": "Study Strategies That Work – Academic Resource Center"
+          "title": "Study Strategies That Work \u2013 Academic Resource Center"
         },
         {
           "domain": "adobe.com",
@@ -6371,7 +6455,7 @@
         {
           "domain": "reddit.com",
           "url": "https://www.reddit.com/r/studytips/comments/1o2jqnk/7_evidencebased_study_techniques_that_actually/",
-          "title": "7 evidence-based study techniques that actually work (what i’ve tried + what stuck)"
+          "title": "7 evidence-based study techniques that actually work (what i\u2019ve tried + what stuck)"
         },
         {
           "domain": "quora.com",
@@ -6393,7 +6477,8 @@
           "url": "https://www.cgc.edu/sites/default/files/inline-files/List%20of%20Comprehensive%20Study%20Strategies%20by%20Topic_102025.pdf",
           "title": "List of Proven Study Strategies by Topic"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "fafsa": {
       "keyword": "fafsa",
@@ -6420,7 +6505,7 @@
         {
           "domain": "studentaid.gov",
           "url": "https://studentaid.gov/h/apply-for-aid/fafsa",
-          "title": "FAFSA® Application | Federal Student Aid"
+          "title": "FAFSA\u00ae Application | Federal Student Aid"
         },
         {
           "domain": "usa.gov",
@@ -6455,7 +6540,7 @@
         {
           "domain": "youtube.com",
           "url": "https://www.youtube.com/watch?v=NmEP38x-1Z8",
-          "title": "What Is FAFSA®?"
+          "title": "What Is FAFSA\u00ae?"
         },
         {
           "domain": "citizensbank.com",
@@ -6467,7 +6552,8 @@
           "url": "https://www.gafutures.org/college-planning/college-money-matters/applying-for-aid/",
           "title": "Applying for Student Financial Aid | Georgia ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "student loans": {
       "keyword": "student loans",
@@ -6541,7 +6627,8 @@
           "url": "https://www.consumerfinance.gov/consumer-tools/student-loans/",
           "title": "Student loans | Consumer Financial Protection Bureau"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "scholarships": {
       "keyword": "scholarships",
@@ -6615,7 +6702,8 @@
           "url": "https://www.fastweb.com/college-scholarships",
           "title": "Find College Scholarships | Fastweb"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "travel insurance": {
       "keyword": "travel insurance",
@@ -6689,7 +6777,8 @@
           "url": "http://www.travelinsure.com/",
           "title": "Travel Insurance Services - Experts since 1974"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "visa application": {
       "keyword": "visa application",
@@ -6763,7 +6852,8 @@
           "url": "https://ceac.state.gov/",
           "title": "Consular Electronic Application Center"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "passport renewal": {
       "keyword": "passport renewal",
@@ -6837,7 +6927,8 @@
           "url": "https://www.miamibeachfl.gov/city-hall/finance/passport-information/",
           "title": "Passport Information - City of Miami Beach"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "travel rewards": {
       "keyword": "travel rewards",
@@ -6864,7 +6955,7 @@
         {
           "domain": "bankofamerica.com",
           "url": "https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/",
-          "title": "Bank of America® Travel Rewards Credit Card - Apply Today"
+          "title": "Bank of America\u00ae Travel Rewards Credit Card - Apply Today"
         },
         {
           "domain": "thepointsguy.com",
@@ -6911,7 +7002,8 @@
           "url": "https://www.youtube.com/watch?v=bYhSfhbWRiw",
           "title": "How to Stack Travel Rewards in 2026"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "car maintenance": {
       "keyword": "car maintenance",
@@ -6985,7 +7077,8 @@
           "url": "https://www.consumerreports.org/cars/car-repair-maintenance/your-car-maintenance-checklist-a6808357212/",
           "title": "Consumer Reports' Guide to Car Maintenance"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "buying used car": {
       "keyword": "buying used car",
@@ -7059,7 +7152,8 @@
           "url": "https://www.isba.org/public/guide/buyingacar",
           "title": "Your Guide to Buying a Car"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "car loan": {
       "keyword": "car loan",
@@ -7133,7 +7227,8 @@
           "url": "https://www.onpointcu.com/auto-loans/",
           "title": "Auto Loans & Financing in Oregon & Washington"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "ev charging": {
       "keyword": "ev charging",
@@ -7207,7 +7302,8 @@
           "url": "https://www.homedepot.com/b/Electrical-Renewable-Energy-EV-Chargers/N-5yc1vZc3gj",
           "title": "EV Chargers"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "flutter vs kmp": {
       "keyword": "flutter vs kmp",
@@ -7244,7 +7340,7 @@
         {
           "domain": "syzygy.pl",
           "url": "https://www.syzygy.pl/en/blog/kmp-vs-flutter-vs-native-comparision/",
-          "title": "KMP vs Flutter vs Native – which solution is better for a mobile ..."
+          "title": "KMP vs Flutter vs Native \u2013 which solution is better for a mobile ..."
         },
         {
           "domain": "medium.com",
@@ -7281,7 +7377,8 @@
           "url": "https://www.youtube.com/watch?v=FzaVmw4u6O8",
           "title": "Does Kotlin Multiplatform beat Flutter? | KMP vs Flutter in 2025 ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "kmp vs flutter": {
       "keyword": "kmp vs flutter",
@@ -7355,7 +7452,8 @@
           "url": "https://infinitelambda.com/flutter-kotlin-multiplatform-native-comparison/",
           "title": "Flutter vs Kotlin Multiplatform vs Native"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "aosp system integration": {
       "keyword": "aosp system integration",
@@ -7429,7 +7527,8 @@
           "url": "https://www.youtube.com/watch?v=Ze-SqcKi3q4",
           "title": "Add Apps to Android (AOSP) Practical - Android 12 / Android 13"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "aosp system integrator": {
       "keyword": "aosp system integrator",
@@ -7461,7 +7560,7 @@
         {
           "domain": "reddit.com",
           "url": "https://www.reddit.com/r/Android/comments/u3x4oj/what_does_aosp_android_really_mean_can_you_use_it/",
-          "title": "What does “AOSP Android” really mean? Can you use it?"
+          "title": "What does \u201cAOSP Android\u201d really mean? Can you use it?"
         },
         {
           "domain": "youtube.com",
@@ -7503,7 +7602,8 @@
           "url": "https://www.aospinsider.com/blog/creating-and-integrating-system-app/",
           "title": "Creating and Integrating an AOSP System App: A Step-by- ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "intel 8255": {
       "keyword": "intel 8255",
@@ -7577,7 +7677,8 @@
           "url": "https://electronics.stackexchange.com/questions/232084/manipulating-i-o-ports-of-intel-8255-ppi",
           "title": "manipulating I/O ports of Intel 8255 PPI"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "intel 8255 programmable peripheral interface": {
       "keyword": "intel 8255 programmable peripheral interface",
@@ -7651,7 +7752,8 @@
           "url": "https://www.youtube.com/watch?v=H1Lgm6LdBys",
           "title": "8255 - Programmable Peripheral Interface (PPI) - MPMC - YouTube"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "teamz lab": {
       "keyword": "teamz lab",
@@ -7725,7 +7827,8 @@
           "url": "https://www.youtube.com/@teamzlab",
           "title": "Teamz Lab - Design & Tech (+AI) Company"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "teamz lab ltd": {
       "keyword": "teamz lab ltd",
@@ -7799,7 +7902,8 @@
           "url": "https://x.com/teamzlabapp",
           "title": "Teamz Lab LTD - Design & Tech (+AI) Company"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "8255 control register": {
       "keyword": "8255 control register",
@@ -7873,7 +7977,8 @@
           "url": "https://www.youtube.com/watch?v=BWplF8M0OyY",
           "title": "8255 PPI OPERATING MODES / CONTROL WORD ..."
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     },
     "8255 control word register": {
       "keyword": "8255 control word register",
@@ -7947,7 +8052,8 @@
           "url": "https://www.scribd.com/document/855265983/8255",
           "title": "8255 Control Word and Modes Overview | PDF | Input/Output"
         }
-      ]
+      ],
+      "scored_at": "2026-07-22"
     }
   }
 }
