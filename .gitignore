@@ -32,3 +32,10 @@ data/*
 data/manual-pull/*
 !data/manual-pull/1-UPLOAD-THESE/
 !data/manual-pull/2-DROP-RESULTS-HERE/
+# Pulled Planner results are NOT churn. Each one costs a manual export that cannot be automated
+# (no free Keyword Planner API), and the negation above re-includes only the DIRECTORY — the CSVs
+# inside stayed untracked, so the first real pull sat unbacked-up until someone thought to ask.
+# Track the files themselves.
+!data/manual-pull/2-DROP-RESULTS-HERE/*.csv
+!data/manual-pull/2-DROP-RESULTS-HERE/bd/
+!data/manual-pull/2-DROP-RESULTS-HERE/bd/*.csv
