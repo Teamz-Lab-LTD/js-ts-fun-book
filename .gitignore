@@ -24,6 +24,10 @@ data/*
 !data/course-radar-seeds.json
 !data/course-ledger.json
 !data/noindex-courses.json
+# Measured SERP composition — each keyword cost a Firecrawl credit, and the cached raw results are
+# what let the authority model be recomputed without refetching. Losing this file means re-spending
+# credits to learn something we already know.
+!data/serp-difficulty.json
 !data/manual-pull/
 data/manual-pull/*
 !data/manual-pull/1-UPLOAD-THESE/
