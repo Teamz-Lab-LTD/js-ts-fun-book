@@ -1,15 +1,17 @@
 USE "DISCOVER NEW KEYWORDS" — NOT "Get search volume"
-LOCATION = United States   |   FOUR separate runs
+LOCATION = United States   |   TEN files, one run each   |   FILE ORDER = MONEY ORDER
 ========================================
 
-Run each CSV as its OWN "Discover new keywords" search. Do NOT paste them together: the
-"Start with keywords" box takes roughly 10 seeds per run, so a longer list is silently truncated
+Run each CSV as its OWN "Discover new keywords" search. Do NOT paste files together: the
+"Start with keywords" box takes ~10 seeds per run, so a longer list is silently truncated
 and the extra seeds return nothing — a wasted pull that still looks successful.
 
-  batch-radar-us-01.csv   RPM $55.0 -> $35.0   mortgage, insurance, legal, tax
-  batch-radar-us-02.csv   RPM $31.5 -> $20.0   finance, longevity, business-saas, real-estate
-  batch-radar-us-03.csv   RPM $20.0 -> $11.5   health-supplements, career-jobs, health-general, parenting-family
-  batch-radar-us-04.csv   RPM $11.5 -> $10.0   home-improvement, education, travel, auto
+Files are chunked in RPM order (highest-paying lanes first). If you only have time for some,
+do them IN ORDER — batch 01 is worth more than batch 10.
+
+  batch-radar-us-01..04   mortgage $55 / insurance $42.5 / legal $38.5 / tax $35 / finance $31.5
+  batch-radar-us-05..07   longevity $25 / business-saas $22 / real-estate $20
+  batch-radar-us-08..10   supplements $20 / career $16 / health $13 / parenting+home $11.5 / education $10.5 / travel+auto $10
 
 STEPS, for each file:
   1. Google Ads > Tools > Keyword Planner > "Discover new keywords"
@@ -18,34 +20,43 @@ STEPS, for each file:
   4. Language = English
   5. Download the results CSV into: data/manual-pull/2-DROP-RESULTS-HERE/
 
+THIS PULL IS DESIGNED TO LAST >= 1 YEAR:
+  - Seasonal cases that recur EVERY year are seeded (tax deadline terms, medicare enrollment
+    Oct-Dec, fafsa Oct, back-to-school study terms) — their volume is 12-month averaged by
+    Planner, so one pull covers every future season.
+  - The export's "YoY change" column is now parsed and scored: growing clusters outrank dying
+    ones automatically, so the ranking self-corrects as demand shifts — without a re-pull.
+  - "Top of page bid" is now parsed too: Google's own per-keyword price, reported per cluster.
+  - After this pull, build-course-radar.py --prepare-batches AUTO-GENERATES all future batches
+    from GSC gap data (21-day cadence, >=100 new keywords). You never hand-write seeds again;
+    the nightly leaves any new batch files in this folder and /growth tells you they exist.
+
 HOW THESE WERE CHOSEN — and what bias is left.
 Generated mechanically from teamz-company-automation/data/rpm-benchmarks.json (Ezoic 2025 +
-Mediavine EPMV, updated 2026-04-13), ranked by measured US CPM, highest first. The lane ORDER is
-the table's, not anyone's judgement. Regenerate and the same order comes out.
+Mediavine EPMV, updated 2026-04-13): every lane >= $10 US CPM, ranked by measured price.
+Ranks 1-8 get 8 seed doors each, ranks 9-16 get 4 — coverage proportional to price, order the
+table's, not anyone's judgement. Regenerate and the same allocation comes out.
 
 Two exclusions, both stated so they can be argued with:
-  - b2b-leadgen ($50-300) tops the table but the file's own units note says it is priced PER LEAD,
-    not per 1000 impressions. It is a different business model and cannot be compared to CPM lanes
-    in an ads play. It is NOT excluded on preference — if the goal ever shifts from ads to lead
-    generation, it should be the FIRST thing tested.
+  - b2b-leadgen ($50-300) tops the table but is priced PER LEAD, not per 1000 impressions —
+    a different business model, incomparable in an ads play. First thing to test if the goal
+    ever shifts from ads to lead generation.
   - Lanes under $10 CPM (technology $7, productivity $6.5, fitness $7, lifestyle $5.5, creative
-    $4, gaming $3.5, entertainment $2.5, memes $1.2). The cut is a number, not a taste — and this
-    site already proves the point: its entire existing footprint sits in technology/productivity
-    and Planner returned 50/mo for ~35 of 38 of its keywords.
+    $4, gaming $3.5, entertainment $2.5, memes $1.2). The cut is a number, not a taste — this
+    site's entire existing footprint sits in technology/productivity and Planner returned 50/mo
+    for ~35 of its 38 keywords.
 
-Earlier versions of this file WERE biased and are recorded here so it does not happen again:
+Earlier versions of this file WERE biased and are recorded so it does not happen again:
   v1  the site's own dead vocabulary (fileprovider, espresso test) — Planner said 50/mo.
-  v2  a guess at "high-RPM niches": ten of sixteen seeds landed in the $7/$6.5 bottom tier while
-      every lane above $20 was omitted.
-  v3  8 of 26 lanes, hand-picked — and inconsistently: career-jobs ($16) and health-general ($13)
-      were included while longevity ($25), business-saas ($22) and health-supplements ($20) were
-      dropped. Higher-paying lanes cut, lower-paying lanes kept. Indefensible.
-  v4  (this one) every CPM lane >= $10, ordered by the table.
+  v2  a guess at "high-RPM niches": ten of sixteen seeds in the $7/$6.5 bottom tier.
+  v3  8 of 26 lanes hand-picked, inconsistently — higher-paying lanes cut, lower kept.
+  v4  every CPM lane >= $10 but only 2 doors per lane (32 seeds) — too few entry points.
+  v5  (this one) 96 doors, allocation proportional to price, seasonal recurrence covered.
 
-Seed PHRASING is still human: two 1-3 word entry points per lane. Short on purpose — P(AI Overview)
-climbs 9.5% at 1 word to 46.4% at 7+ across 146M SERPs, and this site ranks position 4 for a 9-word
-query and takes zero clicks because Google prints the answer inline. Seeds are doors, not targets:
-Planner returns the real long tail behind each one with volume and competition attached.
+Seed PHRASING is still human: 1-3 word entry points. Short on purpose — P(AI Overview) climbs
+9.5% at 1 word to 46.4% at 7+ across 146M SERPs, and this site ranks position 4 for a 9-word
+query and takes zero clicks because Google prints the answer inline. Seeds are doors, not
+targets: Planner returns the real long tail behind each one with volume + competition + trend.
 
 EXPECT HEAVY REFUSALS. build-course-radar.py rejects vanity heads this site cannot win, clusters
 dominated by one term, duplicates of existing courses, and AIO-dense clusters (median query >= 6
@@ -53,6 +64,6 @@ words). Most of these probably die there — that is the filter working, not fai
 
 VERDICT AGREED IN ADVANCE, so neither side moves the goalposts afterwards:
   >= 3 clusters survive  -> a real path; the engine starts building courses on its own.
-  0-2 clusters survive   -> ads cannot reach $1k/mo on this site; switch to a services funnel.
+  0-2 clusters survive   -> ads cannot reach the target on this site; switch to a services funnel.
 
 The export header may read "Keyword (by relevance)" instead of "Keyword" — the parser handles both.

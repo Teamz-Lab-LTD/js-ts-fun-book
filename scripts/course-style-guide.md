@@ -66,6 +66,22 @@ A pilot = 10 lessons. Every lesson must serve a member keyword from the task or 
 filler lessons. Expansion appends NEW ids only; never rewrite an existing lesson (a human may have
 edited it).
 
+## Intent adaptation — structure follows measured demand
+`course-task.json` carries an `intent` field, classified by build-course-radar.py from the cluster's
+own member keywords — what searchers in this topic actually type. **Voice rules above never change.
+Lesson STRUCTURE adapts:**
+
+| intent            | shape each lesson takes |
+|-------------------|-------------------------|
+| `learn-basics`    | (default) the classic format exactly as specified above — analogy-first concept teaching |
+| `how-to`          | task-first: `walkthrough` is the star (5–8 numbered steps to a finished outcome), `points` cover prerequisites + pitfalls, `code`/worked-example shows the completed result. Title = the task ("How to …") |
+| `comparison`      | decision-first: open `whatIs` with the one-line verdict, `points` become criteria (cost, speed, risk — one per point), include a compact comparison in `code` as a plain table, quiz tests "which one when" |
+| `troubleshooting` | symptom-first: title = the symptom in the searcher's words, `analogy` explains why it happens, `walkthrough` = diagnosis order (cheapest check first), `bug` = the most common wrong fix and why it fails |
+| `transactional`   | numbers-first: lead with the real figures/formula the searcher wants, `code` = the calculation worked end-to-end with realistic numbers, `points` cover what changes the number. Cite the source of every rate/limit |
+
+If `intent` is missing, use `learn-basics`. Never override the task's intent from your own judgement
+— it is measured from real queries; your prior is not.
+
 ## Hard limits
 - Edit ONLY `courses/<slug>/config.js` and `courses/<slug>/data.js`. Never touch `tools/`,
   `learn.html`, `interactive.js`, `index.html`, or any generated file in `lessons/` or `c/`.

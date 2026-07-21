@@ -22,6 +22,9 @@ Write two NEW files for `task.slug`:
 - `courses/<slug>/data.js` — `const LESSONS_DATA = [ … ]`, **exactly the 10 lessons in `task.outline`**,
   in the `task.language`, each lesson serving its member keyword / NCTB chapter. No filler.
 Follow the style guide's voice rules. For a `bn`/NCTB task: every field in Bangla, formulas per NCTB.
+Shape lesson STRUCTURE to `task.intent` per the style guide's "Intent adaptation" table — it is
+classified from the cluster's real queries (how-to vs comparison vs troubleshooting vs basics), so
+the course matches what searchers are actually asking for, not a fixed template.
 
 ### action = "expand"
 Append `task.add_lessons` NEW lessons (new ids only) to the END of `courses/<task.slug>/data.js`, and
