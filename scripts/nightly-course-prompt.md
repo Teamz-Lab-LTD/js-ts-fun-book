@@ -26,6 +26,15 @@ Shape lesson STRUCTURE to `task.intent` per the style guide's "Intent adaptation
 classified from the cluster's real queries (how-to vs comparison vs troubleshooting vs basics), so
 the course matches what searchers are actually asking for, not a fixed template.
 
+**If an outline keyword names a specific company or organisation** (e.g. "pet insurance aspca",
+"heloc chase"), do NOT write a lesson about that company. Write the lesson about the general
+CATEGORY the searcher is really after — for "pet insurance aspca" that is how non-profit and
+membership-organisation pet plans differ from commercial insurers. Reasons: we cannot outrank a
+company on its own name, a page about one firm reads as unpaid advertising, and we cannot verify
+that firm's current prices or terms — stating them risks being wrong about a real business.
+The radar strips brand keywords it can identify, but it only knows brands that appeared in a
+SERP it has measured, so some reach you. Never invent a company's prices, coverage or terms.
+
 ### action = "expand"
 Append `task.add_lessons` NEW lessons (new ids only) to the END of `courses/<task.slug>/data.js`, and
 add their ids to the matching `topicMap` category in `config.js`. **Never edit or reorder existing
