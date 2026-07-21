@@ -1,6 +1,6 @@
 # Teamz Lab Learning — Full Lesson Index
 
-> Complete index of all 16 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
+> Complete index of all 17 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
 
 - Website: https://learn.teamzlab.com/
 - Curated short index: https://learn.teamzlab.com/llms.txt
@@ -889,6 +889,26 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 - [Compare & Contrast Mastery: পরীক্ষার সেরা পার্থক্যগুলো](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/45-compare-contrast-mastery.html): সব গুরুত্বপূর্ণ তুলনামূলক আলোচনা এক জায়গায় — দ্রুত রিভিশন
 - [Final Exam Drill: বড় প্রশ্ন, কাঠামো, সময় ব্যবস্থাপনা](https://learn.teamzlab.com/lessons/nu-investment-banking-lease-finance-bn/46-final-exam-drill.html): পরীক্ষার খাতায় কীভাবে লিখলে সবচেয়ে বেশি নম্বর পাবে
 
+## Pet Insurance, Plainly Explained
+
+- Course page: https://learn.teamzlab.com/c/pet-insurance.html
+- Level: All Levels — First-Time Pet Owners Welcome
+- Lesson count: 10
+- About: Free interactive course with 10 lessons on pet insurance — what a policy really covers, dog vs cat plans, how quotes are calculated, plan types, real average costs from the NAPHIA industry report,…
+
+### Lessons
+
+- [What Pet Insurance Actually Is (And Isn't)](https://learn.teamzlab.com/lessons/pet-insurance/01-what-pet-insurance-actually-is-and-isnt.html): It is a reimbursement contract, not a vet gift card — the one sentence that fixes 90% of the confusion
+- [Pet Insurance for Dogs: Why It Costs More Than Cats](https://learn.teamzlab.com/lessons/pet-insurance/02-pet-insurance-for-dogs-why-it-costs-more-than-cats.html): Breed, size, and the top-three claims driving dog premiums up
+- [Pet Insurance for Cats: Cheaper, But Watch the Dental Fine Print](https://learn.teamzlab.com/lessons/pet-insurance/03-pet-insurance-for-cats-cheaper-but-watch-the-dental-fine.html): Cats cost about half of dogs to insure — here is what a cat policy actually pays for
+- [Pet Insurance Plans: Accident-Only vs Accident+Illness vs Wellness](https://learn.teamzlab.com/lessons/pet-insurance/04-pet-insurance-plans-accident-only-vs-accidentillness-vs.html): Three plan types, three price points — and the one most people actually need
+- [Pet Insurance Quotes: What the Form Is Actually Asking](https://learn.teamzlab.com/lessons/pet-insurance/05-pet-insurance-quotes-what-the-form-is-actually-asking.html): Every field on a quote form is pricing a specific risk — here is the reason for each one
+- [Nonprofit-Branded Pet Insurance: Who Actually Underwrites the Policy](https://learn.teamzlab.com/lessons/pet-insurance/06-nonprofit-branded-pet-insurance-who-actually-underwrites.html): The logo on the ad is often not the company that pays your claim — and why that matters
+- [Pet Insurance: How Much It Really Costs](https://learn.teamzlab.com/lessons/pet-insurance/07-pet-insurance-how-much-it-really-costs.html): Real US averages from the NAPHIA industry report — plus what actually moves your quote
+- [Pet Insurance Comparison: The Only Fair Way to Compare Plans](https://learn.teamzlab.com/lessons/pet-insurance/08-pet-insurance-comparison-the-only-fair-way-to-compare-plans.html): Same deductible, same reimbursement, same annual max — then read the exclusions
+- [Pet Insurance Cost: Total Year Math That Includes the Premium](https://learn.teamzlab.com/lessons/pet-insurance/09-pet-insurance-cost-total-year-math-that-includes-the-premium.html): The real cost of a policy is premium + deductible + your share of every claim
+- [Pet Insurance and Pre-Existing Conditions: The One Trap That Wrecks Most Policies](https://learn.teamzlab.com/lessons/pet-insurance/10-pet-insurance-and-pre-existing-conditions-the-one-trap-that.html): How pre-existing exclusions really work, what 'curable' means, and why enrollment age is everything
+
 ## Protecting Aging Parents from AI Scams
 
 - Course page: https://learn.teamzlab.com/c/protecting-aging-parents.html
@@ -921,4 +941,4 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 
 ---
 
-*Last updated: 2026-07-21 · 16 courses · 747 lessons.*
+*Last updated: 2026-07-21 · 17 courses · 757 lessons.*
