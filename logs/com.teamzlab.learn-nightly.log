@@ -457,3 +457,11 @@ Deployed → https://learn.teamzlab.com/
   preflight post: OK (2 checks, root=teamz-lab-learning)
 
 DONE — 23:05:51
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-21 23:00:02 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
