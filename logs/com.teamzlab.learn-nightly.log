@@ -685,3 +685,124 @@ index.html written.
 build-sitemap: 483 URLs (9 course landings, 471 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
 Wrote sitemap.xml (483 URLs) at repo root.
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 17 courses, 757 lessons, 169.5 KB, 945 lines
+[main 1d8cea1] chore(nightly): refresh generated site output
+ 4 files changed, 126 insertions(+), 5 deletions(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   9bd7f30..1d8cea1  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (2 checks, root=teamz-lab-learning)
+
+DONE — 23:06:20
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-07-24 23:00:03 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  (build-enhance-outcome.py missing — skipped)
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +4 new   (store 112, unpulled 75)
+    gate: holding (need >=150 new AND >=21d; have 75 new, last 7d)
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 21 sessions across 6 pages (28d)
+  
+    ENHANCE candidates: 0  (queueing 0)
+  
+    NEW-post candidates queued: 0
+  
+    Nothing actionable tonight. That is a valid outcome — not an error.
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (0 targets)
+  Nothing actionable tonight — skipping the agent. (A valid outcome, not an error:
+  a queue with no target means no page is close enough and no demand is unserved.)
+
+=== course agent ===
+    credit guard: 25 keywords but only 0 spendable (0 left, 50 reserved) — trimming.
+  12188 keywords, 310 cached, fetching 0 (credits left 0)
+  
+  scored 310 keywords; 0 failed
+  
+  MOST WINNABLE:
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.02)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.02)
+    win  9.8  rental property                            0/10 strong slots (auth 0.06)
+    win  9.8  intel 8255                                 2/10 strong slots (auth 0.19); 3 UGC = opening
+    win  9.7  ally bank high yield savings account       0/1 strong slots (auth 0.06)
+    win  9.5  reverse mortgage estimate                  0/10 strong slots (auth 0.09)
+    win  9.3  flutter vs kmp                             2/10 strong slots (auth 0.23); 4 UGC = opening
+    win  9.3  travel insurance quote                     0/10 strong slots (auth 0.11)
+    win  9.2  blood test results                         1/10 strong slots (auth 0.12)
+    win  9.2  migraine relief                            2/10 strong slots (auth 0.24); 3 UGC = opening
+    win  9.2  blood pressure monitor                     1/10 strong slots (auth 0.17); 1 UGC = opening
+    win  9.2  s&p 500 index fund                         1/10 strong slots (auth 0.17); 1 UGC = opening
+  
+  LEAST WINNABLE:
+    win  1.8  cash out refinance rates                   9/10 strong slots (auth 0.91)
+    win  1.7  va home loan                               10/10 strong slots (auth 0.87); 5 distinct domains
+    win  1.6  navy federal va loan rates                 10/10 strong slots (auth 0.94); 2 UGC = opening; 3 distinct domains
+    win  1.6  va home mortgage                           10/10 strong slots (auth 0.90); 6 distinct domains
+    win  1.5  pre approval rocket mortgage               9/10 strong slots (auth 0.90); 1 UGC = opening; 3 distinct domains
+    win  1.5  rocket mortgage home equity loan           10/10 strong slots (auth 0.95); 2 UGC = opening; 3 distinct domains
+    win  1.0  navy federal heloc rates                   10/10 strong slots (auth 0.99); 2 distinct domains
+    win  1.0  navy federal credit union heloc rates      10/10 strong slots (auth 0.99); 1 distinct domains
+  
+  top authorities: bankrate.com, reddit.com, nerdwallet.com, rocketmortgage.com, usbank.com, bankofamerica.com, youtube.com, navyfederal.org, investopedia.com, en.wikipedia.org
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 2 gaps)
+    $3267.49/mo  us  mortgage       138kw vol=352050.0 open-real-estate ELIGIBLE
+    $ 2888.2/mo  us  tax            270kw vol=761200.0 open-capital-gains ELIGIBLE
+    $2325.82/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2229.55/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2218.72/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2189.25/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $1795.27/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    (28287 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-american-express:brand-owned, open-chase-bank:unwinnable, open-citizens-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: top cluster ready but only 2d since last pilot (< 14)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ pet-insurance (lenient)
+✓ protecting-aging-parents (lenient)
+validate-course: all 17 OK.
+build-homepage: 17 courses, 1 generated card(s).
+index.html written.
+build-sitemap: 483 URLs (9 course landings, 471 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (483 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 17 courses, 757 lessons, 169.5 KB, 945 lines
