@@ -7,6 +7,16 @@ node_modules/
 .claude/scheduled_tasks.lock
 node_modules/
 
+# Python bytecode. Not optional housekeeping — this froze the site for three nights.
+# The nightly's dirty-guard forgives generated paths (dist/, logs/, docs/, data/ … see
+# ARTIFACT_RE in scripts/nightly-site.sh) but an untracked scripts/__pycache__/ is not on that
+# list, so it read as human WIP. The guard then did exactly what it should: refused to run and
+# protected the "edit". Result: content, build and deploy all skipped:dirty-tree on 26, 27 and
+# 28 July 2026, every night exiting 0 with a green preflight, while the directory that caused
+# it is regenerated automatically the moment any nightly script imports a local module.
+__pycache__/
+*.pyc
+
 # shared automation (symlink to canonical; per-project data stays in ./automation_data)
 teamz-company-automation
 
