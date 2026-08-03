@@ -7,7 +7,7 @@
 <meta name="description" content="ContentProvider is Android&#39;s structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-07-19">
+<meta name="date" content="2026-08-03">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/55-broadcastreceiver-services-binder-bound-services.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html">
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-07-19",
+  "dateModified": "2026-08-03",
   "position": 56
 }
 </script>
@@ -214,6 +214,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
       <li><strong>When ContentProvider is still the right choice in 2026</strong> — System integrations (contacts, calendar, media), sharing structured data with third-party apps via a documented API, and search suggestions (SearchRecentSuggestionsProvider). For sharing within your own app across processes, prefer a database + ViewModel + repository pattern. ContentProvider adds complexity that is rarely justified for single-app use.</li>
       <li><strong>CursorLoader deprecation awareness</strong> — CursorLoader was the recommended way to load ContentProvider data asynchronously in the Loader API era. It is now deprecated. Use viewModelScope + coroutines + contentResolver queries on a background dispatcher instead. Know this transition for legacy codebase discussions.</li>
       <li><strong>Security pitfalls</strong> — Common bugs: setting exported=true on a ContentProvider without permissions (exposes all data to any app), using file:// URIs directly (causes crash on API 24+), not adding URI permission flags to the Intent (receiving app gets the URI but cannot read it). Mentioning these shows security awareness that impresses senior interviewers.</li>
+      <li><strong>Quick answer: what is Android FileProvider?</strong> — FileProvider is a special ContentProvider subclass from AndroidX Core that converts a File on disk into a content:// URI, so you can share it with another app or a system Intent (camera, share sheet, PDF viewer) without exposing the raw file path or granting broad file-system access. Declare it in the Manifest with android:exported=&#39;false&#39;, map allowed directories in an xml/file_paths.xml resource, then call FileProvider.getUriForFile().</li>
     </ul></section>
 
 <section class="section"><h2>Code example</h2><pre class="code"><code>// FileProvider setup in AndroidManifest.xml (shown as comment)
