@@ -1691,3 +1691,112 @@ rsync(45864): error: unexpected end of file
   preflight post: OK (2 checks, root=teamz-lab-learning)
 
 DONE — 23:19:49
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-03 23:00:03 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+   a37a929..555ff54  main       -> origin/main
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  (build-enhance-outcome.py missing — skipped)
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +0 new   (store 132, unpulled 95)
+    gate: holding (need >=150 new AND >=21d; have 95 new, last 17d)
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 53 sessions across 11 pages (28d)
+  
+    ENHANCE candidates: 213  (queueing 4)
+      #12.7   1826 impr  🔒 additive   /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider'
+      #10.9   1209 impr  🔒 additive   /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp interceptor'
+      #6.9    1236 impr  🔒 additive   /lessons/class-9-math-bangla/51-sin-cos-tan.
+             └─ '(no individual phrase disclosed by GSC)'
+      #15.1   1269 impr  🔒 additive   /lessons/android-interview-mastery/73-paging
+             └─ 'pagingsource'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  No task given. What need do?
+  ✓ content agent finished
+
+=== course agent ===
+    serp fail [110 62 blood pressure]: 429
+  12167 keywords, 433 cached, fetching 25 (credits left 673)
+    … 10/25
+    … 20/25
+  
+  scored 457 keywords; 1 failed
+  
+  MOST WINNABLE:
+    win 10.0  intel 8255                                 2/10 strong slots (auth 0.17); 3 UGC = opening
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.01)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.01)
+    win 10.0  cars for sale                              0/10 strong slots (auth 0.03)
+    win 10.0  estate planning attorney                   0/10 strong slots (auth 0.02)
+    win 10.0  estate planning lawyer                     0/10 strong slots (auth 0.02)
+    win 10.0  wills and estate lawyers near me           0/10 strong slots (auth 0.03)
+    win 10.0  wills and trusts attorney                  0/10 strong slots (auth 0.02)
+    win  9.9  rental property                            0/10 strong slots (auth 0.05)
+    win  9.8  ally bank high yield savings account       0/1 strong slots (auth 0.06)
+    win  9.7  pay off loan                               1/10 strong slots (auth 0.16); 2 UGC = opening
+    win  9.7  credit union auto loan                     1/10 strong slots (auth 0.11); 1 UGC = opening
+  
+  LEAST WINNABLE:
+    win  2.1  pnc bank heloc rates                       10/10 strong slots (auth 0.79); 3 distinct domains
+    win  1.9  navy federal va loan rates                 9/10 strong slots (auth 0.90); 2 UGC = opening; 3 distinct domains
+    win  1.8  va home loan                               10/10 strong slots (auth 0.86); 5 distinct domains
+    win  1.7  va home mortgage                           10/10 strong slots (auth 0.89); 6 distinct domains
+    win  1.6  rocket mortgage home equity loan           9/10 strong slots (auth 0.94); 2 UGC = opening; 3 distinct domains
+    win  1.5  pre approval rocket mortgage               9/10 strong slots (auth 0.90); 1 UGC = opening; 3 distinct domains
+    win  1.0  navy federal heloc rates                   10/10 strong slots (auth 0.96); 2 distinct domains
+    win  1.0  navy federal credit union heloc rates      10/10 strong slots (auth 0.95); 1 distinct domains
+  
+  top authorities: reddit.com, bankrate.com, nerdwallet.com, youtube.com, rocketmortgage.com, bankofamerica.com, navyfederal.org, usbank.com, investopedia.com, chase.com
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 1 gaps)
+    $3267.49/mo  us  mortgage       138kw vol=352050.0 open-real-estate ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=761200.0 open-capital-gains ELIGIBLE
+    $2325.82/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2229.55/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2189.25/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    (28295 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable, open-citizens-bank:brand-owned)
+    gate -> None: top cluster ready but only 12d since last pilot (< 14)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ pet-insurance (lenient)
+✓ protecting-aging-parents (lenient)
+validate-course: all 17 OK.
+build-homepage: 17 courses, 1 generated card(s).
+index.html written.
+build-sitemap: 483 URLs (9 course landings, 471 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (483 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 17 courses, 757 lessons, 169.5 KB, 945 lines
