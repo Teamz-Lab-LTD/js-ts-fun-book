@@ -1656,3 +1656,38 @@ index.html written.
 build-sitemap: 483 URLs (9 course landings, 471 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
 Wrote sitemap.xml (483 URLs) at repo root.
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 17 courses, 757 lessons, 169.5 KB, 945 lines
+[main 0559946] chore(nightly): refresh generated site output
+ 4 files changed, 191 insertions(+), 9 deletions(-)
+fatal: unable to access 'https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git/': Could not resolve host: github.com
+  ✗ GIT PUSH FAILED (rc=128) — commit is LOCAL ONLY; remote/VPS will NOT update.
+
+=== deploy: npm run deploy ===
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+ssh: connect to host 72.60.184.132 port 22: Network is unreachable
+rsync(43999): error: unexpected end of file
+    attempt 1/3 failed — retrying in 20s (network may still be waking)
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+ssh: connect to host 72.60.184.132 port 22: Network is unreachable
+rsync(44952): error: unexpected end of file
+    attempt 2/3 failed — retrying in 20s (network may still be waking)
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+ssh: connect to host 72.60.184.132 port 22: Network is unreachable
+rsync(45864): error: unexpected end of file
+  ✗ DEPLOY FAILED after 3 attempts — site still serving the previous build.
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (2 checks, root=teamz-lab-learning)
+
+DONE — 23:19:49

@@ -1,38 +1,38 @@
 {
-  "generated_at": "2026-08-02",
-  "corpus_size": 409,
+  "generated_at": "2026-08-03",
+  "corpus_size": 433,
   "top_authorities": [
     [
       "bankrate.com",
-      129
+      131
     ],
     [
       "reddit.com",
-      118
+      125
     ],
     [
       "nerdwallet.com",
-      85
+      87
     ],
     [
       "youtube.com",
-      75
-    ],
-    [
-      "rocketmortgage.com",
-      68
+      82
     ],
     [
       "bankofamerica.com",
-      66
+      71
+    ],
+    [
+      "rocketmortgage.com",
+      69
     ],
     [
       "navyfederal.org",
-      60
+      65
     ],
     [
       "usbank.com",
-      55
+      57
     ],
     [
       "investopedia.com",
@@ -40,31 +40,31 @@
     ],
     [
       "chase.com",
-      41
+      44
     ],
     [
       "en.wikipedia.org",
       40
     ],
     [
+      "fidelity.com",
+      37
+    ],
+    [
       "wellsfargo.com",
       36
     ],
     [
-      "fidelity.com",
-      33
+      "irs.gov",
+      35
     ],
     [
       "pnc.com",
       32
     ],
     [
-      "irs.gov",
-      32
-    ],
-    [
       "lendingtree.com",
-      30
+      31
     ],
     [
       "consumerfinance.gov",
@@ -76,6 +76,10 @@
     ],
     [
       "pennymac.com",
+      26
+    ],
+    [
+      "facebook.com",
       26
     ],
     [
@@ -91,25 +95,23 @@
       25
     ],
     [
+      "quora.com",
+      24
+    ],
+    [
       "aflac.com",
-      23
-    ],
-    [
-      "guardianlife.com",
-      23
-    ],
-    [
-      "facebook.com",
-      23
+      24
     ]
   ],
-  "failed": [],
+  "failed": [
+    "wills and trusts attorney"
+  ],
   "keywords": {
     "mortgage refinance": {
       "keyword": "mortgage refinance",
-      "difficulty": 8.3,
-      "winnability": 2.7,
-      "authority_share": 0.82,
+      "difficulty": 8.2,
+      "winnability": 2.8,
+      "authority_share": 0.81,
       "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -125,7 +127,7 @@
         "creditkarma.com",
         "navyfederal.org"
       ],
-      "why": "8/10 strong slots (auth 0.82)",
+      "why": "8/10 strong slots (auth 0.81)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -184,8 +186,8 @@
       "keyword": "mortgage preapproval",
       "difficulty": 8.0,
       "winnability": 3.0,
-      "authority_share": 0.84,
-      "strong_slots": 10,
+      "authority_share": 0.83,
+      "strong_slots": 9,
       "ugc_results": 1,
       "distinct_domains": 9,
       "top_domains": [
@@ -200,7 +202,7 @@
         "zillow.com",
         "youtube.com"
       ],
-      "why": "10/10 strong slots (auth 0.84); 1 UGC = opening",
+      "why": "9/10 strong slots (auth 0.83); 1 UGC = opening",
       "_results": [
         {
           "domain": "wellsfargo.com",
@@ -257,9 +259,9 @@
     },
     "reverse mortgage": {
       "keyword": "reverse mortgage",
-      "difficulty": 6.4,
-      "winnability": 4.6,
-      "authority_share": 0.62,
+      "difficulty": 6.3,
+      "winnability": 4.7,
+      "authority_share": 0.61,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -275,7 +277,7 @@
         "investopedia.com",
         "dfi.wa.gov"
       ],
-      "why": "7/10 strong slots (auth 0.62)",
+      "why": "7/10 strong slots (auth 0.61)",
       "_results": [
         {
           "domain": "consumerfinance.gov",
@@ -332,8 +334,8 @@
     },
     "home equity loan": {
       "keyword": "home equity loan",
-      "difficulty": 8.8,
-      "winnability": 2.2,
+      "difficulty": 8.7,
+      "winnability": 2.3,
       "authority_share": 0.86,
       "strong_slots": 10,
       "ugc_results": 0,
@@ -407,10 +409,10 @@
     },
     "heloc": {
       "keyword": "heloc",
-      "difficulty": 5.5,
-      "winnability": 5.5,
+      "difficulty": 5.4,
+      "winnability": 5.6,
       "authority_share": 0.53,
-      "strong_slots": 6,
+      "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -425,7 +427,7 @@
         "citizensbank.com",
         "us.hsbc.com"
       ],
-      "why": "6/10 strong slots (auth 0.53)",
+      "why": "5/10 strong slots (auth 0.53)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -482,8 +484,8 @@
     },
     "fha loan": {
       "keyword": "fha loan",
-      "difficulty": 5.9,
-      "winnability": 5.1,
+      "difficulty": 5.8,
+      "winnability": 5.2,
       "authority_share": 0.69,
       "strong_slots": 6,
       "ugc_results": 3,
@@ -782,9 +784,9 @@
     },
     "whole life insurance": {
       "keyword": "whole life insurance",
-      "difficulty": 4.2,
-      "winnability": 6.8,
-      "authority_share": 0.37,
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.36,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -800,7 +802,7 @@
         "guardianlife.com",
         "nerdwallet.com"
       ],
-      "why": "3/10 strong slots (auth 0.37)",
+      "why": "3/10 strong slots (auth 0.36)",
       "_results": [
         {
           "domain": "aflac.com",
@@ -857,9 +859,9 @@
     },
     "car insurance claim": {
       "keyword": "car insurance claim",
-      "difficulty": 2.5,
-      "winnability": 8.5,
-      "authority_share": 0.25,
+      "difficulty": 2.4,
+      "winnability": 8.6,
+      "authority_share": 0.23,
       "strong_slots": 1,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -875,7 +877,7 @@
         "usnews.com",
         "thegeneral.com"
       ],
-      "why": "1/10 strong slots (auth 0.25); 1 UGC = opening",
+      "why": "1/10 strong slots (auth 0.23); 1 UGC = opening",
       "_results": [
         {
           "domain": "progressive.com",
@@ -1007,9 +1009,9 @@
     },
     "renters insurance": {
       "keyword": "renters insurance",
-      "difficulty": 3.7,
-      "winnability": 7.3,
-      "authority_share": 0.38,
+      "difficulty": 3.6,
+      "winnability": 7.4,
+      "authority_share": 0.36,
       "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -1025,7 +1027,7 @@
         "youtube.com",
         "nationwide.com"
       ],
-      "why": "3/10 strong slots (auth 0.38); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.36); 1 UGC = opening",
       "_results": [
         {
           "domain": "allstate.com",
@@ -1082,9 +1084,9 @@
     },
     "pet insurance": {
       "keyword": "pet insurance",
-      "difficulty": 3.8,
-      "winnability": 7.2,
-      "authority_share": 0.39,
+      "difficulty": 3.7,
+      "winnability": 7.3,
+      "authority_share": 0.38,
       "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -1100,7 +1102,7 @@
         "progressive.com",
         "embracepetinsurance.com"
       ],
-      "why": "3/10 strong slots (auth 0.39); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.38); 1 UGC = opening",
       "_results": [
         {
           "domain": "petinsurance.com",
@@ -1159,7 +1161,7 @@
       "keyword": "disability insurance",
       "difficulty": 6.5,
       "winnability": 4.5,
-      "authority_share": 0.65,
+      "authority_share": 0.64,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -1175,7 +1177,7 @@
         "nerdwallet.com",
         "doi.nv.gov"
       ],
-      "why": "6/10 strong slots (auth 0.65)",
+      "why": "6/10 strong slots (auth 0.64)",
       "_results": [
         {
           "domain": "ssa.gov",
@@ -1684,7 +1686,7 @@
       "keyword": "workers comp",
       "difficulty": 5.4,
       "winnability": 5.6,
-      "authority_share": 0.56,
+      "authority_share": 0.57,
       "strong_slots": 6,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -1700,7 +1702,7 @@
         "compman.com",
         "wcirb.com"
       ],
-      "why": "6/10 strong slots (auth 0.56); 1 UGC = opening",
+      "why": "6/10 strong slots (auth 0.57); 1 UGC = opening",
       "_results": [
         {
           "domain": "dol.gov",
@@ -1832,8 +1834,8 @@
     },
     "estate planning": {
       "keyword": "estate planning",
-      "difficulty": 4.8,
-      "winnability": 6.2,
+      "difficulty": 4.9,
+      "winnability": 6.1,
       "authority_share": 0.46,
       "strong_slots": 5,
       "ugc_results": 0,
@@ -1907,8 +1909,8 @@
     },
     "tax deductions": {
       "keyword": "tax deductions",
-      "difficulty": 6.6,
-      "winnability": 4.4,
+      "difficulty": 6.5,
+      "winnability": 4.5,
       "authority_share": 0.62,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -2059,7 +2061,7 @@
       "keyword": "quarterly taxes",
       "difficulty": 7.3,
       "winnability": 3.7,
-      "authority_share": 0.7,
+      "authority_share": 0.69,
       "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -2075,7 +2077,7 @@
         "nerdwallet.com",
         "fidelity.com"
       ],
-      "why": "8/10 strong slots (auth 0.70)",
+      "why": "8/10 strong slots (auth 0.69)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -2134,7 +2136,7 @@
       "keyword": "capital gains tax",
       "difficulty": 4.7,
       "winnability": 6.3,
-      "authority_share": 0.45,
+      "authority_share": 0.44,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -2150,7 +2152,7 @@
         "investopedia.com",
         "fbfs.com"
       ],
-      "why": "4/10 strong slots (auth 0.45)",
+      "why": "4/10 strong slots (auth 0.44)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -2209,7 +2211,7 @@
       "keyword": "tax brackets",
       "difficulty": 5.3,
       "winnability": 5.7,
-      "authority_share": 0.5,
+      "authority_share": 0.49,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -2225,7 +2227,7 @@
         "moneychimp.com",
         "taxfoundation.org"
       ],
-      "why": "5/10 strong slots (auth 0.50)",
+      "why": "5/10 strong slots (auth 0.49)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -2359,7 +2361,7 @@
       "keyword": "401k withdrawal",
       "difficulty": 5.1,
       "winnability": 5.9,
-      "authority_share": 0.45,
+      "authority_share": 0.46,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -2375,7 +2377,7 @@
         "investor.vanguard.com",
         "blackrock.com"
       ],
-      "why": "5/10 strong slots (auth 0.45)",
+      "why": "5/10 strong slots (auth 0.46)",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -2432,8 +2434,8 @@
     },
     "tax extension": {
       "keyword": "tax extension",
-      "difficulty": 6.3,
-      "winnability": 4.7,
+      "difficulty": 6.2,
+      "winnability": 4.8,
       "authority_share": 0.63,
       "strong_slots": 6,
       "ugc_results": 1,
@@ -2584,7 +2586,7 @@
       "keyword": "credit score",
       "difficulty": 5.1,
       "winnability": 5.9,
-      "authority_share": 0.48,
+      "authority_share": 0.47,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -2600,7 +2602,7 @@
         "creditkarma.com",
         "investopedia.com"
       ],
-      "why": "5/10 strong slots (auth 0.48)",
+      "why": "5/10 strong slots (auth 0.47)",
       "_results": [
         {
           "domain": "myfico.com",
@@ -2809,7 +2811,7 @@
       "keyword": "index funds",
       "difficulty": 6.5,
       "winnability": 4.5,
-      "authority_share": 0.68,
+      "authority_share": 0.67,
       "strong_slots": 8,
       "ugc_results": 1,
       "distinct_domains": 9,
@@ -2825,7 +2827,7 @@
         "investopedia.com",
         "schwab.com"
       ],
-      "why": "8/10 strong slots (auth 0.68); 1 UGC = opening",
+      "why": "8/10 strong slots (auth 0.67); 1 UGC = opening",
       "_results": [
         {
           "domain": "investor.gov",
@@ -2957,8 +2959,8 @@
     },
     "cd rates": {
       "keyword": "cd rates",
-      "difficulty": 5.3,
-      "winnability": 5.7,
+      "difficulty": 5.2,
+      "winnability": 5.8,
       "authority_share": 0.47,
       "strong_slots": 5,
       "ugc_results": 0,
@@ -3107,9 +3109,9 @@
     },
     "healthy aging": {
       "keyword": "healthy aging",
-      "difficulty": 4.6,
-      "winnability": 6.4,
-      "authority_share": 0.48,
+      "difficulty": 4.7,
+      "winnability": 6.3,
+      "authority_share": 0.49,
       "strong_slots": 5,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -3125,7 +3127,7 @@
         "webmd.com",
         "healthinaging.org"
       ],
-      "why": "5/10 strong slots (auth 0.48); 1 UGC = opening",
+      "why": "5/10 strong slots (auth 0.49); 1 UGC = opening",
       "_results": [
         {
           "domain": "cdc.gov",
@@ -3182,8 +3184,8 @@
     },
     "longevity diet": {
       "keyword": "longevity diet",
-      "difficulty": 5.3,
-      "winnability": 5.7,
+      "difficulty": 5.2,
+      "winnability": 5.8,
       "authority_share": 0.49,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -3334,7 +3336,7 @@
       "keyword": "sleep quality",
       "difficulty": 4.7,
       "winnability": 6.3,
-      "authority_share": 0.51,
+      "authority_share": 0.52,
       "strong_slots": 5,
       "ugc_results": 2,
       "distinct_domains": 9,
@@ -3350,7 +3352,7 @@
         "youtube.com",
         "health.harvard.edu"
       ],
-      "why": "5/10 strong slots (auth 0.51); 2 UGC = opening",
+      "why": "5/10 strong slots (auth 0.52); 2 UGC = opening",
       "_results": [
         {
           "domain": "pubmed.ncbi.nlm.nih.gov",
@@ -3407,9 +3409,9 @@
     },
     "blood pressure": {
       "keyword": "blood pressure",
-      "difficulty": 5.3,
-      "winnability": 5.7,
-      "authority_share": 0.51,
+      "difficulty": 5.4,
+      "winnability": 5.6,
+      "authority_share": 0.53,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -3425,7 +3427,7 @@
         "nhlbi.nih.gov",
         "medicalnewstoday.com"
       ],
-      "why": "5/10 strong slots (auth 0.51)",
+      "why": "5/10 strong slots (auth 0.53)",
       "_results": [
         {
           "domain": "heart.org",
@@ -3484,7 +3486,7 @@
       "keyword": "cholesterol",
       "difficulty": 5.6,
       "winnability": 5.4,
-      "authority_share": 0.52,
+      "authority_share": 0.53,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -3500,7 +3502,7 @@
         "heart.org",
         "en.wikipedia.org"
       ],
-      "why": "6/10 strong slots (auth 0.52)",
+      "why": "6/10 strong slots (auth 0.53)",
       "_results": [
         {
           "domain": "medlineplus.gov",
@@ -3634,7 +3636,7 @@
       "keyword": "brain health",
       "difficulty": 4.0,
       "winnability": 7.0,
-      "authority_share": 0.41,
+      "authority_share": 0.42,
       "strong_slots": 4,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -3650,7 +3652,7 @@
         "pmc.ncbi.nlm.nih.gov",
         "brain.health"
       ],
-      "why": "4/10 strong slots (auth 0.41); 1 UGC = opening",
+      "why": "4/10 strong slots (auth 0.42); 1 UGC = opening",
       "_results": [
         {
           "domain": "who.int",
@@ -4007,8 +4009,8 @@
     },
     "business plan": {
       "keyword": "business plan",
-      "difficulty": 3.8,
-      "winnability": 7.2,
+      "difficulty": 3.7,
+      "winnability": 7.3,
       "authority_share": 0.34,
       "strong_slots": 4,
       "ugc_results": 0,
@@ -4084,7 +4086,7 @@
       "keyword": "dropshipping",
       "difficulty": 3.3,
       "winnability": 7.7,
-      "authority_share": 0.41,
+      "authority_share": 0.4,
       "strong_slots": 4,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -4100,7 +4102,7 @@
         "youtube.com",
         "forbes.com"
       ],
-      "why": "4/10 strong slots (auth 0.41); 3 UGC = opening",
+      "why": "4/10 strong slots (auth 0.40); 3 UGC = opening",
       "_results": [
         {
           "domain": "help.shopify.com",
@@ -4157,8 +4159,8 @@
     },
     "print on demand": {
       "keyword": "print on demand",
-      "difficulty": 3.8,
-      "winnability": 7.2,
+      "difficulty": 3.7,
+      "winnability": 7.3,
       "authority_share": 0.41,
       "strong_slots": 5,
       "ugc_results": 2,
@@ -4309,7 +4311,7 @@
       "keyword": "first time homebuyer",
       "difficulty": 5.5,
       "winnability": 5.5,
-      "authority_share": 0.59,
+      "authority_share": 0.58,
       "strong_slots": 6,
       "ugc_results": 2,
       "distinct_domains": 8,
@@ -4325,7 +4327,7 @@
         "thda.org",
         "usa.gov"
       ],
-      "why": "6/10 strong slots (auth 0.59); 2 UGC = opening",
+      "why": "6/10 strong slots (auth 0.58); 2 UGC = opening",
       "_results": [
         {
           "domain": "thda.org",
@@ -4682,9 +4684,9 @@
     },
     "house flipping": {
       "keyword": "house flipping",
-      "difficulty": 4.8,
-      "winnability": 6.2,
-      "authority_share": 0.51,
+      "difficulty": 4.7,
+      "winnability": 6.3,
+      "authority_share": 0.5,
       "strong_slots": 6,
       "ugc_results": 2,
       "distinct_domains": 8,
@@ -4700,7 +4702,7 @@
         "youtube.com",
         "realtor.com"
       ],
-      "why": "6/10 strong slots (auth 0.51); 2 UGC = opening",
+      "why": "6/10 strong slots (auth 0.50); 2 UGC = opening",
       "_results": [
         {
           "domain": "investopedia.com",
@@ -4757,9 +4759,9 @@
     },
     "real estate investing": {
       "keyword": "real estate investing",
-      "difficulty": 6.7,
-      "winnability": 4.3,
-      "authority_share": 0.64,
+      "difficulty": 6.6,
+      "winnability": 4.4,
+      "authority_share": 0.63,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -4775,7 +4777,7 @@
         "investopedia.com",
         "reihub.net"
       ],
-      "why": "7/10 strong slots (auth 0.64)",
+      "why": "7/10 strong slots (auth 0.63)",
       "_results": [
         {
           "domain": "investopedia.com",
@@ -4832,10 +4834,10 @@
     },
     "escrow": {
       "keyword": "escrow",
-      "difficulty": 5.8,
-      "winnability": 5.2,
-      "authority_share": 0.55,
-      "strong_slots": 8,
+      "difficulty": 5.7,
+      "winnability": 5.3,
+      "authority_share": 0.54,
+      "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 9,
       "top_domains": [
@@ -4850,7 +4852,7 @@
         "chase.com",
         "five-starbank.com"
       ],
-      "why": "8/10 strong slots (auth 0.55)",
+      "why": "7/10 strong slots (auth 0.54)",
       "_results": [
         {
           "domain": "escrow.com",
@@ -4907,9 +4909,9 @@
     },
     "vitamin d": {
       "keyword": "vitamin d",
-      "difficulty": 6.0,
-      "winnability": 5.0,
-      "authority_share": 0.59,
+      "difficulty": 6.1,
+      "winnability": 4.9,
+      "authority_share": 0.6,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -4925,7 +4927,7 @@
         "lifestylemedicine.stanford.edu",
         "medlineplus.gov"
       ],
-      "why": "6/10 strong slots (auth 0.59)",
+      "why": "6/10 strong slots (auth 0.60)",
       "_results": [
         {
           "domain": "ods.od.nih.gov",
@@ -4982,8 +4984,8 @@
     },
     "creatine": {
       "keyword": "creatine",
-      "difficulty": 2.5,
-      "winnability": 8.5,
+      "difficulty": 2.6,
+      "winnability": 8.4,
       "authority_share": 0.25,
       "strong_slots": 2,
       "ugc_results": 1,
@@ -5357,8 +5359,8 @@
     },
     "job interview": {
       "keyword": "job interview",
-      "difficulty": 6.6,
-      "winnability": 4.4,
+      "difficulty": 6.5,
+      "winnability": 4.5,
       "authority_share": 0.73,
       "strong_slots": 8,
       "ugc_results": 3,
@@ -5732,9 +5734,9 @@
     },
     "migraine relief": {
       "keyword": "migraine relief",
-      "difficulty": 1.8,
-      "winnability": 9.2,
-      "authority_share": 0.24,
+      "difficulty": 1.9,
+      "winnability": 9.1,
+      "authority_share": 0.25,
       "strong_slots": 2,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -5750,7 +5752,7 @@
         "allianceortho.com",
         "newsroom.osfhealthcare.org"
       ],
-      "why": "2/10 strong slots (auth 0.24); 3 UGC = opening",
+      "why": "2/10 strong slots (auth 0.25); 3 UGC = opening",
       "_results": [
         {
           "domain": "mayoclinic.org",
@@ -5884,7 +5886,7 @@
       "keyword": "potty training",
       "difficulty": 5.3,
       "winnability": 5.7,
-      "authority_share": 0.55,
+      "authority_share": 0.56,
       "strong_slots": 6,
       "ugc_results": 2,
       "distinct_domains": 7,
@@ -5900,7 +5902,7 @@
         "eric.org.uk",
         "pmc.ncbi.nlm.nih.gov"
       ],
-      "why": "6/10 strong slots (auth 0.55); 2 UGC = opening; 7 distinct domains",
+      "why": "6/10 strong slots (auth 0.56); 2 UGC = opening; 7 distinct domains",
       "_results": [
         {
           "domain": "mayoclinic.org",
@@ -6332,8 +6334,8 @@
     },
     "solar panels": {
       "keyword": "solar panels",
-      "difficulty": 3.2,
-      "winnability": 7.8,
+      "difficulty": 3.1,
+      "winnability": 7.9,
       "authority_share": 0.37,
       "strong_slots": 4,
       "ugc_results": 3,
@@ -6482,8 +6484,8 @@
     },
     "fafsa": {
       "keyword": "fafsa",
-      "difficulty": 4.9,
-      "winnability": 6.1,
+      "difficulty": 4.8,
+      "winnability": 6.2,
       "authority_share": 0.49,
       "strong_slots": 5,
       "ugc_results": 1,
@@ -7007,9 +7009,9 @@
     },
     "car maintenance": {
       "keyword": "car maintenance",
-      "difficulty": 3.7,
-      "winnability": 7.3,
-      "authority_share": 0.36,
+      "difficulty": 3.6,
+      "winnability": 7.4,
+      "authority_share": 0.35,
       "strong_slots": 4,
       "ugc_results": 1,
       "distinct_domains": 9,
@@ -7025,7 +7027,7 @@
         "cars.com",
         "consumerreports.org"
       ],
-      "why": "4/10 strong slots (auth 0.36); 1 UGC = opening",
+      "why": "4/10 strong slots (auth 0.35); 1 UGC = opening",
       "_results": [
         {
           "domain": "tires.bridgestone.com",
@@ -7082,8 +7084,8 @@
     },
     "buying used car": {
       "keyword": "buying used car",
-      "difficulty": 3.6,
-      "winnability": 7.4,
+      "difficulty": 3.5,
+      "winnability": 7.5,
       "authority_share": 0.42,
       "strong_slots": 4,
       "ugc_results": 3,
@@ -7307,8 +7309,8 @@
     },
     "flutter vs kmp": {
       "keyword": "flutter vs kmp",
-      "difficulty": 1.7,
-      "winnability": 9.3,
+      "difficulty": 1.6,
+      "winnability": 9.4,
       "authority_share": 0.22,
       "strong_slots": 2,
       "ugc_results": 4,
@@ -7382,8 +7384,8 @@
     },
     "kmp vs flutter": {
       "keyword": "kmp vs flutter",
-      "difficulty": 2.9,
-      "winnability": 8.1,
+      "difficulty": 2.8,
+      "winnability": 8.2,
       "authority_share": 0.36,
       "strong_slots": 4,
       "ugc_results": 3,
@@ -7607,8 +7609,8 @@
     },
     "intel 8255": {
       "keyword": "intel 8255",
-      "difficulty": 1.1,
-      "winnability": 9.9,
+      "difficulty": 1.0,
+      "winnability": 10.0,
       "authority_share": 0.17,
       "strong_slots": 2,
       "ugc_results": 3,
@@ -7907,8 +7909,8 @@
     },
     "8255 control register": {
       "keyword": "8255 control register",
-      "difficulty": 2.6,
-      "winnability": 8.4,
+      "difficulty": 2.5,
+      "winnability": 8.5,
       "authority_share": 0.32,
       "strong_slots": 3,
       "ugc_results": 4,
@@ -8059,7 +8061,7 @@
       "keyword": "navy federal heloc rates",
       "difficulty": 10.0,
       "winnability": 1.0,
-      "authority_share": 0.98,
+      "authority_share": 1.0,
       "strong_slots": 10,
       "ugc_results": 0,
       "distinct_domains": 2,
@@ -8075,7 +8077,7 @@
         "nerdwallet.com",
         "nerdwallet.com"
       ],
-      "why": "10/10 strong slots (auth 0.98); 2 distinct domains",
+      "why": "10/10 strong slots (auth 1.00); 2 distinct domains",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -8134,7 +8136,7 @@
       "keyword": "navy federal credit union heloc rates",
       "difficulty": 10.0,
       "winnability": 1.0,
-      "authority_share": 0.98,
+      "authority_share": 1.0,
       "strong_slots": 10,
       "ugc_results": 0,
       "distinct_domains": 1,
@@ -8150,7 +8152,7 @@
         "navyfederal.org",
         "navyfederal.org"
       ],
-      "why": "10/10 strong slots (auth 0.98); 1 distinct domains",
+      "why": "10/10 strong slots (auth 1.00); 1 distinct domains",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -8207,9 +8209,9 @@
     },
     "navy federal va loan rates": {
       "keyword": "navy federal va loan rates",
-      "difficulty": 9.3,
-      "winnability": 1.7,
-      "authority_share": 0.93,
+      "difficulty": 9.4,
+      "winnability": 1.6,
+      "authority_share": 0.94,
       "strong_slots": 9,
       "ugc_results": 2,
       "distinct_domains": 3,
@@ -8225,7 +8227,7 @@
         "navyfederal.org",
         "reddit.com"
       ],
-      "why": "9/10 strong slots (auth 0.93); 2 UGC = opening; 3 distinct domains",
+      "why": "9/10 strong slots (auth 0.94); 2 UGC = opening; 3 distinct domains",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -8282,9 +8284,9 @@
     },
     "whole life ins": {
       "keyword": "whole life ins",
-      "difficulty": 3.3,
-      "winnability": 7.7,
-      "authority_share": 0.29,
+      "difficulty": 3.2,
+      "winnability": 7.8,
+      "authority_share": 0.28,
       "strong_slots": 1,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -8300,7 +8302,7 @@
         "usnews.com",
         "en.wikipedia.org"
       ],
-      "why": "1/10 strong slots (auth 0.29)",
+      "why": "1/10 strong slots (auth 0.28)",
       "_results": [
         {
           "domain": "aflac.com",
@@ -8357,9 +8359,9 @@
     },
     "whole life cover insurance": {
       "keyword": "whole life cover insurance",
-      "difficulty": 3.3,
-      "winnability": 7.7,
-      "authority_share": 0.29,
+      "difficulty": 3.2,
+      "winnability": 7.8,
+      "authority_share": 0.28,
       "strong_slots": 1,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -8375,7 +8377,7 @@
         "policygenius.com",
         "newyorklife.com"
       ],
-      "why": "1/10 strong slots (auth 0.29)",
+      "why": "1/10 strong slots (auth 0.28)",
       "_results": [
         {
           "domain": "aflac.com",
@@ -8507,9 +8509,9 @@
     },
     "va home loan rates": {
       "keyword": "va home loan rates",
-      "difficulty": 8.2,
-      "winnability": 2.8,
-      "authority_share": 0.8,
+      "difficulty": 8.1,
+      "winnability": 2.9,
+      "authority_share": 0.79,
       "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -8525,7 +8527,7 @@
         "nerdwallet.com",
         "mobile.usaa.com"
       ],
-      "why": "8/10 strong slots (auth 0.80)",
+      "why": "8/10 strong slots (auth 0.79)",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -8585,7 +8587,7 @@
       "difficulty": 7.8,
       "winnability": 3.2,
       "authority_share": 0.79,
-      "strong_slots": 9,
+      "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -8600,7 +8602,7 @@
         "bankrate.com",
         "usbank.com"
       ],
-      "why": "9/10 strong slots (auth 0.79)",
+      "why": "8/10 strong slots (auth 0.79)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -8809,7 +8811,7 @@
       "keyword": "wells fargo home equity line of credit",
       "difficulty": 6.7,
       "winnability": 4.3,
-      "authority_share": 0.65,
+      "authority_share": 0.64,
       "strong_slots": 7,
       "ugc_results": 1,
       "distinct_domains": 6,
@@ -8825,7 +8827,7 @@
         "lendedu.com",
         "bankofamerica.com"
       ],
-      "why": "7/10 strong slots (auth 0.65); 1 UGC = opening; 6 distinct domains",
+      "why": "7/10 strong slots (auth 0.64); 1 UGC = opening; 6 distinct domains",
       "_results": [
         {
           "domain": "wellsfargo.com",
@@ -8884,7 +8886,7 @@
       "keyword": "term life policy",
       "difficulty": 6.1,
       "winnability": 4.9,
-      "authority_share": 0.59,
+      "authority_share": 0.58,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -8900,7 +8902,7 @@
         "mn.gov",
         "nerdwallet.com"
       ],
-      "why": "5/10 strong slots (auth 0.59)",
+      "why": "5/10 strong slots (auth 0.58)",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -8957,8 +8959,8 @@
     },
     "term life insurance quotes": {
       "keyword": "term life insurance quotes",
-      "difficulty": 2.1,
-      "winnability": 8.9,
+      "difficulty": 2.0,
+      "winnability": 9.0,
       "authority_share": 0.15,
       "strong_slots": 0,
       "ugc_results": 0,
@@ -9332,9 +9334,9 @@
     },
     "cash out refinance": {
       "keyword": "cash out refinance",
-      "difficulty": 7.8,
-      "winnability": 3.2,
-      "authority_share": 0.78,
+      "difficulty": 7.7,
+      "winnability": 3.3,
+      "authority_share": 0.76,
       "strong_slots": 9,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -9350,7 +9352,7 @@
         "investopedia.com",
         "truist.com"
       ],
-      "why": "9/10 strong slots (auth 0.78)",
+      "why": "9/10 strong slots (auth 0.76)",
       "_results": [
         {
           "domain": "usbank.com",
@@ -9409,7 +9411,7 @@
       "keyword": "cash out refi",
       "difficulty": 6.4,
       "winnability": 4.6,
-      "authority_share": 0.64,
+      "authority_share": 0.63,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -9425,7 +9427,7 @@
         "citizensbank.com",
         "en.wikipedia.org"
       ],
-      "why": "7/10 strong slots (auth 0.64)",
+      "why": "7/10 strong slots (auth 0.63)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -9484,8 +9486,8 @@
       "keyword": "cash out refinance rates",
       "difficulty": 9.0,
       "winnability": 2.0,
-      "authority_share": 0.89,
-      "strong_slots": 9,
+      "authority_share": 0.88,
+      "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 8,
       "top_domains": [
@@ -9500,7 +9502,7 @@
         "bankrate.com",
         "rocketmortgage.com"
       ],
-      "why": "9/10 strong slots (auth 0.89)",
+      "why": "8/10 strong slots (auth 0.88)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -9707,10 +9709,10 @@
     },
     "pre approval": {
       "keyword": "pre approval",
-      "difficulty": 5.4,
-      "winnability": 5.6,
-      "authority_share": 0.5,
-      "strong_slots": 6,
+      "difficulty": 5.3,
+      "winnability": 5.7,
+      "authority_share": 0.49,
+      "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
       "top_domains": [
@@ -9725,7 +9727,7 @@
         "usccreditunion.org",
         "usccreditunion.org"
       ],
-      "why": "6/10 strong slots (auth 0.50)",
+      "why": "5/10 strong slots (auth 0.49)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -9782,10 +9784,10 @@
     },
     "pre approval vs pre qualification": {
       "keyword": "pre approval vs pre qualification",
-      "difficulty": 5.7,
-      "winnability": 5.3,
+      "difficulty": 5.6,
+      "winnability": 5.4,
       "authority_share": 0.53,
-      "strong_slots": 5,
+      "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 9,
       "top_domains": [
@@ -9800,7 +9802,7 @@
         "equifax.com",
         "pnc.com"
       ],
-      "why": "5/10 strong slots (auth 0.53)",
+      "why": "4/10 strong slots (auth 0.53)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -9932,8 +9934,8 @@
     },
     "chase bank home equity loan": {
       "keyword": "chase bank home equity loan",
-      "difficulty": 8.1,
-      "winnability": 2.9,
+      "difficulty": 8.0,
+      "winnability": 3.0,
       "authority_share": 0.7,
       "strong_slots": 9,
       "ugc_results": 0,
@@ -10007,8 +10009,8 @@
     },
     "chase bank heloc": {
       "keyword": "chase bank heloc",
-      "difficulty": 7.3,
-      "winnability": 3.7,
+      "difficulty": 7.2,
+      "winnability": 3.8,
       "authority_share": 0.69,
       "strong_slots": 8,
       "ugc_results": 1,
@@ -10385,7 +10387,7 @@
       "difficulty": 5.9,
       "winnability": 5.1,
       "authority_share": 0.69,
-      "strong_slots": 7,
+      "strong_slots": 6,
       "ugc_results": 3,
       "distinct_domains": 9,
       "top_domains": [
@@ -10400,7 +10402,7 @@
         "truist.com",
         "alliantcreditunion.org"
       ],
-      "why": "7/10 strong slots (auth 0.69); 3 UGC = opening",
+      "why": "6/10 strong slots (auth 0.69); 3 UGC = opening",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -10457,8 +10459,8 @@
     },
     "best home equity loans": {
       "keyword": "best home equity loans",
-      "difficulty": 7.1,
-      "winnability": 3.9,
+      "difficulty": 7.0,
+      "winnability": 4.0,
       "authority_share": 0.78,
       "strong_slots": 7,
       "ugc_results": 2,
@@ -10607,8 +10609,8 @@
     },
     "veterans united home loan": {
       "keyword": "veterans united home loan",
-      "difficulty": 5.1,
-      "winnability": 5.9,
+      "difficulty": 5.0,
+      "winnability": 6.0,
       "authority_share": 0.6,
       "strong_slots": 6,
       "ugc_results": 3,
@@ -10682,8 +10684,8 @@
     },
     "veterans united loans": {
       "keyword": "veterans united loans",
-      "difficulty": 5.6,
-      "winnability": 5.4,
+      "difficulty": 5.5,
+      "winnability": 5.5,
       "authority_share": 0.64,
       "strong_slots": 7,
       "ugc_results": 3,
@@ -10757,9 +10759,9 @@
     },
     "veterans united home": {
       "keyword": "veterans united home",
-      "difficulty": 4.2,
-      "winnability": 6.8,
-      "authority_share": 0.5,
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.49,
       "strong_slots": 5,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -10775,7 +10777,7 @@
         "lendingtree.com",
         "instagram.com"
       ],
-      "why": "5/10 strong slots (auth 0.50); 3 UGC = opening",
+      "why": "5/10 strong slots (auth 0.49); 3 UGC = opening",
       "_results": [
         {
           "domain": "veteransunited.com",
@@ -10907,9 +10909,9 @@
     },
     "fha mortgage rates": {
       "keyword": "fha mortgage rates",
-      "difficulty": 5.1,
-      "winnability": 5.9,
-      "authority_share": 0.49,
+      "difficulty": 5.0,
+      "winnability": 6.0,
+      "authority_share": 0.48,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -10925,7 +10927,7 @@
         "fred.stlouisfed.org",
         "localfirstbank.com"
       ],
-      "why": "4/10 strong slots (auth 0.49)",
+      "why": "4/10 strong slots (auth 0.48)",
       "_results": [
         {
           "domain": "mortgagenewsdaily.com",
@@ -10982,9 +10984,9 @@
     },
     "fha mortgage lenders": {
       "keyword": "fha mortgage lenders",
-      "difficulty": 4.7,
-      "winnability": 6.3,
-      "authority_share": 0.56,
+      "difficulty": 4.6,
+      "winnability": 6.4,
+      "authority_share": 0.55,
       "strong_slots": 5,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -11000,7 +11002,7 @@
         "bankrate.com",
         "greateralliance.org"
       ],
-      "why": "5/10 strong slots (auth 0.56); 3 UGC = opening",
+      "why": "5/10 strong slots (auth 0.55); 3 UGC = opening",
       "_results": [
         {
           "domain": "hud.gov",
@@ -11132,8 +11134,8 @@
     },
     "home mortgage refinance": {
       "keyword": "home mortgage refinance",
-      "difficulty": 8.9,
-      "winnability": 2.1,
+      "difficulty": 8.8,
+      "winnability": 2.2,
       "authority_share": 0.87,
       "strong_slots": 9,
       "ugc_results": 0,
@@ -11282,9 +11284,9 @@
     },
     "life insurance whole life": {
       "keyword": "life insurance whole life",
-      "difficulty": 3.3,
-      "winnability": 7.7,
-      "authority_share": 0.28,
+      "difficulty": 3.1,
+      "winnability": 7.9,
+      "authority_share": 0.27,
       "strong_slots": 1,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -11300,7 +11302,7 @@
         "investopedia.com",
         "northwesternmutual.com"
       ],
-      "why": "1/10 strong slots (auth 0.28)",
+      "why": "1/10 strong slots (auth 0.27)",
       "_results": [
         {
           "domain": "aflac.com",
@@ -11357,9 +11359,9 @@
     },
     "life insurance whole life policy": {
       "keyword": "life insurance whole life policy",
-      "difficulty": 3.7,
-      "winnability": 7.3,
-      "authority_share": 0.33,
+      "difficulty": 3.6,
+      "winnability": 7.4,
+      "authority_share": 0.32,
       "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -11375,7 +11377,7 @@
         "nationwide.com",
         "law.cornell.edu"
       ],
-      "why": "2/10 strong slots (auth 0.33)",
+      "why": "2/10 strong slots (auth 0.32)",
       "_results": [
         {
           "domain": "aflac.com",
@@ -11432,9 +11434,9 @@
     },
     "life insurance term life": {
       "keyword": "life insurance term life",
-      "difficulty": 4.3,
-      "winnability": 6.7,
-      "authority_share": 0.4,
+      "difficulty": 4.2,
+      "winnability": 6.8,
+      "authority_share": 0.39,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -11450,7 +11452,7 @@
         "prudential.com",
         "law.cornell.edu"
       ],
-      "why": "3/10 strong slots (auth 0.40)",
+      "why": "3/10 strong slots (auth 0.39)",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -11510,7 +11512,7 @@
       "difficulty": 7.9,
       "winnability": 3.1,
       "authority_share": 0.78,
-      "strong_slots": 10,
+      "strong_slots": 9,
       "ugc_results": 0,
       "distinct_domains": 9,
       "top_domains": [
@@ -11525,7 +11527,7 @@
         "creditkarma.com",
         "creditkarma.com"
       ],
-      "why": "10/10 strong slots (auth 0.78)",
+      "why": "9/10 strong slots (auth 0.78)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -11585,7 +11587,7 @@
       "difficulty": 5.9,
       "winnability": 5.1,
       "authority_share": 0.65,
-      "strong_slots": 7,
+      "strong_slots": 6,
       "ugc_results": 2,
       "distinct_domains": 9,
       "top_domains": [
@@ -11600,7 +11602,7 @@
         "truist.com",
         "pnc.com"
       ],
-      "why": "7/10 strong slots (auth 0.65); 2 UGC = opening",
+      "why": "6/10 strong slots (auth 0.65); 2 UGC = opening",
       "_results": [
         {
           "domain": "wellsfargo.com",
@@ -11657,8 +11659,8 @@
     },
     "mortgage loan refinance rates": {
       "keyword": "mortgage loan refinance rates",
-      "difficulty": 6.9,
-      "winnability": 4.1,
+      "difficulty": 6.8,
+      "winnability": 4.2,
       "authority_share": 0.68,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -11732,8 +11734,8 @@
     },
     "term insurance and life insurance": {
       "keyword": "term insurance and life insurance",
-      "difficulty": 4.9,
-      "winnability": 6.1,
+      "difficulty": 4.8,
+      "winnability": 6.2,
       "authority_share": 0.46,
       "strong_slots": 4,
       "ugc_results": 0,
@@ -11807,9 +11809,9 @@
     },
     "term insurance term insurance": {
       "keyword": "term insurance term insurance",
-      "difficulty": 4.9,
-      "winnability": 6.1,
-      "authority_share": 0.54,
+      "difficulty": 4.8,
+      "winnability": 6.2,
+      "authority_share": 0.53,
       "strong_slots": 5,
       "ugc_results": 2,
       "distinct_domains": 9,
@@ -11825,7 +11827,7 @@
         "law.cornell.edu",
         "newyorklife.com"
       ],
-      "why": "5/10 strong slots (auth 0.54); 2 UGC = opening",
+      "why": "5/10 strong slots (auth 0.53); 2 UGC = opening",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -11882,8 +11884,8 @@
     },
     "term insurance quote": {
       "keyword": "term insurance quote",
-      "difficulty": 3.3,
-      "winnability": 7.7,
+      "difficulty": 3.2,
+      "winnability": 7.8,
       "authority_share": 0.27,
       "strong_slots": 2,
       "ugc_results": 0,
@@ -11959,8 +11961,8 @@
       "keyword": "fixed rate heloc",
       "difficulty": 7.8,
       "winnability": 3.2,
-      "authority_share": 0.78,
-      "strong_slots": 9,
+      "authority_share": 0.77,
+      "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 9,
       "top_domains": [
@@ -11975,7 +11977,7 @@
         "mainesavings.com",
         "mainesavings.com"
       ],
-      "why": "9/10 strong slots (auth 0.78)",
+      "why": "8/10 strong slots (auth 0.77)",
       "_results": [
         {
           "domain": "usbank.com",
@@ -12035,7 +12037,7 @@
       "difficulty": 5.9,
       "winnability": 5.1,
       "authority_share": 0.58,
-      "strong_slots": 6,
+      "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -12050,7 +12052,7 @@
         "penfed.org",
         "peopledrivencu.org"
       ],
-      "why": "6/10 strong slots (auth 0.58)",
+      "why": "5/10 strong slots (auth 0.58)",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -12257,8 +12259,8 @@
     },
     "chase home equity line of credit": {
       "keyword": "chase home equity line of credit",
-      "difficulty": 6.0,
-      "winnability": 5.0,
+      "difficulty": 6.1,
+      "winnability": 4.9,
       "authority_share": 0.6,
       "strong_slots": 7,
       "ugc_results": 2,
@@ -12484,7 +12486,7 @@
       "keyword": "chase mortgage refinance rates",
       "difficulty": 7.4,
       "winnability": 3.6,
-      "authority_share": 0.65,
+      "authority_share": 0.64,
       "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 4,
@@ -12500,7 +12502,7 @@
         "smartasset.com",
         "chase.com"
       ],
-      "why": "8/10 strong slots (auth 0.65); 4 distinct domains",
+      "why": "8/10 strong slots (auth 0.64); 4 distinct domains",
       "_results": [
         {
           "domain": "chase.com",
@@ -12784,7 +12786,7 @@
       "keyword": "chase refinance mortgage rates",
       "difficulty": 7.4,
       "winnability": 3.6,
-      "authority_share": 0.65,
+      "authority_share": 0.64,
       "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 4,
@@ -12800,7 +12802,7 @@
         "chase.com",
         "chase.com"
       ],
-      "why": "8/10 strong slots (auth 0.65); 4 distinct domains",
+      "why": "8/10 strong slots (auth 0.64); 4 distinct domains",
       "_results": [
         {
           "domain": "chase.com",
@@ -12857,10 +12859,10 @@
     },
     "mortgage pre approval": {
       "keyword": "mortgage pre approval",
-      "difficulty": 6.7,
-      "winnability": 4.3,
+      "difficulty": 6.6,
+      "winnability": 4.4,
       "authority_share": 0.66,
-      "strong_slots": 7,
+      "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -12875,7 +12877,7 @@
         "lendingtree.com",
         "truist.com"
       ],
-      "why": "7/10 strong slots (auth 0.66)",
+      "why": "6/10 strong slots (auth 0.66)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -13084,7 +13086,7 @@
       "keyword": "current fha mortgage rates",
       "difficulty": 6.0,
       "winnability": 5.0,
-      "authority_share": 0.59,
+      "authority_share": 0.58,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -13100,7 +13102,7 @@
         "zillow.com",
         "fred.stlouisfed.org"
       ],
-      "why": "5/10 strong slots (auth 0.59)",
+      "why": "5/10 strong slots (auth 0.58)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -13159,7 +13161,7 @@
       "keyword": "current fha rates",
       "difficulty": 5.3,
       "winnability": 5.7,
-      "authority_share": 0.5,
+      "authority_share": 0.49,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -13175,7 +13177,7 @@
         "mortgagenewsdaily.com",
         "welcomehomeia.com"
       ],
-      "why": "5/10 strong slots (auth 0.50)",
+      "why": "5/10 strong slots (auth 0.49)",
       "_results": [
         {
           "domain": "mortgagenewsdaily.com",
@@ -13234,7 +13236,7 @@
       "keyword": "current fha loan rates",
       "difficulty": 5.8,
       "winnability": 5.2,
-      "authority_share": 0.54,
+      "authority_share": 0.53,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -13250,7 +13252,7 @@
         "fhaloans.com",
         "pennymac.com"
       ],
-      "why": "5/10 strong slots (auth 0.54)",
+      "why": "5/10 strong slots (auth 0.53)",
       "_results": [
         {
           "domain": "mortgagenewsdaily.com",
@@ -13382,8 +13384,8 @@
     },
     "pnc bank home equity loan": {
       "keyword": "pnc bank home equity loan",
-      "difficulty": 7.9,
-      "winnability": 3.1,
+      "difficulty": 7.8,
+      "winnability": 3.2,
       "authority_share": 0.68,
       "strong_slots": 9,
       "ugc_results": 0,
@@ -13759,7 +13761,7 @@
       "keyword": "interest rates mortgage 30 year fixed",
       "difficulty": 6.2,
       "winnability": 4.8,
-      "authority_share": 0.6,
+      "authority_share": 0.59,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -13775,7 +13777,7 @@
         "zillow.com",
         "rocketmortgage.com"
       ],
-      "why": "6/10 strong slots (auth 0.60)",
+      "why": "6/10 strong slots (auth 0.59)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -14057,10 +14059,10 @@
     },
     "apply for heloc": {
       "keyword": "apply for heloc",
-      "difficulty": 4.0,
-      "winnability": 7.0,
+      "difficulty": 3.9,
+      "winnability": 7.1,
       "authority_share": 0.36,
-      "strong_slots": 4,
+      "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -14075,7 +14077,7 @@
         "achieve.com",
         "nationaldebtrelief.com"
       ],
-      "why": "4/10 strong slots (auth 0.36)",
+      "why": "3/10 strong slots (auth 0.36)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -14135,7 +14137,7 @@
       "difficulty": 5.2,
       "winnability": 5.8,
       "authority_share": 0.5,
-      "strong_slots": 5,
+      "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -14150,7 +14152,7 @@
         "figure.com",
         "consumer.ftc.gov"
       ],
-      "why": "5/10 strong slots (auth 0.50)",
+      "why": "4/10 strong slots (auth 0.50)",
       "_results": [
         {
           "domain": "bankofamerica.com",
@@ -14207,9 +14209,9 @@
     },
     "decreasing term life insurance": {
       "keyword": "decreasing term life insurance",
-      "difficulty": 2.4,
-      "winnability": 8.6,
-      "authority_share": 0.23,
+      "difficulty": 2.3,
+      "winnability": 8.7,
+      "authority_share": 0.22,
       "strong_slots": 1,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -14225,7 +14227,7 @@
         "thrivent.com",
         "afainsure.com"
       ],
-      "why": "1/10 strong slots (auth 0.23); 1 UGC = opening",
+      "why": "1/10 strong slots (auth 0.22); 1 UGC = opening",
       "_results": [
         {
           "domain": "newyorklife.com",
@@ -14282,9 +14284,9 @@
     },
     "decreasing term insurance": {
       "keyword": "decreasing term insurance",
-      "difficulty": 3.5,
-      "winnability": 7.5,
-      "authority_share": 0.42,
+      "difficulty": 3.4,
+      "winnability": 7.6,
+      "authority_share": 0.41,
       "strong_slots": 3,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -14300,7 +14302,7 @@
         "afainsure.com",
         "thrivent.com"
       ],
-      "why": "3/10 strong slots (auth 0.42); 3 UGC = opening",
+      "why": "3/10 strong slots (auth 0.41); 3 UGC = opening",
       "_results": [
         {
           "domain": "progressive.com",
@@ -14357,8 +14359,8 @@
     },
     "decreasing term life policy": {
       "keyword": "decreasing term life policy",
-      "difficulty": 3.0,
-      "winnability": 8.0,
+      "difficulty": 2.9,
+      "winnability": 8.1,
       "authority_share": 0.28,
       "strong_slots": 2,
       "ugc_results": 1,
@@ -14432,9 +14434,9 @@
     },
     "30 year fha mortgage rates": {
       "keyword": "30 year fha mortgage rates",
-      "difficulty": 5.8,
-      "winnability": 5.2,
-      "authority_share": 0.55,
+      "difficulty": 5.7,
+      "winnability": 5.3,
+      "authority_share": 0.54,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -14450,7 +14452,7 @@
         "creditkarma.com",
         "mortgagecalculator.org"
       ],
-      "why": "5/10 strong slots (auth 0.55)",
+      "why": "5/10 strong slots (auth 0.54)",
       "_results": [
         {
           "domain": "mortgagenewsdaily.com",
@@ -14582,9 +14584,9 @@
     },
     "30 year fha loan rates": {
       "keyword": "30 year fha loan rates",
-      "difficulty": 7.0,
-      "winnability": 4.0,
-      "authority_share": 0.66,
+      "difficulty": 6.9,
+      "winnability": 4.1,
+      "authority_share": 0.65,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -14600,7 +14602,7 @@
         "localfirstbank.com",
         "creditkarma.com"
       ],
-      "why": "6/10 strong slots (auth 0.66)",
+      "why": "6/10 strong slots (auth 0.65)",
       "_results": [
         {
           "domain": "mortgagenewsdaily.com",
@@ -14659,7 +14661,7 @@
       "keyword": "best refinance companies",
       "difficulty": 4.9,
       "winnability": 6.1,
-      "authority_share": 0.47,
+      "authority_share": 0.46,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -14675,7 +14677,7 @@
         "experian.com",
         "bankofamerica.com"
       ],
-      "why": "3/10 strong slots (auth 0.47)",
+      "why": "3/10 strong slots (auth 0.46)",
       "_results": [
         {
           "domain": "nerdwallet.com",
@@ -14807,9 +14809,9 @@
     },
     "best refinance mortgage companies": {
       "keyword": "best refinance mortgage companies",
-      "difficulty": 4.7,
-      "winnability": 6.3,
-      "authority_share": 0.44,
+      "difficulty": 4.6,
+      "winnability": 6.4,
+      "authority_share": 0.43,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -14825,7 +14827,7 @@
         "cnbc.com",
         "investopedia.com"
       ],
-      "why": "3/10 strong slots (auth 0.44)",
+      "why": "3/10 strong slots (auth 0.43)",
       "_results": [
         {
           "domain": "nerdwallet.com",
@@ -14882,8 +14884,8 @@
     },
     "best va mortgage lenders": {
       "keyword": "best va mortgage lenders",
-      "difficulty": 4.5,
-      "winnability": 6.5,
+      "difficulty": 4.4,
+      "winnability": 6.6,
       "authority_share": 0.49,
       "strong_slots": 4,
       "ugc_results": 2,
@@ -15032,9 +15034,9 @@
     },
     "best mortgage lenders for va loans": {
       "keyword": "best mortgage lenders for va loans",
-      "difficulty": 5.8,
-      "winnability": 5.2,
-      "authority_share": 0.62,
+      "difficulty": 5.7,
+      "winnability": 5.3,
+      "authority_share": 0.61,
       "strong_slots": 6,
       "ugc_results": 2,
       "distinct_domains": 8,
@@ -15050,7 +15052,7 @@
         "saferate.com",
         "valoans.com"
       ],
-      "why": "6/10 strong slots (auth 0.62); 2 UGC = opening",
+      "why": "6/10 strong slots (auth 0.61); 2 UGC = opening",
       "_results": [
         {
           "domain": "reddit.com",
@@ -15334,7 +15336,7 @@
       "keyword": "third federal heloc",
       "difficulty": 5.8,
       "winnability": 5.2,
-      "authority_share": 0.63,
+      "authority_share": 0.62,
       "strong_slots": 3,
       "ugc_results": 2,
       "distinct_domains": 4,
@@ -15345,7 +15347,7 @@
         "reddit.com",
         "money.com"
       ],
-      "why": "3/5 strong slots (auth 0.63); 2 UGC = opening",
+      "why": "3/5 strong slots (auth 0.62); 2 UGC = opening",
       "_results": [
         {
           "domain": "thirdfederal.com",
@@ -15602,8 +15604,8 @@
     },
     "fha home lenders": {
       "keyword": "fha home lenders",
-      "difficulty": 7.3,
-      "winnability": 3.7,
+      "difficulty": 7.2,
+      "winnability": 3.8,
       "authority_share": 0.71,
       "strong_slots": 7,
       "ugc_results": 0,
@@ -15679,7 +15681,7 @@
       "keyword": "fha home loan rates",
       "difficulty": 5.3,
       "winnability": 5.7,
-      "authority_share": 0.5,
+      "authority_share": 0.49,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -15695,7 +15697,7 @@
         "rate.com",
         "usbank.com"
       ],
-      "why": "4/10 strong slots (auth 0.50)",
+      "why": "4/10 strong slots (auth 0.49)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -15752,8 +15754,8 @@
     },
     "fha streamline refinance": {
       "keyword": "fha streamline refinance",
-      "difficulty": 4.8,
-      "winnability": 6.2,
+      "difficulty": 4.7,
+      "winnability": 6.3,
       "authority_share": 0.57,
       "strong_slots": 5,
       "ugc_results": 4,
@@ -15827,8 +15829,8 @@
     },
     "fha streamline refi": {
       "keyword": "fha streamline refi",
-      "difficulty": 6.8,
-      "winnability": 4.2,
+      "difficulty": 6.7,
+      "winnability": 4.3,
       "authority_share": 0.7,
       "strong_slots": 7,
       "ugc_results": 1,
@@ -15977,9 +15979,9 @@
     },
     "us bank heloc": {
       "keyword": "us bank heloc",
-      "difficulty": 7.5,
-      "winnability": 3.5,
-      "authority_share": 0.69,
+      "difficulty": 7.4,
+      "winnability": 3.6,
+      "authority_share": 0.67,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 6,
@@ -15995,7 +15997,7 @@
         "usbank.com",
         "lendedu.com"
       ],
-      "why": "7/10 strong slots (auth 0.69); 6 distinct domains",
+      "why": "7/10 strong slots (auth 0.67); 6 distinct domains",
       "_results": [
         {
           "domain": "usbank.com",
@@ -16279,7 +16281,7 @@
       "keyword": "va streamline refinance",
       "difficulty": 6.1,
       "winnability": 4.9,
-      "authority_share": 0.65,
+      "authority_share": 0.64,
       "strong_slots": 6,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -16295,7 +16297,7 @@
         "crosscountrymortgage.com",
         "bankrate.com"
       ],
-      "why": "6/10 strong slots (auth 0.65); 1 UGC = opening",
+      "why": "6/10 strong slots (auth 0.64); 1 UGC = opening",
       "_results": [
         {
           "domain": "va.gov",
@@ -16429,7 +16431,7 @@
       "keyword": "best term life insurance",
       "difficulty": 3.5,
       "winnability": 7.5,
-      "authority_share": 0.35,
+      "authority_share": 0.36,
       "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -16445,7 +16447,7 @@
         "seniorliving.org",
         "policygenius.com"
       ],
-      "why": "3/10 strong slots (auth 0.35); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.36); 1 UGC = opening",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -16577,8 +16579,8 @@
     },
     "best term insurance companies": {
       "keyword": "best term insurance companies",
-      "difficulty": 5.5,
-      "winnability": 5.5,
+      "difficulty": 5.4,
+      "winnability": 5.6,
       "authority_share": 0.58,
       "strong_slots": 6,
       "ugc_results": 2,
@@ -16652,8 +16654,8 @@
     },
     "home refinance rates today": {
       "keyword": "home refinance rates today",
-      "difficulty": 6.8,
-      "winnability": 4.2,
+      "difficulty": 6.7,
+      "winnability": 4.3,
       "authority_share": 0.67,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -16802,9 +16804,9 @@
     },
     "home refinance": {
       "keyword": "home refinance",
-      "difficulty": 7.6,
-      "winnability": 3.4,
-      "authority_share": 0.75,
+      "difficulty": 7.5,
+      "winnability": 3.5,
+      "authority_share": 0.74,
       "strong_slots": 8,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -16820,7 +16822,7 @@
         "usbank.com",
         "rocketmortgage.com"
       ],
-      "why": "8/10 strong slots (auth 0.75)",
+      "why": "8/10 strong slots (auth 0.74)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -17027,8 +17029,8 @@
     },
     "regions bank home equity line of credit": {
       "keyword": "regions bank home equity line of credit",
-      "difficulty": 6.6,
-      "winnability": 4.4,
+      "difficulty": 6.5,
+      "winnability": 4.5,
       "authority_share": 0.57,
       "strong_slots": 7,
       "ugc_results": 0,
@@ -17102,10 +17104,10 @@
     },
     "fha cash out refinance": {
       "keyword": "fha cash out refinance",
-      "difficulty": 4.4,
-      "winnability": 6.6,
-      "authority_share": 0.45,
-      "strong_slots": 4,
+      "difficulty": 4.3,
+      "winnability": 6.7,
+      "authority_share": 0.44,
+      "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 10,
       "top_domains": [
@@ -17120,7 +17122,7 @@
         "pennymac.com",
         "experian.com"
       ],
-      "why": "4/10 strong slots (auth 0.45); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.44); 1 UGC = opening",
       "_results": [
         {
           "domain": "fha.com",
@@ -17177,10 +17179,10 @@
     },
     "fha cash out": {
       "keyword": "fha cash out",
-      "difficulty": 4.4,
-      "winnability": 6.6,
+      "difficulty": 4.3,
+      "winnability": 6.7,
       "authority_share": 0.41,
-      "strong_slots": 4,
+      "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -17195,7 +17197,7 @@
         "alcova.com",
         "credible.com"
       ],
-      "why": "4/10 strong slots (auth 0.41)",
+      "why": "3/10 strong slots (auth 0.41)",
       "_results": [
         {
           "domain": "fha.com",
@@ -17252,10 +17254,10 @@
     },
     "fha cash out refi": {
       "keyword": "fha cash out refi",
-      "difficulty": 5.1,
-      "winnability": 5.9,
-      "authority_share": 0.61,
-      "strong_slots": 6,
+      "difficulty": 5.0,
+      "winnability": 6.0,
+      "authority_share": 0.6,
+      "strong_slots": 5,
       "ugc_results": 3,
       "distinct_domains": 9,
       "top_domains": [
@@ -17270,7 +17272,7 @@
         "bankrate.com",
         "pennymac.com"
       ],
-      "why": "6/10 strong slots (auth 0.61); 3 UGC = opening",
+      "why": "5/10 strong slots (auth 0.60); 3 UGC = opening",
       "_results": [
         {
           "domain": "fha.com",
@@ -17327,8 +17329,8 @@
     },
     "mortgage interest rates today 30 year fixed": {
       "keyword": "mortgage interest rates today 30 year fixed",
-      "difficulty": 7.2,
-      "winnability": 3.8,
+      "difficulty": 7.1,
+      "winnability": 3.9,
       "authority_share": 0.7,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -17554,7 +17556,7 @@
       "keyword": "level term life insurance",
       "difficulty": 3.4,
       "winnability": 7.6,
-      "authority_share": 0.35,
+      "authority_share": 0.34,
       "strong_slots": 2,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -17570,7 +17572,7 @@
         "newyorklife.com",
         "prudential.com"
       ],
-      "why": "2/10 strong slots (auth 0.35); 1 UGC = opening",
+      "why": "2/10 strong slots (auth 0.34); 1 UGC = opening",
       "_results": [
         {
           "domain": "aflac.com",
@@ -17627,8 +17629,8 @@
     },
     "level term insurance": {
       "keyword": "level term insurance",
-      "difficulty": 3.5,
-      "winnability": 7.5,
+      "difficulty": 3.4,
+      "winnability": 7.6,
       "authority_share": 0.29,
       "strong_slots": 2,
       "ugc_results": 0,
@@ -17702,9 +17704,9 @@
     },
     "level term life policy": {
       "keyword": "level term life policy",
-      "difficulty": 2.9,
-      "winnability": 8.1,
-      "authority_share": 0.29,
+      "difficulty": 2.8,
+      "winnability": 8.2,
+      "authority_share": 0.28,
       "strong_slots": 2,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -17720,7 +17722,7 @@
         "youtube.com",
         "westernsouthern.com"
       ],
-      "why": "2/10 strong slots (auth 0.29); 1 UGC = opening",
+      "why": "2/10 strong slots (auth 0.28); 1 UGC = opening",
       "_results": [
         {
           "domain": "thrivent.com",
@@ -18077,9 +18079,9 @@
     },
     "mortgage refinance interest rates": {
       "keyword": "mortgage refinance interest rates",
-      "difficulty": 6.9,
-      "winnability": 4.1,
-      "authority_share": 0.67,
+      "difficulty": 6.8,
+      "winnability": 4.2,
+      "authority_share": 0.66,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -18095,7 +18097,7 @@
         "experian.com",
         "newamericanfunding.com"
       ],
-      "why": "7/10 strong slots (auth 0.67)",
+      "why": "7/10 strong slots (auth 0.66)",
       "_results": [
         {
           "domain": "usbank.com",
@@ -18152,9 +18154,9 @@
     },
     "best heloc rates": {
       "keyword": "best heloc rates",
-      "difficulty": 5.5,
-      "winnability": 5.5,
-      "authority_share": 0.53,
+      "difficulty": 5.4,
+      "winnability": 5.6,
+      "authority_share": 0.52,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -18170,7 +18172,7 @@
         "finance.yahoo.com",
         "marketwatch.com"
       ],
-      "why": "4/10 strong slots (auth 0.53)",
+      "why": "4/10 strong slots (auth 0.52)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -18302,9 +18304,9 @@
     },
     "best heloc": {
       "keyword": "best heloc",
-      "difficulty": 5.1,
-      "winnability": 5.9,
-      "authority_share": 0.48,
+      "difficulty": 5.0,
+      "winnability": 6.0,
+      "authority_share": 0.47,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -18320,7 +18322,7 @@
         "cnbc.com",
         "forbes.com"
       ],
-      "why": "3/10 strong slots (auth 0.48)",
+      "why": "3/10 strong slots (auth 0.47)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -18377,8 +18379,8 @@
     },
     "va loan for second home": {
       "keyword": "va loan for second home",
-      "difficulty": 5.0,
-      "winnability": 6.0,
+      "difficulty": 4.9,
+      "winnability": 6.1,
       "authority_share": 0.5,
       "strong_slots": 5,
       "ugc_results": 1,
@@ -18454,7 +18456,7 @@
       "keyword": "va loan for manufactured home",
       "difficulty": 3.4,
       "winnability": 7.6,
-      "authority_share": 0.29,
+      "authority_share": 0.28,
       "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -18470,7 +18472,7 @@
         "veteransloans.com",
         "rocketmortgage.com"
       ],
-      "why": "2/10 strong slots (auth 0.29)",
+      "why": "2/10 strong slots (auth 0.28)",
       "_results": [
         {
           "domain": "veteransunited.com",
@@ -18529,7 +18531,7 @@
       "keyword": "va loan for disabled veterans",
       "difficulty": 5.0,
       "winnability": 6.0,
-      "authority_share": 0.58,
+      "authority_share": 0.57,
       "strong_slots": 5,
       "ugc_results": 3,
       "distinct_domains": 8,
@@ -18545,7 +18547,7 @@
         "lawforveterans.org",
         "freedommortgage.com"
       ],
-      "why": "5/10 strong slots (auth 0.58); 3 UGC = opening",
+      "why": "5/10 strong slots (auth 0.57); 3 UGC = opening",
       "_results": [
         {
           "domain": "benefits.va.gov",
@@ -18604,7 +18606,7 @@
       "keyword": "cheap life insurance",
       "difficulty": 3.2,
       "winnability": 7.8,
-      "authority_share": 0.4,
+      "authority_share": 0.39,
       "strong_slots": 2,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -18620,7 +18622,7 @@
         "facebook.com",
         "reddit.com"
       ],
-      "why": "2/10 strong slots (auth 0.40); 3 UGC = opening",
+      "why": "2/10 strong slots (auth 0.39); 3 UGC = opening",
       "_results": [
         {
           "domain": "colonialpenn.com",
@@ -18679,7 +18681,7 @@
       "keyword": "cheap life insurance for seniors",
       "difficulty": 2.8,
       "winnability": 8.2,
-      "authority_share": 0.28,
+      "authority_share": 0.27,
       "strong_slots": 1,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -18695,7 +18697,7 @@
         "protective.com",
         "geico.com"
       ],
-      "why": "1/10 strong slots (auth 0.28); 1 UGC = opening",
+      "why": "1/10 strong slots (auth 0.27); 1 UGC = opening",
       "_results": [
         {
           "domain": "colonialpenn.com",
@@ -18754,7 +18756,7 @@
       "keyword": "cheap life insurance without medical exam",
       "difficulty": 2.8,
       "winnability": 8.2,
-      "authority_share": 0.3,
+      "authority_share": 0.31,
       "strong_slots": 2,
       "ugc_results": 2,
       "distinct_domains": 9,
@@ -18770,7 +18772,7 @@
         "newyorklife.com",
         "protective.com"
       ],
-      "why": "2/10 strong slots (auth 0.30); 2 UGC = opening",
+      "why": "2/10 strong slots (auth 0.31); 2 UGC = opening",
       "_results": [
         {
           "domain": "aflac.com",
@@ -18904,7 +18906,7 @@
       "keyword": "discover home loans",
       "difficulty": 6.1,
       "winnability": 4.9,
-      "authority_share": 0.62,
+      "authority_share": 0.63,
       "strong_slots": 7,
       "ugc_results": 2,
       "distinct_domains": 6,
@@ -18920,7 +18922,7 @@
         "reddit.com",
         "discover.com"
       ],
-      "why": "7/10 strong slots (auth 0.62); 2 UGC = opening; 6 distinct domains",
+      "why": "7/10 strong slots (auth 0.63); 2 UGC = opening; 6 distinct domains",
       "_results": [
         {
           "domain": "discover.com",
@@ -19129,7 +19131,7 @@
       "keyword": "refinance mortgage lenders",
       "difficulty": 6.2,
       "winnability": 4.8,
-      "authority_share": 0.73,
+      "authority_share": 0.72,
       "strong_slots": 6,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -19145,7 +19147,7 @@
         "usbank.com",
         "lendingtree.com"
       ],
-      "why": "6/10 strong slots (auth 0.73); 3 UGC = opening",
+      "why": "6/10 strong slots (auth 0.72); 3 UGC = opening",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -19204,8 +19206,8 @@
       "keyword": "refinance mortgage calculators",
       "difficulty": 6.4,
       "winnability": 4.6,
-      "authority_share": 0.64,
-      "strong_slots": 6,
+      "authority_share": 0.63,
+      "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -19220,7 +19222,7 @@
         "pnc.com",
         "rocketmortgage.com"
       ],
-      "why": "6/10 strong slots (auth 0.64)",
+      "why": "5/10 strong slots (auth 0.63)",
       "_results": [
         {
           "domain": "yourhome.fanniemae.com",
@@ -19504,7 +19506,7 @@
       "keyword": "pet insurance for dogs",
       "difficulty": 2.8,
       "winnability": 8.2,
-      "authority_share": 0.31,
+      "authority_share": 0.3,
       "strong_slots": 2,
       "ugc_results": 2,
       "distinct_domains": 9,
@@ -19520,7 +19522,7 @@
         "reddit.com",
         "reddit.com"
       ],
-      "why": "2/10 strong slots (auth 0.31); 2 UGC = opening",
+      "why": "2/10 strong slots (auth 0.30); 2 UGC = opening",
       "_results": [
         {
           "domain": "aspcapetinsurance.com",
@@ -19579,7 +19581,7 @@
       "keyword": "pet insurance for cats",
       "difficulty": 2.8,
       "winnability": 8.2,
-      "authority_share": 0.33,
+      "authority_share": 0.32,
       "strong_slots": 2,
       "ugc_results": 2,
       "distinct_domains": 10,
@@ -19595,7 +19597,7 @@
         "nerdwallet.com",
         "progressive.com"
       ],
-      "why": "2/10 strong slots (auth 0.33); 2 UGC = opening",
+      "why": "2/10 strong slots (auth 0.32); 2 UGC = opening",
       "_results": [
         {
           "domain": "aspcapetinsurance.com",
@@ -19954,7 +19956,7 @@
       "keyword": "capital gains tax rate",
       "difficulty": 4.1,
       "winnability": 6.9,
-      "authority_share": 0.37,
+      "authority_share": 0.38,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -19970,7 +19972,7 @@
         "usecache.com",
         "taxfoundation.org"
       ],
-      "why": "3/10 strong slots (auth 0.37)",
+      "why": "3/10 strong slots (auth 0.38)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -20027,10 +20029,10 @@
     },
     "high yield savings account": {
       "keyword": "high yield savings account",
-      "difficulty": 5.1,
-      "winnability": 5.9,
+      "difficulty": 5.0,
+      "winnability": 6.0,
       "authority_share": 0.48,
-      "strong_slots": 5,
+      "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -20045,7 +20047,7 @@
         "nerdwallet.com",
         "baskbank.com"
       ],
-      "why": "5/10 strong slots (auth 0.48)",
+      "why": "4/10 strong slots (auth 0.48)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -20102,10 +20104,10 @@
     },
     "high yield interest savings account": {
       "keyword": "high yield interest savings account",
-      "difficulty": 4.8,
-      "winnability": 6.2,
-      "authority_share": 0.45,
-      "strong_slots": 4,
+      "difficulty": 4.7,
+      "winnability": 6.3,
+      "authority_share": 0.44,
+      "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -20120,7 +20122,7 @@
         "nerdwallet.com",
         "usnews.com"
       ],
-      "why": "4/10 strong slots (auth 0.45)",
+      "why": "3/10 strong slots (auth 0.44)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -20552,8 +20554,8 @@
     },
     "american express savings account": {
       "keyword": "american express savings account",
-      "difficulty": 6.0,
-      "winnability": 5.0,
+      "difficulty": 5.9,
+      "winnability": 5.1,
       "authority_share": 0.54,
       "strong_slots": 7,
       "ugc_results": 1,
@@ -20702,9 +20704,9 @@
     },
     "short term disability insurance": {
       "keyword": "short term disability insurance",
-      "difficulty": 3.4,
-      "winnability": 7.6,
-      "authority_share": 0.3,
+      "difficulty": 3.3,
+      "winnability": 7.7,
+      "authority_share": 0.29,
       "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -20720,7 +20722,7 @@
         "guardianlife.com",
         "symetra.com"
       ],
-      "why": "2/10 strong slots (auth 0.30)",
+      "why": "2/10 strong slots (auth 0.29)",
       "_results": [
         {
           "domain": "aflac.com",
@@ -20777,8 +20779,8 @@
     },
     "short term disability insurance pregnancy": {
       "keyword": "short term disability insurance pregnancy",
-      "difficulty": 4.6,
-      "winnability": 6.4,
+      "difficulty": 4.5,
+      "winnability": 6.5,
       "authority_share": 0.44,
       "strong_slots": 5,
       "ugc_results": 1,
@@ -20854,7 +20856,7 @@
       "keyword": "travel insurance international",
       "difficulty": 2.1,
       "winnability": 8.9,
-      "authority_share": 0.16,
+      "authority_share": 0.15,
       "strong_slots": 1,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -20870,7 +20872,7 @@
         "travelers.com",
         "globalrescue.com"
       ],
-      "why": "1/10 strong slots (auth 0.16)",
+      "why": "1/10 strong slots (auth 0.15)",
       "_results": [
         {
           "domain": "allianztravelinsurance.com",
@@ -20927,8 +20929,8 @@
     },
     "travel insurance quote": {
       "keyword": "travel insurance quote",
-      "difficulty": 1.5,
-      "winnability": 9.5,
+      "difficulty": 1.4,
+      "winnability": 9.6,
       "authority_share": 0.08,
       "strong_slots": 0,
       "ugc_results": 0,
@@ -21077,9 +21079,9 @@
     },
     "real estate investment corporation": {
       "keyword": "real estate investment corporation",
-      "difficulty": 2.2,
-      "winnability": 8.8,
-      "authority_share": 0.21,
+      "difficulty": 2.1,
+      "winnability": 8.9,
+      "authority_share": 0.2,
       "strong_slots": 2,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -21095,7 +21097,7 @@
         "irei.com",
         "invesco.com"
       ],
-      "why": "2/10 strong slots (auth 0.21); 1 UGC = opening",
+      "why": "2/10 strong slots (auth 0.20); 1 UGC = opening",
       "_results": [
         {
           "domain": "blackstone.com",
@@ -21152,9 +21154,9 @@
     },
     "blood pressure monitor": {
       "keyword": "blood pressure monitor",
-      "difficulty": 1.8,
-      "winnability": 9.2,
-      "authority_share": 0.17,
+      "difficulty": 1.9,
+      "winnability": 9.1,
+      "authority_share": 0.18,
       "strong_slots": 1,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -21170,7 +21172,7 @@
         "withings.com",
         "youtube.com"
       ],
-      "why": "1/10 strong slots (auth 0.17); 1 UGC = opening",
+      "why": "1/10 strong slots (auth 0.18); 1 UGC = opening",
       "_results": [
         {
           "domain": "consumerreports.org",
@@ -21227,9 +21229,9 @@
     },
     "blood pressure chart": {
       "keyword": "blood pressure chart",
-      "difficulty": 5.4,
-      "winnability": 5.6,
-      "authority_share": 0.49,
+      "difficulty": 5.5,
+      "winnability": 5.5,
+      "authority_share": 0.5,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -21245,7 +21247,7 @@
         "augustahealth.com",
         "nhs.uk"
       ],
-      "why": "6/10 strong slots (auth 0.49)",
+      "why": "6/10 strong slots (auth 0.50)",
       "_results": [
         {
           "domain": "heart.org",
@@ -21302,10 +21304,10 @@
     },
     "closing cost calculator": {
       "keyword": "closing cost calculator",
-      "difficulty": 3.5,
-      "winnability": 7.5,
+      "difficulty": 3.6,
+      "winnability": 7.4,
       "authority_share": 0.32,
-      "strong_slots": 3,
+      "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -21320,7 +21322,7 @@
         "mortgagecalculator.org",
         "homelight.com"
       ],
-      "why": "3/10 strong slots (auth 0.32)",
+      "why": "2/10 strong slots (auth 0.32)",
       "_results": [
         {
           "domain": "zillow.com",
@@ -21380,7 +21382,7 @@
       "difficulty": 4.8,
       "winnability": 6.2,
       "authority_share": 0.53,
-      "strong_slots": 6,
+      "strong_slots": 5,
       "ugc_results": 2,
       "distinct_domains": 9,
       "top_domains": [
@@ -21395,7 +21397,7 @@
         "federalreserve.gov",
         "reddit.com"
       ],
-      "why": "6/10 strong slots (auth 0.53); 2 UGC = opening",
+      "why": "5/10 strong slots (auth 0.53); 2 UGC = opening",
       "_results": [
         {
           "domain": "reddit.com",
@@ -21454,8 +21456,8 @@
       "keyword": "no closing cost refi",
       "difficulty": 5.2,
       "winnability": 5.8,
-      "authority_share": 0.55,
-      "strong_slots": 6,
+      "authority_share": 0.54,
+      "strong_slots": 5,
       "ugc_results": 1,
       "distinct_domains": 10,
       "top_domains": [
@@ -21470,7 +21472,7 @@
         "bankrate.com",
         "rate.com"
       ],
-      "why": "6/10 strong slots (auth 0.55); 1 UGC = opening",
+      "why": "5/10 strong slots (auth 0.54); 1 UGC = opening",
       "_results": [
         {
           "domain": "rocketmortgage.com",
@@ -21527,8 +21529,8 @@
     },
     "credit score check": {
       "keyword": "credit score check",
-      "difficulty": 5.6,
-      "winnability": 5.4,
+      "difficulty": 5.5,
+      "winnability": 5.5,
       "authority_share": 0.52,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -21602,8 +21604,8 @@
     },
     "my credit score": {
       "keyword": "my credit score",
-      "difficulty": 6.0,
-      "winnability": 5.0,
+      "difficulty": 5.9,
+      "winnability": 5.1,
       "authority_share": 0.55,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -21677,8 +21679,8 @@
     },
     "renters insurance quote": {
       "keyword": "renters insurance quote",
-      "difficulty": 2.2,
-      "winnability": 8.8,
+      "difficulty": 2.1,
+      "winnability": 8.9,
       "authority_share": 0.16,
       "strong_slots": 0,
       "ugc_results": 0,
@@ -21752,8 +21754,8 @@
     },
     "renters insurance for apartments": {
       "keyword": "renters insurance for apartments",
-      "difficulty": 4.7,
-      "winnability": 6.3,
+      "difficulty": 4.6,
+      "winnability": 6.4,
       "authority_share": 0.42,
       "strong_slots": 4,
       "ugc_results": 0,
@@ -21827,9 +21829,9 @@
     },
     "s&p 500 index": {
       "keyword": "s&p 500 index",
-      "difficulty": 4.3,
-      "winnability": 6.7,
-      "authority_share": 0.38,
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.36,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -21845,7 +21847,7 @@
         "investopedia.com",
         "google.com"
       ],
-      "why": "4/10 strong slots (auth 0.38)",
+      "why": "4/10 strong slots (auth 0.36)",
       "_results": [
         {
           "domain": "finance.yahoo.com",
@@ -21902,8 +21904,8 @@
     },
     "s&p 500 index fund": {
       "keyword": "s&p 500 index fund",
-      "difficulty": 1.8,
-      "winnability": 9.2,
+      "difficulty": 1.9,
+      "winnability": 9.1,
       "authority_share": 0.17,
       "strong_slots": 1,
       "ugc_results": 1,
@@ -21977,9 +21979,9 @@
     },
     "s&p 500 index today": {
       "keyword": "s&p 500 index today",
-      "difficulty": 1.6,
-      "winnability": 9.4,
-      "authority_share": 0.1,
+      "difficulty": 1.5,
+      "winnability": 9.5,
+      "authority_share": 0.09,
       "strong_slots": 0,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -21995,7 +21997,7 @@
         "barrons.com",
         "nyse.com"
       ],
-      "why": "0/10 strong slots (auth 0.10)",
+      "why": "0/10 strong slots (auth 0.09)",
       "_results": [
         {
           "domain": "finance.yahoo.com",
@@ -22052,9 +22054,9 @@
     },
     "student loan interest deduction": {
       "keyword": "student loan interest deduction",
-      "difficulty": 5.3,
-      "winnability": 5.7,
-      "authority_share": 0.56,
+      "difficulty": 5.2,
+      "winnability": 5.8,
+      "authority_share": 0.55,
       "strong_slots": 5,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -22070,7 +22072,7 @@
         "smartasset.com",
         "reddit.com"
       ],
-      "why": "5/10 strong slots (auth 0.56); 1 UGC = opening",
+      "why": "5/10 strong slots (auth 0.55); 1 UGC = opening",
       "_results": [
         {
           "domain": "irs.gov",
@@ -22127,9 +22129,9 @@
     },
     "student loan interest tax deduction": {
       "keyword": "student loan interest tax deduction",
-      "difficulty": 5.2,
-      "winnability": 5.8,
-      "authority_share": 0.6,
+      "difficulty": 5.1,
+      "winnability": 5.9,
+      "authority_share": 0.59,
       "strong_slots": 5,
       "ugc_results": 4,
       "distinct_domains": 8,
@@ -22145,7 +22147,7 @@
         "turbotax.intuit.com",
         "reddit.com"
       ],
-      "why": "5/10 strong slots (auth 0.60); 4 UGC = opening",
+      "why": "5/10 strong slots (auth 0.59); 4 UGC = opening",
       "_results": [
         {
           "domain": "irs.gov",
@@ -22277,9 +22279,9 @@
     },
     "roth ira account": {
       "keyword": "roth ira account",
-      "difficulty": 5.4,
-      "winnability": 5.6,
-      "authority_share": 0.62,
+      "difficulty": 5.5,
+      "winnability": 5.5,
+      "authority_share": 0.63,
       "strong_slots": 6,
       "ugc_results": 3,
       "distinct_domains": 8,
@@ -22295,7 +22297,7 @@
         "nerdwallet.com",
         "fidelity.com"
       ],
-      "why": "6/10 strong slots (auth 0.62); 3 UGC = opening",
+      "why": "6/10 strong slots (auth 0.63); 3 UGC = opening",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -22352,9 +22354,9 @@
     },
     "roth ira how to open": {
       "keyword": "roth ira how to open",
-      "difficulty": 4.1,
-      "winnability": 6.9,
-      "authority_share": 0.51,
+      "difficulty": 4.2,
+      "winnability": 6.8,
+      "authority_share": 0.52,
       "strong_slots": 5,
       "ugc_results": 3,
       "distinct_domains": 10,
@@ -22370,7 +22372,7 @@
         "empower.com",
         "youtube.com"
       ],
-      "why": "5/10 strong slots (auth 0.51); 3 UGC = opening",
+      "why": "5/10 strong slots (auth 0.52); 3 UGC = opening",
       "_results": [
         {
           "domain": "fidelity.com",
@@ -22577,9 +22579,9 @@
     },
     "rental property insurance": {
       "keyword": "rental property insurance",
-      "difficulty": 3.4,
-      "winnability": 7.6,
-      "authority_share": 0.33,
+      "difficulty": 3.3,
+      "winnability": 7.7,
+      "authority_share": 0.32,
       "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 9,
@@ -22595,7 +22597,7 @@
         "baselane.com",
         "allstate.com"
       ],
-      "why": "3/10 strong slots (auth 0.33); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.32); 1 UGC = opening",
       "_results": [
         {
           "domain": "progressive.com",
@@ -22729,7 +22731,7 @@
       "keyword": "credit card for fair credit",
       "difficulty": 2.4,
       "winnability": 8.6,
-      "authority_share": 0.24,
+      "authority_share": 0.23,
       "strong_slots": 1,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -22745,7 +22747,7 @@
         "creditsesame.com",
         "bankrate.com"
       ],
-      "why": "1/10 strong slots (auth 0.24); 1 UGC = opening",
+      "why": "1/10 strong slots (auth 0.23); 1 UGC = opening",
       "_results": [
         {
           "domain": "visa.com",
@@ -22802,9 +22804,9 @@
     },
     "credit card interest rates": {
       "keyword": "credit card interest rates",
-      "difficulty": 6.8,
-      "winnability": 4.2,
-      "authority_share": 0.66,
+      "difficulty": 6.7,
+      "winnability": 4.3,
+      "authority_share": 0.65,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -22820,7 +22822,7 @@
         "nerdwallet.com",
         "investopedia.com"
       ],
-      "why": "6/10 strong slots (auth 0.66)",
+      "why": "6/10 strong slots (auth 0.65)",
       "_results": [
         {
           "domain": "experian.com",
@@ -22952,8 +22954,8 @@
     },
     "best online savings account": {
       "keyword": "best online savings account",
-      "difficulty": 6.5,
-      "winnability": 4.5,
+      "difficulty": 6.4,
+      "winnability": 4.6,
       "authority_share": 0.71,
       "strong_slots": 6,
       "ugc_results": 2,
@@ -23023,7 +23025,7 @@
       "keyword": "best online savings rates",
       "difficulty": 6.1,
       "winnability": 4.9,
-      "authority_share": 0.61,
+      "authority_share": 0.6,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 7,
@@ -23036,7 +23038,7 @@
         "investopedia.com",
         "key.com"
       ],
-      "why": "4/7 strong slots (auth 0.61)",
+      "why": "4/7 strong slots (auth 0.60)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -23158,14 +23160,14 @@
       "keyword": "ally bank high yield savings account",
       "difficulty": 1.3,
       "winnability": 9.7,
-      "authority_share": 0.07,
+      "authority_share": 0.06,
       "strong_slots": 0,
       "ugc_results": 0,
       "distinct_domains": 1,
       "top_domains": [
         "ally.com"
       ],
-      "why": "0/1 strong slots (auth 0.07)",
+      "why": "0/1 strong slots (auth 0.06)",
       "_results": [
         {
           "domain": "ally.com",
@@ -23329,7 +23331,7 @@
       "keyword": "small claims attorney",
       "difficulty": 1.8,
       "winnability": 9.2,
-      "authority_share": 0.21,
+      "authority_share": 0.22,
       "strong_slots": 2,
       "ugc_results": 2,
       "distinct_domains": 10,
@@ -23345,7 +23347,7 @@
         "kernerlawfirm.com",
         "hayesmannlawnc.com"
       ],
-      "why": "2/10 strong slots (auth 0.21); 2 UGC = opening",
+      "why": "2/10 strong slots (auth 0.22); 2 UGC = opening",
       "_results": [
         {
           "domain": "m.yelp.com",
@@ -23402,8 +23404,8 @@
     },
     "pay off credit card debt": {
       "keyword": "pay off credit card debt",
-      "difficulty": 4.4,
-      "winnability": 6.6,
+      "difficulty": 4.5,
+      "winnability": 6.5,
       "authority_share": 0.46,
       "strong_slots": 5,
       "ugc_results": 1,
@@ -23627,9 +23629,9 @@
     },
     "self employed": {
       "keyword": "self employed",
-      "difficulty": 6.1,
-      "winnability": 4.9,
-      "authority_share": 0.57,
+      "difficulty": 6.0,
+      "winnability": 5.0,
+      "authority_share": 0.56,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 8,
@@ -23645,7 +23647,7 @@
         "indeed.com",
         "hrblock.com"
       ],
-      "why": "7/10 strong slots (auth 0.57)",
+      "why": "7/10 strong slots (auth 0.56)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -23777,8 +23779,8 @@
     },
     "self employed tax form": {
       "keyword": "self employed tax form",
-      "difficulty": 3.7,
-      "winnability": 7.3,
+      "difficulty": 3.6,
+      "winnability": 7.4,
       "authority_share": 0.36,
       "strong_slots": 3,
       "ugc_results": 1,
@@ -24004,7 +24006,7 @@
       "keyword": "social security insurance",
       "difficulty": 7.6,
       "winnability": 3.4,
-      "authority_share": 0.75,
+      "authority_share": 0.74,
       "strong_slots": 8,
       "ugc_results": 1,
       "distinct_domains": 6,
@@ -24020,7 +24022,7 @@
         "en.wikipedia.org",
         "ssa.gov"
       ],
-      "why": "8/10 strong slots (auth 0.75); 1 UGC = opening; 6 distinct domains",
+      "why": "8/10 strong slots (auth 0.74); 1 UGC = opening; 6 distinct domains",
       "_results": [
         {
           "domain": "ssa.gov",
@@ -24077,8 +24079,8 @@
     },
     "income tax brackets": {
       "keyword": "income tax brackets",
-      "difficulty": 3.9,
-      "winnability": 7.1,
+      "difficulty": 4.0,
+      "winnability": 7.0,
       "authority_share": 0.36,
       "strong_slots": 3,
       "ugc_results": 0,
@@ -24152,8 +24154,8 @@
     },
     "income tax return extended": {
       "keyword": "income tax return extended",
-      "difficulty": 6.5,
-      "winnability": 4.5,
+      "difficulty": 6.4,
+      "winnability": 4.6,
       "authority_share": 0.62,
       "strong_slots": 6,
       "ugc_results": 0,
@@ -24227,9 +24229,9 @@
     },
     "income tax rates": {
       "keyword": "income tax rates",
-      "difficulty": 4.4,
-      "winnability": 6.6,
-      "authority_share": 0.41,
+      "difficulty": 4.3,
+      "winnability": 6.7,
+      "authority_share": 0.4,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -24245,7 +24247,7 @@
         "taxsummaries.pwc.com",
         "taxact.com"
       ],
-      "why": "3/10 strong slots (auth 0.41)",
+      "why": "3/10 strong slots (auth 0.40)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -24454,7 +24456,7 @@
       "keyword": "irs tax tables",
       "difficulty": 6.7,
       "winnability": 4.3,
-      "authority_share": 0.6,
+      "authority_share": 0.59,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 6,
@@ -24470,7 +24472,7 @@
         "ameriprise.com",
         "irs.gov"
       ],
-      "why": "6/10 strong slots (auth 0.60); 6 distinct domains",
+      "why": "6/10 strong slots (auth 0.59); 6 distinct domains",
       "_results": [
         {
           "domain": "irs.gov",
@@ -24527,9 +24529,9 @@
     },
     "federal tax brackets": {
       "keyword": "federal tax brackets",
-      "difficulty": 4.2,
-      "winnability": 6.8,
-      "authority_share": 0.39,
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.38,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -24545,7 +24547,7 @@
         "raisin.com",
         "taxpolicycenter.org"
       ],
-      "why": "3/10 strong slots (auth 0.39)",
+      "why": "3/10 strong slots (auth 0.38)",
       "_results": [
         {
           "domain": "irs.gov",
@@ -24677,9 +24679,9 @@
     },
     "federal tax rate calculator": {
       "keyword": "federal tax rate calculator",
-      "difficulty": 3.4,
-      "winnability": 7.6,
-      "authority_share": 0.3,
+      "difficulty": 3.3,
+      "winnability": 7.7,
+      "authority_share": 0.29,
       "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -24695,7 +24697,7 @@
         "atlanticunionbank.com",
         "nerdwallet.com"
       ],
-      "why": "2/10 strong slots (auth 0.30)",
+      "why": "2/10 strong slots (auth 0.29)",
       "_results": [
         {
           "domain": "smartasset.com",
@@ -24977,9 +24979,9 @@
     },
     "best car loan rates": {
       "keyword": "best car loan rates",
-      "difficulty": 4.8,
-      "winnability": 6.2,
-      "authority_share": 0.45,
+      "difficulty": 4.9,
+      "winnability": 6.1,
+      "authority_share": 0.46,
       "strong_slots": 4,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -24995,7 +24997,7 @@
         "nerdwallet.com",
         "capitalone.com"
       ],
-      "why": "4/10 strong slots (auth 0.45)",
+      "why": "4/10 strong slots (auth 0.46)",
       "_results": [
         {
           "domain": "navyfederal.org",
@@ -25052,8 +25054,8 @@
     },
     "best car interest rates": {
       "keyword": "best car interest rates",
-      "difficulty": 2.9,
-      "winnability": 8.1,
+      "difficulty": 3.0,
+      "winnability": 8.0,
       "authority_share": 0.25,
       "strong_slots": 2,
       "ugc_results": 0,
@@ -25127,8 +25129,8 @@
     },
     "best car and home insurance": {
       "keyword": "best car and home insurance",
-      "difficulty": 2.8,
-      "winnability": 8.2,
+      "difficulty": 2.7,
+      "winnability": 8.3,
       "authority_share": 0.23,
       "strong_slots": 1,
       "ugc_results": 0,
@@ -25352,8 +25354,8 @@
     },
     "fifth third bank cd rates": {
       "keyword": "fifth third bank cd rates",
-      "difficulty": 5.1,
-      "winnability": 5.9,
+      "difficulty": 5.2,
+      "winnability": 5.8,
       "authority_share": 0.47,
       "strong_slots": 6,
       "ugc_results": 1,
@@ -25577,9 +25579,9 @@
     },
     "best travel credit card": {
       "keyword": "best travel credit card",
-      "difficulty": 4.1,
-      "winnability": 6.9,
-      "authority_share": 0.49,
+      "difficulty": 4.0,
+      "winnability": 7.0,
+      "authority_share": 0.48,
       "strong_slots": 4,
       "ugc_results": 3,
       "distinct_domains": 9,
@@ -25595,7 +25597,7 @@
         "mastercard.com",
         "youtube.com"
       ],
-      "why": "4/10 strong slots (auth 0.49); 3 UGC = opening",
+      "why": "4/10 strong slots (auth 0.48); 3 UGC = opening",
       "_results": [
         {
           "domain": "creditcards.chase.com",
@@ -25879,7 +25881,7 @@
       "keyword": "cars for sale near me",
       "difficulty": 2.6,
       "winnability": 8.4,
-      "authority_share": 0.19,
+      "authority_share": 0.2,
       "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -25895,7 +25897,7 @@
         "craigslist.org",
         "carzonenj.com"
       ],
-      "why": "2/10 strong slots (auth 0.19)",
+      "why": "2/10 strong slots (auth 0.20)",
       "_results": [
         {
           "domain": "autotrader.com",
@@ -26029,7 +26031,7 @@
       "keyword": "huntington bank cd rates",
       "difficulty": 5.4,
       "winnability": 5.6,
-      "authority_share": 0.46,
+      "authority_share": 0.45,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 6,
@@ -26045,7 +26047,7 @@
         "businessinsider.com",
         "cdvalet.com"
       ],
-      "why": "6/10 strong slots (auth 0.46); 6 distinct domains",
+      "why": "6/10 strong slots (auth 0.45); 6 distinct domains",
       "_results": [
         {
           "domain": "huntington.com",
@@ -26102,9 +26104,9 @@
     },
     "huntington bank cd": {
       "keyword": "huntington bank cd",
-      "difficulty": 6.3,
-      "winnability": 4.7,
-      "authority_share": 0.54,
+      "difficulty": 6.2,
+      "winnability": 4.8,
+      "authority_share": 0.53,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 5,
@@ -26120,7 +26122,7 @@
         "smartasset.com",
         "huntington.com"
       ],
-      "why": "7/10 strong slots (auth 0.54); 5 distinct domains",
+      "why": "7/10 strong slots (auth 0.53); 5 distinct domains",
       "_results": [
         {
           "domain": "huntington.com",
@@ -26402,8 +26404,8 @@
     },
     "credit union auto loan rates": {
       "keyword": "credit union auto loan rates",
-      "difficulty": 3.0,
-      "winnability": 8.0,
+      "difficulty": 3.1,
+      "winnability": 7.9,
       "authority_share": 0.26,
       "strong_slots": 2,
       "ugc_results": 0,
@@ -26479,7 +26481,7 @@
       "keyword": "tax bracket calculator",
       "difficulty": 3.8,
       "winnability": 7.2,
-      "authority_share": 0.33,
+      "authority_share": 0.32,
       "strong_slots": 3,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -26495,7 +26497,7 @@
         "pacificlife.com",
         "freetaxusa.com"
       ],
-      "why": "3/10 strong slots (auth 0.33)",
+      "why": "3/10 strong slots (auth 0.32)",
       "_results": [
         {
           "domain": "taxact.com",
@@ -26852,9 +26854,9 @@
     },
     "american airlines rewards program": {
       "keyword": "american airlines rewards program",
-      "difficulty": 8.3,
-      "winnability": 2.7,
-      "authority_share": 0.73,
+      "difficulty": 8.2,
+      "winnability": 2.8,
+      "authority_share": 0.72,
       "strong_slots": 10,
       "ugc_results": 0,
       "distinct_domains": 3,
@@ -26870,7 +26872,7 @@
         "aa.com",
         "aa.com"
       ],
-      "why": "10/10 strong slots (auth 0.73); 3 distinct domains",
+      "why": "10/10 strong slots (auth 0.72); 3 distinct domains",
       "_results": [
         {
           "domain": "aa.com",
@@ -27002,8 +27004,8 @@
     },
     "car loan interest rates": {
       "keyword": "car loan interest rates",
-      "difficulty": 5.3,
-      "winnability": 5.7,
+      "difficulty": 5.4,
+      "winnability": 5.6,
       "authority_share": 0.5,
       "strong_slots": 5,
       "ugc_results": 0,
@@ -27079,7 +27081,7 @@
       "keyword": "charles schwab roth ira",
       "difficulty": 6.5,
       "winnability": 4.5,
-      "authority_share": 0.61,
+      "authority_share": 0.6,
       "strong_slots": 8,
       "ugc_results": 1,
       "distinct_domains": 5,
@@ -27095,7 +27097,7 @@
         "investopedia.com",
         "stockbrokers.com"
       ],
-      "why": "8/10 strong slots (auth 0.61); 1 UGC = opening; 5 distinct domains",
+      "why": "8/10 strong slots (auth 0.60); 1 UGC = opening; 5 distinct domains",
       "_results": [
         {
           "domain": "schwab.com",
@@ -27229,7 +27231,7 @@
       "keyword": "charles schwab cd rate",
       "difficulty": 5.5,
       "winnability": 5.5,
-      "authority_share": 0.58,
+      "authority_share": 0.57,
       "strong_slots": 7,
       "ugc_results": 2,
       "distinct_domains": 7,
@@ -27245,7 +27247,7 @@
         "gobankingrates.com",
         "annuityexpertadvice.com"
       ],
-      "why": "7/10 strong slots (auth 0.58); 2 UGC = opening; 7 distinct domains",
+      "why": "7/10 strong slots (auth 0.57); 2 UGC = opening; 7 distinct domains",
       "_results": [
         {
           "domain": "schwab.com",
@@ -27302,8 +27304,8 @@
     },
     "home appraisal cost": {
       "keyword": "home appraisal cost",
-      "difficulty": 3.4,
-      "winnability": 7.6,
+      "difficulty": 3.5,
+      "winnability": 7.5,
       "authority_share": 0.35,
       "strong_slots": 3,
       "ugc_results": 1,
@@ -27452,9 +27454,9 @@
     },
     "first home buyer program": {
       "keyword": "first home buyer program",
-      "difficulty": 5.8,
-      "winnability": 5.2,
-      "authority_share": 0.55,
+      "difficulty": 5.7,
+      "winnability": 5.3,
+      "authority_share": 0.54,
       "strong_slots": 6,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -27470,7 +27472,7 @@
         "wellsfargo.com",
         "homeplusaz.com"
       ],
-      "why": "6/10 strong slots (auth 0.55)",
+      "why": "6/10 strong slots (auth 0.54)",
       "_results": [
         {
           "domain": "fortworthtexas.gov",
@@ -27527,9 +27529,9 @@
     },
     "first home buyers loan": {
       "keyword": "first home buyers loan",
-      "difficulty": 6.7,
-      "winnability": 4.3,
-      "authority_share": 0.65,
+      "difficulty": 6.6,
+      "winnability": 4.4,
+      "authority_share": 0.64,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -27545,7 +27547,7 @@
         "sdhc.org",
         "themortgagereports.com"
       ],
-      "why": "7/10 strong slots (auth 0.65)",
+      "why": "7/10 strong slots (auth 0.64)",
       "_results": [
         {
           "domain": "welcomehome.tdhca.texas.gov",
@@ -27602,8 +27604,8 @@
     },
     "first home buyer grants": {
       "keyword": "first home buyer grants",
-      "difficulty": 5.1,
-      "winnability": 5.9,
+      "difficulty": 5.0,
+      "winnability": 6.0,
       "authority_share": 0.48,
       "strong_slots": 5,
       "ugc_results": 0,
@@ -27827,8 +27829,8 @@
     },
     "vitamin d3 and k2": {
       "keyword": "vitamin d3 and k2",
-      "difficulty": 1.8,
-      "winnability": 9.2,
+      "difficulty": 1.9,
+      "winnability": 9.1,
       "authority_share": 0.24,
       "strong_slots": 2,
       "ugc_results": 3,
@@ -27902,8 +27904,8 @@
     },
     "vitamin d and k2": {
       "keyword": "vitamin d and k2",
-      "difficulty": 2.3,
-      "winnability": 8.7,
+      "difficulty": 2.4,
+      "winnability": 8.6,
       "authority_share": 0.23,
       "strong_slots": 2,
       "ugc_results": 1,
@@ -27977,8 +27979,8 @@
     },
     "vitamin d3 and k2 supplements": {
       "keyword": "vitamin d3 and k2 supplements",
-      "difficulty": 3.8,
-      "winnability": 7.2,
+      "difficulty": 3.7,
+      "winnability": 7.3,
       "authority_share": 0.39,
       "strong_slots": 5,
       "ugc_results": 2,
@@ -28052,10 +28054,10 @@
     },
     "high interest savings account": {
       "keyword": "high interest savings account",
-      "difficulty": 6.0,
-      "winnability": 5.0,
-      "authority_share": 0.63,
-      "strong_slots": 6,
+      "difficulty": 5.9,
+      "winnability": 5.1,
+      "authority_share": 0.62,
+      "strong_slots": 5,
       "ugc_results": 1,
       "distinct_domains": 10,
       "top_domains": [
@@ -28070,7 +28072,7 @@
         "key.com",
         "bankofamerica.com"
       ],
-      "why": "6/10 strong slots (auth 0.63); 1 UGC = opening",
+      "why": "5/10 strong slots (auth 0.62); 1 UGC = opening",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -28127,10 +28129,10 @@
     },
     "high interest savings": {
       "keyword": "high interest savings",
-      "difficulty": 5.7,
-      "winnability": 5.3,
-      "authority_share": 0.6,
-      "strong_slots": 6,
+      "difficulty": 5.6,
+      "winnability": 5.4,
+      "authority_share": 0.59,
+      "strong_slots": 5,
       "ugc_results": 1,
       "distinct_domains": 10,
       "top_domains": [
@@ -28145,7 +28147,7 @@
         "experian.com",
         "youtube.com"
       ],
-      "why": "6/10 strong slots (auth 0.60); 1 UGC = opening",
+      "why": "5/10 strong slots (auth 0.59); 1 UGC = opening",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -28279,7 +28281,7 @@
       "keyword": "magnesium for constipation",
       "difficulty": 3.1,
       "winnability": 7.9,
-      "authority_share": 0.32,
+      "authority_share": 0.31,
       "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -28295,7 +28297,7 @@
         "medlineplus.gov",
         "youtube.com"
       ],
-      "why": "3/10 strong slots (auth 0.32); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.31); 1 UGC = opening",
       "_results": [
         {
           "domain": "baptisthealth.com",
@@ -28427,8 +28429,8 @@
     },
     "low interest credit cards": {
       "keyword": "low interest credit cards",
-      "difficulty": 2.6,
-      "winnability": 8.4,
+      "difficulty": 2.5,
+      "winnability": 8.5,
       "authority_share": 0.32,
       "strong_slots": 2,
       "ugc_results": 3,
@@ -28727,10 +28729,10 @@
     },
     "high interest deposit account": {
       "keyword": "high interest deposit account",
-      "difficulty": 6.3,
-      "winnability": 4.7,
-      "authority_share": 0.61,
-      "strong_slots": 6,
+      "difficulty": 6.2,
+      "winnability": 4.8,
+      "authority_share": 0.6,
+      "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
       "top_domains": [
@@ -28745,7 +28747,7 @@
         "nerdwallet.com",
         "nerdwallet.com"
       ],
-      "why": "6/10 strong slots (auth 0.61)",
+      "why": "5/10 strong slots (auth 0.60)",
       "_results": [
         {
           "domain": "bankrate.com",
@@ -28804,7 +28806,7 @@
       "keyword": "estate planning attorney",
       "difficulty": 1.0,
       "winnability": 10.0,
-      "authority_share": 0.02,
+      "authority_share": 0.03,
       "strong_slots": 0,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -28820,7 +28822,7 @@
         "batsonnolan.com",
         "dannamckitrick.com"
       ],
-      "why": "0/10 strong slots (auth 0.02)",
+      "why": "0/10 strong slots (auth 0.03)",
       "_results": [
         {
           "domain": "justia.com",
@@ -28879,7 +28881,7 @@
       "keyword": "estate planning lawyer",
       "difficulty": 1.0,
       "winnability": 10.0,
-      "authority_share": 0.02,
+      "authority_share": 0.03,
       "strong_slots": 0,
       "ugc_results": 0,
       "distinct_domains": 10,
@@ -28895,7 +28897,7 @@
         "stuartlaw.com",
         "kelleherholland.com"
       ],
-      "why": "0/10 strong slots (auth 0.02)",
+      "why": "0/10 strong slots (auth 0.03)",
       "_results": [
         {
           "domain": "justia.com",
@@ -28954,7 +28956,7 @@
       "keyword": "small business plan",
       "difficulty": 6.2,
       "winnability": 4.8,
-      "authority_share": 0.63,
+      "authority_share": 0.62,
       "strong_slots": 7,
       "ugc_results": 1,
       "distinct_domains": 8,
@@ -28970,7 +28972,7 @@
         "libguides.colorado.edu",
         "mellow.io"
       ],
-      "why": "7/10 strong slots (auth 0.63); 1 UGC = opening",
+      "why": "7/10 strong slots (auth 0.62); 1 UGC = opening",
       "_results": [
         {
           "domain": "sba.gov",
@@ -29029,7 +29031,7 @@
       "keyword": "small business loans for veterans",
       "difficulty": 5.1,
       "winnability": 5.9,
-      "authority_share": 0.47,
+      "authority_share": 0.48,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -29045,7 +29047,7 @@
         "militaryonesource.mil",
         "va.gov"
       ],
-      "why": "5/10 strong slots (auth 0.47)",
+      "why": "5/10 strong slots (auth 0.48)",
       "_results": [
         {
           "domain": "sba.gov",
@@ -29254,7 +29256,7 @@
       "keyword": "free credit score report",
       "difficulty": 5.5,
       "winnability": 5.5,
-      "authority_share": 0.52,
+      "authority_share": 0.51,
       "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 9,
@@ -29270,7 +29272,7 @@
         "transunion.com",
         "consumerfinance.gov"
       ],
-      "why": "5/10 strong slots (auth 0.52)",
+      "why": "5/10 strong slots (auth 0.51)",
       "_results": [
         {
           "domain": "annualcreditreport.com",
@@ -29402,8 +29404,8 @@
     },
     "southwest airlines card": {
       "keyword": "southwest airlines card",
-      "difficulty": 6.5,
-      "winnability": 4.5,
+      "difficulty": 6.4,
+      "winnability": 4.6,
       "authority_share": 0.57,
       "strong_slots": 7,
       "ugc_results": 0,
@@ -29479,7 +29481,7 @@
       "keyword": "southwest airlines credit cards",
       "difficulty": 6.7,
       "winnability": 4.3,
-      "authority_share": 0.62,
+      "authority_share": 0.61,
       "strong_slots": 7,
       "ugc_results": 0,
       "distinct_domains": 7,
@@ -29495,7 +29497,7 @@
         "nerdwallet.com",
         "thepointsguy.com"
       ],
-      "why": "7/10 strong slots (auth 0.62); 7 distinct domains",
+      "why": "7/10 strong slots (auth 0.61); 7 distinct domains",
       "_results": [
         {
           "domain": "southwest.com",
@@ -29627,9 +29629,9 @@
     },
     "130 80 blood pressure": {
       "keyword": "130 80 blood pressure",
-      "difficulty": 3.5,
-      "winnability": 7.5,
-      "authority_share": 0.35,
+      "difficulty": 3.7,
+      "winnability": 7.3,
+      "authority_share": 0.38,
       "strong_slots": 3,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -29645,7 +29647,7 @@
         "bhf.org.uk",
         "easternstates.heart.org"
       ],
-      "why": "3/10 strong slots (auth 0.35); 1 UGC = opening",
+      "why": "3/10 strong slots (auth 0.38); 1 UGC = opening",
       "_results": [
         {
           "domain": "mayoclinic.org",
@@ -29702,9 +29704,9 @@
     },
     "130 90 blood pressure": {
       "keyword": "130 90 blood pressure",
-      "difficulty": 2.8,
-      "winnability": 8.2,
-      "authority_share": 0.27,
+      "difficulty": 2.9,
+      "winnability": 8.1,
+      "authority_share": 0.29,
       "strong_slots": 2,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -29720,7 +29722,7 @@
         "practo.com",
         "easternstates.heart.org"
       ],
-      "why": "2/10 strong slots (auth 0.27); 1 UGC = opening",
+      "why": "2/10 strong slots (auth 0.29); 1 UGC = opening",
       "_results": [
         {
           "domain": "heart.org",
@@ -29777,9 +29779,9 @@
     },
     "130 70 blood pressure": {
       "keyword": "130 70 blood pressure",
-      "difficulty": 4.0,
-      "winnability": 7.0,
-      "authority_share": 0.41,
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.42,
       "strong_slots": 4,
       "ugc_results": 1,
       "distinct_domains": 10,
@@ -29795,7 +29797,7 @@
         "healthpartners.com",
         "acc.org"
       ],
-      "why": "4/10 strong slots (auth 0.41); 1 UGC = opening",
+      "why": "4/10 strong slots (auth 0.42); 1 UGC = opening",
       "_results": [
         {
           "domain": "mayoclinic.org",
@@ -29852,10 +29854,10 @@
     },
     "mortgage closing costs": {
       "keyword": "mortgage closing costs",
-      "difficulty": 5.6,
-      "winnability": 5.4,
+      "difficulty": 5.5,
+      "winnability": 5.5,
       "authority_share": 0.54,
-      "strong_slots": 6,
+      "strong_slots": 5,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -29870,7 +29872,7 @@
         "pnc.com",
         "wellsfargo.com"
       ],
-      "why": "6/10 strong slots (auth 0.54)",
+      "why": "5/10 strong slots (auth 0.54)",
       "_results": [
         {
           "domain": "zillow.com",
@@ -30005,7 +30007,7 @@
       "difficulty": 3.5,
       "winnability": 7.5,
       "authority_share": 0.31,
-      "strong_slots": 3,
+      "strong_slots": 2,
       "ugc_results": 0,
       "distinct_domains": 10,
       "top_domains": [
@@ -30020,7 +30022,7 @@
         "texasamerican.com",
         "flagstar.com"
       ],
-      "why": "3/10 strong slots (auth 0.31)",
+      "why": "2/10 strong slots (auth 0.31)",
       "_results": [
         {
           "domain": "yourhome.fanniemae.com",
@@ -30152,8 +30154,8 @@
     },
     "down payment assistance grants": {
       "keyword": "down payment assistance grants",
-      "difficulty": 3.4,
-      "winnability": 7.6,
+      "difficulty": 3.3,
+      "winnability": 7.7,
       "authority_share": 0.29,
       "strong_slots": 3,
       "ugc_results": 0,
@@ -30527,8 +30529,8 @@
     },
     "irs form 4868": {
       "keyword": "irs form 4868",
-      "difficulty": 7.0,
-      "winnability": 4.0,
+      "difficulty": 6.9,
+      "winnability": 4.1,
       "authority_share": 0.67,
       "strong_slots": 7,
       "ugc_results": 1,
@@ -30599,6 +30601,1806 @@
         }
       ],
       "scored_at": "2026-08-01"
+    },
+    "120 80 blood pressure": {
+      "keyword": "120 80 blood pressure",
+      "difficulty": 5.4,
+      "winnability": 5.6,
+      "authority_share": 0.61,
+      "strong_slots": 6,
+      "ugc_results": 2,
+      "distinct_domains": 10,
+      "top_domains": [
+        "heart.org",
+        "pmc.ncbi.nlm.nih.gov",
+        "facebook.com",
+        "yalemedicine.org",
+        "cdc.gov",
+        "medlineplus.gov",
+        "youtube.com",
+        "fda.gov",
+        "health.harvard.edu",
+        "ucfhealth.com"
+      ],
+      "why": "6/10 strong slots (auth 0.61); 2 UGC = opening",
+      "_results": [
+        {
+          "domain": "heart.org",
+          "url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings",
+          "title": "Understanding Blood Pressure Readings"
+        },
+        {
+          "domain": "pmc.ncbi.nlm.nih.gov",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC514035/",
+          "title": "US guidelines say blood pressure of 120/80 mm Hg is not “normal” - PMC"
+        },
+        {
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/MassGeneralBrigham/posts/hypertension-is-blood-pressure-above-the-normal-range-of-12080-be-proactive-abou/1368861481949802/",
+          "title": "Hypertension is blood pressure above the normal range of 120/80. Be ..."
+        },
+        {
+          "domain": "yalemedicine.org",
+          "url": "https://www.yalemedicine.org/news/blood-pressure-goal-the-number-your-doctor-wants-to-see",
+          "title": "Blood Pressure Goal: 120/80 Is the Number Your Doctor Wants to See"
+        },
+        {
+          "domain": "cdc.gov",
+          "url": "https://www.cdc.gov/high-blood-pressure/about/index.html",
+          "title": "About High Blood Pressure"
+        },
+        {
+          "domain": "medlineplus.gov",
+          "url": "https://medlineplus.gov/highbloodpressure.html",
+          "title": "High Blood Pressure | Hypertension"
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=CqU5gSTbRCA",
+          "title": "When Should You Worry About Your Blood Pressure?"
+        },
+        {
+          "domain": "fda.gov",
+          "url": "https://www.fda.gov/drugs/information-consumers-and-patients-drugs/high-blood-pressure-understanding-silent-killer",
+          "title": "High Blood Pressure–Understanding the Silent Killer"
+        },
+        {
+          "domain": "health.harvard.edu",
+          "url": "https://www.health.harvard.edu/healthy-aging-and-longevity/what-is-the-ideal-blood-pressure-number",
+          "title": "What is the ideal blood pressure number?"
+        },
+        {
+          "domain": "ucfhealth.com",
+          "url": "https://ucfhealth.com/our-services/primary-care/when-is-blood-pressure-high-enough-to-go-to-the-hospital/",
+          "title": "When Is Blood Pressure High Enough to Go to the Hospital? | Orlando"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "120 90 blood pressure": {
+      "keyword": "120 90 blood pressure",
+      "difficulty": 3.8,
+      "winnability": 7.2,
+      "authority_share": 0.38,
+      "strong_slots": 3,
+      "ugc_results": 1,
+      "distinct_domains": 10,
+      "top_domains": [
+        "heart.org",
+        "mayoclinic.org",
+        "fda.gov",
+        "pmc.ncbi.nlm.nih.gov",
+        "yalemedicine.org",
+        "facebook.com",
+        "my.clevelandclinic.org",
+        "capitalnephrology.com",
+        "bhf.org.uk",
+        "medlineplus.gov"
+      ],
+      "why": "3/10 strong slots (auth 0.38); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "heart.org",
+          "url": "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings",
+          "title": "Understanding Blood Pressure Readings"
+        },
+        {
+          "domain": "mayoclinic.org",
+          "url": "https://www.mayoclinic.org/diseases-conditions/high-blood-pressure/in-depth/blood-pressure/art-20050982",
+          "title": "Blood pressure chart: What your reading means"
+        },
+        {
+          "domain": "fda.gov",
+          "url": "https://www.fda.gov/drugs/information-consumers-and-patients-drugs/high-blood-pressure-understanding-silent-killer",
+          "title": "High Blood Pressure–Understanding the Silent Killer"
+        },
+        {
+          "domain": "pmc.ncbi.nlm.nih.gov",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC514035/",
+          "title": "US guidelines say blood pressure of 120/80 mm Hg is not “normal” - PMC"
+        },
+        {
+          "domain": "yalemedicine.org",
+          "url": "https://www.yalemedicine.org/news/blood-pressure-goal-the-number-your-doctor-wants-to-see",
+          "title": "Blood Pressure Goal: 120/80 Is the Number Your Doctor Wants to See"
+        },
+        {
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/MassGeneralBrigham/posts/hypertension-is-blood-pressure-above-the-normal-range-of-12080-be-proactive-abou/1368861481949802/",
+          "title": "Hypertension is blood pressure above the normal range of 120/80. Be ..."
+        },
+        {
+          "domain": "my.clevelandclinic.org",
+          "url": "https://my.clevelandclinic.org/health/diseases/4314-hypertension-high-blood-pressure",
+          "title": "High Blood Pressure (Hypertension): Symptoms & Causes"
+        },
+        {
+          "domain": "capitalnephrology.com",
+          "url": "https://www.capitalnephrology.com/high-blood-pressure-hypertension",
+          "title": "High Blood Pressure / Hypertension"
+        },
+        {
+          "domain": "bhf.org.uk",
+          "url": "https://www.bhf.org.uk/informationsupport/risk-factors/high-blood-pressure",
+          "title": "High blood pressure (Hypertension) - causes and symptoms"
+        },
+        {
+          "domain": "medlineplus.gov",
+          "url": "https://medlineplus.gov/highbloodpressure.html",
+          "title": "High Blood Pressure | Hypertension"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "120 60 blood pressure": {
+      "keyword": "120 60 blood pressure",
+      "difficulty": 4.8,
+      "winnability": 6.2,
+      "authority_share": 0.5,
+      "strong_slots": 5,
+      "ugc_results": 1,
+      "distinct_domains": 10,
+      "top_domains": [
+        "medicinenet.com",
+        "nhlbi.nih.gov",
+        "my.clevelandclinic.org",
+        "ubiehealth.com",
+        "bhf.org.uk",
+        "youtube.com",
+        "acibademinternational.com",
+        "health.harvard.edu",
+        "pmc.ncbi.nlm.nih.gov",
+        "healthdirect.gov.au"
+      ],
+      "why": "5/10 strong slots (auth 0.50); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "medicinenet.com",
+          "url": "https://www.medicinenet.com/is_120_over_60_a_good_blood_pressure_reading/article.htm",
+          "title": "Is 120 Over 60 a Good Blood Pressure Reading?"
+        },
+        {
+          "domain": "nhlbi.nih.gov",
+          "url": "https://www.nhlbi.nih.gov/health/low-blood-pressure",
+          "title": "Low Blood Pressure | NHLBI, NIH"
+        },
+        {
+          "domain": "my.clevelandclinic.org",
+          "url": "https://my.clevelandclinic.org/health/diagnostics/17649-blood-pressure",
+          "title": "Blood Pressure: Types, Ranges & Readings"
+        },
+        {
+          "domain": "ubiehealth.com",
+          "url": "https://ubiehealth.com/doctors-note/blood-pressure-normal-levels-age-insights-guide-37123exp4",
+          "title": "What is normal blood pressure by age? | Ubie Doctor's Note"
+        },
+        {
+          "domain": "bhf.org.uk",
+          "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/medical/low-blood-pressure",
+          "title": "Low blood pressure (hypotension): symptoms and causes"
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=CqU5gSTbRCA",
+          "title": "When Should You Worry About Your Blood Pressure?"
+        },
+        {
+          "domain": "acibademinternational.com",
+          "url": "https://acibademinternational.com/health-library/blood-pressure-120-60-is-it-normal-what-this-reading-means-for-your-health/",
+          "title": "120/60 Blood Pressure: Is It Normal?"
+        },
+        {
+          "domain": "health.harvard.edu",
+          "url": "https://www.health.harvard.edu/heart-health/blood-pressure-can-it-be-too-low",
+          "title": "Blood pressure: Can it be too low?"
+        },
+        {
+          "domain": "pmc.ncbi.nlm.nih.gov",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC514035/",
+          "title": "US guidelines say blood pressure of 120/80 mm Hg is ... - PMC"
+        },
+        {
+          "domain": "healthdirect.gov.au",
+          "url": "https://www.healthdirect.gov.au/what-is-a-healthy-blood-pressure",
+          "title": "What is a healthy blood pressure?"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "124 82 blood pressure": {
+      "keyword": "124 82 blood pressure",
+      "difficulty": 4.8,
+      "winnability": 6.2,
+      "authority_share": 0.49,
+      "strong_slots": 5,
+      "ugc_results": 1,
+      "distinct_domains": 9,
+      "top_domains": [
+        "mayoclinic.org",
+        "pmc.ncbi.nlm.nih.gov",
+        "pennmedicine.org",
+        "athleticheartsf.com",
+        "youtube.com",
+        "fda.gov",
+        "ubiehealth.com",
+        "heart.org",
+        "bhf.org.uk",
+        "bhf.org.uk"
+      ],
+      "why": "5/10 strong slots (auth 0.49); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "mayoclinic.org",
+          "url": "https://www.mayoclinic.org/diseases-conditions/high-blood-pressure/in-depth/blood-pressure/art-20050982",
+          "title": "Blood pressure chart: What your reading means"
+        },
+        {
+          "domain": "pmc.ncbi.nlm.nih.gov",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC514035/",
+          "title": "US guidelines say blood pressure of 120/80 mm Hg is not “normal” - PMC"
+        },
+        {
+          "domain": "pennmedicine.org",
+          "url": "https://www.pennmedicine.org/news/what-are-high-blood-pressure-numbers",
+          "title": "What are high blood pressure numbers?"
+        },
+        {
+          "domain": "athleticheartsf.com",
+          "url": "https://www.athleticheartsf.com/resources/article-series/is-blood-pressure-at-125-82-too-high",
+          "title": "Your Blood Pressure Is 125/82. Is This Too High?"
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=CqU5gSTbRCA",
+          "title": "When Should You Worry About Your Blood Pressure?"
+        },
+        {
+          "domain": "fda.gov",
+          "url": "https://www.fda.gov/drugs/information-consumers-and-patients-drugs/high-blood-pressure-understanding-silent-killer",
+          "title": "High Blood Pressure–Understanding the Silent Killer"
+        },
+        {
+          "domain": "ubiehealth.com",
+          "url": "https://ubiehealth.com/doctors-note/blood-pressure-normal-levels-age-insights-guide-37123exp4",
+          "title": "What is normal blood pressure by age? | Ubie Doctor's Note"
+        },
+        {
+          "domain": "heart.org",
+          "url": "https://www.heart.org/en/news/2023/05/02/blood-pressure-what-do-the-numbers-mean-and-why-do-they-matter",
+          "title": "Blood pressure: What do the numbers mean and why do they matter?"
+        },
+        {
+          "domain": "bhf.org.uk",
+          "url": "https://www.bhf.org.uk/informationsupport/risk-factors/high-blood-pressure",
+          "title": "High blood pressure (Hypertension) - causes and symptoms"
+        },
+        {
+          "domain": "bhf.org.uk",
+          "url": "https://www.bhf.org.uk/informationsupport/risk-factors/high-blood-pressure",
+          "title": "High blood pressure (Hypertension) - causes and symptoms"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "124 70 blood pressure": {
+      "keyword": "124 70 blood pressure",
+      "difficulty": 3.7,
+      "winnability": 7.3,
+      "authority_share": 0.36,
+      "strong_slots": 3,
+      "ugc_results": 1,
+      "distinct_domains": 9,
+      "top_domains": [
+        "mayoclinic.org",
+        "acibademinternational.com",
+        "pennmedicine.org",
+        "heart.org",
+        "ubiehealth.com",
+        "healthpartners.com",
+        "youtube.com",
+        "fda.gov",
+        "bhf.org.uk",
+        "fda.gov"
+      ],
+      "why": "3/10 strong slots (auth 0.36); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "mayoclinic.org",
+          "url": "https://www.mayoclinic.org/diseases-conditions/high-blood-pressure/in-depth/blood-pressure/art-20050982",
+          "title": "Blood pressure chart: What your reading means"
+        },
+        {
+          "domain": "acibademinternational.com",
+          "url": "https://acibademinternational.com/health-library/blood-pressure-124-70-is-it-normal-what-this-reading-means-for-your-health/",
+          "title": "124/70 Blood Pressure: Is It Normal?"
+        },
+        {
+          "domain": "pennmedicine.org",
+          "url": "https://www.pennmedicine.org/news/what-are-high-blood-pressure-numbers",
+          "title": "What are high blood pressure numbers?"
+        },
+        {
+          "domain": "heart.org",
+          "url": "https://www.heart.org/en/news/2023/05/02/blood-pressure-what-do-the-numbers-mean-and-why-do-they-matter",
+          "title": "Blood pressure: What do the numbers mean and why do they matter?"
+        },
+        {
+          "domain": "ubiehealth.com",
+          "url": "https://ubiehealth.com/doctors-note/blood-pressure-normal-levels-age-insights-guide-37123exp4",
+          "title": "What is normal blood pressure by age? | Ubie Doctor's Note"
+        },
+        {
+          "domain": "healthpartners.com",
+          "url": "https://www.healthpartners.com/blog/which-numbers-mean-high-blood-pressure/",
+          "title": "Blood pressure ranges: What do the numbers mean?"
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=CqU5gSTbRCA",
+          "title": "When Should You Worry About Your Blood Pressure?"
+        },
+        {
+          "domain": "fda.gov",
+          "url": "https://www.fda.gov/drugs/information-consumers-and-patients-drugs/high-blood-pressure-understanding-silent-killer",
+          "title": "High Blood Pressure–Understanding the Silent Killer"
+        },
+        {
+          "domain": "bhf.org.uk",
+          "url": "https://www.bhf.org.uk/informationsupport/risk-factors/high-blood-pressure",
+          "title": "High blood pressure (Hypertension) - causes and symptoms"
+        },
+        {
+          "domain": "fda.gov",
+          "url": "https://www.fda.gov/drugs/information-consumers-and-patients-drugs/high-blood-pressure-understanding-silent-killer",
+          "title": "High Blood Pressure–Understanding the Silent Killer"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "124 72 blood pressure": {
+      "keyword": "124 72 blood pressure",
+      "difficulty": 4.7,
+      "winnability": 6.3,
+      "authority_share": 0.48,
+      "strong_slots": 5,
+      "ugc_results": 1,
+      "distinct_domains": 9,
+      "top_domains": [
+        "mayoclinic.org",
+        "acibademinternational.com",
+        "pennmedicine.org",
+        "healthpartners.com",
+        "ubiehealth.com",
+        "fda.gov",
+        "youtube.com",
+        "acibademinternational.com",
+        "healthdirect.gov.au",
+        "healthcentral.com"
+      ],
+      "why": "5/10 strong slots (auth 0.48); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "mayoclinic.org",
+          "url": "https://www.mayoclinic.org/diseases-conditions/high-blood-pressure/in-depth/blood-pressure/art-20050982",
+          "title": "Blood pressure chart: What your reading means"
+        },
+        {
+          "domain": "acibademinternational.com",
+          "url": "https://acibademinternational.com/health-library/blood-pressure-124-72-is-it-normal-what-this-reading-means-for-your-health/",
+          "title": "124/72 Blood Pressure: Normal Or Not?"
+        },
+        {
+          "domain": "pennmedicine.org",
+          "url": "https://www.pennmedicine.org/news/what-are-high-blood-pressure-numbers",
+          "title": "What are high blood pressure numbers?"
+        },
+        {
+          "domain": "healthpartners.com",
+          "url": "https://www.healthpartners.com/blog/which-numbers-mean-high-blood-pressure/",
+          "title": "Blood pressure ranges: What do the numbers mean?"
+        },
+        {
+          "domain": "ubiehealth.com",
+          "url": "https://ubiehealth.com/doctors-note/blood-pressure-normal-levels-age-insights-guide-37123exp4",
+          "title": "What is normal blood pressure by age? | Ubie Doctor's Note"
+        },
+        {
+          "domain": "fda.gov",
+          "url": "https://www.fda.gov/drugs/information-consumers-and-patients-drugs/high-blood-pressure-understanding-silent-killer",
+          "title": "High Blood Pressure–Understanding the Silent Killer"
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=CqU5gSTbRCA",
+          "title": "When Should You Worry About Your Blood Pressure?"
+        },
+        {
+          "domain": "acibademinternational.com",
+          "url": "https://acibademinternational.com/health-library/blood-pressure-124-70-is-it-normal-what-this-reading-means-for-your-health/",
+          "title": "124/70 Blood Pressure: Is It Normal?"
+        },
+        {
+          "domain": "healthdirect.gov.au",
+          "url": "https://www.healthdirect.gov.au/what-is-a-healthy-blood-pressure",
+          "title": "What is a healthy blood pressure?"
+        },
+        {
+          "domain": "healthcentral.com",
+          "url": "https://www.healthcentral.com/article/blood-pressure-normal-need-call-doctor",
+          "title": "My Blood Pressure is 124/60. Do I Need to Call my Doctor?"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "401k distribution calculator": {
+      "keyword": "401k distribution calculator",
+      "difficulty": 2.4,
+      "winnability": 8.6,
+      "authority_share": 0.18,
+      "strong_slots": 2,
+      "ugc_results": 0,
+      "distinct_domains": 10,
+      "top_domains": [
+        "key.com",
+        "fidelity.com",
+        "tiaa.org",
+        "esl.org",
+        "fidelitybank.com",
+        "easternbank.com",
+        "umcu.org",
+        "investor.gov",
+        "cnbankpa.com",
+        "americancentury.com"
+      ],
+      "why": "2/10 strong slots (auth 0.18)",
+      "_results": [
+        {
+          "domain": "key.com",
+          "url": "https://www.key.com/personal/calculators/enough-retirement-savings-calculator.html",
+          "title": "Retirement Withdrawal and Distribution Calculator"
+        },
+        {
+          "domain": "fidelity.com",
+          "url": "https://www.fidelity.com/calculators-tools/retirement-calculator/overview",
+          "title": "Planning for Retirement | Retirement Calculators & Tools"
+        },
+        {
+          "domain": "tiaa.org",
+          "url": "https://www.tiaa.org/public/tools-calculators/withdrawalcalculator",
+          "title": "401k Early Withdrawal Calculator"
+        },
+        {
+          "domain": "esl.org",
+          "url": "https://www.esl.org/resources-tools/calculators/retirement-distribution-calculator",
+          "title": "Retirement Distribution Calculator"
+        },
+        {
+          "domain": "fidelitybank.com",
+          "url": "https://www.fidelitybank.com/resources/knowledge-center/calculator-how-long-will-my-retirement-savings-last/",
+          "title": "Calculator: How long will my retirement savings last?"
+        },
+        {
+          "domain": "easternbank.com",
+          "url": "https://www.easternbank.com/retirement-savings-distribution-calculator",
+          "title": "Retirement Savings Distribution Calculator"
+        },
+        {
+          "domain": "umcu.org",
+          "url": "https://www.umcu.org/learn/resources/calculators/how-long-will-my-retirement-savings-last-calculator",
+          "title": "Calculate How Long Your Money Will Last in Retirement"
+        },
+        {
+          "domain": "investor.gov",
+          "url": "https://www.investor.gov/financial-tools-calculators/calculators/required-minimum-distribution-calculator",
+          "title": "Required Minimum Distribution Calculator"
+        },
+        {
+          "domain": "cnbankpa.com",
+          "url": "https://www.cnbankpa.com/Resource-Center/Tools/Calculators/Investment-Savings-and-Distributions",
+          "title": "Investment Savings & Distributions Calculator"
+        },
+        {
+          "domain": "americancentury.com",
+          "url": "https://www.americancentury.com/plan/calculators/cash-out-calculator/",
+          "title": "401(k) Cash Out Withdrawal Calculator"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "401k distribution rules": {
+      "keyword": "401k distribution rules",
+      "difficulty": 5.4,
+      "winnability": 5.6,
+      "authority_share": 0.49,
+      "strong_slots": 6,
+      "ugc_results": 0,
+      "distinct_domains": 8,
+      "top_domains": [
+        "irs.gov",
+        "fidelity.com",
+        "employeefiduciary.com",
+        "irs.gov",
+        "blackrock.com",
+        "schwab.com",
+        "paychex.com",
+        "empower.com",
+        "usbank.com",
+        "schwab.com"
+      ],
+      "why": "6/10 strong slots (auth 0.49)",
+      "_results": [
+        {
+          "domain": "irs.gov",
+          "url": "https://www.irs.gov/retirement-plans/plan-participant-employee/401k-resource-guide-plan-participants-general-distribution-rules",
+          "title": "Plan Participants - General Distribution Rules"
+        },
+        {
+          "domain": "fidelity.com",
+          "url": "https://www.fidelity.com/learning-center/smart-money/i-need-my-401k-money-now",
+          "title": "I need my 401(k) money now: 401(k) early withdrawals"
+        },
+        {
+          "domain": "employeefiduciary.com",
+          "url": "https://www.employeefiduciary.com/blog/401k-distribution-rules-frequently-asked-questions",
+          "title": "401(k) Distribution Rules: Frequently Asked Questions for ..."
+        },
+        {
+          "domain": "irs.gov",
+          "url": "https://www.irs.gov/retirement-plans/retirement-plan-and-ira-required-minimum-distributions-faqs",
+          "title": "Retirement plan and IRA required minimum distributions ..."
+        },
+        {
+          "domain": "blackrock.com",
+          "url": "https://www.blackrock.com/us/individual/education/retirement/withdrawal-rules-and-strategies",
+          "title": "Retirement withdrawal rules and strategies"
+        },
+        {
+          "domain": "schwab.com",
+          "url": "https://www.schwab.com/learn/story/retiring-early-5-key-points-about-rule-55",
+          "title": "When Can You Withdraw? 401(k)s and the Rule of 55"
+        },
+        {
+          "domain": "paychex.com",
+          "url": "https://www.paychex.com/glossary/what-is-a-401k-withdrawal",
+          "title": "401(k) Withdrawal: Rules, Penalties & Options"
+        },
+        {
+          "domain": "empower.com",
+          "url": "https://www.empower.com/the-currency/money/can-withdraw-401k-ira-penalty-free",
+          "title": "401(k) withdrawal rules: How to avoid penalties"
+        },
+        {
+          "domain": "usbank.com",
+          "url": "https://www.usbank.com/retirement-planning/financial-perspectives/ira-and-401k-withdrawal-rules.html",
+          "title": "IRA and 401(k) Withdrawal Rules"
+        },
+        {
+          "domain": "schwab.com",
+          "url": "https://www.schwab.com/learn/story/retiring-early-5-key-points-about-rule-55",
+          "title": "When Can You Withdraw? 401(k)s and the Rule of 55"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "401k distribution": {
+      "keyword": "401k distribution",
+      "difficulty": 4.3,
+      "winnability": 6.7,
+      "authority_share": 0.36,
+      "strong_slots": 4,
+      "ugc_results": 0,
+      "distinct_domains": 8,
+      "top_domains": [
+        "irs.gov",
+        "fidelity.com",
+        "empower.com",
+        "employeefiduciary.com",
+        "schwab.com",
+        "fidelity.com",
+        "help.guideline.com",
+        "blackrock.com",
+        "paychex.com",
+        "fidelity.com"
+      ],
+      "why": "4/10 strong slots (auth 0.36)",
+      "_results": [
+        {
+          "domain": "irs.gov",
+          "url": "https://www.irs.gov/retirement-plans/plan-participant-employee/401k-resource-guide-plan-participants-general-distribution-rules",
+          "title": "401k Resource Guide Plan Participants General Distribution ..."
+        },
+        {
+          "domain": "fidelity.com",
+          "url": "https://www.fidelity.com/learning-center/smart-money/i-need-my-401k-money-now",
+          "title": "I need my 401(k) money now: 401(k) early withdrawals"
+        },
+        {
+          "domain": "empower.com",
+          "url": "https://www.empower.com/the-currency/money/can-withdraw-401k-ira-penalty-free",
+          "title": "401(k) withdrawal rules: How to avoid penalties"
+        },
+        {
+          "domain": "employeefiduciary.com",
+          "url": "https://www.employeefiduciary.com/blog/401k-distribution-rules-frequently-asked-questions",
+          "title": "401(k) Distribution Rules: Frequently Asked Questions for Employers and ..."
+        },
+        {
+          "domain": "schwab.com",
+          "url": "https://www.schwab.com/resource/401k-distribution-request-form",
+          "title": "Individual 401(k) Distribution Request Form"
+        },
+        {
+          "domain": "fidelity.com",
+          "url": "https://www.fidelity.com/learning-center/personal-finance/what-is-rule-of-55",
+          "title": "What is the Rule of 55?"
+        },
+        {
+          "domain": "help.guideline.com",
+          "url": "https://help.guideline.com/en/articles/8614990-how-an-in-service-distribution-may-allow-you-to-withdraw-from-your-401-k-while-still-employed",
+          "title": "How an in-service distribution may allow you to withdraw from your 401 ..."
+        },
+        {
+          "domain": "blackrock.com",
+          "url": "https://www.blackrock.com/us/individual/education/retirement/withdrawal-rules-and-strategies",
+          "title": "Retirement withdrawal rules and strategies"
+        },
+        {
+          "domain": "paychex.com",
+          "url": "https://www.paychex.com/glossary/what-is-a-401k-withdrawal",
+          "title": "401(k) Withdrawal: Rules, Penalties & Options"
+        },
+        {
+          "domain": "fidelity.com",
+          "url": "https://www.fidelity.com/learning-center/personal-finance/what-is-rule-of-55",
+          "title": "What is the Rule of 55?"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "closing costs how much": {
+      "keyword": "closing costs how much",
+      "difficulty": 5.2,
+      "winnability": 5.8,
+      "authority_share": 0.55,
+      "strong_slots": 5,
+      "ugc_results": 1,
+      "distinct_domains": 10,
+      "top_domains": [
+        "zillow.com",
+        "yourhome.fanniemae.com",
+        "reddit.com",
+        "bankofamerica.com",
+        "icul.com",
+        "rocketmortgage.com",
+        "usbank.com",
+        "myhome.freddiemac.com",
+        "navyfederal.org",
+        "herringbank.com"
+      ],
+      "why": "5/10 strong slots (auth 0.55); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "zillow.com",
+          "url": "https://www.zillow.com/mortgage-calculator/closing-cost-calculator/",
+          "title": "Closing Cost Calculator"
+        },
+        {
+          "domain": "yourhome.fanniemae.com",
+          "url": "https://yourhome.fanniemae.com/calculators-tools/closing-costs-calculator",
+          "title": "Closing Costs Calculator"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/RealEstate/comments/11771qp/how_much_were_your_closing_costs_and_how_much_was/",
+          "title": "how much were your closing costs, and how much was your home?"
+        },
+        {
+          "domain": "bankofamerica.com",
+          "url": "https://www.bankofamerica.com/mortgage/closing-costs-calculator/",
+          "title": "Closing Costs Calculator"
+        },
+        {
+          "domain": "icul.com",
+          "url": "https://www.icul.com/news/hermoney-blog/2025/what-are-closing-costs-and-how-much-should-i-expect/",
+          "title": "What Are Closing Costs, and How Much Should I Expect? |"
+        },
+        {
+          "domain": "rocketmortgage.com",
+          "url": "https://www.rocketmortgage.com/learn/closing-costs",
+          "title": "Closing costs: What they are and how much you'll pay"
+        },
+        {
+          "domain": "usbank.com",
+          "url": "https://www.usbank.com/home-loans/mortgage/first-time-home-buyers/closing-costs.html",
+          "title": "How much are closing costs — What will you pay?"
+        },
+        {
+          "domain": "myhome.freddiemac.com",
+          "url": "https://myhome.freddiemac.com/blog/homebuying/what-are-closing-costs-and-how-much-will-i-pay",
+          "title": "What Are Closing Costs and How Much Will I Pay?"
+        },
+        {
+          "domain": "navyfederal.org",
+          "url": "https://www.navyfederal.org/makingcents/tools/mortgage-closing-cost-calculator.html",
+          "title": "Mortgage Closing Costs Calculator"
+        },
+        {
+          "domain": "herringbank.com",
+          "url": "https://www.herringbank.com/learn/typical-closing-costs-in-texas-for-buyers-and-sellers/",
+          "title": "Typical Closing Costs in Texas for Buyers and Sellers"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "closing costs calculator for buyer": {
+      "keyword": "closing costs calculator for buyer",
+      "difficulty": 3.1,
+      "winnability": 7.9,
+      "authority_share": 0.27,
+      "strong_slots": 2,
+      "ugc_results": 0,
+      "distinct_domains": 10,
+      "top_domains": [
+        "zillow.com",
+        "yourhome.fanniemae.com",
+        "bankofamerica.com",
+        "navyfederal.org",
+        "myhome.freddiemac.com",
+        "homelight.com",
+        "thegiffordgroup.net",
+        "mortgagecalculator.org",
+        "spectracu.com",
+        "associatedbank.com"
+      ],
+      "why": "2/10 strong slots (auth 0.27)",
+      "_results": [
+        {
+          "domain": "zillow.com",
+          "url": "https://www.zillow.com/mortgage-calculator/closing-cost-calculator/",
+          "title": "Closing Cost Calculator"
+        },
+        {
+          "domain": "yourhome.fanniemae.com",
+          "url": "https://yourhome.fanniemae.com/calculators-tools/closing-costs-calculator",
+          "title": "Closing Costs Calculator"
+        },
+        {
+          "domain": "bankofamerica.com",
+          "url": "https://www.bankofamerica.com/mortgage/closing-costs-calculator/",
+          "title": "Closing Costs Calculator"
+        },
+        {
+          "domain": "navyfederal.org",
+          "url": "https://www.navyfederal.org/makingcents/tools/mortgage-closing-cost-calculator.html",
+          "title": "Mortgage Closing Costs Calculator"
+        },
+        {
+          "domain": "myhome.freddiemac.com",
+          "url": "https://myhome.freddiemac.com/resources/calculators/closing-costs",
+          "title": "Closing Costs - My Home by Freddie Mac"
+        },
+        {
+          "domain": "homelight.com",
+          "url": "https://www.homelight.com/closing-costs-calculator",
+          "title": "Simple Closing Costs Calculator"
+        },
+        {
+          "domain": "thegiffordgroup.net",
+          "url": "https://thegiffordgroup.net/closing-cost-calculator",
+          "title": "Buyer Closing cost calculator Texas"
+        },
+        {
+          "domain": "mortgagecalculator.org",
+          "url": "https://www.mortgagecalculator.org/calcs/closing-costs.php",
+          "title": "VA, FHA & Conventional Mortgage Closing Cost Calculator"
+        },
+        {
+          "domain": "spectracu.com",
+          "url": "https://www.spectracu.com/calculators/mortgage/net-seller-proceeds",
+          "title": "Seller Closing Cost Calculator"
+        },
+        {
+          "domain": "associatedbank.com",
+          "url": "https://www.associatedbank.com/education/articles/personal-finance/loans-and-debt/closing-costs",
+          "title": "Mortgage Closing Cost Calculator: Estimate Your Home ..."
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "mortgage interest deduction": {
+      "keyword": "mortgage interest deduction",
+      "difficulty": 5.7,
+      "winnability": 5.3,
+      "authority_share": 0.65,
+      "strong_slots": 6,
+      "ugc_results": 2,
+      "distinct_domains": 10,
+      "top_domains": [
+        "irs.gov",
+        "nerdwallet.com",
+        "congress.gov",
+        "nar.realtor",
+        "reddit.com",
+        "taxpolicycenter.org",
+        "youtube.com",
+        "bankrate.com",
+        "taxfoundation.org",
+        "turbotax.intuit.com"
+      ],
+      "why": "6/10 strong slots (auth 0.65); 2 UGC = opening",
+      "_results": [
+        {
+          "domain": "irs.gov",
+          "url": "https://www.irs.gov/publications/p936",
+          "title": "Publication 936 (2025), Home Mortgage Interest Deduction"
+        },
+        {
+          "domain": "nerdwallet.com",
+          "url": "https://www.nerdwallet.com/taxes/learn/mortgage-interest-rate-deduction",
+          "title": "Mortgage Interest Deduction: Limit, How It Works - Taxes"
+        },
+        {
+          "domain": "congress.gov",
+          "url": "https://www.congress.gov/crs-product/IF13190",
+          "title": "Reforms to the Mortgage Interest Deduction with Revenue Estimates"
+        },
+        {
+          "domain": "nar.realtor",
+          "url": "https://www.nar.realtor/mortgage-interest-deduction",
+          "title": "Mortgage Interest Deduction"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Mortgages/comments/1khu1ig/can_anyone_tell_the_real_impact_of_the_mortgage/",
+          "title": "Can anyone tell the real impact of the mortgage interest deduction on their ..."
+        },
+        {
+          "domain": "taxpolicycenter.org",
+          "url": "https://taxpolicycenter.org/fiscal-facts/who-benefits-mortgage-interest-deduction-and-who-misses-out",
+          "title": "Who Benefits From The Mortgage Interest Deduction And Who Misses ..."
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=xyHdUVv36lg",
+          "title": "Mortgage Interest Deduction"
+        },
+        {
+          "domain": "bankrate.com",
+          "url": "https://www.bankrate.com/mortgages/mortgage-tax-deduction-calculator/",
+          "title": "Mortgage Interest Tax Deduction Calculator"
+        },
+        {
+          "domain": "taxfoundation.org",
+          "url": "https://taxfoundation.org/taxedu/glossary/mortgage-interest-deduction-mid/",
+          "title": "Mortgage Interest Deduction | TaxEDU Glossary"
+        },
+        {
+          "domain": "turbotax.intuit.com",
+          "url": "https://turbotax.intuit.com/tax-tips/home-ownership/about-tax-deductions-for-a-mortgage/amp/L2NEBzLjY",
+          "title": "Mortgage Interest Deduction: How Does it Work? - TurboTax - Intuit"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "electric car stations near me": {
+      "keyword": "electric car stations near me",
+      "difficulty": 2.6,
+      "winnability": 8.4,
+      "authority_share": 0.21,
+      "strong_slots": 2,
+      "ugc_results": 0,
+      "distinct_domains": 10,
+      "top_domains": [
+        "afdc.energy.gov",
+        "electrifyamerica.com",
+        "nyserda.ny.gov",
+        "shell.us",
+        "chargefinder.com",
+        "michigan.org",
+        "evgo.com",
+        "blinkcharging.com",
+        "walmart.com",
+        "jdpower.com"
+      ],
+      "why": "2/10 strong slots (auth 0.21)",
+      "_results": [
+        {
+          "domain": "afdc.energy.gov",
+          "url": "https://afdc.energy.gov/fuels/electricity-locations",
+          "title": "Electric Vehicle Charging Station Locations"
+        },
+        {
+          "domain": "electrifyamerica.com",
+          "url": "https://www.electrifyamerica.com/locate-charger/",
+          "title": "EV Charging Stations Near Me"
+        },
+        {
+          "domain": "nyserda.ny.gov",
+          "url": "https://www.nyserda.ny.gov/All-Programs/Drive-Clean-Rebate-For-Electric-Cars-Program/Charging-Options/Electric-Vehicle-Station-Locator",
+          "title": "Electric Vehicle Station Locator | NYSERDA - NY.gov"
+        },
+        {
+          "domain": "shell.us",
+          "url": "https://www.shell.us/electric-vehicle-charging/find-an-ev-charging-station.html",
+          "title": "Find The Nearest EV Charging Station"
+        },
+        {
+          "domain": "chargefinder.com",
+          "url": "https://chargefinder.com/us/saint-louis/charging-station/w8wyd9",
+          "title": "EV charging stations in Saint Louis"
+        },
+        {
+          "domain": "michigan.org",
+          "url": "https://www.michigan.org/ev",
+          "title": "Electric Vehicle Charging Stations | Michigan"
+        },
+        {
+          "domain": "evgo.com",
+          "url": "https://www.evgo.com/cities/phoenix/",
+          "title": "Phoenix Electric Vehicle Charging Stations"
+        },
+        {
+          "domain": "blinkcharging.com",
+          "url": "https://blinkcharging.com/charge/find-a-charger",
+          "title": "Find EV Chargers Nearby: Locate Blink Charging Stations"
+        },
+        {
+          "domain": "walmart.com",
+          "url": "https://www.walmart.com/cp/ev/9145505",
+          "title": "EV - Walmart.com"
+        },
+        {
+          "domain": "jdpower.com",
+          "url": "https://www.jdpower.com/evs/ev-charging-stations-near-me",
+          "title": "EV Charging Stations Near Me"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "electric car recharge stations": {
+      "keyword": "electric car recharge stations",
+      "difficulty": 2.6,
+      "winnability": 8.4,
+      "authority_share": 0.21,
+      "strong_slots": 2,
+      "ugc_results": 0,
+      "distinct_domains": 10,
+      "top_domains": [
+        "afdc.energy.gov",
+        "plugshare.com",
+        "blinkcharging.com",
+        "shell.us",
+        "chargefinder.com",
+        "michigan.org",
+        "driveelectric.gov",
+        "pilotcompany.com",
+        "evgo.com",
+        "chevrolet.com"
+      ],
+      "why": "2/10 strong slots (auth 0.21)",
+      "_results": [
+        {
+          "domain": "afdc.energy.gov",
+          "url": "https://afdc.energy.gov/fuels/electricity-locations",
+          "title": "Electric Vehicle Charging Station Locations - Alternative Fuels Data Center"
+        },
+        {
+          "domain": "plugshare.com",
+          "url": "https://www.plugshare.com/",
+          "title": "PlugShare - EV Charging Station Map - Find a place to charge"
+        },
+        {
+          "domain": "blinkcharging.com",
+          "url": "https://blinkcharging.com/",
+          "title": "Blink Charging: EV Charging Stations for Residences & Businesses"
+        },
+        {
+          "domain": "shell.us",
+          "url": "https://www.shell.us/electric-vehicle-charging/find-an-ev-charging-station.html",
+          "title": "Shell Recharge Locator - Find The Nearest EV Charging Station"
+        },
+        {
+          "domain": "chargefinder.com",
+          "url": "https://chargefinder.com/",
+          "title": "ChargeFinder - Charging stations for electric cars (EV)"
+        },
+        {
+          "domain": "michigan.org",
+          "url": "https://www.michigan.org/ev",
+          "title": "Electric Vehicle Charging Stations | Michigan"
+        },
+        {
+          "domain": "driveelectric.gov",
+          "url": "https://driveelectric.gov/stations",
+          "title": "Electric Vehicle Charging Stations"
+        },
+        {
+          "domain": "pilotcompany.com",
+          "url": "https://pilotcompany.com/ev-charging",
+          "title": "EV Charging A New Era of Electric Travel"
+        },
+        {
+          "domain": "evgo.com",
+          "url": "https://www.evgo.com/find-a-charger/mi/detroit/100-renaissance-center-367003/",
+          "title": "EVgo EV Charging Station in 100 Renaissance Center, Detroit, MI ..."
+        },
+        {
+          "domain": "chevrolet.com",
+          "url": "https://www.chevrolet.com/electric/ev-charging/public-charging",
+          "title": "Public Charging for Electric Vehicles"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "electric car charger": {
+      "keyword": "electric car charger",
+      "difficulty": 3.0,
+      "winnability": 8.0,
+      "authority_share": 0.3,
+      "strong_slots": 3,
+      "ugc_results": 1,
+      "distinct_domains": 10,
+      "top_domains": [
+        "smartchargeamerica.com",
+        "evgo.com",
+        "caranddriver.com",
+        "youtube.com",
+        "energystar.gov",
+        "marketplace.pseg.com",
+        "store.leviton.com",
+        "driveelectric.gov",
+        "evocharge.com",
+        "store.chargepoint.com"
+      ],
+      "why": "3/10 strong slots (auth 0.30); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "smartchargeamerica.com",
+          "url": "https://smartchargeamerica.com/electric-car-chargers/?srsltid=AfmBOorQ6KRfWo8K1AW7Ft9xFp2Ajemg5WRRsOiHqyDWUvXFjgTZ16kL",
+          "title": "Electric Car Chargers - EV Charging Stations - EVSE"
+        },
+        {
+          "domain": "evgo.com",
+          "url": "https://www.evgo.com/",
+          "title": "EVgo | Electric Vehicle (EV) Charging Stations - EV Fast Chargers"
+        },
+        {
+          "domain": "caranddriver.com",
+          "url": "https://www.caranddriver.com/shopping-advice/a39917614/best-home-ev-chargers-tested/",
+          "title": "Tested: Best Home EV Chargers for 2026"
+        },
+        {
+          "domain": "youtube.com",
+          "url": "https://www.youtube.com/watch?v=W96a8svXo14",
+          "title": "The \"standard\" car charger is usually overkill—but your electrician might ..."
+        },
+        {
+          "domain": "energystar.gov",
+          "url": "https://www.energystar.gov/products/ev_chargers",
+          "title": "Electric Vehicle Chargers"
+        },
+        {
+          "domain": "marketplace.pseg.com",
+          "url": "https://marketplace.pseg.com/shop-all/ev-chargers/",
+          "title": "EV Chargers - PSE&G Marketplace"
+        },
+        {
+          "domain": "store.leviton.com",
+          "url": "https://store.leviton.com/collections/ev-charging?srsltid=AfmBOopVuwcscNnpWELoWH4Ikgyf0uzRxrl3XUaoD_VcmOljGpaFXaC-",
+          "title": "Electric Vehicle"
+        },
+        {
+          "domain": "driveelectric.gov",
+          "url": "https://driveelectric.gov/stations",
+          "title": "Electric Vehicle Charging Stations"
+        },
+        {
+          "domain": "evocharge.com",
+          "url": "https://evocharge.com/",
+          "title": "EvoCharge: Electric Vehicle (EV) Charging Stations & Solutions"
+        },
+        {
+          "domain": "store.chargepoint.com",
+          "url": "https://store.chargepoint.com/chargers",
+          "title": "Shop Level 2 home EV chargers"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "low cost index funds": {
+      "keyword": "low cost index funds",
+      "difficulty": 3.9,
+      "winnability": 7.1,
+      "authority_share": 0.47,
+      "strong_slots": 4,
+      "ugc_results": 3,
+      "distinct_domains": 9,
+      "top_domains": [
+        "money.usnews.com",
+        "forbes.com",
+        "fidelity.com",
+        "reddit.com",
+        "reddit.com",
+        "quora.com",
+        "morningstar.com",
+        "nerdwallet.com",
+        "view.ceros.com",
+        "investor.vanguard.com"
+      ],
+      "why": "4/10 strong slots (auth 0.47); 3 UGC = opening",
+      "_results": [
+        {
+          "domain": "money.usnews.com",
+          "url": "https://money.usnews.com/investing/articles/best-low-cost-index-funds",
+          "title": "10 Best Low-Cost Index Funds to Buy in 2026 | Investing"
+        },
+        {
+          "domain": "forbes.com",
+          "url": "https://www.forbes.com/sites/investor-hub/article/best-index-funds-beginners/",
+          "title": "5 Best Index Funds For Beginners"
+        },
+        {
+          "domain": "fidelity.com",
+          "url": "https://www.fidelity.com/mutual-funds/investing-ideas/index-funds",
+          "title": "No minimum investment mutual funds"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/personalfinance/comments/1kct11n/what_index_fund_is_the_most_safereliableoverall/",
+          "title": "What index fund is the most safe/reliable/overall best choice as a young investor?"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Bogleheads/comments/1q5b6c3/what_is_low_cost_in_an_index_fund_for_you/",
+          "title": "What is \"low cost\" in an index fund for you?"
+        },
+        {
+          "domain": "quora.com",
+          "url": "https://www.quora.com/Why-are-ultra-low-cost-index-funds-recommended-for-early-retirement-and-how-do-I-choose-the-right-ones",
+          "title": "Why are ultra-low-cost index funds recommended for early retirement, and how ..."
+        },
+        {
+          "domain": "morningstar.com",
+          "url": "https://www.morningstar.com/funds/best-index-funds",
+          "title": "The Best Index Funds for 2026"
+        },
+        {
+          "domain": "nerdwallet.com",
+          "url": "https://www.nerdwallet.com/investing/learn/low-cost-index-funds",
+          "title": "14 Low-Cost Index Funds and ETFs for July 2026"
+        },
+        {
+          "domain": "view.ceros.com",
+          "url": "https://view.ceros.com/fidelity-interactive/low-cost-index-funds-a-beginners-guide",
+          "title": "Low-cost index funds: A beginner's guide"
+        },
+        {
+          "domain": "investor.vanguard.com",
+          "url": "https://investor.vanguard.com/investment-products/index-funds",
+          "title": "Index Funds: How to Invest - Vanguard"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "low cost s&p 500 index fund": {
+      "keyword": "low cost s&p 500 index fund",
+      "difficulty": 2.4,
+      "winnability": 8.6,
+      "authority_share": 0.31,
+      "strong_slots": 2,
+      "ugc_results": 3,
+      "distinct_domains": 9,
+      "top_domains": [
+        "fundresearch.fidelity.com",
+        "money.usnews.com",
+        "forbes.com",
+        "investor.vanguard.com",
+        "schwab.com",
+        "view.ceros.com",
+        "franklintempleton.com",
+        "reddit.com",
+        "reddit.com",
+        "bogleheads.org"
+      ],
+      "why": "2/10 strong slots (auth 0.31); 3 UGC = opening",
+      "_results": [
+        {
+          "domain": "fundresearch.fidelity.com",
+          "url": "https://fundresearch.fidelity.com/mutual-funds/summary/315911750",
+          "title": "FXAIX - Fidelity ® 500 Index Fund"
+        },
+        {
+          "domain": "money.usnews.com",
+          "url": "https://money.usnews.com/investing/articles/best-s-p-500-index-funds-to-buy",
+          "title": "5 Best S&P 500 Index Funds to Buy for 2026 | Investing"
+        },
+        {
+          "domain": "forbes.com",
+          "url": "https://www.forbes.com/sites/investor-hub/article/best-index-funds-beginners/",
+          "title": "5 Best Index Funds For Beginners"
+        },
+        {
+          "domain": "investor.vanguard.com",
+          "url": "https://investor.vanguard.com/investment-products/index-funds",
+          "title": "Index Funds: How to Invest - Vanguard"
+        },
+        {
+          "domain": "schwab.com",
+          "url": "https://www.schwab.com/research/mutual-funds/quotes/fees/swppx",
+          "title": "Schwab S&P 500 Index Fund (SWPPX)"
+        },
+        {
+          "domain": "view.ceros.com",
+          "url": "https://view.ceros.com/fidelity-interactive/low-cost-index-funds-a-beginners-guide",
+          "title": "Low-cost index funds: A beginner's guide"
+        },
+        {
+          "domain": "franklintempleton.com",
+          "url": "https://www.franklintempleton.com/investments/options/mutual-funds/products/90138/AA2/franklin-s-p-500-index-fund/SBSPX",
+          "title": "SBSPX Franklin S&P 500 Index Fund"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Schwab/comments/1mqh7ed/are_there_any_sp_500_growth_etfs_at_a_lower_price/",
+          "title": "Are there any s&p 500 growth ETFs at a lower price?"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Bogleheads/comments/1la20ib/how_has_vanguard_allowed_splg_to_be_the_lowest/",
+          "title": "How has Vanguard allowed SPLG to be the lowest cost S&P500 fund?"
+        },
+        {
+          "domain": "bogleheads.org",
+          "url": "https://www.bogleheads.org/forum/viewtopic.php?t=389255",
+          "title": "Where is it cheapest to own the S&P 500 index Vanguard, Fidelity, or Schwab and why?"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "low cost life insurance without medical exam": {
+      "keyword": "low cost life insurance without medical exam",
+      "difficulty": 2.5,
+      "winnability": 8.5,
+      "authority_share": 0.32,
+      "strong_slots": 2,
+      "ugc_results": 3,
+      "distinct_domains": 9,
+      "top_domains": [
+        "aflac.com",
+        "ethos.com",
+        "policygenius.com",
+        "wsj.com",
+        "trustage.com",
+        "ace.aaa.com",
+        "lifeessentials.nationwide.com",
+        "reddit.com",
+        "reddit.com",
+        "quora.com"
+      ],
+      "why": "2/10 strong slots (auth 0.32); 3 UGC = opening",
+      "_results": [
+        {
+          "domain": "aflac.com",
+          "url": "https://www.aflac.com/resources/life-insurance/life-insurance-with-no-medical-exam.aspx",
+          "title": "Life Insurance with No Medical Exam"
+        },
+        {
+          "domain": "ethos.com",
+          "url": "https://www.ethos.com/life/term-life-insurance-no-medical-exam/",
+          "title": "No-Exam Life Insurance: Get Coverage Without a Medical Exam"
+        },
+        {
+          "domain": "policygenius.com",
+          "url": "https://www.policygenius.com/life-insurance/no-medical-exam-life-insurance/",
+          "title": "Best No-Exam Life Insurance Companies (2025)"
+        },
+        {
+          "domain": "wsj.com",
+          "url": "https://www.wsj.com/buyside/personal-finance/life-insurance/best-no-exam-life-insurance-companies",
+          "title": "The Best No-Exam Life Insurance"
+        },
+        {
+          "domain": "trustage.com",
+          "url": "https://www.trustage.com/learn/life-insurance/no-medical-exam-life-insurance",
+          "title": "Can I get life insurance with no medical exam?"
+        },
+        {
+          "domain": "ace.aaa.com",
+          "url": "https://www.ace.aaa.com/insurance/life-insurance/no-medical-exam-life-insurance.html",
+          "title": "No Medical Exam Life Insurance: Skip the Physical & Health Questions"
+        },
+        {
+          "domain": "lifeessentials.nationwide.com",
+          "url": "https://lifeessentials.nationwide.com/",
+          "title": "No Exam Life Insurance Quote - Nationwide"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/LifeInsurance/comments/1vboo3a/best_life_insurance_companies_if_you_dont_want_a/",
+          "title": "Best life insurance companies if you don't want a medical exam?"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/MiddleClassFinance/comments/1n7jtme/best_life_insurance_companies_that_dont_require_a/",
+          "title": "Best life insurance companies that don't require a medical exam? Just want to stop putting it off and get insured."
+        },
+        {
+          "domain": "quora.com",
+          "url": "https://www.quora.com/Why-should-I-consider-a-life-insurance-policy-that-doesnt-require-medical-exams",
+          "title": "'Why should I consider a life insurance policy that doesn't require medical exams?"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "wills and estate lawyers near me": {
+      "keyword": "wills and estate lawyers near me",
+      "difficulty": 1.0,
+      "winnability": 10.0,
+      "authority_share": 0.03,
+      "strong_slots": 0,
+      "ugc_results": 0,
+      "distinct_domains": 10,
+      "top_domains": [
+        "bankierlaw.com",
+        "justia.com",
+        "m.yelp.com",
+        "stevenkschwartzpa.com",
+        "siegellawgroup.com",
+        "boyntonlaw.com",
+        "kitroserlaw.com",
+        "attorneys.superlawyers.com",
+        "floridabar.org",
+        "ogoldberglaw.com"
+      ],
+      "why": "0/10 strong slots (auth 0.03)",
+      "_results": [
+        {
+          "domain": "bankierlaw.com",
+          "url": "https://www.bankierlaw.com/",
+          "title": "Estate Planning Attorneys Delray Beach, FL | Wills & Probate ..."
+        },
+        {
+          "domain": "justia.com",
+          "url": "https://www.justia.com/lawyers/estate-planning/florida/delray-beach?amp",
+          "title": "Best Estate Planning Lawyers in Delray Beach, FL"
+        },
+        {
+          "domain": "m.yelp.com",
+          "url": "https://m.yelp.com/search?find_desc=Estate+Planning+Lawyer&find_loc=Delray+Beach%2C+FL",
+          "title": "TOP 10 BEST Estate Planning Lawyer in Delray Beach, FL - Updated 2026"
+        },
+        {
+          "domain": "stevenkschwartzpa.com",
+          "url": "https://www.stevenkschwartzpa.com/firm-overview",
+          "title": "Delray Beach Florida Wills and Probate Law Firm Overview"
+        },
+        {
+          "domain": "siegellawgroup.com",
+          "url": "https://siegellawgroup.com/",
+          "title": "Boca Raton Estate Planning Lawyer | Call 24/7"
+        },
+        {
+          "domain": "boyntonlaw.com",
+          "url": "https://www.boyntonlaw.com/",
+          "title": "Boynton Beach Lawyers"
+        },
+        {
+          "domain": "kitroserlaw.com",
+          "url": "https://www.kitroserlaw.com/",
+          "title": "Palm Beach County Estate, Probate & Trust Litigation Attorneys"
+        },
+        {
+          "domain": "attorneys.superlawyers.com",
+          "url": "https://attorneys.superlawyers.com/trusts/florida/delray-beach/",
+          "title": "Best Delray Beach, FL Trusts Attorneys"
+        },
+        {
+          "domain": "floridabar.org",
+          "url": "https://www.floridabar.org/about/cert/cert-ep-mbrs/",
+          "title": "Wills, Trusts and Estates Certified Lawyers"
+        },
+        {
+          "domain": "ogoldberglaw.com",
+          "url": "https://ogoldberglaw.com/",
+          "title": "Fort Lauderdale Estate Planning Attorney | Real Estate Law | Wills ..."
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "wills and trusts attorney near me": {
+      "keyword": "wills and trusts attorney near me",
+      "difficulty": 1.5,
+      "winnability": 9.5,
+      "authority_share": 0.13,
+      "strong_slots": 1,
+      "ugc_results": 1,
+      "distinct_domains": 10,
+      "top_domains": [
+        "fourpillarslawfirm.com",
+        "justia.com",
+        "alleyregistermceachern.com",
+        "bcklawfirm.com",
+        "m.yelp.com",
+        "johnsonlegal.us",
+        "legerlawyer.com",
+        "attorneys.superlawyers.com",
+        "reddit.com",
+        "nelsonmullins.com"
+      ],
+      "why": "1/10 strong slots (auth 0.13); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "fourpillarslawfirm.com",
+          "url": "https://www.fourpillarslawfirm.com/",
+          "title": "Best Wilmington NC Asset Protection | Wills | Trusts | Estate Planning Lawyer"
+        },
+        {
+          "domain": "justia.com",
+          "url": "https://www.justia.com/lawyers/estate-planning/north-carolina/wilmington?amp",
+          "title": "Best Estate Planning Lawyers in Wilmington, NC"
+        },
+        {
+          "domain": "alleyregistermceachern.com",
+          "url": "https://alleyregistermceachern.com/wills-trusts-estates-attorney-wilmington-nc/",
+          "title": "Wills, Trusts, & Estates in Wilmington - Wilmington NC Bankruptcy Lawyers"
+        },
+        {
+          "domain": "bcklawfirm.com",
+          "url": "https://bcklawfirm.com/litigation/estate-trust/",
+          "title": "Estate & Trust Litigation Attorneys Wilmington, NC"
+        },
+        {
+          "domain": "m.yelp.com",
+          "url": "https://m.yelp.com/search?cflt=estateplanning&find_loc=Wilmington%2C+NC",
+          "title": "THE BEST 10 Estate Planning Law in WILMINGTON, NC - Updated 2026"
+        },
+        {
+          "domain": "johnsonlegal.us",
+          "url": "https://www.johnsonlegal.us/",
+          "title": "Johnson Legal, PLLC: Wilmington, NC Estate Planning Attorney ..."
+        },
+        {
+          "domain": "legerlawyer.com",
+          "url": "https://legerlawyer.com/",
+          "title": "Wilmington Estate Planning Attorney | Leger Law, PLLC"
+        },
+        {
+          "domain": "attorneys.superlawyers.com",
+          "url": "https://attorneys.superlawyers.com/trusts/north-carolina/wilmington/",
+          "title": "Top Rated Trusts Lawyers in Wilmington, NC"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/Wilmington/comments/1m2aulq/can_anyone_recommend_me_a_law_firm_thats_handles/",
+          "title": "Can anyone recommend me a law firm that's handles wills? : r/Wilmington"
+        },
+        {
+          "domain": "nelsonmullins.com",
+          "url": "https://www.nelsonmullins.com/services/trusts_and_estate_planning",
+          "title": "Trusts & Estate Planning"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "best auto loan rates": {
+      "keyword": "best auto loan rates",
+      "difficulty": 5.2,
+      "winnability": 5.8,
+      "authority_share": 0.48,
+      "strong_slots": 5,
+      "ugc_results": 0,
+      "distinct_domains": 9,
+      "top_domains": [
+        "navyfederal.org",
+        "penfed.org",
+        "bankofamerica.com",
+        "cutx.org",
+        "northeast.aaa.com",
+        "chase.com",
+        "innovationsfcu.org",
+        "educationfirstfcu.org",
+        "bankrate.com",
+        "chase.com"
+      ],
+      "why": "5/10 strong slots (auth 0.48)",
+      "_results": [
+        {
+          "domain": "navyfederal.org",
+          "url": "https://www.navyfederal.org/loans-cards/auto-loans/auto-rates.html",
+          "title": "Auto Loan Rates for New & Used Cars"
+        },
+        {
+          "domain": "penfed.org",
+          "url": "https://www.penfed.org/auto",
+          "title": "Auto Loans - New and Used Car Loan Rates and Calculator"
+        },
+        {
+          "domain": "bankofamerica.com",
+          "url": "https://www.bankofamerica.com/auto-loans/auto-loan-rates/",
+          "title": "Auto Loan Rates"
+        },
+        {
+          "domain": "cutx.org",
+          "url": "https://www.cutx.org/auto-loans",
+          "title": "Get The Best Auto Loan Rates At Credit Union of Texas | CUTX"
+        },
+        {
+          "domain": "northeast.aaa.com",
+          "url": "https://northeast.aaa.com/financial/auto-loans/auto-loan-rates.html",
+          "title": "Auto Loan Rates"
+        },
+        {
+          "domain": "chase.com",
+          "url": "https://www.chase.com/personal/auto/auto-loan-rates",
+          "title": "Auto Loan Rates | New, Used and Refinance"
+        },
+        {
+          "domain": "innovationsfcu.org",
+          "url": "https://www.innovationsfcu.org/promotions/loans/vehicles/auto-loan/",
+          "title": "Auto Loans | Low Rates Starting at 2.99% APR"
+        },
+        {
+          "domain": "educationfirstfcu.org",
+          "url": "https://www.educationfirstfcu.org/personal/auto/auto-loans",
+          "title": "Auto Loans | Texas Credit Union | Education First FCU"
+        },
+        {
+          "domain": "bankrate.com",
+          "url": "https://www.bankrate.com/loans/auto-loans/rates/",
+          "title": "Auto Loan Rates & Financing in 2026"
+        },
+        {
+          "domain": "chase.com",
+          "url": "https://www.chase.com/personal/auto/auto-loan-rates",
+          "title": "Auto Loan Rates | New, Used and Refinance"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "best auto finance rates": {
+      "keyword": "best auto finance rates",
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.42,
+      "strong_slots": 4,
+      "ugc_results": 1,
+      "distinct_domains": 10,
+      "top_domains": [
+        "navyfederal.org",
+        "chase.com",
+        "innovationsfcu.org",
+        "bankofamerica.com",
+        "kpcu.com",
+        "broadviewfcu.com",
+        "northeast.aaa.com",
+        "cutx.org",
+        "capitalone.com",
+        "reddit.com"
+      ],
+      "why": "4/10 strong slots (auth 0.42); 1 UGC = opening",
+      "_results": [
+        {
+          "domain": "navyfederal.org",
+          "url": "https://www.navyfederal.org/loans-cards/auto-loans/auto-rates.html",
+          "title": "Auto Loan Rates for New & Used Cars"
+        },
+        {
+          "domain": "chase.com",
+          "url": "https://www.chase.com/personal/auto/auto-loan-rates",
+          "title": "Auto Loan Rates | New, Used and Refinance"
+        },
+        {
+          "domain": "innovationsfcu.org",
+          "url": "https://www.innovationsfcu.org/promotions/loans/vehicles/auto-loan/",
+          "title": "Auto Loans | Low Rates Starting at 2.99% APR"
+        },
+        {
+          "domain": "bankofamerica.com",
+          "url": "https://www.bankofamerica.com/auto-loans/auto-loan-rates/",
+          "title": "Auto Loan Rates"
+        },
+        {
+          "domain": "kpcu.com",
+          "url": "https://kpcu.com/borrow/loans/auto-loans",
+          "title": "Auto Loans | CA Bay Area Interest Rates"
+        },
+        {
+          "domain": "broadviewfcu.com",
+          "url": "https://www.broadviewfcu.com/blogs/best-car-interest-rates-compare/",
+          "title": "Best Car Interest Rates 2026: Compare & Save"
+        },
+        {
+          "domain": "northeast.aaa.com",
+          "url": "https://northeast.aaa.com/financial/auto-loans/auto-loan-rates.html",
+          "title": "Auto Loan Rates"
+        },
+        {
+          "domain": "cutx.org",
+          "url": "https://www.cutx.org/auto-loans",
+          "title": "Get The Best Auto Loan Rates At Credit Union of Texas"
+        },
+        {
+          "domain": "capitalone.com",
+          "url": "https://www.capitalone.com/cars/auto-loan-rates",
+          "title": "Auto Loan Rates - New and Used Car Loans"
+        },
+        {
+          "domain": "reddit.com",
+          "url": "https://www.reddit.com/r/carbuying/comments/1tf4vom/whats_the_best_rate_people_are_getting_on_used/",
+          "title": "What's the best rate people are getting on used cars right ..."
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "best auto interest rates": {
+      "keyword": "best auto interest rates",
+      "difficulty": 4.1,
+      "winnability": 6.9,
+      "authority_share": 0.38,
+      "strong_slots": 3,
+      "ugc_results": 0,
+      "distinct_domains": 10,
+      "top_domains": [
+        "navyfederal.org",
+        "chase.com",
+        "innovationsfcu.org",
+        "lendingtree.com",
+        "bankofamerica.com",
+        "northeast.aaa.com",
+        "cutx.org",
+        "capitalone.com",
+        "truist.com",
+        "landmarkcu.com"
+      ],
+      "why": "3/10 strong slots (auth 0.38)",
+      "_results": [
+        {
+          "domain": "navyfederal.org",
+          "url": "https://www.navyfederal.org/loans-cards/auto-loans/auto-rates.html",
+          "title": "Auto Loan Rates for New & Used Cars"
+        },
+        {
+          "domain": "chase.com",
+          "url": "https://www.chase.com/personal/auto/auto-loan-rates",
+          "title": "Auto Loan Rates | New, Used and Refinance"
+        },
+        {
+          "domain": "innovationsfcu.org",
+          "url": "https://www.innovationsfcu.org/promotions/loans/vehicles/auto-loan/",
+          "title": "Auto Loans | Low Rates Starting at 2.99% APR"
+        },
+        {
+          "domain": "lendingtree.com",
+          "url": "https://www.lendingtree.com/auto/",
+          "title": "Best Auto Loan Rates in July 2026"
+        },
+        {
+          "domain": "bankofamerica.com",
+          "url": "https://www.bankofamerica.com/auto-loans/auto-loan-rates/",
+          "title": "Auto Loan Rates"
+        },
+        {
+          "domain": "northeast.aaa.com",
+          "url": "https://northeast.aaa.com/financial/auto-loans/auto-loan-rates.html",
+          "title": "Auto Loan Rates"
+        },
+        {
+          "domain": "cutx.org",
+          "url": "https://www.cutx.org/auto-loans",
+          "title": "Get The Best Auto Loan Rates At Credit Union of Texas | CUTX"
+        },
+        {
+          "domain": "capitalone.com",
+          "url": "https://www.capitalone.com/cars/auto-loan-rates",
+          "title": "Auto Loan Rates - New and Used Car Loans"
+        },
+        {
+          "domain": "truist.com",
+          "url": "https://www.truist.com/loans/auto-loans",
+          "title": "Auto Loans with Competitive Rates and Terms"
+        },
+        {
+          "domain": "landmarkcu.com",
+          "url": "https://landmarkcu.com/borrow/auto-loans/",
+          "title": "Auto Loans for Cars, Trucks and Motorcycles"
+        }
+      ],
+      "scored_at": "2026-08-03"
+    },
+    "same day passport": {
+      "keyword": "same day passport",
+      "difficulty": 6.0,
+      "winnability": 5.0,
+      "authority_share": 0.58,
+      "strong_slots": 6,
+      "ugc_results": 1,
+      "distinct_domains": 7,
+      "top_domains": [
+        "travel.state.gov",
+        "travel.state.gov",
+        "facebook.com",
+        "travel.state.gov",
+        "passport-office-san-francisco.com",
+        "travel.state.gov",
+        "m.yelp.com",
+        "fastpassportcenter.com",
+        "samedaypassport-visa.com",
+        "dublin.ca.gov"
+      ],
+      "why": "6/10 strong slots (auth 0.58); 1 UGC = opening; 7 distinct domains",
+      "_results": [
+        {
+          "domain": "travel.state.gov",
+          "url": "https://travel.state.gov/en/passports/apply/get-fast/make-appointment/san-francisco.html",
+          "title": "San Francisco Passport Agency - Travel - State Department"
+        },
+        {
+          "domain": "travel.state.gov",
+          "url": "https://travel.state.gov/en/passports/apply/get-fast/make-appointment.html",
+          "title": "Make an Appointment at a Passport Agency - Travel - State Department"
+        },
+        {
+          "domain": "facebook.com",
+          "url": "https://www.facebook.com/groups/688042038014714/posts/2831348270350736/",
+          "title": "How to get a passport the same day in San Francisco?"
+        },
+        {
+          "domain": "travel.state.gov",
+          "url": "https://travel.state.gov/en/passports/apply/get-fast.html",
+          "title": "Get Your Passport Fast - Travel - State Department"
+        },
+        {
+          "domain": "passport-office-san-francisco.com",
+          "url": "https://passport-office-san-francisco.com/same-day-passport-san-francisco",
+          "title": "Same Day Passport San Francisco | Express Passport Office, CA"
+        },
+        {
+          "domain": "travel.state.gov",
+          "url": "https://travel.state.gov/en/passports/apply/get-fast/make-appointment/los-angeles.html",
+          "title": "Los Angeles Passport Agency - Travel - State Department"
+        },
+        {
+          "domain": "m.yelp.com",
+          "url": "https://m.yelp.com/search?find_desc=Same+Day+Passport&find_loc=San+Francisco%2C+CA",
+          "title": "TOP 10 BEST Same Day Passport in San Francisco, CA - Updated 2026"
+        },
+        {
+          "domain": "fastpassportcenter.com",
+          "url": "https://fastpassportcenter.com/cities/concord/",
+          "title": "Emergency & Expedited Passport Services in Concord, CA"
+        },
+        {
+          "domain": "samedaypassport-visa.com",
+          "url": "https://samedaypassport-visa.com/la/",
+          "title": "Sameday Passport & Visa Los Angeles | Open on Weekends"
+        },
+        {
+          "domain": "dublin.ca.gov",
+          "url": "https://www.dublin.ca.gov/2270/Passport-Services",
+          "title": "Passport Services | Dublin, CA - Official Website"
+        }
+      ],
+      "scored_at": "2026-08-03"
     }
   }
 }
