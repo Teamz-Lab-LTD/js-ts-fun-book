@@ -5052,7 +5052,20 @@ class MainActivity : AppCompatActivity() {   // Bug 4
     { t: "Cursor pagination", d: "Server returns a next_cursor with each response. Client passes the cursor in the next request. Cursor encodes the position (e.g., last item ID or timestamp). Handles insertions/deletions between pages correctly. No way to jump to arbitrary page. Preferred for real-time feeds (social, notifications). Twitter, Slack, GitHub all use cursor pagination." },
     { t: "Paging 3 library integration", d: "PagingSource<Key, Value> defines how to load pages — loadBefore/loadAfter with LoadResult.Page or LoadResult.Error. RemoteMediator bridges network + Room for offline-first paging. Pager + PagingConfig creates a Flow<PagingData<T>>. UI uses LazyColumn + collectAsLazyPagingItems() in Compose or PagingDataAdapter in RecyclerView." },
     { t: "Network result wrapper pattern", d: "Wrap all API calls in a sealed class: sealed class NetworkResult<T> { data class Success<T>(val data: T) : NetworkResult<T>(); data class Error<T>(val exception: DomainException) : NetworkResult<T>(); class Loading<T> : NetworkResult<T>() }. Repository returns NetworkResult, ViewModel maps to UiState. Eliminates try/catch scattered through ViewModels." },
-    { t: "Quick answer: what is an OkHttp interceptor?", d: "An OkHttp interceptor is a class implementing the Interceptor interface that plugs into OkHttpClient's request/response chain via addInterceptor() (once per logical request) or addNetworkInterceptor() (once per actual network call). Inside intercept(chain), it can read or rewrite the request, call chain.proceed(request), then read or rewrite the response before returning it — the standard place for auth headers, logging, and retries in an Android app." }
+    { t: "Quick answer: what is an OkHttp interceptor?", d: "An OkHttp interceptor is a class implementing the Interceptor interface that plugs into OkHttpClient's request/response chain via addInterceptor() (once per logical request) or addNetworkInterceptor() (once per actual network call). Inside intercept(chain), it can read or rewrite the request, call chain.proceed(request), then read or rewrite the response before returning it — the standard place for auth headers, logging, and retries in an Android app." },
+    { t: "Minimal interceptor — smallest working example", d: "Skip the auth/retry complexity for a moment — here is the smallest interceptor that compiles and does something useful (adds a header, then hands the request back to the chain). Every interceptor you write, no matter how complex, follows this same 4-line shape.", code: `class SimpleHeaderInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request().newBuilder()
+            .header("Accept", "application/json")
+            .build()
+        return chain.proceed(request) // never skip this — it actually sends the request
+    }
+}
+
+// register it:
+val client = OkHttpClient.Builder()
+    .addInterceptor(SimpleHeaderInterceptor())
+    .build()` }
   ],
   whatIs: "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",

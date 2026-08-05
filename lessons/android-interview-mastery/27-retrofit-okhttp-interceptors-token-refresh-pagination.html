@@ -7,7 +7,7 @@
 <meta name="description" content="Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-08-03">
+<meta name="date" content="2026-08-05">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html">
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-08-03",
+  "dateModified": "2026-08-05",
   "position": 27
 }
 </script>
@@ -215,6 +215,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
       <li><strong>Paging 3 library integration</strong> — PagingSource defines how to load pages — loadBefore/loadAfter with LoadResult.Page or LoadResult.Error. RemoteMediator bridges network + Room for offline-first paging. Pager + PagingConfig creates a Flow&gt;. UI uses LazyColumn + collectAsLazyPagingItems() in Compose or PagingDataAdapter in RecyclerView.</li>
       <li><strong>Network result wrapper pattern</strong> — Wrap all API calls in a sealed class: sealed class NetworkResult { data class Success(val data: T) : NetworkResult(); data class Error(val exception: DomainException) : NetworkResult(); class Loading : NetworkResult() }. Repository returns NetworkResult, ViewModel maps to UiState. Eliminates try/catch scattered through ViewModels.</li>
       <li><strong>Quick answer: what is an OkHttp interceptor?</strong> — An OkHttp interceptor is a class implementing the Interceptor interface that plugs into OkHttpClient&#39;s request/response chain via addInterceptor() (once per logical request) or addNetworkInterceptor() (once per actual network call). Inside intercept(chain), it can read or rewrite the request, call chain.proceed(request), then read or rewrite the response before returning it — the standard place for auth headers, logging, and retries in an Android app.</li>
+      <li><strong>Minimal interceptor — smallest working example</strong> — Skip the auth/retry complexity for a moment — here is the smallest interceptor that compiles and does something useful (adds a header, then hands the request back to the chain). Every interceptor you write, no matter how complex, follows this same 4-line shape.</li>
     </ul></section>
 
 <section class="section"><h2>Code example</h2><pre class="code"><code>// 1. Retrofit interface definition
