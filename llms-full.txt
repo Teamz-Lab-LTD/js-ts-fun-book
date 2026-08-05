@@ -1,6 +1,6 @@
 # Teamz Lab Learning — Full Lesson Index
 
-> Complete index of all 17 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
+> Complete index of all 18 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
 
 - Website: https://learn.teamzlab.com/
 - Curated short index: https://learn.teamzlab.com/llms.txt
@@ -939,6 +939,26 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 - [The Emotional Aftermath](https://learn.teamzlab.com/lessons/protecting-aging-parents/19-the-emotional-aftermath.html): Shame, guilt, and healing — the part nobody talks about
 - [The One-Page Family Safety Checklist](https://learn.teamzlab.com/lessons/protecting-aging-parents/20-the-one-page-family-safety-checklist.html): Everything you need, nothing you don't — print this and put it on the fridge
 
+## Real Estate, Plainly Explained
+
+- Course page: https://learn.teamzlab.com/c/real-estate.html
+- Level: All Levels — First-Time Buyers and New Investors Welcome
+- Lesson count: 10
+- About: Free interactive course with 10 lessons on US real estate fundamentals — what an appraiser actually does, holding property in an LLC or corporation, how REITs work, capital gains tax on a sale, what…
+
+### Lessons
+
+- [What Real Estate Appraisers Actually Do](https://learn.teamzlab.com/lessons/real-estate/01-what-real-estate-appraisers-actually-do.html): The appraisal is not for you — it is the lender checking its own collateral, and that changes everything about how it works
+- [Should You Hold Real Estate in a Corporation or an LLC?](https://learn.teamzlab.com/lessons/real-estate/02-should-you-hold-real-estate-in-a-corporation-or-an-llc.html): An entity is a liability wrapper first and a tax choice second — and picking the wrong one is expensive to undo
+- [Real Estate Income Trusts (REITs): Owning Property Without Owning a Building](https://learn.teamzlab.com/lessons/real-estate/03-real-estate-income-trusts-reits-owning-property-without.html): Buy a share of a shopping centre for the price of a lunch — and understand the 90% payout rule that makes it work
+- [Capital Gains Tax on Real Estate: The Number You Owe When You Sell](https://learn.teamzlab.com/lessons/real-estate/04-capital-gains-tax-on-real-estate-the-number-you-owe-when.html): Gain is not profit on the price — it is sale proceeds minus your ADJUSTED BASIS, and that word is where the money is
+- [What a Real Estate CPA Actually Does For You](https://learn.teamzlab.com/lessons/real-estate/05-what-a-real-estate-cpa-actually-does-for-you.html): Not the person who types your numbers into a form in April — the person who changes the numbers in March of last year
+- [Writing a Real Estate Business Plan That Is Not Just Vibes](https://learn.teamzlab.com/lessons/real-estate/06-writing-a-real-estate-business-plan-that-is-not-just-vibes.html): One page that says what you buy, where, at what number, with whose money, and how you get out
+- [Real Estate Rentals: How the Money Actually Moves](https://learn.teamzlab.com/lessons/real-estate/07-real-estate-rentals-how-the-money-actually-moves.html): Rent in, expenses out, depreciation on paper, and a set of loss rules that may quietly park your deduction for later
+- [A Real Estate Agent Business Plan: Leads, Splits, and the Tax Nobody Withholds](https://learn.teamzlab.com/lessons/real-estate/08-a-real-estate-agent-business-plan-leads-splits-and-the-tax.html): Most new agents plan their marketing and forget that they are a self-employed business with no payroll department
+- [Real Estate Taxes While You Own: Property Tax, Explained Line by Line](https://learn.teamzlab.com/lessons/real-estate/09-real-estate-taxes-while-you-own-property-tax-explained-line.html): Assessed value times a mill rate, minus exemptions — and every one of those three pieces can be challenged
+- [Real Estate Transfer Tax: The Closing Cost People Forget to Budget](https://learn.teamzlab.com/lessons/real-estate/10-real-estate-transfer-tax-the-closing-cost-people-forget-to.html): A one-time tax on moving the deed — set by your state, county and sometimes your city, and negotiable only as to who pays it
+
 ---
 
-*Last updated: 2026-08-05 · 17 courses · 757 lessons.*
+*Last updated: 2026-08-05 · 18 courses · 767 lessons.*

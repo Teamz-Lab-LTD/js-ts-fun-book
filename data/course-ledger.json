@@ -10,6 +10,17 @@
       "history": [
         { "date": "2026-07-22", "event": "created", "lessons": 10 }
       ]
+    },
+    {
+      "slug": "real-estate",
+      "created": "2026-08-05",
+      "status": "pilot",
+      "lessons": 10,
+      "target_lessons": 70,
+      "last_expanded": null,
+      "history": [
+        { "date": "2026-08-05", "event": "created", "lessons": 10 }
+      ]
     }
   ]
 }
