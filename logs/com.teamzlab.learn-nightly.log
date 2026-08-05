@@ -1832,3 +1832,151 @@ DONE — 23:10:10
 ============================================================
   preflight pre: OK (4 checks, root=teamz-lab-learning)
 ✓ dirty-guard passed
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-05 23:00:04 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+   555ff54..947f1e0  main       -> origin/main
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  (build-enhance-outcome.py missing — skipped)
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +5 new   (store 138, unpulled 101)
+    gate: holding (need >=150 new AND >=21d; have 101 new, last 19d)
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 57 sessions across 11 pages (28d)
+  
+    ENHANCE candidates: 215  (queueing 4)
+      #12.7   1851 impr  🔒 additive   /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider'
+      #6.8    1336 impr  🔒 additive   /lessons/class-9-math-bangla/51-sin-cos-tan.
+             └─ '(no individual phrase disclosed by GSC)'
+      #10.8   1276 impr  🔒 additive   /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp interceptor'
+      #14.9   1238 impr  🔒 additive   /lessons/android-interview-mastery/73-paging
+             └─ 'pagingsource'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Done. gitignored (`data/*`) — not committed, that's by design; report written to disk only.
+  
+  **Summary:**
+  - Queue: 4 additive targets, 0 new-post.
+  - Shipped 2: class-9-math-bangla/51 (formula-sheet point + 2 quiz Q&A, feeds FAQ schema) — commit `7378c38`; android-interview-mastery/27 (minimal interceptor code example) — commit `db18ec3`. Titles/descriptions verified untouched on both.
+  - Skipped 2 (56-fileprovider pos12.7, 73-pagingsource pos14.9): generic English pages past pos12 vs GeeksforGeeks/StackOverflow — unwinnable, no file changes.
+  - Flagged: lesson 51 got additive touched twice now (Aug 3 + Aug 5) — `cooldown_days: 7` in `build-content-queue.py` isn't catching it on the `striking-distance-page-level` path. Worth a look, not fixed tonight (out of scope — script is off-limits per hard limits).
+  - No push/deploy done — nightly handles that per instructions.
+  
+  **DONE: nightly content pass (2 shipped, 2 skipped, cooldown bug flagged). NEXT: fix cooldown-gap in build-content-queue.py for striking-distance-page-level source → `/model sonnet` + effort medium.**
+  ✓ content agent finished
+
+=== course agent ===
+    serp fail [dog insurance pet]: 429
+    serp fail [marcus goldman sachs high yield savings]: 429
+  12161 keywords, 482 cached, fetching 25 (credits left 555)
+    … 10/25
+    … 20/25
+  
+  scored 505 keywords; 2 failed
+  
+  MOST WINNABLE:
+    win 10.0  intel 8255                                 2/10 strong slots (auth 0.16); 3 UGC = opening
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.01)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.01)
+    win 10.0  cars for sale                              0/10 strong slots (auth 0.03)
+    win 10.0  estate planning attorney                   0/10 strong slots (auth 0.03)
+    win 10.0  estate planning lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  wills and estate lawyers near me           0/10 strong slots (auth 0.04)
+    win 10.0  wills and trusts attorney                  0/10 strong slots (auth 0.02)
+    win 10.0  used car dealers near me                   0/10 strong slots (auth 0.02)
+    win 10.0  speeding ticket lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  speeding ticket attorney                   0/10 strong slots (auth 0.04)
+    win 10.0  speeding ticket lawyer near me             0/10 strong slots (auth 0.02)
+  
+  LEAST WINNABLE:
+    win  2.4  home mortgage refinance                    8/10 strong slots (auth 0.84)
+    win  2.1  pnc bank heloc rates                       10/10 strong slots (auth 0.79); 3 distinct domains
+    win  1.9  pre approval rocket mortgage               9/10 strong slots (auth 0.86); 1 UGC = opening; 3 distinct domains
+    win  1.9  rocket mortgage home equity loan           9/10 strong slots (auth 0.90); 2 UGC = opening; 3 distinct domains
+    win  1.8  va home loan                               10/10 strong slots (auth 0.86); 5 distinct domains
+    win  1.8  va home mortgage                           10/10 strong slots (auth 0.88); 6 distinct domains
+    win  1.0  navy federal heloc rates                   10/10 strong slots (auth 0.91); 2 distinct domains
+    win  1.0  navy federal credit union heloc rates      10/10 strong slots (auth 0.88); 1 distinct domains
+  
+  top authorities: reddit.com, bankrate.com, nerdwallet.com, youtube.com, bankofamerica.com, rocketmortgage.com, navyfederal.org, usbank.com, investopedia.com, irs.gov
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 1 gaps)
+    $3267.49/mo  us  mortgage       138kw vol=352050.0 open-real-estate ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=761200.0 open-capital-gains ELIGIBLE
+    $2325.82/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2189.25/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    (28297 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable, open-citizens-bank:brand-owned)
+    gate -> create-pilot: cluster $3267.49/mo, niche mortgage, win 8/10, intent learn-basics
+  action: create-pilot   model: opus
+  Committed. Not pushed — nightly handles that.
+  
+  ## Done
+  
+  **Pilot `real-estate` created** — 10 lessons, en/us, intent `learn-basics`, per work order.
+  
+  One lesson per outline keyword, no filler:
+  
+  | # | Lesson | Keyword |
+  |---|--------|---------|
+  | 1 | What Real Estate Appraisers Actually Do | real estate appraisers |
+  | 2 | Corporation or LLC? | real estate investment corporation |
+  | 3 | REITs | real estate income trust |
+  | 4 | Capital Gains Tax | real estate gains tax |
+  | 5 | What a Real Estate CPA Does | real estate cpa |
+  | 6 | Investor Business Plan | real estate business plan |
+  | 7 | Rentals: How Money Moves | real estate rentals |
+  | 8 | Agent Business Plan | real estate agent business plan |
+  | 9 | Property Tax Line by Line | real estate taxes |
+  | 10 | Transfer Tax | real estate transfer tax |
+  
+  **Two numbers I refused to assert.** SALT cap dollar amount and current bonus-depreciation percentage — both legislated and moved recently (2025 changes). Stating a stale figure on YMYL money content is worse than omitting it, so those lessons point at IRS Pub 530 and Pub 946 for the filing year and explain the mechanic without the number. Everything else is cited to primary source: IRS Topic 409/701, Pub 523/527/530/925/936, IRC §469(c)(7)(B), §§856–859, §1411, USPAP, 12 CFR 1002.14, HUD FHA, NY Tax Law §1402, SEC, NAR (17 Aug 2024 practice changes), SBA. No invented citations, no company-specific lessons.
+  
+  **Gates:** `validate-course.js real-estate` STRICT pass · all 5 generators clean (10 lesson pages, 18 landings, sitemap 494 URLs, llms-full 18 courses) · `lessons/real-estate/01-*.html` verified 25.7 KB real content, zero unresolved `${…}` · ledger appended and re-parsed valid.
+  
+  `data/last-night-content.md` updated (gitignored, so not in the commit — left it that way rather than forcing).
+  
+  > **DONE: real-estate pilot shipped. NEXT: nightly push + first GSC read in ~14 days → `/model sonnet` + effort low.**
+  ✓ course agent finished (create-pilot)
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
