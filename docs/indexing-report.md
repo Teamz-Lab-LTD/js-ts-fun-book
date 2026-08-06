@@ -1,16 +1,16 @@
-# Indexing Report — 2026-08-04 23:08
+# Indexing Report — 2026-08-05 23:29
 
 Total pages: 41
 Checked: 41
-Indexed: 18 (43%)
+Indexed: 17 (41%)
 Not indexed: 23
-Errors: 0
+Errors: 1
 
 ## Not Indexed Pages
 
 | Page | Reason |
 |---|---|
-| /lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html | Crawled - currently not indexed |
+| /lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/44-json-models-serialization.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html | Crawled - currently not indexed |
 | /lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html | Crawled - currently not indexed |
@@ -34,13 +34,12 @@ Errors: 0
 | /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (18)
+## Indexed Pages (17)
 
 - /
 - /lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html
 - /lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
-- /lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html
 - /lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
 - /lessons/class-9-math-bangla/51-sin-cos-tan.html
 - /lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html

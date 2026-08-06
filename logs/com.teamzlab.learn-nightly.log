@@ -1980,3 +1980,148 @@ index.html written.
 build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
 Wrote sitemap.xml (494 URLs) at repo root.
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
+[main eb9dddd] chore(nightly): refresh generated site output
+ 180 files changed, 2965 insertions(+), 1089 deletions(-)
+
+Please make sure you have the correct access rights
+and the repository exists.
+  ✗ GIT PUSH FAILED (rc=128) — commit is LOCAL ONLY; remote/VPS will NOT update.
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (2 checks, root=teamz-lab-learning)
+
+DONE — 23:29:16
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-06 23:00:05 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+   947f1e0..970ab2c  main       -> origin/main
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+enhance-outcome: 6 pages known (2026-07-13 .. 2026-08-03) but NONE fall in the scoring window 2026-02-07 .. 2026-07-06 — raise --max-age or wait for the 28d after-window to elapse
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +0 new   (store 138, unpulled 101)
+    gate: holding (need >=150 new AND >=21d; have 101 new, last 20d)
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 57 sessions across 10 pages (28d)
+  
+    ENHANCE candidates: 214  (queueing 4)
+      #12.6   1870 impr  🔒 additive   /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider'
+      #6.8    1382 impr  🔒 additive   /lessons/class-9-math-bangla/51-sin-cos-tan.
+             └─ '(no individual phrase disclosed by GSC)'
+      #10.7   1329 impr  🔒 additive   /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp interceptor'
+      #14.8   1218 impr  🔒 additive   /lessons/android-interview-mastery/73-paging
+             └─ 'pagingsource'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Clean tree except pre-existing files from session start (not mine to touch). Not pushing — nightly wrapper does that.
+  
+  Done. 4 targets shipped, all `additive`, no titles touched:
+  
+  1. **lesson 27** (okhttp interceptor) — HttpLoggingInterceptor setup, debug/release warning
+  2. **lesson 56** (fileprovider) — minimal 3-piece Manifest+xml+Kotlin setup
+  3. **lesson 73** (pagingsource) — minimal network-only PagingSource example
+  4. **lesson 51** (sin-cos-tan, Bangla) — 0°/30°/45°/60°/90° standard-angle table
+  
+  Two things flagged in report, not fixed (not my call tonight):
+  - cooldown script missed all 4 — bug already present, real edits under 6-changed-line floor slip past cooldown detection. Verified myself none duplicated prior content before writing.
+  - course build regenerates every page's date stamp, touching 157 unrelated files. Reverted those before commit, kept only real target diffs.
+  
+  **DONE: nightly content pass, 4 targets shipped, cooldown bug flagged. NEXT: none queued → stay.**
+  ✓ content agent finished
+
+=== course agent ===
+  12158 keywords, 505 cached, fetching 25 (credits left 497)
+    … 10/25
+    … 20/25
+  
+  scored 530 keywords; 0 failed
+  
+  MOST WINNABLE:
+    win 10.0  intel 8255                                 2/10 strong slots (auth 0.16); 3 UGC = opening
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.01)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.01)
+    win 10.0  cars for sale                              0/10 strong slots (auth 0.03)
+    win 10.0  estate planning attorney                   0/10 strong slots (auth 0.03)
+    win 10.0  estate planning lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  wills and estate lawyers near me           0/10 strong slots (auth 0.04)
+    win 10.0  wills and trusts attorney                  0/10 strong slots (auth 0.02)
+    win 10.0  used car dealers near me                   0/10 strong slots (auth 0.02)
+    win 10.0  speeding ticket lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  speeding ticket attorney                   0/10 strong slots (auth 0.04)
+    win 10.0  speeding ticket lawyer near me             0/10 strong slots (auth 0.02)
+  
+  LEAST WINNABLE:
+    win  2.5  regions bank home equity loan              10/10 strong slots (auth 0.73); 2 distinct domains
+    win  2.2  pre approval rocket mortgage               9/10 strong slots (auth 0.83); 1 UGC = opening; 3 distinct domains
+    win  2.2  rocket mortgage home equity loan           9/10 strong slots (auth 0.87); 2 UGC = opening; 3 distinct domains
+    win  2.1  pnc bank heloc rates                       10/10 strong slots (auth 0.79); 3 distinct domains
+    win  1.9  va home loan                               10/10 strong slots (auth 0.85); 5 distinct domains
+    win  1.9  va home mortgage                           10/10 strong slots (auth 0.86); 6 distinct domains
+    win  1.4  navy federal credit union heloc rates      10/10 strong slots (auth 0.84); 1 distinct domains
+    win  1.2  navy federal heloc rates                   10/10 strong slots (auth 0.87); 2 distinct domains
+  
+  top authorities: reddit.com, bankrate.com, nerdwallet.com, youtube.com, bankofamerica.com, rocketmortgage.com, navyfederal.org, usbank.com, investopedia.com, irs.gov
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 1 gaps)
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=761200.0 open-capital-gains ELIGIBLE
+    $2325.82/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2189.25/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    (28305 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-american-express:brand-owned, open-navy-federal:unwinnable, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
