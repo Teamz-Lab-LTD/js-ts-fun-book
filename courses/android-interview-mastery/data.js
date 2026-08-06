@@ -5065,6 +5065,21 @@ class MainActivity : AppCompatActivity() {   // Bug 4
 // register it:
 val client = OkHttpClient.Builder()
     .addInterceptor(SimpleHeaderInterceptor())
+    .build()` },
+    { t: "HttpLoggingInterceptor — see every request/response in Logcat", d: "Before writing a custom interceptor, add OkHttp's own logging interceptor first — it prints method, URL, headers, and body for every call, and is the fastest way to debug 'why is my request failing'. Add it LAST via addInterceptor() so it logs the fully-built request (after auth headers are attached). Never ship BODY level in a release build — it can leak tokens and PII into device logs.", code: `dependencies {
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+}
+
+val loggingInterceptor = HttpLoggingInterceptor().apply {
+    level = if (BuildConfig.DEBUG)
+        HttpLoggingInterceptor.Level.BODY   // full request/response body
+    else
+        HttpLoggingInterceptor.Level.NONE   // never log bodies in release
+}
+
+val client = OkHttpClient.Builder()
+    .addInterceptor(AuthInterceptor(tokenProvider))
+    .addInterceptor(loggingInterceptor)     // add LAST — sees the final request
     .build()` }
   ],
   whatIs: "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.",
@@ -11058,7 +11073,33 @@ registerReceiver(noisyReceiver, filter)`,
     { t: "When ContentProvider is still the right choice in 2026", d: "System integrations (contacts, calendar, media), sharing structured data with third-party apps via a documented API, and search suggestions (SearchRecentSuggestionsProvider). For sharing within your own app across processes, prefer a database + ViewModel + repository pattern. ContentProvider adds complexity that is rarely justified for single-app use." },
     { t: "CursorLoader deprecation awareness", d: "CursorLoader was the recommended way to load ContentProvider data asynchronously in the Loader API era. It is now deprecated. Use viewModelScope + coroutines + contentResolver queries on a background dispatcher instead. Know this transition for legacy codebase discussions." },
     { t: "Security pitfalls", d: "Common bugs: setting exported=true on a ContentProvider without permissions (exposes all data to any app), using file:// URIs directly (causes crash on API 24+), not adding URI permission flags to the Intent (receiving app gets the URI but cannot read it). Mentioning these shows security awareness that impresses senior interviewers." },
-    { t: "Quick answer: what is Android FileProvider?", d: "FileProvider is a special ContentProvider subclass from AndroidX Core that converts a File on disk into a content:// URI, so you can share it with another app or a system Intent (camera, share sheet, PDF viewer) without exposing the raw file path or granting broad file-system access. Declare it in the Manifest with android:exported='false', map allowed directories in an xml/file_paths.xml resource, then call FileProvider.getUriForFile()." }
+    { t: "Quick answer: what is Android FileProvider?", d: "FileProvider is a special ContentProvider subclass from AndroidX Core that converts a File on disk into a content:// URI, so you can share it with another app or a system Intent (camera, share sheet, PDF viewer) without exposing the raw file path or granting broad file-system access. Declare it in the Manifest with android:exported='false', map allowed directories in an xml/file_paths.xml resource, then call FileProvider.getUriForFile()." },
+    { t: "Minimal FileProvider setup — smallest working example", d: "Three pieces, in order: the Manifest declaration, the file_paths.xml that whitelists a directory, and the Kotlin call that turns a File into a shareable URI. Miss the xml resource and getUriForFile() throws IllegalArgumentException at runtime — that error means the directory you're sharing from isn't listed below.", code: `<!-- 1. AndroidManifest.xml -->
+<provider
+    android:name="androidx.core.content.FileProvider"
+    android:authorities="\${applicationId}.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+</provider>
+
+<!-- 2. res/xml/file_paths.xml -->
+<paths>
+    <cache-path name="shared_images" path="images/" />
+</paths>
+
+// 3. Kotlin — File on disk -> content:// URI
+val file = File(context.cacheDir, "images/photo.jpg")
+val uri: Uri = FileProvider.getUriForFile(
+    context, "\${context.packageName}.fileprovider", file
+)
+val shareIntent = Intent(Intent.ACTION_SEND).apply {
+    putExtra(Intent.EXTRA_STREAM, uri)
+    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    type = "image/jpeg"
+}` }
   ],
   whatIs: "ContentProvider is Android's structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data source. FileProvider is a ContentProvider subclass that securely exposes files via content:// URIs with time-limited URI permission grants, replacing the dangerous file:// URI pattern. Together they form Android's inter-app data exchange system.",
   realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
@@ -13830,7 +13871,35 @@ and now I always make sure to communicate well with my team."`,
     { t: "Invalidation & Refresh", d: "Call `pagingSource.invalidate()` to trigger a fresh load — typically from Room's InvalidationTracker when data changes. For manual refresh, use `adapter.refresh()` or re-collect the Pager flow. RemoteMediator's REFRESH loadType handles pull-to-refresh scenarios by clearing and re-fetching." },
     { t: "Testing PagingSource", d: "Test PagingSource by calling `load()` directly with `LoadParams.Refresh(key, loadSize, placeholders)` and asserting the LoadResult. Use `TestPager(PagingConfig, pagingSourceFactory)` for integration tests that simulate real paging behavior. For snapshot testing, use `AsyncPagingDataDiffer` to collect PagingData into a list." },
     { t: "Performance & Memory", d: "Paging 3 manages memory via `maxSize` eviction. Use `cachedIn(scope)` to share PagingData across collectors. Avoid transforming PagingData outside the paging pipeline (e.g., `.toList()`) as it defeats lazy loading. Profile with Android Studio's Memory Profiler to verify items are evicted correctly." },
-    { t: "Quick answer: what is PagingSource?", d: "PagingSource<Key, Value> is the abstract class in Jetpack Paging 3 that defines exactly one thing — how to load one page of data, via its load() method — from a network call, a Room DAO, or a combination of both through RemoteMediator. A Pager wraps a PagingSource factory and exposes the results as Flow<PagingData<T>> for the UI to collect with collectAsLazyPagingItems() (Compose) or a PagingDataAdapter (RecyclerView)." }
+    { t: "Quick answer: what is PagingSource?", d: "PagingSource<Key, Value> is the abstract class in Jetpack Paging 3 that defines exactly one thing — how to load one page of data, via its load() method — from a network call, a Room DAO, or a combination of both through RemoteMediator. A Pager wraps a PagingSource factory and exposes the results as Flow<PagingData<T>> for the UI to collect with collectAsLazyPagingItems() (Compose) or a PagingDataAdapter (RecyclerView)." },
+    { t: "Minimal PagingSource — smallest working example", d: "Skip RemoteMediator and Room for a moment — here is the smallest PagingSource that compiles: one network call per page, plus prevKey/nextKey for the next load. Every network-only paging screen (search results, a simple feed) starts from exactly this shape.", code: `class SimplePagingSource(
+    private val api: ArticleApi
+) : PagingSource<Int, Article>() {
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
+        val page = params.key ?: 1   // first page when key is null
+        return try {
+            val response = api.getArticles(page = page, pageSize = params.loadSize)
+            LoadResult.Page(
+                data = response.articles,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (response.articles.isEmpty()) null else page + 1
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Article>): Int? =
+        state.anchorPosition?.let { anchor ->
+            state.closestPageToPosition(anchor)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchor)?.nextKey?.minus(1)
+        }
+}
+
+// wire it up:
+val pager = Pager(PagingConfig(pageSize = 20)) { SimplePagingSource(api) }
+val flow: Flow<PagingData<Article>> = pager.flow.cachedIn(viewModelScope)` }
   ],
   whatIs: "Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator for network-plus-database offline-first patterns, and Flow<PagingData> for reactive data delivery to both RecyclerView (via PagingDataAdapter) and Compose (via LazyPagingItems), with built-in error handling, retry, and transformation support.",
   realWorld: "Every production app with a feed, search results, or message list uses pagination. Instagram uses cursor-based paging for its feed, Slack pages message history with RemoteMediator-style caching, and Twitter's timeline relies on keyset pagination. Paging 3 is the standard approach in Android for all these patterns, handling the complex state management of multi-source, bidirectional loading.",
