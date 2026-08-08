@@ -1,17 +1,16 @@
-# Indexing Report — 2026-08-06 23:14
+# Indexing Report — 2026-08-07 23:10
 
 Total pages: 41
 Checked: 41
 Indexed: 17 (41%)
-Not indexed: 24
-Errors: 0
+Not indexed: 23
+Errors: 1
 
 ## Not Indexed Pages
 
 | Page | Reason |
 |---|---|
 | /lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html | Crawled - currently not indexed |
-| /lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/44-json-models-serialization.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html | Crawled - currently not indexed |
 | /lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html | Crawled - currently not indexed |
