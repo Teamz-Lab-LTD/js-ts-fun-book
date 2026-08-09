@@ -7,7 +7,7 @@
 <meta name="description" content="Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-08-06">
+<meta name="date" content="2026-08-09">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html">
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-08-06",
+  "dateModified": "2026-08-09",
   "position": 27
 }
 </script>
@@ -217,6 +217,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
       <li><strong>Quick answer: what is an OkHttp interceptor?</strong> — An OkHttp interceptor is a class implementing the Interceptor interface that plugs into OkHttpClient&#39;s request/response chain via addInterceptor() (once per logical request) or addNetworkInterceptor() (once per actual network call). Inside intercept(chain), it can read or rewrite the request, call chain.proceed(request), then read or rewrite the response before returning it — the standard place for auth headers, logging, and retries in an Android app.</li>
       <li><strong>Minimal interceptor — smallest working example</strong> — Skip the auth/retry complexity for a moment — here is the smallest interceptor that compiles and does something useful (adds a header, then hands the request back to the chain). Every interceptor you write, no matter how complex, follows this same 4-line shape.</li>
       <li><strong>HttpLoggingInterceptor — see every request/response in Logcat</strong> — Before writing a custom interceptor, add OkHttp&#39;s own logging interceptor first — it prints method, URL, headers, and body for every call, and is the fastest way to debug &#39;why is my request failing&#39;. Add it LAST via addInterceptor() so it logs the fully-built request (after auth headers are attached). Never ship BODY level in a release build — it can leak tokens and PII into device logs.</li>
+      <li><strong>Testing an interceptor in isolation with MockWebServer</strong> — Interviewers often follow up &#39;how would you unit test that AuthInterceptor?&#39; with a straight yes/no on whether you&#39;ve actually done it. MockWebServer (from okhttp3.mockwebserver) starts a real local HTTP server your OkHttpClient talks to — no mocking framework needed. Enqueue a canned response, fire the request through your real interceptor chain, then assert on the recorded request that reached the server (headers, body, path). This catches interceptor bugs that Mockito-style unit tests miss, because the request actually travels through chain.proceed().</li>
     </ul></section>
 
 <section class="section"><h2>Code example</h2><pre class="code"><code>// 1. Retrofit interface definition
@@ -409,6 +410,7 @@ class BrokenAuthInterceptor(
       <li><a href="https://developer.android.com/topic/libraries/architecture/paging/v3-overview" target="_blank" rel="noopener noreferrer">Android Paging 3 Library</a> <span class="res-source">(Android Developers)</span></li>
       <li><a href="https://proandroiddev.com/handling-token-refresh-with-okhttp-authenticator-b0c1b3a79af0" target="_blank" rel="noopener noreferrer">Token Refresh with OkHttp Authenticator — Race condition prevention</a> <span class="res-source">(ProAndroidDev)</span></li>
       <li><a href="https://medium.com/swlh/offset-vs-cursor-pagination-best-practices-b38ab7b7f40c" target="_blank" rel="noopener noreferrer">Cursor vs Offset Pagination — When to use each</a> <span class="res-source">(Medium)</span></li>
+      <li><a href="https://github.com/square/okhttp/tree/master/mockwebserver" target="_blank" rel="noopener noreferrer">MockWebServer — Testing HTTP clients</a> <span class="res-source">(OkHttp / Square)</span></li>
     </ul></section>
 
 <a class="cta-interactive" href="../../learn.html?course=android-interview-mastery&amp;lesson=27">Open interactive version (quiz + challenge)</a>

@@ -5080,7 +5080,27 @@ val loggingInterceptor = HttpLoggingInterceptor().apply {
 val client = OkHttpClient.Builder()
     .addInterceptor(AuthInterceptor(tokenProvider))
     .addInterceptor(loggingInterceptor)     // add LAST — sees the final request
-    .build()` }
+    .build()` },
+    { t: "Testing an interceptor in isolation with MockWebServer", d: "Interviewers often follow up 'how would you unit test that AuthInterceptor?' with a straight yes/no on whether you've actually done it. MockWebServer (from okhttp3.mockwebserver) starts a real local HTTP server your OkHttpClient talks to — no mocking framework needed. Enqueue a canned response, fire the request through your real interceptor chain, then assert on the recorded request that reached the server (headers, body, path). This catches interceptor bugs that Mockito-style unit tests miss, because the request actually travels through chain.proceed().", code: `class AuthInterceptorTest {
+    private lateinit var server: MockWebServer
+
+    @Before fun setup() { server = MockWebServer(); server.start() }
+    @After fun teardown() { server.shutdown() }
+
+    @Test fun \`adds bearer token header to every request\`() {
+        server.enqueue(MockResponse().setResponseCode(200).setBody("{}"))
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(FakeTokenProvider("test-token")))
+            .build()
+        val request = Request.Builder().url(server.url("/transactions")).build()
+        client.newCall(request).execute()
+
+        // Assert on what the interceptor actually sent — not what you think it sent
+        val recorded = server.takeRequest()
+        assertEquals("Bearer test-token", recorded.getHeader("Authorization"))
+    }
+}` }
   ],
   whatIs: "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
@@ -5228,7 +5248,8 @@ fun provideOkHttpClient(
     { q: "Where should HTTP-to-domain exception mapping happen in a Clean Architecture app?", opts: ["Inside the ViewModel so it can display specific error messages directly", "Inside the Repository implementation or a dedicated network result mapper in the Data layer", "Inside the Retrofit interface method using @Throws annotation", "Inside the Authenticator before returning the refreshed request"], ans: 1 },
     { q: "In PagingSource, what should getRefreshKey() return for cursor-based pagination?", opts: ["The first cursor from the initial load to restart from the beginning", "null — cursor pagination cannot resume from an arbitrary position in the list, so refresh starts from the beginning", "The last loaded cursor so refresh continues from where it left off", "The total item count from the last loaded page"], ans: 1 },
     { q: "What is an OkHttp interceptor?", opts: ["A UI component for showing network errors", "A hook that observes, modifies, or short-circuits every HTTP request and response passing through the client", "A Retrofit annotation for request headers", "A background service that caches API responses"], ans: 1 },
-    { q: "Can you register more than one interceptor on the same OkHttpClient?", opts: ["No — OkHttp allows only one application interceptor per client", "Yes — interceptors run in the order they were added via addInterceptor(), forming a chain", "Yes, but only network interceptors support chaining", "Only if they are added in the same file"], ans: 1 }
+    { q: "Can you register more than one interceptor on the same OkHttpClient?", opts: ["No — OkHttp allows only one application interceptor per client", "Yes — interceptors run in the order they were added via addInterceptor(), forming a chain", "Yes, but only network interceptors support chaining", "Only if they are added in the same file"], ans: 1 },
+    { q: "Why is MockWebServer preferred over Mockito for testing an interceptor like AuthInterceptor?", opts: ["MockWebServer is faster to configure than Mockito", "It runs a real local HTTP server so the request travels through the actual chain.proceed() call, catching bugs a mocked chain would hide", "Mockito cannot be used in Android instrumented tests", "MockWebServer automatically generates test cases from the OpenAPI spec"], ans: 1 }
   ],
   challenge: "Implement a RetryInterceptor that retries requests up to 3 times with exponential backoff (1s, 2s, 4s) for 503 responses and IOException. Ensure it does NOT retry POST requests. Then write the error mapping function that converts HttpException and IOException to a sealed class NetworkError with at least 5 subtypes. Wire both into the OkHttpClient builder.",
   resources: [
@@ -5236,7 +5257,8 @@ fun provideOkHttpClient(
     { type: "docs", title: "Retrofit — Square Documentation", url: "https://square.github.io/retrofit/", source: "Square" },
     { type: "docs", title: "Android Paging 3 Library", url: "https://developer.android.com/topic/libraries/architecture/paging/v3-overview", source: "Android Developers" },
     { type: "article", title: "Token Refresh with OkHttp Authenticator — Race condition prevention", url: "https://proandroiddev.com/handling-token-refresh-with-okhttp-authenticator-b0c1b3a79af0", source: "ProAndroidDev" },
-    { type: "article", title: "Cursor vs Offset Pagination — When to use each", url: "https://medium.com/swlh/offset-vs-cursor-pagination-best-practices-b38ab7b7f40c", source: "Medium" }
+    { type: "article", title: "Cursor vs Offset Pagination — When to use each", url: "https://medium.com/swlh/offset-vs-cursor-pagination-best-practices-b38ab7b7f40c", source: "Medium" },
+    { type: "docs", title: "MockWebServer — Testing HTTP clients", url: "https://github.com/square/okhttp/tree/master/mockwebserver", source: "OkHttp / Square" }
   ],
   eli5: "Imagine ordering food through an app. Retrofit is the order screen — you pick what you want and press send. OkHttp is the delivery driver who actually goes to the restaurant. Interceptors are checkpoints on the way: one writes down every order in a notebook (logging), another shows your membership card at the restaurant door (auth). If your card expired (401), a special agent (Authenticator) runs to get you a new card, then the driver retries the delivery — you don't even notice.",
   codeWalkthrough: [
