@@ -4876,7 +4876,36 @@ class DashboardViewModel(
     { t: "@HiltViewModel", d: "Annotates a ViewModel to enable Hilt injection into it. Use with viewModels() delegate in Activity/Fragment. Hilt manages the ViewModel factory automatically — no more ViewModelProvider.Factory boilerplate. Dependencies injected into the ViewModel follow @ViewModelScoped or @Singleton scopes." },
     { t: "Dagger basics for legacy", d: "Hilt is built on Dagger 2. In legacy codebases you will see: @Component (defines the dependency graph), @Subcomponent (child component with narrower scope), @Module (same as Hilt), @Scope annotations (custom like @PerActivity). Understanding Dagger helps you debug Hilt's generated code and work in pre-Hilt projects." },
     { t: "Testing with Hilt", d: "Replace production modules in tests using @UninstallModules + @BindValue or @TestInstallIn. HiltAndroidTest + HiltTestRunner for instrumented tests. For unit tests, do NOT use Hilt — just construct the class under test directly with fakes/mocks (constructor injection makes this trivial)." },
-    { t: "DI interview answer structure", d: "Answer: (1) Problem DI solves — testability, loose coupling, single source of truth for dependencies. (2) Manual DI — how you'd do it without a framework. (3) Why Hilt/Dagger — compile-time validation, scope management, no manual container wiring. (4) Scoping — knowing @Singleton vs @ViewModelScoped. Shows progression from first principles." }
+    { t: "DI interview answer structure", d: "Answer: (1) Problem DI solves — testability, loose coupling, single source of truth for dependencies. (2) Manual DI — how you'd do it without a framework. (3) Why Hilt/Dagger — compile-time validation, scope management, no manual container wiring. (4) Scoping — knowing @Singleton vs @ViewModelScoped. Shows progression from first principles." },
+    { t: "Hilt with Jetpack Compose — hiltViewModel()", d: "The official Android Developers Hilt guide dedicates a whole section to this because Compose has no Activity/Fragment lifecycle to hang @AndroidEntryPoint on inside a @Composable. Add the androidx.hilt:hilt-navigation-compose artifact, then call hiltViewModel() inside a composable (or inside a NavGraphBuilder route) instead of viewModel(). It resolves the nearest ViewModelStoreOwner — normally the hosting Activity/Fragment or the current NavBackStackEntry when used inside Navigation-Compose — and returns a Hilt-constructed ViewModel with no factory boilerplate.", code: `// build.gradle: implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+@Composable
+fun OrderScreen(
+    viewModel: OrderViewModel = hiltViewModel() // resolves ViewModelStoreOwner automatically
+) {
+    val orders by viewModel.orders.collectAsStateWithLifecycle()
+    // ...
+}
+
+// scoped to a single NavGraph route instead of the whole Activity:
+composable("orderDetail/{orderId}") { backStackEntry ->
+    val viewModel: OrderDetailViewModel = hiltViewModel(backStackEntry)
+    OrderDetailScreen(viewModel)
+}` },
+    { t: "@EntryPoint — injecting into classes Hilt can't construct", d: "Not every class can be an @AndroidEntryPoint or take an @Inject constructor — ContentProvider.onCreate() runs before Hilt components exist, and third-party classes you don't own can't be annotated. The official guide's answer is @EntryPoint: define an interface annotated @EntryPoint + @InstallIn(SingletonComponent::class) exposing the dependency, then pull it out manually with EntryPointAccessors.fromApplication(). This is the escape hatch senior interviewers probe for when they ask 'how would you get a Hilt dependency into a class Hilt doesn't support?'", code: `@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface OrderRepositoryEntryPoint {
+    fun orderRepository(): OrderRepository
+}
+
+class LegacyWidgetProvider : AppWidgetProvider() { // Hilt can't inject widget providers directly
+    override fun onUpdate(context: Context, mgr: AppWidgetManager, ids: IntArray) {
+        val repo = EntryPointAccessors.fromApplication(
+            context.applicationContext, OrderRepositoryEntryPoint::class.java
+        ).orderRepository()
+        // use repo to populate the widget
+    }
+}` }
   ],
   whatIs: "Dependency Injection is the practice of providing objects' dependencies from the outside rather than letting them construct their own. Manual DI is hand-wiring an AppContainer. Dagger 2 is a compile-time annotation processor that generates the wiring code. Hilt is Google's opinionated Dagger wrapper for Android that provides standard components (Application, Activity, ViewModel) so you only write business logic — not infrastructure.",
   realWorld: "At Payback (fintech), the token refresh interceptor, the encrypted Room database, and the analytics tracker all need to be singletons shared across the app. Hilt's @Singleton scope guarantees exactly one instance. The AuthRepository is @Singleton but the SessionManager is @ActivityScoped — it's destroyed when the auth Activity is destroyed, preventing stale session state from leaking across Activities. In tests, the real AuthService is replaced with a FakeAuthService via @TestInstallIn without touching any production code.",
@@ -4976,7 +5005,9 @@ class OrderViewModelTest {
     { q: "What is the role of @HiltAndroidApp?", opts: ["It registers all Activities and Fragments for DI automatically", "It triggers Hilt code generation and creates the application-level singleton component", "It replaces the need for @Module annotations across the app", "It enables hot-reload of dependency bindings at runtime"], ans: 1 },
     { q: "In a legacy Dagger 2 codebase (pre-Hilt), what does @Subcomponent represent?", opts: ["A module that provides only interface bindings", "A child component with a narrower scope and lifetime than its parent component", "An alternative to @Component for testing only", "A way to share singletons across different app processes"], ans: 1 },
     { q: "Which Hilt annotation marks a ViewModel for automatic factory generation?", opts: ["@AndroidEntryPoint", "@HiltAndroidApp", "@HiltViewModel", "@ViewModelScoped"], ans: 2 },
-    { q: "What is the correct approach to replacing a real module with a fake in an instrumented Hilt test?", opts: ["Modify the production module directly and revert after the test", "Use @UninstallModules on the test class combined with @BindValue or @TestInstallIn to provide the fake", "Create a separate Application class for tests and manually install fake modules", "Use Mockito to mock the Hilt component interface at runtime"], ans: 1 }
+    { q: "What is the correct approach to replacing a real module with a fake in an instrumented Hilt test?", opts: ["Modify the production module directly and revert after the test", "Use @UninstallModules on the test class combined with @BindValue or @TestInstallIn to provide the fake", "Create a separate Application class for tests and manually install fake modules", "Use Mockito to mock the Hilt component interface at runtime"], ans: 1 },
+    { q: "You need a Hilt-provided dependency inside an AppWidgetProvider, which cannot use @AndroidEntryPoint. What does the official Hilt guide recommend?", opts: ["Manually call the Dagger-generated component's factory method", "Define an @EntryPoint interface installed in the right component and retrieve the dependency via EntryPointAccessors", "Make AppWidgetProvider extend AppCompatActivity so @AndroidEntryPoint works", "It's not possible — rewrite the dependency as a static singleton instead"], ans: 1 },
+    { q: "Inside a Jetpack Compose screen, what replaces the standard viewModel() call to get a Hilt-injected ViewModel?", opts: ["hiltViewModel(), provided by the androidx.hilt:hilt-navigation-compose artifact", "@HiltViewModel alone is enough — no special composable call is needed", "EntryPointAccessors.fromApplication() inside the composable body", "ViewModelProvider.Factory constructed manually with @Inject"], ans: 0 }
   ],
   challenge: "Take a class that constructs its own Retrofit instance and Room database inside its body (no DI). Refactor it step-by-step: first to Manual DI with an AppContainer, then to Hilt with proper @Module/@Provides/@Binds. Identify the correct scope for each dependency. Write the test double strategy for each approach.",
   resources: [
@@ -4984,7 +5015,9 @@ class OrderViewModelTest {
     { type: "docs", title: "Dependency Injection in Android — Manual DI first", url: "https://developer.android.com/training/dependency-injection/manual", source: "Android Developers" },
     { type: "docs", title: "Hilt Testing Guide", url: "https://developer.android.com/training/dependency-injection/hilt-testing", source: "Android Developers" },
     { type: "article", title: "@Binds vs @Provides — When to use each", url: "https://proandroiddev.com/dagger-hilt-binds-vs-provides-b8ff437d6a6a", source: "ProAndroidDev" },
-    { type: "docs", title: "Dagger 2 — User's Guide (for legacy codebases)", url: "https://dagger.dev/dev-guide/", source: "dagger.dev" }
+    { type: "docs", title: "Dagger 2 — User's Guide (for legacy codebases)", url: "https://dagger.dev/dev-guide/", source: "dagger.dev" },
+    { type: "docs", title: "Hilt and Jetpack Compose — Official Guide", url: "https://developer.android.com/jetpack/compose/libraries#hilt", source: "Android Developers" },
+    { type: "docs", title: "Hilt entry points — Official Guide", url: "https://developer.android.com/training/dependency-injection/hilt-android#not-supported", source: "Android Developers" }
   ],
   eli5: "Imagine you run a burger restaurant. Without DI, every chef makes their own ketchup from scratch — that's crazy. Manual DI is the head chef making one big batch and handing it out. Dagger is a robot that reads a recipe book and automatically prepares every ingredient for every chef in the right amount. Hilt is that same robot but pre-programmed specifically for burger restaurants — you just tell it 'I need ketchup' and it knows exactly when and how much to bring.",
   codeWalkthrough: [
