@@ -11121,7 +11121,19 @@ val shareIntent = Intent(Intent.ACTION_SEND).apply {
     putExtra(Intent.EXTRA_STREAM, uri)
     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     type = "image/jpeg"
-}` }
+}` },
+    { t: "Sharing multiple files at once — ACTION_SEND_MULTIPLE", d: "A common gap in FileProvider tutorials: sharing more than one file requires ACTION_SEND_MULTIPLE with EXTRA_STREAM holding an ArrayList<Uri>, not a single Uri. Every URI in the list must come from getUriForFile() and the grant flag applies to the whole list. Mixing MIME types (e.g. a photo and a PDF) means using type = \"*/*\" — a specific type like image/jpeg will make the chooser reject a non-matching file silently.", code: `fun shareMultiplePhotos(context: Context, files: List<File>) {
+    val uris = ArrayList(files.map { file ->
+        FileProvider.getUriForFile(context, "\${context.packageName}.fileprovider", file)
+    })
+    val intent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+        type = "image/jpeg" // use "*/*" if mixing file types
+        putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(Intent.createChooser(intent, "Share photos"))
+}` },
+    { t: "Revoking a URI grant early with revokeUriPermission()", d: "Grants normally expire when the receiving app's task is removed from recents, but that can be minutes or hours later — not good enough for a one-time share of a sensitive document. Call context.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) as soon as you know the transfer is done (e.g. after an upload-complete callback) to close the grant immediately. This is the detail that separates 'I followed a tutorial' from 'I understand the permission lifecycle' in a senior interview." }
   ],
   whatIs: "ContentProvider is Android's structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data source. FileProvider is a ContentProvider subclass that securely exposes files via content:// URIs with time-limited URI permission grants, replacing the dangerous file:// URI pattern. Together they form Android's inter-app data exchange system.",
   realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
@@ -11246,7 +11258,9 @@ fun getPhotosFromMediaStore(context: Context): List<Uri> {
     { q: "What is the correct modern approach to loading ContentProvider data asynchronously?", opts: ["CursorLoader inside a Fragment", "AsyncQueryHandler", "viewModelScope coroutine with contentResolver query on Dispatchers.IO", "IntentService with QUERY action"], ans: 2 },
     { q: "Which ContentProvider method must return the MIME type for the data at a given URI?", opts: ["query()", "insert()", "getType()", "onCreate()"], ans: 2 },
     { q: "What is Android FileProvider used for?", opts: ["Compiling resources at build time", "Securely exposing files to other apps via content:// URIs instead of raw file:// paths", "Storing app preferences", "Managing background services"], ans: 1 },
-    { q: "What must you add to res/xml/ for a FileProvider to work?", opts: ["A network_security_config.xml file", "A file_paths.xml resource listing the directories FileProvider is allowed to expose", "A backup_rules.xml file", "A provider_paths.json manifest"], ans: 1 }
+    { q: "What must you add to res/xml/ for a FileProvider to work?", opts: ["A network_security_config.xml file", "A file_paths.xml resource listing the directories FileProvider is allowed to expose", "A backup_rules.xml file", "A provider_paths.json manifest"], ans: 1 },
+    { q: "How do you share three files at once through FileProvider in a single Intent?", opts: ["Call startActivity() three times in a loop, once per file", "Use ACTION_SEND_MULTIPLE with EXTRA_STREAM set to an ArrayList<Uri> built from getUriForFile() calls", "Zip the files and share the archive as a single Uri", "FileProvider does not support sharing more than one file"], ans: 1 },
+    { q: "Why would you call context.revokeUriPermission() instead of waiting for the grant to expire naturally?", opts: ["revokeUriPermission() is required before the app can be uninstalled", "To close a sensitive file's access grant immediately after the transfer completes, rather than leaving it open until the receiving app's task is cleared", "It forces FileProvider to regenerate a new authority string", "It is required for FLAG_GRANT_WRITE_URI_PERMISSION but not for read grants"], ans: 1 }
   ],
   challenge: "Build a secure photo sharing flow: (1) Configure FileProvider in Manifest and file_paths.xml for cache directory. (2) Write a function that captures a photo using TakePicture ActivityResultContract and saves it to a FileProvider-managed cache path. (3) Write a function that shares the captured photo with FLAG_GRANT_READ_URI_PERMISSION. (4) Write a MediaStore query that returns all images taken in the last 7 days, sorted newest first. (5) Explain what happens to the URI permission grant when the receiving app's task is cleared from recents.",
   resources: [
@@ -11254,7 +11268,8 @@ fun getPhotosFromMediaStore(context: Context): List<Uri> {
     { type: "docs", title: "FileProvider — AndroidX Core", url: "https://developer.android.com/reference/androidx/core/content/FileProvider", source: "Android Docs" },
     { type: "docs", title: "URI permissions — Android Developers", url: "https://developer.android.com/guide/topics/providers/content-provider-basics#Permissions", source: "Android Docs" },
     { type: "docs", title: "MediaStore access — scoped storage", url: "https://developer.android.com/training/data-storage/shared/media", source: "Android Docs" },
-    { type: "docs", title: "Storage Access Framework overview", url: "https://developer.android.com/guide/topics/providers/document-provider", source: "Android Docs" }
+    { type: "docs", title: "Storage Access Framework overview", url: "https://developer.android.com/guide/topics/providers/document-provider", source: "Android Docs" },
+    { type: "docs", title: "Sharing files with Intent.ACTION_SEND / ACTION_SEND_MULTIPLE", url: "https://developer.android.com/training/sharing/send", source: "Android Docs" }
   ],
   eli5: "Imagine your photos are locked in a safe. ContentProvider is a bank teller who can look things up in that safe for you using a special code number. FileProvider is like a secure messenger service — it takes a file from your safe and delivers it to another app in a sealed envelope with a temporary key, so the other app can open it but cannot keep the key forever.",
   codeWalkthrough: [
