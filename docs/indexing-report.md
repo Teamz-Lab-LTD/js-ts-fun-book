@@ -1,10 +1,10 @@
-# Indexing Report — 2026-08-08 23:10
+# Indexing Report — 2026-08-09 23:15
 
 Total pages: 41
 Checked: 41
-Indexed: 16 (39%)
+Indexed: 17 (41%)
 Not indexed: 24
-Errors: 1
+Errors: 0
 
 ## Not Indexed Pages
 
@@ -35,7 +35,7 @@ Errors: 1
 | /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (16)
+## Indexed Pages (17)
 
 - /
 - /lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html
@@ -43,6 +43,7 @@ Errors: 1
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
 - /lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
 - /lessons/class-9-math-bangla/51-sin-cos-tan.html
+- /lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html
 - /lessons/flutter-dart-masterclass/12-constructors-named-parameters.html
 - /lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
 - /roadmap.html
