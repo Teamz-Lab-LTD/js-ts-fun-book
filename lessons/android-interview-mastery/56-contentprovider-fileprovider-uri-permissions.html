@@ -7,7 +7,7 @@
 <meta name="description" content="ContentProvider is Android&#39;s structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-08-09">
+<meta name="date" content="2026-08-10">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/55-broadcastreceiver-services-binder-bound-services.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html">
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-08-09",
+  "dateModified": "2026-08-10",
   "position": 56
 }
 </script>
@@ -218,6 +218,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
       <li><strong>Minimal FileProvider setup — smallest working example</strong> — Three pieces, in order: the Manifest declaration, the file_paths.xml that whitelists a directory, and the Kotlin call that turns a File into a shareable URI. Miss the xml resource and getUriForFile() throws IllegalArgumentException at runtime — that error means the directory you&#39;re sharing from isn&#39;t listed below.</li>
       <li><strong>Sharing multiple files at once — ACTION_SEND_MULTIPLE</strong> — A common gap in FileProvider tutorials: sharing more than one file requires ACTION_SEND_MULTIPLE with EXTRA_STREAM holding an ArrayList, not a single Uri. Every URI in the list must come from getUriForFile() and the grant flag applies to the whole list. Mixing MIME types (e.g. a photo and a PDF) means using type = &quot;*/*&quot; — a specific type like image/jpeg will make the chooser reject a non-matching file silently.</li>
       <li><strong>Revoking a URI grant early with revokeUriPermission()</strong> — Grants normally expire when the receiving app&#39;s task is removed from recents, but that can be minutes or hours later — not good enough for a one-time share of a sensitive document. Call context.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) as soon as you know the transfer is done (e.g. after an upload-complete callback) to close the grant immediately. This is the detail that separates &#39;I followed a tutorial&#39; from &#39;I understand the permission lifecycle&#39; in a senior interview.</li>
+      <li><strong>Fixing &quot;Failed to find configured root&quot; IllegalArgumentException</strong> — The single most common FileProvider crash. getUriForFile() throws IllegalArgumentException: Failed to find configured root for path when the File you pass lives OUTSIDE every directory whitelisted in file_paths.xml — not when the xml resource is simply missing. Checklist: (1) confirm the file&#39;s real path (context.cacheDir vs context.filesDir vs getExternalFilesDir() are different roots, each needs its own // tag); (2) the &#39;path&#39; attribute must match the actual sub-directory you write into, not just &quot;.&quot;; (3) after editing file_paths.xml, do a clean rebuild — the manifest merger sometimes caches the old meta-data resource pointer.</li>
     </ul></section>
 
 <section class="section"><h2>Code example</h2><pre class="code"><code>// FileProvider setup in AndroidManifest.xml (shown as comment)
