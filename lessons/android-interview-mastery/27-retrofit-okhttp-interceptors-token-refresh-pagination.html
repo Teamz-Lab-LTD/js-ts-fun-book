@@ -7,7 +7,7 @@
 <meta name="description" content="Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-08-09">
+<meta name="date" content="2026-08-10">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html">
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-08-09",
+  "dateModified": "2026-08-10",
   "position": 27
 }
 </script>
@@ -218,6 +218,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
       <li><strong>Minimal interceptor — smallest working example</strong> — Skip the auth/retry complexity for a moment — here is the smallest interceptor that compiles and does something useful (adds a header, then hands the request back to the chain). Every interceptor you write, no matter how complex, follows this same 4-line shape.</li>
       <li><strong>HttpLoggingInterceptor — see every request/response in Logcat</strong> — Before writing a custom interceptor, add OkHttp&#39;s own logging interceptor first — it prints method, URL, headers, and body for every call, and is the fastest way to debug &#39;why is my request failing&#39;. Add it LAST via addInterceptor() so it logs the fully-built request (after auth headers are attached). Never ship BODY level in a release build — it can leak tokens and PII into device logs.</li>
       <li><strong>Testing an interceptor in isolation with MockWebServer</strong> — Interviewers often follow up &#39;how would you unit test that AuthInterceptor?&#39; with a straight yes/no on whether you&#39;ve actually done it. MockWebServer (from okhttp3.mockwebserver) starts a real local HTTP server your OkHttpClient talks to — no mocking framework needed. Enqueue a canned response, fire the request through your real interceptor chain, then assert on the recorded request that reached the server (headers, body, path). This catches interceptor bugs that Mockito-style unit tests miss, because the request actually travels through chain.proceed().</li>
+      <li><strong>RetryInterceptor — full exponential-backoff implementation</strong> — The &#39;Retry interceptor&#39; point above describes the shape; this is the actual working class most tutorials skip. Key rules an interviewer checks for: retry only idempotent methods (GET, never POST), cap the attempt count, sleep on the interceptor&#39;s own thread (never the main thread — OkHttp interceptors already run off it), and read Retry-After when the server sends one instead of guessing the delay.</li>
     </ul></section>
 
 <section class="section"><h2>Code example</h2><pre class="code"><code>// 1. Retrofit interface definition

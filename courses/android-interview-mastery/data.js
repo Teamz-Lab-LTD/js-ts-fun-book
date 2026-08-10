@@ -5133,7 +5133,43 @@ val client = OkHttpClient.Builder()
         val recorded = server.takeRequest()
         assertEquals("Bearer test-token", recorded.getHeader("Authorization"))
     }
-}` }
+}` },
+    { t: "RetryInterceptor — full exponential-backoff implementation", d: "The 'Retry interceptor' point above describes the shape; this is the actual working class most tutorials skip. Key rules an interviewer checks for: retry only idempotent methods (GET, never POST), cap the attempt count, sleep on the interceptor's own thread (never the main thread — OkHttp interceptors already run off it), and read Retry-After when the server sends one instead of guessing the delay.", code: `class RetryInterceptor(
+    private val maxRetries: Int = 3
+) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        var attempt = 0
+        var lastException: IOException? = null
+
+        while (attempt < maxRetries) {
+            try {
+                val response = chain.proceed(request)
+                // only retry idempotent requests, and only on retryable status codes
+                val retryable = response.code == 503 || response.code == 429
+                if (!retryable || request.method != "GET") return response
+
+                response.close()
+                val retryAfter = response.header("Retry-After")?.toLongOrNull()
+                val backoffMs = retryAfter?.times(1000) ?: (1000L shl attempt) // 1s, 2s, 4s
+                Thread.sleep(backoffMs) // safe here — interceptors run off the main thread
+                attempt++
+            } catch (e: IOException) {
+                lastException = e
+                if (request.method != "GET" || attempt == maxRetries - 1) throw e
+                Thread.sleep(1000L shl attempt)
+                attempt++
+            }
+        }
+        throw lastException ?: IOException("Retry failed after \$maxRetries attempts")
+    }
+}
+
+// register BEFORE the auth interceptor so a refreshed request also gets retried:
+val client = OkHttpClient.Builder()
+    .addInterceptor(RetryInterceptor(maxRetries = 3))
+    .addInterceptor(AuthInterceptor(tokenProvider))
+    .build()` }
   ],
   whatIs: "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
@@ -11166,7 +11202,23 @@ val shareIntent = Intent(Intent.ACTION_SEND).apply {
     }
     context.startActivity(Intent.createChooser(intent, "Share photos"))
 }` },
-    { t: "Revoking a URI grant early with revokeUriPermission()", d: "Grants normally expire when the receiving app's task is removed from recents, but that can be minutes or hours later — not good enough for a one-time share of a sensitive document. Call context.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) as soon as you know the transfer is done (e.g. after an upload-complete callback) to close the grant immediately. This is the detail that separates 'I followed a tutorial' from 'I understand the permission lifecycle' in a senior interview." }
+    { t: "Revoking a URI grant early with revokeUriPermission()", d: "Grants normally expire when the receiving app's task is removed from recents, but that can be minutes or hours later — not good enough for a one-time share of a sensitive document. Call context.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) as soon as you know the transfer is done (e.g. after an upload-complete callback) to close the grant immediately. This is the detail that separates 'I followed a tutorial' from 'I understand the permission lifecycle' in a senior interview." },
+    { t: "Fixing \"Failed to find configured root\" IllegalArgumentException", d: "The single most common FileProvider crash. getUriForFile() throws IllegalArgumentException: Failed to find configured root for path when the File you pass lives OUTSIDE every directory whitelisted in file_paths.xml — not when the xml resource is simply missing. Checklist: (1) confirm the file's real path (context.cacheDir vs context.filesDir vs getExternalFilesDir() are different roots, each needs its own <cache-path>/<files-path>/<external-files-path> tag); (2) the 'path' attribute must match the actual sub-directory you write into, not just \".\"; (3) after editing file_paths.xml, do a clean rebuild — the manifest merger sometimes caches the old meta-data resource pointer.", code: `<!-- res/xml/file_paths.xml -->
+<paths>
+    <!-- matches File(context.cacheDir, "images/x.jpg") -->
+    <cache-path name="shared_images" path="images/" />
+
+    <!-- matches File(context.filesDir, "docs/x.pdf") -->
+    <files-path name="shared_docs" path="docs/" />
+
+    <!-- matches File(context.getExternalFilesDir(null), "exports/x.csv") -->
+    <external-files-path name="shared_exports" path="exports/" />
+</paths>
+
+// this throws IllegalArgumentException if the file is under filesDir
+// but only cache-path is declared above:
+val file = File(context.filesDir, "docs/report.pdf")
+FileProvider.getUriForFile(context, authority, file) // add <files-path> to fix` }
   ],
   whatIs: "ContentProvider is Android's structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data source. FileProvider is a ContentProvider subclass that securely exposes files via content:// URIs with time-limited URI permission grants, replacing the dangerous file:// URI pattern. Together they form Android's inter-app data exchange system.",
   realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
