@@ -2651,3 +2651,141 @@ DONE — 23:12:47
 ============================================================
   preflight pre: OK (4 checks, root=teamz-lab-learning)
 ✓ dirty-guard passed
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-12 23:00:04 +06
+============================================================
+  preflight pre: OK (4 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+enhance-outcome: 7 pages known (2026-07-13 .. 2026-08-09) but NONE fall in the scoring window 2026-02-13 .. 2026-07-12 — raise --max-age or wait for the 28d after-window to elapse
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +1 new   (store 148, unpulled 111)
+    gate: holding (need >=150 new AND >=21d; have 111 new, last 26d)
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 80 sessions across 8 pages (28d)
+    value layer: re-ranked by measured conversion (median 1505.08 per 1k sessions; 0 section(s) calibrated) — none=201
+  
+    ENHANCE candidates: 201  (queueing 4)
+      #11.3   1753 impr  🔒 additive   /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp retry'
+      #6.8    1559 impr  🔒 additive   /lessons/class-9-math-bangla/51-sin-cos-tan.
+             └─ '(no individual phrase disclosed by GSC)'
+      #12.3   1741 impr  🔒 additive   /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider'
+      #17.7   1473 impr  🔒 additive   /lessons/android-interview-mastery/26-depend
+             └─ 'android developers hilt dependency injection official gu'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log --format='%h %ad %s' --date=short
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"cooldown\" scripts/build-conten
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py","offset":155,"lim
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py","offset":255,"lim
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && tail -40 data/last-night-content.md 2>/de
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log -1 --format='%ad %H' --date=iso -
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log -1 --format='%H %ad %s' --date=sh
+  [tool] Write {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","content":"# Nightly 
+  Same 4 targets tonight as last night. Cooldown bug from 08-11 report still unfixed — shipped 0 again, not 6th padding pass.
+
+Bug not mine to blind-fix: `scripts/build-content-queue.py` symlinks into `teamz-company-automation/py/`, shared across 4 properties. `cooldown_paths()` stems on committed file path — this site's lessons all live in one `courses/<slug>/data.js`, so every edit registers stem `"data"`, matches no lesson URL. Cooldown has never held here. Confirmed again: all 4 targets last touched 2-3 days ago, inside the 7-day window that should've blocked them.
+
+Fix known (~15 lines: on `courses/<slug>/data.js` touch, read `lessons/<slug>/*.html` off disk, register all as touched — same pattern already shipped for apps' `services.ts`). Not applying without your say-so — cross-project shared script.
+
+Say the word and I patch it. Report written to `data/last-night-content.md`.
+
+**DONE: nightly run, shipped 0, cooldown bug re-flagged. NEXT: your call on cooldown_paths() fix → `/model sonnet` + effort medium.**
+  [agent finished] Same 4 targets tonight as last night. Cooldown bug from 08-11 report still unfixed — shipped 0 again, not 6th padding pass.
+
+Bug not mine to blind-fix: `scripts/build-content-queue.py` symlinks into `teamz-company-automation/py/`, shared across 4 properties. `cooldown_paths()` stems on committed file path — this site's lessons all live in one `courses/<slug>/data.js`, so every edit registers stem `"data"`, matches no lesson URL. Cooldown has never held here. Confirmed again: all 4 targets last touched 2-3 days ago, inside the 7-day window that should've blocked them.
+
+Fix known (~15 lines: on `courses/<slug>/data.js` touch, read `lessons/<slug>/*.html` off disk, register all as touched — same pattern already shipped for apps' `services.ts`). Not applying without your say-so — cross-project shared script.
+
+Say the word and I patch it. Report written to `data/last-night-content.md`.
+
+**DONE: nightly run, shipped 0, cooldown bug re-flagged. NEXT: your call on cooldown_paths() fix → `/model sonnet` + effort medium.**
+  ✓ content agent finished
+
+=== course agent ===
+  12117 keywords, 651 cached, fetching 25 (credits left 133)
+    … 10/25
+    … 20/25
+  
+  scored 676 keywords; 0 failed
+  
+  MOST WINNABLE:
+    win 10.0  rental property                            0/10 strong slots (auth 0.04)
+    win 10.0  intel 8255                                 1/10 strong slots (auth 0.14); 3 UGC = opening
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.01)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.01)
+    win 10.0  cars for sale                              0/10 strong slots (auth 0.02)
+    win 10.0  estate planning attorney                   0/10 strong slots (auth 0.02)
+    win 10.0  estate planning lawyer                     0/10 strong slots (auth 0.02)
+    win 10.0  wills and estate lawyers near me           0/10 strong slots (auth 0.03)
+    win 10.0  wills and trusts attorney                  0/10 strong slots (auth 0.01)
+    win 10.0  used car dealers near me                   0/10 strong slots (auth 0.02)
+    win 10.0  speeding ticket lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  speeding ticket attorney                   0/10 strong slots (auth 0.03)
+  
+  LEAST WINNABLE:
+    win  2.8  american express savings                   10/10 strong slots (auth 0.76); 1 UGC = opening; 3 distinct domains
+    win  2.7  navy federal credit union heloc rates      10/10 strong slots (auth 0.70); 1 distinct domains
+    win  2.7  ally bank cd rates                         10/10 strong slots (auth 0.79); 1 UGC = opening; 4 distinct domains
+    win  2.5  regions bank home equity loan              10/10 strong slots (auth 0.73); 2 distinct domains
+    win  2.3  navy federal heloc rates                   10/10 strong slots (auth 0.76); 2 distinct domains
+    win  2.3  va home mortgage                           10/10 strong slots (auth 0.82); 6 distinct domains
+    win  2.1  pnc bank heloc rates                       10/10 strong slots (auth 0.79); 3 distinct domains
+    win  2.0  va home loan                               10/10 strong slots (auth 0.84); 5 distinct domains
+  
+  top authorities: reddit.com, bankrate.com, youtube.com, nerdwallet.com, bankofamerica.com, rocketmortgage.com, irs.gov, navyfederal.org, usbank.com, investopedia.com
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 3 gaps)
+    $2736.57/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    (28311 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
