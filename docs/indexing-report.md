@@ -1,10 +1,10 @@
-# Indexing Report — 2026-08-11 23:13
+# Indexing Report — 2026-08-12 23:10
 
 Total pages: 41
 Checked: 41
 Indexed: 17 (41%)
-Not indexed: 23
-Errors: 1
+Not indexed: 24
+Errors: 0
 
 ## Not Indexed Pages
 
@@ -20,6 +20,7 @@ Errors: 1
 | /lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html | Crawled - currently not indexed |
+| /learn.html | URL is unknown to Google |
 | /lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html | Crawled - currently not indexed |
 | /lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html | Crawled - currently not indexed |
