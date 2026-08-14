@@ -5171,7 +5171,7 @@ val client = OkHttpClient.Builder()
     .addInterceptor(AuthInterceptor(tokenProvider))
     .build()` }
   ],
-  whatIs: "Retrofit is the declarative HTTP client for Android, backed by OkHttp as the HTTP engine. Interceptors are middleware that inspect and modify every request and response — authentication headers, logging, and retry logic all live here. The OkHttp Authenticator handles automatic token refresh on 401 responses. Pagination patterns (offset vs cursor) control how large data sets are loaded incrementally. Mapping HTTP errors to typed domain exceptions keeps ViewModels clean and testable.",
+  whatIs: "How to retry failed OkHttp requests: an Interceptor with exponential backoff, retryable codes (503, 429), a retry limit, and why POST retries need care. Also covers the OkHttp Authenticator for automatic token refresh on 401, offset vs cursor pagination, and mapping HTTP errors to typed domain exceptions.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
   code: `// 1. Retrofit interface definition
 interface PaybackApiService {
