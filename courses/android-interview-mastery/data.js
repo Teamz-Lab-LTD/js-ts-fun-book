@@ -5400,7 +5400,7 @@ class BrokenAuthInterceptor(
     { t: "Testing Room", d: "Use in-memory database for unit tests: Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build(). No migration needed. Run DAO tests with runTest (coroutine test). For migration testing, use MigrationTestHelper with schema export files to verify migrations are correct before shipping." },
     { t: "Room performance tips", d: "Add indices on columns used in WHERE and JOIN clauses. Use @Query with specific columns instead of SELECT * to reduce memory. Batch inserts with a single @Insert call taking List<T>. Use LIMIT in queries for pagination. Avoid accessing Room on the main thread — Room enforces this by default (allowMainThreadQueries() is test-only)." }
   ],
-  whatIs: "Room is Android's official SQLite ORM — it provides compile-time SQL verification, type-safe queries, and reactive data streams via Flow. @Entity maps Kotlin classes to tables, @Dao defines typed queries, @Database assembles the schema. TypeConverters handle complex types, Migrations preserve user data across schema changes, and @Relation/@Embedded model complex relationships without manual joins in application code.",
+  whatIs: "A Room transaction (@Transaction) runs several DAO queries as one atomic unit — all succeed or all roll back, so related inserts/updates never leave the database half-written. Room is Android's official SQLite ORM: compile-time SQL verification, type-safe queries, reactive Flow streams, safe migrations, and relations via @Relation/@Embedded.",
   realWorld: "Hazira Khata (school attendance/management app) stores student attendance records locally in Room for 500+ schools with intermittent connectivity. Migrations are critical — when a school added a 'late arrival' status, MIGRATION_1_2 added the column with a DEFAULT of 'present' to preserve historical records. The attendance DAO returns Flow<List<AttendanceRecord>> scoped to today's date — the UI updates instantly when the teacher marks a student present, even before the sync completes.",
   code: `// 1. Entity definition
 @Entity(
@@ -11220,7 +11220,7 @@ val shareIntent = Intent(Intent.ACTION_SEND).apply {
 val file = File(context.filesDir, "docs/report.pdf")
 FileProvider.getUriForFile(context, authority, file) // add <files-path> to fix` }
   ],
-  whatIs: "ContentProvider is Android's structured data-sharing mechanism between apps, built on a URI-addressed CRUD interface backed by SQLite or any other data source. FileProvider is a ContentProvider subclass that securely exposes files via content:// URIs with time-limited URI permission grants, replacing the dangerous file:// URI pattern. Together they form Android's inter-app data exchange system.",
+  whatIs: "A ContentProvider is Android's built-in way to share data safely between apps, via URI-addressed CRUD instead of raw file paths. FileProvider adds secure file sharing over content:// URIs with time-limited permission grants — replacing the dangerous file:// pattern. Together they form Android's inter-app data and file exchange system.",
   realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
   code: `// FileProvider setup in AndroidManifest.xml (shown as comment)
 // <provider
@@ -14023,7 +14023,7 @@ and now I always make sure to communicate well with my team."`,
 val pager = Pager(PagingConfig(pageSize = 20)) { SimplePagingSource(api) }
 val flow: Flow<PagingData<Article>> = pager.flow.cachedIn(viewModelScope)` }
   ],
-  whatIs: "Paging 3 is a Jetpack library for loading and displaying large datasets incrementally. It provides PagingSource for single-source loading, RemoteMediator for network-plus-database offline-first patterns, and Flow<PagingData> for reactive data delivery to both RecyclerView (via PagingDataAdapter) and Compose (via LazyPagingItems), with built-in error handling, retry, and transformation support.",
+  whatIs: "PagingSource is the Jetpack Paging 3 class that loads one page of data at a time instead of the whole list — the foundation for infinite-scroll lists. Combined with RemoteMediator for offline-first network+database sync and Flow<PagingData> for reactive delivery, Paging 3 powers large datasets in RecyclerView (PagingDataAdapter) or Compose (LazyPagingItems), with built-in retry and error handling.",
   realWorld: "Every production app with a feed, search results, or message list uses pagination. Instagram uses cursor-based paging for its feed, Slack pages message history with RemoteMediator-style caching, and Twitter's timeline relies on keyset pagination. Paging 3 is the standard approach in Android for all these patterns, handling the complex state management of multi-source, bidirectional loading.",
   code: `// === PagingSource Implementation ===
 class ArticlePagingSource(
