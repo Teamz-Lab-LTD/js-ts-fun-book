@@ -20,505 +20,505 @@
   </url>
   <url>
     <loc>https://learn.teamzlab.com/c/android-interview-mastery.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/02-collections-lambdas-scope-functions-higher-order-functions.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/03-oop-in-kotlin-interfaces-abstract-classes-composition.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/04-sealed-classes-enums-objects-companion-objects.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/05-generics-variance-extension-functions-inlinereified.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/06-exceptions-result-defensive-kotlin.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/07-coroutines-fundamentals-suspend-structured-concurrency.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/08-coroutine-cancellation-supervisorscope-exception-handling.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/09-flow-fundamentals-cold-streams-operators-collection.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/11-android-architecture-timeline-mvc-mvp-mvvm-mvi-clean.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/12-android-app-components-activity-fragment-service.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/15-viewmodel-lifecycle-aware-state-savedstatehandle.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/16-livedata-legacy-knowledge-for-modern-interviews.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/20-compose-side-effects-launchedeffect-sideeffect.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/21-compose-performance-recomposition-traps-keys-stability.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/22-navigation-in-android-fragment-nav-vs-compose-nav-vs-deep.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/24-repository-pattern-use-cases-dependency-inversion.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/36-android-performance-anr-jank-memory-leaks-startup-time.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/40-viewmodel-flow-testing-coroutine-test-utilities.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/42-compose-ui-testing-fundamentals.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/45-gradle-basics-dependencies-build-variants-product-flavors.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/46-signing-release-builds-play-console-versioning.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/47-cicd-for-android-github-actions-fastlane-bitrise.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/48-kotlin-flow-vs-dart-stream-vs-rx-crossover-interview.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/51-localization-rtl-formatting-resource-management.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/52-adaptive-android-ui-phones-tablets-foldables-multi-window.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/55-broadcastreceiver-services-binder-bound-services.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/58-system-design-i-offline-first-field-app-at-scale.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/62-cs-basics-big-o-memory-threading-networking.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/63-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/65-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/66-android-interview-project-storytelling-foundations.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/67-behavioral-foundations-w-star-confidence-concise-answers.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/68-leadership-seniority-mentoring-ownership-conflict-ambiguity.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/69-salary-negotiation-remote-culture-relocation.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/70-full-android-technical-mock-pack.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/71-full-architecture-system-design-mock-pack.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/72-full-behavioral-mixed-senior-mobile-mock-pack.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/75-advanced-coroutines-callbackflow-channelflow-custom.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/77-r8-proguard-release-optimization.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/78-android-1415-platform-features-migration.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/80-baseline-profiles-macrobenchmark-startup-optimization.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/82-aosp-android-platform-internals-for-app-developers.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/83-java-interop-legacy-code-kotlin-migration-strategy.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
