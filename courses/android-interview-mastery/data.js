@@ -5171,7 +5171,7 @@ val client = OkHttpClient.Builder()
     .addInterceptor(AuthInterceptor(tokenProvider))
     .build()` }
   ],
-  whatIs: "How to retry failed OkHttp requests: an Interceptor with exponential backoff, retryable codes (503, 429), a retry limit, and why POST retries need care. Also covers the OkHttp Authenticator for automatic token refresh on 401, offset vs cursor pagination, and mapping HTTP errors to typed domain exceptions.",
+  whatIs: "Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
   code: `// 1. Retrofit interface definition
 interface PaybackApiService {
@@ -16398,7 +16398,7 @@ class BInitializer : Initializer<B> {
       d: "Emerging tools use ML to distinguish meaningful visual changes from noise (anti-aliasing, shadow rounding). Services like Percy and Applitools (cross-platform) offer AI-powered visual comparison. In the Android ecosystem, expect tighter Compose Preview integration, IDE-inline diff previews, and smarter tolerance algorithms that understand semantic UI regions rather than raw pixel comparison."
     }
   ],
-  whatIs: "Screenshot testing (also called visual regression testing) is an automated testing approach where you capture rendered UI as image files, store approved versions as golden baselines, and compare future renders against those baselines to detect unintended visual changes. On Android, frameworks like Paparazzi (JVM-based, no emulator), Roborazzi (Robolectric-based), and Dropshots (device-based) automate this process, enabling teams to catch broken layouts, wrong colors, missing icons, and theme inconsistencies before they ship to users.",
+  whatIs: "Roborazzi screenshot testing for Android: Robolectric-based visual regression on the JVM — compare UI against golden baselines, catch pixel bugs before ship.",
   realWorld: "At Cash App, Paparazzi was created because their design system team needed to validate hundreds of UI components across themes and screen sizes without maintaining a fleet of emulators. Companies like Dropbox, Square, and Google use screenshot testing to enforce design consistency across feature teams — when any PR changes a shared component, the screenshot tests immediately show which screens are affected. In large-scale apps with 50+ contributors, screenshot testing is the primary defense against 'it looked fine on my machine' visual bugs.",
   code: `// ============================================
 // 1. PAPARAZZI SETUP — build.gradle.kts (module)
