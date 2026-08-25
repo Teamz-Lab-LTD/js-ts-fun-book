@@ -4907,7 +4907,7 @@ class LegacyWidgetProvider : AppWidgetProvider() { // Hilt can't inject widget p
     }
 }` }
   ],
-  whatIs: "Dependency Injection is the practice of providing objects' dependencies from the outside rather than letting them construct their own. Manual DI is hand-wiring an AppContainer. Dagger 2 is a compile-time annotation processor that generates the wiring code. Hilt is Google's opinionated Dagger wrapper for Android that provides standard components (Application, Activity, ViewModel) so you only write business logic — not infrastructure.",
+  whatIs: "Hilt vs Dagger vs Manual DI explained with real Android code: @HiltAndroidApp, @Inject, scopes, and when to use each — practical guide, not just theory. Manual DI is hand-wiring an AppContainer. Dagger 2 is a compile-time annotation processor that generates the wiring code. Hilt is Google's opinionated Dagger wrapper for Android that provides standard components (Application, Activity, ViewModel) so you only write business logic — not infrastructure.",
   realWorld: "At Payback (fintech), the token refresh interceptor, the encrypted Room database, and the analytics tracker all need to be singletons shared across the app. Hilt's @Singleton scope guarantees exactly one instance. The AuthRepository is @Singleton but the SessionManager is @ActivityScoped — it's destroyed when the auth Activity is destroyed, preventing stale session state from leaking across Activities. In tests, the real AuthService is replaced with a FakeAuthService via @TestInstallIn without touching any production code.",
   code: `// 1. Application setup
 @HiltAndroidApp
