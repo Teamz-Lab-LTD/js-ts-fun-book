@@ -1,9 +1,9 @@
-# Indexing Report — 2026-08-23 23:09
+# Indexing Report — 2026-08-24 23:05
 
 Total pages: 41
 Checked: 41
-Indexed: 16 (39%)
-Not indexed: 25
+Indexed: 15 (36%)
+Not indexed: 26
 Errors: 0
 
 ## Not Indexed Pages
@@ -18,6 +18,7 @@ Errors: 0
 | /lessons/cp-kids/23-powers-and-modular-arithmetic.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/77-r8-proguard-release-optimization.html | Crawled - currently not indexed |
+| /lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html | Crawled - currently not indexed |
@@ -36,7 +37,7 @@ Errors: 0
 | /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (16)
+## Indexed Pages (15)
 
 - /
 - /lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html
@@ -49,7 +50,6 @@ Errors: 0
 - /lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
 - /roadmap.html
 - /lessons/class-9-math-bangla/55-lesson.html
-- /lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html
 - /lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html
 - /lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html
 - /lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html

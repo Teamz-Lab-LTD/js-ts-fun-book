@@ -4989,3 +4989,242 @@ index.html written.
 build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
 Wrote sitemap.xml (494 URLs) at repo root.
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
+warning: in the working copy of 'logs/com.teamzlab.learn-nightly.log', CRLF will be replaced by LF the next time Git touches it
+[main cfefab2] chore(nightly): refresh generated site output
+ 4 files changed, 168 insertions(+), 5 deletions(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   fb9176c..cfefab2  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+  --- verifying against the live site ---
+  verify-deploy-live [https://learn.teamzlab.com/] via sitemap.xml: local 494 URLs, live 494
+    ✓ every locally built URL is present on the live site
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (2 checks, root=teamz-lab-learning)
+
+DONE — 23:06:01
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-25 23:00:01 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 2 pages, 2 excluding event-driven sections)
+    up 0  /  down 0  /  flat 2
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       30 ->     58 clicks   +93%
+    verdict: inconclusive: not enough baseline clicks
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +1 new   (store 158, unpulled 121)
+    gate: holding (need >=150 new AND >=21d; have 121 new, last 39d)
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 157 of 250 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  130 link(s) from /search/ (52 impr)
+            /hazira-khata-bn/
+         0 impr  128 link(s) from /search/ (52 impr)
+            /hazira-khata/
+         7 impr  126 link(s) from /hazira-khata-bn/tutorials/result-archive/ (0 impr)
+            /data-deletion/
+         0 impr  69 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  69 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  59 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  57 link(s) from /hazira-khata-bn/tutorials/import-students/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+         0 impr  57 link(s) from /hazira-khata/tutorials/parent-requests/ (0 impr)
+            /hazira-khata/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 87 sessions across 4 pages (28d)
+    value layer: re-ranked by measured conversion (median 866.67 per 1k sessions; 0 section(s) calibrated) — none=140, page=1
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 141  (queueing 4)
+      #13.6   1771 impr  ✏️  full     /lessons/android-interview-mastery/26-depend
+             └─ 'android developers hilt dependency injection official gu'
+      #6.1     767 impr  ✏️  full     /lessons/class-9-math-bangla/55-lesson.html/
+             └─ '(no individual phrase disclosed by GSC)'
+      #12.1    980 impr  ✏️  full     /lessons/flutter-interview-mastery/70-code-g
+             └─ '(no individual phrase disclosed by GSC)'
+      #12.3    801 impr  ✏️  full     /lessons/flutter-dart-masterclass/12-constru
+             └─ '(no individual phrase disclosed by GSC)'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Nightly run start. STEP 0 — pull targets.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"26-dependency\\|id: 26\" course
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mastery/data.js","offse
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"metaTitle\\|metaDescription\\|s
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls tools/ | grep -i lesson; echo ---; gre
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/tools/build-lesson-pages.js","offset":95,"limit":
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && awk '/^{$/{c++} c==1 && /id: 26,/{f=1} f{
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mastery/data.js","offse
+  [tool] Bash {"command":"node -e '\nconst suffix = \" | Free Tutorial — Teamz Lab\";\nconsole.log(\"suffix len\", suffix.length);\nconsole.log(\"budget for title\"
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"function truncate\" -A 10 tools
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -rn \"function truncate\" tools/"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -rn \"truncate\" tools/build-lesson-
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/tools/build-lesson-pages.js","offset":46,"limit":
+  [tool] Bash {"command":"node -e '\nconst opts = [\n\"Hilt vs Dagger vs Manual DI\",\n\"Hilt Dependency Injection Guide\",\n\"Android Hilt DI Guide\",\n\"Hilt DI: 
+  [tool] Bash {"command":"node -e '\nconst opts = [\n\"Hilt Dependency Injection Guide\",\n\"Hilt DI Guide: Dagger vs Manual\",\n\"Hilt Dependency Injection (DI) Gu
+  [tool] Bash {"command":"node -e '\nconst d = \"Hilt vs Dagger vs Manual DI explained with real Android code: @HiltAndroidApp, @Inject, scopes, and when to use eac
+  Good, fits. Edit android DI lesson now.
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  Target 2 done. Now class-9-math-bangla lesson 55.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"id: 55,\" courses/class-9-math-
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"id:55\\|id: 55\\b\" courses/cla
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls courses/ | grep -i class-9"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls courses/class-9-math-bangla/"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"^const LESSONS_DATA\\|id:\" cou
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/class-9-math-bangla/data.js","limit":40}
+  id: uses double-quoted JSON-ish keys here, unlike other course. That's why plain grep `id: 55,` missed. Search correctly.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n '\"id\": 55' courses/class-9-math
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/class-9-math-bangla/data.js","offset":102
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n '10258,10420p' courses/class-9-mat
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git show 199c228 -- courses/class-9-math-
+  [tool] Bash {"command":"node -e '\nconst d = \"উন্নতি কোণ ও অবনতি কোণ (ক্লাস ৯): উচ্চতা ও দূরত্ব বের করার সূত্র — tan ব্যবহার করে সহজ উদাহরণসহ ব্যাখ্যা। উন্নতি কো
+  Good. Editing.
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/class-9-math-bangla/data.js","offset":103
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/class-9-math-bangla/d
+  Target 3: flutter-interview-mastery lesson 70 (freezed/json_serializable/build_runner).
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n '\"id\": 70\\|id: 70,' courses/fl
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"code-generation-freezed\\|freez
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && awk 'NR==7324' courses/flutter-interview-
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && awk 'NR==7324' courses/flutter-interview-
+  [tool] Bash {"command":"node -e '\nconst opts=[\n\"Freezed & json_serializable Guide\",\n\"Flutter Freezed + build_runner\",\n\"Freezed vs json_serializable\",\n\
+  [tool] Bash {"command":"node -e '\nconst d = \"Freezed and json_serializable in Flutter: generate immutable models, copyWith, unions, and JSON parsing with build_
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\nimport re\npath = \"co
+  Target 4: flutter-dart-masterclass lesson 12 (constructors/named parameters).
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n '^{id:12,\\|{id: 12,\\|id:12,titl
+  [tool] Bash {"command":"node -e '\nconst opts=[\n\"Dart Constructors & Parameters\",\n\"Dart Named Parameters Guide\",\n\"Dart Constructors Guide\",\n\"Dart Named
+  [tool] Bash {"command":"node -e '\nconst d = \"Dart constructors explained: default, named parameters, named constructors, factory constructors, and const constru
+  [tool] Bash {"command":"node -e '\nconst d = \"Dart constructors explained: default, named parameters, factory constructors, and const constructors — with fromJso
+  Good, 139 chars. Apply edit.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/flutt
+  All 4 edits done. STEP 3 — build + verify.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-lesson-pages.js android-
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-lesson-pages.js class-9-
+  Verify each generated page actually renders new title/description.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\ngrep -o '<title>[^<]*</title>' lesson
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"lesson\\.\\(seo\\|meta\\)\" too
+  Bug caught: title-field edits change the URL slug (filename derived from `kebab(title)`), which would orphan the exact indexed URLs the queue targets. Reverting title changes on all 3, keeping description-only fixes (matches the site's established safe pattern).
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/flutt
+  Now clean up orphan generated files and rebuild all 3 courses.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\nrm -f lessons/android-interview-maste
+  Verify: same filenames, only description changed.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --porcelain -- lessons/android
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff --stat -- lessons/android-interv
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\ngit diff -- lessons/android-interview
+  Confirmed: all 4 target URLs unchanged, only descriptions rewritten. Also verify og:description / twitter:description got updated consistently (they derive from same metaDesc var, so fine). Now landing pages didn't need touching (no config.js edits). Refresh llms-full.txt.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-llms-txt.js 2>&1 | tail 
+  Now commit each target separately.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --porcelain courses/ llms-full
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\ngit add courses/android-interview-mas
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\ngit add courses/class-9-math-bangla/d
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\ngit add courses/flutter-interview-mas
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && \\\ngit add courses/flutter-dart-mastercl
+  Now STEP 4 — write the report.
+  [agent finished] error_during_execution
+  ✗ content agent TIMED OUT (>1800s) — killed to prevent a zombie. Next run retries fresh.
+  Last tool call before kill: Bash — likely where it hung.
+
+=== course agent ===
+    credit guard: 25 keywords but only 0 spendable (-1 left, 50 reserved) — trimming.
+  12117 keywords, 676 cached, fetching 0 (credits left -1)
+  
+  scored 676 keywords; 0 failed
+  
+  MOST WINNABLE:
+    win 10.0  rental property                            0/10 strong slots (auth 0.04)
+    win 10.0  intel 8255                                 1/10 strong slots (auth 0.14); 3 UGC = opening
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.01)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.01)
+    win 10.0  cars for sale                              0/10 strong slots (auth 0.02)
+    win 10.0  estate planning attorney                   0/10 strong slots (auth 0.02)
+    win 10.0  estate planning lawyer                     0/10 strong slots (auth 0.02)
+    win 10.0  wills and estate lawyers near me           0/10 strong slots (auth 0.03)
+    win 10.0  wills and trusts attorney                  0/10 strong slots (auth 0.01)
+    win 10.0  used car dealers near me                   0/10 strong slots (auth 0.02)
+    win 10.0  speeding ticket lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  speeding ticket attorney                   0/10 strong slots (auth 0.03)
+  
+  LEAST WINNABLE:
+    win  2.8  american express savings                   10/10 strong slots (auth 0.76); 1 UGC = opening; 3 distinct domains
+    win  2.7  navy federal credit union heloc rates      10/10 strong slots (auth 0.70); 1 distinct domains
+    win  2.7  ally bank cd rates                         10/10 strong slots (auth 0.79); 1 UGC = opening; 4 distinct domains
+    win  2.5  regions bank home equity loan              10/10 strong slots (auth 0.73); 2 distinct domains
+    win  2.3  navy federal heloc rates                   10/10 strong slots (auth 0.76); 2 distinct domains
+    win  2.3  va home mortgage                           10/10 strong slots (auth 0.82); 6 distinct domains
+    win  2.1  pnc bank heloc rates                       10/10 strong slots (auth 0.79); 3 distinct domains
+    win  2.0  va home loan                               10/10 strong slots (auth 0.84); 5 distinct domains
+  
+  top authorities: reddit.com, bankrate.com, youtube.com, nerdwallet.com, bankofamerica.com, rocketmortgage.com, irs.gov, navyfederal.org, usbank.com, investopedia.com
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 3 gaps)
+    $2736.57/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    (28311 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines

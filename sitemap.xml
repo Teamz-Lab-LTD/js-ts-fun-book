@@ -20,1759 +20,1759 @@
   </url>
   <url>
     <loc>https://learn.teamzlab.com/c/android-interview-mastery.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/01-kotlin-basics-valvar-null-safety-smart-casts-data-classes.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/02-collections-lambdas-scope-functions-higher-order-functions.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/03-oop-in-kotlin-interfaces-abstract-classes-composition.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/04-sealed-classes-enums-objects-companion-objects.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/05-generics-variance-extension-functions-inlinereified.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/06-exceptions-result-defensive-kotlin.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/07-coroutines-fundamentals-suspend-structured-concurrency.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/08-coroutine-cancellation-supervisorscope-exception-handling.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/09-flow-fundamentals-cold-streams-operators-collection.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/10-stateflow-vs-sharedflow-vs-livedata-vs-channels.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/11-android-architecture-timeline-mvc-mvp-mvvm-mvi-clean.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/12-android-app-components-activity-fragment-service.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/15-viewmodel-lifecycle-aware-state-savedstatehandle.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/16-livedata-legacy-knowledge-for-modern-interviews.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/18-jetpack-compose-fundamentals-composable-functions-state.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/20-compose-side-effects-launchedeffect-sideeffect.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/21-compose-performance-recomposition-traps-keys-stability.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/22-navigation-in-android-fragment-nav-vs-compose-nav-vs-deep.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/23-clean-architecture-for-android.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/24-repository-pattern-use-cases-dependency-inversion.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/25-mvvm-vs-mvi-vs-clean-tradeoffs-interview-answers.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/30-offline-first-sync-caching-conflict-resolution.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/31-firebase-on-android-auth-fcm-analytics-crashlytics-remote.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/33-notifications-channels-push-flows-deep-links-app-links.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/35-security-jwt-secure-storage-encryption-biometrics.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/36-android-performance-anr-jank-memory-leaks-startup-time.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/40-viewmodel-flow-testing-coroutine-test-utilities.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/41-roomrepositorynetwork-testing-mocks-vs-fakes.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/42-compose-ui-testing-fundamentals.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/43-espresso-legacy-awareness-instrumentation-basics.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/44-modularization-feature-modules-build-tradeoffs.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/45-gradle-basics-dependencies-build-variants-product-flavors.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/46-signing-release-builds-play-console-versioning.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/47-cicd-for-android-github-actions-fastlane-bitrise.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/48-kotlin-flow-vs-dart-stream-vs-rx-crossover-interview.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/49-jetpack-compose-vs-flutter-how-to-answer-without-sounding.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/51-localization-rtl-formatting-resource-management.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/52-adaptive-android-ui-phones-tablets-foldables-multi-window.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/55-broadcastreceiver-services-binder-bound-services.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/57-nativeplatform-apis-camera-bluetooth-nfc-sensors-maps.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/58-system-design-i-offline-first-field-app-at-scale.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/59-system-design-ii-schoolproductivity-app-with-local-db-sync.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/60-system-design-iii-secure-authpaymentclaims-flow.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/61-production-debugging-incident-response-crash-triage.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/62-cs-basics-big-o-memory-threading-networking.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/63-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/64-dsa-ii-stack-queue-linked-list-binary-search-heap.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/65-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/66-android-interview-project-storytelling-foundations.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/67-behavioral-foundations-w-star-confidence-concise-answers.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/68-leadership-seniority-mentoring-ownership-conflict-ambiguity.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/69-salary-negotiation-remote-culture-relocation.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/70-full-android-technical-mock-pack.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/71-full-architecture-system-design-mock-pack.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/72-full-behavioral-mixed-senior-mobile-mock-pack.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/75-advanced-coroutines-callbackflow-channelflow-custom.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/76-ksp-vs-kapt-code-generation-serialization.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/77-r8-proguard-release-optimization.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/78-android-1415-platform-features-migration.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/79-graphql-with-apollo-kotlin.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/80-baseline-profiles-macrobenchmark-startup-optimization.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/82-aosp-android-platform-internals-for-app-developers.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/android-interview-mastery/83-java-interop-legacy-code-kotlin-migration-strategy.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/c/class-9-math-bangla.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/01-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/02-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/03-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/04-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/05-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/06-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/07-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/08-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/09-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/10-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/11-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/12-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/13-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/14-ab-ab.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/15-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/16-a-b-abab.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/17-ab-ab.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/18-ab-ab.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/19-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/20-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/21-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/22-factor-theorem.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/23-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/24-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/25-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/26-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/27-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/28-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/29-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/30-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/31-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/32-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/33-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/34-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/35-discriminant.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/36-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/37-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/38-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/39-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/40-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/41-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/42-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/43-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/44-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/45-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/46-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/47-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/48-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/49-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/50-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/51-sin-cos-tan.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/52-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/53-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/54-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/55-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/56-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/57-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/58-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/59-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/60-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/61-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/62-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/63-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/64-arithmetic-series.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/65-geometric-series.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/66-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/67-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/68-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/69-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/70-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/71-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/72-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/73-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/74-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/75-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/76-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/77-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/class-9-math-bangla/78-lesson.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/c/flutter-dart-masterclass.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/01-what-is-programming.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/02-meet-flutter-dart.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/03-setting-up-flutter.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/04-your-first-flutter-app.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/05-variables-data-types.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/06-strings-numbers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/07-booleans-conditions.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/08-lists-collections.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/09-loops-iteration.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/10-functions.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/11-classes-objects.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/13-inheritance-mixins.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/14-null-safety.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/15-async-futures-streams.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/16-everything-is-a-widget.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/17-statelesswidget.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/19-materialapp-scaffold.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/20-text-icons-images.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/21-buttons-user-interactions.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/22-row-column-layout.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/24-listview-gridview.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/25-stack-positioned.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/26-forms-text-input.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/27-building-custom-widgets.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/28-design-system-theming.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/29-navigation-basics.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/30-gorouter.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/31-passing-data-between-screens.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/32-understanding-state.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/33-bloc-pattern-events-states.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/34-flutter_bloc-in-practice.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/35-advanced-bloc-patterns.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/36-clean-architecture-overview.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/37-domain-layer.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/38-data-layer.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/39-presentation-layer.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/40-getit-service-locator.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/41-injectable-code-generation.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/42-rest-apis-crud.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/43-dio-http-client.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/44-json-models-serialization.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/45-hive-local-database.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/46-token-auth-storage.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/47-firebase-setup-auth.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/48-social-login.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/49-error-handling-result-pattern.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/50-testing-debugging.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-dart-masterclass/51-config-build-release.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/c/flutter-interview-mastery.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/01-dart-types-null-safety-variables.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/02-collections-iterables-equality.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/03-futures-asyncawait-the-event-loop.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/04-streams-streamcontroller-operators.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/05-isolates-compute-concurrency.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/06-generics-extensions-mixins-typedefs.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/07-records-patterns-sealed-classes-class-modifiers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/08-error-handling-result-types-defensive-coding.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/09-oop-solid-principles-composition.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/10-widget-tree-element-tree-render-tree.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/11-stateless-vs-stateful-widget-lifecycle.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/12-buildcontext-inheritedwidget-keys-rebuild-boundaries.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/13-layout-system-constraints-flex.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/14-navigation-navigator-vs-gorouter-deep-links-route-guards.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/16-state-management-landscape.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/17-cubit-fundamentals.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/18-bloc-fundamentals.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/19-advanced-bloc-patterns.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/20-clean-architecture-fundamentals-for-flutter.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/21-repository-pattern-use-cases-di-boundaries.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/22-mvvm-vs-mvi-vs-clean-vs-mvc-tradeoffs.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/23-rest-apis-with-dio-interceptors-token-refresh-retries.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/24-websockets-socketio-real-time-sync.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/25-local-persistence-sharedpreferences-vs-hive-vs-sqlite-vs.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/26-offline-first-architecture-sync.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/27-firebase-essentials-auth-fcm-crashlytics-firestore.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/28-caching-pagination-lazy-loading-list-performance.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/29-flutter-performance-profiling-devtools.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/30-rendering-jank-impeller-memory-optimization.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/31-testing-strategy-unit-vs-widget-vs-integration.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/32-unit-testing-dart-classes-use-cases-repositories.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/33-testing-bloccubit-async-state-sequences.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/34-widget-testing-ui-flows-navigation-forms.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/35-integration-testing-e2e-flows.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/36-testability-patterns-mocks-fakes-golden-tests-coverage.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/37-cicd-basics-build-pipelines-artifacts-secrets.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/38-flavors-signing-release-builds-store-workflows.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/39-platform-channels-method-channels-event-channels-pigeon.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/40-ffi-native-library-binding.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/41-push-notifications-background-work-deep-links.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/42-android-fundamentals-for-flutter-engineers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/43-kotlin-coroutines-flow-vs-dart-streams.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/44-jetpack-compose-vs-flutter-tradeoffs-interview-answers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/45-mobile-security-jwt-secure-storage-biometrics-encryption.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/47-internationalization-localization.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/48-adaptive-ui-phone-tablet-foldables-desktop.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/49-flutter-web-rendering-constraints-seo-limitations.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/50-flutter-web-wasm-what-why-deployment.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/51-desktop-macos-windows-linux-packaging-inputs.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/52-graphql-vs-rest-when-to-choose-which.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/54-monetization-iap-subscriptions-ads-revenuecat.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/55-logging-observability-analytics-feature-flags.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/56-system-design-i-real-time-collaboration-app.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/57-system-design-ii-fintech-claimspayment-app.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/58-system-design-iii-offline-first-field-app-at-scale.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/59-production-debugging-incident-response-root-cause-analysis.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/60-cs-basics-big-o-memory-concurrency-networking.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/61-dsa-i-arrays-strings-hashmaps-sets-two-pointers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/62-dsa-ii-stack-queue-linked-list-binary-search-heap.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/63-dsa-iii-trees-graphs-bfsdfs-recursion-intervals.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/64-behavioral-foundations-w-star-confidence-concise-answers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/65-project-storytelling-architecture-decisions-tradeoffs-impact.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/66-leadership-seniority-mentoring-conflict-deadlines-product.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/67-salary-negotiation-remote-culture-relocation.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/68-full-interview-simulation-pack-technical-architecture.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/72-memory-profiling-leak-detection-devtools-mastery.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/73-flutter-internals-how-rendering-actually-works.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/74-grpc-protobuf-advanced-api-patterns.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/75-kmp-vs-flutter-strategic-comparison-for-senior-engineers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/76-package-development-publishing-open-source-maintenance.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://learn.teamzlab.com/lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
