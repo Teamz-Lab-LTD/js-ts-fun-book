@@ -5254,3 +5254,152 @@ Deployed → https://learn.teamzlab.com/
   preflight post: OK (2 checks, root=teamz-lab-learning)
 
 DONE — 23:36:13
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-26 23:00:00 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  IMPRESSION SPIKE (0 shown, cap 200)
+  --------------------------------------------------------------------
+  (none)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 2 pages, 2 excluding event-driven sections)
+    up 0  /  down 0  /  flat 2
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       30 ->     58 clicks   +93%
+    verdict: inconclusive: not enough baseline clicks
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +0 new   (store 165, unpulled 128)
+    gate: holding (need >=150 new AND >=21d; have 128 new, last 40d)
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 157 of 250 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  130 link(s) from /search/ (51 impr)
+            /hazira-khata-bn/
+         0 impr  128 link(s) from /search/ (51 impr)
+            /hazira-khata/
+         7 impr  126 link(s) from /hazira-khata-bn/tutorials/progress-report/ (0 impr)
+            /data-deletion/
+         0 impr  69 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  69 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  59 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  57 link(s) from /hazira-khata-bn/tutorials/progress-report/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+         0 impr  57 link(s) from /hazira-khata/tutorials/connect-all-parents/ (0 impr)
+            /hazira-khata/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 89 sessions across 4 pages (28d)
+    value layer: re-ranked by measured conversion (median 127.12 per 1k sessions; 0 section(s) calibrated) — none=132, page=1
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 133  (queueing 4)
+      #12      583 impr  ✏️  full     /lessons/flutter-dart-masterclass/23-contain
+             └─ '(no individual phrase disclosed by GSC)'
+      #12.9    528 impr  ✏️  full     /lessons/android-interview-mastery/13-activi
+             └─ '(no individual phrase disclosed by GSC)'
+      #14.1    507 impr  ✏️  full     /lessons/android-interview-mastery/54-recycl
+             └─ '(no individual phrase disclosed by GSC)'
+      #11.4    375 impr  ✏️  full     /lessons/android-interview-mastery/37-profil
+             └─ 'android studio logcat'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Nightly agent ready. No task given yet — what run tonight?
+
+Options:
+- **STEP 0**: run `python3 scripts/build-content-queue.py`, read queue, execute targets per rules above
+- Something else specific
+
+Say word, act.
+  [agent finished] Nightly agent ready. No task given yet — what run tonight?
+
+Options:
+- **STEP 0**: run `python3 scripts/build-content-queue.py`, read queue, execute targets per rules above
+- Something else specific
+
+Say word, act.
+  ✓ content agent finished
+
+=== course agent ===
+    credit guard: 25 keywords but only 0 spendable (-1 left, 50 reserved) — trimming.
+  12117 keywords, 676 cached, fetching 0 (credits left -1)
+  
+  scored 676 keywords; 0 failed
+  
+  MOST WINNABLE:
+    win 10.0  rental property                            0/10 strong slots (auth 0.04)
+    win 10.0  intel 8255                                 1/10 strong slots (auth 0.14); 3 UGC = opening
+    win 10.0  real estate appraisers                     0/10 strong slots (auth 0.01)
+    win 10.0  power of attorney lawyers                  0/10 strong slots (auth 0.01)
+    win 10.0  cars for sale                              0/10 strong slots (auth 0.02)
+    win 10.0  estate planning attorney                   0/10 strong slots (auth 0.02)
+    win 10.0  estate planning lawyer                     0/10 strong slots (auth 0.02)
+    win 10.0  wills and estate lawyers near me           0/10 strong slots (auth 0.03)
+    win 10.0  wills and trusts attorney                  0/10 strong slots (auth 0.01)
+    win 10.0  used car dealers near me                   0/10 strong slots (auth 0.02)
+    win 10.0  speeding ticket lawyer                     0/10 strong slots (auth 0.03)
+    win 10.0  speeding ticket attorney                   0/10 strong slots (auth 0.03)
+  
+  LEAST WINNABLE:
+    win  2.8  american express savings                   10/10 strong slots (auth 0.76); 1 UGC = opening; 3 distinct domains
+    win  2.7  navy federal credit union heloc rates      10/10 strong slots (auth 0.70); 1 distinct domains
+    win  2.7  ally bank cd rates                         10/10 strong slots (auth 0.79); 1 UGC = opening; 4 distinct domains
+    win  2.5  regions bank home equity loan              10/10 strong slots (auth 0.73); 2 distinct domains
+    win  2.3  navy federal heloc rates                   10/10 strong slots (auth 0.76); 2 distinct domains
+    win  2.3  va home mortgage                           10/10 strong slots (auth 0.82); 6 distinct domains
+    win  2.1  pnc bank heloc rates                       10/10 strong slots (auth 0.79); 3 distinct domains
+    win  2.0  va home loan                               10/10 strong slots (auth 0.84); 5 distinct domains
+  
+  top authorities: reddit.com, bankrate.com, youtube.com, nerdwallet.com, bankofamerica.com, rocketmortgage.com, irs.gov, navyfederal.org, usbank.com, investopedia.com
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 3 gaps)
+    $2736.57/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    (28311 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
