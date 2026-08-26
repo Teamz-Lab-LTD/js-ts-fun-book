@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-25",
+  "generated_at": "2026-08-26",
   "corpus_size": 676,
   "calibrated": true,
   "min_corpus": 25,
@@ -8348,8 +8348,8 @@
     },
     "navy federal credit union heloc rates": {
       "keyword": "navy federal credit union heloc rates",
-      "difficulty": 8.3,
-      "winnability": 2.7,
+      "difficulty": 8.4,
+      "winnability": 2.6,
       "authority_share": 0.7,
       "strong_slots": 10,
       "ugc_results": 0,
