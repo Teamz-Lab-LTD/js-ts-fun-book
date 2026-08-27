@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profiling &amp; Debugging: Logcat… | Free Tutorial — Teamz Lab</title>
-<meta name="description" content="Profiling and debugging tools help you understand what your Android app is actually doing at runtime — where CPU time goes, how much memory is used, which…">
+<meta name="description" content="Android Studio Logcat explained step by step: filter by tag, package, and log level, read stack traces fast, then pair it with the Profiler, LeakCanary, and…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-08-25">
+<meta name="date" content="2026-08-27">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/36-android-performance-anr-jank-memory-leaks-startup-time.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/38-testing-strategy-unit-vs-instrumentation-vs-ui-tests.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Profiling &amp; Debugging: Logcat, Android Studio Profiler, LeakCanary &amp; StrictMode">
-<meta property="og:description" content="Profiling and debugging tools help you understand what your Android app is actually doing at runtime — where CPU time goes, how much memory is used, which…">
+<meta property="og:description" content="Android Studio Logcat explained step by step: filter by tag, package, and log level, read stack traces fast, then pair it with the Profiler, LeakCanary, and…">
 <meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
 <meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html">
 <meta property="og:site_name" content="Teamz Lab Learning">
@@ -22,7 +22,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Profiling &amp; Debugging: Logcat, Android Studio Profiler, LeakCanary &amp;…">
-<meta name="twitter:description" content="Profiling and debugging tools help you understand what your Android app is actually doing at runtime — where CPU time goes, how much memory is used, which…">
+<meta name="twitter:description" content="Android Studio Logcat explained step by step: filter by tag, package, and log level, read stack traces fast, then pair it with the Profiler, LeakCanary, and…">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Profiling & Debugging: Logcat, Android Studio Profiler, LeakCanary & StrictMode",
-  "description": "Profiling and debugging tools help you understand what your Android app is actually doing at runtime — where CPU time goes, how much memory is used, which…",
+  "description": "Android Studio Logcat explained step by step: filter by tag, package, and log level, read stack traces fast, then pair it with the Profiler, LeakCanary, and…",
   "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html",
   "inLanguage": "en",
   "learningResourceType": "Lesson",
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-08-25",
+  "dateModified": "2026-08-27",
   "position": 37
 }
 </script>
@@ -195,7 +195,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Profiling your app is like being a doctor with an X-ray machine. Logcat is your stethoscope — quick checks. The Profiler is your MRI — detailed internal scans. LeakCanary is the bloodwork that reveals what&#39;s slowly poisoning the patient. StrictMode is the health monitor that screams whenever you do something risky.</div></section>
 
-<section class="section"><h2>What is it?</h2><p>Profiling and debugging tools help you understand what your Android app is actually doing at runtime — where CPU time goes, how much memory is used, which objects are leaking, and whether disk or network calls block the main thread. Mastery of these tools is what separates senior engineers from juniors: you can reproduce, isolate, and fix production performance issues systematically rather than guessing.</p></section>
+<section class="section"><h2>What is it?</h2><p>Android Studio Logcat explained step by step: filter by tag, package, and log level, read stack traces fast, then pair it with the Profiler, LeakCanary, and StrictMode to catch memory leaks and slow calls before production. Mastery of these tools is what separates senior engineers from juniors: you can reproduce, isolate, and fix production performance issues systematically rather than guessing.</p></section>
 
 
 
