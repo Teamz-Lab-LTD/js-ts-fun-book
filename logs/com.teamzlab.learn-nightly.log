@@ -6043,3 +6043,136 @@ Deployed → https://learn.teamzlab.com/
   preflight post: OK (3 checks, root=teamz-lab-learning)
 
 DONE — 23:59:47
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-30 23:00:05 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+fatal: unable to access 'https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git/': Could not resolve host: github.com
+  (git pull skipped/failed — non-fatal)
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+ERROR: Search Console API unreachable: HTTPSConnectionPool(host='searchconsole.googleapis.com', port=443): Max retries exceeded with url: /webmasters/v3/sites (Caused by NameResolutionError("HTTPSConnection(host='searchconsole.googleapis.com', port=443): Failed to resolve 'searchconsole.googleapis.com' ([Errno 8] nodename nor servname provided, or not known)"))
+  (build-search-console.sh missing — skipped)
+ERROR: token refresh failed: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+ERROR: Could not refresh Search Console token.
+  (build-gsc-anomalies.py missing — skipped)
+enhance-outcome: FAILED to authenticate (URLError) — NOT scoring
+  (build-enhance-outcome.py missing — skipped)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1324, in do_open
+      raise URLError(err)
+  urllib.error.URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+  (keyword-candidate harvest failed — non-fatal)
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    attempt 1/20 failed — retrying in 60s (network may still be waking)
+    attempt 2/20 failed — retrying in 60s (network may still be waking)
+    attempt 3/20 failed — retrying in 60s (network may still be waking)
+    attempt 4/20 failed — retrying in 60s (network may still be waking)
+    attempt 5/20 failed — retrying in 60s (network may still be waking)
+    attempt 6/20 failed — retrying in 60s (network may still be waking)
+    attempt 7/20 failed — retrying in 60s (network may still be waking)
+    attempt 8/20 failed — retrying in 60s (network may still be waking)
+    attempt 9/20 failed — retrying in 60s (network may still be waking)
+    attempt 10/20 failed — retrying in 60s (network may still be waking)
+    attempt 11/20 failed — retrying in 60s (network may still be waking)
+    attempt 12/20 failed — retrying in 60s (network may still be waking)
+    attempt 13/20 failed — retrying in 60s (network may still be waking)
+    attempt 14/20 failed — retrying in 60s (network may still be waking)
+    attempt 15/20 failed — retrying in 60s (network may still be waking)
+    attempt 16/20 failed — retrying in 60s (network may still be waking)
+    attempt 17/20 failed — retrying in 60s (network may still be waking)
+    attempt 18/20 failed — retrying in 60s (network may still be waking)
+    attempt 19/20 failed — retrying in 60s (network may still be waking)
+  SKIP: api.anthropic.com unreachable after ~20 min.
+        The morning catch-up sweep will retry this site.
+
+=== course agent ===
+  Traceback (most recent call last):
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1321, in do_open
+      h.request(req.get_method(), req.selector, req.data, headers,
+      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                encode_chunked=req.has_header('Transfer-encoding'))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1358, in request
+      self._send_request(method, url, body, headers, encode_chunked)
+      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1404, in _send_request
+      self.endheaders(body, encode_chunked=encode_chunked)
+      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1353, in endheaders
+      self._send_output(message_body, encode_chunked=encode_chunked)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1113, in _send_output
+      self.send(msg)
+      ~~~~~~~~~^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1057, in send
+      self.connect()
+      ~~~~~~~~~~~~^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1492, in connect
+      super().connect()
+      ~~~~~~~~~~~~~~~^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1023, in connect
+      self.sock = self._create_connection(
+                  ~~~~~~~~~~~~~~~~~~~~~~~^
+          (self.host,self.port), self.timeout, self.source_address)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socket.py", line 846, in create_connection
+      for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socket.py", line 983, in getaddrinfo
+      for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-course-radar.py", line 811, in <module>
+      sys.exit(main())
+               ~~~~^^
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-course-radar.py", line 785, in main
+      radar = build_radar(host, cfg)
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-course-radar.py", line 516, in build_radar
+      gaps = gap_queries(cfg)
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-course-radar.py", line 261, in gap_queries
+      token = _bcq.gsc_token(cfg)
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/build-content-queue.py", line 163, in gsc_token
+      return json.load(urllib.request.urlopen(req, timeout=30))["access_token"]
+                       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 187, in urlopen
+      return opener.open(url, data, timeout)
+             ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 487, in open
+      response = self._open(req, data)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 504, in _open
+      result = self._call_chain(self.handle_open, protocol, protocol +
+                                '_open', req)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 464, in _call_chain
+      result = func(*args)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1369, in https_open
+      return self.do_open(http.client.HTTPSConnection, req,
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          context=self._context)
+                          ^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1324, in do_open
+      raise URLError(err)
+  urllib.error.URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
