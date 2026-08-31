@@ -6217,3 +6217,110 @@ rsync error: unexplained error (code 255) at io.c(285) [sender=3.5.0]
   ⚠️ preflight --post flagged an output problem (see data/preflight-status.json)
 
 DONE — 23:20:34
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-08-31 23:00:05 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  (none)
+
+  Site total: ~0 clicks/day (alerts at 10/page/day)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 2 pages, 2 excluding event-driven sections)
+    up 0  /  down 0  /  flat 2
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       30 ->     58 clicks   +93%
+    verdict: inconclusive: not enough baseline clicks
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +0 new   (store 177, unpulled 140)
+    gate: holding (need >=150 new AND >=21d; have 140 new, last 45d)
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 157 of 252 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  132 link(s) from /search/ (37 impr)
+            /hazira-khata-bn/
+         0 impr  130 link(s) from /search/ (37 impr)
+            /hazira-khata/
+         8 impr  128 link(s) from /hazira-khata-bn/tutorials/import-students/ (0 impr)
+            /data-deletion/
+         9 impr  128 link(s) from /hazira-khata-bn/tutorials/import-students/ (0 impr)
+            /privacy/
+         0 impr  70 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  70 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  60 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  58 link(s) from /hazira-khata-bn/tutorials/progress-report/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 87 sessions across 5 pages (28d)
+    value layer: re-ranked by measured conversion (median 136.36 per 1k sessions; 0 section(s) calibrated) — none=112, page=1
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 113  (queueing 4)
+      #10.3   2390 impr  ✏️  full     /lessons/android-interview-mastery/27-retrof
+             └─ 'retrofit interceptor'
+      #8.6    1558 impr  ✏️  full     /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider geturiforfile official docs'
+      #10.5   1398 impr  ✏️  full     /lessons/android-interview-mastery/28-room-s
+             └─ 'room transaction'
+      #10.6   1051 impr  ✏️  full     /lessons/android-interview-mastery/73-paging
+             └─ 'pagingsource'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  No task given. What need done?
+  [agent finished] No task given. What need done?
+  ✓ content agent finished
+
+=== course agent ===
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 2 gaps)
+    $2736.57/mo  us  mortgage       231kw vol=853750.0 open-first-time ELIGIBLE
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    (28311 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
