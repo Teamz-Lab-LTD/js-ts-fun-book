@@ -6324,3 +6324,225 @@ index.html written.
 build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
 Wrote sitemap.xml (494 URLs) at repo root.
 ✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
+[main b93c946] chore(nightly): refresh generated site output
+ 2 files changed, 108 insertions(+), 1 deletion(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   cb4bc66..b93c946  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+  --- verifying against the live site ---
+  verify-deploy-live [https://learn.teamzlab.com/] via sitemap.xml: local 494 URLs, live 494
+    ✓ every locally built URL is present on the live site
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (3 checks, root=teamz-lab-learning)
+
+DONE — 23:06:01
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-09-01 23:00:04 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+SKIP: uncommitted source changes (protecting human WIP):
+    ?? .claude/knowledge/
+    ?? scripts/_teamz_geo.py
+    ?? scripts/aso-claims-lint.py
+    ?? scripts/aso-name-collision.py
+    ?? scripts/aso-refresh-runner.sh
+    ?? scripts/aso-refresh-selftest.sh
+    ?? scripts/build-bing-data.py
+    ?? scripts/build-business-registry.py
+    ?? scripts/build-crashlytics-monitor.py
+    ?? scripts/build-dead-revival.py
+    ?? scripts/build-distribution-drafts.py
+    ?? scripts/build-distribution-leads.py
+    ?? scripts/build-enhance-queue.py
+    ?? scripts/build-football-fortress.py
+    ?? scripts/build-growth-digest.py
+    ?? scripts/build-growth-watchdog.py
+    ?? scripts/build-gsc-broken-pages.py
+    ?? scripts/build-keyword-batches.py
+    ?? scripts/build-keyword-target-audit.py
+    ?? scripts/build-marooned-pages.py
+    ?? scripts/build-money-tracker.py
+    ?? scripts/build-public-rpm-benchmarks.py
+    ?? scripts/build-reddit-rpm-tracker.py
+    ?? scripts/build-revenue-velocity-score.py
+    ?? scripts/build-revenue-watchdog.py
+    ?? scripts/build-season-radar.py
+    ?? scripts/build-youtube-keywords.py
+    ?? scripts/cf-dns.sh
+    ?? scripts/check-ad-funnel.py
+    ?? scripts/crash-session-hook.sh
+    ?? scripts/crashlytics-monitor-daily.sh
+    ?? scripts/football-refresh.sh
+    ?? scripts/google_ads_api.py
+    ?? scripts/growth-watchdog-daily.sh
+    ?? scripts/iap_doctor.py
+    ?? scripts/keyword_volume_manual.py
+    ?? scripts/nightly-app.sh
+    ?? scripts/nightly-catchup.sh
+    ?? scripts/overflow-audit.sh
+    ?? scripts/qa-mobile-ux.py
+    ?? scripts/revenue_priority.py
+    ?? scripts/revenue_signals.py
+    ?? scripts/seo-healthcheck.py
+    ?? scripts/serp_difficulty.py
+    ?? scripts/setup-ga4-dimensions.py
+    ?? scripts/teamz_notify.py
+    ?? scripts/verify-deploy-live.py
+Commit or stash, then the next run proceeds.
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-09-02 23:00:04 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+SKIP: uncommitted source changes (protecting human WIP):
+    ?? .claude/knowledge/
+    ?? scripts/_teamz_geo.py
+    ?? scripts/aso-claims-lint.py
+    ?? scripts/aso-name-collision.py
+    ?? scripts/aso-refresh-runner.sh
+    ?? scripts/aso-refresh-selftest.sh
+    ?? scripts/build-bing-data.py
+    ?? scripts/build-business-registry.py
+    ?? scripts/build-crashlytics-monitor.py
+    ?? scripts/build-dead-revival.py
+    ?? scripts/build-distribution-drafts.py
+    ?? scripts/build-distribution-leads.py
+    ?? scripts/build-enhance-queue.py
+    ?? scripts/build-football-fortress.py
+    ?? scripts/build-growth-digest.py
+    ?? scripts/build-growth-watchdog.py
+    ?? scripts/build-gsc-broken-pages.py
+    ?? scripts/build-keyword-batches.py
+    ?? scripts/build-keyword-target-audit.py
+    ?? scripts/build-marooned-pages.py
+    ?? scripts/build-money-tracker.py
+    ?? scripts/build-public-rpm-benchmarks.py
+    ?? scripts/build-reddit-rpm-tracker.py
+    ?? scripts/build-revenue-velocity-score.py
+    ?? scripts/build-revenue-watchdog.py
+    ?? scripts/build-season-radar.py
+    ?? scripts/build-youtube-keywords.py
+    ?? scripts/cf-dns.sh
+    ?? scripts/check-ad-funnel.py
+    ?? scripts/crash-session-hook.sh
+    ?? scripts/crashlytics-monitor-daily.sh
+    ?? scripts/football-refresh.sh
+    ?? scripts/google_ads_api.py
+    ?? scripts/growth-watchdog-daily.sh
+    ?? scripts/iap_doctor.py
+    ?? scripts/keyword_volume_manual.py
+    ?? scripts/nightly-app.sh
+    ?? scripts/nightly-catchup.sh
+    ?? scripts/overflow-audit.sh
+    ?? scripts/qa-mobile-ux.py
+    ?? scripts/revenue_priority.py
+    ?? scripts/revenue_signals.py
+    ?? scripts/seo-healthcheck.py
+    ?? scripts/serp_difficulty.py
+    ?? scripts/setup-ga4-dimensions.py
+    ?? scripts/teamz_notify.py
+    ?? scripts/verify-deploy-live.py
+Commit or stash, then the next run proceeds.
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-09-03 23:00:01 +06
+============================================================
+  preflight pre: OK (5 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  (none)
+
+  Site total: ~0 clicks/day (alerts at 10/page/day)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 6 pages, 6 excluding event-driven sections)
+    up 0  /  down 0  /  flat 6
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       51 ->     66 clicks   +29%
+    verdict: inconclusive: not enough baseline clicks
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +10 new   (store 187, unpulled 150)
+    gate: READY — run --prepare to emit a batch
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 159 of 254 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  134 link(s) from /search/ (29 impr)
+            /hazira-khata-bn/
+         0 impr  132 link(s) from /search/ (29 impr)
+            /hazira-khata/
+         8 impr  130 link(s) from /hazira-khata/tutorials/certificate/ (0 impr)
+            /data-deletion/
+         9 impr  130 link(s) from /hazira-khata/tutorials/certificate/ (0 impr)
+            /privacy/
+         0 impr  71 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  71 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  61 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  59 link(s) from /hazira-khata-bn/tutorials/connect-diary/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  Traceback (most recent call last):
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py", line 1931, in <module>
+      main()
+      ~~~~^^
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py", line 1549, in main
+      default=int(os.getenv("TEAMZ_CONTENT_NEW_CAP", "2")))
+              ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ValueError: invalid literal for int() with base 10: '1            # per week; lessons are structured content, not blog filler'
+  targets: 4   new-post tonight: False   model: sonnet
+  No task given. Waiting on you — what you need?
+  [agent finished] No task given. Waiting on you — what you need?
+  ✓ content agent finished
+
+=== course agent ===
+  Traceback (most recent call last):
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-course-radar.py", line 58, in <module>
+      PILOT_CADENCE    = int(os.getenv("TEAMZ_PILOT_CADENCE_DAYS", "14"))
+  ValueError: invalid literal for int() with base 10: '14        # at most one new pilot per 14 days (anti-scaled-content)'
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 18 OK.
+build-homepage: 18 courses, 2 generated card(s).
+index.html written.
+build-sitemap: 494 URLs (10 course landings, 481 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (494 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 18 courses, 767 lessons, 172.7 KB, 965 lines
