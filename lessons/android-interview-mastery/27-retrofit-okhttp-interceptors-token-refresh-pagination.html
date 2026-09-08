@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retrofit, OkHttp, Interceptors… | Free Tutorial — Teamz Lab</title>
-<meta name="description" content="Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.">
+<meta name="description" content="OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-08-25">
+<meta name="date" content="2026-09-08">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Retrofit, OkHttp, Interceptors, Token Refresh &amp; Pagination">
-<meta property="og:description" content="Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.">
+<meta property="og:description" content="OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.">
 <meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
 <meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html">
 <meta property="og:site_name" content="Teamz Lab Learning">
@@ -22,7 +22,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Retrofit, OkHttp, Interceptors, Token Refresh &amp; Pagination">
-<meta name="twitter:description" content="Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.">
+<meta name="twitter:description" content="OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Retrofit, OkHttp, Interceptors, Token Refresh & Pagination",
-  "description": "Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.",
+  "description": "OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.",
   "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html",
   "inLanguage": "en",
   "learningResourceType": "Lesson",
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-08-25",
+  "dateModified": "2026-09-08",
   "position": 27
 }
 </script>
@@ -195,7 +195,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Retrofit is the waiter who takes your order (API call) and brings back your food (response). OkHttp is the kitchen — it does the actual work. Interceptors are the kitchen stations the order passes through: the logging station writes everything down, the auth station stamps your order with your ID badge, and the retry station sends the order back if the kitchen is temporarily closed.</div></section>
 
-<section class="section"><h2>What is it?</h2><p>Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.</p></section>
+<section class="section"><h2>What is it?</h2><p>OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.</p></section>
 
 
 

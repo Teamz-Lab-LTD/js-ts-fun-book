@@ -4907,7 +4907,7 @@ class LegacyWidgetProvider : AppWidgetProvider() { // Hilt can't inject widget p
     }
 }` }
   ],
-  whatIs: "Hilt vs Dagger vs Manual DI explained with real Android code: @HiltAndroidApp, @Inject, scopes, and when to use each — practical guide, not just theory. Manual DI is hand-wiring an AppContainer. Dagger 2 is a compile-time annotation processor that generates the wiring code. Hilt is Google's opinionated Dagger wrapper for Android that provides standard components (Application, Activity, ViewModel) so you only write business logic — not infrastructure.",
+  whatIs: "Manual DI means hand-wiring dependencies in an AppContainer instead of Hilt or Dagger — full control, zero codegen, but every constructor wired by hand.",
   realWorld: "At Payback (fintech), the token refresh interceptor, the encrypted Room database, and the analytics tracker all need to be singletons shared across the app. Hilt's @Singleton scope guarantees exactly one instance. The AuthRepository is @Singleton but the SessionManager is @ActivityScoped — it's destroyed when the auth Activity is destroyed, preventing stale session state from leaking across Activities. In tests, the real AuthService is replaced with a FakeAuthService via @TestInstallIn without touching any production code.",
   code: `// 1. Application setup
 @HiltAndroidApp
@@ -5171,7 +5171,7 @@ val client = OkHttpClient.Builder()
     .addInterceptor(AuthInterceptor(tokenProvider))
     .build()` }
   ],
-  whatIs: "Retrofit interceptor guide: add auth headers, retry OkHttp requests with exponential backoff (503/429), refresh tokens on 401, and paginate with Kotlin code.",
+  whatIs: "OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
   code: `// 1. Retrofit interface definition
 interface PaybackApiService {
@@ -5400,7 +5400,7 @@ class BrokenAuthInterceptor(
     { t: "Testing Room", d: "Use in-memory database for unit tests: Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build(). No migration needed. Run DAO tests with runTest (coroutine test). For migration testing, use MigrationTestHelper with schema export files to verify migrations are correct before shipping." },
     { t: "Room performance tips", d: "Add indices on columns used in WHERE and JOIN clauses. Use @Query with specific columns instead of SELECT * to reduce memory. Batch inserts with a single @Insert call taking List<T>. Use LIMIT in queries for pagination. Avoid accessing Room on the main thread — Room enforces this by default (allowMainThreadQueries() is test-only)." }
   ],
-  whatIs: "A Room transaction (@Transaction) runs several DAO queries as one atomic unit — all succeed or all roll back, so related inserts/updates never leave the database half-written. Room is Android's official SQLite ORM: compile-time SQL verification, type-safe queries, reactive Flow streams, safe migrations, and relations via @Relation/@Embedded.",
+  whatIs: "A Room transaction (@Transaction) runs several DAO queries as one atomic unit — all succeed or roll back together, so related writes never end up half-done.",
   realWorld: "Hazira Khata (school attendance/management app) stores student attendance records locally in Room for 500+ schools with intermittent connectivity. Migrations are critical — when a school added a 'late arrival' status, MIGRATION_1_2 added the column with a DEFAULT of 'present' to preserve historical records. The attendance DAO returns Flow<List<AttendanceRecord>> scoped to today's date — the UI updates instantly when the teacher marks a student present, even before the sync completes.",
   code: `// 1. Entity definition
 @Entity(
@@ -11220,7 +11220,7 @@ val shareIntent = Intent(Intent.ACTION_SEND).apply {
 val file = File(context.filesDir, "docs/report.pdf")
 FileProvider.getUriForFile(context, authority, file) // add <files-path> to fix` }
   ],
-  whatIs: "A ContentProvider is Android's built-in way to share data safely between apps, via URI-addressed CRUD instead of raw file paths. FileProvider adds secure file sharing over content:// URIs with time-limited permission grants — replacing the dangerous file:// pattern. Together they form Android's inter-app data and file exchange system.",
+  whatIs: "FileProvider.getUriForFile() turns a File into a shareable content:// URI with time-limited permissions — replacing unsafe file:// URIs between apps.",
   realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
   code: `// FileProvider setup in AndroidManifest.xml (shown as comment)
 // <provider
