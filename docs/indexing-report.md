@@ -1,9 +1,9 @@
-# Indexing Report — 2026-09-03 23:05
+# Indexing Report — 2026-09-07 23:06
 
 Total pages: 41
 Checked: 41
-Indexed: 12 (29%)
-Not indexed: 29
+Indexed: 13 (31%)
+Not indexed: 28
 Errors: 0
 
 ## Not Indexed Pages
@@ -32,7 +32,6 @@ Errors: 0
 | /lessons/flutter-interview-mastery/23-rest-apis-with-dio-interceptors-token-refresh-retries.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html | Crawled - currently not indexed |
 | /lessons/js-ts-fun-book/45-nestjs-guards-custom-decorators.html | Crawled - currently not indexed |
-| /lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/17-statelesswidget.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/26-forms-text-input.html | Crawled - currently not indexed |
@@ -40,7 +39,7 @@ Errors: 0
 | /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (12)
+## Indexed Pages (13)
 
 - /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
@@ -54,3 +53,4 @@ Errors: 0
 - /lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html
 - /lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html
 - /lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html
+- /lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html
