@@ -14023,7 +14023,7 @@ and now I always make sure to communicate well with my team."`,
 val pager = Pager(PagingConfig(pageSize = 20)) { SimplePagingSource(api) }
 val flow: Flow<PagingData<Article>> = pager.flow.cachedIn(viewModelScope)` }
   ],
-  whatIs: "PagingSource is the Jetpack Paging 3 class that loads one page of data at a time instead of the whole list — the foundation for infinite-scroll lists. Combined with RemoteMediator for offline-first network+database sync and Flow<PagingData> for reactive delivery, Paging 3 powers large datasets in RecyclerView (PagingDataAdapter) or Compose (LazyPagingItems), with built-in retry and error handling.",
+  whatIs: "PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.",
   realWorld: "Every production app with a feed, search results, or message list uses pagination. Instagram uses cursor-based paging for its feed, Slack pages message history with RemoteMediator-style caching, and Twitter's timeline relies on keyset pagination. Paging 3 is the standard approach in Android for all these patterns, handling the complex state management of multi-source, bidirectional loading.",
   code: `// === PagingSource Implementation ===
 class ArticlePagingSource(
@@ -16398,7 +16398,7 @@ class BInitializer : Initializer<B> {
       d: "Emerging tools use ML to distinguish meaningful visual changes from noise (anti-aliasing, shadow rounding). Services like Percy and Applitools (cross-platform) offer AI-powered visual comparison. In the Android ecosystem, expect tighter Compose Preview integration, IDE-inline diff previews, and smarter tolerance algorithms that understand semantic UI regions rather than raw pixel comparison."
     }
   ],
-  whatIs: "Roborazzi screenshot testing for Android: Robolectric-based visual regression on the JVM — compare UI against golden baselines, catch pixel bugs before ship.",
+  whatIs: "Roborazzi vs Paparazzi screenshot testing for Android: Robolectric-based visual regression on the JVM, golden baselines, and catching pixel bugs before ship.",
   realWorld: "At Cash App, Paparazzi was created because their design system team needed to validate hundreds of UI components across themes and screen sizes without maintaining a fleet of emulators. Companies like Dropbox, Square, and Google use screenshot testing to enforce design consistency across feature teams — when any PR changes a shared component, the screenshot tests immediately show which screens are affected. In large-scale apps with 50+ contributors, screenshot testing is the primary defense against 'it looked fine on my machine' visual bugs.",
   code: `// ============================================
 // 1. PAPARAZZI SETUP — build.gradle.kts (module)
