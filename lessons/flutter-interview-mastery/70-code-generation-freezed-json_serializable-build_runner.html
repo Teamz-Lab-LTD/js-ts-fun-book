@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Code Generation: freezed… | Free Tutorial — Teamz Lab</title>
-<meta name="description" content="Freezed and json_serializable in Flutter: generate immutable models, copyWith, unions, and JSON parsing with build_runner — step-by-step, with real code.">
+<meta name="description" content="freezed + json_serializable + build_runner in Flutter: copy-paste @freezed model, JSON parsing, and the exact commands — full working code, step by step.">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-09-09">
+<meta name="date" content="2026-09-15">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/flutter-interview-mastery/71-animations-deep-dive-implicit-explicit-hero-custompainter.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Code Generation: freezed, json_serializable &amp; build_runner">
-<meta property="og:description" content="Freezed and json_serializable in Flutter: generate immutable models, copyWith, unions, and JSON parsing with build_runner — step-by-step, with real code.">
+<meta property="og:description" content="freezed + json_serializable + build_runner in Flutter: copy-paste @freezed model, JSON parsing, and the exact commands — full working code, step by step.">
 <meta property="og:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
 <meta property="og:url" content="https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html">
 <meta property="og:site_name" content="Teamz Lab Learning">
@@ -22,7 +22,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Code Generation: freezed, json_serializable &amp; build_runner">
-<meta name="twitter:description" content="Freezed and json_serializable in Flutter: generate immutable models, copyWith, unions, and JSON parsing with build_runner — step-by-step, with real code.">
+<meta name="twitter:description" content="freezed + json_serializable + build_runner in Flutter: copy-paste @freezed model, JSON parsing, and the exact commands — full working code, step by step.">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-flutter-interview.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Code Generation: freezed, json_serializable & build_runner",
-  "description": "Freezed and json_serializable in Flutter: generate immutable models, copyWith, unions, and JSON parsing with build_runner — step-by-step, with real code.",
+  "description": "freezed + json_serializable + build_runner in Flutter: copy-paste @freezed model, JSON parsing, and the exact commands — full working code, step by step.",
   "url": "https://learn.teamzlab.com/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html",
   "inLanguage": "en",
   "learningResourceType": "Lesson",
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-09-09",
+  "dateModified": "2026-09-15",
   "position": 70
 }
 </script>
@@ -195,7 +195,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Writing model classes by hand is like hand-copying a legal contract every time you need a new one. You could do it, but you&#39;ll miss a field, mistype a name, or forget to update hashCode when you add a property. Code generation is like having a paralegal who reads your template, fills in every clause perfectly, and hands you a complete document every time. freezed is the template language, json_serializable is the JSON clause, and build_runner is the paralegal.</div></section>
 
-<section class="section"><h2>What is it?</h2><p>Freezed and json_serializable in Flutter: generate immutable models, copyWith, unions, and JSON parsing with build_runner — step-by-step, with real code.</p></section>
+<section class="section"><h2>What is it?</h2><p>freezed + json_serializable + build_runner in Flutter: copy-paste @freezed model, JSON parsing, and the exact commands — full working code, step by step.</p></section>
 
 
 
