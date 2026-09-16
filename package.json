@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "deploy": "rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'"
+    "deploy": "rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed \u2192 https://learn.teamzlab.com/'",
+    "test": "node --test \"test/**/*.test.mjs\""
   },
   "devDependencies": {
     "puppeteer": "^24.39.1"
