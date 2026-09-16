@@ -3,13 +3,23 @@
     {
       "slug": "pet-insurance",
       "created": "2026-07-22",
-      "status": "pilot",
+      "status": "dormant",
       "lessons": 10,
       "target_lessons": 70,
       "last_expanded": null,
       "history": [
-        { "date": "2026-07-22", "event": "created", "lessons": 10 }
-      ]
+        {
+          "date": "2026-07-22",
+          "event": "created",
+          "lessons": 10
+        },
+        {
+          "date": "2026-09-16",
+          "event": "dormant",
+          "clicks_28d": 0
+        }
+      ],
+      "clicks_28d": 0
     },
     {
       "slug": "real-estate",
@@ -19,7 +29,27 @@
       "target_lessons": 70,
       "last_expanded": null,
       "history": [
-        { "date": "2026-08-05", "event": "created", "lessons": 10 }
+        {
+          "date": "2026-08-05",
+          "event": "created",
+          "lessons": 10
+        }
+      ],
+      "clicks_28d": 0
+    },
+    {
+      "slug": "first-time",
+      "created": "2026-09-16",
+      "status": "pilot",
+      "lessons": 10,
+      "target_lessons": 70,
+      "last_expanded": null,
+      "history": [
+        {
+          "date": "2026-09-16",
+          "event": "created",
+          "lessons": 10
+        }
       ]
     }
   ]

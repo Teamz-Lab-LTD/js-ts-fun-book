@@ -1,6 +1,6 @@
 # Teamz Lab Learning — Full Lesson Index
 
-> Complete index of all 18 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
+> Complete index of all 19 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
 
 - Website: https://learn.teamzlab.com/
 - Curated short index: https://learn.teamzlab.com/llms.txt
@@ -401,6 +401,26 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 - [Legal Essentials](https://learn.teamzlab.com/lessons/ebook-business/36-legal-essentials.html): Protect Your Business and Your Content
 - [Case Studies — Successful eBook Businesses](https://learn.teamzlab.com/lessons/ebook-business/37-case-studies-successful-ebook-businesses.html): Real People, Real Numbers, Real Strategies
 - [Your 90-Day Action Plan](https://learn.teamzlab.com/lessons/ebook-business/38-your-90-day-action-plan.html): From Zero to First Sale in 90 Days
+
+## First-Time Home Buying, Plainly Explained
+
+- Course page: https://learn.teamzlab.com/c/first-time.html
+- Level: All Levels — Written for People Buying Their First Home
+- Lesson count: 10
+- About: Free interactive course with 10 lessons on buying your first home in the US — who legally counts as a first-time buyer, how FHA, conventional 97, USDA and VA loans differ, what down payment you…
+
+### Lessons
+
+- [First-Time Home Buyer: Who Actually Counts](https://learn.teamzlab.com/lessons/first-time/01-first-time-home-buyer-who-actually-counts.html): It is a legal test with a three-year clock — and people who have owned a home before pass it all the time
+- [First-Time Home Buyer Loans: FHA, Conventional 97, USDA and VA Side by Side](https://learn.teamzlab.com/lessons/first-time/02-first-time-home-buyer-loans-fha-conventional-97-usda-and-va.html): There is no such thing as a 'first-time buyer loan' — there are four ordinary loan families, and first-time buyers usually land in one of…
+- [First-Time Buyer Down Payment: How Much You Actually Need](https://learn.teamzlab.com/lessons/first-time/03-first-time-buyer-down-payment-how-much-you-actually-need.html): 20% is a custom, not a requirement — and the money you forgot to save for is the closing costs
+- [Down Payment Assistance: What It Really Is Before You Take It](https://learn.teamzlab.com/lessons/first-time/04-down-payment-assistance-what-it-really-is-before-you-take-it.html): Most down payment assistance is a second loan wearing friendly clothes — forgivable, deferred or repayable, and the difference is…
+- [First-Time Home Buyer Grants: Which Ones Are Real and Who Actually Hands Them Out](https://learn.teamzlab.com/lessons/first-time/05-first-time-home-buyer-grants-which-ones-are-real-and-who.html): A true grant is money you never repay and never record as a lien — most things called grants fail at least one half of that sentence
+- [State First-Time Home Buyer Programs: How a Housing Finance Agency Actually Works](https://learn.teamzlab.com/lessons/first-time/06-state-first-time-home-buyer-programs-how-a-housing-finance.html): Every state runs one, most are funded by tax-exempt bonds, and that funding source is why the income caps, price caps and the nine-year…
+- [VA Loan for First-Time Buyers: Zero Down, No Monthly Mortgage Insurance](https://learn.teamzlab.com/lessons/first-time/07-va-loan-for-first-time-buyers-zero-down-no-monthly-mortgage.html): If you have entitlement, this is usually the strongest first-purchase loan in the country — and the funding fee is the one number to…
+- [First-Time Buyer Tax Credits and Perks: What Exists, What Expired, What Is Just Marketing](https://learn.teamzlab.com/lessons/first-time/08-first-time-buyer-tax-credits-and-perks-what-exists-what.html): The famous $8,000 federal credit ended in 2010 — the real tax benefit most first-time buyers can still get is a Mortgage Credit Certificate
+- [First-Time Buyer Lenders: How to Compare Financing Without Guessing](https://learn.teamzlab.com/lessons/first-time/09-first-time-buyer-lenders-how-to-compare-financing-without.html): The Loan Estimate is standardised by federal rule so that three lenders can be compared line by line — almost nobody uses it that way
+- [First-Time Buyer Agent, Contract and Closing Table](https://learn.teamzlab.com/lessons/first-time/10-first-time-buyer-agent-contract-and-closing-table.html): Since 17 August 2024 you hire a buyer's agent in writing before you tour — and a home purchase has no three-day right to cancel
 
 ## Free Flutter Course: Beginner to Professional
 
@@ -961,4 +981,4 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 
 ---
 
-*Last updated: 2026-09-15 · 18 courses · 767 lessons.*
+*Last updated: 2026-09-16 · 19 courses · 777 lessons.*
