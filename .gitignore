@@ -49,3 +49,9 @@ data/manual-pull/*
 !data/manual-pull/2-DROP-RESULTS-HERE/*.csv
 !data/manual-pull/2-DROP-RESULTS-HERE/bd/
 !data/manual-pull/2-DROP-RESULTS-HERE/bd/*.csv
+
+# A tool-made backup of the (gitignored) env file must never look like human WIP:
+# an untracked .teamz-automation.env.bak-<ts> froze the nightly dirty-guard for 3 nights
+# on learn (2026-09-04..06) and 1 on apps. Fixed in apps on 2026-09-05 (d811e6a) and not
+# propagated, so the same file kept blocking here after the fix already existed.
+.teamz-automation.env.bak-*
