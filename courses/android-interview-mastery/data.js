@@ -11220,7 +11220,7 @@ val shareIntent = Intent(Intent.ACTION_SEND).apply {
 val file = File(context.filesDir, "docs/report.pdf")
 FileProvider.getUriForFile(context, authority, file) // add <files-path> to fix` }
   ],
-  whatIs: "FileProvider.getUriForFile() turns a File into a shareable content:// URI with time-limited permissions — replacing unsafe file:// URIs between apps.",
+  whatIs: "FileProvider.getUriForFile() docs: turn a File into a shareable content:// URI with time-limited permissions — the official Android pattern for file sharing.",
   realWorld: "A camera app uses FileProvider to share a captured photo with a crop app — it generates a content:// URI, attaches FLAG_GRANT_READ_URI_PERMISSION to the Intent, and the crop app reads the file without ever knowing its path. A contacts app exposes data through ContentProvider so that a dialer or messaging app can query phone numbers by name.",
   code: `// FileProvider setup in AndroidManifest.xml (shown as comment)
 // <provider
