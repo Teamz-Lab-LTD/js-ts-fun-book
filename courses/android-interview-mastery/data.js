@@ -16398,7 +16398,7 @@ class BInitializer : Initializer<B> {
       d: "Emerging tools use ML to distinguish meaningful visual changes from noise (anti-aliasing, shadow rounding). Services like Percy and Applitools (cross-platform) offer AI-powered visual comparison. In the Android ecosystem, expect tighter Compose Preview integration, IDE-inline diff previews, and smarter tolerance algorithms that understand semantic UI regions rather than raw pixel comparison."
     }
   ],
-  whatIs: "Roborazzi vs Paparazzi screenshot testing for Android: Robolectric-based visual regression on the JVM, golden baselines, and catching pixel bugs before ship.",
+  whatIs: "Roborazzi vs Paparazzi: Robolectric screenshot testing on the JVM, golden baseline diffs, catching pixel regressions before you ship — with setup code.",
   realWorld: "At Cash App, Paparazzi was created because their design system team needed to validate hundreds of UI components across themes and screen sizes without maintaining a fleet of emulators. Companies like Dropbox, Square, and Google use screenshot testing to enforce design consistency across feature teams — when any PR changes a shared component, the screenshot tests immediately show which screens are affected. In large-scale apps with 50+ contributors, screenshot testing is the primary defense against 'it looked fine on my machine' visual bugs.",
   code: `// ============================================
 // 1. PAPARAZZI SETUP — build.gradle.kts (module)
