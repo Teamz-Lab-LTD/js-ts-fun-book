@@ -8902,3 +8902,43 @@ Wrote sitemap.xml (505 URLs) at repo root.
 
 === shipped-asset integrity (merge debris / JS parse) ===
   guard-shipped-assets: OK — 885 shipped text file(s) clean, 48 JS file(s) parse
+[main b0eca9f] chore(nightly): refresh generated site output
+ 3 files changed, 171 insertions(+), 2 deletions(-)
+    attempt 1/3 failed — retrying in 20s (network may still be waking)
+    attempt 2/3 failed — retrying in 20s (network may still be waking)
+fatal: unable to access 'https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git/': Could not resolve host: github.com
+  ✗ GIT PUSH FAILED after 3 attempts (last rc: see above) — commit is LOCAL ONLY.
+    The VPS deploy below is unaffected and still runs; the GitHub backup is what is missing.
+
+=== deploy: npm run deploy ===
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+ssh: connect to host 72.60.184.132 port 22: Operation timed out
+rsync: connection unexpectedly closed (0 bytes received so far) [sender]
+rsync error: unexplained error (code 255) at io.c(285) [sender=3.5.0]
+    attempt 1/3 failed — retrying in 20s (network may still be waking)
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+ssh: connect to host 72.60.184.132 port 22: Operation timed out
+rsync: connection unexpectedly closed (0 bytes received so far) [sender]
+rsync error: error in rsync protocol data stream (code 12) at io.c(285) [sender=3.5.0]
+    attempt 2/3 failed — retrying in 20s (network may still be waking)
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+ssh: connect to host 72.60.184.132 port 22: Operation timed out
+rsync: connection unexpectedly closed (0 bytes received so far) [sender]
+rsync error: unexplained error (code 255) at io.c(285) [sender=3.5.0]
+  ✗ DEPLOY FAILED after 3 attempts — site still serving the previous build.
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: FAILED (1/3):
+    ✗ dns-down-now: name resolution is failing RIGHT NOW (oauth2.googleapis.com). Every network-dependent result in this run is UNKNOWN, not healthy — the tokens, feeds and push did not fail one by one, they all failed for this one reason. Check the router/DNS before reading any other alert.
+  ⚠️ preflight --post flagged an output problem (see data/preflight-status.json)
+
+DONE — 23:42:10
