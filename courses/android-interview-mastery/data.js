@@ -5400,7 +5400,7 @@ class BrokenAuthInterceptor(
     { t: "Testing Room", d: "Use in-memory database for unit tests: Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build(). No migration needed. Run DAO tests with runTest (coroutine test). For migration testing, use MigrationTestHelper with schema export files to verify migrations are correct before shipping." },
     { t: "Room performance tips", d: "Add indices on columns used in WHERE and JOIN clauses. Use @Query with specific columns instead of SELECT * to reduce memory. Batch inserts with a single @Insert call taking List<T>. Use LIMIT in queries for pagination. Avoid accessing Room on the main thread — Room enforces this by default (allowMainThreadQueries() is test-only)." }
   ],
-  whatIs: "A Room transaction (@Transaction) runs several DAO queries as one atomic unit — all succeed or roll back together, so related writes never end up half-done.",
+  whatIs: "Room @Transaction explained: run multiple DAO queries as one atomic unit so related writes never end up half-done — with a working Kotlin example.",
   realWorld: "Hazira Khata (school attendance/management app) stores student attendance records locally in Room for 500+ schools with intermittent connectivity. Migrations are critical — when a school added a 'late arrival' status, MIGRATION_1_2 added the column with a DEFAULT of 'present' to preserve historical records. The attendance DAO returns Flow<List<AttendanceRecord>> scoped to today's date — the UI updates instantly when the teacher marks a student present, even before the sync completes.",
   code: `// 1. Entity definition
 @Entity(
