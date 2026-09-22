@@ -8942,3 +8942,211 @@ rsync error: unexplained error (code 255) at io.c(285) [sender=3.5.0]
   ⚠️ preflight --post flagged an output problem (see data/preflight-status.json)
 
 DONE — 23:42:10
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-09-22 23:00:01 +06
+============================================================
+  preflight pre: OK (6 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  (none)
+
+  Site total: ~0 clicks/day (alerts at 10/page/day)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 7 pages, 7 excluding event-driven sections)
+    up 0  /  down 0  /  flat 7
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       51 ->     66 clicks   +29%
+    verdict: inconclusive: not enough baseline clicks in one of the cohorts to compare like for like
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +0 new   (store 352, unpulled 315)
+    gate: READY — run --prepare to emit a batch
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 162 of 264 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  136 link(s) from /search/ (14 impr)
+            /hazira-khata-bn/
+         0 impr  134 link(s) from /search/ (14 impr)
+            /hazira-khata/
+         8 impr  132 link(s) from /hazira-khata/tutorials/closed-days/ (0 impr)
+            /data-deletion/
+         6 impr  132 link(s) from /hazira-khata/tutorials/closed-days/ (0 impr)
+            /privacy/
+         0 impr  72 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  72 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  62 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  60 link(s) from /hazira-khata-bn/tutorials/exam-routine-share/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py:1296: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    age_d = (datetime.utcnow() - gen).days
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 77 sessions across 17 pages (28d)
+    value layer: re-ranked by measured conversion (median 96.88 per 1k sessions; 1 section(s) calibrated) — none=95, page=3, section=3
+    proven non-converters (>=300 impr, 0 clicks / 90d): ['/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html/', '/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html/', '/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html/', '/lessons/android-interview-mastery/36-android-performance-anr-jank-memory-leaks-startup-time.html/', '/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html/', '/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html/', '/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html/', '/lessons/microprocessor-a-z/27-string-instructions-and-rep-prefix.html/']
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 101  (queueing 4)
+      #9.7    2904 impr  ✏️  full     /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp retry'
+      #10.4   1367 impr  ✏️  full     /lessons/android-interview-mastery/28-room-s
+             └─ 'room transaction'
+      #12.8   1734 impr  ✏️  full     /lessons/android-interview-mastery/26-depend
+             └─ 'manual di'
+      #6.9    1157 impr  ✏️  full     /lessons/android-interview-mastery/81-screen
+             └─ 'roborazzi'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status && echo --- && ls scripts/ | g
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls courses/android-interview-mastery/ && 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"metaTitle\\|metaDescription\\|s
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"id: 27,\\|id: 28,\\|id: 26,\\|i
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mastery/data.js","offse
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"og:description\\|<title>\\|meta
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/tools/build-lesson-pages.js","offset":85,"limit":
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git show 5b961e8 --stat && echo --- && gi
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && awk '/id: 26,/{f=1} f{print NR\": \"$0} f
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"^function kebab\\|const kebab\"
+  [tool] Bash {"command":"python3 - <<'EOF'\ndrafts = {\n27: \"OkHttp retry with exponential backoff for 503/429, auto token refresh on 401 via Authenticator, plus 
+  [tool] Bash {"command":"python3 - <<'EOF'\nv = \"Roborazzi vs Paparazzi: Robolectric screenshot testing on the JVM, golden baseline diffs, catching pixel regressi
+  Good, all 3 under 158 chars. Editing the 3 winnable targets now (id 27, 28, 81); skipping id 26 (manual di, pos 12.8 — past the position-12 cutoff this property's playbook explicitly deprioritizes).
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  3 edits done. Build pages + llms.txt now.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-lesson-pages.js android-
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-llms-txt.js 2>&1 | tail 
+  Verify generated output actually reflects new descriptions, and confirm URL slugs unchanged.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && for f in \\\n  \"lessons/android-intervie
+  Good, all 3 verified. Slugs unchanged, titles untouched (URL/ranking safe), descriptions updated. Now commit each target separately per STEP 3.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --short","description":"Check 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff lessons/android-interview-master
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --short lessons/android-interv
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff lessons/android-interview-master
+  Date-only, confirmed. Reverting since #26 is skipped.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git checkout -- lessons/android-interview
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff --stat llms-full.txt; echo \"exi
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git checkout -- courses/android-interview
+  Reverted cleanly. Reapplying edit #27 only, then committing.
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git add courses/android-interview-mastery
+  Now applying edit #28.
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git add courses/android-interview-mastery
+  Now applying edit #81.
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git add courses/android-interview-mastery
+  Clean — only the two pre-existing untouched files remain modified (not mine). Now writing STEP 4 report.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && test -f data/last-night-content.md && ech
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md"}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && for f in 27-retrofit-okhttp-interceptors-
+  [tool] Bash {"command":"python3 - <<'EOF'\nold = {\n27: \"OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, re
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"id: 81,\\|title:\" courses/andr
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log --oneline -- data/last-night-cont
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"last-night-content\\|^data/\" .
+  Confirmed gitignored — report is local-only scratch, not committed. No commit needed for it. Work's done: 3 commits, ready for nightly push.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log --oneline -3","description":"Fina
+  **[Certain]** Found conflict mid-task, not before — a prior run tonight already hit this exact queue, checked live `<title>` tags, concluded "0 safe edits, real defect is title truncation," wrote it in `data/last-night-content.md`, committed nothing. I hadn't read that file first. Should've.
+
+Work done anyway (3 commits, before I found the conflict):
+- `827ac73` okhttp retry lesson (27) — desc rewrite
+- `8174f46` room transaction lesson (28) — desc rewrite
+- `03255dc` roborazzi lesson (81) — desc rewrite
+- skipped `26` manual-di, pos 12.8 — past this course's pos-12 win cutoff, same call prior run made
+
+**[Certain]** My 3 edits aren't wrong — accurate, under 158-char cap, arguably tighter (name concrete APIs: `Authenticator`, `@Transaction`). But prior run's diagnosis holds: `whatIs` already led with the query term on all 3 before I touched it. Real problem is `<title>` truncation eating the query word entirely —
+
+- 27 renders `"Retrofit, OkHttp, Interceptors…"` — no "retry"
+- 28 renders `"Room, SQLite, Migrations…"` — no "transaction"
+- 81 renders `"Screenshot Testing: Paparazzi…"` — cuts "Roborazzi", the exact query term
+
+Root cause: `lesson.title` drives both `<title>` (34-char budget after suffix) AND the URL filename (`kebab(lesson.title)`). No separate `metaTitle` field exists. Shortening the title to fit fixes the SERP headline but silently mints a new URL for pages Google already ranks at pos 7-10 — confirmed destructive by trial in the 09-20 run. `tools/` off-limits to this agent, URL changes need human call. Three nights running now (09-20, 09-22 first pass, tonight) hitting the same wall.
+
+Kept my 3 commits — cost nothing, marginal upside, not misleading. Didn't revert. Appended honest note to `last-night-content.md` (gitignored, not committed) explaining the duplication instead of overwriting the prior entry.
+
+**Flagging for you:** the structural fix (decoupled `metaTitle` field in `tools/build-lesson-pages.js`, or accept redirects for this batch) needs a human decision — three nightly passes can't self-resolve it.
+
+**DONE: nightly content pass, android-interview-mastery (3 commits, 1 skip, blocker re-confirmed). NEXT: decide metaTitle-field fix in tools/build-lesson-pages.js → `/model opus` + effort high.**
+  [agent finished] **[Certain]** Found conflict mid-task, not before — a prior run tonight already hit this exact queue, checked live `<title>` tags, concluded "0 safe edits, real defect is title truncation," wrote it in `data/last-night-content.md`, committed nothing. I hadn't read that file first. Should've.
+
+Work done anyway (3 commits, before I found the conflict):
+- `827ac73` okhttp retry lesson (27) — desc rewrite
+- `8174f46` room transaction lesson (28) — desc rewrite
+- `03255dc` roborazzi lesson (81) — desc rewrite
+- skipped `26` manual-di, pos 12.8 — past this course's pos-12 win cutoff, same call prior run made
+
+**[Certain]** My 3 edits aren't wrong — accurate, under 158-char cap, arguably tighter (name concrete APIs: `Authenticator`, `@Transaction`). But prior run's diagnosis holds: `whatIs` already led with the query term on all 3 before I touched it. Real problem is `<title>` truncation eating the query word entirely —
+
+- 27 renders `"Retrofit, OkHttp, Interceptors…"` — no "retry"
+- 28 renders `"Room, SQLite, Migrations…"` — no "transaction"
+- 81 renders `"Screenshot Testing: Paparazzi…"` — cuts "Roborazzi", the exact query term
+
+Root cause: `lesson.title` drives both `<title>` (34-char budget after suffix) AND the URL filename (`kebab(lesson.title)`). No separate `metaTitle` field exists. Shortening the title to fit fixes the SERP headline but silently mints a new URL for pages Google already ranks at pos 7-10 — confirmed destructive by trial in the 09-20 run. `tools/` off-limits to this agent, URL changes need human call. Three nights running now (09-20, 09-22 first pass, tonight) hitting the same wall.
+
+Kept my 3 commits — cost nothing, marginal upside, not misleading. Didn't revert. Appended honest note to `last-night-content.md` (gitignored, not committed) explaining the duplication instead of overwriting the prior entry.
+
+**Flagging for you:** the structural fix (decoupled `metaTitle` field in `tools/build-lesson-pages.js`, or accept redirects for this batch) needs a human decision — three nightly passes can't self-resolve it.
+
+**DONE: nightly content pass, android-interview-mastery (3 commits, 1 skip, blocker re-confirmed). NEXT: decide metaTitle-field fix in tools/build-lesson-pages.js → `/model opus` + effort high.**
+  ✓ content agent finished
+
+=== course agent ===
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 2 gaps)
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    $1745.31/mo  us  finance        44kw vol=1376050.0 open-cars-for ELIGIBLE
+    (28325 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 19 OK.
+build-homepage: 19 courses, 3 generated card(s).
+index.html written.
+build-sitemap: 505 URLs (11 course landings, 491 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (505 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 19 courses, 777 lessons, 176.2 KB, 985 lines
+
+=== sitemap validity ===
+  guard-sitemap-valid: /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/sitemap.xml OK — 505 URL(s)
+
+=== shipped-asset integrity (merge debris / JS parse) ===
+  guard-shipped-assets: OK — 885 shipped text file(s) clean, 48 JS file(s) parse
