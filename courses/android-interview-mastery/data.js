@@ -5171,7 +5171,7 @@ val client = OkHttpClient.Builder()
     .addInterceptor(AuthInterceptor(tokenProvider))
     .build()` }
   ],
-  whatIs: "OkHttp retry logic: retry failed requests with exponential backoff on 503/429, add auth interceptors, refresh tokens on 401, and paginate — with Kotlin code.",
+  whatIs: "OkHttp retry with exponential backoff for 503/429, auto token refresh on 401 via Authenticator, plus Retrofit pagination — full Kotlin example.",
   realWorld: "At Payback (fintech app), every API call requires a bearer token that expires every 15 minutes. The AuthInterceptor stamps every request with the current token. When a 401 arrives, the Authenticator synchronously calls the refresh endpoint, updates the token in EncryptedSharedPreferences, and retries the original request — the user never sees a logout screen. For the transaction history screen, cursor pagination handles the real-time feed correctly — new transactions added while browsing don't cause skipped items like offset pagination would.",
   code: `// 1. Retrofit interface definition
 interface PaybackApiService {
