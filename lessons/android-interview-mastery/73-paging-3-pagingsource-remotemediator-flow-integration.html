@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paging 3: PagingSource… | Free Tutorial — Teamz Lab</title>
-<meta name="description" content="PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.">
+<meta name="description" content="PagingSource is the core class in Jetpack Paging 3 that loads one page at a time — load(), LoadResult, prevKey/nextKey explained, paired with a working…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-09-20">
+<meta name="date" content="2026-09-24">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/72-full-behavioral-mixed-senior-mobile-mock-pack.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Paging 3: PagingSource, RemoteMediator &amp; Flow Integration">
-<meta property="og:description" content="PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.">
+<meta property="og:description" content="PagingSource is the core class in Jetpack Paging 3 that loads one page at a time — load(), LoadResult, prevKey/nextKey explained, paired with a working…">
 <meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
 <meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html">
 <meta property="og:site_name" content="Teamz Lab Learning">
@@ -22,7 +22,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Paging 3: PagingSource, RemoteMediator &amp; Flow Integration">
-<meta name="twitter:description" content="PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.">
+<meta name="twitter:description" content="PagingSource is the core class in Jetpack Paging 3 that loads one page at a time — load(), LoadResult, prevKey/nextKey explained, paired with a working…">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Paging 3: PagingSource, RemoteMediator & Flow Integration",
-  "description": "PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.",
+  "description": "PagingSource is the core class in Jetpack Paging 3 that loads one page at a time — load(), LoadResult, prevKey/nextKey explained, paired with a working…",
   "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html",
   "inLanguage": "en",
   "learningResourceType": "Lesson",
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-09-20",
+  "dateModified": "2026-09-24",
   "position": 73
 }
 </script>
@@ -195,7 +195,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Paging 3 is like a librarian who fetches books shelf by shelf instead of dumping the entire library on your desk. The PagingSource is the librarian&#39;s catalog, RemoteMediator is the inter-library loan system that also stocks your local shelves, and Flow is the conveyor belt delivering books to your reading table exactly when you need them.</div></section>
 
-<section class="section"><h2>What is it?</h2><p>PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.</p></section>
+<section class="section"><h2>What is it?</h2><p>PagingSource is the core class in Jetpack Paging 3 that loads one page at a time — load(), LoadResult, prevKey/nextKey explained, paired with a working RemoteMediator + Flow Kotlin example.</p></section>
 
 
 

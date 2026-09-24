@@ -4907,7 +4907,7 @@ class LegacyWidgetProvider : AppWidgetProvider() { // Hilt can't inject widget p
     }
 }` }
   ],
-  whatIs: "Manual DI in Android: build your own AppContainer to wire dependencies by hand — no Hilt, no Dagger, no codegen. Full Kotlin example + when to skip a DI framework.",
+  whatIs: "Manual DI means hand-wiring dependencies in an AppContainer instead of Hilt or Dagger — full control, zero codegen, but every constructor wired by hand.",
   realWorld: "At Payback (fintech), the token refresh interceptor, the encrypted Room database, and the analytics tracker all need to be singletons shared across the app. Hilt's @Singleton scope guarantees exactly one instance. The AuthRepository is @Singleton but the SessionManager is @ActivityScoped — it's destroyed when the auth Activity is destroyed, preventing stale session state from leaking across Activities. In tests, the real AuthService is replaced with a FakeAuthService via @TestInstallIn without touching any production code.",
   code: `// 1. Application setup
 @HiltAndroidApp
@@ -14023,7 +14023,7 @@ and now I always make sure to communicate well with my team."`,
 val pager = Pager(PagingConfig(pageSize = 20)) { SimplePagingSource(api) }
 val flow: Flow<PagingData<Article>> = pager.flow.cachedIn(viewModelScope)` }
   ],
-  whatIs: "PagingSource loads one page of data at a time in Jetpack Paging 3 — pairs with RemoteMediator for offline sync and Flow of PagingData, with Kotlin code.",
+  whatIs: "PagingSource is the core class in Jetpack Paging 3 that loads one page at a time — load(), LoadResult, prevKey/nextKey explained, paired with a working RemoteMediator + Flow<PagingData> Kotlin example.",
   realWorld: "Every production app with a feed, search results, or message list uses pagination. Instagram uses cursor-based paging for its feed, Slack pages message history with RemoteMediator-style caching, and Twitter's timeline relies on keyset pagination. Paging 3 is the standard approach in Android for all these patterns, handling the complex state management of multi-source, bidirectional loading.",
   code: `// === PagingSource Implementation ===
 class ArticlePagingSource(
