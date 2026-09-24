@@ -4907,7 +4907,7 @@ class LegacyWidgetProvider : AppWidgetProvider() { // Hilt can't inject widget p
     }
 }` }
   ],
-  whatIs: "Manual DI means hand-wiring dependencies in an AppContainer instead of Hilt or Dagger — full control, zero codegen, but every constructor wired by hand.",
+  whatIs: "Manual DI in Android: build your own AppContainer to wire dependencies by hand — no Hilt, no Dagger, no codegen. Full Kotlin example + when to skip a DI framework.",
   realWorld: "At Payback (fintech), the token refresh interceptor, the encrypted Room database, and the analytics tracker all need to be singletons shared across the app. Hilt's @Singleton scope guarantees exactly one instance. The AuthRepository is @Singleton but the SessionManager is @ActivityScoped — it's destroyed when the auth Activity is destroyed, preventing stale session state from leaking across Activities. In tests, the real AuthService is replaced with a FakeAuthService via @TestInstallIn without touching any production code.",
   code: `// 1. Application setup
 @HiltAndroidApp
