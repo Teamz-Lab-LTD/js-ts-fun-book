@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Activity &amp; Fragment Lifecycle… | Free Tutorial — Teamz Lab</title>
-<meta name="description" content="Android Activity &amp; Fragment lifecycle for interviews: onCreate to onDestroy, why configuration changes destroy Activities, and the ViewModel fix.…">
+<meta name="description" content="Android Activity &amp; Fragment lifecycle: the exact onCreate-to-onDestroy order, why configuration changes destroy Activities, and the ViewModel fix, with…">
 <meta name="author" content="Teamz Lab">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="date" content="2026-09-20">
+<meta name="date" content="2026-09-27">
 <link rel="canonical" href="https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html">
 <link rel="prev" href="https://learn.teamzlab.com/lessons/android-interview-mastery/12-android-app-components-activity-fragment-service.html">
 <link rel="next" href="https://learn.teamzlab.com/lessons/android-interview-mastery/14-intents-pendingintents-task-stack-launch-modes.html">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Activity &amp; Fragment Lifecycle, Configuration Changes">
-<meta property="og:description" content="Android Activity &amp; Fragment lifecycle for interviews: onCreate to onDestroy, why configuration changes destroy Activities, and the ViewModel fix.…">
+<meta property="og:description" content="Android Activity &amp; Fragment lifecycle: the exact onCreate-to-onDestroy order, why configuration changes destroy Activities, and the ViewModel fix, with…">
 <meta property="og:image" content="https://learn.teamzlab.com/og-android-interview.png">
 <meta property="og:url" content="https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html">
 <meta property="og:site_name" content="Teamz Lab Learning">
@@ -22,7 +22,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Activity &amp; Fragment Lifecycle, Configuration Changes">
-<meta name="twitter:description" content="Android Activity &amp; Fragment lifecycle for interviews: onCreate to onDestroy, why configuration changes destroy Activities, and the ViewModel fix.…">
+<meta name="twitter:description" content="Android Activity &amp; Fragment lifecycle: the exact onCreate-to-onDestroy order, why configuration changes destroy Activities, and the ViewModel fix, with…">
 <meta name="twitter:image" content="https://learn.teamzlab.com/og-android-interview.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Activity & Fragment Lifecycle, Configuration Changes",
-  "description": "Android Activity & Fragment lifecycle for interviews: onCreate to onDestroy, why configuration changes destroy Activities, and the ViewModel fix.…",
+  "description": "Android Activity & Fragment lifecycle: the exact onCreate-to-onDestroy order, why configuration changes destroy Activities, and the ViewModel fix, with…",
   "url": "https://learn.teamzlab.com/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html",
   "inLanguage": "en",
   "learningResourceType": "Lesson",
@@ -59,7 +59,7 @@ if('requestIdleCallback' in window){window.addEventListener('load',function(){re
     "url": "https://teamzlab.com"
   },
   "datePublished": "2025-03-01",
-  "dateModified": "2026-09-20",
+  "dateModified": "2026-09-27",
   "position": 13
 }
 </script>
@@ -195,7 +195,7 @@ html[data-theme="dark"] .funfact-box::before{content:'';}
 
 <section class="section"><h2>Real-world analogy</h2><div class="analogy-box">Activity lifecycle is like a restaurant table. onCreate is when guests sit down, onResume is when food arrives and they&#39;re actively eating, onPause is when they&#39;re distracted by a phone call, onStop is when they step outside, and onDestroy is when they leave and the table is cleared. Configuration change is like the restaurant switching to a new layout — every guest (Activity) is re-seated from scratch unless you have a VIP reservation (ViewModel).</div></section>
 
-<section class="section"><h2>What is it?</h2><p>Android Activity &amp; Fragment lifecycle for interviews: onCreate to onDestroy, why configuration changes destroy Activities, and the ViewModel fix. Configuration changes (rotation, locale switch) destroy and recreate Activities — but ViewModels persist across this. onSaveInstanceState provides a Bundle-based escape hatch for small UI state that must survive process death. Fragment lifecycle adds a second dimension — the View lifecycle — that must be used correctly to avoid memory leaks and NPEs.</p></section>
+<section class="section"><h2>What is it?</h2><p>Android Activity &amp; Fragment lifecycle: the exact onCreate-to-onDestroy order, why configuration changes destroy Activities, and the ViewModel fix, with code. Configuration changes (rotation, locale switch) destroy and recreate Activities — but ViewModels persist across this. onSaveInstanceState provides a Bundle-based escape hatch for small UI state that must survive process death. Fragment lifecycle adds a second dimension — the View lifecycle — that must be used correctly to avoid memory leaks and NPEs.</p></section>
 
 
 
