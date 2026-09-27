@@ -1,10 +1,10 @@
-# Indexing Report — 2026-09-25 23:07
+# Indexing Report — 2026-09-26 23:07
 
 Total pages: 41
 Checked: 41
-Indexed: 17 (41%)
+Indexed: 16 (39%)
 Not indexed: 24
-Errors: 0
+Errors: 1
 
 ## Not Indexed Pages
 
@@ -35,9 +35,8 @@ Errors: 0
 | /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (17)
+## Indexed Pages (16)
 
-- /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
 - /lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
 - /lessons/class-9-math-bangla/51-sin-cos-tan.html

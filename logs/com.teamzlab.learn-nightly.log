@@ -9807,3 +9807,205 @@ Wrote sitemap.xml (505 URLs) at repo root.
 
 === shipped-asset integrity (merge debris / JS parse) ===
   guard-shipped-assets: OK — 885 shipped text file(s) clean, 48 JS file(s) parse
+[main 648d983] chore(nightly): refresh generated site output
+ 3 files changed, 143 insertions(+), 2 deletions(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   282e003..648d983  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+  --- verifying against the live site ---
+  verify-deploy-live [https://learn.teamzlab.com/] via sitemap.xml: local 505 URLs, live 505
+    ✓ every locally built URL is present on the live site
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (3 checks, root=teamz-lab-learning)
+
+DONE — 23:07:14
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-09-27 23:00:01 +06
+============================================================
+  preflight pre: OK (6 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  (none)
+
+  Site total: ~0 clicks/day (alerts at 10/page/day)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 12 pages, 12 excluding event-driven sections)
+    up 0  /  down 0  /  flat 12
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       54 ->     57 clicks   +6%
+    verdict: inconclusive: not enough baseline clicks in one of the cohorts to compare like for like
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +7 new   (store 397, unpulled 360)
+    gate: READY — run --prepare to emit a batch
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 161 of 265 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  136 link(s) from /search/ (12 impr)
+            /hazira-khata-bn/
+         0 impr  134 link(s) from /search/ (12 impr)
+            /hazira-khata/
+         8 impr  132 link(s) from /hazira-khata/tutorials/finance/ (0 impr)
+            /data-deletion/
+         6 impr  132 link(s) from /hazira-khata/tutorials/finance/ (0 impr)
+            /privacy/
+         0 impr  72 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  72 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  62 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  60 link(s) from /hazira-khata-bn/tutorials/staff-roles-permissions/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py:1296: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    age_d = (datetime.utcnow() - gen).days
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 84 sessions across 19 pages (28d)
+    value layer: re-ranked by measured conversion (median 79.16 per 1k sessions; 1 section(s) calibrated) — none=97, page=2, section=3
+    proven non-converters (>=300 impr, 0 clicks / 90d): ['/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html/', '/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html/', '/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html/', '/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html/', '/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html/', '/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html/', '/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html/', '/lessons/microprocessor-a-z/27-string-instructions-and-rep-prefix.html/']
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 102  (queueing 4)
+      #11.1    588 impr  ✏️  full     /lessons/flutter-dart-masterclass/23-contain
+             └─ '(no individual phrase disclosed by GSC)'
+      #12.1    776 impr  ✏️  full     /lessons/flutter-dart-masterclass/12-constru
+             └─ '(no individual phrase disclosed by GSC)'
+      #10.2    555 impr  ✏️  full     /lessons/android-interview-mastery/19-compos
+             └─ '%site.developer.android.com develop ui compose state rem'
+      #11.2    525 impr  ✏️  full     /lessons/android-interview-mastery/13-activi
+             └─ '(no individual phrase disclosed by GSC)'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Nightly run start. Step 0 first.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && cat data/content-queue.json | python3 -m 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls courses/ && echo --- && grep -n \"id: 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"^  id:\" courses/flutter-dart-m
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"container-padding-sizedbox\\|co
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/flutter-dart-masterclass/data.js","offset
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -o \"{id:12,title:\\\"[^\\\"]*\\\"\"
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"metaTitle\\|metaDescription\\|s
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"pageTitle\\s*=\\|metaDesc\\s*=\
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/tools/build-lesson-pages.js","offset":97,"limit":
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git show ea97b1e --stat && echo ---DIFF--
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git show 2915baf -- courses/ | head -60",
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\nimport re\nfor fname, 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n '3505,3520p' courses/android-inter
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"^  whatIs:\" courses/android-in
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"function truncate\" -A 10 tools
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -rn \"truncate\" tools/*.js | grep -
+  [tool] Bash {"command":"python3 - <<'EOF'\ntexts = {\n\"flutter12\": \"Dart named parameters explained: the {name: value} syntax, required vs optional, and defaul
+  [tool] Bash {"command":"python3 - <<'EOF'\ncands = {\n\"flutter12\": \"Dart named parameters & constructors: {name: value} syntax, required vs optional, plus defa
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -bo '{id:12,title:\"Constructors' co
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/flutt
+  Now android-interview-mastery — lessons 19 and 13.
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mastery/data.js","offse
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mastery/data.js","offse
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  All 4 edits done. Building pages now.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-lesson-pages.js flutter-
+  Shell quirk, not a real error. Re-run second build separately.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-lesson-pages.js android-
+  Both built. llms-full.txt next.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-llms-txt.js 2>&1 | tail 
+  Verify generated HTML actually picked up new descriptions.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -o '<meta name=\"description\" conte
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --short | grep -v \"^ M docs/i
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff lessons/flutter-dart-masterclass
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff --stat courses/flutter-dart-mast
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff llms-full.txt | head -60","descr
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --short -- lessons/ | awk '{pr
+  Good, only the 4 real target files remain. Now split each `data.js` change into two separate commits per target using targeted patches.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git diff -U0 courses/flutter-dart-masterc
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/flutt
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/flutt
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/flutt
+  Now android-interview-mastery: android19 first, then android13.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/andro
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 - <<'EOF'\npath = \"courses/andro
+  All 4 targets committed separately. Verify final git status clean.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --short && echo --- && git log
+  Clean. Only pre-existing unrelated modified files (`docs/indexing-report.md`, nightly log) remain untouched — those predate this run. Now write STEP 4 report.
+  [tool] Write {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","content":"# Nightly 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git add data/last-night-content.md && git
+  Gitignored on purpose (report file, not shipped). Fine — no commit needed there. Nightly run done.
+
+**Summary:** 4/4 queue targets fixed (meta description only, `whatIs` field), each own commit, builds verified, no push (nightly job pushes/deploys after exit). 0 skipped. Report at `data/last-night-content.md` (gitignored by design).
+
+DONE: nightly content queue (4 snippet fixes, committed). NEXT: none queued — await tomorrow's `build-content-queue.py` run → stay.
+  [agent finished] Gitignored on purpose (report file, not shipped). Fine — no commit needed there. Nightly run done.
+
+**Summary:** 4/4 queue targets fixed (meta description only, `whatIs` field), each own commit, builds verified, no push (nightly job pushes/deploys after exit). 0 skipped. Report at `data/last-night-content.md` (gitignored by design).
+
+DONE: nightly content queue (4 snippet fixes, committed). NEXT: none queued — await tomorrow's `build-content-queue.py` run → stay.
+  ✓ content agent finished
+
+=== course agent ===
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 2 gaps)
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    $1745.31/mo  us  finance        44kw vol=1376050.0 open-cars-for ELIGIBLE
+    (28325 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 19 OK.
+build-homepage: 19 courses, 3 generated card(s).
+index.html written.
+build-sitemap: 505 URLs (11 course landings, 491 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (505 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 19 courses, 777 lessons, 176.2 KB, 985 lines
+
+=== sitemap validity ===
+  guard-sitemap-valid: /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/sitemap.xml OK — 505 URL(s)
+
+=== shipped-asset integrity (merge debris / JS parse) ===
+  guard-shipped-assets: OK — 885 shipped text file(s) clean, 48 JS file(s) parse
