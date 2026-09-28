@@ -1,10 +1,10 @@
-# Indexing Report — 2026-09-26 23:07
+# Indexing Report — 2026-09-27 23:10
 
 Total pages: 41
 Checked: 41
-Indexed: 16 (39%)
-Not indexed: 24
-Errors: 1
+Indexed: 19 (46%)
+Not indexed: 22
+Errors: 0
 
 ## Not Indexed Pages
 
@@ -13,7 +13,6 @@ Errors: 1
 | /lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html | Crawled - currently not indexed |
-| /lessons/flutter-dart-masterclass/44-json-models-serialization.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/12-constructors-named-parameters.html | Crawled - currently not indexed |
 | /lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html | Excluded by ‘noindex’ tag |
 | /lessons/cp-kids/23-powers-and-modular-arithmetic.html | Crawled - currently not indexed |
@@ -32,16 +31,17 @@ Errors: 1
 | /lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/26-forms-text-input.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/41-injectable-code-generation.html | Crawled - currently not indexed |
-| /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (16)
+## Indexed Pages (19)
 
+- /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
 - /lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
 - /lessons/class-9-math-bangla/51-sin-cos-tan.html
 - /lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html
 - /lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html
+- /lessons/flutter-dart-masterclass/44-json-models-serialization.html
 - /lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html
 - /lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
 - /roadmap.html
@@ -53,3 +53,4 @@ Errors: 1
 - /lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html
 - /lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html
 - /lessons/flutter-dart-masterclass/17-statelesswidget.html
+- /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html
