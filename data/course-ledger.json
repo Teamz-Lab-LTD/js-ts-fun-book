@@ -24,7 +24,7 @@
     {
       "slug": "real-estate",
       "created": "2026-08-05",
-      "status": "pilot",
+      "status": "dormant",
       "lessons": 10,
       "target_lessons": 70,
       "last_expanded": null,
@@ -33,6 +33,11 @@
           "date": "2026-08-05",
           "event": "created",
           "lessons": 10
+        },
+        {
+          "date": "2026-09-30",
+          "event": "dormant",
+          "clicks_28d": 0
         }
       ],
       "clicks_28d": 0
@@ -50,7 +55,24 @@
           "event": "created",
           "lessons": 10
         }
-      ]
+      ],
+      "clicks_28d": 0
+    },
+    {
+      "slug": "high-yield",
+      "created": "2026-09-30",
+      "status": "pilot",
+      "lessons": 10,
+      "target_lessons": 70,
+      "last_expanded": null,
+      "history": [
+        {
+          "date": "2026-09-30",
+          "event": "created",
+          "lessons": 10
+        }
+      ],
+      "clicks_28d": 0
     }
   ]
 }

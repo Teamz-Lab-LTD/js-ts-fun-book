@@ -1,6 +1,6 @@
 # Teamz Lab Learning — Full Lesson Index
 
-> Complete index of all 19 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
+> Complete index of all 20 free interactive courses and every lesson inside them. All content runs client-side in a browser with quizzes, spaced-repetition flashcards, and code playgrounds. No signup, no ads in the way, no paywall.
 
 - Website: https://learn.teamzlab.com/
 - Curated short index: https://learn.teamzlab.com/llms.txt
@@ -598,6 +598,26 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 - [When It Happens — What to Do If You Lose Your Job to AI](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/17-when-it-happens-what-to-do-if-you-lose-your-job-to-ai.html): A survival playbook for the first 48 hours, the first month, and the strategic pivot that follows
 - [You Are Not a Machine — And That Is Your Greatest Advantage](https://learn.teamzlab.com/lessons/hard-to-replace-by-ai/18-you-are-not-a-machine-and-that-is-your-greatest-advantage.html): Why becoming MORE human — not more efficient — is the winning career strategy in the age of AI
 
+## High-Yield Savings, Plainly Explained
+
+- Course page: https://learn.teamzlab.com/c/high-yield.html
+- Level: All Levels — Written for Ordinary Savers
+- Lesson count: 10
+- About: Free interactive course with 10 lessons on high-yield savings accounts, CDs and money market accounts in the US — what "high yield" legally is (and is not), how APY is defined and calculated under…
+
+### Lessons
+
+- [High-Yield Savings Account: What It Actually Is](https://learn.teamzlab.com/lessons/high-yield/01-high-yield-savings-account-what-it-actually-is.html): There is no legal product called a "high-yield savings account" — it is an ordinary savings account with a rate worth having
+- [High-Yield Interest Savings Account: How The Interest Is Actually Calculated](https://learn.teamzlab.com/lessons/high-yield/02-high-yield-interest-savings-account-how-the-interest-is.html): Interest rate and APY are two different numbers, and knowing which is which stops you from being impressed by the wrong one
+- [High Yield Savings: Is The Money Actually Safe?](https://learn.teamzlab.com/lessons/high-yield/03-high-yield-savings-is-the-money-actually-safe.html): Deposit insurance is per depositor, per insured bank, per ownership category — and the app you are looking at may not be the bank
+- [High-Yield Savings Account Rates: Where They Come From And Why They Move](https://learn.teamzlab.com/lessons/high-yield/04-high-yield-savings-account-rates-where-they-come-from-and.html): Your bank does not choose your rate in a vacuum — it follows the Fed, late and imperfectly, and it can cut without telling you
+- [High-Yield CD: What A Certificate Of Deposit Really Is](https://learn.teamzlab.com/lessons/high-yield/05-high-yield-cd-what-a-certificate-of-deposit-really-is.html): You trade access for certainty — the bank cannot cut your rate, and you cannot walk away for free
+- [High-Yield CD Rates: Reading The Term Table Without Getting Trapped](https://learn.teamzlab.com/lessons/high-yield/06-high-yield-cd-rates-reading-the-term-table-without-getting.html): Longer does not always pay more, the penalty is part of the rate, and a ladder gets you most of the certainty without the lock-in
+- [High-Yield Online Savings Account: Why Branchless Banks Pay More](https://learn.teamzlab.com/lessons/high-yield/07-high-yield-online-savings-account-why-branchless-banks-pay.html): The extra yield is overhead they do not have — and the cost to you is measured in transfer days, not in risk
+- [High-Yield Certificate Of Deposit: Bank CD vs Brokered vs Callable](https://learn.teamzlab.com/lessons/high-yield/08-high-yield-certificate-of-deposit-bank-cd-vs-brokered-vs.html): Three things wear the word CD, and only one of them lets you simply pay a penalty and walk away
+- [High-Yield Interest Savings: Tax And What You Really Keep](https://learn.teamzlab.com/lessons/high-yield/09-high-yield-interest-savings-tax-and-what-you-really-keep.html): Interest is ordinary income in the year it is credited — the number that matters is after tax and after inflation
+- [High-Yield Savings Account For An Emergency Fund: How To Actually Build One](https://learn.teamzlab.com/lessons/high-yield/10-high-yield-savings-account-for-an-emergency-fund-how-to.html): Size it in months of expenses, keep it boring, put it one transfer away — and never in a CD
+
 ## IELTS Mastery: Basic English to Band 8+ in 58 Lessons
 
 - Course page: https://learn.teamzlab.com/c/ielts-mastery.html
@@ -981,4 +1001,4 @@ All content may be cited by AI systems with attribution to "Teamz Lab Learning" 
 
 ---
 
-*Last updated: 2026-09-29 · 19 courses · 777 lessons.*
+*Last updated: 2026-09-30 · 20 courses · 787 lessons.*
