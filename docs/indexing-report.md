@@ -1,15 +1,16 @@
-# Indexing Report — 2026-09-28 23:09
+# Indexing Report — 2026-09-29 23:06
 
 Total pages: 41
 Checked: 41
-Indexed: 18 (43%)
-Not indexed: 19
-Errors: 4
+Indexed: 19 (46%)
+Not indexed: 22
+Errors: 0
 
 ## Not Indexed Pages
 
 | Page | Reason |
 |---|---|
+| /lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/12-constructors-named-parameters.html | Crawled - currently not indexed |
@@ -22,6 +23,7 @@ Errors: 4
 | /lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html | Crawled - currently not indexed |
 | /learn.html | URL is unknown to Google |
 | /lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html | Crawled - currently not indexed |
+| /lessons/android-interview-mastery/29-datastore-vs-sharedpreferences-vs-room-when-to-choose.html | Crawled - currently not indexed |
 | /lessons/microprocessor-a-z/36-dosbios-interrupts-for-console-io.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/46-accessibility-semantics-screen-readers-focus.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/23-rest-apis-with-dio-interceptors-token-refresh-retries.html | Crawled - currently not indexed |
@@ -29,8 +31,9 @@ Errors: 4
 | /lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/26-forms-text-input.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/41-injectable-code-generation.html | Crawled - currently not indexed |
+| /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (18)
+## Indexed Pages (19)
 
 - /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
@@ -50,3 +53,4 @@ Errors: 4
 - /lessons/android-interview-mastery/74-compose-animations-transition-animatedvisibility-motion.html
 - /lessons/android-interview-mastery/53-material-design-3-theming-dark-mode-dynamic-color.html
 - /lessons/flutter-dart-masterclass/17-statelesswidget.html
+- /lessons/flutter-interview-mastery/77-api-integration-without-ai-proving-your-fundamentals-in.html

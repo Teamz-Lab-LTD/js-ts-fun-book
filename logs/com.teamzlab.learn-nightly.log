@@ -10291,3 +10291,230 @@ Wrote sitemap.xml (505 URLs) at repo root.
 
 === shipped-asset integrity (merge debris / JS parse) ===
   guard-shipped-assets: OK — 885 shipped text file(s) clean, 48 JS file(s) parse
+[main fc710bf] chore(nightly): refresh generated site output
+ 3 files changed, 147 insertions(+), 10 deletions(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   7436901..fc710bf  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+  --- verifying against the live site ---
+  verify-deploy-live [https://learn.teamzlab.com/] via sitemap.xml: local 505 URLs, live 505
+    ✓ every locally built URL is present on the live site
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (3 checks, root=teamz-lab-learning)
+
+DONE — 23:06:22
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-09-30 23:00:05 +06
+============================================================
+  preflight pre: OK (6 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  (none)
+
+  Site total: ~0 clicks/day (alerts at 10/page/day)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 12 pages, 12 excluding event-driven sections)
+    up 0  /  down 0  /  flat 12
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       54 ->     57 clicks   +6%
+    verdict: inconclusive: not enough baseline clicks in one of the cohorts to compare like for like
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +7 new   (store 423, unpulled 386)
+    gate: READY — run --prepare to emit a batch
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 161 of 266 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  136 link(s) from /search/ (11 impr)
+            /hazira-khata-bn/
+         0 impr  134 link(s) from /search/ (11 impr)
+            /hazira-khata/
+         6 impr  132 link(s) from /hazira-khata-bn/tutorials/staff-attendance-log/ (0 impr)
+            /data-deletion/
+         6 impr  132 link(s) from /hazira-khata-bn/tutorials/staff-attendance-log/ (0 impr)
+            /privacy/
+         0 impr  72 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  72 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  62 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  60 link(s) from /hazira-khata-bn/tutorials/staff-attendance-log/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py:1296: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    age_d = (datetime.utcnow() - gen).days
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 90 sessions across 18 pages (28d)
+    value layer: re-ranked by measured conversion (median 69.77 per 1k sessions; 0 section(s) calibrated) — none=105, page=2
+    proven non-converters (>=300 impr, 0 clicks / 90d): ['/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html/', '/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html/', '/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html/', '/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html/', '/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html/', '/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html/', '/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html/', '/lessons/microprocessor-a-z/27-string-instructions-and-rep-prefix.html/']
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 107  (queueing 4)
+      #9.7    2970 impr  ✏️  full     /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp retry'
+      #8.2    1454 impr  ✏️  full     /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider geturiforfile official docs'
+      #10.4   1367 impr  ✏️  full     /lessons/android-interview-mastery/28-room-s
+             └─ 'room transaction'
+      #6.9    1221 impr  ✏️  full     /lessons/android-interview-mastery/81-screen
+             └─ 'roborazzi'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Run queue script first, per nightly playbook.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  Read queue file details.
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json"}
+  Locate lesson entries in course data.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls courses/android-interview-mastery/ && 
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mastery/data.js","offse
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"metaTitle\\|metaDescription\\|s
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"pageTitle\\|metaDesc\\s*=\" too
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"whatIs:\" courses/android-inter
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"^  id: [0-9]*,\\|whatIs:\\|^  s
+  Now find each lesson's `whatIs` field (drives meta description).
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && for range in \"5071 5385\" \"5385 5700\" 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n '95,125p' tools/build-lesson-pages
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node -e '\nconst suffix = \" | Free Tutor
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"function truncate\" -A 15 tools
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -rn \"function truncate\\|truncate =
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n '40,55p' tools/build-lesson-pages.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -o '<title>[^<]*</title>' \"lessons/
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && for f in \"28-room-sqlite-migrations-tran
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node -e '\nconst truncate = (s, n) => {\n
+  Root cause found: titles truncate at ~34 chars before hitting the actual query term — descriptions already good, only titles need reorder. Editing 4 lesson titles now.
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  [tool] Edit {"replace_all":false,"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/courses/android-interview-mas
+  Build pages, verify rendered titles, then commit each separately.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && node tools/build-lesson-pages.js android-
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && for f in \"27-retrofit-okhttp-interceptor
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"OkHttp Retry, Token Refresh\\|R
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n '1,40p' tools/build-lesson-pages.j
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"require(\\|LESSONS_DATA\\|loadC
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git status --porcelain lessons/android-in
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"kebab(\\|lesson.slug\\|\\.slug\
+  Found a serious problem — changing `title` in data.js also changes the URL slug (filename derived from `kebab(title)`), since there's no separate slug/metaTitle field. That creates a **new orphan URL** while leaving the actually-ranking old URL completely untouched (duplicate content, zero benefit, cannibalization risk). Reverting all 4 before this ships.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && rm -f \\\n  \"lessons/android-interview-m
+  Confirmed clean revert. All 4 titles restored, stray orphan files removed, llms-full.txt back to original.
+
+Now write the nightly report explaining the finding and why nothing shipped.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && test -f data/last-night-content.md && ech
+  [tool] Read {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","limit":40}
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log --oneline -- courses/android-inte
+  [tool] Write {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","content":"# Nightly 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log --oneline -- data/last-night-cont
+  Nightly run shipped **0 changes** — both queued levers turned out broken or exhausted, not missing.
+
+**[Certain]** Caught a real bug before it shipped: rewriting `title` in `data.js` also renames the output filename (`kebab(lesson.title)` in `tools/build-lesson-pages.js:88`) since there's no separate slug field. All 4 queue targets' titles get hard-truncated at 34 chars, hiding the exact query term ("Retry", "Transaction", "getUriForFile", "Roborazzi") — a real diagnosis — but fixing it by editing `title` would have created a 0-authority duplicate URL next to the untouched, still-ranking old one. Reverted before commit. Fixing this properly needs a `tools/` change (separate `slug`/`seoTitle` field), out of scope for a content-only nightly run.
+
+**[Certain]** All 4 queue targets have already had `whatIs` (meta description) rewritten 3–8 times each on prior nights (`git log` confirms), CTR still 0.00–0.41% at pos 6.9–10.4, and the descriptions already lead with the exact query phrase. Nothing left to sharpen — another pass is guessing, not fixing.
+
+Wrote `data/last-night-content.md` with both findings and a flag: `scripts/build-content-queue.py` has no memory of "already tried the description lever here," so it'll hand back these same 4 pages tomorrow unless that's added.
+
+No commits made — nothing safe to ship tonight.
+
+**DONE: nightly content run, 0 shippable edits, 2 findings reported. NEXT: decide whether to add per-page edit-exhaustion tracking to build-content-queue.py → `/model opus` + effort high.**
+  [agent finished] Nightly run shipped **0 changes** — both queued levers turned out broken or exhausted, not missing.
+
+**[Certain]** Caught a real bug before it shipped: rewriting `title` in `data.js` also renames the output filename (`kebab(lesson.title)` in `tools/build-lesson-pages.js:88`) since there's no separate slug field. All 4 queue targets' titles get hard-truncated at 34 chars, hiding the exact query term ("Retry", "Transaction", "getUriForFile", "Roborazzi") — a real diagnosis — but fixing it by editing `title` would have created a 0-authority duplicate URL next to the untouched, still-ranking old one. Reverted before commit. Fixing this properly needs a `tools/` change (separate `slug`/`seoTitle` field), out of scope for a content-only nightly run.
+
+**[Certain]** All 4 queue targets have already had `whatIs` (meta description) rewritten 3–8 times each on prior nights (`git log` confirms), CTR still 0.00–0.41% at pos 6.9–10.4, and the descriptions already lead with the exact query phrase. Nothing left to sharpen — another pass is guessing, not fixing.
+
+Wrote `data/last-night-content.md` with both findings and a flag: `scripts/build-content-queue.py` has no memory of "already tried the description lever here," so it'll hand back these same 4 pages tomorrow unless that's added.
+
+No commits made — nothing safe to ship tonight.
+
+**DONE: nightly content run, 0 shippable edits, 2 findings reported. NEXT: decide whether to add per-page edit-exhaustion tracking to build-content-queue.py → `/model opus` + effort high.**
+  ✓ content agent finished
+
+=== course agent ===
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 3 gaps)
+    $2713.46/mo  us  insurance      205kw vol=10886750.0 open-high-yield ELIGIBLE
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    $1745.31/mo  us  finance        44kw vol=1376050.0 open-cars-for ELIGIBLE
+    (28325 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    promote -> real-estate: pilot -> dormant (0 clicks/28d < 3 at 56d old)
+    gate -> create-pilot: cluster $2713.46/mo, niche insurance, win 7/10, intent learn-basics
+  action: create-pilot   model: opus
+  Permission allow rule (../../../../.claude/settings.json): Bash(grep -o '"[a-z]*\\.[a-z_]*\\.[a-z_]*"' ~/.config/teamzlab/distribute-config.json | sort -u | head -30) has a wildcard before the rest of the command, so it also matches any options inserted at that position and approves them without a prompt. Replace that * with the exact value you mean, or only use * after the subcommand.
+  Done. Pilot shipped, not pushed.
+  
+  **Work order executed** — `action=create-pilot`, slug `high-yield`, intent `learn-basics`, geo us.
+  
+  - `courses/high-yield/config.js` — 9 topics, topicMap covers ids 1–10 exactly once, conceptFlows all 10, finance disclaimer in description + footer + trust strip.
+  - `courses/high-yield/data.js` — exactly the 10 `task.outline` keywords, one lesson each, 70 points, 50 quizzes, full field set per lesson.
+  - `node tools/validate-course.js high-yield` → **✓ strict**. All 5 generators clean: 10 lesson pages, 20 landings, homepage, sitemap 516 URLs, llms-full.txt.
+  - Spot-check `lessons/high-yield/01-*.html`: 39.8 KB real content, all 9 sections, zero unresolved `${…}`.
+  - Ledger: `high-yield` / pilot / 10 / target 70 / created 2026-09-30. Same commit carries radar's pending ledger writes (`real-estate` → dormant, `first-time` clicks field).
+  - Commit `ac25e7a`, 17 files. Report appended to `data/last-night-content.md`.
+  
+  **YMYL discipline.** Live APYs cannot be verified inside a nightly run, so every rate/penalty/bracket figure in worked examples is labelled ILLUSTRATIVE. Structural claims cite primary sources only — Reg DD 12 CFR 1030 (incl. Appendix A APY formula, variable-rate carve-out from the 30-day notice rule), FDIC $250k per depositor/bank/ownership category, NCUA share insurance, Fed's 24 Apr 2020 Reg D amendment, FDIC weekly national rates, Nacha $1m Same Day ACH, IRS Topic 403 / 1099-INT box 2, BLS CPI, Fed SHED. No company's prices or terms anywhere: the cluster's brand keywords (chase, sofi, navy federal, bank of america, td bank) got no lessons — lesson 7 covers the online-bank *category*.
+  
+  **Two things to flag upstream, not fixed by me:**
+  
+  1. Work order's `why` reads `"niche insurance"`. Cluster is deposit products — savings/CD/money-market — not insurance. Radar niche label is wrong; harmless here since outline drove the content, but it will misfile future RPM/competition logic.
+  2. Outline keyword 3 (`high yield savings`) and 9 (`high yield interest savings`) are near-duplicates of 1 and 2. I split them by angle (3 → deposit insurance, 9 → tax and real return) to avoid two thin lessons saying the same thing. Radar's dedup works on exact strings, not semantic overlap.
+  
+  **DONE: high-yield pilot created, validated, built, committed. NEXT: nightly push/deploy (unattended) → stay.**
+  ✓ course agent finished (create-pilot)
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 20 OK.
+build-homepage: 20 courses, 4 generated card(s).
+index.html written.
+build-sitemap: 516 URLs (12 course landings, 501 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (516 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 20 courses, 787 lessons, 179.5 KB, 1005 lines
+
+=== sitemap validity ===
+  guard-sitemap-valid: /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/sitemap.xml OK — 516 URL(s)
+
+=== shipped-asset integrity (merge debris / JS parse) ===
+  guard-shipped-assets: OK — 898 shipped text file(s) clean, 50 JS file(s) parse
