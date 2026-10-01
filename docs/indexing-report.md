@@ -1,9 +1,9 @@
-# Indexing Report — 2026-09-29 23:06
+# Indexing Report — 2026-09-30 23:27
 
 Total pages: 41
 Checked: 41
-Indexed: 19 (46%)
-Not indexed: 22
+Indexed: 20 (48%)
+Not indexed: 21
 Errors: 0
 
 ## Not Indexed Pages
@@ -17,7 +17,6 @@ Errors: 0
 | /lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html | Excluded by ‘noindex’ tag |
 | /lessons/cp-kids/23-powers-and-modular-arithmetic.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/34-android-permissions-storage-changes-privacy-safe-handling.html | Crawled - currently not indexed |
-| /lessons/android-interview-mastery/77-r8-proguard-release-optimization.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/69-riverpod-2x-provider-the-other-state-management.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/18-statefulwidget-setstate.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html | Crawled - currently not indexed |
@@ -33,7 +32,7 @@ Errors: 0
 | /lessons/flutter-dart-masterclass/41-injectable-code-generation.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (19)
+## Indexed Pages (20)
 
 - /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
@@ -46,6 +45,7 @@ Errors: 0
 - /lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
 - /roadmap.html
 - /lessons/class-9-math-bangla/55-lesson.html
+- /lessons/android-interview-mastery/77-r8-proguard-release-optimization.html
 - /lessons/android-interview-mastery/54-recyclerview-vs-lazycolumn-legacy-vs-modern-ui-tradeoffs.html
 - /lessons/android-interview-mastery/32-workmanager-background-tasks-foreground-services-alarm.html
 - /lessons/android-interview-mastery/17-xml-view-system-layouts-constraintlayout-recyclerview.html
