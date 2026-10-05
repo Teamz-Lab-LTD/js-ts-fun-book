@@ -1,10 +1,10 @@
-# Indexing Report — 2026-10-02 23:08
+# Indexing Report — 2026-10-04 23:07
 
 Total pages: 41
 Checked: 41
-Indexed: 19 (46%)
+Indexed: 21 (51%)
 Not indexed: 20
-Errors: 2
+Errors: 0
 
 ## Not Indexed Pages
 
@@ -31,14 +31,16 @@ Errors: 2
 | /lessons/flutter-dart-masterclass/41-injectable-code-generation.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (19)
+## Indexed Pages (21)
 
 - /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
 - /lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
 - /lessons/class-9-math-bangla/51-sin-cos-tan.html
+- /lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html
 - /lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html
 - /lessons/flutter-dart-masterclass/44-json-models-serialization.html
+- /lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html
 - /lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
 - /roadmap.html
 - /lessons/class-9-math-bangla/55-lesson.html

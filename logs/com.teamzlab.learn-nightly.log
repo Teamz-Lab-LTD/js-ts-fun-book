@@ -11053,3 +11053,188 @@ Wrote sitemap.xml (516 URLs) at repo root.
 
 === shipped-asset integrity (merge debris / JS parse) ===
   guard-shipped-assets: OK — 898 shipped text file(s) clean, 50 JS file(s) parse
+[main 4afcd64] chore(nightly): refresh generated site output
+ 3 files changed, 187 insertions(+), 10 deletions(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   d38f39e..4afcd64  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+  --- verifying against the live site ---
+  verify-deploy-live [https://learn.teamzlab.com/] via sitemap.xml: local 516 URLs, live 516
+    ✓ every locally built URL is present on the live site
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== preflight --post ===
+  preflight post: OK (3 checks, root=teamz-lab-learning)
+
+DONE — 23:07:11
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-10-05 23:00:02 +06
+============================================================
+  preflight pre: OK (7 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+  Run: ./build-search-console.sh --status         (indexing only)
+  Run: ./build-search-console.sh --opportunities  (quick wins only)
+  Docs: docs/search-console-setup.md
+======================================================================
+  (none)
+
+  Site total: ~0 clicks/day (alerts at 10/page/day)
+
+  Tip: tighten noise with --min-impr 50 or shorter --days 7 windows.
+
+  enhance-outcome (28d windows, 12 pages, 12 excluding event-driven sections)
+    up 0  /  down 0  /  flat 12
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       54 ->     57 clicks   +6%
+    verdict: inconclusive: not enough baseline clicks in one of the cohorts to compare like for like
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +39 new   (store 492, unpulled 455)
+    gate: READY — run --prepare to emit a batch
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 163 of 281 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login', 1 submodule/product 'games'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         1 impr  138 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata-bn/
+         0 impr  137 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata/
+         6 impr  134 link(s) from /hazira-khata-bn/tutorials/machine-import/ (0 impr)
+            /data-deletion/
+         6 impr  134 link(s) from /hazira-khata-bn/tutorials/machine-import/ (0 impr)
+            /privacy/
+         0 impr  73 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/guides/
+         0 impr  73 link(s) from /hazira-khata/privacy/ (5 impr)
+            /hazira-khata/tutorials/
+         0 impr  63 link(s) from /hazira-khata-bn/ (1 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  61 link(s) from /hazira-khata-bn/tutorials/move-student/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-content-queue.py:1696: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    age_d = (datetime.utcnow() - gen).days
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 102 sessions across 20 pages (28d)
+    value layer: re-ranked by measured conversion (median 31.25 per 1k sessions; 0 section(s) calibrated) — none=114, page=2
+    proven non-converters (>=300 impr, 0 clicks / 90d): ['/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html/', '/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html/', '/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html/', '/lessons/android-interview-mastery/37-profiling-debugging-logcat-android-studio-profiler.html/', '/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html/', '/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html/', '/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html/', '/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html/', '/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html/', '/lessons/microprocessor-a-z/27-string-instructions-and-rep-prefix.html/']
+    cannibalisation (measured): none — no query has 2+ of our pages ranking
+  
+    ENHANCE candidates: 116  (queueing 4)
+      #9.6    2838 impr  ✏️  full     /lessons/android-interview-mastery/27-retrof
+             └─ 'okhttp retry'
+      #8.2    1398 impr  ✏️  full     /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider geturiforfile official docs'
+      #10.4   1367 impr  ✏️  full     /lessons/android-interview-mastery/28-room-s
+             └─ 'room transaction'
+      #12.4   1774 impr  ✏️  full     /lessons/android-interview-mastery/26-depend
+             └─ 'manual di'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  Starting STEP 0: build the work queue.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 -c \"\nimport json;d=json.load(op
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n 40,200p data/last-night-content.md
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"metaTitle\\|metaDescription\" t
+  [tool] Write {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","content":"# Nightly 
+  Nothing changed and nothing committed tonight. I skipped all 4 queued pages and wrote the reason to `data/last-night-content.md`.
+
+The queue gave the same 4 Android interview-prep pages as last night:
+
+| Page | Query | Position | Impressions | Clicks |
+|---|---|---|---|---|
+| 27 Retrofit/OkHttp | okhttp retry | 9.6 | 2838 | 10 |
+| 56 FileProvider | fileprovider geturiforfile | 8.2 | 1398 | 2 |
+| 28 Room | room transaction | 10.4 | 1367 | 0 |
+| 26 Manual DI | manual di | 12.4 | 1774 | 1 |
+
+- **Descriptions are already done.** They were rewritten 11–15 days ago, and position and impressions haven't moved since. Rewriting them again would just muddy the CTR reading.
+- **The title is the real problem, and I can't fix it from `data.js`.** The builder has no `metaTitle` field. It builds both `<title>` and the filename from `lesson.title`, so a title edit would change the URL and orphan the page that currently ranks. Adding the field means editing `tools/`, which is off-limits to me.
+- **Manual DI (pos 12.4) is unwinnable.** The results for that query are big brands, and the earlier description rewrite did nothing.
+
+Two things need a human:
+- Add an optional `lesson.metaTitle` to `renderLesson()`, falling back to today's truncation. Then pages 27, 28 and 56 can get keyword-first titles with no URL change. I put suggested titles in the report.
+- Lengthen the queue builder's cooldown for pages whose description was recently rewritten and whose numbers haven't moved. At about 10 clicks per page, 7 days is too short to see a CTR effect, so the same targets keep coming back. No Bangla-curriculum page was queued, and that's where the site's 1.31% CTR is.
+
+**DONE: nightly content run (0 edits, 4 skipped, report written). NEXT: add `metaTitle` support to `tools/build-lesson-pages.js` + longer queue cooldown → `/model opus` + effort high.**
+  [agent finished] Nothing changed and nothing committed tonight. I skipped all 4 queued pages and wrote the reason to `data/last-night-content.md`.
+
+The queue gave the same 4 Android interview-prep pages as last night:
+
+| Page | Query | Position | Impressions | Clicks |
+|---|---|---|---|---|
+| 27 Retrofit/OkHttp | okhttp retry | 9.6 | 2838 | 10 |
+| 56 FileProvider | fileprovider geturiforfile | 8.2 | 1398 | 2 |
+| 28 Room | room transaction | 10.4 | 1367 | 0 |
+| 26 Manual DI | manual di | 12.4 | 1774 | 1 |
+
+- **Descriptions are already done.** They were rewritten 11–15 days ago, and position and impressions haven't moved since. Rewriting them again would just muddy the CTR reading.
+- **The title is the real problem, and I can't fix it from `data.js`.** The builder has no `metaTitle` field. It builds both `<title>` and the filename from `lesson.title`, so a title edit would change the URL and orphan the page that currently ranks. Adding the field means editing `tools/`, which is off-limits to me.
+- **Manual DI (pos 12.4) is unwinnable.** The results for that query are big brands, and the earlier description rewrite did nothing.
+
+Two things need a human:
+- Add an optional `lesson.metaTitle` to `renderLesson()`, falling back to today's truncation. Then pages 27, 28 and 56 can get keyword-first titles with no URL change. I put suggested titles in the report.
+- Lengthen the queue builder's cooldown for pages whose description was recently rewritten and whose numbers haven't moved. At about 10 clicks per page, 7 days is too short to see a CTR effect, so the same targets keep coming back. No Bangla-curriculum page was queued, and that's where the site's 1.31% CTR is.
+
+**DONE: nightly content run (0 edits, 4 skipped, report written). NEXT: add `metaTitle` support to `tools/build-lesson-pages.js` + longer queue cooldown → `/model opus` + effort high.**
+  ✓ content agent finished
+
+=== course agent ===
+  course-radar: 33232 clusters (80387 US kw, 0 BD kw, 3 gaps)
+    $2675.46/mo  us  mortgage       160kw vol=216000.0 open-apply-for ELIGIBLE
+    $2535.68/mo  us  insurance      235kw vol=2202700.0 open-whole-life ELIGIBLE
+    $2527.18/mo  us  tax            270kw vol=785200.0 open-capital-gains ELIGIBLE
+    $2325.61/mo  us  insurance      121kw vol=990050.0 open-travel-insurance ELIGIBLE
+    $2094.49/mo  us  insurance      157kw vol=594150.0 open-short-term ELIGIBLE
+    $2038.85/mo  us  legal          203kw vol=454900.0 open-small-claims ELIGIBLE
+    $1745.31/mo  us  finance        44kw vol=1376050.0 open-cars-for ELIGIBLE
+    $1686.46/mo  us  finance        139kw vol=1282700.0 open-chase-sapphire ELIGIBLE
+    (28329 refused: open-capital-one:brand-owned, open-wells-fargo:brand-owned, open-navy-federal:unwinnable, open-american-express:brand-owned, open-chase-bank:brand-owned, open-home-loan:unwinnable)
+    gate -> None: 2 pilots already active (cap 2)
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 20 OK.
+build-homepage: 20 courses, 4 generated card(s).
+index.html written.
+build-sitemap: 516 URLs (12 course landings, 501 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (516 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 20 courses, 787 lessons, 179.5 KB, 1005 lines
+
+=== sitemap validity ===
+  guard-sitemap-valid: /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/sitemap.xml OK — 516 URL(s)
+
+=== shipped-asset integrity (merge debris / JS parse) ===
+  guard-shipped-assets: OK — 898 shipped text file(s) clean, 50 JS file(s) parse
