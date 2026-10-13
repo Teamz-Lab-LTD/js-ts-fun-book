@@ -1,9 +1,9 @@
-# Indexing Report — 2026-10-11 23:06
+# Indexing Report — 2026-10-12 23:07
 
 Total pages: 41
 Checked: 41
-Indexed: 21 (51%)
-Not indexed: 20
+Indexed: 20 (48%)
+Not indexed: 21
 Errors: 0
 
 ## Not Indexed Pages
@@ -13,6 +13,7 @@ Errors: 0
 | /lessons/android-interview-mastery/56-contentprovider-fileprovider-uri-permissions.html | Crawled - currently not indexed |
 | /lessons/android-interview-mastery/73-paging-3-pagingsource-remotemediator-flow-integration.html | Crawled - currently not indexed |
 | /lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html | Crawled - currently not indexed |
+| /lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/12-constructors-named-parameters.html | Crawled - currently not indexed |
 | /lessons/js-ts-fun-book/46-nestjs-exception-filters-error-handling.html | Excluded by ‘noindex’ tag |
 | /lessons/cp-kids/23-powers-and-modular-arithmetic.html | Excluded by ‘noindex’ tag |
@@ -31,14 +32,13 @@ Errors: 0
 | /lessons/flutter-dart-masterclass/41-injectable-code-generation.html | Crawled - currently not indexed |
 | /lessons/flutter-dart-masterclass/28-design-system-theming.html | Crawled - currently not indexed |
 
-## Indexed Pages (21)
+## Indexed Pages (20)
 
 - /
 - /lessons/microprocessor-a-z/39-8255-programmable-peripheral-interface.html
 - /lessons/android-interview-mastery/27-retrofit-okhttp-interceptors-token-refresh-pagination.html
 - /lessons/class-9-math-bangla/51-sin-cos-tan.html
 - /lessons/android-interview-mastery/81-screenshot-testing-paparazzi-roborazzi-visual-regression.html
-- /lessons/android-interview-mastery/26-dependency-injection-manual-di-vs-hilt-vs-dagger.html
 - /lessons/flutter-dart-masterclass/44-json-models-serialization.html
 - /lessons/flutter-interview-mastery/15-forms-validation-focus-controllers.html
 - /lessons/flutter-interview-mastery/53-firebase-vs-supabase-vs-custom-backend-practical-comparison.html
