@@ -12715,3 +12715,250 @@ Wrote sitemap.xml (516 URLs) at repo root.
 
 === shipped-asset integrity (merge debris / JS parse) ===
   guard-shipped-assets: OK — 898 shipped text file(s) clean, 50 JS file(s) parse
+[main e9428a6] chore(nightly): refresh generated site output
+ 3 files changed, 186 insertions(+), 6 deletions(-)
+To https://github.com/Teamz-Lab-LTD/js-ts-fun-book.git
+   f091223..e9428a6  HEAD -> main
+
+=== deploy: npm run deploy ===
+
+> deploy
+> rsync -az --delete --exclude=.git --exclude=.github --exclude=.claude --exclude=node_modules --exclude=teamz-company-automation --exclude=scripts --exclude=.DS_Store --exclude=.teamz-automation.env --exclude=package.json --exclude=package-lock.json --exclude=.gitmodules --exclude=.gitignore --exclude=schema-validation-latest.json -e 'ssh -i ~/.ssh/gha_teamzlab_landing_deploy -o BatchMode=yes' ./ root@72.60.184.132:/var/www/learn.teamzlab.com/ && echo 'Deployed → https://learn.teamzlab.com/'
+
+Deployed → https://learn.teamzlab.com/
+  --- verifying against the live site ---
+  verify-deploy-live [https://learn.teamzlab.com/] via sitemap.xml: local 516 URLs, live 516
+    ✓ every locally built URL is present on the live site
+
+=== request indexing ===
+
+  Quick link to inspect URLs:
+  https://search.google.com/search-console/inspect?resource_id=https%3A%2F%2Flearn.teamzlab.com%2F
+
+
+=== teamz brain: DB update (never fatal) ===
+  SKIPPED (runs from the apps.teamzlab.com property only; this is https://learn.teamzlab.com/)
+  brain lanes: SKIPPED (apps property only)
+
+=== preflight --post ===
+  preflight post: OK (3 checks, root=teamz-lab-learning)
+
+DONE — 23:07:01
+token mode: NORMAL  (Tokens: week 10% · reset Tue 17:00 · mode NORMAL · 47 waiting for reset)
+============================================================
+  NIGHTLY: com.teamzlab.learn-nightly
+  site   : https://learn.teamzlab.com/
+  mode   : FULL (build + deploy)
+  time   : 2026-10-14 23:00:05 +06
+============================================================
+  preflight pre: OK (7 checks, root=teamz-lab-learning)
+✓ dirty-guard passed
+Already up to date.
+
+=== GSC signals (https://learn.teamzlab.com/) ===
+ERROR: Search Console API unreachable: HTTPSConnectionPool(host='searchconsole.googleapis.com', port=443): Max retries exceeded with url: /webmasters/v3/sites (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)')))
+  (build-search-console.sh missing — skipped)
+ERROR: token refresh failed: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>
+ERROR: Could not refresh Search Console token.
+  (build-gsc-anomalies.py missing — skipped)
+  enhance-outcome (28d windows, 12 pages, 12 excluding event-driven sections)
+    up 0  /  down 0  /  flat 12
+    ENHANCED       0 ->      0 clicks   n/a
+    CONTROL       54 ->     57 clicks   +6%
+    verdict: inconclusive: not enough baseline clicks in one of the cohorts to compare like for like
+    keyword candidates — https://learn.teamzlab.com/
+    harvested +9 new   (store 611, unpulled 574)
+    gate: READY — run --prepare to emit a batch
+
+Resolving pending keyword batches (Google Ads API)...
+    keyword-volume-auto: 0 batch file(s) written.
+
+=== content agent ===
+  [diag] retry tries=20 gap=60s
+    scanning built output at dist/ (Astro property) — --fix is disabled here, dist/ is regenerated on every build
+  marooned pages [apps]: 163 of 283 scanned — indexed, linked, and no inbound link from any page above 100 impressions
+    excluded from the count (correctly unlinked): 2 non-public segment 'login'
+    --fix ignored: this property's pages are build output. The link belongs in src/content, which the nightly content agent edits.
+         0 impr  138 link(s) from /hazira-khata/privacy/ (4 impr)
+            /hazira-khata-bn/
+         0 impr  137 link(s) from /portfolio/ (1 impr)
+            /hazira-khata/
+         6 impr  134 link(s) from /hazira-khata/guides/sunday-school-attendance-app/ (0 impr)
+            /data-deletion/
+         5 impr  134 link(s) from /hazira-khata/guides/sunday-school-attendance-app/ (0 impr)
+            /privacy/
+         0 impr  73 link(s) from /hazira-khata/privacy/ (4 impr)
+            /hazira-khata/guides/
+         0 impr  73 link(s) from /hazira-khata/privacy/ (4 impr)
+            /hazira-khata/tutorials/
+         0 impr  63 link(s) from /hazira-khata-bn/tutorials/question-paper-table-math/ (0 impr)
+            /hazira-khata-bn/tutorials/
+         0 impr  61 link(s) from /hazira-khata-bn/tutorials/question-paper-table-math/ (0 impr)
+            /hazira-khata-bn/tutorials/ask-ai/
+  keyword-target audit: no primaryKeyword declared on this property — nothing to audit
+  /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/seo/build/build-content-queue.py:1852: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    age_d = (datetime.utcnow() - gen).days
+  ======================================================================
+    CONTENT QUEUE — https://learn.teamzlab.com/
+    host: teamz-lab-learning
+  ======================================================================
+    edit mode  : per-page — additive above 0 clicks, full rewrite at or below
+    kw volume  : 80387 terms (winnability ON — head terms >= 10000/mo refused as NEW posts, deprioritised as retargets)
+    AI channel : 112 sessions across 17 pages (28d)
+    value layer: re-ranked by measured conversion (median 41.67 per 1k sessions; 0 section(s) calibrated) — none=129, page=1
+    proven non-converters (>=300 impr, 0 clicks / 90d): ['/lessons/android-interview-mastery/13-activity-fragment-lifecycle-configuration-changes.html/', '/lessons/android-interview-mastery/19-compose-state-remember-remembersaveable-state-hoisting.html/', '/lessons/android-interview-mastery/28-room-sqlite-migrations-transactions-relations.html/', '/lessons/android-interview-mastery/39-unit-testing-kotlin-classes-use-cases-repositories.html/', '/lessons/android-interview-mastery/50-accessibility-on-android-talkback-semantics-touch-targets.html/', '/lessons/flutter-dart-masterclass/12-constructors-named-parameters.html/', '/lessons/flutter-dart-masterclass/23-container-padding-sizedbox.html/', '/lessons/flutter-interview-mastery/70-code-generation-freezed-json_serializable-build_runner.html/', '/lessons/microprocessor-a-z/12-segmented-memory-and-physical-address.html/', '/lessons/microprocessor-a-z/17-8086-addressing-modes.html/', '/lessons/microprocessor-a-z/27-string-instructions-and-rep-prefix.html/']
+    cannibalisation (measured): 1 quer(y/ies) split across our own pages — worst 'teamz lab' 342 impr / 2 clicks over 2 pages
+  
+    ENHANCE candidates: 130  (queueing 4)
+      #9.6    2542 impr  ✏️  full     /lessons/android-interview-mastery/27-retrof
+             └─ 'retrofit interceptor'
+      #10.4   1367 impr  ✏️  full     /lessons/android-interview-mastery/28-room-s
+             └─ 'room transaction'
+      #12.4   1690 impr  ✏️  full     /lessons/android-interview-mastery/26-depend
+             └─ 'manual di'
+      #8.2    1016 impr  ✏️  full     /lessons/android-interview-mastery/56-conten
+             └─ 'android fileprovider geturiforfile official docs'
+  
+    NEW-post candidates queued: 0
+  
+    Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/content-queue.json  (4 targets)
+  targets: 4   new-post tonight: False   model: sonnet
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && python3 scripts/build-content-queue.py 2>
+  Queue has 4 targets, all Android interview pages (pos 8–12). Pos ≤10.4 are worth a snippet fix. Checking source now.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && ls courses/android-interview-mastery/ && 
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && head -c 1500 courses/android-interview-ma
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n -i \"metaTitle\\|metaDescription\
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"pageTitle\\|metaDesc\" tools/bu
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && sed -n 105,122p tools/build-lesson-pages.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && git log --oneline --since=2026-09-01 -- c
+  Same four targets as last night. Checking whether `tools/` has since gained a title-override field.
+  [tool] Bash {"command":"cd \"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning\" && grep -n \"seoTitle\\|metaTitle\" tools/*.
+  Blocker unchanged. Writing report, no content commits.
+  [tool] Write {"file_path":"/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/data/last-night-content.md","content":"# Nightly 
+  Made no content changes tonight: the four queued pages can't be fixed from `data.js`.
+
+- **Targets:** all four are Android interview lessons: 27 Retrofit (position 9.6), 28 Room (10.4), 26 Manual DI (12.4) and 56 FileProvider (8.2).
+- **Description:** already fixed on earlier nights. Each lesson's `whatIs` already leads with its query, so editing it again would only reset the click-through-rate measurement.
+- **Title:** this is what's left. `tools/build-lesson-pages.js:118-119` builds the `<title>` from `lesson.title`. It cuts it to about 32 characters, so the query term gets cut off or buried.
+- **Why I couldn't shorten it:** `lessonFilename()` builds the URL from the same `title`, so shortening it would move a page-1 URL with no redirect. `tools/` has no separate `seoTitle` or `metaTitle` field, and `tools/` is off-limits to me.
+- **Winnability:** 26 (Manual DI, position 12.4) is the weakest, since Android Developers and Medium dominate that query. The other three are page-1 pages with niche queries, so they're worth fixing once the tooling allows it.
+- **Bangla pages:** no Bangla or `class-9-math-bangla` targets were queued again. The queue found 130 candidates and picked four, all generic English Android. That is worth checking in `build-content-queue.py`.
+
+`data/last-night-content.md` has the full report, including a suggested `seoTitle` change for `tools/` and four title strings to use with it. Nothing was committed.
+
+**DONE: nightly content run, no edits (blocked on title tooling). NEXT: add `seoTitle` support to `build-lesson-pages.js` and check why the queue skips Bangla pages → `/model opus` + effort high.**
+  [agent finished] Made no content changes tonight: the four queued pages can't be fixed from `data.js`.
+
+- **Targets:** all four are Android interview lessons: 27 Retrofit (position 9.6), 28 Room (10.4), 26 Manual DI (12.4) and 56 FileProvider (8.2).
+- **Description:** already fixed on earlier nights. Each lesson's `whatIs` already leads with its query, so editing it again would only reset the click-through-rate measurement.
+- **Title:** this is what's left. `tools/build-lesson-pages.js:118-119` builds the `<title>` from `lesson.title`. It cuts it to about 32 characters, so the query term gets cut off or buried.
+- **Why I couldn't shorten it:** `lessonFilename()` builds the URL from the same `title`, so shortening it would move a page-1 URL with no redirect. `tools/` has no separate `seoTitle` or `metaTitle` field, and `tools/` is off-limits to me.
+- **Winnability:** 26 (Manual DI, position 12.4) is the weakest, since Android Developers and Medium dominate that query. The other three are page-1 pages with niche queries, so they're worth fixing once the tooling allows it.
+- **Bangla pages:** no Bangla or `class-9-math-bangla` targets were queued again. The queue found 130 candidates and picked four, all generic English Android. That is worth checking in `build-content-queue.py`.
+
+`data/last-night-content.md` has the full report, including a suggested `seoTitle` change for `tools/` and four title strings to use with it. Nothing was committed.
+
+**DONE: nightly content run, no edits (blocked on title tooling). NEXT: add `seoTitle` support to `build-lesson-pages.js` and check why the queue skips Bangla pages → `/model opus` + effort high.**
+  ✓ content agent finished
+
+=== course agent ===
+  Traceback (most recent call last):
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1321, in do_open
+      h.request(req.get_method(), req.selector, req.data, headers,
+      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                encode_chunked=req.has_header('Transfer-encoding'))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1358, in request
+      self._send_request(method, url, body, headers, encode_chunked)
+      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1404, in _send_request
+      self.endheaders(body, encode_chunked=encode_chunked)
+      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1353, in endheaders
+      self._send_output(message_body, encode_chunked=encode_chunked)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1113, in _send_output
+      self.send(msg)
+      ~~~~~~~~~^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1057, in send
+      self.connect()
+      ~~~~~~~~~~~~^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py", line 1499, in connect
+      self.sock = self._context.wrap_socket(self.sock,
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+                                            server_hostname=server_hostname)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 455, in wrap_socket
+      return self.sslsocket_class._create(
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+          sock=sock,
+          ^^^^^^^^^^
+      ...<5 lines>...
+          session=session
+          ^^^^^^^^^^^^^^^
+      )
+      ^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1076, in _create
+      self.do_handshake()
+      ~~~~~~~~~~~~~~~~~^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1372, in do_handshake
+      self._sslobj.do_handshake()
+      ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  ConnectionResetError: [Errno 54] Connection reset by peer
+  
+  During handling of the above exception, another exception occurred:
+  
+  Traceback (most recent call last):
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/scripts/build-course-radar.py", line 12, in <module>
+      exec(compile(_REAL.read_text(encoding="utf-8"), str(_REAL), "exec"))
+      ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/seo/discover/build-course-radar.py", line 815, in <module>
+      sys.exit(main())
+               ~~~~^^
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/seo/discover/build-course-radar.py", line 789, in main
+      radar = build_radar(host, cfg)
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/seo/discover/build-course-radar.py", line 520, in build_radar
+      gaps = gap_queries(cfg)
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/seo/discover/build-course-radar.py", line 265, in gap_queries
+      token = _bcq.gsc_token(cfg)
+    File "/Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-company-automation/py/seo/build/build-content-queue.py", line 167, in gsc_token
+      return json.load(urllib.request.urlopen(req, timeout=30))["access_token"]
+                       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 187, in urlopen
+      return opener.open(url, data, timeout)
+             ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 487, in open
+      response = self._open(req, data)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 504, in _open
+      result = self._call_chain(self.handle_open, protocol, protocol +
+                                '_open', req)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 464, in _call_chain
+      result = func(*args)
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1369, in https_open
+      return self.do_open(http.client.HTTPSConnection, req,
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          context=self._context)
+                          ^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 1324, in do_open
+      raise URLError(err)
+  urllib.error.URLError: <urlopen error [Errno 54] Connection reset by peer>
+  No course action tonight (no eligible cluster / cadence not due) — a valid outcome.
+AI discovery (weekly): SKIPPED (apps.teamzlab.com only; this is https://learn.teamzlab.com/)
+Own-blog articles (Mon+Thu): SKIPPED (apps.teamzlab.com only; this is https://learn.teamzlab.com/)
+teamzlab.com blog (weekly, Tue): SKIPPED (apps.teamzlab.com only; this is https://learn.teamzlab.com/)
+
+=== build: node tools/validate-course.js --all && node tools/build-homepage.js && node tools/build-sitemap.js && node tools/build-llms-txt.js ===
+✓ protecting-aging-parents (lenient)
+✓ real-estate (lenient)
+validate-course: all 20 OK.
+build-homepage: 20 courses, 4 generated card(s).
+index.html written.
+build-sitemap: 516 URLs (12 course landings, 501 lessons, 3 root) — withheld 8 noindexed course(s) per data/noindex-courses.json
+Wrote sitemap.xml (516 URLs) at repo root.
+✓ Wrote /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/llms-full.txt — 20 courses, 787 lessons, 179.5 KB, 1005 lines
+
+=== sitemap validity ===
+  guard-sitemap-valid: /Users/mdgolamkibriaemon/Projects/Teamz Lab Projects/teamz-projects/teamz-lab-learning/sitemap.xml OK — 516 URL(s)
+
+=== shipped-asset integrity (merge debris / JS parse) ===
+  guard-shipped-assets: OK — 898 shipped text file(s) clean, 50 JS file(s) parse
